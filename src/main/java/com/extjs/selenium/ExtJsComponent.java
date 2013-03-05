@@ -1,0 +1,174 @@
+package com.extjs.selenium;
+
+import com.sdl.selenium.web.WebLocator;
+import org.apache.log4j.Logger;
+
+public class ExtJsComponent extends WebLocator {
+    private static final Logger logger = Logger.getLogger(ExtJsComponent.class);
+
+    public ExtJsComponent() {
+        setClassName("ExtJsComponent");
+    }
+
+    /**
+     * @param cls
+     */
+    public ExtJsComponent(String cls) {
+        this();
+        setCls(cls);
+    }
+
+    public ExtJsComponent(WebLocator container) {
+        this();
+        setContainer(container);
+    }
+
+    public ExtJsComponent(WebLocator container, String elPath) {
+        this(container);
+        setElPath(elPath);
+    }
+
+    public ExtJsComponent(String cls, WebLocator container) {
+        this(container);
+        setCls(cls);
+    }
+
+    public ExtJsComponent(String text, String cls, WebLocator container) {
+        this(cls, container);
+        setText(text);
+    }
+
+    /**
+     * Containing baseCls, class, name and style
+     * @return baseSelector
+     */
+    public String getBasePathSelector(){
+        String selector = super.getBasePathSelector();
+
+        if(isVisibility()){
+            selector += " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0";
+        }
+        // TODO use also if disabled some parents then can;t click/select some children
+        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
+        selector = Utils.fixPathSelector(selector);
+
+        return selector;
+    }
+
+     /**
+     * Containing baseCls, class, name and style
+     * @return baseCssSelector
+     */
+    public String getBaseCssSelector(){
+        String selector = super.getBaseCssSelector();
+
+        if(isVisibility()){
+//            selector += " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0";
+            selector = ":not([class*='x-hide-display']) " + selector + ":not([class*='x-hide-display'])";
+        }
+        // TODO use also if disabled some parents then can;t click/select some children
+        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
+        selector = Utils.fixCssSelector(selector);
+
+        return selector;
+    }
+
+
+    /**
+     * @param disabled
+     * @return
+     */
+    public String getSelector(boolean disabled) {
+        String returnPath = super.getSelector(disabled);
+
+        // TODO this is ok but need test
+        // TODO make more specific for WebLocators in general
+        // TODO x-masked is used in hasMask
+        if(disabled){
+//            returnPath += "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]";
+            returnPath = "+ [class*='x-masked' or class=*'x-item-disabled'] " + returnPath + "+[@class*='x-masked' or class=*'x-item-disabled']";
+        }
+        return returnPath;
+    }
+
+    /**
+     * @param disabled
+     * @return
+     */
+    @Override
+    public String getPath(boolean disabled) {
+        String returnPath = super.getPath(disabled);
+
+        // TODO this is ok but need test
+        // TODO make more specific for WebLocators in general
+        // TODO x-masked is used in hasMask
+        if(disabled){
+            returnPath += "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]";
+//            returnPath = "+ [@class*='x-masked' or class=*'x-item-disabled'] " + returnPath + "+ [@class*='x-masked' or class=*'x-item-disabled']";
+        }
+        return returnPath;
+    }
+
+    @Override
+    public boolean isVisible() {
+        boolean visible = super.isVisible();
+        if(visible){
+            String cls = getAttribute("class");
+            if(cls != null && cls.contains("x-hide-display")){
+                visible = false;
+            }
+        }
+        return visible;
+    }
+
+    /**
+     * @return true if element has mask or some parent container has mask
+     *         has mask = element contains class 'x-masked'
+     */
+    public boolean hasMask(boolean useCssSelectors) {
+        // to make sure mask is for this element get his ID and start from it
+        String id = getAttributeId();
+        WebLocator mask = getMaskElement();
+        if ((id == null || id.equals("")) && getContainer() != null) {
+            id = getContainer().getAttributeId();
+            logger.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getContainer().getClassName());
+        }
+        if (id != null) {
+            if (!id.equals("")) {
+                WebLocator thisEl = new WebLocator();
+                thisEl.setId(id);
+                mask.setContainer(thisEl);
+            }
+        }
+        boolean hasMask = mask.isElementPresent(useCssSelectors);
+        if (logger.isDebugEnabled() && hasMask) {
+            logger.debug(this + " masked : " + hasMask);
+        }
+        return hasMask;
+    }
+
+    public WebLocator getMaskElement() {
+        String maskCssSelector = "*[class*='x-masked'] " + getSelector() + "[class*='x-masked']";
+        maskCssSelector = Utils.fixCssSelector(maskCssSelector);
+        String maskXPathSelector = "/ancestor-or-self::*[contains(@class, 'x-masked')]";
+        return new WebLocator(this, maskXPathSelector).setElCssSelector(maskCssSelector);
+    }
+
+    /**
+     * Wait for the element to be activated when there is deactivation mask on top of it
+     *
+     * @param seconds
+     */
+    public boolean waitToActivate(int seconds, boolean useCssSelectors) {
+        String info = toString();
+        //logger.debug("waitToActivate:" + seconds + " sec; " + info);
+        int count = 0;
+        boolean hasMask;
+        while ((hasMask = hasMask(useCssSelectors)) && (count < seconds) ) {
+            count++;
+            logger.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
+            Utils.sleep(1000);
+        }
+        return !hasMask;
+    }
+}

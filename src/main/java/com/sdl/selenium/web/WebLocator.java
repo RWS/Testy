@@ -1,0 +1,529 @@
+package com.sdl.selenium.web;
+
+import com.extjs.selenium.Utils;
+import com.thoughtworks.selenium.Selenium;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.Assert;
+
+public class WebLocator extends WebLocatorAbstractBuilder {
+    private static final Logger logger = Logger.getLogger(WebLocator.class);
+
+    public static WebDriver driver;
+    public static Selenium selenium;
+
+    private static boolean isIE;
+    private static boolean isChrome = false;
+    private String currentElementPath = "";
+    public WebElement currentElement;
+
+    protected static WebLocatorExecutor executor;
+
+    /**
+     * driver is InternetExplorerDriver
+     *
+     * @return boolean
+     */
+    public static boolean isIE() {
+        return isIE;
+    }
+
+    public WebLocator() {
+    }
+
+    /**
+     * @param cls
+     */
+    public WebLocator(String cls) {
+        setCls(cls);
+    }
+
+    public WebLocator(WebLocator container) {
+        setContainer(container);
+    }
+
+    public WebLocator(WebLocator container, String elPath) {
+        this(container);
+        setElPath(elPath);
+    }
+
+    public WebLocator(String cls, WebLocator container) {
+        this(container);
+        setCls(cls);
+    }
+
+    public WebLocator(String text, String cls, WebLocator container) {
+        this(cls, container);
+        setText(text);
+    }
+
+    // getters and setters
+
+    public static WebDriver getDriver() {
+        return driver;
+    }
+
+    public static void setDriver(WebDriver driver) {
+        WebLocator.driver = driver;
+        executor = new WebLocatorDriverExecutor(driver);
+        if (driver != null) {
+            if(driver instanceof InternetExplorerDriver){
+                isIE = true;
+            } else if(driver instanceof ChromeDriver){
+                isChrome = true;
+            }
+        }
+    }
+
+    public static Selenium getSelenium() {
+        return selenium;
+    }
+
+    public static void setSelenium(Selenium selenium) {
+        WebLocator.selenium = selenium;
+        executor = new WebLocatorSeleniumExecutor(selenium);
+    }
+
+    public static boolean hasWebDriver() {
+        return driver != null;
+    }
+
+    /**
+     * @return id
+     */
+    public String getAttributeId() {
+        String pathId = getAttribute("id");
+        if (hasId()) {
+            final String id = getId();
+            if (!id.equals(pathId)) {
+                logger.warn("id is not same as pathId:" + id + " - " + pathId);
+            }
+            return id;
+        }
+        return pathId;
+    }
+
+    /**
+     * Use xPath only
+     *
+     * @param attribute
+     * @return
+     */
+    public String getAttribute(String attribute) {
+        return executor.getAttribute(this, attribute);
+    }
+
+    public String getHtmlSource() {
+        return executor.getHtmlSource(this);
+    }
+
+    /**
+     * xPath only
+     *
+     * @return
+     */
+    public String getHtmlText() {
+        return getHtmlText(false);
+    }
+
+    /**
+     * it verify if isElementPresent and then selenium.getText
+     *
+     * @return
+     */
+    public String getHtmlText(boolean useCssSelectors) {
+        return executor.getHtmlText(this);
+    }
+
+    /**
+     * Using XPath only
+     */
+    public boolean clickAt() {
+        if (ready()) {
+            return doClickAt();
+        }
+        return false;
+    }
+
+    public boolean assertClickAt() {
+        boolean clicked = clickAt();
+        if (!clicked) {
+            Assert.fail("Could not clickAt on: " + this);
+        }
+        return clicked;
+    }
+
+    public boolean assertExists() {
+        boolean exists = exists();
+        if (!exists) {
+            Assert.fail("Element does not exists : " + this);
+        }
+        return exists;
+    }
+
+    /**
+     * Using xPath only
+     *
+     * @return
+     */
+    public boolean click() {
+        return click(false);
+    }
+
+    /**
+     * Use xPath or CSS Selectors. Click once do you catch exceptions StaleElementReferenceException.
+     *
+     * @param useCssSelectors
+     * @return
+     */
+    public boolean click(boolean useCssSelectors) {
+        return waitToRender(useCssSelectors) && doClick();
+    }
+
+    /**
+     * //TODO Daca nu a facut click pe element sa se intrerupa testul de facut si pentru clickAt() si sa fie setabil
+     *
+     * @return
+     */
+
+    public boolean assertClick() {
+        boolean clicked = click();
+        if (!clicked) {
+            Assert.fail("Could not click on: " + this);
+        }
+        return clicked;
+    }
+
+    /**
+     * doClick does not make sure element is present, if you are not sure about this, please use click() instead
+     * @return
+     */
+    protected boolean doClick() {
+        return executor.doClick(this);
+    }
+
+    /**
+     * doClickAt does not make sure element is present, if you are not sure about this, please use click() instead
+     * @return
+     */
+    protected boolean doClickAt() {
+        return executor.doClickAt(this);
+    }
+
+    public void highlight(){
+        if(isElementPresent()){
+            doHighlight();
+        }
+    }
+
+    private void doHighlight(){
+        executor.doHighlight(this);
+    }
+
+    public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
+       executor.sendKeys(this, charSequences);
+        return this;
+    }
+
+    public boolean clear() {
+        return executor.clear(this);
+    }
+
+    /**
+     * Using XPath or CSS Selectors
+     *
+     * @param useCssSelectors
+     * @return
+     */
+    public boolean mouseOver(boolean useCssSelectors) {
+        if (ready(useCssSelectors)) {
+            logger.info("mouseOver on " + this);
+            return doMouseOver();
+        } else {
+            logger.warn("mouseOver on " + this + " failed");
+            return false;
+        }
+    }
+
+    protected boolean doMouseOver() {
+        return executor.doMouseOver(this);
+    }
+
+    /**
+     * Using XPath only
+     *
+     * @return
+     */
+    public boolean mouseOver() {
+        return mouseOver(false);
+    }
+
+    /**
+     * Using XPath or CSS Selectors
+     *
+     * @return
+     */
+    public WebLocator focus() {
+        return focus(false);
+    }
+
+    /**
+     * Using XPath or CSS Selector
+     *
+     * @param useCssSelectors
+     * @return
+     */
+    public WebLocator focus(boolean useCssSelectors) {
+        if (ready(useCssSelectors)) {
+            executor.focus(this);
+            logger.info("focus on " + toString());
+        }
+        return this;
+    }
+
+    public Object executeScript(String script, Object... objects) {
+        return executor.executeScript(script, objects);
+    }
+
+    /**
+     * Using XPath only
+     *
+     * @return
+     */
+    public boolean doubleClickAt() {
+        return doubleClickAt(false);
+    }
+
+    /**
+     * Using XPath or CSS Selectors
+     *
+     * @param useCssSelectors
+     * @return
+     */
+    public boolean doubleClickAt(boolean useCssSelectors) {
+        boolean clicked = false;
+        if (ready(useCssSelectors)) {
+            clicked = executor.doubleClickAt(this);
+        }
+        return clicked;
+    }
+
+    /**
+     * Using xPath only
+     *
+     * @return
+     */
+    public boolean isElementPresent() {
+        return isElementPresent(false);
+    }
+
+    /**
+     * Using xPath or Css Selectors
+     *
+     * @param useCssSelectors
+     * @return
+     */
+    public boolean isElementPresent(boolean useCssSelectors) {
+        return executor.isElementPresent(this);
+    }
+
+    public int size() {
+        return executor.size(this);
+    }
+
+    public int size(boolean useCssSelectors) {
+        String selector = getSelector();
+        return driver.findElements(By.cssSelector(selector)).size();
+    }
+
+    public boolean exists() {
+        return executor.exists(this);
+    }
+
+    public WebElement findElement() {
+        return findElement(false);
+    }
+
+    public WebElement findElement(final boolean useCssSelectors) {
+        return executor.findElement(this);
+    }
+
+    /**
+     * Using XPath only
+     *
+     * @param text
+     * @return
+     */
+    public WebLocator type(String text) {
+        String info = toString();
+        if (ready()) {
+            executor.type(this, text);
+            logger.info("type = '" + text + "' in: " + info);
+        }
+        return this;
+    }
+
+    /**
+     * Using only selenium
+     * @param text
+     * @return
+     */
+    public WebLocator typeKeys(String text) {
+        String info = toString();
+        if (ready()) {
+            executor.typeKeys(this, text);
+            logger.info("typeKeys = '" + text + "' in: " + info);
+        }
+        return this;
+    }
+
+
+    /**
+     * Using XPath only
+     *
+     * @return
+     */
+    public boolean isVisible() {
+        boolean visible = isElementPresent();
+        if (visible) {
+            String style = getAttribute("style");
+            style = style == null ? "" : style.toLowerCase();
+            if (style.contains("visibility: hidden") || style.contains("display: none")) {
+                visible = false;
+            }
+            /*else {
+                visible = getContainer().isVisible();
+                //TODO if must check parent is visible
+            }*/
+        }
+        return visible;
+    }
+
+    public boolean isTextPresent(String text) {
+       return executor.isTextPresent(this, text);
+    }
+
+    /**
+     * Using xPath only
+     *
+     * @return
+     */
+    public boolean waitToRender() {
+        return waitToRender(false);
+    }
+
+    /**
+     * wait 5 seconds (or specified value for renderSeconds)
+     * Using xPath or CSS Selectors
+     *
+     * @return
+     */
+    public boolean waitToRender(boolean useCssSelectors) {
+        return waitToRender(getRenderMillis(), useCssSelectors);
+    }
+
+    /**
+     * Using xPath only
+     *
+     * @param seconds
+     * @return
+     */
+    public boolean waitToRender(int seconds) {
+        return waitToRender((long) seconds * 1000, false);
+    }
+
+    public boolean waitToRender(final long millis, boolean useCssSelectors) {
+        long stepMs = 100;
+        long ms = millis;
+        if (isElementPresent(useCssSelectors)) {
+            return true;
+        }
+        // if element was not present instantly wait to render
+        while (ms > 0) {
+            Utils.sleep(Math.min(stepMs, ms));
+            if (isElementPresent(useCssSelectors)) {
+                return true;
+            }
+            ms -= stepMs;
+        }
+        logger.warn("Element not found after " + millis + " millis; " + this);
+        //logger.debug("Element not found after " + millis + " millis; " + getPath());
+        return false;
+    }
+
+    /**
+     * @param seconds
+     * @return
+     */
+    public String waitTextToRender(int seconds) {
+        return waitTextToRender(seconds, "");
+    }
+
+    /**
+     * Waits for the text to be loaded by looking at the content and not take in consideration the excludeText
+     * text or what ever text is given as parameter
+     *
+     * @param seconds
+     * @param excludeText
+     * @return
+     */
+    public String waitTextToRender(int seconds, String excludeText) {
+        String text = null;
+        if (seconds == 0 && ((text = getHtmlText()) != null && text.length() > 0 && !text.equals(excludeText))) {
+            return text;
+        }
+        for (int i = 0, count = 5 * seconds; i < count; i++) {
+            text = getHtmlText();
+            if (text != null && text.length() > 0 && !text.equals(excludeText)) {
+                return text;
+            }
+            if (i == 0) {
+                // log only fist time
+                logger.debug("waitTextToRender");
+            }
+            Utils.sleep(200);
+        }
+        //logger.debug("No text was found for Element after " + seconds + " sec; " + path);
+        logger.warn("No text was found for Element after " + seconds + " sec; " + this);
+        return excludeText.equals(text) ? null : text;
+    }
+
+    public boolean waitToActivate(boolean useCssSelectors) {
+        return waitToActivate(getActivateSeconds(), useCssSelectors);
+    }
+
+    /**
+     * Wait to activate using xPath
+     *
+     * @param seconds
+     * @return
+     */
+    public boolean waitToActivate(int seconds) {
+        return waitToActivate(seconds, false);
+    }
+
+    /**
+     * Wait for the element to be activated when there is deactivation mask on top of it
+     *
+     * @param seconds
+     */
+    public boolean waitToActivate(int seconds, boolean useCssSelectors) {
+        return true;
+    }
+
+    public boolean ready() {
+        return waitToRender(false) && waitToActivate(false);
+    }
+
+    public boolean ready(boolean useCssSelectors) {
+        return waitToRender(useCssSelectors) && waitToActivate(useCssSelectors);
+    }
+
+    public boolean ready(int seconds, boolean useCssSelectors) {
+        return waitToRender((long) seconds * 1000, useCssSelectors) && waitToActivate(seconds, useCssSelectors);
+    }
+}

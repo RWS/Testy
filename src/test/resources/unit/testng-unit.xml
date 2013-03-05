@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="WebLocator Unit Test Suite" verbose="1">
+    <test name="AllTests">
+        <packages>
+            <package name="com.beglobal.selenium.*"/>
+            <package name="com.extjs.selenium.*"/>
+            <package name="com.sdl.selenium.web.*"/>
+        </packages>
+    </test>
+</suite>
