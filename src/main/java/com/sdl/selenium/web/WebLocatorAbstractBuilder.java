@@ -3,6 +3,9 @@ package com.sdl.selenium.web;
 import com.extjs.selenium.Utils;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
@@ -15,6 +18,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String elPath;
     private String baseCls;
     private String cls;
+    private List<String> classes;
     private String excludeCls;
     private String name;
     private String text;
@@ -89,6 +93,20 @@ public abstract class WebLocatorAbstractBuilder {
 
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
         this.cls = cls;
+        return (T) this;
+    }
+
+    public List<String> getClasses() {
+        return classes;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setClasses(final String ...classes) {
+        if(classes != null){
+            this.classes = new ArrayList<String>();
+            for (String cls: classes){
+                this.classes.add(cls);
+            }
+        }
         return (T) this;
     }
 
@@ -275,6 +293,10 @@ public abstract class WebLocatorAbstractBuilder {
         return cls != null && !cls.equals("");
     }
 
+    public Boolean hasClasses() {
+        return classes != null && classes.size() > 0;
+    }
+
     public Boolean hasExcludeCls() {
         return excludeCls != null && !excludeCls.equals("");
     }
@@ -336,6 +358,11 @@ public abstract class WebLocatorAbstractBuilder {
         }
         if (hasCls()) {
             selector += " and contains(@class, '" + getCls() + "')";
+        }
+        if (hasClasses()) {
+            for(String cls : getClasses()){
+                selector += " and contains(@class, '" + cls + "')";
+            }
         }
         if (hasExcludeCls()) {
             selector += " and not(contains(@class, '" + getExcludeCls() + "'))";
