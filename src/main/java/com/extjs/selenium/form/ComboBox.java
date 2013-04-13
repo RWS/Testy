@@ -9,7 +9,7 @@ public class ComboBox extends TextField {
     private static final Logger logger = Logger.getLogger(ComboBox.class);
     private static String listClass = "x-combo-list";
 
-   //TODO change the way comboBox is identified, without using cls
+    //TODO change the way comboBox is identified, without using cls
     // (create baseCls and if there is no cls, label then take first combo by baseCls)
     public ComboBox() {
         setClassName("ComboBox");
@@ -40,7 +40,7 @@ public class ComboBox extends TextField {
         setName(name);
     }
 
-    public ComboBox(WebLocator container, String cls, String name, boolean hasName ) {
+    public ComboBox(WebLocator container, String cls, String name, boolean hasName) {
         this();
         setContainer(container);
         setCls(cls);
@@ -65,8 +65,8 @@ public class ComboBox extends TextField {
         WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage("ComboList");
         WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(300).setInfoMessage(value);
 
-        if(clickIcon("arrow")){
-            try{
+        if (clickIcon("arrow")) {
+            try {
                 // TODO temporary try this solution for IE because is too slow
 //                if (isIE()) {
 //                    componentId = getAttributeId();
@@ -78,8 +78,9 @@ public class ComboBox extends TextField {
                     option.setContainer(comboListElement);
                 }
                 selected = option.click();
-            } catch (Exception e){
+            } catch (Exception e) {
                 logger.error(e);
+                ready();
                 componentId = getAttributeId();
                 selected = setValueWithJs(componentId, value);
             }
@@ -100,6 +101,7 @@ public class ComboBox extends TextField {
 
     private String getListId() {
         String componentId;
+        ready();
         componentId = getAttributeId();
         String getListIdScript = "return Ext.getCmp('" + componentId + "').list.id;";
         logger.debug("script:" + getListIdScript);
@@ -110,6 +112,7 @@ public class ComboBox extends TextField {
 
     /**
      * this method is used in case normal flow for selection fails
+     *
      * @param componentId ComboBox id so we can use directly js to force selection of that value
      * @param value
      * @return
@@ -119,7 +122,7 @@ public class ComboBox extends TextField {
         String script = "return (function(){var c  = Ext.getCmp('" + componentId + "'); var record = c.findRecord(c.displayField, '" + value + "');" +
                 "if(record){c.onSelect(record, c.store.indexOf(record)); return true;} return false;})()";
         logger.warn("force ComboBox Value with js: " + script);
-        selected = (Boolean)executeScript(script);
+        selected = (Boolean) executeScript(script);
         logger.warn("force ComboBox select result: " + selected);
         return selected;
     }

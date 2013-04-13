@@ -2,6 +2,7 @@ package com.extjs.selenium.window;
 
 import com.extjs.selenium.Utils;
 import com.extjs.selenium.panel.Panel;
+import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
 public class Window extends Panel {
@@ -48,10 +49,10 @@ public class Window extends Panel {
         setTitle(title);
     }
 
-    public String getItemPath(boolean disabled){
+    public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         selector += getHeaderSelector();
-        if(isModal()){
+        if (isModal()) {
             // test for IE be cause of :
             // http://jira.openqa.org/browse/SEL-545
             // and http://code.google.com/p/selenium/issues/detail?id=1716
@@ -63,6 +64,10 @@ public class Window extends Panel {
         }
 
         selector = Utils.fixPathSelector(selector);
-        return "//*["+ selector +"]";
+        return "//*[" + selector + "]";
+    }
+
+    public String getTitleWindow() {
+        return new WebLocator(this, "//*[contains(@class, 'x-window-header-text')]").getHtmlText();
     }
 }

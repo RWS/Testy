@@ -52,6 +52,7 @@ public class Button extends ExtJsComponent {
     public Button(WebLocator container, String text) {
         this(container);
         setText(text);
+        setSearchTextType("eq");
     }
 
     // Methods
@@ -60,7 +61,18 @@ public class Button extends ExtJsComponent {
     public String getItemPathText() {
         String selector = "";
         if (hasText()) {
-            selector += " and count(.//*[text()='" + getText() + "']) > 0";
+            String text = getText();
+            if ("equals".equals(getSearchTextType()) || "eq".equals(getSearchTextType())) {
+                selector += "text()='" + text + "'";
+            } else if ("contains".equals(getSearchTextType())) {
+                selector += "contains(text(),'" + text + "')";
+            } else if ("starts-with".equals(getSearchTextType()) || "starts".equals(getSearchTextType())) {
+                selector += "starts-with(text(),'" + text + "')";
+            } else {
+                logger.warn("searchType did not math to any accepted values");
+                selector = "";
+            }
+            selector = " and count(.//*[" + selector + "]) > 0";
         }
         if (hasIconCls()) {
             selector += " and count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
@@ -129,7 +141,7 @@ public class Button extends ExtJsComponent {
     }
 
     public boolean toggle(boolean state) {
-        String cls = this.getAttribute("class");
+        String cls = this.getAttributeClass();
         boolean contains = cls.contains("x-btn-pressed");
         if (state && !contains || !state && contains) {
             return this.click();
@@ -144,7 +156,7 @@ public class Button extends ExtJsComponent {
      */
     public boolean clickWithExtJS() {
         String id = getAttributeId();
-        String script = "return (function(){var b = Ext.getCmp('"+id+"'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
+        String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
 //        logger.debug("clickWithExtJS: "+ script);
         Object object = executeScript(script);
         logger.debug("clickWithExtJS result: " + object);

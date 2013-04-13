@@ -15,7 +15,7 @@ public class SimpleCheckBox extends WebLocator {
         setId(id);
     }
 
-    public boolean isSelected(){
-        return isElementPresent() && executor.isSelected(this);
+    public boolean isSelected() {
+        return ready() && executor.isSelected(this);
     }
 }

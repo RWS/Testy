@@ -37,6 +37,7 @@ public class GetData {
 
     /**
      * Get Current day (+/- number of days/months/years)
+     *
      * @param days
      * @param months
      * @param years
@@ -47,7 +48,7 @@ public class GetData {
         return getDate(days, months, years, format, Locale.ENGLISH);
     }
 
-     public static String getDate(int days, int months, int years, String format, Locale locale) {
+    public static String getDate(int days, int months, int years, String format, Locale locale) {
         Calendar now = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
         now.add(Calendar.DATE, +days);

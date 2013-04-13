@@ -40,12 +40,13 @@ public class ExtJsComponent extends WebLocator {
 
     /**
      * Containing baseCls, class, name and style
+     *
      * @return baseSelector
      */
-    public String getBasePathSelector(){
+    public String getBasePathSelector() {
         String selector = super.getBasePathSelector();
 
-        if(isVisibility()){
+        if (isVisibility()) {
             selector += " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0";
         }
         // TODO use also if disabled some parents then can;t click/select some children
@@ -55,14 +56,15 @@ public class ExtJsComponent extends WebLocator {
         return selector;
     }
 
-     /**
+    /**
      * Containing baseCls, class, name and style
+     *
      * @return baseCssSelector
      */
-    public String getBaseCssSelector(){
+    public String getBaseCssSelector() {
         String selector = super.getBaseCssSelector();
 
-        if(isVisibility()){
+        if (isVisibility()) {
 //            selector += " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0";
             selector = ":not([class*='x-hide-display']) " + selector + ":not([class*='x-hide-display'])";
         }
@@ -84,7 +86,7 @@ public class ExtJsComponent extends WebLocator {
         // TODO this is ok but need test
         // TODO make more specific for WebLocators in general
         // TODO x-masked is used in hasMask
-        if(disabled){
+        if (disabled) {
 //            returnPath += "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]";
             returnPath = "+ [class*='x-masked' or class=*'x-item-disabled'] " + returnPath + "+[@class*='x-masked' or class=*'x-item-disabled']";
         }
@@ -102,7 +104,7 @@ public class ExtJsComponent extends WebLocator {
         // TODO this is ok but need test
         // TODO make more specific for WebLocators in general
         // TODO x-masked is used in hasMask
-        if(disabled){
+        if (disabled) {
             returnPath += "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]";
 //            returnPath = "+ [@class*='x-masked' or class=*'x-item-disabled'] " + returnPath + "+ [@class*='x-masked' or class=*'x-item-disabled']";
         }
@@ -112,9 +114,9 @@ public class ExtJsComponent extends WebLocator {
     @Override
     public boolean isVisible() {
         boolean visible = super.isVisible();
-        if(visible){
-            String cls = getAttribute("class");
-            if(cls != null && cls.contains("x-hide-display")){
+        if (visible) {
+            String cls = getAttributeClass();
+            if (cls != null && cls.contains("x-hide-display")) {
                 visible = false;
             }
         }
@@ -164,7 +166,7 @@ public class ExtJsComponent extends WebLocator {
         //logger.debug("waitToActivate:" + seconds + " sec; " + info);
         int count = 0;
         boolean hasMask;
-        while ((hasMask = hasMask(useCssSelectors)) && (count < seconds) ) {
+        while ((hasMask = hasMask(useCssSelectors)) && (count < seconds)) {
             count++;
             logger.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
             Utils.sleep(1000);

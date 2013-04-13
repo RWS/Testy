@@ -204,10 +204,9 @@ public class GridPanel extends Panel {
     }
 
     /**
-     *
      * @param searchElement
      * @param columnId
-     * @param searchType accepted values are: {"equals", "starts-with", "contains"}
+     * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
      * @return
      */
 
@@ -217,20 +216,20 @@ public class GridPanel extends Panel {
         return doCellSelect(cell);
     }
 
-    public boolean doCellSelect(GridCell cell){
+    public boolean doCellSelect(GridCell cell) {
         return doCellAction(cell, null);
     }
 
-    public boolean doCellDoubleClickAt(GridCell cell){
+    public boolean doCellDoubleClickAt(GridCell cell) {
         return doCellAction(cell, "doubleClickAt");
     }
 
-    private boolean doCellAction(GridCell cell, String action){
+    private boolean doCellAction(GridCell cell, String action) {
         boolean selected;
         scrollTop(); // make sure always start from top then scroll down till the end of the page
         do {
             // if the row is not in visible (need to scroll down - errors when used BufferView in grid)
-            if("doubleClickAt".equals(action)){
+            if ("doubleClickAt".equals(action)) {
                 selected = cell.doubleClickAt();
             } else {
                 selected = cell.select();
@@ -264,11 +263,13 @@ public class GridPanel extends Panel {
         }
         return false;
     }
-    public WebLocator getSelectAllChecker(String columnId){
+
+    public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        WebLocator checkerEl = new WebLocator(this,"//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div" );
+        WebLocator checkerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
         return checkerEl;
     }
+
     private WebLocator getHeader(String columnId) {
         waitToRender();
         WebLocator headerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]");
@@ -293,9 +294,9 @@ public class GridPanel extends Panel {
         return clickOnHeader(columnId) && clickOnHeader(columnId);
     }
 
-    public boolean assertCheckSelectAll(String columnId){
+    public boolean assertCheckSelectAll(String columnId) {
         logger.debug("Select-all checker path: " + getSelectAllChecker(columnId));
-        if(hasWebDriver()){
+        if (hasWebDriver()) {
             return getSelectAllChecker(columnId).assertClick();
         } else {
             return getSelectAllChecker(columnId).assertClickAt();
@@ -360,7 +361,7 @@ public class GridPanel extends Panel {
             //TODO Try better search mecanism
             while (rowIndex <= rowCount) {
                 GridRow row = getGridRow(rowIndex);
-                String cls = row.getAttribute("class");
+                String cls = row.getAttributeClass();
                 if (cls != null && cls.contains("x-grid3-row-selected")) {
                     index = rowIndex;
                     break;
@@ -423,11 +424,11 @@ public class GridPanel extends Panel {
         return new GridRow(this, rowIndex);
     }
 
-    public GridRow getGridRow(String  searchElement) {
+    public GridRow getGridRow(String searchElement) {
         return getGridRow(searchElement, "eq");
     }
 
-    public GridRow getGridRow(String  searchElement, String searchType) {
+    public GridRow getGridRow(String searchElement, String searchType) {
         return new GridRow(this, searchColumnId, searchElement, searchType);
     }
 
@@ -445,6 +446,7 @@ public class GridPanel extends Panel {
 
     /**
      * TODO improve *reuse searchType from WebLocator
+     *
      * @param searchElement
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
      * @return
@@ -493,10 +495,12 @@ public class GridPanel extends Panel {
 
     public GridCell getGridCell(String searchElement, int columnIndex) {
         GridRow gridRow = getGridRow(searchElement, "contains");// TODO verify tests and use "eq", because "eq" must be default
-        GridCell cell = new GridCell(gridRow, columnIndex);
-        return cell;
-//        int row = getRowIndex(searchText);
-//        return getGridCell(row, column);
+        return new GridCell(gridRow, columnIndex);
+    }
+
+    public GridCell getGridCell(String searchElement, String searchColumnId, int columnIndex) {
+        GridRow gridRow = new GridRow(this, searchColumnId, searchElement, "contains");
+        return new GridCell(gridRow, columnIndex);
     }
 
     public GridRow findGridRow(GridCell... byCells) {
@@ -527,16 +531,17 @@ public class GridPanel extends Panel {
      */
     public String[] getRow(String searchText) {
         String[] rowElements = null;
-            GridRow row = new GridRow(this, searchText, getSearchColumnId(), "contains");
-            String text = row.getHtmlText();
-            if (text != null) {
-                rowElements = text.split("\n");
-            }
+        GridRow row = new GridRow(this, searchText, getSearchColumnId(), "contains");
+        String text = row.getHtmlText();
+        if (text != null) {
+            rowElements = text.split("\n");
+        }
         return rowElements;
     }
 
     public boolean isRowDisable(String searchText) {
-        String cls = getGridRow(searchText).getAttribute("class");
+        ready(true);
+        String cls = getGridRow(searchText).getAttributeClass();
         return cls.contains("x-item-disabled");
     }
 
@@ -560,12 +565,21 @@ public class GridPanel extends Panel {
     }
 
     public String getText(String searchText, int columnId) {
-        String path;
         String text = null;
-        int rowIndex = getRowIndex(searchText);
-        if (rowIndex != -1) {
-            path = getGridRow(rowIndex).getPath() + "//td[" + columnId + "]";
-            text = new WebLocator(null, path).getHtmlText();
+        GridCell cell = getGridCell(searchText, columnId);
+        if (cell.ready(true)) {
+            text = cell.getHtmlText();
+        } else {
+            logger.warn("searchText was not found in grid: " + searchText);
+        }
+        return text;
+    }
+
+    public String getText(String searchText, String searchColumnId, int columnId) {
+        String text = null;
+        GridCell cell = getGridCell(searchText, searchColumnId, columnId);
+        if (cell.ready(true)) {
+            text = cell.getHtmlText();
         } else {
             logger.warn("searchText was not found in grid: " + searchText);
         }
@@ -598,7 +612,7 @@ public class GridPanel extends Panel {
             String path;
             if (rowIndex != -1) {
                 GridRow gridRow = getGridRow(rowIndex);
-                String cls = gridRow.getAttribute("class");
+                String cls = gridRow.getAttributeClass();
                 boolean isSelected = cls != null && cls.contains("x-grid3-row-selected");
                 path = "//*[contains(@class, 'x-grid3-row-checker')]";
                 WebLocator element = new WebLocator(gridRow, path);
@@ -612,7 +626,7 @@ public class GridPanel extends Panel {
                     logger.warn("Could not click on checkbox corresponding to line index: " + rowIndex + "; path = " + path);
                     return false;
                 }
-                cls = gridRow.getAttribute("class");
+                cls = gridRow.getAttributeClass();
                 return (cls != null && cls.contains("x-grid3-row-selected")) != isSelected;
             }
             return false;
@@ -674,15 +688,17 @@ public class GridPanel extends Panel {
     private GridCell getCheckerCell(final String searchText) {
         return getCheckerCell(searchText, false);
     }
+
     private GridCell getCheckerCell(final String searchText, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
-        cellPath +="//*[contains(@class, 'x-grid3-row-checker')]";
+        cellPath += "//*[contains(@class, 'x-grid3-row-checker')]";
         return new GridCell(getGridRow(), cellPath).setInfoMessage("row-checker (" + searchText + ")");
     }
 
     private GridCell getCheckboxCell(final String searchText, int columnIndex) {
         return getCheckboxCell(searchText, columnIndex, false);
     }
+
     private GridCell getCheckboxCell(final String searchText, int columnIndex, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-check-col')]";
@@ -690,7 +706,7 @@ public class GridPanel extends Panel {
     }
 
     private String getTableRowSearchPath(String searchText, boolean containsText) {
-        String text = containsText ? ("contains(text(),'" + searchText + "')") : ("text()='" + searchText + "'") ;
+        String text = containsText ? ("contains(text(),'" + searchText + "')") : ("text()='" + searchText + "'");
         String searchCondition = "[count(*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + text + "]) > 0]";
         return "//tr" + searchCondition;
     }
@@ -703,7 +719,8 @@ public class GridPanel extends Panel {
         boolean selected = false;
         if (ready(true)) {
             GridCell gridCell = getCheckboxCell(searchText, columnIndex, containsText);
-            String cls = gridCell.getAttribute("class");
+            gridCell.ready();
+            String cls = gridCell.getAttributeClass();
             boolean isSelected = cls != null && cls.contains("x-grid3-check-col-on");
             if (isSelected) {
                 selected = isSelected;
@@ -722,7 +739,7 @@ public class GridPanel extends Panel {
         boolean selected = false;
         if (ready(true)) {
             GridCell gridCell = getCheckboxCell(searchText, columnIndex, containsText);
-            String cls = gridCell.getAttribute("class");
+            String cls = gridCell.getAttributeClass();
             boolean isSelected = cls != null && cls.contains("x-grid3-check-col-on");
             if (isSelected) {
                 logger.debug("path: " + gridCell.getPath());

@@ -1,6 +1,6 @@
 package com.extjs.selenium.form;
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
 public class TextArea extends TextField {
@@ -11,13 +11,13 @@ public class TextArea extends TextField {
         setTag("textarea");
     }
 
-    public TextArea(ExtJsComponent container, String label) {
+    public TextArea(WebLocator container, String label) {
         this();
         setContainer(container);
         setLabel(label);
     }
 
-    public TextArea(String name, ExtJsComponent container) {
+    public TextArea(String name, WebLocator container) {
         this();
         setContainer(container);
         setName(name);

@@ -33,4 +33,3 @@ public class Checkbox extends ExtJsComponent {
         return isElementPresent() && executor.isSelected(this);
     }
 }
-
