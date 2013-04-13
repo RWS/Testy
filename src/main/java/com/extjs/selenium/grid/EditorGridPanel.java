@@ -6,6 +6,7 @@ import com.extjs.selenium.form.TextArea;
 import com.extjs.selenium.form.TextField;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Keys;
 
 public class EditorGridPanel extends GridPanel {
     private static final Logger logger = Logger.getLogger(EditorGridPanel.class);
@@ -61,9 +62,9 @@ public class EditorGridPanel extends GridPanel {
         TextField editor;
         WebLocator container = new WebLocator("x-editor", this);
         WebLocator editableEl = new WebLocator(container).setCls("-focus");
-        String stringClass = editableEl.getAttribute("class");
+        String stringClass = editableEl.getAttributeClass();
         logger.debug("stringClass: " + stringClass);
-        if(stringClass == null){
+        if (stringClass == null) {
             stringClass = "";
         }
         if (stringClass.contains("x-form-field-trigger-wrap")) {
@@ -93,12 +94,16 @@ public class EditorGridPanel extends GridPanel {
     public boolean startEdit(int rowIndex, int colIndex) {
         logger.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
         GridCell cell = getGridCell(rowIndex, colIndex);
+        cell.ready();
+        cell.sendKeys(Keys.TAB);
         return startEdit(cell);
     }
 
     public boolean startEdit(String searchElement, int colIndex) {
         logger.debug("startEdit(" + searchElement + ", " + colIndex + ")");
         GridCell cell = getGridCell(searchElement, colIndex);
+        cell.ready();
+        cell.sendKeys(Keys.TAB);
         return startEdit(cell);
     }
 
@@ -136,7 +141,11 @@ public class EditorGridPanel extends GridPanel {
     public boolean setRowValue(String value) {
         logger.debug("setRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
-        return editor.setValue(value);
+        boolean edited = editor.setValue(value);
+        if (edited) {
+            editor.blur();
+        }
+        return edited;
     }
 
     public boolean setRowValue(int rowIndex, int colIndex, String value) {
@@ -153,5 +162,34 @@ public class EditorGridPanel extends GridPanel {
             return setRowValue(value);
         }
         return false;
+    }
+
+    private void setCursorPosition(TextField editor, int position) {
+        while (position > 0) {
+            editor.sendKeys(Keys.LEFT);
+            position--;
+        }
+    }
+
+    public boolean deleteCharacters(int rowIndex, int colIndex, int countCharacters, int cursorPosition) {
+        startEdit(rowIndex, colIndex);
+        TextField editor = getActiveEditor();
+        setCursorPosition(editor, cursorPosition);
+        while (countCharacters > 0) {
+            editor.sendKeys(Keys.DELETE);
+            countCharacters--;
+        }
+        return editor.blur();
+    }
+
+    public boolean backspaceCharacters(int rowIndex, int colIndex, int countCharacters, int cursorPosition) {
+        startEdit(rowIndex, colIndex);
+        TextField editor = getActiveEditor();
+        setCursorPosition(editor, cursorPosition);
+        while (countCharacters > 0) {
+            editor.sendKeys(Keys.BACK_SPACE);
+            countCharacters--;
+        }
+        return editor.blur();
     }
 }

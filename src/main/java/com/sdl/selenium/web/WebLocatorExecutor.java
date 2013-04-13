@@ -44,4 +44,6 @@ public interface WebLocatorExecutor {
     boolean exists(WebLocator el);
 
     boolean isSelected(WebLocator el);
+
+    void blur(WebLocator el);
 }

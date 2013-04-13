@@ -105,7 +105,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             } catch (SeleniumException e) {
                 logger.debug("getAttribute '" + attribute + "' SeleniumException: " + e);
             }
-
         }
         return attributeValue;
     }
@@ -163,6 +162,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public boolean isSelected(WebLocator el) {
         return el.currentElement.isSelected();
+    }
+
+    @Override
+    public void blur(WebLocator el) {
+        fireEventWithJS(el, "blur");
     }
 
     @Override

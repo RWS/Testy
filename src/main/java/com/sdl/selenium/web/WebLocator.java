@@ -21,6 +21,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     private String currentElementPath = "";
     public WebElement currentElement;
 
+    public static WebLocatorExecutor getExecutor() {
+        return executor;
+    }
+
     protected static WebLocatorExecutor executor;
 
     /**
@@ -71,9 +75,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         WebLocator.driver = driver;
         executor = new WebLocatorDriverExecutor(driver);
         if (driver != null) {
-            if(driver instanceof InternetExplorerDriver){
+            if (driver instanceof InternetExplorerDriver) {
                 isIE = true;
-            } else if(driver instanceof ChromeDriver){
+            } else if (driver instanceof ChromeDriver) {
                 isChrome = true;
             }
         }
@@ -96,22 +100,21 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return id
      */
     public String getAttributeId() {
-        String pathId = getAttribute("id");
-        if (hasId()) {
-            final String id = getId();
-            if (!id.equals(pathId)) {
-                logger.warn("id is not same as pathId:" + id + " - " + pathId);
-            }
-            return id;
-        }
-        return pathId;
+        return getAttribute("id");
+    }
+
+    /**
+     * @return class
+     */
+    public String getAttributeClass() {
+        return getAttribute("class");
     }
 
     /**
      * Use xPath only
      *
      * @param attribute
-     * @return
+     * @return String attribute, if element not exist return null.
      */
     public String getAttribute(String attribute) {
         return executor.getAttribute(this, attribute);
@@ -136,7 +139,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public String getHtmlText(boolean useCssSelectors) {
-        return executor.getHtmlText(this);
+        if (ready()) {
+            return executor.getHtmlText(this);
+        }
+        return null;
     }
 
     /**
@@ -200,6 +206,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * doClick does not make sure element is present, if you are not sure about this, please use click() instead
+     *
      * @return
      */
     protected boolean doClick() {
@@ -208,24 +215,25 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * doClickAt does not make sure element is present, if you are not sure about this, please use click() instead
+     *
      * @return
      */
     protected boolean doClickAt() {
         return executor.doClickAt(this);
     }
 
-    public void highlight(){
-        if(isElementPresent()){
+    public void highlight() {
+        if (isElementPresent()) {
             doHighlight();
         }
     }
 
-    private void doHighlight(){
+    private void doHighlight() {
         executor.doHighlight(this);
     }
 
     public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
-       executor.sendKeys(this, charSequences);
+        executor.sendKeys(this, charSequences);
         return this;
     }
 
@@ -245,6 +253,17 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             return doMouseOver();
         } else {
             logger.warn("mouseOver on " + this + " failed");
+            return false;
+        }
+    }
+
+    public boolean blur() {
+        if (ready()) {
+            logger.info("blur on " + this);
+            executor.blur(this);
+            return true;
+        } else {
+            logger.warn("blur on " + this + " failed");
             return false;
         }
     }
@@ -369,6 +388,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * Using only selenium
+     *
      * @param text
      * @return
      */
@@ -404,7 +424,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean isTextPresent(String text) {
-       return executor.isTextPresent(this, text);
+        return executor.isTextPresent(this, text);
     }
 
     /**

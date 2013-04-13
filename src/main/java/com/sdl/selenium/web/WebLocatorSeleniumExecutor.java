@@ -159,4 +159,9 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     public boolean isSelected(WebLocator el) {
         return selenium.isChecked(el.getPath());
     }
+
+    @Override
+    public void blur(WebLocator el) {
+        selenium.fireEvent(el.getPath(), "blur");
+    }
 }

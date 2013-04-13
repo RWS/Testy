@@ -6,8 +6,6 @@ import com.sdl.selenium.web.WebLocator;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
@@ -55,35 +53,37 @@ public class TextField extends ExtJsComponent {
     }
 
     /**
-        * Containing baseCls, class, name and style
-        * @return baseSelector
-        */
-       public String getBasePathSelector(){
-           String selector = super.getBasePathSelector();
+     * Containing baseCls, class, name and style
+     *
+     * @return baseSelector
+     */
+    public String getBasePathSelector() {
+        String selector = super.getBasePathSelector();
 
-           selector += " and not (@type='hidden') ";
-           // TODO use also if disabled some parents then can;t click/select some children
-           // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-           selector = Utils.fixPathSelector(selector);
+        selector += " and not (@type='hidden') ";
+        // TODO use also if disabled some parents then can;t click/select some children
+        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
+        selector = Utils.fixPathSelector(selector);
 
-           return selector;
-       }
+        return selector;
+    }
 
-     /**
-        * Containing baseCls, class, name and style
-        * @return baseSelector
-        */
-       public String getBaseCssSelector(){
-           String selector = super.getBaseCssSelector();
+    /**
+     * Containing baseCls, class, name and style
+     *
+     * @return baseSelector
+     */
+    public String getBaseCssSelector() {
+        String selector = super.getBaseCssSelector();
 
 //           selector += " and not (@type='hidden') ";
-           selector += ":not([type='hidden'])";
-           // TODO use also if disabled some parents then can;t click/select some children
-           // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-           selector = Utils.fixCssSelector(selector);
+        selector += ":not([type='hidden'])";
+        // TODO use also if disabled some parents then can;t click/select some children
+        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
+        selector = Utils.fixCssSelector(selector);
 
-           return selector;
-       }
+        return selector;
+    }
 
 
     public String getItemCssSelector(boolean disabled) {
@@ -94,45 +94,38 @@ public class TextField extends ExtJsComponent {
 
         if (hasLabel()) {
 //            selector = "//label[text()='" + label + "']//following-sibling::*" + selector;
-            selector = selector + " label:contains('" + getLabel() + "')"  ;
+            selector = selector + " label:contains('" + getLabel() + "')";
         }
-        selector = "" + (selector.length() > 0 ? ( selector +" + * " + getTag() + getBaseCssSelector()) : "");
+        selector = "" + (selector.length() > 0 ? (selector + " + * " + getTag() + getBaseCssSelector()) : "");
         selector = Utils.fixCssSelector(selector);
         return selector;
     }
 
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
-        selector = "//" + getTag() + (selector.length() > 0 ? ("["+ selector +"]") : "");
+        selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
         return selector;
     }
 
-     public static void copyToClipboard( final String text ) {
-        final StringSelection stringSelection = new StringSelection( text );
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( stringSelection,
-        new ClipboardOwner() {
-              @Override
-              public void lostOwnership( final java.awt.datatransfer.Clipboard clipboard, final Transferable contents )
-              {
-                // do nothing
-              }
-        } );
-      }
+    public static void copyToClipboard(final String text) {
+        final StringSelection stringSelection = new StringSelection(text);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection,
+                new ClipboardOwner() {
+                    @Override
+                    public void lostOwnership(final java.awt.datatransfer.Clipboard clipboard, final Transferable contents) {
+                        // do nothing
+                    }
+                });
+    }
 
     public boolean pasteInValue(String value) {
-        if(ready()){
-            if(value != null && value.length() > 0){
-                String path = getPath();
-                if (isElementPresent()) {
-                    logger.info("Set value(" + toString() +"): " + value);
-                    currentElement.clear();
-                    copyToClipboard(value);
-                    final Actions builder = new Actions( driver );
-                    builder.click( currentElement ).keyDown( Keys.CONTROL ).sendKeys( "V" ).keyUp( Keys.CONTROL );
-                          final Action paste = builder.build();
-                          paste.perform();
-                    return true;
-                }
+        if (ready()) {
+            if (value != null) {
+                logger.info("Set value(" + toString() + "): " + value + "'");
+                currentElement.clear();
+                copyToClipboard(value);
+                currentElement.sendKeys(Keys.CONTROL, "v");
+                return true;
             }
         } else {
             logger.warn("setValue : field is not ready for use: " + toString());
@@ -148,7 +141,7 @@ public class TextField extends ExtJsComponent {
         if (value != null) {
             if (ready(useCssSelectors)) {
                 logger.info("Setting value(" + toString() + "): '" + value + "'");
-                if(hasWebDriver()){
+                if (hasWebDriver()) {
                     currentElement.clear();
                     currentElement.sendKeys(value);
                     return true;
@@ -178,6 +171,7 @@ public class TextField extends ExtJsComponent {
 
     /**
      * getValue using xPath
+     *
      * @return
      */
     public String getValue() {
@@ -186,12 +180,13 @@ public class TextField extends ExtJsComponent {
 
     /**
      * getValue using xPath or Css Selectors, depending on the parameter
+     *
      * @param useCssSelectors
      * @return
      */
     public String getValue(boolean useCssSelectors) {
         String value = "";
-        if(ready(useCssSelectors)){
+        if (ready(useCssSelectors)) {
             // using WebDriver -> there are situations when the value is taken by getText() or getAttribute("value")
             if (hasWebDriver()) {
                 final String attributeValue = currentElement.getAttribute("value");
@@ -217,6 +212,7 @@ public class TextField extends ExtJsComponent {
 
     /**
      * Using xPath only
+     *
      * @param value
      * @return
      */
@@ -226,6 +222,7 @@ public class TextField extends ExtJsComponent {
 
     /**
      * Using xPath or Css Selectors
+     *
      * @param value
      * @param useCssSelectors
      * @return
@@ -242,17 +239,17 @@ public class TextField extends ExtJsComponent {
     }
 
     public boolean clickIcon(String icon) {
-        if(ready()){
+        if (ready()) {
             String triggerPath = getTriggerPath(icon);
             WebLocator iconLocator = new WebLocator(this, triggerPath);
             iconLocator.setInfoMessage("trigger-" + icon);
             try {
-                if(hasWebDriver()){
+                if (hasWebDriver()) {
                     return iconLocator.click();
                 } else {
                     return iconLocator.clickAt();
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 logger.error("Exception on clickIcon: " + e.getMessage());
                 return false;
             }
@@ -260,5 +257,12 @@ public class TextField extends ExtJsComponent {
             logger.warn("clickIcon : field is not ready for use: " + toString());
         }
         return false;
+    }
+
+    /**
+     * @return true is the element doesn't have attribute readonly
+     */
+    public boolean isEditable() {
+        return !"true".equals(getAttribute("readonly"));
     }
 }

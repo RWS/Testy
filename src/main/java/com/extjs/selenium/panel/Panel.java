@@ -104,7 +104,7 @@ public class Panel extends ExtJsComponent {
     }
 
     public boolean clickOnTool(String id) {
-        WebLocator toolElement = new WebLocator(this, "//*[contains(@class,'x-tool-" + id + "')]");
+        WebLocator toolElement = new WebLocator(this).setCls("x-tool-" + id).setVisibility(true);
         toolElement.setInfoMessage("x-tool-" + id);
         return toolElement.click();
     }
