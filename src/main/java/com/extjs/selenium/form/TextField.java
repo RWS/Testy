@@ -134,12 +134,8 @@ public class TextField extends ExtJsComponent {
     }
 
     public boolean setValue(String value) {
-        return setValue(value, false);
-    }
-
-    public boolean setValue(String value, boolean useCssSelectors) {
         if (value != null) {
-            if (ready(useCssSelectors)) {
+            if (ready()) {
                 logger.info("Setting value(" + toString() + "): '" + value + "'");
                 if (hasWebDriver()) {
                     currentElement.clear();
@@ -168,25 +164,14 @@ public class TextField extends ExtJsComponent {
         return true;
     }
 
-
     /**
-     * getValue using xPath
+     * getValue using xPath only, depending on the parameter
      *
      * @return
      */
     public String getValue() {
-        return getValue(false);
-    }
-
-    /**
-     * getValue using xPath or Css Selectors, depending on the parameter
-     *
-     * @param useCssSelectors
-     * @return
-     */
-    public String getValue(boolean useCssSelectors) {
         String value = "";
-        if (ready(useCssSelectors)) {
+        if (ready()) {
             // using WebDriver -> there are situations when the value is taken by getText() or getAttribute("value")
             if (hasWebDriver()) {
                 final String attributeValue = currentElement.getAttribute("value");
@@ -217,18 +202,7 @@ public class TextField extends ExtJsComponent {
      * @return
      */
     public boolean verifyValue(String value) {
-        return verifyValue(value, false);
-    }
-
-    /**
-     * Using xPath or Css Selectors
-     *
-     * @param value
-     * @param useCssSelectors
-     * @return
-     */
-    public boolean verifyValue(String value, boolean useCssSelectors) {
-        String v = getValue(useCssSelectors);
+        String v = getValue();
         logger.debug("The values '" + v + "' and '" + value + "' " + (value.equals(v) ? "" : "do NOT ") + "match");
         return value.equals(v);
     }

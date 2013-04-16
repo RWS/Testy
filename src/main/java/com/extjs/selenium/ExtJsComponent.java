@@ -57,43 +57,6 @@ public class ExtJsComponent extends WebLocator {
     }
 
     /**
-     * Containing baseCls, class, name and style
-     *
-     * @return baseCssSelector
-     */
-    public String getBaseCssSelector() {
-        String selector = super.getBaseCssSelector();
-
-        if (isVisibility()) {
-//            selector += " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0";
-            selector = ":not([class*='x-hide-display']) " + selector + ":not([class*='x-hide-display'])";
-        }
-        // TODO use also if disabled some parents then can;t click/select some children
-        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        selector = Utils.fixCssSelector(selector);
-
-        return selector;
-    }
-
-
-    /**
-     * @param disabled
-     * @return
-     */
-    public String getSelector(boolean disabled) {
-        String returnPath = super.getSelector(disabled);
-
-        // TODO this is ok but need test
-        // TODO make more specific for WebLocators in general
-        // TODO x-masked is used in hasMask
-        if (disabled) {
-//            returnPath += "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]";
-            returnPath = "+ [class*='x-masked' or class=*'x-item-disabled'] " + returnPath + "+[@class*='x-masked' or class=*'x-item-disabled']";
-        }
-        return returnPath;
-    }
-
-    /**
      * @param disabled
      * @return
      */
@@ -127,7 +90,7 @@ public class ExtJsComponent extends WebLocator {
      * @return true if element has mask or some parent container has mask
      *         has mask = element contains class 'x-masked'
      */
-    public boolean hasMask(boolean useCssSelectors) {
+    public boolean hasMask() {
         // to make sure mask is for this element get his ID and start from it
         String id = getAttributeId();
         WebLocator mask = getMaskElement();
@@ -142,7 +105,7 @@ public class ExtJsComponent extends WebLocator {
                 mask.setContainer(thisEl);
             }
         }
-        boolean hasMask = mask.isElementPresent(useCssSelectors);
+        boolean hasMask = mask.isElementPresent();
         if (logger.isDebugEnabled() && hasMask) {
             logger.debug(this + " masked : " + hasMask);
         }
@@ -150,10 +113,8 @@ public class ExtJsComponent extends WebLocator {
     }
 
     public WebLocator getMaskElement() {
-        String maskCssSelector = "*[class*='x-masked'] " + getSelector() + "[class*='x-masked']";
-        maskCssSelector = Utils.fixCssSelector(maskCssSelector);
         String maskXPathSelector = "/ancestor-or-self::*[contains(@class, 'x-masked')]";
-        return new WebLocator(this, maskXPathSelector).setElCssSelector(maskCssSelector);
+        return new WebLocator(this, maskXPathSelector);
     }
 
     /**
@@ -161,12 +122,12 @@ public class ExtJsComponent extends WebLocator {
      *
      * @param seconds
      */
-    public boolean waitToActivate(int seconds, boolean useCssSelectors) {
+    public boolean waitToActivate(int seconds) {
         String info = toString();
         //logger.debug("waitToActivate:" + seconds + " sec; " + info);
         int count = 0;
         boolean hasMask;
-        while ((hasMask = hasMask(useCssSelectors)) && (count < seconds)) {
+        while ((hasMask = hasMask()) && (count < seconds)) {
             count++;
             logger.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
             Utils.sleep(1000);

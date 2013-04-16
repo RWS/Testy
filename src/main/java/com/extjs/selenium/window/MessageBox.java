@@ -17,53 +17,32 @@ public class MessageBox extends ExtJsComponent {
 
     private static Window messageBoxWindow = new Window(true).setCls("x-window-dlg").setInfoMessage("MessageBox");
 
-    // === statics ===
-
     /**
      * instant get MessageBox text if is present
+     *
      * @return
      */
     public static String getMessage() {
         return getMessage(0);
     }
 
-
-    public static String getMessage(boolean useCssSelectors) {
-        return getMessage(0, useCssSelectors);
-    }
     /**
      * Wait MessageBox to appear and get text.
      * Use this method when you realy expect some message box but don't know exact time when it appear
-     * @param waitSeconds
-     * @return
-     */
-    public static String getMessage(int waitSeconds, boolean useCssSelectors) {
-
-        ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", messageBoxWindow);
-        mbTextElement.setInfoMessage("MessageBox ext-mb-text");
-        String msg;
-
-        if(waitSeconds == 0){
-            msg = mbTextElement.getHtmlText(useCssSelectors);
-        } else {
-            msg = mbTextElement.waitTextToRender(waitSeconds);
-        }
-        return msg;
-    }
-
-    /**
-     * xPath only
+     *
      * @param waitSeconds
      * @return
      */
     public static String getMessage(int waitSeconds) {
-        return getMessage(waitSeconds, false);
-    }
-
-    public static String getStaticPath() {
-        ExtJsComponent  component = new ExtJsComponent("ext-mb-text", messageBoxWindow);
-        component.setInfoMessage("MessageBox ext-mb-text");
-        return component.getPath();
+        ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", messageBoxWindow);
+        mbTextElement.setInfoMessage("MessageBox ext-mb-text");
+        String msg;
+        if (waitSeconds == 0) {
+            msg = mbTextElement.getHtmlText();
+        } else {
+            msg = mbTextElement.waitTextToRender(waitSeconds);
+        }
+        return msg;
     }
 
     public boolean close() {
@@ -71,20 +50,14 @@ public class MessageBox extends ExtJsComponent {
     }
 
     public static String press(String buttonText) {
-        return press(buttonText, false);
-    }
-
-    public static String press(String buttonText, boolean useCssSelectors) {
-        if(isIE() && !messageBoxWindow.isVisible()){
+        if (isIE() && !messageBoxWindow.isVisible()) {
             return null;
         }
-
-        String msg = getMessage(useCssSelectors);
+        String msg = getMessage();
         Button button = new Button(messageBoxWindow, buttonText);
-
         if (msg != null) {
             logger.info("Click on button " + buttonText + " in the window with message: " + msg);
-            button.click(useCssSelectors);
+            button.click();
         } else {
             logger.warn("There is no Message or Dialog");
         }
@@ -92,24 +65,14 @@ public class MessageBox extends ExtJsComponent {
     }
 
     public static String pressOK() {
-        return pressOK(false);
+        return press(BUTTON_OK);
     }
-    public static String pressOK(boolean useCssSelectors) {
-        return press(BUTTON_OK, useCssSelectors);
-    }
+
     public static String pressYes() {
-        return pressYes(false);
-    }
-
-    public static String pressYes(boolean useCssSelectors) {
-        return press(BUTTON_YES, useCssSelectors);
-    }
-
-    public static String pressNo(boolean useCssSelectors) {
-        return press(BUTTON_NO, useCssSelectors);
+        return press(BUTTON_YES);
     }
 
     public static String pressNo() {
-        return pressNo(false);
+        return press(BUTTON_NO);
     }
 }

@@ -4,7 +4,6 @@ import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 public class Button extends ExtJsComponent {
@@ -90,38 +89,6 @@ public class Button extends ExtJsComponent {
         return "//" + getTag() + "[" + selector + "]";
     }
 
-    public String getItemCssSelector(boolean disabled) {
-        // TODO create iconCls & iconPath for buttons with no text
-        String selector = getBaseCssSelector();
-        if (disabled) {
-            selector = "[class*='x-item-disabled']";
-        }
-        if (hasText()) {
-            selector += ":contains('" + getText() + "')";
-        }
-        selector = Utils.fixPathSelector(selector);
-        return " table" + selector + "";
-    }
-
-    public boolean click(boolean useCssSelectors) {
-        if (useCssSelectors) {
-            if (ready(useCssSelectors)) {
-                String info = toString();
-
-                String selector = getSelector();
-                // to scroll to this element (if element is not visible)
-                driver.findElement(By.cssSelector(selector + " button")).sendKeys(Keys.TAB);
-                driver.findElement(By.cssSelector(selector)).click();
-                logger.info("Click on " + info);
-                Utils.sleep(200);
-                return true;
-            }
-            return false;
-        } else {
-            return click();
-        }
-    }
-
     public boolean click() {
         // to scroll to this element (if element is not visible)
         WebLocator buttonEl = new WebLocator(this, "//button");
@@ -130,8 +97,7 @@ public class Button extends ExtJsComponent {
         } else {
             buttonEl.focus();
         }
-
-        boolean clicked = super.click(false);
+        boolean clicked = super.click();
         if (clicked) {
             Utils.sleep(200);
         } else {
@@ -177,7 +143,7 @@ public class Button extends ExtJsComponent {
      * @return
      */
     public boolean waitToEnable(long milliseconds) {
-        return waitToRender(milliseconds, false);
+        return waitToRender(milliseconds);
     }
 
     /**

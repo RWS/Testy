@@ -3,7 +3,6 @@ package com.sdl.selenium.web;
 import com.extjs.selenium.Utils;
 import com.thoughtworks.selenium.Selenium;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -130,15 +129,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public String getHtmlText() {
-        return getHtmlText(false);
-    }
-
-    /**
-     * it verify if isElementPresent and then selenium.getText
-     *
-     * @return
-     */
-    public String getHtmlText(boolean useCssSelectors) {
         if (ready()) {
             return executor.getHtmlText(this);
         }
@@ -172,22 +162,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * Using xPath only
+     * Use xPath only. Click once do you catch exceptions StaleElementReferenceException.
      *
      * @return
      */
     public boolean click() {
-        return click(false);
-    }
-
-    /**
-     * Use xPath or CSS Selectors. Click once do you catch exceptions StaleElementReferenceException.
-     *
-     * @param useCssSelectors
-     * @return
-     */
-    public boolean click(boolean useCssSelectors) {
-        return waitToRender(useCssSelectors) && doClick();
+        return waitToRender() && doClick();
     }
 
     /**
@@ -242,19 +222,22 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * Using XPath or CSS Selectors
+     * Using XPath only
      *
-     * @param useCssSelectors
      * @return
      */
-    public boolean mouseOver(boolean useCssSelectors) {
-        if (ready(useCssSelectors)) {
+    public boolean mouseOver() {
+        if (ready()) {
             logger.info("mouseOver on " + this);
             return doMouseOver();
         } else {
             logger.warn("mouseOver on " + this + " failed");
             return false;
         }
+    }
+
+    protected boolean doMouseOver() {
+        return executor.doMouseOver(this);
     }
 
     public boolean blur() {
@@ -268,36 +251,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         }
     }
 
-    protected boolean doMouseOver() {
-        return executor.doMouseOver(this);
-    }
-
     /**
      * Using XPath only
      *
      * @return
      */
-    public boolean mouseOver() {
-        return mouseOver(false);
-    }
-
-    /**
-     * Using XPath or CSS Selectors
-     *
-     * @return
-     */
     public WebLocator focus() {
-        return focus(false);
-    }
-
-    /**
-     * Using XPath or CSS Selector
-     *
-     * @param useCssSelectors
-     * @return
-     */
-    public WebLocator focus(boolean useCssSelectors) {
-        if (ready(useCssSelectors)) {
+        if (ready()) {
             executor.focus(this);
             logger.info("focus on " + toString());
         }
@@ -314,18 +274,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public boolean doubleClickAt() {
-        return doubleClickAt(false);
-    }
-
-    /**
-     * Using XPath or CSS Selectors
-     *
-     * @param useCssSelectors
-     * @return
-     */
-    public boolean doubleClickAt(boolean useCssSelectors) {
         boolean clicked = false;
-        if (ready(useCssSelectors)) {
+        if (ready()) {
             clicked = executor.doubleClickAt(this);
         }
         return clicked;
@@ -337,16 +287,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public boolean isElementPresent() {
-        return isElementPresent(false);
-    }
-
-    /**
-     * Using xPath or Css Selectors
-     *
-     * @param useCssSelectors
-     * @return
-     */
-    public boolean isElementPresent(boolean useCssSelectors) {
         return executor.isElementPresent(this);
     }
 
@@ -354,20 +294,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.size(this);
     }
 
-    public int size(boolean useCssSelectors) {
-        String selector = getSelector();
-        return driver.findElements(By.cssSelector(selector)).size();
-    }
-
     public boolean exists() {
         return executor.exists(this);
     }
 
     public WebElement findElement() {
-        return findElement(false);
-    }
-
-    public WebElement findElement(final boolean useCssSelectors) {
         return executor.findElement(this);
     }
 
@@ -428,22 +359,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * Using xPath only
+     * wait 5 seconds (or specified value for renderSeconds)
+     * Using xPath only.
      *
      * @return
      */
     public boolean waitToRender() {
-        return waitToRender(false);
-    }
-
-    /**
-     * wait 5 seconds (or specified value for renderSeconds)
-     * Using xPath or CSS Selectors
-     *
-     * @return
-     */
-    public boolean waitToRender(boolean useCssSelectors) {
-        return waitToRender(getRenderMillis(), useCssSelectors);
+        return waitToRender(getRenderMillis());
     }
 
     /**
@@ -453,19 +375,19 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public boolean waitToRender(int seconds) {
-        return waitToRender((long) seconds * 1000, false);
+        return waitToRender((long) seconds * 1000);
     }
 
-    public boolean waitToRender(final long millis, boolean useCssSelectors) {
+    public boolean waitToRender(final long millis) {
         long stepMs = 100;
         long ms = millis;
-        if (isElementPresent(useCssSelectors)) {
+        if (isElementPresent()) {
             return true;
         }
         // if element was not present instantly wait to render
         while (ms > 0) {
             Utils.sleep(Math.min(stepMs, ms));
-            if (isElementPresent(useCssSelectors)) {
+            if (isElementPresent()) {
                 return true;
             }
             ms -= stepMs;
@@ -512,18 +434,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return excludeText.equals(text) ? null : text;
     }
 
-    public boolean waitToActivate(boolean useCssSelectors) {
-        return waitToActivate(getActivateSeconds(), useCssSelectors);
-    }
-
-    /**
-     * Wait to activate using xPath
-     *
-     * @param seconds
-     * @return
-     */
-    public boolean waitToActivate(int seconds) {
-        return waitToActivate(seconds, false);
+    public boolean waitToActivate() {
+        return waitToActivate(getActivateSeconds());
     }
 
     /**
@@ -531,19 +443,15 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      *
      * @param seconds
      */
-    public boolean waitToActivate(int seconds, boolean useCssSelectors) {
+    public boolean waitToActivate(int seconds) {
         return true;
     }
 
     public boolean ready() {
-        return waitToRender(false) && waitToActivate(false);
+        return waitToRender() && waitToActivate();
     }
 
-    public boolean ready(boolean useCssSelectors) {
-        return waitToRender(useCssSelectors) && waitToActivate(useCssSelectors);
-    }
-
-    public boolean ready(int seconds, boolean useCssSelectors) {
-        return waitToRender((long) seconds * 1000, useCssSelectors) && waitToActivate(seconds, useCssSelectors);
+    public boolean ready(int seconds) {
+        return waitToRender((long) seconds * 1000) && waitToActivate(seconds);
     }
 }

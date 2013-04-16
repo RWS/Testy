@@ -272,7 +272,7 @@ public class GridPanel extends Panel {
 
     private WebLocator getHeader(String columnId) {
         waitToRender();
-        WebLocator headerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]");
+        WebLocator headerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "') and contains(@style ,'visibility: visible;')]");
         headerEl.setInfoMessage(itemToString() + " Header[" + columnId + "]");
         return headerEl;
     }
@@ -567,7 +567,7 @@ public class GridPanel extends Panel {
     public String getText(String searchText, int columnId) {
         String text = null;
         GridCell cell = getGridCell(searchText, columnId);
-        if (cell.ready(true)) {
+        if (this.ready(true) && cell.ready()) {
             text = cell.getHtmlText();
         } else {
             logger.warn("searchText was not found in grid: " + searchText);
@@ -578,7 +578,7 @@ public class GridPanel extends Panel {
     public String getText(String searchText, String searchColumnId, int columnId) {
         String text = null;
         GridCell cell = getGridCell(searchText, searchColumnId, columnId);
-        if (cell.ready(true)) {
+        if (this.ready(true) && cell.ready()) {
             text = cell.getHtmlText();
         } else {
             logger.warn("searchText was not found in grid: " + searchText);
@@ -819,7 +819,7 @@ public class GridPanel extends Panel {
     }
 
     public boolean ready(int seconds) {
-        return super.ready(seconds, false) && waitToLoad(seconds);
+        return super.ready() && waitToLoad(seconds);
     }
 
     public boolean ready(boolean waitRows) {
