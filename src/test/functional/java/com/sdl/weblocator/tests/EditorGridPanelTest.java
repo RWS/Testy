@@ -21,7 +21,7 @@ import static org.testng.Assert.assertTrue;
 public class EditorGridPanelTest extends TestBase {
 
     Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "1").setTitle("EditableGrid");
+    EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, 1).setTitle("EditableGrid");
     Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider
@@ -89,5 +89,19 @@ public class EditorGridPanelTest extends TestBase {
         Utils.sleep(1000);
     }
 
+    @Test(dependsOnMethods = "backspaceCharacters")
+    public void editGridPanelAndScrollWithoutClearCell() {
+        for (int i = 1; i <= editorGridPanel.getCount(); i++) {
+            assertTrue(editorGridPanel.appendRowValue(i, 1, "1"));
+        }
+        Utils.sleep(1000);
+    }
 
+    @Test(dependsOnMethods = "editGridPanelAndScrollWithoutClearCell")
+    public void editGridPanelAndScrollClearCell() {
+        for (int i = 1; i <= editorGridPanel.getCount(); i++) {
+            assertTrue(editorGridPanel.setRowValue(i, 1, "1"));
+        }
+        Utils.sleep(1000);
+    }
 }

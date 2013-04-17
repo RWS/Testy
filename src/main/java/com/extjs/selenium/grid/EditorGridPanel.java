@@ -131,7 +131,6 @@ public class EditorGridPanel extends GridPanel {
         return false;
     }
 
-
     /**
      * set row value in active editor
      *
@@ -148,6 +147,18 @@ public class EditorGridPanel extends GridPanel {
         return edited;
     }
 
+    public boolean appendRowValue(String value) {
+        logger.debug("setRowValue(" + value + ") - in active editor");
+        TextField editor = getActiveEditor();
+            editor.sendKeys(Keys.END);
+            editor.sendKeys(value);
+            boolean edited = true;
+        if (edited) {
+            editor.blur();
+        }
+        return edited;
+    }
+
     public boolean setRowValue(int rowIndex, int colIndex, String value) {
         logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
         if (startEdit(rowIndex, colIndex)) {
@@ -156,10 +167,27 @@ public class EditorGridPanel extends GridPanel {
         return false;
     }
 
+    public boolean appendRowValue(int rowIndex, int colIndex, String value) {
+        logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
+        if (startEdit(rowIndex, colIndex)) {
+            return appendRowValue(value);
+        }
+        return false;
+    }
+
+
     public boolean setRowValue(String searchElement, int colIndex, String value) {
         logger.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
         if (startEdit(searchElement, colIndex)) {
             return setRowValue(value);
+        }
+        return false;
+    }
+
+    public boolean appendRowValue(String searchElement, int colIndex, String value) {
+        logger.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
+        if (startEdit(searchElement, colIndex)) {
+            return appendRowValue(value);
         }
         return false;
     }

@@ -6,12 +6,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
@@ -104,9 +106,9 @@ public class TestBase {
 //                FirefoxProfile firefoxProfile = new FirefoxProfile(new File(InputData.FIREFOX_PROFILE_DIR));
 //                return new FirefoxDriver(firefoxProfile);
 //            } else {
-            return new FirefoxDriver();
-//            FirefoxDriver firefoxProfile = new FirefoxDriver(new File("C:\\Users\\vculea\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\aqm486uu.default"));
-//            return new FirefoxDriver(firefoxProfile);
+//            return new FirefoxDriver();
+            FirefoxProfile firefoxProfile = new FirefoxProfile(new File("C:\\Users\\vculea\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\aqm486uu.default"));
+            return new FirefoxDriver(firefoxProfile);
 //            }
         } else if (browser.equalsIgnoreCase("*iexplore")) {
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();

@@ -699,7 +699,7 @@ public class GridPanel extends Panel {
         return getCheckboxCell(searchText, columnIndex, false);
     }
 
-    private GridCell getCheckboxCell(final String searchText, int columnIndex, boolean containsText) {
+    public GridCell getCheckboxCell(final String searchText, int columnIndex, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-check-col')]";
         return new GridCell(getGridRow(), cellPath).setInfoMessage("row-checker (" + searchText + ")");
@@ -726,6 +726,9 @@ public class GridPanel extends Panel {
                 selected = isSelected;
             } else {
                 selected = gridCell.clickAt();
+                if (!selected) {
+                    logger.debug("gridCellPath: " + gridCell.getPath());
+                }
             }
         }
         return selected;
