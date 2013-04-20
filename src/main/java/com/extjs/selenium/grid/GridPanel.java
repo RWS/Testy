@@ -204,9 +204,21 @@ public class GridPanel extends Panel {
     }
 
     /**
+     *
+     * @param searchElement
+     * @param searchType accepted values are: {"equals"/"eq", "starts-with", "contains"}
+     * @return
+     */
+    public boolean rowSelect(String searchElement, String searchType) {
+        ready(true);
+        GridCell cell = getGridCell(searchElement, searchType);
+        return doCellSelect(cell);
+    }
+
+    /**
      * @param searchElement
      * @param columnId
-     * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
+     * @param searchType accepted values are: {"equals", "starts-with", "contains"}
      * @return
      */
 
