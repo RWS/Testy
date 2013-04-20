@@ -79,7 +79,7 @@ public class ComboBox extends TextField {
                 }
                 selected = option.click();
             } catch (Exception e) {
-                logger.error(e);
+//                logger.error(e);
                 ready();
                 componentId = getAttributeId();
                 selected = setValueWithJs(componentId, value);

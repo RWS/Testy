@@ -386,51 +386,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Containing baseCls, class, name and style
-     *
-     * @return baseSelector
-     */
-    public String getBaseCssSelector() {
-        // TODO use disabled
-        // TODO verify what need to be equal OR contains
-        String selector = "";
-        if (isVisibility()) {
-            //be cause the following is not possible:
-            //selector += " and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0";
-            // => we need to check that our element is not descending from an element
-            // having style=display:none
-            // and at the end we also need to add the same test for the identified component
-            selector += ":not([style*='display: none']) "; //be aware of the space
-            // at the end for the ancestor, and do not insert the space for the current element
-        }
-        if (hasBaseCls()) {
-            selector += "[class*='" + getBaseCls() + "']";
-        }
-        if (hasCls()) {
-            selector += "[class*='" + getCls() + "']";
-        }
-        if (hasName()) {
-            selector += "[name='" + getName() + "']";
-        }
-        if (hasStyle()) {
-            selector += "[style*='" + getStyle() + "']";
-        }
-
-        // TODO make specific for WebLocator
-        if (isVisibility()) {
-            //be cause the following is not possible:
-            //selector += " and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0";
-            // => we need to check that our element is not descending from an element
-            // having style=display:none
-            // and at the end we also need to add the same test for the identified component
-            selector += ":not([style*='display: none'])"; //be aware of the space
-            // at the end for the ancestor, and do not insert the space for the current element
-        }
-//        selector = Utils.fixPathSelector(selector);
-        return selector;
-    }
-
-    /**
      * this method is meant to be overridden by each component
      *
      * @param disabled
@@ -476,61 +431,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * this method is meant to be overridden by each component
-     *
-     * @param disabled
-     * @return
-     */
-    public String getItemCssSelector(boolean disabled) {
-        String selector = getBaseCssSelector();
-        // TODO try to move text also in baseSelector if possible
-        if (hasText()) {
-            //TODO should be equal not contains
-            selector += ":contains('" + getText() + "')";
-        }
-//        selector = Utils.fixPathSelector(selector);
-//        selector = "//" + getTag() + (selector.length() > 0 ? ("["+ selector +"]") : "");
-        selector = " " + getTag() + (selector.length() > 0 ? (selector) : "");
-        return selector;
-    }
-
-    /**
-     * disabled is false
-     *
-     * @return
-     */
-    public final String getCssSelector() {
-        return getCssSelector(false);
-    }
-
-    /**
-     * @param disabled
-     * @return
-     */
-    public String getCssSelector(boolean disabled) {
-        String returnPath = "";
-
-        if (hasElCssSelector()) {
-            returnPath = getElCssSelector();
-        } else if (hasId()) {
-//            returnPath  = "//" + getTag() + "[@id='" + id + "']";
-            returnPath = "" + getTag() + "#" + getId() + "";
-        } else {
-            returnPath = getItemCssSelector(disabled);
-        }
-
-        // add container path
-        if (getContainer() != null) {
-            returnPath = getContainer().getCssSelector() + returnPath;
-        }
-
-//        logger.debug(returnPath);
-        returnPath = Utils.fixCssSelector(returnPath);
-        return returnPath;
-    }
-
-
-    /**
      * disabled is false
      *
      * @return
@@ -553,9 +453,6 @@ public abstract class WebLocatorAbstractBuilder {
                 // TODO "inject" baseItemPath to elPath
 //                logger.warn("TODO must inject: \"" + baseItemPath + "\" in \"" + returnPath + "\"");
             }
-
-//        } else if(hasElCssSelector()){
-//            returnPath = elCssSelector;
         } else {
             returnPath = getItemPath(disabled);
         }
@@ -568,41 +465,6 @@ public abstract class WebLocatorAbstractBuilder {
         }
 
 //        logger.debug(returnPath);
-        return returnPath;
-    }
-
-    /**
-     * disabled is false
-     *
-     * @return
-     */
-    public final String getSelector() {
-        return getSelector(false);
-    }
-
-    /**
-     * TODO this is experimental
-     *
-     * @param disabled
-     * @return
-     */
-    public String getSelector(boolean disabled) {
-        String returnPath = "";
-
-        if (hasElCssSelector()) {
-            returnPath = getElCssSelector();
-        } else if (hasId()) {
-            returnPath = "" + getTag() + "#" + getId() + "";
-        } else {
-            returnPath = getItemCssSelector(disabled);
-        }
-
-        // add container path
-        if (getContainer() != null) {
-            returnPath = getContainer().getSelector() + returnPath;
-        }
-
-        returnPath = Utils.fixCssSelector(returnPath);
         return returnPath;
     }
 

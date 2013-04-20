@@ -68,39 +68,6 @@ public class TextField extends ExtJsComponent {
         return selector;
     }
 
-    /**
-     * Containing baseCls, class, name and style
-     *
-     * @return baseSelector
-     */
-    public String getBaseCssSelector() {
-        String selector = super.getBaseCssSelector();
-
-//           selector += " and not (@type='hidden') ";
-        selector += ":not([type='hidden'])";
-        // TODO use also if disabled some parents then can;t click/select some children
-        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        selector = Utils.fixCssSelector(selector);
-
-        return selector;
-    }
-
-
-    public String getItemCssSelector(boolean disabled) {
-        String selector = getBaseCssSelector();
-
-//        selector = "//input" + (selector.length() > 0 ? ("["+ selector +"]") : "");
-        selector = "";
-
-        if (hasLabel()) {
-//            selector = "//label[text()='" + label + "']//following-sibling::*" + selector;
-            selector = selector + " label:contains('" + getLabel() + "')";
-        }
-        selector = "" + (selector.length() > 0 ? (selector + " + * " + getTag() + getBaseCssSelector()) : "");
-        selector = Utils.fixCssSelector(selector);
-        return selector;
-    }
-
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
