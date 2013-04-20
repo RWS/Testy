@@ -1,3 +1,5 @@
+// TODO in EditorGridPanel add clickToEdit option new EditorGridPanel(this).setClicksToEdit(2)
+
 function getVarName(name){
     name = name ? name.replace(/\s/g, '') : 'name';
     name = name.replace(/[\(\)/\\:;\<>=\-"]/gi, '');
