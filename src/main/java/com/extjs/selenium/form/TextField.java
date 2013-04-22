@@ -139,18 +139,12 @@ public class TextField extends ExtJsComponent {
     public String getValue() {
         String value = "";
         if (ready()) {
-            // using WebDriver -> there are situations when the value is taken by getText() or getAttribute("value")
             if (hasWebDriver()) {
                 final String attributeValue = currentElement.getAttribute("value");
-                final String text = currentElement.getText();
-                if (!attributeValue.equals("") && text.equals("")) {
+                if (attributeValue != null) {
                     value = attributeValue;
-                } else if (attributeValue.equals("") && !text.equals("")) {
-                    value = text;
-                } else if (!attributeValue.equals("") && !text.equals("") && attributeValue.equals(text)) {
-                    value = text;
-                } else if (!attributeValue.equals("") && !text.equals("") && !attributeValue.equals(text)) {
-                    logger.debug("Not sure what value to use: \ncurrentElement.getText()= " + text + "\ncurrentElement.getAttribute(\"value\"): " + attributeValue);
+                } else {
+                    logger.warn("getValue : value attribute is null: " + toString());
                 }
             } else {
                 value = selenium.getValue(getPath());
@@ -160,7 +154,6 @@ public class TextField extends ExtJsComponent {
         }
         return value;
     }
-
 
     /**
      * Using xPath only

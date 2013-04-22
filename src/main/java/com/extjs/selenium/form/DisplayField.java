@@ -40,7 +40,7 @@ public class DisplayField extends TextField {
     }
 
 
-    public String getValue(boolean useCssSelectors) {
+    public String getValue() {
         String value = "";
         if(ready()){
             value = getHtmlText();

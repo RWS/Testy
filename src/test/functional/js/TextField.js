@@ -10,6 +10,7 @@ Ext.onReady(function(){
             xtype:'textfield',
             fieldLabel: 'First Name',
             name: 'firstName',
+            value: 'First Name',
             allowBlank: false,
             readOnly : true
         }, {
@@ -17,7 +18,14 @@ Ext.onReady(function(){
             fieldLabel: 'Last Name',
             name: 'lastName',
             allowBlank: false
-        }],
+        }, {
+           xtype:'textfield',
+           fieldLabel: 'Disable TextField',
+           name: 'disableTextField',
+           value: 'Disable Name',
+           allowBlank: false,
+           disabled: true
+       }],
     });
 
     new Ext.Button({
