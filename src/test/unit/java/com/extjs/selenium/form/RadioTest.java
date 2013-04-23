@@ -14,7 +14,8 @@ public class RadioTest {
                 {new Radio("LabelText"), "//input[contains(@class, 'x-form-radio') and @value='LabelText']"},
                 {new Radio(container), "//*[contains(@class, 'container')]//input[contains(@class, 'x-form-radio')]"},
                 {new Radio(container, "Name"), "//*[contains(@class, 'container')]//input[contains(@class, 'x-form-radio') and contains(@name,'Name')]"},
-                {new Radio("Label", container), "//*[contains(@class, 'container')]//label[text()='Label']/..//input[contains(@class, 'x-form-radio')]"},
+                {new Radio(container, "Name").setLabel("label"), "//*[contains(@class, 'container')]//input[contains(@class, 'x-form-radio') and contains(@name,'Name')]/..//label[text()='label']"},
+                {new Radio("Label", container), "//*[contains(@class, 'container')]//input[contains(@class, 'x-form-radio')]/..//label[text()='Label']"},
         };
     }
 

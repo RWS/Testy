@@ -43,6 +43,14 @@ public class Radio extends ExtJsComponent {
         return selector;
     }
 
+    public String afterItemPathCreated(String itemPath) {
+        if (hasLabel()) {
+            itemPath = itemPath + getLabelPosition() + getLabelPath();
+        }
+        itemPath = addPositionToPath(itemPath);
+        return itemPath;
+    }
+
     public boolean isSelected() {
         return isElementPresent() && executor.isSelected(this);
     }
