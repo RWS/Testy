@@ -107,7 +107,8 @@ function getActiveWinClassCode(){
         name = getVarName(w.title),
         code;
     console.debug('getActiveWinClassCode', name);
-    code = 'public class ' + name + 'Window {\n';
+    code = 'public class ' + name + 'Window extends Window {\n';
+    code += ' public ' + name + 'Window(){\n setTitle("' + w.title + '");\n}\n';
     w.items.each(function(it){
         code += getItemsCode('this', it);
     });
