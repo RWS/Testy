@@ -1,7 +1,7 @@
 // TODO in EditorGridPanel add clickToEdit option new EditorGridPanel(this).setClicksToEdit(2)
 // TODO fieldLabel must have ":" have labelSeparator
 
-var logId = false;
+var logId = true;
 var elemCount = 0;
 function getVarName(name){
     name = name ? name : 'item' + (elemCount++);
@@ -32,7 +32,7 @@ function getItemCode(container, item){
         code = '\tpublic ',
         xtype = item.getXType(),
         xtypes = item.getXTypes(),
-        label = item.fieldLabel;
+        label = item.fieldLabel + (item.ownerCt.getLayout().labelSeparator || '');
 
     //console.debug('getItemCode', container, item);
     if(xtype == 'editorgrid' || xtypes.indexOf('/editorgrid/') != -1 || item instanceof Ext.grid.EditorGridPanel){
@@ -132,7 +132,8 @@ function getItemsCode(container, item){
     var elements,
         code = '',
         tbar = item.getTopToolbar ? item.getTopToolbar() : false,
-        bbar = item.getBottomToolbar ? item.getBottomToolbar(): false;
+        bbar = item.getBottomToolbar ? item.getBottomToolbar(): false,
+        fbar = w.getFooterToolbar ? w.getFooterToolbar(): false;
 
     var isTab = isTabPanel(item);
     if(!isTab){
@@ -147,6 +148,9 @@ function getItemsCode(container, item){
     if(bbar){
         code += getEachElementsCode(container, bbar.items, false);
     }
+    if(fbar){
+        code += getEachElementsCode(container, fbar.items, false);
+    }
 
     return code;
 }
@@ -154,15 +158,31 @@ function getItemsCode(container, item){
 function getActiveWinClassCode(){
     var w = Ext.WindowMgr.getActive(),
         name = getVarName(w.title),
-        code;
+        code,
+        container = 'this';
     console.debug('getActiveWinClassCode', name);
     code = 'public class ' + name + 'Window extends Window {\n';
     code += '\tpublic ' + name + 'Window(){\n';
     code += '\t\tsetTitle("' + w.title + '");\n\t}\n';
     w.items.each(function(it){
-        code += getItemsCode('this', it);
+        code += getItemsCode(container, it);
     });
-    code += '\t}\n';
+
+    var tbar = w.getTopToolbar ? w.getTopToolbar() : false,
+        bbar = w.getBottomToolbar ? w.getBottomToolbar(): false,
+        fbar = w.getFooterToolbar ? w.getFooterToolbar(): false;
+
+    if(tbar){
+        code += getEachElementsCode(container, tbar.items, false);
+    }
+    if(bbar){
+        code += getEachElementsCode(container, bbar.items, false);
+    }
+    if(fbar){
+        code += getEachElementsCode(container, fbar.items, false);
+    }
+
+    code += '}\n';
     return code;
 }
 
