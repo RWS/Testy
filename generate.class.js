@@ -4,9 +4,16 @@
 var logId = false;
 var elemCount = 0;
 function getVarName(name){
-    name = name ? name.replace(/\s/g, '') : 'item' + (elemCount++);
+    name = name ? name : 'item' + (elemCount++);
+    // remove spaces and capitalize each word
+    var words = name.split(/\s/);
+    Ext.each(words, function(w, i){
+        words[i] = Ext.util.Format.capitalize(w);
+    });
+    name = words.join('');
+
     name = name.replace(/[\(\)/\\:;\<>=\-"]/gi, '');
-    name = Ext.util.Format.capitalize(name);
+    //name = Ext.util.Format.capitalize(name);
     return !name ? name : name.charAt(0).toLowerCase() + name.substr(1);
 }
 
