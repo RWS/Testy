@@ -5,6 +5,7 @@ import com.extjs.selenium.grid.GridPanel;
 import com.extjs.selenium.grid.GridRow;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Keys;
 
 public class List extends GridPanel {
     private static final Logger logger = Logger.getLogger(List.class);
@@ -20,21 +21,22 @@ public class List extends GridPanel {
     }
 
     @Override
-    public String getDefaultExcludePath(){
+    public String getDefaultExcludePath() {
         return "";
     }
 
     public boolean selectRows(String[] values) {
         boolean select = false;
         if (hasWebDriver()) {
-            logger.warn("//TODO not implemented for WebDriver");
-//            http://code.google.com/p/selenium/issues/detail?id=3734&sort=-stars&colspec=ID%20Stars%20Type%20Status%20Priority%20Milestone%20Owner%20Summary
-            /*Actions compAction = new Actions(driver);
-            compAction = compAction.keyDown(Keys.CONTROL)
-            compAction = compAction.click(ele1);
-            compAction = compAction.click(ele2);
-            compAction = compAction.KeyUp(Keys.CONTROL);
-            compAction.build().perform();*/
+            sendKeys(Keys.CONTROL, Keys.DOWN);
+            for (String value : values) {
+                select = rowSelect(value, false);
+                if (!select) {
+                    sendKeys(Keys.UP);
+                    return false;
+                }
+            }
+            sendKeys(Keys.UP);
         } else {
             selenium.controlKeyDown();
             for (String value : values) {
@@ -45,6 +47,18 @@ public class List extends GridPanel {
                 }
             }
             selenium.controlKeyUp();
+        }
+        return select;
+    }
+
+    public boolean isSelectedRows(String[] values) {
+        boolean select = false;
+        for (String value : values) {
+            WebLocator webLocator = new WebLocator(getGridCell(value, false), "/parent::*/parent::dl");
+            select = webLocator.getAttributeClass().contains("ux-mselect-selected");
+            if (!select) {
+                return false;
+            }
         }
         return select;
     }
@@ -66,7 +80,7 @@ public class List extends GridPanel {
     }
 
     @Override
-    public GridRow getGridRow(int rowIndex){
+    public GridRow getGridRow(int rowIndex) {
         return new GridRow(this, "//dl[" + rowIndex + "]");
     }
 }

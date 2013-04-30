@@ -284,7 +284,7 @@ public class GridPanel extends Panel {
 
     private WebLocator getHeader(String columnId) {
         waitToRender();
-        WebLocator headerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "') and contains(@style ,'visibility: visible;')]");
+        WebLocator headerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
         headerEl.setInfoMessage(itemToString() + " Header[" + columnId + "]");
         return headerEl;
     }
