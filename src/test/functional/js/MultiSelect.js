@@ -1,35 +1,47 @@
 Ext.BLANK_IMAGE_URL = 'http://extjs.cachefly.net/ext-3.4.0/resources/images/default/s.gif';
 
 Ext.onReady(function(){
+
+    Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+
     var fm = Ext.form;
-    var multiSelect = new Ext.ux.form.MultiSelect({
-                fieldLabel:'MultiSelect',
-                width: 230,
-                height: 65,
-                disabled: true,
-                allowBlank:true,
-                valueField: 'id',
-                displayField: 'value',
-                store: store
-            });
 
-            var store = new Ext.data.ArrayStore({
-                        fields: [
-                            {name: 'id', type: 'string'},
-                            {name: 'value', type: 'string'},
+    var store = new Ext.data.ArrayStore({
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'value', type: 'string'},
+        ],
+        data: [
+            ["afghan", "Afghan"],
+            ["albanian", "Albanian"],
+            ["algerian", "Algerian"],
+            ["french", "French"],
+            ["english", "English"],
+            ["german", "German"],
+            ["hebrew", "Hebrew"],
+            ["italian", "Italian"],
+            ["japanese", "Japanese"],
+            ["romanian", "Romanian"],
+            ["russian", "Russian"],
+            ["spanish", "Spanish"],
+        ]
+    });
 
-                        ],
-                        data: [
-                            ["afghan", "Afghan"],
-                            ["albanian", "Albanian"],
-                            ["algerian", "Algerian"],
-                        ]
-                    });
-
-    var fsf = new Ext.FormPanel({
-        frame:true,
+    var fsf = new Ext.form.FormPanel({
+        width: 700,
+        bodyStyle: 'padding:10px;',
         title: 'MultiSelectFromPanel',
-        items: multiSelect
+        items: [{
+            xtype: 'multiselect',
+            fieldLabel: 'MultiSelect',
+            width: 250,
+            height: 100,
+            allowBlank: false,
+            valueField: 'id',
+            displayField: 'value',
+            store: store,
+        }]
     });
 
     new Ext.Button({
@@ -38,9 +50,8 @@ Ext.onReady(function(){
         handler: function(){
             var win = new Ext.Window({
                 title: 'MultiSelectWindow',
-                layout:'fit',
-                width:300,
-                height:200,
+                width:400,
+                height:400,
                 plain: true,
 
                 items: fsf,
