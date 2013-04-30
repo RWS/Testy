@@ -37,20 +37,23 @@ var _classGen = {
             label = item.fieldLabel + (item.ownerCt.getLayout().labelSeparator || '');
 
         //console.debug('getItemCode', container, item);
-        if(xtype == 'editorgrid' || xtypes.indexOf('/editorgrid/') != -1 || item instanceof Ext.grid.EditorGridPanel){
-            name = _classGen.getVarName(item.title) + 'EditorGridPanel';
-            code += 'EditorGridPanel ' + name + ' = new EditorGridPanel(' + container + ')';
+
+        // all classes that are or extend panels
+        if(xtype == 'panel' || xtypes.indexOf('/panel/') != -1 || item instanceof Ext.Panel){
+            if(xtype == 'editorgrid' || xtypes.indexOf('/editorgrid/') != -1 || item instanceof Ext.grid.EditorGridPanel){
+                name = _classGen.getVarName(item.title) + 'EditorGridPanel';
+                code += 'EditorGridPanel ' + name + ' = new EditorGridPanel(' + container + ')';
+            } else if(xtype == 'grid' || xtypes.indexOf('/grid/') != -1 || item instanceof Ext.grid.GridPanel){
+                name = _classGen.getVarName(item.title) + 'GridPanel';
+                code += 'GridPanel ' + name + ' = new GridPanel(' + container + ')';
+            } else {
+                name = _classGen.getVarName(item.title) + 'Panel';
+                code += 'Panel ' + name + ' = new Panel(' + container + ')';
+            }
             code += _classGen.getPanelConfig(item);
-        } else if(xtype == 'grid' || xtypes.indexOf('/grid/') != -1 || item instanceof Ext.grid.GridPanel){
-            name = _classGen.getVarName(item.title) + 'GridPanel';
-            code += 'GridPanel ' + name + ' = new GridPanel(' + container + ')';
-            code += _classGen.getPanelConfig(item);
-        } else if(xtype == 'panel' || xtypes.indexOf('/panel/') != -1 || item instanceof Ext.Panel){
-            console.debug('panel item:', item.id, item);
-            name = _classGen.getVarName(item.title) + 'Panel';
-            code += 'Panel ' + name + ' = new Panel(' + container + ')';
-            code += _classGen.getPanelConfig(item);
-        } else if(xtype == 'combo' || xtypes.indexOf('/combo/') != -1){
+        }
+
+        if(xtype == 'combo' || xtypes.indexOf('/combo/') != -1){
             name = _classGen.getVarName(label) + 'ComboBox';
             code += 'ComboBox ' + name + ' = new ComboBox(' + container + ', "' + label +  '")';
         } else if(xtype == 'textarea' || xtypes.indexOf('/textarea/') != -1){
