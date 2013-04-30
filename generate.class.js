@@ -51,6 +51,9 @@ function getItemCode(container, item){
     } else if(xtype == 'combo' || xtypes.indexOf('/combo/') != -1){
         name = getVarName(label) + 'ComboBox';
         code += 'ComboBox ' + name + ' = new ComboBox(' + container + ', "' + label +  '")';
+    } else if(xtype == 'textarea' || xtypes.indexOf('/textarea/') != -1){
+        name = getVarName(label) + 'TextArea';
+        code += 'TextArea ' + name + ' = new TextArea(' + container + ', "'  + label +  '")';
     } else if(xtype == 'textfield' || xtypes.indexOf('/textfield/') != -1){
         name = getVarName(label) + 'TextField';
         code += 'TextField ' + name + ' = new TextField(' + container + ', "'  + label +  '")';
