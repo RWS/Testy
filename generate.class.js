@@ -29,8 +29,19 @@ var _classGen = {
         return code;
     },
 
+    getFieldConfig: function (item){
+        var code = '';
+        if(item.fieldLabel){
+            code += '.setLabel("' + item.fieldLabel + '")';
+        } else if (item.name){
+            code += '.setName("' + item.name + '")';
+        }
+        return code;
+    },
+
     getItemCode: function (container, item){
         var name = '',
+            className = '',
             code = '\tpublic ',
             xtype = item.getXType(),
             xtypes = item.getXTypes(),
@@ -41,33 +52,31 @@ var _classGen = {
         // all classes that are or extend panels
         if(xtype == 'panel' || xtypes.indexOf('/panel/') != -1 || item instanceof Ext.Panel){
             if(xtype == 'editorgrid' || xtypes.indexOf('/editorgrid/') != -1 || item instanceof Ext.grid.EditorGridPanel){
-                name = _classGen.getVarName(item.title) + 'EditorGridPanel';
-                code += 'EditorGridPanel ' + name + ' = new EditorGridPanel(' + container + ')';
+                className = 'EditorGridPanel';
             } else if(xtype == 'grid' || xtypes.indexOf('/grid/') != -1 || item instanceof Ext.grid.GridPanel){
-                name = _classGen.getVarName(item.title) + 'GridPanel';
-                code += 'GridPanel ' + name + ' = new GridPanel(' + container + ')';
+                className = 'GridPanel';
             } else {
-                name = _classGen.getVarName(item.title) + 'Panel';
-                code += 'Panel ' + name + ' = new Panel(' + container + ')';
+                className = 'Panel';
             }
+            name = _classGen.getVarName(item.title) + className;
+            code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
             code += _classGen.getPanelConfig(item);
-        }
-
-        if(xtype == 'combo' || xtypes.indexOf('/combo/') != -1){
-            name = _classGen.getVarName(label) + 'ComboBox';
-            code += 'ComboBox ' + name + ' = new ComboBox(' + container + ', "' + label +  '")';
-        } else if(xtype == 'textarea' || xtypes.indexOf('/textarea/') != -1){
-            name = _classGen.getVarName(label) + 'TextArea';
-            code += 'TextArea ' + name + ' = new TextArea(' + container + ', "'  + label +  '")';
-        } else if(xtype == 'textfield' || xtypes.indexOf('/textfield/') != -1){
-            name = _classGen.getVarName(label) + 'TextField';
-            code += 'TextField ' + name + ' = new TextField(' + container + ', "'  + label +  '")';
-        } else if(xtype == 'displayfield' || xtypes.indexOf('/displayfield/') != -1){
-            name = _classGen.getVarName(label) + 'DisplayField';
-            code += 'DisplayField ' + name + ' = new DisplayField(' + container + ', "'  + label +  '")';
-        } else if(xtype == 'checkbox' || xtypes.indexOf('/checkbox/') != -1){
-            name = _classGen.getVarName(label || item.boxLabel) + 'Checkbox';
-            code += 'Checkbox ' + name + ' = new Checkbox(' + container + ', "'  + (label || item.boxLabel) +  '")';
+        } else if(xtype == 'field' || xtypes.indexOf('/field/') != -1 || item instanceof Ext.form.Field){
+            if(xtype == 'combo' || xtypes.indexOf('/combo/') != -1){
+                className = 'ComboBox';
+            } else if(xtype == 'textarea' || xtypes.indexOf('/textarea/') != -1){
+                className = 'TextArea';
+            } else if(xtype == 'textfield' || xtypes.indexOf('/textfield/') != -1){
+                className = 'TextField';
+            } else if(xtype == 'displayfield' || xtypes.indexOf('/displayfield/') != -1){
+                className = 'DisplayField';
+            } else if(xtype == 'checkbox' || xtypes.indexOf('/checkbox/') != -1){
+                className = 'Checkbox';
+                //TODO code += (label || item.boxLabel)
+            }
+            name = _classGen.getVarName(label) + className;
+            code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
+            code += _classGen.getFieldConfig(item);
         } else if(xtype == 'button' || xtypes.indexOf('/button/') != -1){
             name = _classGen.getVarName(item.text) + 'Button';
             code += 'Button ' + name + ' = new Button(' + container + ', "'  + item.text +  '")';
