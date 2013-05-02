@@ -2,7 +2,7 @@
 // TODO fieldLabel must have ":" have labelSeparator
 
 var _classGen = {
-    logId: true,
+    logId: false,
     elemCount: 0,
 
     getVarName: function(name){
@@ -14,25 +14,32 @@ var _classGen = {
         });
         name = words.join('');
 
-        name = name.replace(/[\(\)/\\:;\<>=\-"]/gi, '');
+        name = name.replace(/[\(\)/\\:;\<>=\-",]/gi, '');
         //name = Ext.util.Format.capitalize(name);
         return !name ? name : name.charAt(0).toLowerCase() + name.substr(1);
     },
 
     getPanelConfig: function (item){
-        var code = '';
+        var code = '',
+            label;
         if(item.title){
             code += '.setTitle("' + item.title + '")';
         } else if(item.fieldLabel){
-            code += '.setLabel("' + item.fieldLabel + '")';
+            label = item.fieldLabel;
+            label += item.ownerCt.getLayout().labelSeparator || '';
+            code += '.setLabel("' + label + '")';
         }
         return code;
     },
 
     getFieldConfig: function (item){
-        var code = '';
-        if(item.fieldLabel){
-            code += '.setLabel("' + item.fieldLabel + '")';
+        var code = '',
+            label = item.fieldLabel;
+        if(label){
+            label += item.ownerCt.getLayout().labelSeparator || '';
+            code += '.setLabel("' + label + '")';
+        } else if (item.boxLabel){
+            code += '.setLabel("' + item.boxLabel + '")';
         } else if (item.name){
             code += '.setName("' + item.name + '")';
         }
@@ -40,43 +47,50 @@ var _classGen = {
     },
 
     getItemCode: function (container, item){
-        var name = '',
+        var me = this,
+            name = '',
             className = '',
             code = '\tpublic ',
             xtype = item.getXType(),
-            xtypes = item.getXTypes(),
-            label = item.fieldLabel + (item.ownerCt.getLayout().labelSeparator || '');
+            xtypes = item.getXTypes();
 
         //console.debug('getItemCode', container, item);
 
         // all classes that are or extend panels
-        if(xtype == 'panel' || xtypes.indexOf('/panel/') != -1 || item instanceof Ext.Panel){
-            if(xtype == 'editorgrid' || xtypes.indexOf('/editorgrid/') != -1 || item instanceof Ext.grid.EditorGridPanel){
+        if(me.isTypeOf(xtype, xtypes, 'panel') || item instanceof Ext.Panel){
+            if(me.isTypeOf(xtype, xtypes, 'editorgrid') || item instanceof Ext.grid.EditorGridPanel){
                 className = 'EditorGridPanel';
-            } else if(xtype == 'grid' || xtypes.indexOf('/grid/') != -1 || item instanceof Ext.grid.GridPanel){
+            } else if(me.isTypeOf(xtype, xtypes, 'grid') || item instanceof Ext.grid.GridPanel){
                 className = 'GridPanel';
             } else {
                 className = 'Panel';
             }
-            name = _classGen.getVarName(item.title) + className;
+            name = item.title || item.fieldLabel;
+            name = _classGen.getVarName(name) + className;
             code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
             code += _classGen.getPanelConfig(item);
         } else if(xtype == 'field' || xtypes.indexOf('/field/') != -1 || item instanceof Ext.form.Field){
-            if(xtype == 'combo' || xtypes.indexOf('/combo/') != -1){
+            if(me.isTypeOf(xtype, xtypes, 'combo')){
                 className = 'ComboBox';
-            } else if(xtype == 'textarea' || xtypes.indexOf('/textarea/') != -1){
+            } else if(me.isTypeOf(xtype, xtypes, 'textarea')){
                 className = 'TextArea';
-            } else if(xtype == 'textfield' || xtypes.indexOf('/textfield/') != -1){
+            } else if(me.isTypeOf(xtype, xtypes, 'textfield')){
                 className = 'TextField';
-            } else if(xtype == 'displayfield' || xtypes.indexOf('/displayfield/') != -1){
+            } else if(me.isTypeOf(xtype, xtypes, 'displayfield')){
                 className = 'DisplayField';
-            } else if(xtype == 'checkbox' || xtypes.indexOf('/checkbox/') != -1){
+            } else if(me.isTypeOf(xtype, xtypes, 'checkbox')){
                 className = 'Checkbox';
                 //TODO code += (label || item.boxLabel)
             }
-            name = _classGen.getVarName(label) + className;
-            code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
-            code += _classGen.getFieldConfig(item);
+            if(className){
+                name = item.fieldLabel || item.boxLabel || item.name; // create order for variable name
+                name = _classGen.getVarName(name) + className;
+                code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
+                code += _classGen.getFieldConfig(item);
+            } else {
+                code = '';
+                console.warn('no field className found', container, item, xtype, xtypes, item.id);
+            }
         } else if(xtype == 'button' || xtypes.indexOf('/button/') != -1){
             name = _classGen.getVarName(item.text) + 'Button';
             code += 'Button ' + name + ' = new Button(' + container + ', "'  + item.text +  '")';
@@ -85,7 +99,7 @@ var _classGen = {
         } else {
             //code += 'XYZ xyz = new XYZ("' + xtype + '", "' + xtypes + '")';
             code = '';
-            console.warn(container, item, xtype, xtypes, item.id);
+            console.warn('no classified xtype found', container, item, xtype, xtypes, item.id);
         }
         if(code != ''){
             code += ';';
@@ -101,21 +115,26 @@ var _classGen = {
     },
 
     isNecesaryType : function (xtype, xtypes){
-        var necesary = true;
-        if(xtype == 'hidden' || xtypes.indexOf('/hidden/') != -1){
+        var me = this,
+            necesary = true;
+        if(me.isTypeOf(xtype, xtypes, 'hidden')){
             necesary = false;
-        } else if(xtype == 'tbfill' || xtypes.indexOf('/tbfill/') != -1){
+        } else if(me.isTypeOf(xtype, xtypes, 'tbfill')){
             necesary = false;
-        } else if(xtype == 'tbtext' || xtypes.indexOf('/tbtext/') != -1){
+        } else if(me.isTypeOf(xtype, xtypes, 'tbtext')){
             necesary = false;
-        } else if(xtype == 'tbspacer' || xtypes.indexOf('/tbspacer/') != -1){
+        } else if(me.isTypeOf(xtype, xtypes, 'tbseparator')){
             necesary = false;
-        } else if(xtype == 'tbseparator' || xtypes.indexOf('/tbseparator/') != -1){
+        } else if(me.isTypeOf(xtype, xtypes, 'tbseparator')){
             necesary = false;
-        } else if(xtype == 'box' || xtypes.indexOf('/box/') != -1){
+        } else if(me.isTypeOf(xtype, xtypes, 'box')){
             necesary = false; // TODO this is temporary
         }
         return necesary;
+    },
+
+    isTypeOf: function(xtype, xtypes, type){
+        return xtype == type || xtypes.indexOf('/' + type + '/') != -1;
     },
 
     isTabPanel : function (item){
@@ -197,6 +216,5 @@ var _classGen = {
         return code;
     }
 };
-
 
 console.info('\n'+ _classGen.getActiveWinClassCode());
