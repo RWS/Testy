@@ -12,7 +12,7 @@ var _classGen = {
         });
         name = words.join('');
 
-        name = name.replace(/[\(\)/\\:;\<>=\-",]/gi, '');
+        name = name.replace(/[\(\)/\\:;\<>=\-",+]/gi, '');
         //name = Ext.util.Format.capitalize(name);
         return !name ? name : name.charAt(0).toLowerCase() + name.substr(1);
     },
@@ -44,6 +44,17 @@ var _classGen = {
         return code;
     },
 
+    getButtonConfig: function (item){
+        var code = '',
+            text = item.text;
+        if(text){
+            code += '.setText("' + text + '")';
+        } else if (item.iconCls){
+            code += '.setCls("' + item.iconCls + '")';
+        }
+        return code;
+    },
+
     getItemCode: function (container, item){
         var me = this,
             name = '',
@@ -70,7 +81,6 @@ var _classGen = {
             name = _classGen.getVarName(name) + className;
             code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
             classConstructor = _classGen.getPanelConfig(item);
-            code += classConstructor;
         } else if(xtype == 'field' || xtypes.indexOf('/field/') != -1 || item instanceof Ext.form.Field){
             if(me.isTypeOf(xtype, xtypes, 'combo')){
                 className = 'ComboBox';
@@ -89,14 +99,14 @@ var _classGen = {
                 name = _classGen.getVarName(name) + className;
                 code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
                 classConstructor = _classGen.getFieldConfig(item);
-                code += classConstructor;
             } else {
                 code = '';
                 console.warn('no field className found', container, item, xtype, xtypes, item.id);
             }
         } else if(xtype == 'button' || xtypes.indexOf('/button/') != -1){
-            name = _classGen.getVarName(item.text) + 'Button';
-            code += 'Button ' + name + ' = new Button(' + container + ', "'  + item.text +  '")';
+            name = _classGen.getVarName(item.text || item.tooltip) + 'Button';
+            code += 'Button ' + name + ' = new Button(' + container + ')';
+            classConstructor = _classGen.getButtonConfig(item);
         } else if(!_classGen.isNecesaryType(xtype, xtypes)){
             code = '';
         } else {
@@ -105,6 +115,7 @@ var _classGen = {
             console.warn('no classified xtype found', container, item, xtype, xtypes, item.id);
         }
         if(code != ''){
+            code += classConstructor;
             code += ';';
             if(_classGen.logId){
                 code += '// ' + item.id;
@@ -217,7 +228,7 @@ var _classGen = {
         code = 'public class ' + elements.name + ' extends ' + elements.className + ' {\n';
         // constructor
         code += '\tpublic ' + elements.name + '(){\n';
-        code += '\t\t' + (elements.classConstructor ? ('this' + elements.classConstructor) : '') + ';\n';
+        code += '\t\t' + (elements.classConstructor ? ('this' + elements.classConstructor + ';') : '') + '\n';
         code += '\t}\n';
 
         code += _classGen.getInsideItems(container, component, false);
@@ -231,6 +242,10 @@ var _classGen = {
     }
 };
 
-// examples
+// ================
+// usage examples:
+// ================
+
 console.info('\n'+ _classGen.getActiveWinClassCode());
-console.info('\n'+ _classGen.getCmpClassCode('winUserPreferences'));
+//console.info('\n'+ _classGen.getCmpClassCode('winUserPreferences'));
+

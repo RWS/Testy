@@ -7,12 +7,12 @@ var _classGen = {
         name = name ? name : 'item' + (_classGen.elemCount++);
         // remove spaces and capitalize each word
         var words = name.split(/\s/);
-        //$.each(words, function(w, i){
-        //    words[i] = Ext.util.Format.capitalize(w);
-        //});
+        $.each(words, function(i, w){
+            words[i] = !w ? w : w.charAt(0).toUpperCase() + w.substr(1).toLowerCase();
+        });
         name = words.join('');
 
-        name = name.replace(/[\(\)/\\:;\<>=\-",]/gi, '');
+        name = name.replace(/[\(\)/\\:;\<>=\-",+]/gi, '');
         //name = Ext.util.Format.capitalize(name);
         return !name ? name : name.charAt(0).toLowerCase() + name.substr(1);
     },
