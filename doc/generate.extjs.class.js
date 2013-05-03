@@ -48,6 +48,7 @@ var _classGen = {
         var me = this,
             name = '',
             className = '',
+            classConstructor = '',
             code = '\tpublic ',
             xtype = item.getXType(),
             xtypes = item.getXTypes();
@@ -56,7 +57,9 @@ var _classGen = {
 
         // all classes that are or extend panels
         if(me.isTypeOf(xtype, xtypes, 'panel') || item instanceof Ext.Panel){
-            if(me.isTypeOf(xtype, xtypes, 'editorgrid') || item instanceof Ext.grid.EditorGridPanel){
+            if(me.isTypeOf(xtype, xtypes, 'window') || item instanceof Ext.Window){
+                className = 'Window';
+            } else if(me.isTypeOf(xtype, xtypes, 'editorgrid') || item instanceof Ext.grid.EditorGridPanel){
                 className = 'EditorGridPanel';
             } else if(me.isTypeOf(xtype, xtypes, 'grid') || item instanceof Ext.grid.GridPanel){
                 className = 'GridPanel';
@@ -66,7 +69,8 @@ var _classGen = {
             name = item.title || item.fieldLabel;
             name = _classGen.getVarName(name) + className;
             code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
-            code += _classGen.getPanelConfig(item);
+            classConstructor = _classGen.getPanelConfig(item);
+            code += classConstructor;
         } else if(xtype == 'field' || xtypes.indexOf('/field/') != -1 || item instanceof Ext.form.Field){
             if(me.isTypeOf(xtype, xtypes, 'combo')){
                 className = 'ComboBox';
@@ -84,7 +88,8 @@ var _classGen = {
                 name = item.fieldLabel || item.boxLabel || item.name; // create order for variable name
                 name = _classGen.getVarName(name) + className;
                 code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
-                code += _classGen.getFieldConfig(item);
+                classConstructor = _classGen.getFieldConfig(item);
+                code += classConstructor;
             } else {
                 code = '';
                 console.warn('no field className found', container, item, xtype, xtypes, item.id);
@@ -108,7 +113,9 @@ var _classGen = {
         }
         return {
             code: code,
-            name: name
+            name: name,
+            className: className,
+            classConstructor: classConstructor
         };
     },
 
@@ -197,22 +204,33 @@ var _classGen = {
         return code;
     },
 
-    getActiveWinClassCode : function (){
-        var w = Ext.WindowMgr.getActive(),
-            name = _classGen.getVarName(w.title),
+    getCmpClassCode : function(component) {
+        var elements,
             code,
             container = 'this';
-        console.debug('getActiveWinClassCode', name);
-        code = 'public class ' + name + 'Window extends Window {\n';
-        code += '\tpublic ' + name + 'Window(){\n';
-        code += '\t\tsetTitle("' + w.title + '");\n';
+
+        if(typeof component === 'string'){
+            component = Ext.getCmp(component);
+        }
+        elements = _classGen.getItemCode('', component);
+
+        code = 'public class ' + elements.name + ' extends ' + elements.className + ' {\n';
+        // constructor
+        code += '\tpublic ' + elements.name + '(){\n';
+        code += '\t\t' + (elements.classConstructor ? ('this' + elements.classConstructor) : '') + ';\n';
         code += '\t}\n';
 
-        code += _classGen.getInsideItems(container, w, false);
+        code += _classGen.getInsideItems(container, component, false);
 
         code += '}\n';
         return code;
+    },
+
+    getActiveWinClassCode : function (){
+        return _classGen.getCmpClassCode(Ext.WindowMgr.getActive());
     }
 };
 
+// examples
 console.info('\n'+ _classGen.getActiveWinClassCode());
+console.info('\n'+ _classGen.getCmpClassCode('winUserPreferences'));
