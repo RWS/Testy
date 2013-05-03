@@ -5,6 +5,7 @@ var _classGen = {
 
     getVarName: function(name){
         name = name ? name : 'item' + (_classGen.elemCount++);
+        name = Ext.util.Format.stripTags(name);
         // remove spaces and capitalize each word
         var words = name.split(/\s/);
         Ext.each(words, function(w, i){
@@ -12,7 +13,7 @@ var _classGen = {
         });
         name = words.join('');
 
-        name = name.replace(/[\(\)/\\:;\<>=\-",+]/gi, '');
+        name = name.replace(/[\(\)/\\:;\<>=\-",+&]/gi, '');
         //name = Ext.util.Format.capitalize(name);
         return !name ? name : name.charAt(0).toLowerCase() + name.substr(1);
     },
@@ -21,7 +22,7 @@ var _classGen = {
         var code = '',
             label;
         if(item.title){
-            code += '.setTitle("' + item.title + '")';
+            code += '.setTitle("' + Ext.util.Format.stripTags(item.title) + '")';
         } else if(item.fieldLabel){
             label = item.fieldLabel;
             label += item.ownerCt.getLayout().labelSeparator || '';

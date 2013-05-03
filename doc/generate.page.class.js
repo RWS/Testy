@@ -12,7 +12,7 @@ var _classGen = {
         });
         name = words.join('');
 
-        name = name.replace(/[\(\)/\\:;\<>=\-",+]/gi, '');
+        name = name.replace(/[\(\)/\\:;\<>=\-",+&]/gi, '');
         //name = Ext.util.Format.capitalize(name);
         return !name ? name : name.charAt(0).toLowerCase() + name.substr(1);
     },
