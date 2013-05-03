@@ -1,5 +1,3 @@
-// TODO in EditorGridPanel add clickToEdit option new EditorGridPanel(this).setClicksToEdit(2)
-// TODO fieldLabel must have ":" have labelSeparator
 
 var _classGen = {
     logId: false,
