@@ -11,9 +11,12 @@ var _classGen = {
             'import com.extjs.selenium.button.Button;',
             'import com.extjs.selenium.form.Checkbox;',
             'import com.extjs.selenium.form.ComboBox;',
+            'import com.extjs.selenium.form.DisplayField;',
             'import com.extjs.selenium.form.TextField;',
             'import com.extjs.selenium.grid.EditorGridPanel;',
+            'import com.extjs.selenium.grid.GridPanel;',
             'import com.extjs.selenium.panel.Panel;',
+            'import com.extjs.selenium.tab.TabPanel;',
             'import com.extjs.selenium.window.Window;'
         ];
         return imports.join('\n') + '\n\n';

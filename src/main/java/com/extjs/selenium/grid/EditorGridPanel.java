@@ -18,6 +18,11 @@ public class EditorGridPanel extends GridPanel {
         //logger.debug(getClassName() + "() constructor");
     }
 
+    public EditorGridPanel(WebLocator container) {
+        this();
+        setContainer(container);
+    }
+
     public EditorGridPanel(String cls) {
         this();
         setCls(cls);
@@ -29,8 +34,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public EditorGridPanel(WebLocator container, String searchColumnId) {
-        this();
-        setContainer(container);
+        this(container);
         setSearchColumnId(searchColumnId);
     }
 
@@ -40,8 +44,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public EditorGridPanel(WebLocator container, int clicksToEdit) {
-        this();
-        setContainer(container);
+        this(container);
         this.clicksToEdit = clicksToEdit;
     }
 
