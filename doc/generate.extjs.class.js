@@ -3,6 +3,22 @@ var _classGen = {
     logId: false,
     elemCount: 0,
 
+    getImports: function(classCode){
+        // TODO optimize imports
+        var imports = [
+            'package com.sdl;\n',
+
+            'import com.extjs.selenium.button.Button;',
+            'import com.extjs.selenium.form.Checkbox;',
+            'import com.extjs.selenium.form.ComboBox;',
+            'import com.extjs.selenium.form.TextField;',
+            'import com.extjs.selenium.grid.EditorGridPanel;',
+            'import com.extjs.selenium.panel.Panel;',
+            'import com.extjs.selenium.window.Window;'
+        ];
+        return imports.join('\n') + '\n\n';
+    },
+
     getVarName: function(name){
         name = name ? name : 'item' + (_classGen.elemCount++);
         name = Ext.util.Format.stripTags(name);
@@ -62,8 +78,8 @@ var _classGen = {
             className = '',
             classConstructor = '',
             code = '\tpublic ',
-            xtype = item.getXType(),
-            xtypes = item.getXTypes();
+            xtype = item.getXType ? item.getXType() : ('unknownGetXType'),
+            xtypes = item.getXTypes ? item.getXTypes() : ('unknownGetXTypes');
 
         //console.debug('getItemCode', container, item);
 
@@ -155,7 +171,12 @@ var _classGen = {
     },
 
     isTabPanel : function (item){
-        return item.getXType() == 'tabpanel' || item.getXTypes().indexOf('/tabpanel/') != -1;
+        if(item.getXType){
+            return item.getXType() == 'tabpanel' || item.getXTypes().indexOf('/tabpanel/') != -1;
+        } else {
+            console.warn('item does not have getXType() method', item);
+            return false;
+        }
     },
 
     getEachElementsCode : function (container, items, isTab){
@@ -218,23 +239,33 @@ var _classGen = {
 
     getCmpClassCode : function(component) {
         var elements,
-            code,
+            name,
+            code = '',
             container = 'this';
 
         if(typeof component === 'string'){
             component = Ext.getCmp(component);
         }
+        if(!component){
+            return 'no component found';
+        }
         elements = _classGen.getItemCode('', component);
 
-        code = 'public class ' + elements.name + ' extends ' + elements.className + ' {\n';
+        name = elements.name;
+        name = name.charAt(0).toUpperCase() + name.substr(1);
+        code += 'public class ' + name + ' extends ' + elements.className + ' {\n';
         // constructor
-        code += '\tpublic ' + elements.name + '(){\n';
+        code += '\tpublic ' + name + '(){\n';
         code += '\t\t' + (elements.classConstructor ? ('this' + elements.classConstructor + ';') : '') + '\n';
         code += '\t}\n';
 
         code += _classGen.getInsideItems(container, component, false);
 
-        code += '}\n';
+        code += '\n// methods hire \n';
+        code += '\n}\n';
+
+        code = _classGen.getImports(code) + code;
+
         return code;
     },
 
@@ -250,3 +281,4 @@ var _classGen = {
 console.info('\n'+ _classGen.getActiveWinClassCode());
 //console.info('\n'+ _classGen.getCmpClassCode('winUserPreferences'));
 
+// TODO verify that all var names are used only once
