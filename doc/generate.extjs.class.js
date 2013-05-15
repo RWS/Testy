@@ -4,21 +4,42 @@ var _classGen = {
     elemCount: 0,
 
     getImports: function(classCode){
-        // TODO optimize imports
         var imports = [
-            'package com.sdl;\n',
-
-            'import com.extjs.selenium.button.Button;',
-            'import com.extjs.selenium.form.Checkbox;',
-            'import com.extjs.selenium.form.ComboBox;',
-            'import com.extjs.selenium.form.DisplayField;',
-            'import com.extjs.selenium.form.TextField;',
-            'import com.extjs.selenium.grid.EditorGridPanel;',
-            'import com.extjs.selenium.grid.GridPanel;',
-            'import com.extjs.selenium.panel.Panel;',
-            'import com.extjs.selenium.tab.TabPanel;',
-            'import com.extjs.selenium.window.Window;'
-        ];
+                'package com.sdl;\n'
+            ];
+            if(classCode.contains('Button')){
+                imports.push('import com.extjs.selenium.button.Button;')
+            }
+            if(classCode.contains('TextField')){
+                imports.push('import com.extjs.selenium.form.TextField;')
+            }
+            if(classCode.contains('Checkbox')){
+                imports.push('import com.extjs.selenium.form.Checkbox;')
+            }
+            if(classCode.contains('TextArea')){
+                imports.push('import com.extjs.selenium.form.TextArea;')
+            }
+            if(classCode.contains('Window')){
+                imports.push('import com.extjs.selenium.window.Window;')
+            }
+            if(classCode.contains('ComboBox')){
+                imports.push('import com.extjs.selenium.form.ComboBox;')
+            }
+            if(classCode.contains('DisplayField')){
+                imports.push('import com.extjs.selenium.form.DisplayField;')
+            }
+            if(classCode.contains('EditorGridPanel')){
+                imports.push('import com.extjs.selenium.grid.EditorGridPanel;')
+            }
+            if(classCode.contains('GridPanel')){
+                imports.push('import com.extjs.selenium.grid.GridPanel;')
+            }
+            if(classCode.contains('Panel')){
+                imports.push('import com.extjs.selenium.panel.Panel;')
+            }
+            if(classCode.contains('TabPanel')){
+                imports.push('import com.extjs.selenium.tab.TabPanel;')
+            }
         return imports.join('\n') + '\n\n';
     },
 

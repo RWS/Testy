@@ -3,6 +3,27 @@ var _classGen = {
     logId: false,
     elemCount: 0,
 
+    getImports: function(classCode){
+        // TODO optimize imports
+        var imports = [
+            'package com.sdl;\n'
+        ];
+        if(classCode.indexOf('SimpleButton') != -1){
+            imports.push('import com.extjs.selenium.button.SimpleButton;')
+        }
+        if(classCode.indexOf('SimpleTextField') != -1){
+            imports.push('import com.extjs.selenium.form.SimpleTextField;')
+        }
+        if(classCode.indexOf('SimpleCheckbox') != -1){
+            imports.push('import com.extjs.selenium.form.SimpleCheckbox;')
+        }
+        if(classCode.indexOf('TextArea') != -1){
+            imports.push('import com.extjs.selenium.form.TextArea;')
+        }
+        return imports.join('\n') + '\n\n';
+    },
+
+
     getVarName: function(name){
         name = name ? name : 'item' + (_classGen.elemCount++);
         // remove spaces and capitalize each word
@@ -47,6 +68,18 @@ var _classGen = {
         } else if (item.text()){
             code += '.setText("' + item.text() + '")';
         }
+
+        // start bootstrap
+        if(!code){
+            var kids = $(item).children(),
+                cls;
+            if(kids){
+                cls = kids.get(0).className;
+                code += '.setElPath("//button[count(*[contains(@class, ' + cls + ')]) > 0]")';
+            }
+        }
+        // end bootstrap
+
         return code;
     },
 
@@ -87,14 +120,22 @@ var _classGen = {
                 console.warn('no field className found', container, tag, item.id);
             }
         } else if(tag == 'button'){
-
-            if(item.text()){
-                className = 'SimpleButton';
-            }
-            name = item.prop("id"); // create order for variable name
+            className = 'SimpleButton';
+            name = item.prop("id") || item.text(); // create order for variable name
             name = _classGen.getVarName(name) + className;
             code += className + ' ' + name + ' = new ' + className + '()';
             code += _classGen.getButtonConfig(item);
+        } else if(tag == 'textarea'){
+            className = 'SimpleTextArea';
+            if(className){
+                name = item.prop("id"); // create order for variable name
+                name = _classGen.getVarName(name) + className;
+                code += className + ' ' + name + ' = new ' + className + '()';
+                code += _classGen.getFieldConfig(item);
+            } else {
+                code = '';
+                console.warn('no field className found', container, tag, item.id);
+            }
         } else if(false){
             code = '';
         } else {
@@ -179,6 +220,7 @@ var _classGen = {
             name = _classGen.getVarName(el.title),
             code,
             container = 'this';
+            name = name.charAt(0).toUpperCase() + name.substr(1);
         code = 'public class ' + name + 'MyWebLocator extends WebLocator {\n';
         //code += '\tpublic ' + name + 'Window(){\n';
         //code += '\t\tsetTitle("' + w.title + '");\n';
@@ -186,7 +228,11 @@ var _classGen = {
 
         code += _classGen.getInsideItems(container, el);
 
-        code += '}\n';
+        code += '\n// methods hire \n';
+        code += '\n}\n';
+
+        code = _classGen.getImports(code) + code;
+
         return code;
     }
 };
