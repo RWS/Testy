@@ -2,9 +2,11 @@ package com.extjs.selenium.grid;
 
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.Row;
 import org.apache.log4j.Logger;
 
-public class GridRow extends WebLocator {
+public class GridRow extends Row {
     private static final Logger logger = Logger.getLogger(GridRow.class);
 
     private static final String GRID_ROW_PATH = "[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]";
@@ -13,6 +15,7 @@ public class GridRow extends WebLocator {
     public GridRow() {
         setRenderMillis(200);
         setClassName("GridRow");
+        setTag("*");
     }
 
     public GridRow(WebLocator container, String elPath) {
@@ -34,25 +37,25 @@ public class GridRow extends WebLocator {
 
     public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, String searchType) {
         this(gridPanel, new GridCell(searchColumnIndex, searchElement, searchType));
-//        String textCondition = getTextCondition(searchElement, searchType);
-//        setElPath("//*[" + getSearchPath(searchColumnId, textCondition) + "]");
     }
 
     public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, String searchType) {
         this(gridPanel);
         GridCell cell = new GridCell(null, searchElement, searchType);
-//        this(gridPanel, new GridCell(searchColumnId, searchElement, searchType));
-//        String textCondition = getTextCondition(searchElement, searchType);
-        setElPath("//*[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText())) + "]");
+        setElPath("//" + getTag() + "[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText())) + "]");
     }
 
-    public GridRow(GridPanel gridPanel, GridCell ...cells) {
-        this(gridPanel) ;
+    public GridRow(GridPanel gridPanel, Cell... cells) {
+        this(gridPanel);
         String path = "";
-        for(GridCell cell : cells){
-            path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(cell.getItemPathText()));
+        for (Cell cell : cells) {
+            if (cell.getPosition() != -1 && !"".equals(cell.getItemPathText())) {
+                path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(cell.getItemPathText()));
+            } else {
+                logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
+            }
         }
-        setElPath("//*[" + Utils.fixPathSelector(path) + "]");
+        setElPath("//" + getTag() + "[" + Utils.fixPathSelector(path) + "]");
     }
 
     private String getSearchPath(String searchColumnId, String textCondition) {
@@ -60,11 +63,11 @@ public class GridRow extends WebLocator {
     }
 
     private String getSearchPath(int columnIndex, String textCondition) {
-        return "count(*[contains(@class, 'x-grid3-row-table')]//td[" +columnIndex +"]//*[" + textCondition + "]) > 0";
+        return "count(*[contains(@class, 'x-grid3-row-table')]//td[" + columnIndex + "]//*[" + textCondition + "]) > 0";
     }
 
     private String getSearchPath(int columnIndex, GridCell cell) {
-        return "count(*[contains(@class, 'x-grid3-row-table')]//td[" +columnIndex +"]" + cell.getPath() + ") > 0";
+        return "count(*[contains(@class, 'x-grid3-row-table')]//td[" + columnIndex + "]" + cell.getPath() + ") > 0";
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {

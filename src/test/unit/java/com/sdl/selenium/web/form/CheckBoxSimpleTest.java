@@ -11,8 +11,8 @@ public class CheckBoxSimpleTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new SimpleCheckBox(),           "//*"},
-                {new SimpleCheckBox("SelectId"), "//*[@id='SelectId']"}
+                {new SimpleCheckBox(),           "//input[@type='checkbox']"},
+                {new SimpleCheckBox("SelectId"), "//input[@type='checkbox' and @id='SelectId']"}
         };
     }
 

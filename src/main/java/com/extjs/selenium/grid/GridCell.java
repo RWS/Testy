@@ -1,9 +1,10 @@
 package com.extjs.selenium.grid;
 
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.Cell;
 import org.apache.log4j.Logger;
 
-public class GridCell extends WebLocator {
+public class GridCell extends Cell {
     private static final Logger logger = Logger.getLogger(GridCell.class);
 
     public GridCell() {

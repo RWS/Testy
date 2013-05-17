@@ -8,11 +8,17 @@ public class SimpleCheckBox extends WebLocator {
 
     public SimpleCheckBox() {
         setClassName("SimpleCheckBox");
+        setTag("input");
     }
 
     public SimpleCheckBox(String id) {
         this();
         setId(id);
+    }
+
+    public String getItemPath(boolean disabled) {
+        String selector = getBasePathSelector();
+        return "//" + getTag() + "[@type='checkbox'" + ("".equals(selector) ? "" : " and " + selector) + "]";
     }
 
     public boolean isSelected() {
