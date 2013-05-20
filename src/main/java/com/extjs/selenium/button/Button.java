@@ -107,10 +107,12 @@ public class Button extends ExtJsComponent {
     }
 
     public boolean toggle(boolean state) {
-        String cls = this.getAttributeClass();
-        boolean contains = cls.contains("x-btn-pressed");
-        if (state && !contains || !state && contains) {
-            return this.click();
+        if (ready()) {
+            String cls = getAttributeClass();
+            boolean contains = cls.contains("x-btn-pressed");
+            if (state && !contains || !state && contains) {
+                return click();
+            }
         }
         return false;
     }
