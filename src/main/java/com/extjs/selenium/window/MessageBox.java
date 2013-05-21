@@ -2,12 +2,13 @@ package com.extjs.selenium.window;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.button.Button;
+import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
 /**
  * The Info/Error/Warning Message Box from ExtJs
  */
-public class MessageBox extends ExtJsComponent {
+public class MessageBox {
     private static final Logger logger = Logger.getLogger(MessageBox.class);
 
     public static String BUTTON_OK = "OK";
@@ -16,6 +17,8 @@ public class MessageBox extends ExtJsComponent {
     public static String BUTTON_NO = "No";
 
     private static Window messageBoxWindow = new Window(true).setCls("x-window-dlg").setInfoMessage("MessageBox");
+
+    private MessageBox(){}
 
     /**
      * instant get MessageBox text if is present
@@ -50,7 +53,7 @@ public class MessageBox extends ExtJsComponent {
     }
 
     public static String press(String buttonText) {
-        if (isIE() && !messageBoxWindow.isVisible()) {
+        if (WebLocator.isIE() && !messageBoxWindow.isVisible()) {
             return null;
         }
         String msg = getMessage();

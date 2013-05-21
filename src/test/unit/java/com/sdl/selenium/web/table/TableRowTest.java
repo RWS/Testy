@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.table;
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -8,7 +9,7 @@ import org.testng.annotations.Test;
 public class TableRowTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
 
-    public static Table table = new Table().setId("ID");
+    public static WebLocator table = new Table().setId("ID");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

@@ -41,7 +41,7 @@ public class SelectFilesHandler {
         return getButtonElement().isElementPresent();
     }
 
-    public void openBrowseWindow(){
+    public void openBrowseWindow() {
         WebDriver driver = WebLocator.getDriver();
         driver.switchTo().window(driver.getWindowHandle()); // TODO is not ready 100% (need to focus on browser)
         buttonElement.sendKeys(Keys.TAB);
@@ -49,6 +49,7 @@ public class SelectFilesHandler {
         builder.moveToElement(buttonElement.currentElement).build().perform();
         builder.click().build().perform();
         Utils.sleep(4000);
+        driver.switchTo().defaultContent();
 //        String parentWindowHandle = driver.getWindowHandle(); // save the current window handle.
 //        WebDriver popup = null;
 //        Iterator windowIterator = driver.getWindowHandles().iterator();
@@ -71,7 +72,7 @@ public class SelectFilesHandler {
             logger.error(e);
         }
 
-     writeFileName(path, robot);
+        writeFileName(path, robot);
         // press enter to close Open dialog
         pressEnter(robot);
     }

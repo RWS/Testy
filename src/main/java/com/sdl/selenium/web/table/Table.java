@@ -417,13 +417,17 @@ public class Table extends Cell {
 //        return new GridCell(gridRow, columnIndex);
 //    }
 
-//    public GridRow findGridRow(GridCell... byCells) {
-//        return new GridRow(this, byCells);
-//    }
+    public Row findRow(TableCell... byCells) {
+        return new TableRow(this, byCells);
+    }
 
-//    public GridCell getGridCell(int position, String text, GridCell... byCells) {
-//        return new GridCell(findGridRow(byCells)).setPosition(position).setText(text);
-//    }
+    public TableCell getGridCell(int position, TableCell... byCells) {
+        return new TableCell(findRow(byCells), position);
+    }
+
+    public TableCell getGridCell(int position, String text, TableCell... byCells) {
+        return new TableCell(findRow(byCells), position, text, "eq");
+    }
 
     public String[] getRow(int rowIndex) {
         String[] rowElements = null;

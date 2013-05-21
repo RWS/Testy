@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.table;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
 public class TableRow extends Row {
@@ -12,29 +13,20 @@ public class TableRow extends Row {
         setTag("tr");
     }
 
-    public TableRow(Table table, String searchElement, String searchType) {
+    public TableRow(WebLocator container){
         this();
-        setContainer(table);
+        setContainer(container);
+    }
+
+    public TableRow(WebLocator table, String searchElement, String searchType) {
+        this(table);
         setText(searchElement);
         setSearchTextType(searchType);
     }
 
-    public TableRow(Table table, Cell... cells) {
-        this();
-        setContainer(table);
-        String path = "";
-        for (Cell cell : cells) {
-            if (cell.getPosition() != -1 && !"".equals(cell.getItemPathText())) {
-                path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(cell.getItemPathText()));
-            } else {
-                logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
-            }
-        }
-        setElPath("//" + getTag() + "[" + Utils.fixPathSelector(path) + "]");
-    }
-
-    private String getSearchPath(int columnIndex, String textCondition) {
-        return "count(td[" + columnIndex + "][" + textCondition + "]) > 0";
+    public TableRow(WebLocator table, Cell... cells) {
+        this(table);
+        setRowCells(cells);
     }
 
     public String getItemPath(boolean disabled) {

@@ -14,10 +14,11 @@ public class TableCellTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new TableCell(),             "//td"},
-                {new TableCell(tableRow, 1), "//table[@id='ID']//tr[text()='Text' or count(.//*[text()='Text']) > 0]//td[1]"},
-                {new TableCell(3, "Text", "contains"), "//td[3][contains(text(),'Text') or count(.//*[contains(text(),'Text')]) > 0]"},
-                {new TableCell(3, "Text", "eq"), "//td[3][text()='Text' or count(.//*[text()='Text']) > 0]"},
+                {new TableCell(),                       "//td"},
+                {new TableCell(tableRow, 1),            "//table[@id='ID']//tr[text()='Text' or count(.//*[text()='Text']) > 0]//td[1]"},
+                {new TableCell(3, "Text", "eq"),        "//td[3][text()='Text' or count(.//*[text()='Text']) > 0]"},
+                {new TableCell(3, "Text", "contains"),  "//td[3][contains(text(),'Text') or count(.//*[contains(text(),'Text')]) > 0]"},
+                {new TableCell(tableRow, 3, "Text", "eq"), "//table[@id='ID']//tr[text()='Text' or count(.//*[text()='Text']) > 0]//td[3][text()='Text' or count(.//*[text()='Text']) > 0]"},
         };
     }
 

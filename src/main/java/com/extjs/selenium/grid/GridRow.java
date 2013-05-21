@@ -47,22 +47,14 @@ public class GridRow extends Row {
 
     public GridRow(GridPanel gridPanel, Cell... cells) {
         this(gridPanel);
-        String path = "";
-        for (Cell cell : cells) {
-            if (cell.getPosition() != -1 && !"".equals(cell.getItemPathText())) {
-                path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(cell.getItemPathText()));
-            } else {
-                logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
-            }
-        }
-        setElPath("//" + getTag() + "[" + Utils.fixPathSelector(path) + "]");
+        setRowCells(cells);
     }
 
     private String getSearchPath(String searchColumnId, String textCondition) {
         return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + textCondition + "]) > 0";
     }
 
-    private String getSearchPath(int columnIndex, String textCondition) {
+    protected String getSearchPath(int columnIndex, String textCondition) {
         return "count(*[contains(@class, 'x-grid3-row-table')]//td[" + columnIndex + "]//*[" + textCondition + "]) > 0";
     }
 
