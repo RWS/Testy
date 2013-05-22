@@ -19,6 +19,11 @@ public class Table extends Cell {
         setTag("table");
     }
 
+    public Table(WebLocator container) {
+        this();
+        setContainer(container);
+    }
+
     public boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
         //logger.info(this + " - " + info);

@@ -1,18 +1,18 @@
 package com.sdl.selenium.web.table;
 
-import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TableTest {
-    public static ExtJsComponent container = new ExtJsComponent("container");
+    public static WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Table(),             "//table"},
+                {new Table(container),    "//*[contains(@class, 'container')]//table"},
                 {new Table().setId("ID"), "//table[@id='ID']"},
         };
     }
