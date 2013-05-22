@@ -11,8 +11,13 @@ public class SimpleUploadButton extends WebLocator {
         setTag("input");
     }
 
-    public SimpleUploadButton(String id) {
+    public SimpleUploadButton(WebLocator container) {
         this();
+        setContainer(container);
+    }
+
+    public SimpleUploadButton(WebLocator container, String id) {
+        this(container);
         setId(id);
     }
 
