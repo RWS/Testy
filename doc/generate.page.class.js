@@ -8,17 +8,20 @@ var _classGen = {
         var imports = [
             'package com.sdl;\n'
         ];
-        if(classCode.indexOf('SimpleButton') != -1){
-            imports.push('import com.extjs.selenium.button.SimpleButton;')
+        if(classCode.indexOf('Button') != -1){
+            imports.push('import com.sdl.bootstrap.button.Button;')
         }
-        if(classCode.indexOf('SimpleTextField') != -1){
-            imports.push('import com.extjs.selenium.form.SimpleTextField;')
+        if(classCode.indexOf('TextField') != -1){
+            imports.push('import com.sdl.bootstrap.form.TextField;')
         }
         if(classCode.indexOf('SimpleCheckbox') != -1){
             imports.push('import com.extjs.selenium.form.SimpleCheckbox;')
         }
         if(classCode.indexOf('TextArea') != -1){
-            imports.push('import com.extjs.selenium.form.TextArea;')
+            imports.push('import com.sdl.bootstrap.form.TextArea;')
+        }
+        if(classCode.indexOf('Table') != -1){
+            imports.push('import com.sdl.selenium.web.table.Table;')
         }
         return imports.join('\n') + '\n\n';
     },
@@ -91,22 +94,10 @@ var _classGen = {
             tag = item.prop("tagName").toLowerCase();
 
         // all classes that are or extend panels
-        if(false){
-            if(me.isTypeOf(xtype, xtypes, 'editorgrid') || item instanceof Ext.grid.EditorGridPanel){
-                className = 'EditorGridPanel';
-            } else if(me.isTypeOf(xtype, xtypes, 'grid') || item instanceof Ext.grid.GridPanel){
-                className = 'GridPanel';
-            } else {
-                className = 'Panel';
-            }
-            name = item.title || item.fieldLabel;
-            name = _classGen.getVarName(name) + className;
-            code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
-            code += _classGen.getPanelConfig(item);
-        } else if(tag == 'input'){
+        if(tag == 'input'){
             var type = item.prop("type");
             if(type == 'text' || type == 'email'){
-                className = 'SimpleTextField';
+                className = 'TextField';
             } else if(type == 'checkbox'){
                 className = 'SimpleCheckbox';
             }
@@ -120,13 +111,13 @@ var _classGen = {
                 console.warn('no field className found', container, tag, item.id);
             }
         } else if(tag == 'button'){
-            className = 'SimpleButton';
+            className = 'Button';
             name = item.prop("id") || item.text(); // create order for variable name
             name = _classGen.getVarName(name) + className;
             code += className + ' ' + name + ' = new ' + className + '()';
             code += _classGen.getButtonConfig(item);
         } else if(tag == 'textarea'){
-            className = 'SimpleTextArea';
+            className = 'TextArea';
             if(className){
                 name = item.prop("id"); // create order for variable name
                 name = _classGen.getVarName(name) + className;
@@ -134,7 +125,26 @@ var _classGen = {
                 code += _classGen.getFieldConfig(item);
             } else {
                 code = '';
-                console.warn('no field className found', container, tag, item.id);
+            }
+        } else if(tag == 'table'){
+            className = 'Table';
+            if(className){
+                name = item.prop("id"); // create order for variable name
+                name = _classGen.getVarName(name) + className;
+                code += className + ' ' + name + ' = new ' + className + '()';
+                code += _classGen.getButtonConfig(item);
+            } else {
+                code = '';
+            }
+        } else if(item.attr("role") == 'dialog'){
+            className = 'Window';
+            var title = item.children('div').children('h3').text();
+            if(className && title != ''){
+            console.debug('window: ', item)
+                name = _classGen.getVarName(title) + className;
+                code += className + ' ' + name + ' = new ' + className + '("' + title + '")';
+            } else {
+                code = '';
             }
         } else if(false){
             code = '';
