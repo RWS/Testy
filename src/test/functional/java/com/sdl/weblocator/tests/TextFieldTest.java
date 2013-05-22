@@ -32,6 +32,7 @@ public class TextFieldTest extends TestBase {
     public void isEditable() {
         assertFalse(firstNameTextField.isEditable());
         assertTrue(lastNameTextField.isEditable());
+        assertTrue(disableTextField.isDisabled());
     }
 
     @Test

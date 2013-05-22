@@ -199,4 +199,11 @@ public class TextField extends ExtJsComponent {
     public boolean isEditable() {
         return !"true".equals(getAttribute("readonly"));
     }
+
+    /**
+     * @return true is the element does have attribute disabled
+     */
+    public boolean isDisabled() {
+        return "true".equals(getAttribute("disabled"));
+    }
 }
