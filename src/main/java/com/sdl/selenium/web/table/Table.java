@@ -256,7 +256,7 @@ public class Table extends Cell {
     /**
      * @return  row count
      */
-    public Number getRowCount() {
+    public int getRowCount() {
         ready();
         return new TableRow(this).size();
     }

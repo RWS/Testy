@@ -24,8 +24,7 @@ public class TestBase {
     public static int TEST_RUNS = 0;
     public static int TEST_FAILED = 0;
 
-    public static final String SERVER = "file:///D:/Testy1/src/test/functional/index.html";
-    public static final String CHROME_DRIVER_DIR = "D:\\Testy1\\src\\main\\resources\\drivers\\chromedriver.exe";
+    public static final String SERVER = InputData.SERVER_URL;
 
     // start suite & open browser
     @BeforeSuite(alwaysRun = true)
@@ -102,22 +101,20 @@ public class TestBase {
 
     public WebDriver getWebDriver(String browser) {
         if (browser.equalsIgnoreCase("*firefox")) {
-//            if (InputData.FIREFOX_PROFILE_DIR != null && !InputData.FIREFOX_PROFILE_DIR.equals("")) {
-//                FirefoxProfile firefoxProfile = new FirefoxProfile(new File(InputData.FIREFOX_PROFILE_DIR));
-//                return new FirefoxDriver(firefoxProfile);
-//            } else {
-//            return new FirefoxDriver();
-            FirefoxProfile firefoxProfile = new FirefoxProfile(new File("C:\\Users\\vculea\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\aqm486uu.default"));
-            return new FirefoxDriver(firefoxProfile);
-//            }
+            if (InputData.FIREFOX_PROFILE_DIR != null && !InputData.FIREFOX_PROFILE_DIR.equals("")) {
+                FirefoxProfile firefoxProfile = new FirefoxProfile(new File(InputData.FIREFOX_PROFILE_DIR));
+                return new FirefoxDriver(firefoxProfile);
+            } else {
+                return new FirefoxDriver();
+            }
         } else if (browser.equalsIgnoreCase("*iexplore")) {
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
             return new InternetExplorerDriver(ieCapabilities);
 //            return new InternetExplorerDriver();
         } else if (browser.equalsIgnoreCase("*chrome")) {
-            if (CHROME_DRIVER_DIR != null && !CHROME_DRIVER_DIR.equals("")) {
-                System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_DIR);
+            if (InputData.CHROME_DRIVER_DIR != null && !InputData.CHROME_DRIVER_DIR.equals("")) {
+                System.setProperty("webdriver.chrome.driver", InputData.CHROME_DRIVER_DIR);
             }
             return new ChromeDriver();
         } else if (browser.equalsIgnoreCase("*htmlunit")) {
@@ -134,16 +131,10 @@ public class TestBase {
         logger.info("|          AUT URL: " + SERVER);
         logger.info("===============================================================\n");
 
-        driver = getWebDriver("*firefox");
-//        driver = getWebDriver("*iexplore");
-//        driver = getWebDriver("*chrome");
+        driver = getWebDriver(InputData.BROWSER);
         driver.manage().window().maximize();
         driver.get(SERVER);
-        if (false) {
-            driver.manage().timeouts().implicitlyWait(150, TimeUnit.MILLISECONDS);
-        } else {
-            driver.manage().timeouts().implicitlyWait(100, TimeUnit.MILLISECONDS);
-        }
+        driver.manage().timeouts().implicitlyWait(100, TimeUnit.MILLISECONDS);
         WebLocator.setDriver(driver);
     }
 

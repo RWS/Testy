@@ -6,6 +6,7 @@ import com.extjs.selenium.form.TextArea;
 import com.extjs.selenium.form.TextField;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;
 
 public class EditorGridPanel extends GridPanel {
@@ -83,7 +84,7 @@ public class EditorGridPanel extends GridPanel {
             editor = new TextField();
         }
         editor.setContainer(this).setCls("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
-        logger.debug("editor: " + editor.getPath());
+//        logger.debug("editor: " + editor.getPath());
         return editor;
     }
 
@@ -97,16 +98,30 @@ public class EditorGridPanel extends GridPanel {
     public boolean startEdit(int rowIndex, int colIndex) {
         logger.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
         GridCell cell = getGridCell(rowIndex, colIndex);
-        cell.ready();
-        cell.sendKeys(Keys.TAB);
-        return startEdit(cell);
+//        cell.sendKeys(Keys.TAB);
+//        return startEdit(cell);
+        return prepareEdit(cell);
     }
 
     public boolean startEdit(String searchElement, int colIndex) {
         logger.debug("startEdit(" + searchElement + ", " + colIndex + ")");
         GridCell cell = getGridCell(searchElement, colIndex);
-        cell.ready();
-        cell.sendKeys(Keys.TAB);
+//        cell.sendKeys(Keys.TAB);
+//        return startEdit(cell);
+        return prepareEdit(cell);
+    }
+
+    private boolean prepareEdit(GridCell cell) {
+        boolean selected = false;
+        scrollTop();
+        do {
+            try {
+                cell.sendKeys(Keys.TAB);
+                selected = true;
+            } catch (ElementNotVisibleException e) {
+                logger.error("sendKeys: ElementNotVisibleException");
+            }
+        } while (!selected && scrollPageDown());
         return startEdit(cell);
     }
 
@@ -114,9 +129,9 @@ public class EditorGridPanel extends GridPanel {
         boolean clicked = false;
         if (ready(true)) {
             if (clicksToEdit == 1) {
-                clicked = doCellSelect(cell);
+                clicked = cell.select();
             } else {
-                clicked = doCellDoubleClickAt(cell);
+                clicked = cell.doubleClickAt();
             }
             if (clicked) {
                 Utils.sleep(200);
@@ -153,9 +168,9 @@ public class EditorGridPanel extends GridPanel {
     public boolean appendRowValue(String value) {
         logger.debug("setRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
-            editor.sendKeys(Keys.END);
-            editor.sendKeys(value);
-            boolean edited = true;
+        editor.sendKeys(Keys.END);
+        editor.sendKeys(value);
+        boolean edited = true;
         if (edited) {
             editor.blur();
         }
