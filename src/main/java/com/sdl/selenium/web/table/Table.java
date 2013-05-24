@@ -254,6 +254,14 @@ public class Table extends Cell {
     }
 
     /**
+     * @return  row count
+     */
+    public Number getRowCount() {
+        ready();
+        return new TableRow(this).size();
+    }
+
+    /**
      * @return row count. -1 if not grid not ready to be used or not found
      */
     public int getCount() {

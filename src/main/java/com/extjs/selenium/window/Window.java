@@ -68,6 +68,7 @@ public class Window extends Panel {
     }
 
     public String getTitleWindow() {
+        ready();
         return new WebLocator(this, "//*[contains(@class, 'x-window-header-text')]").getHtmlText();
     }
 }
