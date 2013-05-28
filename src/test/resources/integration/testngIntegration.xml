@@ -1,14 +1,59 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Recruit Bird Functional Test Suite" verbose="1">
-    <test name="Register">
+<suite name="Testy Functional Test Suite" verbose="1">
+    <test name="ButtonTest">
         <classes>
-            <!--<class name="com.sdl.selenium.functional.register.Register"/>-->
+            <class name="com.sdl.weblocator.tests.ButtonTest"/>
         </classes>
     </test>
-    <test name="SetUpUser">
+    <test name="EditorGridPanelTest">
         <classes>
             <class name="com.sdl.weblocator.tests.EditorGridPanelTest"/>
+        </classes>
+    </test>
+    <test name="ComboBoxTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.ComboBoxTest"/>
+        </classes>
+    </test>
+    <test name="DateFieldTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.DateFieldTest"/>
+        </classes>
+    </test>
+    <test name="DisplayFieldTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.DisplayFieldTest"/>
+        </classes>
+    </test>
+    <test name="ListTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.ListTest"/>
+        </classes>
+    </test>
+    <test name="RadioGroupTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.RadioGroupTest"/>
+        </classes>
+    </test>
+    <test name="TextAreaTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.TextAreaTest"/>
+        </classes>
+    </test>
+    <test name="TextFieldTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.TextFieldTest"/>
+        </classes>
+    </test>
+    <test name="WebLocatorTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.WebLocatorTest"/>
+        </classes>
+    </test>
+    <test name="WindowTest">
+        <classes>
+            <class name="com.sdl.weblocator.tests.WindowTest"/>
         </classes>
     </test>
 </suite>
