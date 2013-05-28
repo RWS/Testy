@@ -15,7 +15,7 @@ var _classGen = {
             imports.push('import com.sdl.bootstrap.form.TextField;')
         }
         if(classCode.indexOf('SimpleCheckbox') != -1){
-            imports.push('import com.extjs.selenium.form.SimpleCheckbox;')
+            imports.push('import com.sdl.selenium.form.SimpleCheckbox;')
         }
         if(classCode.indexOf('TextArea') != -1){
             imports.push('import com.sdl.bootstrap.form.TextArea;')
