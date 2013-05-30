@@ -150,6 +150,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             } catch (ElementNotVisibleException e) {
                 logger.error("sendKeys: ElementNotVisibleException");
                 throw e;
+            } catch (WebDriverException e){
+                //TODO this fix is for Chrome
+                Actions builder = new Actions(driver);
+                builder.click(el.currentElement);
+                builder.sendKeys(charSequences);
             }
         }
     }
