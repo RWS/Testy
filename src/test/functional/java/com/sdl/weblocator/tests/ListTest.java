@@ -26,10 +26,16 @@ public class ListTest extends TestBase {
         multiSelectWindow.close();
     }
 
-    @Test
+    //@Test
     public void select() {
         assertTrue(multiSelectList.selectRows(new String[]{"English", "French", "Spanish"}));
         assertTrue(multiSelectList.isSelectedRows(new String[]{"English", "French", "Spanish"}));
+    }
+
+    @Test
+    public void selectWithJs() {
+        assertTrue(multiSelectList.selectRowsWithJs(new String[]{"German", "Japanese", "Russian"}));
+        assertTrue(multiSelectList.isSelectedRows(new String[]{"German", "Japanese", "Russian"}));
     }
 
 }

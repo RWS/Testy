@@ -4,6 +4,7 @@ import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.grid.GridPanel;
 import com.extjs.selenium.grid.GridRow;
 import com.sdl.selenium.web.WebLocator;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 
@@ -12,7 +13,7 @@ public class List extends GridPanel {
 
     public List() {
         setClassName("List");
-        setBaseCls("x-list-wrap");
+        setBaseCls("ux-form-multiselect");
     }
 
     public List(WebLocator container) {
@@ -49,6 +50,11 @@ public class List extends GridPanel {
             selenium.controlKeyUp();
         }
         return select;
+    }
+
+    public boolean selectRowsWithJs(String[] values) {
+        String id = getAttributeId();
+        return (Boolean) executeScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + StringUtils.join(values, ",") + "');");
     }
 
     public boolean isSelectedRows(String[] values) {

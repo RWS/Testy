@@ -11,8 +11,8 @@ public class ListTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new List(),          "//*[contains(@class, 'x-list-wrap')]"},
-                {new List(container), "//*[contains(@class, 'container')]//*[contains(@class, 'x-list-wrap')]"},
+                {new List(),          "//*[contains(@class, 'ux-form-multiselect')]"},
+                {new List(container), "//*[contains(@class, 'container')]//*[contains(@class, 'ux-form-multiselect')]"},
         };
     }
 
