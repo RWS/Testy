@@ -134,7 +134,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public void type(WebLocator el, String text) {
-        el.currentElement.sendKeys(text);
+        el.sendKeys(text);
     }
 
     @Override

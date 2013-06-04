@@ -3,12 +3,14 @@ package com.sdl.selenium.web.button;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class SelectFilesHandler {
 
@@ -37,6 +39,30 @@ public class SelectFilesHandler {
         selectFiles(filePath);
     }
 
+    /**
+     * Uploud file with AutoIT exe
+     * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     */
+    public void browseWithAutoIT(String[] filePath) {
+        logger.info("browse filePath : " + filePath[1]);
+        openBrowseWindow();
+        try {
+            Process process = Runtime.getRuntime().exec(filePath[0] + " " + filePath[1] + " " + uploadName());
+            if(0 != process.waitFor()){
+                Assert.fail();
+            }
+//            Utils.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String uploadName(){
+        return WebLocator.driver instanceof FirefoxDriver ? "File Upload" : "Open";
+    }
+
     public boolean isElementPresent() {
         return getButtonElement().isElementPresent();
     }
@@ -44,11 +70,11 @@ public class SelectFilesHandler {
     public void openBrowseWindow() {
         WebDriver driver = WebLocator.getDriver();
         driver.switchTo().window(driver.getWindowHandle()); // TODO is not ready 100% (need to focus on browser)
-        buttonElement.sendKeys(Keys.TAB);
+        buttonElement.focus();
+//        buttonElement.sendKeys(Keys.TAB);
         Actions builder = new Actions(driver);
         builder.moveToElement(buttonElement.currentElement).build().perform();
         builder.click().build().perform();
-        Utils.sleep(4000);
         driver.switchTo().defaultContent();
 //        String parentWindowHandle = driver.getWindowHandle(); // save the current window handle.
 //        WebDriver popup = null;

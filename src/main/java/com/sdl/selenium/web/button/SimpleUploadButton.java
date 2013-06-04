@@ -24,4 +24,9 @@ public class SimpleUploadButton extends WebLocator {
     public void uploadFile(String path) {
         type(path);
     }
+
+    public void uploadFileWithJS(String path, String id) {
+        executeScript("return (function(id){var d=document.getElementById(id);d.style.visibility='visible';d.style.height='1px'; d.style.width='1px'; d.style.opacity=1;return d.getAttribute('style') != ''}('" + id + "'));");
+        type(path);
+    }
 }
