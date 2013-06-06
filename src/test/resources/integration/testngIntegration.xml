@@ -59,4 +59,9 @@
             <class name="com.sdl.weblocator.tests.WindowTest"/>
         </classes>
     </test>
+    <test name="DatePickerTest">
+        <classes>
+            <class name="com.sdl.weblocator.bootstrap.DatePickerTest"/>
+        </classes>
+    </test>
 </suite>

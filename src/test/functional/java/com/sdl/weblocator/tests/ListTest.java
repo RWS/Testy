@@ -3,12 +3,14 @@ package com.sdl.weblocator.tests;
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.list.List;
 import com.extjs.selenium.window.Window;
+import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.TestBase;
 import org.junit.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
+import static com.sdl.weblocator.Ignores.Driver.CHROME;
 
 public class ListTest extends TestBase {
 
@@ -26,7 +28,8 @@ public class ListTest extends TestBase {
         multiSelectWindow.close();
     }
 
-    //@Test
+    @Ignores (value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
+    @Test
     public void select() {
         assertTrue(multiSelectList.selectRows(new String[]{"English", "French", "Spanish"}));
         assertTrue(multiSelectList.isSelectedRows(new String[]{"English", "French", "Spanish"}));
@@ -37,5 +40,4 @@ public class ListTest extends TestBase {
         assertTrue(multiSelectList.selectRowsWithJs(new String[]{"German", "Japanese", "Russian"}));
         assertTrue(multiSelectList.isSelectedRows(new String[]{"German", "Japanese", "Russian"}));
     }
-
 }
