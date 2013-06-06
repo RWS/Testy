@@ -2,66 +2,71 @@
 
 <suite name="Testy Functional Test Suite" verbose="1">
     <listeners>
-        <listener class-name="com.sdl.weblocator.tests.MyTransformer"></listener>
+        <listener class-name="com.sdl.weblocator.extjs.MyTransformer"></listener>
     </listeners>
     <test name="ButtonTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.ButtonTest"/>
+            <class name="com.sdl.weblocator.extjs.ButtonTest"/>
         </classes>
     </test>
     <test name="EditorGridPanelTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.EditorGridPanelTest"/>
+            <class name="com.sdl.weblocator.extjs.EditorGridPanelTest"/>
         </classes>
     </test>
     <test name="ComboBoxTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.ComboBoxTest"/>
+            <class name="com.sdl.weblocator.extjs.ComboBoxTest"/>
         </classes>
     </test>
     <test name="DateFieldTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.DateFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.DateFieldTest"/>
         </classes>
     </test>
     <test name="DisplayFieldTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.DisplayFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.DisplayFieldTest"/>
         </classes>
     </test>
     <test name="ListTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.ListTest"/>
+            <class name="com.sdl.weblocator.extjs.ListTest"/>
         </classes>
     </test>
     <test name="RadioGroupTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.RadioGroupTest"/>
+            <class name="com.sdl.weblocator.extjs.RadioGroupTest"/>
         </classes>
     </test>
     <test name="TextAreaTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.TextAreaTest"/>
+            <class name="com.sdl.weblocator.extjs.TextAreaTest"/>
         </classes>
     </test>
     <test name="TextFieldTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.TextFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.TextFieldTest"/>
         </classes>
     </test>
     <test name="WebLocatorTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.WebLocatorTest"/>
+            <class name="com.sdl.weblocator.extjs.WebLocatorTest"/>
         </classes>
     </test>
     <test name="WindowTest">
         <classes>
-            <class name="com.sdl.weblocator.tests.WindowTest"/>
+            <class name="com.sdl.weblocator.extjs.WindowTest"/>
         </classes>
     </test>
     <test name="DatePickerTest">
         <classes>
             <class name="com.sdl.weblocator.bootstrap.DatePickerTest"/>
+        </classes>
+    </test>
+    <test name="CheckBoxTest">
+        <classes>
+            <class name="com.sdl.weblocator.bootstrap.CheckBoxTest"/>
         </classes>
     </test>
 </suite>

@@ -1,4 +1,4 @@
-package com.sdl.weblocator.tests;
+package com.sdl.weblocator.extjs;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;

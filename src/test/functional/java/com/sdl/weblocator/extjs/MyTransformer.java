@@ -1,4 +1,4 @@
-package com.sdl.weblocator.tests;
+package com.sdl.weblocator.extjs;
 
 import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.InputData;

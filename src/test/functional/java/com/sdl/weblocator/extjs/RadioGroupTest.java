@@ -1,4 +1,4 @@
-package com.sdl.weblocator.tests;
+package com.sdl.weblocator.extjs;
 
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.form.RadioGroup;

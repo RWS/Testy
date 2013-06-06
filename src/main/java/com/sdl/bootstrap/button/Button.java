@@ -1,6 +1,5 @@
 package com.sdl.bootstrap.button;
 
-import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
@@ -82,7 +81,7 @@ public class Button extends WebLocator {
      * TO Be used in extreme cases when simple .click is not working
      *
      * @return
-     */
+     *//*
     public boolean clickWithExtJS() {
         String id = getAttributeId();
         String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
@@ -90,33 +89,33 @@ public class Button extends WebLocator {
         return (Boolean) object;
     }
 
-    /**
+    *//**
      * Using XPath only
      *
      * @return
-     */
+     *//*
     public boolean isDisabled() {
         return new WebLocator(null, getPath(true)).exists();
     }
 
-    /**
+    *//**
      * @param milliseconds
      * @return
-     */
+     *//*
     public boolean waitToEnable(long milliseconds) {
         return waitToRender(milliseconds);
     }
 
-    /**
+    *//**
      * @return
-     */
+     *//*
     public boolean isEnabled() {
         return exists();
     }
 
-    /**
+    *//**
      * @return
-     */
+     *//*
     public boolean showMenu() {
         // TODO try to find solution without runScript
         final String id = getAttributeId();
@@ -129,12 +128,12 @@ public class Button extends WebLocator {
         return false;
     }
 
-    /**
+    *//**
      * new String[]{"option1", "option2", "option3-click"}
      *
      * @param menuOptions
      * @return
-     */
+     *//*
     public boolean clickOnMenu(String[] menuOptions) {
         logger.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
         if (click()) {
@@ -169,11 +168,11 @@ public class Button extends WebLocator {
     }
 
 
-    /**
+    *//**
      * @param option
      * @return
-     */
+     *//*
     public boolean clickOnMenu(String option) {
         return clickOnMenu(new String[]{option});
-    }
+    }*/
 }
