@@ -69,4 +69,9 @@
             <class name="com.sdl.weblocator.bootstrap.CheckBoxTest"/>
         </classes>
     </test>
+    <test name="UploadFileTest">
+        <classes>
+            <class name="com.sdl.weblocator.bootstrap.UploadFileTest"/>
+        </classes>
+    </test>
 </suite>

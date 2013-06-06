@@ -3,9 +3,11 @@
 <head>
     <title>Bootstrap WebDriver</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/datepicker.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap-fileupload.css" rel="stylesheet" media="screen">
 </head>
 <body>
 <h1>Bootstrap WebDriver</h1>
@@ -29,10 +31,22 @@
     Stop the process?
 </label>
 
+<div class="control-group">
+    <label class="control-label">TPT Test:</label>
+    <div class="controls">
+        <div class="fileupload fileupload-new" data-provides="fileupload">
+            <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span>
+            <span class="fileupload-preview"></span>
+            <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+        </div>
+    </div>
+</div>
+
 <script src="http://code.jquery.com/jquery.js"></script>
 <!--<script src="bootstrap/js/jquery.js"></script>-->
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
+<script src="js/bootstrap-fileupload.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dp3').datepicker();

@@ -1,0 +1,3 @@
+executeScript("arguments[0].style.visibility = 'visible'; arguments[0].style.height = '1px'; arguments[0].style.width = '1px'; arguments[0].style.opacity = 1", driver.findElement(By.id("xmlInput")));
+inputFile.uploadFile(questionnaire);
+executeScript("arguments[0].style.visibility = ''; arguments[0].style.height = ''; arguments[0].style.width = ''; arguments[0].style.opacity = ''", driver.findElement(By.id("xmlInput")));

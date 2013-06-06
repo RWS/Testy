@@ -40,7 +40,7 @@ public class SelectFilesHandler {
     }
 
     /**
-     * Uploud file with AutoIT exe
+     * Upload file with AutoIT exe
      * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
      */
     public void browseWithAutoIT(String[] filePath) {
@@ -51,7 +51,6 @@ public class SelectFilesHandler {
             if(0 != process.waitFor()){
                 Assert.fail();
             }
-//            Utils.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
