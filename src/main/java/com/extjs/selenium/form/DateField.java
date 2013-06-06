@@ -57,7 +57,7 @@ public class DateField extends TextField {
     }
 
     /**
-     * example new DataField().setDate("19/05/2013")
+     * example new DataField().select("19/05/2013")
      *
      * @param date accept only this format: 'dd/MM/yyyy'
      * @return true if is selected date, false when DataField doesn't exist

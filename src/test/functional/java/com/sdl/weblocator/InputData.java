@@ -42,6 +42,7 @@ public class InputData extends Properties {
     // ==============================
     public static final String UPLOAD_DIRECTORY = new File(RESOURCES_PATH).getAbsolutePath();
     public static final String SERVER_URL = singleton.getProperty("server.url");
+    public static final String BOOTSTRAP_URL = singleton.getProperty("bootstrap.url");
     public static final String FIREFOX_PROFILE_DIR = singleton.getProperty("firefox.profile.dir");
     public static final String CHROME_DRIVER_DIR = singleton.getProperty("chrome.driver.dir");
     public static final String DB_SERVER = singleton.getProperty("db.server");

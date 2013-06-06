@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bootstrap WebDriver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/datepicker.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<h1>Bootstrap WebDriver</h1>
+<div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+    <input class="span2" id="date" size="16" type="text">
+    <span class="add-on"><i class="icon-th"></i></span>
+</div>
+
+<div class="control-group">
+    <label class="control-label">Select Flow:</label>
+    <div class="controls">
+        <select data-bind="flow" class="selectpicker">
+            <option>Auto</option>
+            <option>Manual</option>
+            <option>No ADB</option>
+        </select>
+    </div>
+</div>
+
+<label class="checkbox">
+    <input type="checkbox" value="">
+    Stop the process?
+</label>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<!--<script src="bootstrap/js/jquery.js"></script>-->
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dp3').datepicker();
+    });
+</script>
+</body>
+</html>
+

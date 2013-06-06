@@ -1,6 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Testy Functional Test Suite" verbose="1">
+    <listeners>
+        <listener class-name="com.sdl.weblocator.tests.MyTransformer"></listener>
+    </listeners>
     <test name="ButtonTest">
         <classes>
             <class name="com.sdl.weblocator.tests.ButtonTest"/>
