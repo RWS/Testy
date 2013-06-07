@@ -74,4 +74,9 @@
             <class name="com.sdl.weblocator.bootstrap.UploadFileTest"/>
         </classes>
     </test>
+    <test name="SelectPickerTest">
+        <classes>
+            <class name="com.sdl.weblocator.bootstrap.SelectPickerTest"/>
+        </classes>
+    </test>
 </suite>
