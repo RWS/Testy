@@ -7,6 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * If you want more information about this datepicker visit this site: http://vitalets.github.io/bootstrap-datepicker/
+ */
 public class DatePicker extends WebLocator {
     private static final Logger logger = Logger.getLogger(DatePicker.class);
 
@@ -52,7 +55,7 @@ public class DatePicker extends WebLocator {
         return setDate(day, month, year);
     }
 
-    private WebLocator icon = new WebLocator(this).setCls("icon-th").setInfoMessage("Open DatePicker");
+    private WebLocator icon = new WebLocator(this).setCls("icon-calendar").setInfoMessage("Open Calendar");
     private WebLocator dataPicker = new WebLocator().setCls("datepicker-dropdown dropdown-menu").setStyle("display: block;");
     private WebLocator dataPickerDays = new WebLocator(dataPicker).setCls("datepicker-days").setStyle("display: block;");
     private WebLocator dataPickerMonths = new WebLocator(dataPicker).setCls("datepicker-months").setStyle("display: block;");
@@ -72,7 +75,7 @@ public class DatePicker extends WebLocator {
             boolean m = monthSelect.click();
 
             WebLocator daySelect = new WebLocator(dataPickerDays).setCls("day").setText(day);
-            return y && m && daySelect.click() && click() && click();
+            return y && m && daySelect.click();
         }
         return false;
     }
