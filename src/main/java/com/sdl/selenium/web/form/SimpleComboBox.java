@@ -9,6 +9,7 @@ public class SimpleComboBox extends WebLocator {
 
     public SimpleComboBox() {
         setClassName("SimpleComboBox");
+        setTag("select");
     }
 
     //TODO
@@ -18,10 +19,14 @@ public class SimpleComboBox extends WebLocator {
     }
 
     public boolean select(String value) {
-        if (isElementPresent()) {
-            if(hasWebDriver()){
-                new Select(currentElement).selectByVisibleText(value);
-                return true;
+        if (ready()) {
+            if (hasWebDriver()) {
+                if ("".equals(value)) {
+                    return true;
+                } else {
+                    new Select(currentElement).selectByVisibleText(value);
+                    return true;
+                }
             } else {
                 selenium.select(getPath(), value);
                 return true;

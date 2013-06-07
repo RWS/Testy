@@ -11,9 +11,9 @@ public class SimpleComboBoxTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new SimpleComboBox(),                      "//*"},
+                {new SimpleComboBox(),                      "//select"},
                 {new SimpleComboBox("//*[@id='SelectId']"), "//*[@id='SelectId']"},
-                {new SimpleComboBox().setId("ID"), "//*[@id='ID']"},
+                {new SimpleComboBox().setId("ID"), "//select[@id='ID']"},
         };
     }
 

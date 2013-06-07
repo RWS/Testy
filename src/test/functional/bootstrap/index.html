@@ -20,7 +20,7 @@
     <div>
         <label class="control-label">Tech:</label>
         <div>
-            <select data-bind="flow" class="selectpicker">
+            <select class="selectpicker">
                 <option>Auto</option>
                 <option>Manual</option>
                 <option>No ADB</option>
@@ -52,6 +52,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.selectpicker').selectpicker();
         var today = new Date();
 
         $('#dp3').datepicker({
