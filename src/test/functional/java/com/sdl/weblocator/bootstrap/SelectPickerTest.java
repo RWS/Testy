@@ -1,5 +1,6 @@
 package com.sdl.weblocator.bootstrap;
 
+import com.sdl.bootstrap.form.Form;
 import com.sdl.bootstrap.form.SelectPicker;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
@@ -12,7 +13,8 @@ import static org.testng.Assert.assertTrue;
 public class SelectPickerTest extends TestBase {
     private static final Logger logger = Logger.getLogger(SelectPickerTest.class);
 
-    SelectPicker selectPicker = new SelectPicker(null, "Tech:");
+    Form form = new Form(null, "Form Title");
+    SelectPicker selectPicker = new SelectPicker(form, "Tech:");
 
     @BeforeClass
     public void startTests() {

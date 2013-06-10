@@ -1,6 +1,7 @@
 package com.sdl.weblocator.bootstrap;
 
 import com.sdl.bootstrap.form.CheckBox;
+import com.sdl.bootstrap.form.Form;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
@@ -12,7 +13,8 @@ import static org.testng.Assert.assertTrue;
 public class CheckBoxTest extends TestBase {
     private static final Logger logger = Logger.getLogger(CheckBoxTest.class);
 
-    CheckBox checkBox = new CheckBox();
+    Form form = new Form(null, "Form Title");
+    CheckBox checkBox = new CheckBox(form);
 
     @BeforeClass
     public void startTests() {
