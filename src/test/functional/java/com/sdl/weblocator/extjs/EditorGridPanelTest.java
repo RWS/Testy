@@ -6,6 +6,7 @@ import com.extjs.selenium.form.ComboBox;
 import com.extjs.selenium.form.TextArea;
 import com.extjs.selenium.form.TextField;
 import com.extjs.selenium.grid.EditorGridPanel;
+import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.window.Window;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
@@ -44,7 +45,12 @@ public class EditorGridPanelTest extends TestBase {
         editorGridPanelWindow.close();
     }
 
-    @Test(dataProvider = "createTestDP")
+    @Test
+    public void testSelectRow() {
+        assertTrue(editorGridPanel.selectRow(new GridCell(1, "Wake Robin", "eq"), new GridCell(2, "Trillium grandiflorum", "eq")));
+    }
+
+    @Test(dependsOnMethods = "testSelectRow", dataProvider = "createTestDP")
     public void testEditorType(int column, Class<? extends TextField> cls) {
         editorGridPanel.startEdit(1, column);
         TextField textField = editorGridPanel.getActiveEditor();

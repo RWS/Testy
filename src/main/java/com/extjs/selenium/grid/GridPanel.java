@@ -204,9 +204,8 @@ public class GridPanel extends Panel {
     }
 
     /**
-     *
      * @param searchElement
-     * @param searchType accepted values are: {"equals"/"eq", "starts-with", "contains"}
+     * @param searchType    accepted values are: {"equals"/"eq", "starts-with", "contains"}
      * @return
      */
     public boolean rowSelect(String searchElement, String searchType) {
@@ -218,7 +217,7 @@ public class GridPanel extends Panel {
     /**
      * @param searchElement
      * @param columnId
-     * @param searchType accepted values are: {"equals", "starts-with", "contains"}
+     * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
      * @return
      */
 
@@ -517,6 +516,15 @@ public class GridPanel extends Panel {
 
     public GridRow findGridRow(GridCell... byCells) {
         return new GridRow(this, byCells);
+    }
+
+    public boolean selectRow(GridCell... byCells) {
+        GridRow gridRow = findGridRow(byCells);
+        boolean selected;
+        do {
+            selected = gridRow.clickAt();
+        } while (!selected && scrollPageDown());
+        return selected;
     }
 
     public GridCell getGridCell(int position, String text, GridCell... byCells) {
