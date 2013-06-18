@@ -14,7 +14,7 @@ public class FormTest {
                 {new Form(),                      "//form"},
                 {new Form().setId("ID"),          "//form[@id='ID']"},
                 {new Form(container),             "//*[contains(@class, 'container')]//form"},
-                {new Form(container, "TitleForm"),"//*[contains(@class, 'container')]//form[count(//legend[text()='TitleForm']) > 0]"},
+                {new Form(container, "TitleForm"),"//*[contains(@class, 'container')]//form[count(.//legend[text()='TitleForm']) > 0]"},
         };
     }
 

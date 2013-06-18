@@ -26,7 +26,7 @@ public class Form extends SimpleTextField {
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         if (hasTitle()) {
-            selector += "count(//legend[text()='" + getTitle() + "']) > 0";
+            selector += "count(.//legend[text()='" + getTitle() + "']) > 0";
         }
         selector = Utils.fixPathSelector(selector);
         selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
