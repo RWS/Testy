@@ -23,6 +23,9 @@ var _classGen = {
         if(classCode.indexOf('Table') != -1){
             imports.push('import com.sdl.selenium.web.table.Table;')
         }
+        if(classCode.indexOf('Form') != -1){
+            imports.push('import com.sdl.bootstrap.form.Form;')
+        }
         return imports.join('\n') + '\n\n';
     },
 
@@ -86,6 +89,17 @@ var _classGen = {
         return code;
     },
 
+    getFormConfig: function (item){
+             var code = '';
+             var kids = $(item).children('legend');
+            if(item.id){
+                code += '.setId("' + item.id + '")';
+            } else if(kids){
+                code += '.setTitle("' + kids.text() + '")';
+            }
+            return code;
+        },
+
     getItemCode: function (container, item){
         var me = this,
             name = '',
@@ -93,7 +107,6 @@ var _classGen = {
             code = '\tpublic ',
             tag = item.prop("tagName").toLowerCase();
 
-        // all classes that are or extend panels
         if(tag == 'input'){
             var type = item.prop("type");
             if(type == 'text' || type == 'email'){
@@ -104,7 +117,7 @@ var _classGen = {
             if(className){
                 name = item.prop("id"); // create order for variable name
                 name = _classGen.getVarName(name) + className;
-                code += className + ' ' + name + ' = new ' + className + '()';
+                code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
                 code += _classGen.getFieldConfig(item);
             } else {
                 code = '';
@@ -114,14 +127,14 @@ var _classGen = {
             className = 'Button';
             name = item.prop("id") || item.text(); // create order for variable name
             name = _classGen.getVarName(name) + className;
-            code += className + ' ' + name + ' = new ' + className + '()';
+            code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
             code += _classGen.getButtonConfig(item);
         } else if(tag == 'textarea'){
             className = 'TextArea';
             if(className){
                 name = item.prop("id"); // create order for variable name
                 name = _classGen.getVarName(name) + className;
-                code += className + ' ' + name + ' = new ' + className + '()';
+                code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
                 code += _classGen.getFieldConfig(item);
             } else {
                 code = '';
@@ -131,11 +144,21 @@ var _classGen = {
             if(className){
                 name = item.prop("id"); // create order for variable name
                 name = _classGen.getVarName(name) + className;
-                code += className + ' ' + name + ' = new ' + className + '()';
+                code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
                 code += _classGen.getButtonConfig(item);
             } else {
                 code = '';
             }
+        } else if(tag == 'form'){
+             className = 'Form';
+             if(className){
+                 name = item.children('legend').text();
+                 name = _classGen.getVarName(name) + className;
+                 code += className + ' ' + name + ' = new ' + className + '(' + container + ')';
+                 code += _classGen.getFormConfig(item);
+             } else {
+                 code = '';
+             }
         } else if(item.attr("role") == 'dialog'){
             className = 'Window';
             var title = item.children('div').children('h3').text();
@@ -222,7 +245,15 @@ var _classGen = {
     },
 
     getBadyClassCode : function (){
-        return _classGen.getElClassCode($("body").children().first());
+//        return _classGen.getElClassCode($("body").children().first());
+        var el;
+        $("body").children().first().children().last().children().each(function (){
+            var style = $(this).attr('style');
+            if(style == "display: block;" || style != "display: none;"){
+                el = this;
+            }
+        });
+        return  _classGen.getElClassCode(el);
     },
 
     getElClassCode : function (el){
