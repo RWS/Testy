@@ -25,13 +25,13 @@ public class UploadFileTest extends TestBase {
 
     @Test
     public void upload() {
-        uploadFile.upload("Select file", new String[]{InputData.UPLOAD_DIRECTORY + "\\upload\\upload.exe", InputData.UPLOAD_DIRECTORY + "\\upload\\example.txt"});
-        assertTrue(new File(InputData.UPLOAD_DIRECTORY + "\\upload\\example.txt").getName().equals(uploadFile.uploadedNameFile()));
+        uploadFile.upload("Select file", new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt"});
+        assertTrue(new File(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt").getName().equals(uploadFile.uploadedNameFile()));
     }
 
     @Test (dependsOnMethods = "upload")
     public void change() {
-        uploadFile.change(new String[]{InputData.UPLOAD_DIRECTORY + "\\upload\\upload.exe", InputData.UPLOAD_DIRECTORY + "\\upload\\exampleM.txt"});
-        assertTrue(new File(InputData.UPLOAD_DIRECTORY + "\\upload\\exampleM.txt").getName().equals(uploadFile.uploadedNameFile()));
+        uploadFile.change(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\exampleM.txt"});
+        assertTrue(new File(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\exampleM.txt").getName().equals(uploadFile.uploadedNameFile()));
     }
 }

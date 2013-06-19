@@ -12,9 +12,9 @@ public class InputData extends Properties {
     private static final Logger logger = Logger.getLogger(InputData.class);
 
     public static final String ENV_PROPERTY = "env";
-    //    public static final String ENV_PROPERTY_DEFAULT = "ci03";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
     public static final String RESOURCES_PATH = "src/test/resources/";
+    public static final String FUNCTIONAL_PATH = "src/test/functional/";
 
     private static InputData singleton = new InputData();
 
@@ -25,7 +25,6 @@ public class InputData extends Properties {
 
             FileInputStream fileInputStream = new FileInputStream(RESOURCES_PATH + testEnvironment + ".properties");
             load(fileInputStream);
-            logger.info("selenium.server  : " + getProperty("bigbird.url"));
         } catch (FileNotFoundException e) {
             logger.error(e);
         } catch (IOException e) {
@@ -40,15 +39,14 @@ public class InputData extends Properties {
     }
 
     // ==============================
-    public static final String UPLOAD_DIRECTORY = new File(RESOURCES_PATH).getAbsolutePath();
-    public static final String SERVER_URL = singleton.getProperty("server.url");
-    public static final String BOOTSTRAP_URL = singleton.getProperty("bootstrap.url");
+    public static final String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
+    public static final String FUNCTIONAL_PATH_ABSOLUTE = "file:///" + new File(FUNCTIONAL_PATH).getAbsolutePath();
+
+    public static final String SERVER_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("server.url");
+    public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("bootstrap.url");
+
     public static final String FIREFOX_PROFILE_DIR = singleton.getProperty("firefox.profile.dir");
-    public static final String CHROME_DRIVER_DIR = UPLOAD_DIRECTORY + singleton.getProperty("chrome.driver.dir");
-    public static final String DB_SERVER = singleton.getProperty("db.server");
-    public static final String DB_TABLE = singleton.getProperty("db.table");
-    public static final String DB_USER = singleton.getProperty("db.user");
-    public static final String DB_PASSWORD = singleton.getProperty("db.password");
+    public static final String CHROME_DRIVER_DIR = RESOURCES_DIRECTORY_PATH + singleton.getProperty("chrome.driver.dir");
     public static final String BROWSER = singleton.getProperty("browser");
 
 }
