@@ -33,27 +33,50 @@ public class UploadFile extends WebLocator {
     /**
      * Upload file with AutoIT.
      * Use only this: button.browseWithAutoIT("Browse", new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     *
      * @param text
      * @param filePath
      */
     public void upload(String text, String[] filePath) {
-        upload("fileupload-new", text, filePath);
-    }
-
-    public void change(String text, String[] filePath) {
-        upload("fileupload-exists", text, filePath);
+        WebLocator upload = new WebLocator(this).setTag("span").setCls("fileupload-new").setText(text);
+        upload(upload, filePath);
     }
 
     public void change(String[] filePath) {
-        upload("fileupload-exists", "Change", filePath);
+        change("Change", filePath);
     }
 
-    public void upload(String cls, String text, String[] filePath) {
+    public void change(String text, String[] filePath) {
+        WebLocator upload = new WebLocator(this).setTag("span").setCls("fileupload-exists").setText(text);
+        upload(upload, filePath);
+    }
+
+    /**
+     * Upload file with AutoIT.
+     * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     *
+     * @param filePath new String[] {"C:\\upload.exe", "C:\\text.txt"}
+     */
+    public void upload(String[] filePath) {
+        WebLocator uploadButton = new WebLocator(this, "//span[contains(@class,'fileupload-new') and count(.//i[@class='icon-folder-open']) > 0]");
+        upload(uploadButton, filePath);
+    }
+
+    public void reUpload(String[] filePath) {
+        WebLocator uploadButton = new WebLocator(this, "//span[contains(@class,'fileupload-exists') and count(.//i[@class='icon-refresh']) > 0]");
+        upload(uploadButton, filePath);
+    }
+
+    public boolean removeFile() {
+        WebLocator removeButton = new WebLocator(this, "//a[contains(@class,'fileupload-exists') and count(.//i[@class='icon-trash']) > 0]");
+        return removeButton.clickAt();
+    }
+
+    public void upload(WebLocator el, String[] filePath) {
         driver.switchTo().window(driver.getWindowHandle());
-        WebLocator upload = new WebLocator(this).setTag("span").setCls(cls).setText(text);
-        upload.focus();
+        el.focus();
         Actions builder = new Actions(driver);
-        builder.moveToElement(upload.currentElement).build().perform();
+        builder.moveToElement(el.currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
         try {

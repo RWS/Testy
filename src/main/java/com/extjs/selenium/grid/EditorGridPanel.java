@@ -185,6 +185,14 @@ public class EditorGridPanel extends GridPanel {
         return false;
     }
 
+    public boolean setRowValueSafe(int rowIndex, int colIndex, String value) {
+        if (setRowValue(rowIndex, colIndex, value)) {
+            return true;
+        } else {
+            return setRowValue(rowIndex, colIndex, value);
+        }
+    }
+
     public boolean appendRowValue(int rowIndex, int colIndex, String value) {
         logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
         if (startEdit(rowIndex, colIndex)) {
