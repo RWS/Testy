@@ -26,11 +26,15 @@ public class CheckBox extends SimpleTextField {
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         selector = Utils.fixPathSelector(selector);
-        selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
+        if (hasText()) {
+            selector = "//" + getTag() + "[" + selector + "]";
+        } else {
+            selector = selector.length() > 0 ? "//*[" + selector + "]" : "";
+        }
         return selector + "//input[@type='checkbox']";
     }
 
-    public boolean isSelected(){
+    public boolean isSelected() {
         return isElementPresent() && executor.isSelected(this);
     }
 }

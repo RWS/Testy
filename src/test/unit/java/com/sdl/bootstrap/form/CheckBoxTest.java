@@ -11,9 +11,9 @@ public class CheckBoxTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new CheckBox(),                                       "//label//input[@type='checkbox']"},
-                {new CheckBox().setId("ID"),                           "//label[@id='ID']//input[@type='checkbox']"},
-                {new CheckBox(container),                              "//*[contains(@class, 'container')]//label//input[@type='checkbox']"},
+                {new CheckBox(),                                       "//input[@type='checkbox']"},
+                {new CheckBox().setId("ID"),                           "//*[@id='ID']//input[@type='checkbox']"},
+                {new CheckBox(container),                              "//*[contains(@class, 'container')]//input[@type='checkbox']"},
                 {new CheckBox(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(@class, 'container')]//*[contains(text(), 'Register')]"},
                 {new CheckBox(container, "TextFieldText"),             "//*[contains(@class, 'container')]//label[contains(text(),'TextFieldText')]//input[@type='checkbox']"},
         };

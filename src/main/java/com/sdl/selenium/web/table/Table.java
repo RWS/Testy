@@ -434,12 +434,12 @@ public class Table extends Cell {
         return new TableRow(this, byCells);
     }
 
-    public TableCell getGridCell(int position, TableCell... byCells) {
-        return new TableCell(findRow(byCells), position);
+    public TableCell getGridCell(int columnIndex, TableCell... byCells) {
+        return new TableCell(findRow(byCells), columnIndex);
     }
 
-    public TableCell getGridCell(int position, String text, TableCell... byCells) {
-        return new TableCell(findRow(byCells), position, text, "eq");
+    public TableCell getGridCell(int columnIndex, String text, TableCell... byCells) {
+        return new TableCell(findRow(byCells), columnIndex, text, "eq");
     }
 
     public String[] getRow(int rowIndex) {
