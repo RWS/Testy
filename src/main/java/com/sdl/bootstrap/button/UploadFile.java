@@ -2,7 +2,6 @@ package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class UploadFile extends WebLocator {
@@ -76,11 +75,7 @@ public class UploadFile extends WebLocator {
         builder.moveToElement(el.currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
-        return new RunExe().upload(filePath);
-    }
-
-    private String uploadName() {
-        return WebLocator.driver instanceof FirefoxDriver ? "File Upload" : "Open";
+        return RunExe.getInstance().upload(filePath);
     }
 
     public String uploadedNameFile() {

@@ -84,4 +84,9 @@
             <class name="com.sdl.weblocator.bootstrap.SpanTest"/>
         </classes>
     </test>
+    <test name="DownloadFileTest">
+        <classes>
+            <class name="com.sdl.weblocator.bootstrap.DownloadFileTest"/>
+        </classes>
+    </test>
 </suite>

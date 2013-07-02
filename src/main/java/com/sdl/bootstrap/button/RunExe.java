@@ -9,6 +9,15 @@ import java.util.Date;
 
 public class RunExe {
 
+    private static RunExe instance = new RunExe();
+
+    private RunExe() {
+    }
+
+    public static RunExe getInstance() {
+        return instance;
+    }
+
     public boolean download(String[] filePath) {
         return upload(filePath[0] + " " + filePath[1] + " " + downloadName());
     }

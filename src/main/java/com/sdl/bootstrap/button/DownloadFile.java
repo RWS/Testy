@@ -39,6 +39,6 @@ public class DownloadFile extends WebLocator {
         builder.moveToElement(currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
-        return new RunExe().download(filePath);
+        return RunExe.getInstance().download(filePath);
     }
 }
