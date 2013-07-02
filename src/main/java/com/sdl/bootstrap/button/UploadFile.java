@@ -4,9 +4,6 @@ import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
-
-import java.io.IOException;
 
 public class UploadFile extends WebLocator {
     private static final Logger logger = Logger.getLogger(UploadFile.class);
@@ -72,23 +69,14 @@ public class UploadFile extends WebLocator {
         return removeButton.clickAt();
     }
 
-    public void upload(WebLocator el, String[] filePath) {
+    public boolean upload(WebLocator el, String[] filePath) {
         driver.switchTo().window(driver.getWindowHandle());
         el.focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(el.currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
-        try {
-            Process process = Runtime.getRuntime().exec(filePath[0] + " " + filePath[1] + " " + uploadName());
-            if (0 != process.waitFor()) {
-                Assert.fail();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return new RunExe().upload(filePath);
     }
 
     private String uploadName() {

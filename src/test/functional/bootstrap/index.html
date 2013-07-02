@@ -60,6 +60,16 @@
         </div>
     </div>
 
+    <label class="control-label">Project Data:</label>
+    <div class="controls">
+        <button id="downloadProjectDataButton" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+    </div>
+
+    <label class="control-label">DownloadNegative:</label>
+    <div class="controls">
+        <button id="downloadNegative" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+    </div>
+
 </form>
 
 <!--<script src="http://code.jquery.com/jquery.js"></script>-->
@@ -80,6 +90,10 @@
             keyboardNavigation: true
         });
         $('#dp3').datepicker('setValue', today);
+
+        $('#downloadProjectDataButton').on('click', function(){
+            window.location.href = '../../resources/upload/text.docx';
+        });
     });
 </script>
 </body>
