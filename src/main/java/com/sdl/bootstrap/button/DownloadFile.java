@@ -28,7 +28,7 @@ public class DownloadFile extends WebLocator {
 
     /**
      * Download file with AutoIT. Work only on FireFox.
-     * Use only this: button.download(testSet, new String[]{"C:\\download.exe", "TestSet.tmx"});
+     * Use only this: button.download(new String[]{"C:\\download.exe", "TestSet.tmx"});
      *
      * @param filePath
      */

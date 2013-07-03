@@ -5,7 +5,6 @@ import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
-import java.util.Date;
 
 public class RunExe {
 
@@ -31,7 +30,18 @@ public class RunExe {
     }
 
     public boolean upload(String filePath) {
-        RunExeThread runExeThread = new RunExeThread(filePath);
+        try {
+            Process process = Runtime.getRuntime().exec(filePath);
+            if (0 == process.waitFor()) {
+                return true;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+        /*RunExeThread runExeThread = new RunExeThread(filePath);
         runExeThread.start();
         long startTime = new Date().getTime();
         while (Thread.State.RUNNABLE.equals(runExeThread.getState())) {
@@ -41,7 +51,7 @@ public class RunExe {
                 return false;
             }
         }
-        return Thread.State.TIMED_WAITING.equals(runExeThread.getState());
+        return Thread.State.TIMED_WAITING.equals(runExeThread.getState());*/
     }
 
     private String uploadName() {
