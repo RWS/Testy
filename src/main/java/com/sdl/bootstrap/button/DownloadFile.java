@@ -1,10 +1,10 @@
 package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.button.SelectFiles;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.interactions.Actions;
 
-public class DownloadFile extends WebLocator {
+public class DownloadFile extends SelectFiles {
     private static final Logger logger = Logger.getLogger(DownloadFile.class);
 
     public DownloadFile() {
@@ -24,21 +24,5 @@ public class DownloadFile extends WebLocator {
     public DownloadFile(WebLocator container, String label) {
         this(container);
         setLabel(label);
-    }
-
-    /**
-     * Download file with AutoIT. Work only on FireFox.
-     * Use only this: button.download(new String[]{"C:\\download.exe", "TestSet.tmx"});
-     *
-     * @param filePath
-     */
-    public boolean download(String[] filePath) {
-        driver.switchTo().window(driver.getWindowHandle());
-        focus();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(currentElement).build().perform();
-        builder.click().build().perform();
-        driver.switchTo().defaultContent();
-        return RunExe.getInstance().download(filePath);
     }
 }
