@@ -59,6 +59,16 @@
             <class name="com.sdl.weblocator.extjs.WindowTest"/>
         </classes>
     </test>
+    <test name="DownloadTest">
+        <classes>
+            <class name="com.sdl.weblocator.extjs.DownloadTest"/>
+        </classes>
+    </test>
+    <test name="UploadButtonTest">
+        <classes>
+            <class name="com.sdl.weblocator.extjs.UploadButtonTest"/>
+        </classes>
+    </test>
     <test name="DatePickerTest">
         <classes>
             <class name="com.sdl.weblocator.bootstrap.DatePickerTest"/>

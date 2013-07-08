@@ -45,7 +45,7 @@ public class InputData extends Properties {
     public static final String SERVER_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("server.url");
     public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("bootstrap.url");
 
-    public static final String FIREFOX_PROFILE_DIR = singleton.getProperty("firefox.profile.dir");
+    public static final String FIREFOX_PROFILE = singleton.getProperty("firefox.profile");
     public static final String CHROME_DRIVER_DIR = RESOURCES_DIRECTORY_PATH + singleton.getProperty("chrome.driver.dir");
     public static final String BROWSER = singleton.getProperty("browser");
 

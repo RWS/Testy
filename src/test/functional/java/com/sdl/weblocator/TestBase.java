@@ -7,13 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
@@ -101,9 +101,10 @@ public class TestBase {
 
     public WebDriver getWebDriver(String browser) {
         if (browser.equalsIgnoreCase("*firefox")) {
-            if (InputData.FIREFOX_PROFILE_DIR != null && !InputData.FIREFOX_PROFILE_DIR.equals("")) {
-                FirefoxProfile firefoxProfile = new FirefoxProfile(new File(InputData.FIREFOX_PROFILE_DIR));
-                return new FirefoxDriver(firefoxProfile);
+            ProfilesIni allProfiles = new ProfilesIni();
+            FirefoxProfile myProfile = allProfiles.getProfile(InputData.FIREFOX_PROFILE);
+            if (myProfile != null) {
+                return new FirefoxDriver(myProfile);
             } else {
                 return new FirefoxDriver();
             }

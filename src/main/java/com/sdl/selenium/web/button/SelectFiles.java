@@ -1,11 +1,12 @@
 package com.sdl.selenium.web.button;
 
+import com.extjs.selenium.button.Button;
 import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
 
-public class SelectFiles extends WebLocator {
+public class SelectFiles extends Button {
 
     private static final Logger logger = Logger.getLogger(SelectFiles.class);
 

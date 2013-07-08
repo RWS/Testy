@@ -14,11 +14,12 @@ public class DownloadButton extends SelectFiles {
 
     public DownloadButton(WebLocator container) {
         this();
-        setElPath(new Button(container).getPath());
+        setContainer(container);
     }
 
     public DownloadButton(WebLocator container, String text) {
-        this();
-        setElPath(new Button(container, text).getPath());
+        this(container);
+        setText(text);
+        setSearchTextType("eq");
     }
 }

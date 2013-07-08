@@ -1,10 +1,10 @@
 package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.button.SelectFiles;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.interactions.Actions;
 
-public class UploadFile extends SelectFiles {
+public class UploadFile extends WebLocator {
     private static final Logger logger = Logger.getLogger(UploadFile.class);
 
     public UploadFile() {
@@ -28,7 +28,7 @@ public class UploadFile extends SelectFiles {
 
     /**
      * Upload file with AutoIT.
-     * Use only this: button.browseWithAutoIT("Browse", new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     * Use only this: button.upload("Browse", new String[] {"C:\\upload.exe", "C:\\text.txt"});
      *
      * @param text
      * @param filePath
@@ -49,7 +49,7 @@ public class UploadFile extends SelectFiles {
 
     /**
      * Upload file with AutoIT.
-     * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     * Use only this: button.upload(new String[] {"C:\\upload.exe", "C:\\text.txt"});
      *
      * @param filePath new String[] {"C:\\upload.exe", "C:\\text.txt"}
      */
@@ -71,5 +71,15 @@ public class UploadFile extends SelectFiles {
     public String uploadedNameFile() {
         WebLocator upload = new WebLocator(this).setTag("span").setCls("fileupload-preview");
         return upload.getHtmlText();
+    }
+
+    public boolean upload(WebLocator el, String[] filePath) {
+        driver.switchTo().window(driver.getWindowHandle());
+        el.focus();
+        Actions builder = new Actions(driver);
+        builder.moveToElement(el.currentElement).build().perform();
+        builder.click().build().perform();
+        driver.switchTo().defaultContent();
+        return RunExe.getInstance().upload(filePath);
     }
 }

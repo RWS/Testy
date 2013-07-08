@@ -2,14 +2,9 @@ Ext.onReady(function(){
 
     Ext.QuickTips.init();
 
-    // turn on validation errors beside the field globally
     Ext.form.Field.prototype.msgTarget = 'side';
 
     var bd = Ext.getBody();
-
-    /*
-     * ================  Simple form  =======================
-     */
     bd.createChild({tag: 'h2', html: 'Field Components'});
 
     var simple = new Ext.FormPanel({
@@ -30,23 +25,23 @@ Ext.onReady(function(){
             editable : false,
             format: 'd/m/Y',
             minValue: '01/01/06'
-        }, new Ext.form.TimeField({
-            fieldLabel: 'Time',
-            name: 'time',
-            minValue: '8:00am',
-            maxValue: '6:00pm'
-        }), new Ext.Button({
+        }, new Ext.Button({
             style:{
                 fontSize:12,
                 marginLeft: "100px"
-
             },
             html:'<a href="#" style="color: blue">Download File</a>',
             handler: function() {
                 window.location.href = '../../resources/upload/text.docx';
             }
-
-        })
+        }), {
+            xtype: 'fileuploadfield',
+            id: 'form-file',
+            emptyText: 'Select a file',
+            fieldLabel: 'Upload File',
+            name: 'photo-path',
+            buttonText: 'Browse',
+        }
         ],
 
         buttons: [{
