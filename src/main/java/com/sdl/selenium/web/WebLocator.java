@@ -139,10 +139,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * Using XPath only
      */
     public boolean clickAt() {
-        if (ready()) {
-            return doClickAt();
+        boolean clickAt = ready() && doClickAt();
+        if(clickAt){
+            logger.info("ClickAt on " + this);
         }
-        return false;
+        return clickAt;
     }
 
     public boolean assertClickAt() {
@@ -167,7 +168,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public boolean click() {
-        return waitToRender() && doClick();
+        boolean click = waitToRender() && doClick();
+        if(click){
+            logger.info("Click on " + this);
+        }
+        return click;
     }
 
     /**

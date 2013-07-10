@@ -40,22 +40,16 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } else {
             logger.error("currentElement is null");
         }
-        if (clicked) {
-            logger.info("Click on " + el);
-        }
         return clicked;
     }
 
     @Override
     public boolean doClickAt(WebLocator el) {
-        boolean clicked;
         if (highlight) {
             doHighlight(el);
         }
         focus(el);
-        clicked = doClick(el);
-        logger.info("ClickAt on " + el);
-        return clicked;
+        return doClick(el);
     }
 
     @Override

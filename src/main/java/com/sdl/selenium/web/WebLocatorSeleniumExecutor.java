@@ -20,20 +20,16 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
             doHighlight(el);
         }
         selenium.click(el.getPath());
-        logger.info("Click on " + el);
         return true;
     }
 
     @Override
     public boolean doClickAt(WebLocator el) {
-        boolean clicked;
         if (highlight) {
             doHighlight(el);
         }
         selenium.clickAt(el.getPath(), "");
-        clicked = true;
-        logger.info("ClickAt on " + el);
-        return clicked;
+        return true;
     }
 
     @Override
