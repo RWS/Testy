@@ -50,14 +50,16 @@ public class SimpleTextField extends WebLocator {
         if (ready()) {
             // using WebDriver -> there are situations when the value is taken by getText() or getAttribute("value")
             if (hasWebDriver()) {
-                if (!currentElement.getAttribute("value").equals("") && currentElement.getText().equals("")) {
-                    value = currentElement.getAttribute("value");
-                } else if (currentElement.getAttribute("value").equals("") && !currentElement.getText().equals("")) {
+                String text = currentElement.getAttribute("value");
+                if (!text.equals("") && currentElement.getText().equals("")) {
+                    value = text;
+                } else if (text.equals("") && !currentElement.getText().equals("")) {
                     value = currentElement.getText();
-                } else if (!currentElement.getAttribute("value").equals("") && !currentElement.getText().equals("") && currentElement.getAttribute("value").equals(currentElement.getText())) {
+                } else if (!text.equals("") && !currentElement.getText().equals("") && text.equals(currentElement.getText())) {
                     value = currentElement.getText();
-                } else if (!currentElement.getAttribute("value").equals("") && !currentElement.getText().equals("") && !currentElement.getAttribute("value").equals(currentElement.getText())) {
-                    logger.debug("Not sure what value to use: \ncurrentElement.getText()= " + currentElement.getText() + "\ncurrentElement.getAttribute(\"value\"): " + currentElement.getAttribute("value"));
+                } else if (!text.equals("") && !currentElement.getText().equals("") && !text.equals(currentElement.getText())) {
+                    logger.warn("Not sure what value to use: \ncurrentElement.getText()= " + currentElement.getText() + "\ncurrentElement.getAttribute(\"value\"): " + text);
+                    value = text;
                 }
             } else {
                 value = selenium.getValue(getPath());
