@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -43,19 +42,18 @@ public class SelectFilesHandler {
      * Upload file with AutoIT exe
      * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
      */
-    public void browseWithAutoIT(String[] filePath) {
-        logger.info("browse filePath : " + filePath[1]);
-        openBrowseWindow();
+    public boolean browseWithAutoIT(String[] filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath[0] + " " + filePath[1] + " " + uploadName());
-            if(0 != process.waitFor()){
-                Assert.fail();
+            if (0 == process.waitFor()) {
+                return true;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     private String uploadName(){

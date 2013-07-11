@@ -94,13 +94,11 @@ public class Panel extends ExtJsComponent {
      * @return
      */
     public String getBodyPath(){
-        String selector = "//*[contains(@class, '" + getBaseCls() + "-body')]";
-        return selector;
+        return  "//*[contains(@class, '" + getBaseCls() + "-body')]";
     }
 
     public ExtJsComponent getBodyComponent(){
-        ExtJsComponent body = new ExtJsComponent(this, getBodyPath());
-        return body;
+        return new ExtJsComponent(this, getBodyPath());
     }
 
     public boolean clickOnTool(String id) {
