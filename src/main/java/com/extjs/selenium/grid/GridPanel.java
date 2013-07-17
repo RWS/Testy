@@ -209,7 +209,7 @@ public class GridPanel extends Panel {
      * @param searchType    accepted values are: {"equals"/"eq", "starts-with", "contains"}
      * @return
      */
-    public boolean rowSelect(String searchElement, String searchType) {
+    public boolean rowSelect(String searchElement, SearchType searchType) {
         ready(true);
         GridCell cell = getGridCell(searchElement, searchType);
         return doCellSelect(cell);
@@ -463,11 +463,13 @@ public class GridPanel extends Panel {
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
      * @return
      */
-    public GridCell getGridCell(String searchElement, String searchType) {
+    public GridCell getGridCell(String searchElement, SearchType searchType) {
         String textCondition = "text()='" + searchElement + "'";
-        if ("equals".equals(searchType) || "eq".equals(searchType)) {
-        } else if ("contains".equals(searchType) || "starts-with".equals(searchType)) {
-            textCondition = searchType + "(text(),'" + searchElement + "')";
+        if (SearchType.EQUALS.equals(searchType)) {
+        } else if (SearchType.CONTAINS.equals(searchType)){
+            textCondition = "contains(text(),'" + searchElement + "')";
+        } else if(SearchType.STARTS_WITH.equals(searchType)) {
+            textCondition = "starts-with(text(),'" + searchElement + "')";
         } else {
             logger.warn("searchType did not math to any accepted values");
         }
@@ -478,11 +480,11 @@ public class GridPanel extends Panel {
     }
 
     public GridCell getGridCell(String searchElement, Boolean startWidth) {
-        return getGridCell(searchElement, startWidth ? "starts-with" : "eq");
+        return getGridCell(searchElement, startWidth ? SearchType.STARTS_WITH : SearchType.EQUALS);
     }
 
     public GridCell getGridCell(boolean containsText, String searchElement) {
-        return getGridCell(searchElement, containsText ? "contains" : "eq");
+        return getGridCell(searchElement, containsText ? SearchType.CONTAINS : SearchType.EQUALS);
     }
 
     public GridCell getGridCell(int rowIndex, int columnIndex, String text) {
