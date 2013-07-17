@@ -3,11 +3,13 @@ package com.sdl.weblocator.extjs;
 import com.extjs.selenium.button.DownloadButton;
 import com.extjs.selenium.button.UploadButton;
 import com.extjs.selenium.panel.Panel;
+import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
+import static com.sdl.weblocator.Ignores.Driver.CHROME;
 import static org.testng.Assert.assertTrue;
 
 public class UploadButtonTest extends TestBase {
@@ -19,9 +21,10 @@ public class UploadButtonTest extends TestBase {
 
     @Test
     public void download() {
-        assertTrue(uploadButton.upload(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
+        assertTrue(uploadButton.upload(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"}));
     }
 
+    @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void downloadFile() {
         assertTrue(downloadFileButton.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));

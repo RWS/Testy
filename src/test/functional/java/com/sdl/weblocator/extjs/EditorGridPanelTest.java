@@ -8,6 +8,7 @@ import com.extjs.selenium.form.TextField;
 import com.extjs.selenium.grid.EditorGridPanel;
 import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.window.Window;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -47,7 +48,7 @@ public class EditorGridPanelTest extends TestBase {
 
     @Test
     public void testSelectRow() {
-        assertTrue(editorGridPanel.selectRow(new GridCell(1, "Wake Robin", "eq"), new GridCell(2, "Trillium grandiflorum", "eq")));
+        assertTrue(editorGridPanel.selectRow(new GridCell(1, "Wake Robin", SearchType.EQUALS), new GridCell(2, "Trillium grandiflorum", SearchType.EQUALS)));
     }
 
     @Test(dependsOnMethods = "testSelectRow", dataProvider = "createTestDP")
