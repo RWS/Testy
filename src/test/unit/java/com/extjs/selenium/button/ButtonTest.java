@@ -1,6 +1,7 @@
 package com.extjs.selenium.button;
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,7 +18,7 @@ public class ButtonTest {
                 {new Button("ButtonClass"), "//table[contains(@class, 'x-btn') and contains(@class, 'ButtonClass') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new Button(container), "//*[contains(@class, 'container')]//table[contains(@class, 'x-btn') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new Button(container, "ButtonText"), "//*[contains(@class, 'container')]//table[contains(@class, 'x-btn') and count(.//*[text()='ButtonText']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
-                {new Button(container, "ButtonText").setSearchTextType("contains"), "//*[contains(@class, 'container')]//table[contains(@class, 'x-btn') and count(.//*[contains(text(),'ButtonText')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+                {new Button(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), "//*[contains(@class, 'container')]//table[contains(@class, 'x-btn') and count(.//*[contains(text(),'ButtonText')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new Button(container).setIconCls("x-tbar-loading"), "//*[contains(@class, 'container')]//table[contains(@class, 'x-btn') and count(.//*[contains(@class, 'x-tbar-loading')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new Button(container).setId("ID"), "//*[contains(@class, 'container')]//table[@id='ID' and contains(@class, 'x-btn') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
         };

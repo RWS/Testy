@@ -1,5 +1,6 @@
 package com.extjs.selenium.grid;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import org.apache.log4j.Logger;
@@ -33,19 +34,19 @@ public class GridCell extends Cell {
         setCls("x-grid3-cell-inner");
     }
 
-    public GridCell(WebLocator container, String text, String searchType) {
+    public GridCell(WebLocator container, String text, SearchType searchType) {
         this(text, container);
         setSearchTextType(searchType);
     }
 
-    public GridCell(int columnIndex, String columnText, String searchType) {
+    public GridCell(int columnIndex, String columnText, SearchType searchType) {
         this();
         setPosition(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }
 
-    public GridCell(WebLocator container, int columnIndex, String columnText, String searchType) {
+    public GridCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
         this(columnIndex, columnText, searchType);
         setContainer(container);
     }

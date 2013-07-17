@@ -2,6 +2,7 @@ package com.sdl.selenium.web.table;
 
 import com.extjs.selenium.Utils;
 import com.extjs.selenium.grid.GridCell;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleCheckBox;
 import org.apache.log4j.Logger;
@@ -26,7 +27,6 @@ public class Table extends Cell {
 
     public boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
-        //logger.info(this + " - " + info);
         if (hasWebDriver()) {
             scrolled = (Boolean) executeScript(script);
         } else {
@@ -117,7 +117,7 @@ public class Table extends Cell {
      * @param searchType    accepted values are: {"equals"/"eq", "starts-with", "contains"}
      * @return
      */
-    public boolean rowSelect(String searchElement, String searchType) {
+    public boolean rowSelect(String searchElement, SearchType searchType) {
         ready(true);
         WebLocator cell = getGridCell(searchElement, searchType);
         return doCellSelect(cell);
@@ -130,7 +130,7 @@ public class Table extends Cell {
      * @return
      */
 
-    public boolean rowSelect(String searchElement, int columnId, String searchType) {
+    public boolean rowSelect(String searchElement, int columnId, SearchType searchType) {
         ready();
         GridCell cell = new GridCell(this, columnId, searchElement, searchType);
         return doCellSelect(cell);
@@ -186,8 +186,7 @@ public class Table extends Cell {
 
     public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        WebLocator checkerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
-        return checkerEl;
+        return new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
     }
 
     private WebLocator getHeader(String columnId) {
@@ -233,7 +232,7 @@ public class Table extends Cell {
     public boolean isRowPresent(String searchElement) {
         ready();
         boolean found;
-        WebLocator cell = getGridCell(searchElement, false);
+        WebLocator cell = getGridCell(searchElement, SearchType.EQUALS);
 //        scrollTop(); // make sure always start from top then scroll down till the end of the page
 //        do {
         // if the row is not in visible (need to scroll down - errors when used BufferView in grid)
@@ -254,7 +253,7 @@ public class Table extends Cell {
     }
 
     /**
-     * @return  row count
+     * @return row count
      */
     public int getRowCount() {
         ready();
@@ -347,20 +346,20 @@ public class Table extends Cell {
     }
 
     public WebLocator getGridRow(String searchElement) {
-        return new TableRow(this, searchElement, "eq");
+        return new TableRow(this, searchElement, SearchType.EQUALS);
     }
 
-    public WebLocator getGridRow(String searchElement, String searchType) {
+    public WebLocator getGridRow(String searchElement, SearchType searchType) {
         return new TableRow(this, searchElement, searchType);
     }
 
-    private String getSearchTypePath(String searchElement, String searchType) {
+    private String getSearchTypePath(String searchElement, SearchType searchType) {
         String selector = "";
-        if ("equals".equals(searchType) || "eq".equals(searchType)) {
+        if (SearchType.EQUALS.equals(searchType)) {
             selector += "text()='" + searchElement + "'";
-        } else if ("contains".equals(searchType)) {
+        } else if (SearchType.CONTAINS.equals(searchType)) {
             selector += "contains(text(),'" + searchElement + "')";
-        } else if ("starts-with".equals(searchType) || "starts".equals(searchType)) {
+        } else if (SearchType.STARTS_WITH.equals(searchType)) {
             selector += "starts-with(text(),'" + searchElement + "')";
         } else {
             logger.warn("searchType did not math to any accepted values");
@@ -369,12 +368,6 @@ public class Table extends Cell {
         selector = selector + " or count(.//*[" + selector + "]) > 0";
         return selector;
     }
-
-//    public GridCell getGridCell(int rowIndex) {  //TODO nu are sens
-//        String rowPath = "//*[contains(@class, 'x-grid3-cell-inner')]";
-//        GridCell cell = new GridCell(getGridRow(rowIndex), rowPath);
-//        return cell;
-//    }
 
     public WebLocator getGridCell(int rowIndex, int columnIndex) {
         WebLocator gridRow = getGridRow(rowIndex);
@@ -389,46 +382,38 @@ public class Table extends Cell {
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
      * @return
      */
-    public WebLocator getGridCell(String searchElement, String searchType) {
+    public WebLocator getGridCell(String searchElement, SearchType searchType) {
         String selector = getSearchTypePath(searchElement, searchType);
         return new WebLocator(this, "//tr//td[" + selector + "]");
     }
 
+    /**
+     * @deprecated use getGridCell(String searchElement, SearchType searchType)
+     * @param searchElement
+     * @param startWidth
+     * @return
+     */
     public WebLocator getGridCell(String searchElement, Boolean startWidth) {
-        return getGridCell(searchElement, startWidth ? "starts-with" : "eq");
+        return getGridCell(searchElement, startWidth ? SearchType.STARTS_WITH : SearchType.EQUALS);
     }
 
     public WebLocator getGridCell(int rowIndex, int columnIndex, String text) {
         WebLocator gridCell = getGridRow(rowIndex);
-        return new WebLocator(gridCell, "//td[" + getSearchTypePath(text, "eq") + "][" + columnIndex + "]");
+        return new WebLocator(gridCell, "//td[" + getSearchTypePath(text, SearchType.EQUALS) + "][" + columnIndex + "]");
     }
 
-//    public WebLocator getGridCell(String searchElement, int columnIndex, String columnText) {
-//        return getGridCell(searchElement, columnIndex, columnText, "contains");
-//    }
-
-    public WebLocator getGridCell(String searchElement, int columnIndex, String columnText, String searchType) {
-        WebLocator gridRow = getGridRow(searchElement, "contains");
-        return getGridCellWithText(gridRow, columnIndex, columnText, searchType);
+    public WebLocator getGridCell(String searchElement, String columnText, SearchType searchType) {
+        WebLocator gridRow = getGridRow(searchElement, SearchType.CONTAINS);
+        return getGridCellWithText(gridRow, columnText, searchType);
     }
 
-    public WebLocator getGridCell(String searchElement, int columnIndex, String searchType) {
+    public WebLocator getGridCell(String searchElement, int columnIndex, SearchType searchType) {
         return new TableCell(new TableRow(this, searchElement, searchType), columnIndex);
     }
 
-    private WebLocator getGridCellWithText(WebLocator gridRow, int columnIndex, String columnText, String searchType) {
+    private WebLocator getGridCellWithText(WebLocator gridRow, String columnText, SearchType searchType) {
         return new WebLocator(gridRow, "//td[" + getSearchTypePath(columnText, searchType) + "]");
     }
-
-//    public WebLocator getGridCell(String searchElement, int columnIndex) {
-//        WebLocator gridRow = getGridRow(searchElement, "contains");// TODO verify tests and use "eq", because "eq" must be default
-//        return new WebLocator(this, "//tr//td[" + getSearchTypePath(searchElement, "contains") + "]");
-//    }
-
-//    public GridCell getGridCell(String searchElement, String searchColumnId, int columnIndex) {
-//        GridRow gridRow = new GridRow(this, searchColumnId, searchElement, "contains");
-//        return new GridCell(gridRow, columnIndex);
-//    }
 
     public Row findRow(TableCell... byCells) {
         return new TableRow(this, byCells);
@@ -439,7 +424,7 @@ public class Table extends Cell {
     }
 
     public TableCell getGridCell(int columnIndex, String text, TableCell... byCells) {
-        return new TableCell(findRow(byCells), columnIndex, text, "eq");
+        return new TableCell(findRow(byCells), columnIndex, text, SearchType.EQUALS);
     }
 
     public String[] getRow(int rowIndex) {
@@ -495,7 +480,7 @@ public class Table extends Cell {
 
     public String getText(String searchText, int columnId) {
         String text = null;
-        TableRow tableRow = new TableRow(this, searchText, "eq");
+        TableRow tableRow = new TableRow(this, searchText, SearchType.EQUALS);
         if (tableRow.ready()) {
             text = new WebLocator(tableRow, "//td[" + columnId + "]").getHtmlText();
         } else {
@@ -518,10 +503,7 @@ public class Table extends Cell {
      */
     public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
         String text = getText(searchText, columnIndex);
-        if (text != null) {
-            return text.trim().equals(compareText);
-        }
-        return false;
+        return text != null && text.trim().equals(compareText);
     }
 
     public boolean checkboxSMSelectRow(int rowIndex) {
@@ -629,35 +611,27 @@ public class Table extends Cell {
     }
 
     public boolean checkboxColumnSelect(String searchText, int columnIndex) {
-        return checkboxColumnSelect(searchText, columnIndex, "eq");
+        return checkboxColumnSelect(searchText, columnIndex, SearchType.EQUALS);
     }
 
-    public boolean checkboxColumnSelect(String searchText, int columnIndex, String searchType) {
+    public boolean checkboxColumnSelect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
             SimpleCheckBox simpleCheckBox = new SimpleCheckBox().setContainer(getGridCell(searchText, columnIndex, searchType));
-            if (simpleCheckBox.isSelected()) {
-                selected = true;
-            } else {
-                selected = simpleCheckBox.click();
-            }
+            selected = simpleCheckBox.isSelected() || simpleCheckBox.click();
         }
         return selected;
     }
 
     public boolean checkboxColumnDeselect(String searchText, int columnIndex) {
-        return checkboxColumnDeselect(searchText, columnIndex, "eq");
+        return checkboxColumnDeselect(searchText, columnIndex, SearchType.EQUALS);
     }
 
-    public boolean checkboxColumnDeselect(String searchText, int columnIndex, String searchType) {
+    public boolean checkboxColumnDeselect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
             SimpleCheckBox simpleCheckBox = new SimpleCheckBox().setContainer(getGridCell(searchText, columnIndex, searchType));
-            if (simpleCheckBox.isSelected()) {
-                selected = simpleCheckBox.click();
-            } else {
-                selected = true;
-            }
+            selected = !simpleCheckBox.isSelected() || simpleCheckBox.click();
         }
         return selected;
     }
@@ -703,15 +677,6 @@ public class Table extends Cell {
         return isSelected;
     }
 
-    //    public String returnTextFromColumn(int columnId) {
-//        String path = new GridRow(this).getPath() + "//*[contains(@class,'x-grid3-td-" + columnId + "')]";
-//        try {
-//            return new WebLocator(null, path).getText();
-//        } catch (Exception e) {
-//            return "";
-//        }
-//    }
-//
     public boolean waitToPopulate() {
         return waitToPopulate(timeout);
     }
@@ -721,14 +686,6 @@ public class Table extends Cell {
         return firstRow.waitToRender(seconds);
     }
 
-//    public boolean ready() {
-//        return super.ready() && waitToLoad();
-//    }
-
-    //    public boolean ready(int seconds) {
-//        return super.ready() && waitToLoad(seconds);
-//    }
-//
     public boolean ready(boolean waitRows) {
         return ready() && (!waitRows || waitToPopulate());
     }

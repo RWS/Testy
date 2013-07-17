@@ -7,6 +7,7 @@ import com.extjs.selenium.tab.TabPanel;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
@@ -221,7 +222,7 @@ public class GridPanel extends Panel {
      * @return
      */
 
-    public boolean rowSelect(String searchElement, int columnId, String searchType) {
+    public boolean rowSelect(String searchElement, int columnId, SearchType searchType) {
         ready();
         GridCell cell = new GridCell(this, columnId, searchElement, searchType);
         return doCellSelect(cell);
@@ -436,10 +437,10 @@ public class GridPanel extends Panel {
     }
 
     public GridRow getGridRow(String searchElement) {
-        return getGridRow(searchElement, "eq");
+        return getGridRow(searchElement, SearchType.EQUALS);
     }
 
-    public GridRow getGridRow(String searchElement, String searchType) {
+    public GridRow getGridRow(String searchElement, SearchType searchType) {
         return new GridRow(this, searchColumnId, searchElement, searchType);
     }
 
@@ -486,31 +487,31 @@ public class GridPanel extends Panel {
 
     public GridCell getGridCell(int rowIndex, int columnIndex, String text) {
         GridRow gridRow = getGridRow(rowIndex);
-        return getGridCellWithText(gridRow, columnIndex, text, "contains");
+        return getGridCellWithText(gridRow, columnIndex, text, SearchType.CONTAINS);
     }
 
     public GridCell getGridCell(String searchElement, int columnIndex, String columnText) {
-        return getGridCell(searchElement, columnIndex, columnText, "contains");
+        return getGridCell(searchElement, columnIndex, columnText, SearchType.CONTAINS);
     }
 
-    public GridCell getGridCell(String searchElement, int columnIndex, String columnText, String searchType) {
-        GridRow gridRow = getGridRow(searchElement, "contains");
+    public GridCell getGridCell(String searchElement, int columnIndex, String columnText, SearchType searchType) {
+        GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);
         return getGridCellWithText(gridRow, columnIndex, columnText, searchType);
     }
 
-    private GridCell getGridCellWithText(GridRow gridRow, int columnIndex, String columnText, String searchType) {
+    private GridCell getGridCellWithText(GridRow gridRow, int columnIndex, String columnText, SearchType searchType) {
         WebLocator gridColTd = new WebLocator(gridRow, "//td[" + columnIndex + "]");
         GridCell cell = new GridCell(gridColTd, columnText, searchType);
         return cell;
     }
 
     public GridCell getGridCell(String searchElement, int columnIndex) {
-        GridRow gridRow = getGridRow(searchElement, "contains");// TODO verify tests and use "eq", because "eq" must be default
+        GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);// TODO verify tests and use "eq", because "eq" must be default
         return new GridCell(gridRow, columnIndex);
     }
 
     public GridCell getGridCell(String searchElement, String searchColumnId, int columnIndex) {
-        GridRow gridRow = new GridRow(this, searchColumnId, searchElement, "contains");
+        GridRow gridRow = new GridRow(this, searchColumnId, searchElement, SearchType.CONTAINS);
         return new GridCell(gridRow, columnIndex);
     }
 
@@ -551,7 +552,7 @@ public class GridPanel extends Panel {
      */
     public String[] getRow(String searchText) {
         String[] rowElements = null;
-        GridRow row = new GridRow(this, searchText, getSearchColumnId(), "contains");
+        GridRow row = new GridRow(this, searchText, getSearchColumnId(), SearchType.CONTAINS);
         String text = row.getHtmlText();
         if (text != null) {
             rowElements = text.split("\n");

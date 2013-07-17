@@ -1,6 +1,7 @@
 package com.extjs.selenium.grid;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
@@ -35,11 +36,11 @@ public class GridRow extends Row {
         setElPath("//div[" + rowIndex + "]" + GRID_ROW_PATH);
     }
 
-    public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, String searchType) {
+    public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType searchType) {
         this(gridPanel, new GridCell(searchColumnIndex, searchElement, searchType));
     }
 
-    public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, String searchType) {
+    public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType searchType) {
         this(gridPanel);
         GridCell cell = new GridCell(null, searchElement, searchType);
         setElPath("//" + getTag() + "[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText())) + "]");

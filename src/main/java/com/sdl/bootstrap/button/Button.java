@@ -1,6 +1,7 @@
 package com.sdl.bootstrap.button;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -39,7 +40,7 @@ public class Button extends WebLocator {
     public Button(WebLocator container, String text) {
         this(container);
         setText(text);
-        setSearchTextType("eq");
+        setSearchTextType(SearchType.EQUALS);
     }
 
     // Methods
@@ -49,11 +50,11 @@ public class Button extends WebLocator {
         String selector = "";
         if (hasText()) {
             String text = getText();
-            if ("equals".equals(getSearchTextType()) || "eq".equals(getSearchTextType())) {
+            if (SearchType.EQUALS.equals(getSearchTextType())) {
                 selector += "text()='" + text + "'";
-            } else if ("contains".equals(getSearchTextType())) {
+            } else if (SearchType.CONTAINS.equals(getSearchTextType())) {
                 selector += "contains(text(),'" + text + "')";
-            } else if ("starts-with".equals(getSearchTextType()) || "starts".equals(getSearchTextType())) {
+            } else if (SearchType.STARTS_WITH.equals(getSearchTextType())) {
                 selector += "starts-with(text(),'" + text + "')";
             } else {
                 logger.warn("searchType did not math to any accepted values");

@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.table;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -23,14 +24,14 @@ public class TableCell extends Cell {
         setPosition(columnIndex);
     }
 
-    public TableCell(int columnIndex, String columnText, String searchType) {
+    public TableCell(int columnIndex, String columnText, SearchType searchType) {
         this();
         setPosition(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }
 
-    public TableCell(Row row, int columnIndex, String columnText, String searchType) {
+    public TableCell(Row row, int columnIndex, String columnText, SearchType searchType) {
         this(row, columnIndex);
         setText(columnText);
         setSearchTextType(searchType);

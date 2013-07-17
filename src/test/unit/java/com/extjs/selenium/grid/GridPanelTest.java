@@ -1,6 +1,7 @@
 package com.extjs.selenium.grid;
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -120,12 +121,12 @@ public class GridPanelTest {
                 {gridContainerAndColumn.getGridCell("SearchText", 1, "text"), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
                 {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "text"), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
 
-                {grid.getGridCell("SearchText", 1, "text", "eq"), GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
-                {gridCls.getGridCell("SearchText", 1, "text", "eq"), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
-                {gridContainer.getGridCell("SearchText", 1, "text", "eq"), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
-                {gridClsAndColumn.getGridCell("SearchText", 1, "text", "eq"), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
-                {gridContainerAndColumn.getGridCell("SearchText", 1, "text", "eq"), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
-                {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "text", "eq"), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {grid.getGridCell("SearchText", 1, "text", SearchType.EQUALS), GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {gridCls.getGridCell("SearchText", 1, "text", SearchType.EQUALS), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {gridContainer.getGridCell("SearchText", 1, "text", SearchType.EQUALS), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {gridClsAndColumn.getGridCell("SearchText", 1, "text", SearchType.EQUALS), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {gridContainerAndColumn.getGridCell("SearchText", 1, "text", SearchType.EQUALS), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "text", SearchType.EQUALS), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
 
         };
     }

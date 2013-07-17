@@ -22,7 +22,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String excludeCls;
     private String name;
     private String text;
-    private String searchTextType = "contains";
+    private SearchType searchTextType = SearchType.CONTAINS;
     private String style;
     private String elCssSelector;
     private String title;
@@ -137,17 +137,17 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public String getSearchTextType() {
+    public SearchType getSearchTextType() {
         return searchTextType;
     }
 
     /**
      *
-     * @param searchTextType accepted values are: {"eq", "equals", "starts", "starts-with", "contains"}
+     * @param searchTextType accepted values are: SearchType.EQUALS
      * @param <T>
      * @return
      */
-    public <T extends WebLocatorAbstractBuilder> T setSearchTextType(String searchTextType) {
+    public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType searchTextType) {
         this.searchTextType = searchTextType;
         return (T) this;
     }
@@ -410,11 +410,11 @@ public abstract class WebLocatorAbstractBuilder {
 //            selector += " and contains(text(),'" + text + "')";
 //            selector += " and contains(normalize-space(text()),'" + getText() + "')";
             selector += " and ";
-            if ("equals".equals(searchTextType) || "eq".equals(searchTextType)) {
+            if (SearchType.EQUALS.equals(getSearchTextType())) {
                 selector += "text()='" + text + "'";
-            } else if ("contains".equals(searchTextType)) {
+            } else if (SearchType.CONTAINS.equals(getSearchTextType())) {
                 selector += "contains(text(),'" + text + "')";
-            } else if ("starts-with".equals(searchTextType) || "starts".equals(searchTextType)) {
+            } else if (SearchType.STARTS_WITH.equals(getSearchTextType())) {
                 selector += "starts-with(text(),'" + text + "')";
             } else {
                 logger.warn("searchType did not math to any accepted values");

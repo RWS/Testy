@@ -1,5 +1,6 @@
 package com.sdl.bootstrap.button;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -23,6 +24,6 @@ public class ButtonLink extends Button {
     public ButtonLink(WebLocator container, String text) {
         this(container);
         setText(text);
-        setSearchTextType("eq");
+        setSearchTextType(SearchType.EQUALS);
     }
 }
