@@ -622,10 +622,7 @@ public class GridPanel extends Panel {
      */
     public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
         String text = getText(searchText, columnIndex);
-        if (text != null) {
-            return text.trim().equals(compareText);
-        }
-        return false;
+        return text != null && text.trim().equals(compareText);
     }
 
     public boolean checkboxSMSelectRow(int rowIndex) {
@@ -793,7 +790,7 @@ public class GridPanel extends Panel {
                 if (element.exists()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
                     new WebLocator(null, gridPath + "//*[contains(@class,'x-grid3-focus')]").sendKeys(Keys.TAB);
-                    selected = isCheckBoxColumnSelected(searchText) ? true : element.click();
+                    selected = isCheckBoxColumnSelected(searchText) || element.click();
                     logger.info("Clicking on checkboxColumnSelect corresponding to line : " + searchText);
                 } else {
                     logger.warn("Could not click on checkboxColumnSelect corresponding to line : " + searchText + "; path = " + path);

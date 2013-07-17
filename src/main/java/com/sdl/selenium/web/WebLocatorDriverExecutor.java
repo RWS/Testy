@@ -233,6 +233,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     "} else if( document.createEventObject ) {" +
                     "fireOnThis.fireEvent('on" + eventName + "');" +
                     "}";
+        } else if (!"".equals(getAttribute(el, "class"))){
+            script = "var fireOnThis = document.getElementsByClassName('" + getAttribute(el, "class") + "');\n" +
+                    "if(document.createEvent) {" +
+                    "var evObj = document.createEvent('MouseEvents');\n" +
+                    "evObj.initEvent( '" + eventName + "', true, true );\n" +
+                    "fireOnThis[0].dispatchEvent(evObj);\n" +
+                    "} else if( document.createEventObject ) {" +
+                    "fireOnThis[0].fireEvent('on" + eventName + "');" +
+                    "}";
         } else {
             script = "var fireOnThis = document.evaluate(\"" + el.getPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                     "var evObj = document.createEvent('MouseEvents');\n" +
