@@ -1,5 +1,6 @@
 package com.extjs.selenium.button;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.SelectFiles;
 import org.apache.log4j.Logger;
@@ -14,13 +15,13 @@ public class UploadButton extends SelectFiles {
 
     public UploadButton(WebLocator container) {
         this();
-        setElPath(new Button(container).getPath());
+        setContainer(container);
     }
 
     public UploadButton(WebLocator container, String text) {
-        this();
-
-        setElPath(new Button(container, text).getPath());
+        this(container);
+        setText(text);
+        setSearchTextType(SearchType.EQUALS);
     }
 
     public boolean upload(String [] filePath){

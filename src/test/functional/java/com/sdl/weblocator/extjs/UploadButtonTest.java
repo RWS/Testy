@@ -20,7 +20,7 @@ public class UploadButtonTest extends TestBase {
     DownloadButton downloadFileButton = new DownloadButton(simpleFormPanel, "Download File");
 
     @Test
-    public void download() {
+    public void uploadFile() {
         assertTrue(uploadButton.upload(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"}));
     }
 
