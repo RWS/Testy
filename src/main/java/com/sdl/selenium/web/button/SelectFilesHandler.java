@@ -43,6 +43,7 @@ public class SelectFilesHandler {
      * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
      */
     public boolean browseWithAutoIT(String[] filePath) {
+        openBrowseWindow();
         try {
             Process process = Runtime.getRuntime().exec(filePath[0] + " " + filePath[1] + " " + uploadName());
             if (0 == process.waitFor()) {
