@@ -11,6 +11,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 
 import java.util.*;
 
@@ -188,6 +189,14 @@ public class GridPanel extends Panel {
      */
     public boolean rowSelect(String searchElement) {
         return rowSelect(searchElement, false);
+    }
+
+    public boolean assertRowSelect(String searchElement) {
+        boolean selected = rowSelect(searchElement);
+        if (!selected) {
+            Assert.fail("Could not select row with text: " + this);
+        }
+        return selected;
     }
 
     /**
@@ -739,8 +748,7 @@ public class GridPanel extends Panel {
 
     private String getTableRowSearchPath(String searchText, boolean containsText) {
         String text = containsText ? ("contains(text(),'" + searchText + "')") : ("text()='" + searchText + "'");
-        String searchCondition = "[count(*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + text + "]) > 0]";
-        return "//tr" + searchCondition;
+        return "//tr[count(*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + text + "]) > 0]";
     }
 
     public boolean checkboxColumnSelect(String searchText, int columnIndex) {
