@@ -23,4 +23,25 @@ public class DownloadButton extends SelectFiles {
         setText(text);
         setSearchTextType(SearchType.EQUALS);
     }
+
+    /**
+     * Wait for the element to be activated when there is deactivation mask on top of it
+     *
+     * @param seconds
+     */
+    public boolean waitToActivate(int seconds) {
+        return isContainer("LiveGridPanel") ? true : super.waitToActivate(seconds);
+    }
+
+    private boolean isContainer(String className){
+        WebLocator webLocator = getContainer();
+        while(webLocator!= null){
+            logger.debug(webLocator.getClassName());
+            if(className.equals(webLocator.getClassName())){
+                return true;
+            }
+            webLocator = webLocator.getContainer();
+        }
+        return false;
+    }
 }

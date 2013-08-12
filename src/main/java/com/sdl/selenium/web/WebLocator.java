@@ -454,7 +454,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean ready() {
-        return waitToRender() && waitToActivate();
+        return waitToRender() &&  waitToActivate();
     }
 
     public boolean ready(int seconds) {
