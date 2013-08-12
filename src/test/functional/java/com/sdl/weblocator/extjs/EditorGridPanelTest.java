@@ -98,7 +98,7 @@ public class EditorGridPanelTest extends TestBase {
 
     @Test(dependsOnMethods = "backspaceCharacters")
     public void editGridPanelAndScrollWithoutClearCell() {
-        for (int i = 1; i <= editorGridPanel.getCount(); i++) {
+        for (int i = 1; i <= editorGridPanel.getCount(); i += 3) {
             assertTrue(editorGridPanel.appendRowValue(i, 1, "1"));
         }
         Utils.sleep(1000);
@@ -106,7 +106,7 @@ public class EditorGridPanelTest extends TestBase {
 
     @Test(dependsOnMethods = "editGridPanelAndScrollWithoutClearCell")
     public void editGridPanelAndScrollClearCell() {
-        for (int i = 1; i <= editorGridPanel.getCount(); i++) {
+        for (int i = 1; i <= editorGridPanel.getCount(); i += 3) {
             assertTrue(editorGridPanel.setRowValue(i, 1, "1"));
         }
         Utils.sleep(1000);
