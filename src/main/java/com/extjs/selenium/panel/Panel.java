@@ -57,28 +57,29 @@ public class Panel extends ExtJsComponent {
 
     /**
      * exclude ids that start-with ext-gen (Ext auto generated ids)
+     *
      * @return
      */
-    public String getDefaultExcludePath(){
+    public String getDefaultExcludePath() {
         return " and not(starts-with(@id, 'ext-gen')) " +
                 "and not(contains(@class, '" + getHeaderBaseCls() + "-tc')) " +
                 "and not(contains(@class, 'x-hide-display')) " +
                 "and not(contains(@class, 'x-masked'))";
     }
 
-    public String getHeaderSelector(){
+    public String getHeaderSelector() {
         String selector = "";
         if (hasTitle()) {
-            selector = " and ("+
-                "count(*[contains(@class,'" + getHeaderBaseCls() + "-header')]//*[text()='" + getTitle() + "']) > 0" +
-                " or " +
-                "count(*[contains(@class, '-tl')]//*[contains(@class,'" + getHeaderBaseCls() + "-header')]//*[text()='" + getTitle() + "']) > 0" +
-            ")";
+            selector = " and (" +
+                    "count(*[contains(@class,'" + getHeaderBaseCls() + "-header')]//*[text()='" + getTitle() + "']) > 0" +
+                    " or " +
+                    "count(*[contains(@class, '-tl')]//*[contains(@class,'" + getHeaderBaseCls() + "-header')]//*[text()='" + getTitle() + "']) > 0" +
+                    ")";
         }
         return selector;
     }
 
-    public String getItemPath(boolean disabled){
+    public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         selector += getHeaderSelector();
 
@@ -86,18 +87,19 @@ public class Panel extends ExtJsComponent {
         selector += getDefaultExcludePath();
 
         selector = Utils.fixPathSelector(selector);
-        return "//*["+ selector +"]";
+        return "//*[" + selector + "]";
     }
 
     /**
      * return only body path but no panel path
+     *
      * @return
      */
-    public String getBodyPath(){
-        return  "//*[contains(@class, '" + getBaseCls() + "-body')]";
+    public String getBodyPath() {
+        return "//*[contains(@class, '" + getBaseCls() + "-body')]";
     }
 
-    public ExtJsComponent getBodyComponent(){
+    public ExtJsComponent getBodyComponent() {
         return new ExtJsComponent(this, getBodyPath());
     }
 
@@ -117,6 +119,10 @@ public class Panel extends ExtJsComponent {
         boolean maximized = clickOnTool("maximize");
         Utils.sleep(50);
         return maximized;
+    }
+
+    public boolean isMaximized() {
+        return !new WebLocator(this, "//*[contains(@class,'x-tool-maximize')]").isVisible();
     }
 
     public boolean restore() {
