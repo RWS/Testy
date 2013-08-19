@@ -583,10 +583,9 @@ public class GridPanel extends Panel {
         return rowElements;
     }
 
-    public boolean isRowDisable(String searchText) {
-        ready(true);
-        String cls = getGridRow(searchText).getAttributeClass();
-        return cls.contains("x-item-disabled");
+    public boolean isRowDisabled(String searchText) {
+        String cls = getGridRow(searchText).getAttribute("class");
+        return cls != null && cls.contains("x-item-disabled");
     }
 
     /**
