@@ -65,6 +65,10 @@ public class ConditionManager  {
         this.timeout = timeout;
     }
 
+    public List<Condition> getConditionList() {
+        return conditionList;
+    }
+
     public ConditionManager add(Condition condition) {
         //logger.debug("ConditionManager add condition : " + condition);
         conditionList.add(condition);
@@ -109,19 +113,25 @@ public class ConditionManager  {
     }
 
     public Condition execute() {
-
         startTime = new Date().getTime();
         Collections.sort(conditionList);
         while (true) {
-            for (Condition condition : conditionList) {
-                if (condition.execute()) {
-                    logger.debug(condition + " - executed");
-                    // TODO we could add press OK on MessageBoxFailCondition and MessageBoxSuccessCondition
-                    return condition; //TODO set timeout when don't execute any condition Matei.
-                }
-//                logger.debug(condition + " is false");
+            Condition condition = findCondition();
+            if(condition != null){
+                logger.debug(condition + " - executed");
+                return condition;
             }
             Utils.sleep(SLEEP_INTERVAL);
         }
+    }
+
+    protected Condition findCondition(){
+        for (Condition condition : getConditionList()) {
+            if (condition.execute()) {
+                return condition;
+            }
+            //logger.debug(condition + " is false");
+        }
+        return null;
     }
 }

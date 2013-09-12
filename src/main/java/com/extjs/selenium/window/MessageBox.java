@@ -38,6 +38,7 @@ public class MessageBox {
      */
     public static String getMessage(int waitSeconds) {
         ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", messageBoxWindow);
+        mbTextElement.setRenderMillis(0);
         mbTextElement.setInfoMessage("MessageBox ext-mb-text");
         String msg;
         if (waitSeconds == 0) {

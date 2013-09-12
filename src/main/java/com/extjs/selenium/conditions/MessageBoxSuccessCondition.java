@@ -1,10 +1,11 @@
 package com.extjs.selenium.conditions;
 
 import com.extjs.selenium.window.MessageBox;
+import com.sdl.selenium.conditions.MessageBoxCondition;
 import com.sdl.selenium.conditions.SuccessCondition;
 import org.apache.log4j.Logger;
 
-public class MessageBoxSuccessCondition extends SuccessCondition {
+public class MessageBoxSuccessCondition extends SuccessCondition implements MessageBoxCondition {
     private static final Logger logger = Logger.getLogger(MessageBoxSuccessCondition.class);
     private boolean contains = false;
 
@@ -28,9 +29,14 @@ public class MessageBoxSuccessCondition extends SuccessCondition {
         setPriority(priority);
     }
 
+    @Override
     public boolean execute() {
+        return execute(MessageBox.getMessage());
+    }
+
+    @Override
+    public boolean execute(final String boxMessage) {
         boolean executed = false;
-        String boxMessage = MessageBox.getMessage();
         if (contains) {
             if (boxMessage != null && boxMessage.contains(getMessage())) {
                 executed = true;

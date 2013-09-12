@@ -1,6 +1,9 @@
 package com.extjs.selenium.conditions;
 
+import com.extjs.selenium.window.MessageBox;
+import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.conditions.MessageBoxCondition;
 import org.apache.log4j.Logger;
 
 /**
@@ -40,6 +43,27 @@ public class ExtjsConditionManager extends ConditionManager {
     public ExtjsConditionManager(long timeout) {
         this();
         setTimeout(timeout);
+    }
+
+    @Override
+    protected Condition findCondition(){
+        String boxMessage = null;
+        for (Condition condition : getConditionList()) {
+            if(condition instanceof MessageBoxCondition){
+                if(boxMessage == null){
+                    boxMessage = MessageBox.getMessage();
+                }
+                if (((MessageBoxCondition)condition).execute(boxMessage)) {
+                    return condition;
+                }
+            } else {
+                if (condition.execute()) {
+                    return condition;
+                }
+            }
+            //logger.debug(condition + " is false");
+        }
+        return null;
     }
 
     /**
