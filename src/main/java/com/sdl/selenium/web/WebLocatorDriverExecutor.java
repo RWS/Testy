@@ -1,6 +1,5 @@
 package com.sdl.selenium.web;
 
-import com.thoughtworks.selenium.SeleniumException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -96,7 +95,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (isElementPresent(el)) {
             try {
                 attributeValue = el.currentElement.getAttribute(attribute);
-            } catch (SeleniumException e) {
+            } catch (WebDriverException e) {
                 logger.debug("getAttribute '" + attribute + "' SeleniumException: " + e);
             }
         }
