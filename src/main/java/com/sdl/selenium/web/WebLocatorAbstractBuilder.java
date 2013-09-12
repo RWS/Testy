@@ -26,6 +26,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String style;
     private String elCssSelector;
     private String title;
+    private String deepness;
 
     private String infoMessage;
 
@@ -176,6 +177,15 @@ public abstract class WebLocatorAbstractBuilder {
 
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title) {
         this.title = title;
+        return (T) this;
+    }
+
+    public String getDeepness() {
+        return deepness;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setDeepness(String deepness) {
+        this.deepness =  "count(" + deepness + ") > 0";
         return (T) this;
     }
 
@@ -333,6 +343,10 @@ public abstract class WebLocatorAbstractBuilder {
         return title != null && !title.equals("");
     }
 
+    public Boolean hasDeepness() {
+        return deepness != null && !deepness.equals("");
+    }
+
     public Boolean hasPosition() {
         return position > 0;
     }
@@ -369,6 +383,9 @@ public abstract class WebLocatorAbstractBuilder {
         }
         if (hasName()) {
             selector += " and contains(@name,'" + getName() + "')";
+        }
+        if (hasDeepness()) {
+            selector += " and " + getDeepness();
         }
         selector += getItemPathText();
         if (!WebLocator.isIE()) {

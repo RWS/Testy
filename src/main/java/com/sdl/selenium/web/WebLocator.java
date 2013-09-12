@@ -129,7 +129,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return
      */
     public String getHtmlText() {
-        if (ready()) {
+        return getHtmlText(false);
+    }
+
+    public String getHtmlText(boolean instant) {
+        if(instant){
+            return executor.getHtmlText(this);
+        } else if (ready()) {
             return executor.getHtmlText(this);
         }
         return null;
@@ -140,7 +146,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public boolean clickAt() {
         boolean clickAt = ready() && doClickAt();
-        if(clickAt){
+        if (clickAt) {
             logger.info("ClickAt on " + this);
         }
         return clickAt;
@@ -169,7 +175,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public boolean click() {
         boolean click = waitToRender() && doClick();
-        if(click){
+        if (click) {
             logger.info("Click on " + this);
         }
         return click;
@@ -454,7 +460,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean ready() {
-        return waitToRender() &&  waitToActivate();
+        return waitToRender() && waitToActivate();
     }
 
     public boolean ready(int seconds) {

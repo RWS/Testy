@@ -26,6 +26,7 @@ public class WebLocatorTest {
                 {new WebLocator().setId("ID").setText("Text"), "//*[@id='ID' and contains(text(),'Text')]"},
                 {new WebLocator().setId("ID").setCls("Cls"), "//*[@id='ID' and contains(@class, 'Cls')]"},
                 {new WebLocator().setCls("Cls").setText("Text"), "//*[contains(@class, 'Cls') and contains(text(),'Text')]"},
+                {new WebLocator().setCls("Cls").setDeepness(".//[text()='Texts']"), "//*[contains(@class, 'Cls') and count(.//[text()='Texts']) > 0]"},
         };
     }
 
@@ -124,7 +125,7 @@ public class WebLocatorTest {
         assertEquals(el.getPath(), "//*[contains(@class, 'container')]//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]");
     }
 
-//    @Test
+    //@Test
     // TODO fix getPathSelectorSetIdWhenWebLocatorHasXPath
     public void getPathSelectorSetIdWhenWebLocatorHasXPath() {
         WebLocator el = new WebLocator(null, "//*[contains(@class, 'container')]//*[contains(@class, 'testcls') and contains(text(),'text')]");
@@ -135,9 +136,14 @@ public class WebLocatorTest {
     @Test
     public void createInstancesWithBuilders(){
         WebLocator locatorBuilder1 = new WebLocator().setTag("div").setId("ID1");
-
         assertEquals(locatorBuilder1.getTag(), "div");
         assertEquals(locatorBuilder1.getId(), "ID1");
         assertEquals(locatorBuilder1.getClassName(), "WebLocator");
+    }
+
+    @Test
+    public void testDeepness(){
+        WebLocator locatorBuilder1 = new WebLocator().setDeepness("div");
+        assertEquals(locatorBuilder1.getDeepness(), "count(div) > 0");
     }
 }

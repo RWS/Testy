@@ -4,8 +4,21 @@ Ext.onReady(function(){
     var fm = Ext.form;
 
     var fsf = new Ext.FormPanel({
-        frame:true,
-        title: 'Simple Form with TextField',
+//        frame:true,
+//        title: 'Simple Form with TextField',
+        border: false,
+		frame : true,
+		monitorValid : true,
+		defaultType : 'textfield',
+		labelAlign: 'right',
+		labelWidth: 100,
+		autoHeight:true,
+		bodyStyle : 'padding: 10px 50px 10px 10px;',
+		defaults: {
+			allowBlank : false,
+			anchor: '100%',
+			minLength: 5
+		},
         items: [{
             xtype:'textfield',
             fieldLabel: 'First Name',

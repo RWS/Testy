@@ -21,7 +21,7 @@ public class SelectFiles extends Button {
         focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(currentElement).build().perform();
-        builder.click().build().perform();
+        builder.click().perform();
         driver.switchTo().defaultContent();
         return RunExe.getInstance().download(filePath);
     }
@@ -32,7 +32,7 @@ public class SelectFiles extends Button {
         el.focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(el.currentElement).build().perform();
-        builder.click().build().perform();
+        builder.click().perform();
         driver.switchTo().defaultContent();
         return RunExe.getInstance().upload(filePath);
     }

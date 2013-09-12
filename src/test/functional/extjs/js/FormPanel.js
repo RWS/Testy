@@ -41,6 +41,8 @@ Ext.onReady(function(){
             fieldLabel: 'Upload File',
             name: 'photo-path',
             buttonText: 'Browse',
+        },{
+
         }
         ],
 

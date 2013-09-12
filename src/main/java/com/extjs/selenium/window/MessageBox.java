@@ -41,7 +41,7 @@ public class MessageBox {
         mbTextElement.setInfoMessage("MessageBox ext-mb-text");
         String msg;
         if (waitSeconds == 0) {
-            msg = mbTextElement.getHtmlText();
+            msg = mbTextElement.getHtmlText(true);
         } else {
             msg = mbTextElement.waitTextToRender(waitSeconds);
         }
