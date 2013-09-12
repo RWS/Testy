@@ -41,8 +41,14 @@ Ext.onReady(function(){
             fieldLabel: 'Upload File',
             name: 'photo-path',
             buttonText: 'Browse',
-        },{
-
+        }, {
+            xtype: 'checkbox',
+            fieldLabel: '',
+            labelSeparator: '',
+            boxLabel: 'CatRight',
+        }, {
+            xtype: 'checkbox',
+            fieldLabel: 'CatLeft',
         }
         ],
 
