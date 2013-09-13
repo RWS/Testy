@@ -43,11 +43,11 @@ public class SelectFilesHandler {
      *
      * @param filePath   path to upload.exe
      * @param uploadWindowName upload window name
-     * @return
+     * @return true or false
      */
     public boolean browseWithAutoIT(String[] filePath, String uploadWindowName) {
         openBrowseWindow();
-        return RunExe.getInstance().download(filePath, uploadWindowName);
+        return RunExe.getInstance().upload(filePath, uploadWindowName);
     }
 
     /**
