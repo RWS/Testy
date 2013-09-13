@@ -33,13 +33,6 @@ public class Slider extends ExtJsComponent {
         setLabel(label);
     }
 
-    public String getItemPath(boolean disabled) {
-        String path = null;
-        if (hasCls()) {
-            path = "//input[contains(@class, '" + getCls() + "')]";
-        }
-        return path;
-    }
 
     public String getThumbPath(int thumbIndex) {
         String thumbPath = getPath() + "//descendant::*//*[contains(@class,'x-slider-thumb')][" + thumbIndex + "]";
