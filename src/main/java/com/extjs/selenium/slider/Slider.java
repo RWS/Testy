@@ -35,9 +35,7 @@ public class Slider extends ExtJsComponent {
 
     public String getItemPath(boolean disabled) {
         String path = null;
-        if (hasLabel()) {
-            path = "//div[contains(@class,'trust-score-settings-container') and label[starts-with(text(),'" + getLabel() + "')]]";
-        } else if (hasCls()) {
+        if (hasCls()) {
             path = "//input[contains(@class, '" + getCls() + "')]";
         }
         return path;
