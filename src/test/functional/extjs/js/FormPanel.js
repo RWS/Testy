@@ -57,6 +57,11 @@ Ext.onReady(function(){
             handler: function() {
                 window.location.href = '../../resources/upload/text.docx';
             }
+        }, {
+            text: 'Download with spaces',
+            handler: function() {
+                window.location.href = '../../resources/upload/text t.docx';
+            }
         },{
             text: 'Cancel'
         }]
