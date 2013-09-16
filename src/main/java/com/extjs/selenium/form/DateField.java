@@ -43,7 +43,7 @@ public class DateField extends TextField {
         WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer);
         if (click()) {
             monthYearButton.click();
-            Utils.sleep(50);
+            Utils.sleep(100);
             WebLocator yearEl = new WebLocator(calendarLayer, "//*[contains(@class, 'x-date-mp-year')]//*[text() = '" + year + "']").setInfoMessage("year " + year);
             yearEl.click();
             WebLocator monthEl = new WebLocator(calendarLayer, "//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']").setInfoMessage("month " + month);
