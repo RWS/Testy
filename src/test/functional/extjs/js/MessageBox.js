@@ -4,7 +4,7 @@ Ext.onReady(function(){
     function pressButton(button){
          setTimeout(function(){
             Ext.MessageBox.alert('Alert', button.getText() + ' button was pressed');
-         }, Math.round(1+Math.random(2)*2) * 1000);
+         }, (1 + Math.round(Math.random(2)*2)) * 1000);
     }
 
     var simple = new Ext.Panel({

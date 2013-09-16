@@ -57,6 +57,7 @@
     <test name="WindowTest">
         <classes>
             <class name="com.sdl.weblocator.extjs.WindowTest"/>
+            <class name="com.sdl.weblocator.extjs.window.MessageBoxTest"/>
         </classes>
     </test>
     <test name="DownloadTest">
