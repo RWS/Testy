@@ -24,6 +24,11 @@ public class UploadButtonTest extends TestBase {
         assertTrue(uploadButton.upload(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"}));
     }
 
+    @Test
+    public void uploadFileWithSpaces() {
+        assertTrue(uploadButton.upload(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"}));
+    }
+
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void downloadFile() {

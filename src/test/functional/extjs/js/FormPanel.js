@@ -41,8 +41,14 @@ Ext.onReady(function(){
             fieldLabel: 'Upload File',
             name: 'photo-path',
             buttonText: 'Browse',
-        },{
-
+        }, {
+            xtype: 'checkbox',
+            fieldLabel: '',
+            labelSeparator: '',
+            boxLabel: 'CatRight',
+        }, {
+            xtype: 'checkbox',
+            fieldLabel: 'CatLeft',
         }
         ],
 
@@ -50,6 +56,11 @@ Ext.onReady(function(){
             text: 'Download',
             handler: function() {
                 window.location.href = '../../resources/upload/text.docx';
+            }
+        }, {
+            text: 'Download with spaces',
+            handler: function() {
+                window.location.href = '../../resources/upload/text t.docx';
             }
         },{
             text: 'Cancel'

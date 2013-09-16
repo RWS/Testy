@@ -1,15 +1,14 @@
 package com.sdl.selenium.web.button;
 
 import com.extjs.selenium.Utils;
+import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 public class SelectFilesHandler {
 
@@ -41,23 +40,14 @@ public class SelectFilesHandler {
     /**
      * Upload file with AutoIT exe
      * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"}, "Open");
-     * @param filePath path to upload.exe
-     * @param uploadName upload window name
-     * @return
+     *
+     * @param filePath   path to upload.exe
+     * @param uploadWindowName upload window name
+     * @return true or false
      */
-    public boolean browseWithAutoIT(String[] filePath, String uploadName) {
+    public boolean browseWithAutoIT(String[] filePath, String uploadWindowName) {
         openBrowseWindow();
-        try {
-            Process process = Runtime.getRuntime().exec(filePath[0] + " " + filePath[1] + " " + uploadName);
-            if (0 == process.waitFor()) {
-                return true;
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return RunExe.getInstance().upload(filePath, uploadWindowName);
     }
 
     /**
@@ -65,11 +55,7 @@ public class SelectFilesHandler {
      * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
      */
     public boolean browseWithAutoIT(String[] filePath) {
-        return browseWithAutoIT(filePath, uploadName());
-    }
-
-    private String uploadName(){
-        return WebLocator.driver instanceof FirefoxDriver ? "File Upload" : "Open";
+        return RunExe.getInstance().upload(filePath);
     }
 
     public boolean isElementPresent() {
@@ -85,18 +71,6 @@ public class SelectFilesHandler {
         builder.moveToElement(buttonElement.currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
-//        String parentWindowHandle = driver.getWindowHandle(); // save the current window handle.
-//        WebDriver popup = null;
-//        Iterator windowIterator = driver.getWindowHandles().iterator();
-//        while(windowIterator.hasNext()) {
-//            String windowHandle = windowIterator.next().toString();
-//            popup = driver.switchTo().window(windowHandle);
-//            logger.debug("title: " + popup.getTitle());
-//            if (popup.getTitle().equals("Google")) {
-//                break;
-//            }
-//        }
-//        logger.debug("title: " + driver.getTitle());
     }
 
     public void selectFiles(String path) {
@@ -159,94 +133,4 @@ public class SelectFilesHandler {
         }
         Utils.sleep(500);
     }
-
-    /// TODO extract browseUploadTMXDatabase from this class
-//    public void browseUploadTMXDatabase(String path) {
-//        waitToRender();
-//        int xPosition = 20;
-//        // TODO if singlewindow
-//        logger.warn("This must be identified dinamically");
-//        logger.info("browse path : " + path);
-//
-//
-//        String buttonPath = getPath();
-////        String buttonPath = "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count((* | (*[contains(@class, '-tl')]//*))[contains(@class,'x-window-header')]//*[text()='TERM AND BRAND MANAGEMENT']) > 0]//*[contains(@class, 'x-tab-panel') and count(*[contains(@class,'x-tab-panel-header')]//*[text()='Term Management']) > 0]//*[contains(@class, 'x-tab-panel-body')]/*[not(contains(@class, 'x-hide-display'))]//input[contains(@class, 'x-form-file') and contains(@name,'fileData')]";
-//        // to scroll to this element (if element is not visible)
-//        driver.findElement(By.xpath(buttonPath)).sendKeys(Keys.TAB);
-////        r.keyPress(KeyEvent.VK_ENTER);
-//        //need to keem mouse movement and action because for some reason
-//        //the browser sometimes looses focus and ENTER key down cannot be performed
-//        String movePosition = buttonPath ;
-//
-////        driver.manage().window().maximize();  //TODO
-//        driver.manage().window().setSize(new Dimension(100,100));
-//        driver.manage().window().setPosition(new Point(0,0));
-//         Actions builder = new Actions(driver);
-//        builder.moveToElement(driver.findElement(By.xpath(movePosition))).build().perform();
-//        builder.click().build().perform();
-//        driver.findElement(By.xpath(buttonPath)).sendKeys(Keys.TAB);
-//        Utils.sleep(2000);
-//         Robot r = null;
-//        try {
-//            r = new Robot();
-//        } catch (AWTException e) {
-//            logger.error(e);
-//        }
-//
-//        // position of Browse button
-////        logger.debug("getScreenY() 1: " + getScreenY());
-////        int left = selenium.getElementPositionLeft(buttonPath).intValue() + xPosition;
-////        int top = getScreenY();
-////        //  add 8 px to be sure we'll click inside the button
-////        top += 10;
-////        r.mouseMove(left, top);
-//        Utils.sleep(200);
-////        logger.debug("getScreenY() 2: " + getScreenY());
-////        logger.info("mouseMove: " + left + " x " + top);
-//
-//        // TODO temporary for debugging
-//       /* String screensPath = properties.getProjectDir()+ "\\reports\\browse";
-//        logger.info("Screenshot: " + screensPath + getAttributeId() +".jpg");
-//
-////        r.mousePress(InputEvent.BUTTON1_MASK);
-//        Utils.sleep(50);
-////        logger.info("mousePress");
-////        logger.debug("getScreenY() 3: " + getScreenY());
-////        r.mouseRelease(InputEvent.BUTTON1_MASK);
-//        Utils.sleep(1500);
-////        logger.debug("mouseRelease");
-//*/
-//        // input file path, field is focused by default
-//        char[] s = path.toUpperCase().toCharArray();
-//
-//        for (char c : s) {
-//            if (c == '\\') {
-//                r.keyPress(KeyEvent.VK_BACK_SLASH);
-//                r.keyRelease(KeyEvent.VK_BACK_SLASH);
-//            } else if (c == ':') {
-//                r.keyPress(KeyEvent.VK_SHIFT);
-//                r.keyPress(KeyEvent.VK_SEMICOLON);
-//                r.keyRelease(KeyEvent.VK_SEMICOLON);
-//                r.keyRelease(KeyEvent.VK_SHIFT);
-//            } else if (c == '_') {
-//                r.keyPress(KeyEvent.VK_SHIFT);
-//                r.keyPress(KeyEvent.VK_MINUS);
-//                r.keyRelease(KeyEvent.VK_MINUS);
-//                r.keyRelease(KeyEvent.VK_SHIFT);
-//
-//            } else {
-//                r.keyPress(c);
-//                r.keyRelease(c);
-//            }
-//        }
-//        Utils.sleep(500);
-//        // press enter to close Open dialog
-//        r.keyPress(KeyEvent.VK_ENTER);
-//        logger.debug("keyPress VK_ENTER");
-//        r.keyRelease(KeyEvent.VK_ENTER);
-//        logger.debug("keyRelease VK_ENTER");
-//        Utils.sleep(500);
-//
-////        driver.manage().window().maximize();
-//    }
 }

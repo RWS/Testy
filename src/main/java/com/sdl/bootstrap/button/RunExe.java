@@ -1,6 +1,5 @@
 package com.sdl.bootstrap.button;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -18,18 +17,26 @@ public class RunExe {
     }
 
     public boolean download(String[] filePath) {
-        return upload(filePath[0] + " " + filePath[1] + " " + downloadName());
+        return download(filePath, downloadWindowName());
     }
 
-    private String downloadName() {
+    public boolean download(String[] filePath, String downloadWindowName) {
+        return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName);
+    }
+
+    private String downloadWindowName() {
         return WebLocator.driver instanceof FirefoxDriver ? "Opening" : "Save As";
     }
 
     public boolean upload(String[] filePath) {
-        return upload(filePath[0] + " " + filePath[1] + " " + uploadName());
+        return upload(filePath, uploadWindowName());
     }
 
-    public boolean upload(String filePath) {
+    public boolean upload(String[] filePath, String uploadWindowName ) {
+        return doRun(filePath[0] + " \"" + filePath[1] + "\" " + uploadWindowName);
+    }
+
+    public boolean doRun(String filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath);
             if (0 == process.waitFor()) {
@@ -41,42 +48,9 @@ public class RunExe {
             e.printStackTrace();
         }
         return false;
-        /*RunExeThread runExeThread = new RunExeThread(filePath);
-        runExeThread.start();
-        long startTime = new Date().getTime();
-        while (Thread.State.RUNNABLE.equals(runExeThread.getState())) {
-            Utils.sleep(200);
-            long currentTime = new Date().getTime();
-            if (currentTime - startTime >= 10000) {
-                return false;
-            }
-        }
-        return Thread.State.TIMED_WAITING.equals(runExeThread.getState());*/
     }
 
-    private String uploadName() {
+    private String uploadWindowName() {
         return WebLocator.driver instanceof FirefoxDriver ? "File Upload" : "Open";
-    }
-}
-
-class RunExeThread extends Thread {
-
-    private String exePath;
-
-    RunExeThread(String exePath) {
-        this.exePath = exePath;
-    }
-
-    public void run() {
-        try {
-            Process process = Runtime.getRuntime().exec(exePath);
-            while (0 != process.waitFor()) {
-                Utils.sleep(100);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -16,6 +16,7 @@ public class DownloadTest extends TestBase {
 
     Panel simpleFormPanel = new Panel(null, "Simple Form");
     DownloadButton downloadButton = new DownloadButton(simpleFormPanel, "Download");
+    DownloadButton downloadWithSpacesButton = new DownloadButton(simpleFormPanel, "Download with spaces");
     DownloadButton downloadFileButton = new DownloadButton(simpleFormPanel, "Download File");
 
     @Ignores(value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
@@ -28,5 +29,11 @@ public class DownloadTest extends TestBase {
     @Test
     public void downloadFile() {
         assertTrue(downloadFileButton.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
+    }
+
+    @Ignores (value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
+    @Test
+    public void downloadFileWithSpaces() {
+        assertTrue(downloadWithSpacesButton.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text t.docx"}));
     }
 }
