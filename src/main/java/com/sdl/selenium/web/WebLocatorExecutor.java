@@ -19,7 +19,9 @@ public interface WebLocatorExecutor {
 
     void focus(WebLocator el);
 
-    String getAttribute(WebLocator el, String attribute);
+    String getAttribute(final WebLocator el, final String attribute);
+
+    String getCurrentElementAttribute(final WebLocator el, final String attribute);
 
     String getHtmlText(WebLocator el);
 

@@ -88,10 +88,10 @@ public class TextField extends ExtJsComponent {
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {
-                logger.info("Set value(" + toString() + "): " + value + "'");
                 currentElement.clear();
                 copyToClipboard(value);
                 currentElement.sendKeys(Keys.CONTROL, "v");
+                logger.info("Set value(" + this + "): " + value + "'");
                 return true;
             }
         } else {
@@ -103,21 +103,20 @@ public class TextField extends ExtJsComponent {
     public boolean setValue(String value) {
         if (value != null) {
             if (ready()) {
-                logger.info("Setting value(" + toString() + "): '" + value + "'");
                 if (hasWebDriver()) {
                     currentElement.clear();
                     currentElement.sendKeys(value);
-                    return true;
                 } else {
                     String path = getPath();
                     selenium.focus(path); // to scroll to this element (if element is not visible)
                     selenium.type(path, value);
                     selenium.keyUp(path, (value.length() == 0) ? "\13" : value.substring(value.length() - 1));
                     selenium.fireEvent(path, "blur");
-                    return true;
                 }
+                logger.info("Set value(" + this + "): '" + value + "'");
+                return true;
             } else {
-                logger.warn("setValue : field is not ready for use: " + toString());
+                logger.warn("setValue : field is not ready for use: " + this);
             }
         }
         return false;
@@ -144,13 +143,13 @@ public class TextField extends ExtJsComponent {
                 if (attributeValue != null) {
                     value = attributeValue;
                 } else {
-                    logger.warn("getValue : value attribute is null: " + toString());
+                    logger.warn("getValue : value attribute is null: " + this);
                 }
             } else {
                 value = selenium.getValue(getPath());
             }
         } else {
-            logger.warn("getValue : field is not ready for use: " + toString());
+            logger.warn("getValue : field is not ready for use: " + this);
         }
         return value;
     }
@@ -188,7 +187,7 @@ public class TextField extends ExtJsComponent {
                 return false;
             }
         } else {
-            logger.warn("clickIcon : field is not ready for use: " + toString());
+            logger.warn("clickIcon : field is not ready for use: " + this);
         }
         return false;
     }

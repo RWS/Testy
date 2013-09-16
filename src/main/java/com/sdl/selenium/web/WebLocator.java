@@ -119,6 +119,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getAttribute(this, attribute);
     }
 
+    protected String getCurrentElementAttribute(String attribute){
+        return executor.getCurrentElementAttribute(this, attribute);
+    }
+
     public String getHtmlSource() {
         return executor.getHtmlSource(this);
     }

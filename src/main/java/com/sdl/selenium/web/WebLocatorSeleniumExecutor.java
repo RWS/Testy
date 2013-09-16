@@ -58,14 +58,21 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public String getAttribute(WebLocator el, String attribute) {
+    public String getAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         if (isElementPresent(el)) {
-            try {
-                attributeValue = selenium.getAttribute(el.getPath() + "@" + attribute); //TODO
-            } catch (SeleniumException e) {
-                logger.debug("getAttribute '" + attribute + "' SeleniumException: " + e);
-            }
+            attributeValue = getCurrentElementAttribute(el, attribute);
+        }
+        return attributeValue;
+    }
+
+    @Override
+    public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
+        String attributeValue = null;
+        try {
+            attributeValue = selenium.getAttribute(el.getPath() + "@" + attribute); //TODO
+        } catch (SeleniumException e) {
+            logger.debug("getAttribute '" + attribute + "' SeleniumException: " + e);
         }
         return attributeValue;
     }
