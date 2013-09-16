@@ -22,9 +22,8 @@ Ext.onReady(function(){
             },{
                 text: 'Expect3',
                 handler: function(){
-                     var box = Ext.MessageBox.wait('Please wait...');
+                     Ext.MessageBox.wait('Please wait...');
                      setTimeout(function(){
-                         box.hide();
                          setTimeout(function(){
                              Ext.MessageBox.confirm('Confirm', 'Are you sure you want to do that?');
                          },  Math.round(1+Math.random(2)*2) * 1000);
