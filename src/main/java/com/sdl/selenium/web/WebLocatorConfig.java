@@ -2,7 +2,7 @@ package com.sdl.selenium.web;
 
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
@@ -28,7 +28,7 @@ public class WebLocatorConfig {
             String filePath = loader.getResource(CONFIG_FILE_NAME).getFile();
             logger.debug("reading: " + filePath);
 
-            FileInputStream inputStream = new FileInputStream(filePath);
+            InputStream inputStream = loader.getSystemResourceAsStream(CONFIG_FILE_NAME);
             if (inputStream != null) {
                 Reader reader = new InputStreamReader(inputStream, "UTF-8");
                 properties.load(reader);
@@ -50,7 +50,7 @@ public class WebLocatorConfig {
     public static Boolean getBoolean(String key) {
         Boolean v = null;
         String vString = getString(key);
-        if(vString != null){
+        if (vString != null) {
             v = Boolean.valueOf(vString);
         } else {
             logger.debug("key not found:" + key);
@@ -61,7 +61,7 @@ public class WebLocatorConfig {
     public static Integer getInt(String key) {
         Integer v = null;
         String vString = getString(key);
-        if(vString != null){
+        if (vString != null) {
             v = Integer.valueOf(vString);
         } else {
             logger.debug("key not found:" + key);
@@ -69,22 +69,22 @@ public class WebLocatorConfig {
         return v;
     }
 
-    private static void init(){
+    private static void init() {
         Integer renderMillis = getInt("weblocator.defaults.renderMillis");
-        if(renderMillis != null){
+        if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);
         }
 
         Boolean logUseClassName = getBoolean("weblocator.log.useClassName");
-        if(logUseClassName != null){
+        if (logUseClassName != null) {
             setLogUseClassName(logUseClassName);
         }
         Boolean logContainers = getBoolean("weblocator.log.containers");
-        if(logContainers != null){
+        if (logContainers != null) {
             setLogContainers(logContainers);
         }
         Boolean highlight = getBoolean("weblocator.highlight");
-        if(highlight != null){
+        if (highlight != null) {
             setHighlight(highlight);
         }
     }
@@ -123,7 +123,7 @@ public class WebLocatorConfig {
         WebLocatorConfig.highlight = highlight;
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         logger.info("start");
 
 //        Window w = new Window("MyWin");
