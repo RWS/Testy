@@ -100,7 +100,7 @@ public class Button extends ExtJsComponent {
         }
         boolean clicked = super.click();
         if (clicked) {
-            Utils.sleep(150);
+            Utils.sleep(50);
         } else {
             logger.error("(" + toString() + ") doesn't exists or is disabled. " + getPath());
         }

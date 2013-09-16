@@ -137,9 +137,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public String getHtmlText(boolean instant) {
-        if(instant){
-            return executor.getHtmlText(this);
-        } else if (ready()) {
+        if(instant || ready()){
             return executor.getHtmlText(this);
         }
         return null;
@@ -431,11 +429,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public String waitTextToRender(int seconds, String excludeText) {
         String text = null;
-        if (seconds == 0 && ((text = getHtmlText()) != null && text.length() > 0 && !text.equals(excludeText))) {
+        if (seconds == 0 && ((text = getHtmlText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
             return text;
         }
         for (int i = 0, count = 5 * seconds; i < count; i++) {
-            text = getHtmlText();
+            text = getHtmlText(true);
             if (text != null && text.length() > 0 && !text.equals(excludeText)) {
                 return text;
             }
