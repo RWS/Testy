@@ -109,6 +109,14 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return getAttribute("class");
     }
 
+    public String getCurrentElementPath() {
+        return currentElementPath;
+    }
+
+    public void setCurrentElementPath(String currentElementPath) {
+        this.currentElementPath = currentElementPath;
+    }
+
     /**
      * Use xPath only
      *

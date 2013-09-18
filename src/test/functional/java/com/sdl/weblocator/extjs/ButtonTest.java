@@ -16,10 +16,10 @@ public class ButtonTest extends TestBase {
     Window dateFieldWindow = new Window("DateFieldWindow");
     Button submitButton = new Button(dateFieldWindow, "Submit");
     Button closeButton = new Button(dateFieldWindow, "Close");
+    Button dateFieldButton = new Button(null, "DateField");
 
     @BeforeMethod
     public void startTests() {
-        Button dateFieldButton = new Button(null, "DateField");
         dateFieldButton.click();
     }
 
@@ -29,7 +29,7 @@ public class ButtonTest extends TestBase {
     }
 
     @Test
-    public void testEditorType() {
+    public void isDisplayed() {
         assertTrue(driver.findElement(By.xpath(closeButton.getPath())).isDisplayed());
     }
 }

@@ -49,6 +49,7 @@ public class DateField extends TextField {
             WebLocator monthEl = new WebLocator(calendarLayer, "//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']").setInfoMessage("month " + month);
             monthEl.click();
             selectOkButton.click();
+            Utils.sleep(60); // wait for Chrome
             return new WebLocator(calendarLayer, "//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']").click();
         } else {
             logger.warn("The selected month doesn't have the " + day + " day.");

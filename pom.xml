@@ -7,7 +7,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <organization>
@@ -91,6 +91,13 @@
                         <suiteXmlFile>src/test/resources/unit/testng-unit.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
+               <!-- <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>-->
             </plugin>
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
