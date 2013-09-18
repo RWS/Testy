@@ -11,6 +11,13 @@ public class MessageBoxTest extends TestBase {
 
     Panel conditionManagerPanel = new Panel("Condition Manager");
     Button expect1Button = new Button(conditionManagerPanel, "Expect1");
+    Button instantMessageButton = new Button(conditionManagerPanel, "Instant Message");
+
+    @Test
+    public void getNullIfNoMessageExistTest() {
+        String message = MessageBox.getMessage();
+        Assert.assertNull(message);
+    }
 
     @Test
     public void getMessageIn1SecTest() {
@@ -21,4 +28,12 @@ public class MessageBoxTest extends TestBase {
         MessageBox.pressOK();
     }
 
+    @Test
+    public void getInstantMessageTest() {
+        instantMessageButton.click();
+        String expected = "Instant Message button was pressed";
+        String message = MessageBox.getMessage();
+        Assert.assertEquals(message, expected);
+        MessageBox.pressOK();
+    }
 }

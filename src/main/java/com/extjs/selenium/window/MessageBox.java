@@ -39,7 +39,13 @@ public class MessageBox {
     public static String getMessage(int waitSeconds) {
         ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", messageBoxWindow);
         mbTextElement.setInfoMessage("MessageBox ext-mb-text");
-        return mbTextElement.waitTextToRender(waitSeconds);
+        String msg;
+        if (waitSeconds == 0) {
+            msg = mbTextElement.getHtmlText(true);
+        } else {
+            msg = mbTextElement.waitTextToRender(waitSeconds);
+        }
+        return msg;
     }
 
     public boolean close() {

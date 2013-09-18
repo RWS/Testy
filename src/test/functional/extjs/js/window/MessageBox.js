@@ -29,6 +29,11 @@ Ext.onReady(function(){
                          },  Math.round(1+Math.random(2)*2) * 1000);
                      },  Math.round(1+Math.random(2)*5) * 1000);
                  }
+            }, {
+                text: 'Instant Message',
+                handler: function(button){
+                    Ext.MessageBox.alert('Alert', button.getText() + ' button was pressed');
+                }
             }
         ]
     });
