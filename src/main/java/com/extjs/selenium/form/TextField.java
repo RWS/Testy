@@ -6,6 +6,7 @@ import com.sdl.selenium.web.WebLocator;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
@@ -102,10 +103,19 @@ public class TextField extends ExtJsComponent {
 
     public boolean setValue(String value) {
         if (value != null) {
-            if (ready()) {
+            if (executor.isSamePath(this, this.getPath()) || ready()) {
                 if (hasWebDriver()) {
-                    currentElement.clear();
-                    currentElement.sendKeys(value);
+                    try {
+                        currentElement.clear();
+                        currentElement.sendKeys(value);
+                    } catch (StaleElementReferenceException exception){
+                        logger.warn("StaleElementReferenceException" + exception);
+                        logger.warn("Set value(" + this + ") second try:  '" + value + "'");
+                        if(ready()){
+                            currentElement.clear();
+                            currentElement.sendKeys(value);
+                        }
+                    }
                 } else {
                     String path = getPath();
                     selenium.focus(path); // to scroll to this element (if element is not visible)
@@ -167,8 +177,7 @@ public class TextField extends ExtJsComponent {
     }
 
     public String getTriggerPath(String icon) {
-        String triggerPath = "/parent::*//*[contains(@class,'x-form-" + icon + "-trigger')]";
-        return triggerPath;
+        return "/parent::*//*[contains(@class,'x-form-" + icon + "-trigger')]";
     }
 
     public boolean clickIcon(String icon) {
