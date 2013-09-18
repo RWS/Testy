@@ -33,6 +33,8 @@ public interface WebLocatorExecutor {
 
     boolean doMouseOver(WebLocator el);
 
+    boolean isSamePath(WebLocator el, String path);
+
     Object executeScript(String script, Object... objects);
 
     void type(WebLocator el, String text);

@@ -163,6 +163,10 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
         return selenium.isChecked(el.getPath());
     }
 
+    public boolean isSamePath(WebLocator el, String path) {
+        return false;
+    }
+
     @Override
     public void blur(WebLocator el) {
         selenium.fireEvent(el.getPath(), "blur");

@@ -4,6 +4,7 @@ import com.extjs.selenium.button.Button;
 import com.extjs.selenium.form.TextField;
 import com.extjs.selenium.window.Window;
 import com.sdl.weblocator.TestBase;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -11,6 +12,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class TextFieldTest extends TestBase {
+    private static final Logger logger = Logger.getLogger(TextFieldTest.class);
 
     Window textFieldWindow = new Window("TextFieldWindow");
     TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");
@@ -41,5 +43,14 @@ public class TextFieldTest extends TestBase {
         assertEquals(lastNameTextField.getValue(), "testValue");
         assertEquals(disableTextField.getValue(), "Disable Name");
         assertEquals(firstNameTextField.getValue(), "First Name");
+    }
+
+    @Test
+    public void performanceTestSetValue() {
+        logger.info("Start");
+        for (int i = 0; i < 100; i++){
+            lastNameTextField.setValue("Value"+i);
+        }
+        logger.info("End");
     }
 }

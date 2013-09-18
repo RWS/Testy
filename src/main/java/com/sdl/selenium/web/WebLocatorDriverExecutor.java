@@ -27,6 +27,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 clicked = true;
             } catch (StaleElementReferenceException e) {
                 logger.error("StaleElementReferenceException: ", e);
+                el.setCurrentElementPath("");
+                el.findElement();
                 el.currentElement.click(); // not sure it will click now
                 clicked = true;
                 logger.info("Exception at Click on ");
@@ -60,18 +62,22 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public WebElement findElement(WebLocator el) {
         final String path = el.getPath();
-//        if(currentElement != null && (currentElementPath.equals(path))){
-//            logger.warn("currentElement already found one time: " + toString());
-//            //return;
-//        }
+        if(isSamePath(el, path)){
+            logger.debug("currentElement already found one time: " + el);
+            //return el.currentElement;
+        }
         try {
             el.currentElement = driver.findElement(By.xpath(path));
-            currentElementPath = path;
+            el.setCurrentElementPath(path);
         } catch (WebDriverException e) {
             el.currentElement = null;
             //logger.debug("Element not present:" + (path != null ? path : selector));
         }
         return el.currentElement;
+    }
+
+    public boolean isSamePath(WebLocator el, String path) {
+        return el.currentElement != null && (el.getCurrentElementPath().equals(path));
     }
 
     @Override
