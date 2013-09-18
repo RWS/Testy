@@ -18,6 +18,11 @@ public class MessageBox {
 
     private static Window messageBoxWindow = new Window(true).setCls("x-window-dlg").setInfoMessage("MessageBox");
 
+    private static Button okButton = new Button(messageBoxWindow, BUTTON_OK);
+    private static Button cancelButton = new Button(messageBoxWindow, BUTTON_CANCEL);
+    private static Button yesButton = new Button(messageBoxWindow, BUTTON_YES);
+    private static Button noButton = new Button(messageBoxWindow, BUTTON_NO);
+
     private MessageBox(){}
 
     /**
@@ -53,13 +58,28 @@ public class MessageBox {
     }
 
     public static String press(String buttonText) {
+        Button button;
+        if(BUTTON_OK.equals(buttonText)){
+            button = okButton;
+        } else if(BUTTON_CANCEL.equals(buttonText)){
+            button = cancelButton;
+        } else if(BUTTON_YES.equals(buttonText)){
+            button = yesButton;
+        } else if(BUTTON_NO.equals(buttonText)){
+            button = noButton;
+        } else {
+            button = new Button(messageBoxWindow, buttonText);
+        }
+        return press(button);
+    }
+
+    private static String press(final Button button) {
         if (WebLocator.isIE() && !messageBoxWindow.isVisible()) {
             return null;
         }
         String msg = getMessage();
-        Button button = new Button(messageBoxWindow, buttonText);
         if (msg != null) {
-            logger.info("Click on button " + buttonText + " in the window with message: " + msg);
+            logger.info("Click on button " + button.getText() + " in the window with message: " + msg);
             button.click();
         } else {
             logger.warn("There is no Message or Dialog");
@@ -68,14 +88,14 @@ public class MessageBox {
     }
 
     public static String pressOK() {
-        return press(BUTTON_OK);
+        return press(okButton);
     }
 
     public static String pressYes() {
-        return press(BUTTON_YES);
+        return press(yesButton);
     }
 
     public static String pressNo() {
-        return press(BUTTON_NO);
+        return press(noButton);
     }
 }
