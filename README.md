@@ -7,13 +7,3 @@ mvn deploy:deploy-file -DgroupId=com.sdl.lt.dev -DartifactId=Testy -Dversion=1.3
 
 If runging integration test from Intelij run src\test\resources\integration\testngIntegration.xml
 
-CHANGES:
-1.6-SNAPSHOT
-1) Improvement setValue for TextField
-2) Add method isSamePath()
-3) Add logger.debug("currentElement already found one time: " + el); in method findElement()
-4) Add setter and getter for currentElementPath
-5) Verifica daca elemenetul exista cand a aparut exceptia StaleElementReferenceException si apoi face din nou click
-
-1.5-SNAPSHOT
-
