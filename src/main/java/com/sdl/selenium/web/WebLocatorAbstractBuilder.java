@@ -74,6 +74,10 @@ public abstract class WebLocatorAbstractBuilder {
         return elPath;
     }
 
+    /**
+     * Once used all other attributes will bi ignored. Try using this class to a minimum.
+     * @param elPath
+     */
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
         this.elPath = elPath;
         return (T) this;
