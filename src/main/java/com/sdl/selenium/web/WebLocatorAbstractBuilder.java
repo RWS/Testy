@@ -75,7 +75,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Once used all other attributes will bi ignored. Try using this class to a minimum.
+     * Once used all other attributes will be ignored. Try using this class to a minimum.
      * @param elPath
      */
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
