@@ -108,7 +108,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         try {
-            attributeValue = el.currentElement.getAttribute(attribute);
+            if(el.currentElement != null || isElementPresent(el)){
+                attributeValue = el.currentElement.getAttribute(attribute);
+            }
         } catch (WebDriverException e) {
             logger.debug("getAttribute '" + attribute + "' SeleniumException: " + e);
         }
