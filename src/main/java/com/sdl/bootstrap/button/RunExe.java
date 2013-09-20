@@ -29,11 +29,7 @@ public class RunExe {
     }
 
     public boolean upload(String[] filePath) {
-        return upload(filePath, uploadWindowName());
-    }
-
-    public boolean upload(String[] filePath, String uploadWindowName ) {
-        return doRun(filePath[0] + " \"" + filePath[1] + "\" " + uploadWindowName);
+        return doRun(filePath[0] + " \"" + filePath[1] + "\"");
     }
 
     public boolean doRun(String filePath) {

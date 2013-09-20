@@ -39,22 +39,13 @@ public class SelectFilesHandler {
 
     /**
      * Upload file with AutoIT exe
-     * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"}, "Open");
+     * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
      *
      * @param filePath   path to upload.exe
-     * @param uploadWindowName upload window name
      * @return true or false
      */
-    public boolean browseWithAutoIT(String[] filePath, String uploadWindowName) {
-        openBrowseWindow();
-        return RunExe.getInstance().upload(filePath, uploadWindowName);
-    }
-
-    /**
-     * Upload file with AutoIT exe
-     * Use only this: button.browseWithAutoIT(new String[] {"C:\\upload.exe", "C:\\text.txt"});
-     */
     public boolean browseWithAutoIT(String[] filePath) {
+        openBrowseWindow();
         return RunExe.getInstance().upload(filePath);
     }
 
