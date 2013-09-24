@@ -1,6 +1,7 @@
 #include <File.au3>
 Local $hFile = FileOpen(@ScriptDir & "\upload.log", 1)
 Local $result = 1
+Sleep(400)
 $activeWindowTitle = WinGetTitle(WinWait("[CLASS:#32770]", " ", 3))
 WinFlash($activeWindowTitle, "", 1, 50) ; Just to Flash the window
 ;ControlSetText($activeWindowTitle, "", "Edit1", "D:\Mill\src\test\resources\file\export.xml")
