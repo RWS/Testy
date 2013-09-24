@@ -76,6 +76,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * Once used all other attributes will be ignored. Try using this class to a minimum.
+     *
      * @param elPath
      */
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
@@ -105,10 +106,10 @@ public abstract class WebLocatorAbstractBuilder {
         return classes;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setClasses(final String ...classes) {
-        if(classes != null){
+    public <T extends WebLocatorAbstractBuilder> T setClasses(final String... classes) {
+        if (classes != null) {
             this.classes = new ArrayList<String>();
-            for (String cls: classes){
+            for (String cls : classes) {
                 this.classes.add(cls);
             }
         }
@@ -147,7 +148,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     *
      * @param searchTextType accepted values are: SearchType.EQUALS
      * @param <T>
      * @return
@@ -189,7 +189,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public <T extends WebLocatorAbstractBuilder> T setDeepness(String deepness) {
-        this.deepness =  "count(" + deepness + ") > 0";
+        this.deepness = "count(" + deepness + ") > 0";
         return (T) this;
     }
 
@@ -277,6 +277,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * example: //*[contains(@class, 'x-grid-panel') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))][position() = 1]
+     *
      * @param position starting index = 1
      * @param <T>
      * @return
@@ -378,7 +379,7 @@ public abstract class WebLocatorAbstractBuilder {
             selector += " and contains(@class, '" + getCls() + "')";
         }
         if (hasClasses()) {
-            for(String cls : getClasses()){
+            for (String cls : getClasses()) {
                 selector += " and contains(@class, '" + cls + "')";
             }
         }
@@ -515,8 +516,14 @@ public abstract class WebLocatorAbstractBuilder {
             info = getName();
         } else if (hasCls()) {
             info = getCls();
-//        } else if (hasElPath()) {// TODO verify with / without xpath
-//            info = getElPath();
+        } else if (hasLabel()) {
+            info = getLabel();
+        } else if (hasTitle()) {
+            info = getTitle();
+        } else if (hasBaseCls()) {
+            info = getBaseCls();
+        } else if (hasElPath()) {// TODO verify with / without xpath
+            info = getElPath();
         } else {
             info = getClassName();
         }
