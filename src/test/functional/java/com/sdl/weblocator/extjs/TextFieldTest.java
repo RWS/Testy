@@ -48,7 +48,7 @@ public class TextFieldTest extends TestBase {
     @Test
     public void performanceTestSetValue() {
         long startMs = System.currentTimeMillis();
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < 10; i++){
             lastNameTextField.setValue("Value" + i);
         }
         long endMs = System.currentTimeMillis();

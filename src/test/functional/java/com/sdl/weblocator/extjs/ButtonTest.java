@@ -38,7 +38,7 @@ public class ButtonTest extends TestBase {
 
     @Test void performanceTestClick(){
         long startMs = System.currentTimeMillis();
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 10; i++) {
             cancelButton.click();
         }
         long endMs = System.currentTimeMillis();
