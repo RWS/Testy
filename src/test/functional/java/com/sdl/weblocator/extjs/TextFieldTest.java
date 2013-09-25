@@ -47,10 +47,11 @@ public class TextFieldTest extends TestBase {
 
     @Test
     public void performanceTestSetValue() {
-        logger.info("Start");
+        long startMs = System.currentTimeMillis();
         for (int i = 0; i < 100; i++){
-            lastNameTextField.setValue("Value"+i);
+            lastNameTextField.setValue("Value" + i);
         }
-        logger.info("End");
+        long endMs = System.currentTimeMillis();
+        logger.info(String.format("performanceTestSetValue took %s ms", endMs - startMs));
     }
 }

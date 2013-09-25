@@ -103,8 +103,8 @@ public class TextField extends ExtJsComponent {
 
     public boolean setValue(String value) {
         if (value != null) {
-//            if (executor.isSamePath(this, this.getPath()) || ready()) {  //TODO Sa gasim o solutie pentru cazurile cand elementul nu exista
-// ca sa putem avea imbunatatire cand e elementul nu s-a modificat
+            // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
+            //if (executor.isSamePath(this, this.getPath()) || ready()) {
             if (ready()) {
                 if (hasWebDriver()) {
                     try {

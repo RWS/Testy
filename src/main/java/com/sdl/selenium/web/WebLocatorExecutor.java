@@ -41,7 +41,7 @@ public interface WebLocatorExecutor {
 
     void typeKeys(WebLocator el, String text);
 
-    void sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
+    void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
     boolean isTextPresent(WebLocator el, String text);
 

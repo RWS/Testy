@@ -234,8 +234,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
-        ready();
-        executor.sendKeys(this, charSequences);
+        if(ready()){
+            executor.doSendKeys(this, charSequences);
+        }
         return this;
     }
 

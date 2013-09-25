@@ -151,19 +151,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
-        if (isElementPresent(el)) {
-            try {
-                el.currentElement.sendKeys(charSequences);
-            } catch (ElementNotVisibleException e) {
-                logger.error("sendKeys: ElementNotVisibleException");
-                throw e;
-            } catch (WebDriverException e){
-                //TODO this fix is for Chrome
-                Actions builder = new Actions(driver);
-                builder.click(el.currentElement);
-                builder.sendKeys(charSequences);
-            }
+    public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        try {
+            el.currentElement.sendKeys(charSequences);
+        } catch (ElementNotVisibleException e) {
+            logger.error("sendKeys: ElementNotVisibleException");
+            throw e;
+        } catch (WebDriverException e){
+            //TODO this fix is for Chrome
+            Actions builder = new Actions(driver);
+            builder.click(el.currentElement);
+            builder.sendKeys(charSequences);
         }
     }
 

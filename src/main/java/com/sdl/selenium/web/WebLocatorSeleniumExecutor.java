@@ -144,7 +144,7 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void sendKeys(WebLocator el, CharSequence... charSequences) {
+    public void doSendKeys(WebLocator el, CharSequence... charSequences) {
         logger.warn("TODO not implemented yet for selenium");
     }
 
