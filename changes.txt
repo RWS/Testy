@@ -8,5 +8,6 @@ CHANGES:
 6) Add more info about elements into intemToString
 7) remove upload(String[] filePath, String uploadWindowName)
 8) Add doSendKeys method
+9) Improvement update.exe
 
 1.5-SNAPSHOT
