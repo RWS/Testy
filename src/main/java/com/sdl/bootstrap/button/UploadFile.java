@@ -54,17 +54,17 @@ public class UploadFile extends WebLocator {
      * @param filePath new String[] {"C:\\upload.exe", "C:\\text.txt"}
      */
     public boolean upload(String[] filePath) {
-        WebLocator uploadButton = new WebLocator(this, "//span[contains(@class,'fileupload-new') and count(.//i[@class='icon-folder-open']) > 0]");
+        WebLocator uploadButton = new WebLocator(this).setTag("span").setCls("fileupload-new").setDeepness(".//i[@class='icon-folder-open']");
         return upload(uploadButton, filePath);
     }
 
     public boolean reUpload(String[] filePath) {
-        WebLocator uploadButton = new WebLocator(this, "//span[contains(@class,'fileupload-exists') and count(.//i[@class='icon-refresh']) > 0]");
+        WebLocator uploadButton = new WebLocator(this).setTag("span").setCls("fileupload-exists").setDeepness(".//i[@class='icon-refresh']");
         return upload(uploadButton, filePath);
     }
 
     public boolean removeFile() {
-        WebLocator removeButton = new WebLocator(this, "//a[contains(@class,'fileupload-exists') and count(.//i[@class='icon-trash']) > 0]");
+        WebLocator removeButton = new WebLocator(this).setTag("a").setCls("fileupload-exists").setDeepness(".//i[@class='icon-trash']");
         return removeButton.clickAt();
     }
 

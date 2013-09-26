@@ -67,7 +67,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             //return el.currentElement;
         }
         try {
-            el.currentElement = driver.findElement(By.xpath(path));
+            el.currentElement = driver.findElement(By.xpath(path)); //TODO sa incerc sa pun id
             el.setCurrentElementPath(path);
         } catch (WebDriverException e) {
             el.currentElement = null;
