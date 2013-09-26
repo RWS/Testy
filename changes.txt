@@ -5,5 +5,8 @@ CHANGES:
 3) Add logger.debug("currentElement already found one time: " + el); in method findElement()
 4) Add setter and getter for currentElementPath
 5) Verifica daca elemenetul exista cand a aparut exceptia StaleElementReferenceException si apoi face din nou click
+6) Add more info about elements into intemToString
+7) remove upload(String[] filePath, String uploadWindowName)
+8) Add doSendKeys method
 
 1.5-SNAPSHOT
