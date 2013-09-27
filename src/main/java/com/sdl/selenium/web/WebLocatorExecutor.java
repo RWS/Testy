@@ -13,6 +13,8 @@ public interface WebLocatorExecutor {
 
     WebElement findElement(WebLocator el);
 
+    WebElement waitElement(WebLocator el, final long millis);
+
     int size(WebLocator el);
 
     void doHighlight(WebLocator el);

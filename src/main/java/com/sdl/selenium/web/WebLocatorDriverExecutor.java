@@ -3,6 +3,10 @@ package com.sdl.selenium.web;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private static final Logger logger = Logger.getLogger(WebLocatorDriverExecutor.class);
@@ -62,16 +66,29 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public WebElement findElement(WebLocator el) {
         final String path = el.getPath();
-        if(isSamePath(el, path)){
+        if (isSamePath(el, path)) {
             logger.debug("currentElement already found one time: " + el);
             //return el.currentElement;
         }
+        el.currentElement = waitElement(el, 0);
+        el.setCurrentElementPath(path);
+        return el.currentElement;
+    }
+
+    @Override
+    public WebElement waitElement(final WebLocator el, final long millis) {
+        WebDriverWait wait = new WebDriverWait(driver, 0, 100);
+        wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
+        final String xpath = el.getPath();
         try {
-            el.currentElement = driver.findElement(By.xpath(path)); //TODO sa incerc sa pun id
-            el.setCurrentElementPath(path);
-        } catch (WebDriverException e) {
-            el.currentElement = null;
-            //logger.debug("Element not present:" + (path != null ? path : selector));
+            el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
+                public WebElement apply(WebDriver driver1) {
+                    return driver.findElement(By.xpath(xpath)); //TODO sa incerc sa pun id
+                }
+            });
+        } catch (TimeoutException e) {
+
+            return el.currentElement = null;
         }
         return el.currentElement;
     }
@@ -108,7 +125,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         try {
-            if(el.currentElement != null || isElementPresent(el)){
+            if (el.currentElement != null || isElementPresent(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (WebDriverException e) {
@@ -157,7 +174,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } catch (ElementNotVisibleException e) {
             logger.error("sendKeys: ElementNotVisibleException");
             throw e;
-        } catch (WebDriverException e){
+        } catch (WebDriverException e) {
             //TODO this fix is for Chrome
             Actions builder = new Actions(driver);
             builder.click(el.currentElement);
@@ -245,7 +262,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     "} else if( document.createEventObject ) {" +
                     "fireOnThis.fireEvent('on" + eventName + "');" +
                     "}";
-        } else if (!"".equals(getAttribute(el, "class"))){
+        } else if (!"".equals(getAttribute(el, "class"))) {
             script = "var fireOnThis = document.getElementsByClassName('" + getAttribute(el, "class") + "');\n" +
                     "if(document.createEvent) {" +
                     "var evObj = document.createEvent('MouseEvents');\n" +

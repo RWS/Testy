@@ -42,6 +42,10 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
         return null;
     }
 
+    public WebElement waitElement(final WebLocator el, final long millis){
+        return null;
+    }
+
     @Override
     public int size(WebLocator el) {
         return selenium.getXpathCount(el.getPath()).intValue();

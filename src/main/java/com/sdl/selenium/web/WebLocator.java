@@ -402,22 +402,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean waitToRender(final long millis) {
-        long stepMs = 100;
-        long ms = millis;
-        if (isElementPresent()) {
-            return true;
-        }
-        // if element was not present instantly wait to render
-        while (ms > 0) {
-            Utils.sleep(Math.min(stepMs, ms));
-            if (isElementPresent()) {
-                return true;
-            }
-            ms -= stepMs;
-        }
-        logger.warn("Element not found after " + millis + " millis; " + this);
-        //logger.debug("Element not found after " + millis + " millis; " + getPath());
-        return false;
+        executor.waitElement(this, millis);
+        return currentElement != null;
     }
 
     /**
