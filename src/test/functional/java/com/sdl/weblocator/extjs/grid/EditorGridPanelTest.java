@@ -1,4 +1,4 @@
-package com.sdl.weblocator.extjs;
+package com.sdl.weblocator.extjs.grid;
 
 import com.extjs.selenium.Utils;
 import com.extjs.selenium.button.Button;

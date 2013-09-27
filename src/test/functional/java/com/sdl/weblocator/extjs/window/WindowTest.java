@@ -1,4 +1,4 @@
-package com.sdl.weblocator.extjs;
+package com.sdl.weblocator.extjs.window;
 
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.grid.EditorGridPanel;

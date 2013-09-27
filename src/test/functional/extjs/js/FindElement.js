@@ -27,4 +27,30 @@ Ext.onReady(function(){
             win.show();
         }
     });
+
+    var timeOutField;
+    var simple = new Ext.form.FormPanel({
+           frame: true,
+           title: 'Find Elements after Timeout',
+           bodyStyle:'padding:5px 5px 0',
+           width: 350,
+           items: [
+                timeOutField = new Ext.form.NumberField({
+                    fieldLabel : 'Timeout',
+                    value: 3000
+                })
+           ],
+           buttons: [
+               {
+                   text: 'Show',
+                   handler: function(){
+                        setTimeout(function(){
+                             Ext.MessageBox.alert('Message', 'Timeout element in ' + timeOutField.getValue());
+                         },  timeOutField.getValue());
+                   }
+               }
+           ]
+       });
+       simple.render(document.body);
+
 });

@@ -12,7 +12,7 @@ Ext.onReady(function(){
         frame: true,
         title: 'Simple Form',
         bodyStyle:'padding:5px 5px 0',
-        width: 350,
+        width: 400,
         defaults: {width: 230},
 
         items: [{
@@ -63,9 +63,22 @@ Ext.onReady(function(){
                 window.location.href = '../../resources/upload/text t.docx';
             }
         },{
+            text: 'Stress',
+            id: 'stress',
+        },{
             text: 'Cancel'
         }]
     });
 
     simple.render(document.body);
+
+    setInterval( function (){
+        var stressButton = Ext.get('stress');
+        if(stressButton){
+            stressButton.hide();
+            console.log("test");
+        } else {
+             stressButton.show();
+        }
+    }, 1000);
 });

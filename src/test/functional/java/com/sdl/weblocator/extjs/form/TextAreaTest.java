@@ -1,4 +1,4 @@
-package com.sdl.weblocator.extjs;
+package com.sdl.weblocator.extjs.form;
 
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.form.TextArea;

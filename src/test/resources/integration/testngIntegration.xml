@@ -6,47 +6,47 @@
     </listeners>
     <test name="ButtonTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.ButtonTest"/>
+            <class name="com.sdl.weblocator.extjs.button.ButtonTest"/>
         </classes>
     </test>
     <test name="EditorGridPanelTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.EditorGridPanelTest"/>
+            <class name="com.sdl.weblocator.extjs.grid.EditorGridPanelTest"/>
         </classes>
     </test>
     <test name="ComboBoxTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.ComboBoxTest"/>
+            <class name="com.sdl.weblocator.extjs.form.ComboBoxTest"/>
         </classes>
     </test>
     <test name="DateFieldTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.DateFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.form.DateFieldTest"/>
         </classes>
     </test>
     <test name="DisplayFieldTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.DisplayFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.form.DisplayFieldTest"/>
         </classes>
     </test>
     <test name="ListTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.ListTest"/>
+            <class name="com.sdl.weblocator.extjs.list.ListTest"/>
         </classes>
     </test>
     <test name="RadioGroupTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.RadioGroupTest"/>
+            <class name="com.sdl.weblocator.extjs.form.RadioGroupTest"/>
         </classes>
     </test>
     <test name="TextAreaTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.TextAreaTest"/>
+            <class name="com.sdl.weblocator.extjs.form.TextAreaTest"/>
         </classes>
     </test>
     <test name="TextFieldTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.TextFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.form.TextFieldTest"/>
         </classes>
     </test>
     <test name="WebLocatorTest">
@@ -56,7 +56,7 @@
     </test>
     <test name="WindowTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.WindowTest"/>
+            <class name="com.sdl.weblocator.extjs.window.WindowTest"/>
             <class name="com.sdl.weblocator.extjs.window.MessageBoxTest"/>
         </classes>
     </test>

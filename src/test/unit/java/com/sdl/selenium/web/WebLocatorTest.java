@@ -26,6 +26,7 @@ public class WebLocatorTest {
                 {new WebLocator().setId("ID").setText("Text"), "//*[@id='ID' and contains(text(),'Text')]"},
                 {new WebLocator().setId("ID").setCls("Cls"), "//*[@id='ID' and contains(@class, 'Cls')]"},
                 {new WebLocator().setCls("Cls").setText("Text"), "//*[contains(@class, 'Cls') and contains(text(),'Text')]"},
+                {new WebLocator().setCls("Cls").setText("Text").setElPath("//a//div//input"), "//a//div//input"},
                 {new WebLocator().setCls("Cls").setDeepness(".//[text()='Texts']"), "//*[contains(@class, 'Cls') and count(.//[text()='Texts']) > 0]"},
         };
     }

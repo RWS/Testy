@@ -1,4 +1,4 @@
-package com.sdl.weblocator.extjs;
+package com.sdl.weblocator.extjs.button;
 
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.panel.Panel;

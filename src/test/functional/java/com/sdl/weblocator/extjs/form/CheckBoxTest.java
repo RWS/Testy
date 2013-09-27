@@ -1,4 +1,4 @@
-package com.sdl.weblocator.extjs;
+package com.sdl.weblocator.extjs.form;
 
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
