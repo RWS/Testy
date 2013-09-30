@@ -35,7 +35,7 @@ public class FieldSet extends WebLocator {
         String selector = "";
         if (hasText()) {
             //selector += " and count(.//*[contains(text(),'" + getText() + "')]) > 0";
-            selector += " and count(.//*[normalize-space(text())=" + getText() + "]) > 0";
+            selector += " and count(.//*[normalize-space(text())='" + getText() + "']) > 0";
         }
         return selector;
     }

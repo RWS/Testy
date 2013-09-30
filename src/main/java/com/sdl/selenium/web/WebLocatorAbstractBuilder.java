@@ -139,7 +139,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public <T extends WebLocatorAbstractBuilder> T setText(final String text) {
-        this.text = Utils.escapeQuotes(text);
+        this.text = text;
         return (T) this;
     }
 
@@ -249,7 +249,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label) {
-        this.label = Utils.escapeQuotes(label);
+        this.label = label;
         return (T) this;
     }
 
@@ -428,6 +428,7 @@ public abstract class WebLocatorAbstractBuilder {
         String selector = "";
         if (hasText()) {
             String text = getText();
+            text = Utils.escapeQuotes(text);
             selector += " and ";
             if (SearchType.EQUALS.equals(getSearchTextType())) {
                 selector += "text()=" + text;
@@ -544,6 +545,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public String getLabelPath() {
-        return "//" + getLabelTag() + "[text()=" + getLabel() + "]"; // new Label(getLabel()).getPath()
+        return "//" + getLabelTag() + "[text()=" + Utils.escapeQuotes(getLabel()) + "]"; // new Label(getLabel()).getPath()
     }
 }

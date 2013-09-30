@@ -34,7 +34,7 @@ public class TabPanel extends ExtJsComponent {
     public String getTitlePath() {
         String returnPath = "";
         if (hasText()) {
-            returnPath = "//*[contains(@class,'x-tab-panel-header')]//*[text()=" + getText() + "]";
+            returnPath = "//*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']";
         }
         return returnPath;
     }
@@ -54,7 +54,7 @@ public class TabPanel extends ExtJsComponent {
         String selector = getBasePathSelector();
         if (hasText()) {
 //            selector += " and count(*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']) > 0"; //[viorel]
-            selector += " and not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[contains(text()," + getText() + ")]) > 0";
+            selector += " and not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[contains(text(),'" + getText() + "')]) > 0";
         }
         selector = Utils.fixPathSelector(selector);
         return "//*[" + selector + "]";

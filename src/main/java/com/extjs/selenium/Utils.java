@@ -91,7 +91,7 @@ public class Utils {
     }
 
     public static String escapeQuotes(String toEscape) {
-        if (toEscape.indexOf("\"") > -1 && toEscape.indexOf("'") > -1) {
+        if (toEscape.contains("\"") && toEscape.contains("'")) {
             boolean quoteIsLast = false;
             if (toEscape.lastIndexOf("\"") == toEscape.length() - 1) {
                 quoteIsLast = true;
@@ -104,7 +104,7 @@ public class Utils {
                 quoted.append(((i == substrings.length - 1) ? (quoteIsLast ? ", '\"')" : ")") : ", '\"', "));
             }
             return quoted.toString();
-        } else if (toEscape.indexOf("\"") == -1 && toEscape.indexOf("'") == -1 || toEscape.indexOf("\"") > -1) { // Escape string with just a quote into being single quoted: f"oo -> 'f"oo'
+        } else if (!toEscape.contains("\"") && !toEscape.contains("'")) {
             return String.format("'%s'", toEscape);
         }
 
@@ -325,7 +325,7 @@ public class Utils {
     }
 
     public static void main(String args[]) {
-        String e = "Don't Accept";
+        String e = "Dont Accept";
         logger.debug(e);
         e = escapeQuotes(e);
         logger.debug(e);

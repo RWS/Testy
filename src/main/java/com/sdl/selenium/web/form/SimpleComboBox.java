@@ -12,10 +12,9 @@ public class SimpleComboBox extends WebLocator {
         setTag("select");
     }
 
-    //TODO
-    public SimpleComboBox(String path) {
+    public SimpleComboBox(WebLocator container) {
         this();
-        setElPath(path);
+        setContainer(container);
     }
 
     public boolean select(String value) {

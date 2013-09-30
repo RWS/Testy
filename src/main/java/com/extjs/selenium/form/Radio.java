@@ -38,7 +38,7 @@ public class Radio extends ExtJsComponent {
     public String getItemPathText() {
         String selector = "";
         if (hasText()) {
-            selector += " and @value=" + getText();
+            selector += " and @value='" + getText() + "'";
         }
         return selector;
     }
