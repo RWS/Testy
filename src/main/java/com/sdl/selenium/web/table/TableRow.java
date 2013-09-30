@@ -42,6 +42,5 @@ public class TableRow extends Row {
             selector = text + " or count(.//*[" + text + "]) > 0";
         }
         return selector;
-
     }
 }

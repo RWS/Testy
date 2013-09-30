@@ -35,7 +35,7 @@ public class FieldSet extends WebLocator {
         String selector = "";
         if (hasText()) {
             //selector += " and count(.//*[contains(text(),'" + getText() + "')]) > 0";
-            selector += " and count(.//*[normalize-space(text())='" + getText() + "']) > 0";
+            selector += " and count(.//*[normalize-space(text())=" + getText() + "]) > 0";
         }
         return selector;
     }
@@ -53,10 +53,7 @@ public class FieldSet extends WebLocator {
     // methods
     public boolean isCollapsed() {
         String cls = getAttribute("class");
-        if (cls != null && cls.contains("x-panel-collapsed")) {
-            return true;
-        }
-        return false;
+        return cls != null && cls.contains("x-panel-collapsed");
     }
 
     public boolean expand() {

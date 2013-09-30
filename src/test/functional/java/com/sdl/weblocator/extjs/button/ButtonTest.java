@@ -3,6 +3,7 @@ package com.sdl.weblocator.extjs.button;
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.panel.Panel;
 import com.extjs.selenium.window.Window;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -20,6 +21,8 @@ public class ButtonTest extends TestBase {
     Button dateFieldButton = new Button(null, "DateField");
 
     Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
+    Button dontAcceptButton = new Button(new Panel("Simple Form"), "Don'\"t Accept");
+    Button dontAcceptButton1 = new Button(new Panel("Simple Form"), "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
 
     @BeforeMethod
     public void startTests() {
@@ -43,5 +46,10 @@ public class ButtonTest extends TestBase {
         }
         long endMs = System.currentTimeMillis();
         logger.info(String.format("performanceTestClick took %s ms", endMs - startMs));
+    }
+
+    @Test void findButtonWithQuotes(){
+        assertTrue(dontAcceptButton.isElementPresent());
+        assertTrue(dontAcceptButton1.isElementPresent());
     }
 }

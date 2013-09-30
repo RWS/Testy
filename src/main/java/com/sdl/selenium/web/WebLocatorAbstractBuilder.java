@@ -139,7 +139,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public <T extends WebLocatorAbstractBuilder> T setText(final String text) {
-        this.text = text;
+        this.text = Utils.escapeQuotes(text);
         return (T) this;
     }
 
@@ -249,7 +249,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label) {
-        this.label = label;
+        this.label = Utils.escapeQuotes(label);
         return (T) this;
     }
 
@@ -428,16 +428,13 @@ public abstract class WebLocatorAbstractBuilder {
         String selector = "";
         if (hasText()) {
             String text = getText();
-            // TODO text must be equal not contains
-//            selector += " and contains(text(),'" + text + "')";
-//            selector += " and contains(normalize-space(text()),'" + getText() + "')";
             selector += " and ";
             if (SearchType.EQUALS.equals(getSearchTextType())) {
-                selector += "text()='" + text + "'";
+                selector += "text()=" + text;
             } else if (SearchType.CONTAINS.equals(getSearchTextType())) {
-                selector += "contains(text(),'" + text + "')";
+                selector += "contains(text()," + text + ")";
             } else if (SearchType.STARTS_WITH.equals(getSearchTextType())) {
-                selector += "starts-with(text(),'" + text + "')";
+                selector += "starts-with(text()," + text + ")";
             } else {
                 logger.warn("searchType did not math to any accepted values");
                 selector = "";
@@ -547,6 +544,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public String getLabelPath() {
-        return "//" + getLabelTag() + "[text()='" + getLabel() + "']"; // new Label(getLabel()).getPath()
+        return "//" + getLabelTag() + "[text()=" + getLabel() + "]"; // new Label(getLabel()).getPath()
     }
 }

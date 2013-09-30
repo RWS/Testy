@@ -90,6 +90,28 @@ public class Utils {
         return selector;
     }
 
+    public static String escapeQuotes(String toEscape) {
+        if (toEscape.indexOf("\"") > -1 && toEscape.indexOf("'") > -1) {
+            boolean quoteIsLast = false;
+            if (toEscape.lastIndexOf("\"") == toEscape.length() - 1) {
+                quoteIsLast = true;
+            }
+            String[] substrings = toEscape.split("\"");
+
+            StringBuilder quoted = new StringBuilder("concat(");
+            for (int i = 0; i < substrings.length; i++) {
+                quoted.append("\"").append(substrings[i]).append("\"");
+                quoted.append(((i == substrings.length - 1) ? (quoteIsLast ? ", '\"')" : ")") : ", '\"', "));
+            }
+            return quoted.toString();
+        } else if (toEscape.indexOf("\"") == -1 && toEscape.indexOf("'") == -1 || toEscape.indexOf("\"") > -1) { // Escape string with just a quote into being single quoted: f"oo -> 'f"oo'
+            return String.format("'%s'", toEscape);
+        }
+
+        // Otherwise return the quoted string
+        return String.format("\"%s\"", toEscape);
+    }
+
     /**
      * add 'css=' at the beginning of the string
      *
@@ -303,6 +325,10 @@ public class Utils {
     }
 
     public static void main(String args[]) {
+        String e = "Don't Accept";
+        logger.debug(e);
+        e = escapeQuotes(e);
+        logger.debug(e);
 
     }
 }

@@ -28,7 +28,7 @@ Ext.onReady(function(){
             readOnly : true
         }, {
             xtype:'textfield',
-            fieldLabel: 'Last Name',
+            fieldLabel: 'Las\'t Name',
             name: 'lastName',
             allowBlank: false
         }, {

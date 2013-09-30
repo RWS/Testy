@@ -12,7 +12,7 @@ Ext.onReady(function(){
         frame: true,
         title: 'Simple Form',
         bodyStyle:'padding:5px 5px 0',
-        width: 400,
+        width: 480,
         defaults: {width: 230},
 
         items: [{
@@ -65,6 +65,8 @@ Ext.onReady(function(){
         },{
             text: 'Stress',
             id: 'stress',
+        },{
+            text: 'Don\'\"t Accept',
         },{
             text: 'Cancel'
         }]

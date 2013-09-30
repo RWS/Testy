@@ -47,21 +47,7 @@ public class Button extends WebLocator {
 
     @Override
     public String getItemPathText() {
-        String selector = "";
-        if (hasText()) {
-            String text = getText();
-            if (SearchType.EQUALS.equals(getSearchTextType())) {
-                selector += "text()='" + text + "'";
-            } else if (SearchType.CONTAINS.equals(getSearchTextType())) {
-                selector += "contains(text(),'" + text + "')";
-            } else if (SearchType.STARTS_WITH.equals(getSearchTextType())) {
-                selector += "starts-with(text(),'" + text + "')";
-            } else {
-                logger.warn("searchType did not math to any accepted values");
-                selector = "";
-            }
-            selector = " and " + selector + "";
-        }
+        String selector = hasText() ? super.getItemPathText() : "";
         if (hasIconCls()) {
             selector += " and count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
         }

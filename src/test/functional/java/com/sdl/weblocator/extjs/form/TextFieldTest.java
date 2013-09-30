@@ -16,7 +16,7 @@ public class TextFieldTest extends TestBase {
 
     Window textFieldWindow = new Window("TextFieldWindow");
     TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");
-    TextField lastNameTextField = new TextField(textFieldWindow, "Last Name:");
+    TextField lastNameTextField = new TextField(textFieldWindow, "Las't Name:");
     TextField disableTextField = new TextField(textFieldWindow, "Disable TextField:");
 
     @BeforeClass
