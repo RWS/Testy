@@ -35,9 +35,7 @@ public class Slider extends ExtJsComponent {
 
 
     public String getThumbPath(int thumbIndex) {
-        String thumbPath = getPath() + "//descendant::*//*[contains(@class,'x-slider-thumb')][" + thumbIndex + "]";
-
-        return thumbPath;
+        return getPath() + "//descendant::*//*[contains(@class,'x-slider-thumb')][" + thumbIndex + "]";
     }
 
     public boolean move(int thumbIndex, int distance) {

@@ -12,7 +12,6 @@ public class FlashUploadButton extends SelectFilesHandler {
         WebLocator buttonElement = new WebLocator();
         buttonElement.setTag("object");
         setButtonElement(buttonElement);
-        //logger.debug(getClassName() + "() constructor");
     }
 
     public FlashUploadButton(WebLocator container, String cls) {

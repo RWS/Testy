@@ -24,8 +24,7 @@ public class LiveGridPanel extends GridPanel {
     }
 
     public LiveGridPanel(String cls, String searchColumnId) {
-        this();
-        setCls(cls);
+        this(cls);
         setSearchColumnId(searchColumnId);
     }
 
@@ -115,7 +114,6 @@ public class LiveGridPanel extends GridPanel {
 
     public boolean refresh() {
         Button refreshButton = new Button(this).setIconCls("x-tbar-loading").setInfoMessage("Loading...");
-        refreshButton.focus();
-        return refreshButton.click();
+        return refreshButton.clickAt();
     }
 }

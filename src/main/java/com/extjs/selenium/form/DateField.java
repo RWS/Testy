@@ -14,18 +14,20 @@ public class DateField extends TextField {
 
     public DateField() {
         setClassName("DateField");
-        //logger.debug(getClassName() + "() constructor");
+    }
+
+    public DateField(WebLocator container) {
+        this();
+        setContainer(container);
     }
 
     public DateField(WebLocator container, String cls) {
-        this();
-        setContainer(container);
+        this(container);
         setCls(cls);
     }
 
     public DateField(String name, WebLocator container) {
-        this();
-        setContainer(container);
+        this(container);
         setName(name);
     }
 
@@ -70,7 +72,7 @@ public class DateField extends TextField {
     public boolean select(String date, String format) {
         SimpleDateFormat inDateFormat = new SimpleDateFormat(format);
         SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy");
-        Date fromDate = null;
+        Date fromDate;
         try {
             fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);

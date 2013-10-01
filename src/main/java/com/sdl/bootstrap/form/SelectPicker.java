@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 public class SelectPicker extends WebLocator {
     private static final Logger logger = Logger.getLogger(SelectPicker.class);
 
+    private WebLocator button = new WebLocator(this, "//button[contains(@class, 'btn dropdown-toggle')]");
+
     public SelectPicker() {
         setClassName("SelectPicker");
     }
@@ -19,8 +21,6 @@ public class SelectPicker extends WebLocator {
         this(container);
         setLabel(label);
     }
-
-    WebLocator button = new WebLocator(this, "//button[contains(@class, 'btn dropdown-toggle')]");
 
     public boolean select(String value) {
         if (button.click()) {

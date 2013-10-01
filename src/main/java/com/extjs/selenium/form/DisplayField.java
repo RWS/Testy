@@ -11,15 +11,18 @@ public class DisplayField extends TextField {
         setBaseCls("x-form-display-field");
     }
 
-    public DisplayField(WebLocator container, String label) {
+    public DisplayField(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public DisplayField(WebLocator container, String label) {
+        this(container);
         setLabel(label);
     }
 
     public DisplayField(String name, WebLocator container) {
-        this();
-        setContainer(container);
+        this(container);
         setName(name);
     }
 

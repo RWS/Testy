@@ -14,9 +14,13 @@ public class RadioGroup extends ExtJsComponent {
         setBaseCls("x-form-radio-group");
     }
 
-    public RadioGroup(WebLocator container, String name) {
+    public RadioGroup(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public RadioGroup(WebLocator container, String name) {
+        this(container);
         radio.setName(name);
     }
 

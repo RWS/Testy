@@ -26,7 +26,6 @@ public class SelectFiles extends Button {
         return RunExe.getInstance().download(filePath);
     }
 
-
     public boolean upload(WebLocator el, String[] filePath) {
         driver.switchTo().window(driver.getWindowHandle());
         el.focus();
@@ -36,5 +35,4 @@ public class SelectFiles extends Button {
         driver.switchTo().defaultContent();
         return RunExe.getInstance().upload(filePath);
     }
-
 }

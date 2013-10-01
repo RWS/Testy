@@ -21,11 +21,4 @@ public class Span extends WebLocator {
         this(container);
         setLabel(label);
     }
-
-    /*public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        selector = Utils.fixPathSelector(selector);
-        selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
-        return selector + "//input[@type='checkbox']";
-    }*/
 }

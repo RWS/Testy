@@ -11,6 +11,11 @@ public class SimpleCheckBox extends WebLocator {
         setTag("input");
     }
 
+    public SimpleCheckBox(WebLocator container) {
+        this();
+        setContainer(container);
+    }
+
     public SimpleCheckBox(String id) {
         this();
         setId(id);

@@ -13,16 +13,18 @@ public class FieldSet extends WebLocator {
         setTag("fieldset");
     }
 
-    public FieldSet(WebLocator container, String text) {
+    public FieldSet(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public FieldSet(WebLocator container, String text) {
+        this(container);
         setText(text);
     }
 
     public FieldSet(WebLocator container, String cls, String text) {
-        this();
-        setContainer(container);
-        setText(text);
+        this(container, text);
         setCls(cls);
     }
 

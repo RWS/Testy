@@ -28,7 +28,6 @@ public class GridPanel extends Panel {
         setClassName("GridPanel");
         setBaseCls("x-grid-panel");
         setHeaderBaseCls("x-panel");
-        //logger.debug(getClassName() + "() constructor");
     }
 
     public GridPanel(String cls) {
@@ -42,8 +41,7 @@ public class GridPanel extends Panel {
     }
 
     public GridPanel(String cls, String searchColumnId) {
-        this();
-        setCls(cls);
+        this(cls);
         this.searchColumnId = searchColumnId;
     }
 

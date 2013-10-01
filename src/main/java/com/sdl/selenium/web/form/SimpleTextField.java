@@ -11,6 +11,11 @@ public class SimpleTextField extends WebLocator {
         setTag("input");
     }
 
+    public SimpleTextField(WebLocator container) {
+        this();
+        setContainer(container);
+    }
+
     public SimpleTextField(String id) {
         this();
         setId(id);

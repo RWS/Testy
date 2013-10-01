@@ -12,12 +12,16 @@ public class TreePanel extends ExtJsComponent {
     public TreePanel() {
         logger.warn("TreePanel is not implemented 100%");
         setClassName("TreePanel");
-        //logger.debug(getClassName() + "() constructor");
     }
 
     public TreePanel(String cls){
         this();
         setCls(cls);
+    }
+
+    public TreePanel(WebLocator container){
+        this();
+        setContainer(container);
     }
 
     public boolean expand(String searchElement) {

@@ -11,15 +11,18 @@ public class TextArea extends TextField {
         setTag("textarea");
     }
 
-    public TextArea(WebLocator container, String label) {
+    public TextArea(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public TextArea(WebLocator container, String label) {
+        this(container);
         setLabel(label);
     }
 
     public TextArea(String name, WebLocator container) {
-        this();
-        setContainer(container);
+        this(container);
         setName(name);
     }
 }
