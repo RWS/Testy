@@ -189,7 +189,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public <T extends WebLocatorAbstractBuilder> T setDeepness(String deepness) {
-        this.deepness = "count(" + deepness + ") > 0";
+        this.deepness = deepness;
         return (T) this;
     }
 
@@ -390,7 +390,7 @@ public abstract class WebLocatorAbstractBuilder {
             selector += " and contains(@name,'" + getName() + "')";
         }
         if (hasDeepness()) {
-            selector += " and " + getDeepness();
+            selector += " and count(" + getDeepness() + ") > 0";
         }
         selector += getItemPathText();
         if (!WebLocator.isIE()) {

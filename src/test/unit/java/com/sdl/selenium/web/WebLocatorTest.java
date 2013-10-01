@@ -145,6 +145,6 @@ public class WebLocatorTest {
     @Test
     public void testDeepness(){
         WebLocator locatorBuilder1 = new WebLocator().setDeepness("div");
-        assertEquals(locatorBuilder1.getDeepness(), "count(div) > 0");
+        assertEquals(locatorBuilder1.getPath(), "//*[count(div) > 0]");
     }
 }
