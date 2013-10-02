@@ -372,6 +372,9 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasId()) {
             selector += " and @id='" + getId() + "'";
         }
+        if (hasName()) {
+            selector += " and @name='" + getName() + "'";
+        }
         if (hasBaseCls()) {
             selector += " and contains(@class, '" + getBaseCls() + "')";
         }
@@ -385,9 +388,6 @@ public abstract class WebLocatorAbstractBuilder {
         }
         if (hasExcludeCls()) {
             selector += " and not(contains(@class, '" + getExcludeCls() + "'))";
-        }
-        if (hasName()) {
-            selector += " and contains(@name,'" + getName() + "')";
         }
         if (hasDeepness()) {
             selector += " and count(" + getDeepness() + ") > 0";

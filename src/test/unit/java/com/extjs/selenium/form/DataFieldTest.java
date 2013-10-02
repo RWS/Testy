@@ -11,9 +11,9 @@ public class DataFieldTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new DateField(), "//input[not (@type='hidden') ]"},
-                {new DateField(container, "cls"), "//*[contains(@class, 'container')]//input[contains(@class, 'cls') and not (@type='hidden') ]"},
-                {new DateField("name", container), "//*[contains(@class, 'container')]//input[contains(@name,'name') and not (@type='hidden') ]"},
+                {new DateField(), "//input[not(@type='hidden')]"},
+                {new DateField(container, "cls"), "//*[contains(@class, 'container')]//input[contains(@class, 'cls') and not(@type='hidden')]"},
+                {new DateField("name", container), "//*[contains(@class, 'container')]//input[@name='name' and not(@type='hidden')]"},
         };
     }
 

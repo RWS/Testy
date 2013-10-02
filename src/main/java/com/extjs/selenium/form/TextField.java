@@ -61,7 +61,7 @@ public class TextField extends ExtJsComponent {
     public String getBasePathSelector() {
         String selector = super.getBasePathSelector();
 
-        selector += " and not (@type='hidden') ";
+        selector += " and not(@type='hidden')";
         // TODO use also if disabled some parents then can;t click/select some children
         // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
         selector = Utils.fixPathSelector(selector);
