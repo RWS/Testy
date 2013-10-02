@@ -90,13 +90,15 @@ public class Utils {
         return selector;
     }
 
-    public static String escapeQuotes(String toEscape) {
-        if (toEscape.contains("\"") && toEscape.contains("'")) {
+    public static String getEscapeQuotesText(String text) {
+        boolean hasDoubleQuote = text.contains("\"");
+        boolean hasSingeQuote = text.contains("'");
+        if (hasDoubleQuote && hasSingeQuote) {
             boolean quoteIsLast = false;
-            if (toEscape.lastIndexOf("\"") == toEscape.length() - 1) {
+            if (text.lastIndexOf("\"") == text.length() - 1) {
                 quoteIsLast = true;
             }
-            String[] substrings = toEscape.split("\"");
+            String[] substrings = text.split("\"");
 
             StringBuilder quoted = new StringBuilder("concat(");
             for (int i = 0; i < substrings.length; i++) {
@@ -104,12 +106,10 @@ public class Utils {
                 quoted.append(((i == substrings.length - 1) ? (quoteIsLast ? ", '\"')" : ")") : ", '\"', "));
             }
             return quoted.toString();
-        } else if (!toEscape.contains("\"") && !toEscape.contains("'")) {
-            return String.format("'%s'", toEscape);
+        } else if (hasDoubleQuote || !hasSingeQuote) {
+            return String.format("'%s'", text);
         }
-
-        // Otherwise return the quoted string
-        return String.format("\"%s\"", toEscape);
+        return String.format("\"%s\"", text);
     }
 
     /**
@@ -325,10 +325,13 @@ public class Utils {
     }
 
     public static void main(String args[]) {
-        String e = "Dont Accept";
-        logger.debug(e);
-        e = escapeQuotes(e);
-        logger.debug(e);
+        String string = " and contains(@name, 'name')";
+        long startMs = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            fixPathSelector(string);
+        }
+        long endMs = System.currentTimeMillis();
+        logger.info(String.format("fixPathSelector took %s ms", endMs - startMs));
 
     }
 }

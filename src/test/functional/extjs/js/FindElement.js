@@ -53,4 +53,23 @@ Ext.onReady(function(){
        });
        simple.render(document.body);
 
+       var simple1 = new Ext.form.FormPanel({
+           frame: true,
+           title: 'Find Elements when contains quotes',
+           bodyStyle:'padding:5px 5px 0',
+           width: 450,
+           buttons: [
+               {
+                   text: 'Don\'t Accept'
+               },{
+                   text: 'It was "good" ok!'
+               },{
+                   text: 'Don\'t do it "now" ok!'
+               },{
+                   text: 'Don\'"t Accept'
+               }
+           ]
+       });
+       simple1.render(document.body);
+
 });

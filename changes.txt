@@ -5,6 +5,7 @@ version 1.7-SNAPSHOT
 2) fixed when Button text or Label of TextField contains quotes.
 3) add constructor with container for all elements
 4) change setName("name") from contains(@name,'name') in @name='name'
+5) improvement Utils.getEscapeQuotesText()
 
 version 1.6
 1) Improvement setValue for TextField

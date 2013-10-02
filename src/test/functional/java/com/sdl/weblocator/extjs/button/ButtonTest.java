@@ -21,8 +21,11 @@ public class ButtonTest extends TestBase {
     Button dateFieldButton = new Button(null, "DateField");
 
     Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
-    Button dontAcceptButton = new Button(new Panel("Simple Form"), "Don'\"t Accept");
-    Button dontAcceptButton1 = new Button(new Panel("Simple Form"), "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
+    Panel panel = new Panel("Find Elements when contains quotes");
+    Button dontAcceptButton = new Button(panel, "Don't Accept");
+    Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
+    Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
+    Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
 
     @BeforeMethod
     public void startTests() {
@@ -51,5 +54,7 @@ public class ButtonTest extends TestBase {
     @Test void findButtonWithQuotes(){
         assertTrue(dontAcceptButton.isElementPresent());
         assertTrue(dontAcceptButton1.isElementPresent());
+        assertTrue(dontAcceptButton2.isElementPresent());
+        assertTrue(dontAcceptButton3.isElementPresent());
     }
 }
