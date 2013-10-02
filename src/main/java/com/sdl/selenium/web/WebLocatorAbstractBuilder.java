@@ -368,43 +368,42 @@ public abstract class WebLocatorAbstractBuilder {
     public String getBasePathSelector() {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
-        String selector = "";
+        StringBuffer selector = new StringBuffer();
         if (hasId()) {
-            selector += " and @id='" + getId() + "'";
+            selector.append(" and @id='").append(getId()).append("'");
         }
         if (hasName()) {
-            selector += " and @name='" + getName() + "'";
+            selector.append(" and @name='").append(getName()).append("'");
         }
         if (hasBaseCls()) {
-            selector += " and contains(@class, '" + getBaseCls() + "')";
+            selector.append(" and contains(@class, '").append(getBaseCls()).append("')");
         }
         if (hasCls()) {
-            selector += " and contains(@class, '" + getCls() + "')";
+            selector.append(" and contains(@class, '").append(getCls()).append("')");
         }
         if (hasClasses()) {
             for (String cls : getClasses()) {
-                selector += " and contains(@class, '" + cls + "')";
+                selector.append(" and contains(@class, '").append(cls).append("')");
             }
         }
         if (hasExcludeCls()) {
-            selector += " and not(contains(@class, '" + getExcludeCls() + "'))";
+            selector.append(" and not(contains(@class, '").append(getExcludeCls()).append("'))");
         }
         if (hasDeepness()) {
-            selector += " and count(" + getDeepness() + ") > 0";
+            selector.append(" and count(").append(getDeepness()).append(") > 0");
         }
-        selector += getItemPathText();
+        selector.append(getItemPathText());
         if (!WebLocator.isIE()) {
             if (hasStyle()) {
-                selector += " and contains(@style ,'" + getStyle() + "')";
+                selector.append(" and contains(@style ,'").append(getStyle()).append("')");
             }
             // TODO make specific for WebLocator
             if (isVisibility()) {
-                selector += " and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0";
+                selector.append(" and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
             }
         }
 
-        selector = Utils.fixPathSelector(selector);
-        return selector;
+        return Utils.fixPathSelector(selector.toString());
     }
 
     /**
@@ -428,7 +427,7 @@ public abstract class WebLocatorAbstractBuilder {
         String selector = "";
         if (hasText()) {
             String text = getText();
-            text = Utils.escapeQuotes(text);
+            text = Utils.getEscapeQuotesText(text);
             selector += " and ";
             if (SearchType.EQUALS.equals(getSearchTextType())) {
                 selector += "text()=" + text;
@@ -446,8 +445,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     private String getBaseItemPath() {
         String selector = getBasePathSelector();
-        selector = Utils.fixPathSelector(selector);
-        return selector;
+        return Utils.fixPathSelector(selector);
     }
 
     /**
@@ -545,6 +543,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     public String getLabelPath() {
-        return "//" + getLabelTag() + "[text()=" + Utils.escapeQuotes(getLabel()) + "]"; // new Label(getLabel()).getPath()
+        return "//" + getLabelTag() + "[text()=" + Utils.getEscapeQuotesText(getLabel()) + "]"; // new Label(getLabel()).getPath()
     }
 }

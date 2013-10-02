@@ -6,6 +6,7 @@ version 1.7-SNAPSHOT
 3) add constructor with container for all elements
 4) change setName("name") from contains(@name,'name') in @name='name'
 5) improvement Utils.getEscapeQuotesText()
+6) improvement getBasePathSelector()
 
 version 1.6
 1) Improvement setValue for TextField
