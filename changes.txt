@@ -7,6 +7,7 @@ version 1.7-SNAPSHOT
 4) change setName("name") from contains(@name,'name') in @name='name'
 5) improvement Utils.getEscapeQuotesText()
 6) improvement getBasePathSelector()
+7) implemented type attribute for SimpleTextField.java
 
 version 1.6
 1) Improvement setValue for TextField

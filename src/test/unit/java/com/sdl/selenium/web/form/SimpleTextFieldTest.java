@@ -11,6 +11,7 @@ public class SimpleTextFieldTest {
         return new Object[][]{
                 {new SimpleTextField(), "//input"},
                 {new SimpleTextField("ID"), "//input[@id='ID']"},
+                {new SimpleTextField("ID").setType("text"), "//input[@id='ID' and @type='text']"},
         };
     }
 

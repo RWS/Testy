@@ -1,12 +1,12 @@
 package com.sdl.selenium.web.form;
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class SimpleComboBoxTest {
-    public static ExtJsComponent container = new ExtJsComponent("container");
+    private static WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
