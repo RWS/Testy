@@ -6,17 +6,17 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LiveGridPanelTest {
-    public static ExtJsComponent container = new ExtJsComponent("container");
-    public static LiveGridPanel grid = new LiveGridPanel();
-    public static LiveGridPanel gridCls = new LiveGridPanel("GridPanelCls");
-    public static LiveGridPanel gridContainer = new LiveGridPanel(container);
-    public static LiveGridPanel gridClsAndColumn = new LiveGridPanel("GridPanelCls", "1");
-    public static LiveGridPanel gridContainerAndColumn = new LiveGridPanel(container, "1");
-    public static LiveGridPanel gridContainerAndClsAndColumn = new LiveGridPanel(container, "GridPanelCls", "1");
+    private static ExtJsComponent container = new ExtJsComponent("container");
+    private static LiveGridPanel grid = new LiveGridPanel();
+    private static LiveGridPanel gridCls = new LiveGridPanel("GridPanelCls");
+    private static LiveGridPanel gridContainer = new LiveGridPanel(container);
+    private static LiveGridPanel gridClsAndColumn = new LiveGridPanel("GridPanelCls", "1");
+    private static LiveGridPanel gridContainerAndColumn = new LiveGridPanel(container, "1");
+    private static LiveGridPanel gridContainerAndClsAndColumn = new LiveGridPanel(container, "GridPanelCls", "1");
 
-    public static String CONTAINER_PATH = "//*[contains(@class, 'container')]";
-    public static String LIVE_GRID_PATH = "//*[contains(@class, 'ext-ux-livegrid') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
-    public static String LIVE_GRID_PANEL_CLS= "//*[contains(@class, 'ext-ux-livegrid') and contains(@class, 'GridPanelCls') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
+    private static String CONTAINER_PATH = "//*[contains(@class, 'container')]";
+    private static String LIVE_GRID_PATH = "//*[contains(@class, 'ext-ux-livegrid') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
+    private static String LIVE_GRID_PANEL_CLS= "//*[contains(@class, 'ext-ux-livegrid') and contains(@class, 'GridPanelCls') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

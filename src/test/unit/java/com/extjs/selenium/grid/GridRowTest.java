@@ -7,10 +7,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class GridRowTest {
-    public static ExtJsComponent container = new ExtJsComponent("container");
-    public static GridPanel grid = new GridPanel();
-    public static GridCell gridCell1 = new GridCell(1, "CellText1", SearchType.EQUALS);
-    public static GridCell gridCell2 = new GridCell(2, "CellText1", SearchType.EQUALS);
+    private static ExtJsComponent container = new ExtJsComponent("container");
+    private static GridPanel grid = new GridPanel();
+    private static GridCell gridCell1 = new GridCell(1, "CellText1", SearchType.EQUALS);
+    private static GridCell gridCell2 = new GridCell(2, "CellText1", SearchType.EQUALS);
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

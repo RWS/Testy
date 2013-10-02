@@ -92,7 +92,7 @@
     </test>
     <test name="SpanTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.SpanTest"/>
+            <class name="com.sdl.weblocator.bootstrap.UneditableInputTest"/>
         </classes>
     </test>
     <test name="DownloadFileTest">
