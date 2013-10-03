@@ -135,7 +135,7 @@ public class TestBase {
         driver = getWebDriver(InputData.BROWSER);
         driver.manage().window().maximize();
         driver.get(SERVER);
-        driver.manage().timeouts().implicitlyWait(100, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         WebLocator.setDriver(driver);
     }
 
