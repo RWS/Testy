@@ -87,7 +87,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 }
             });
         } catch (TimeoutException e) {
-
+            logger.warn("Element not found after " + millis + " millis; " + el);
             return el.currentElement = null;
         }
         return el.currentElement;

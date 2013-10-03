@@ -10,6 +10,7 @@ version 1.7-SNAPSHOT
 7) implemented type attribute for SimpleTextField.java
 8) rename Span in UneditableInput
 9) add WebLink class
+10) improvement com.extjs.selenium.button.Button.click()
 
 version 1.6
 1) Improvement setValue for TextField

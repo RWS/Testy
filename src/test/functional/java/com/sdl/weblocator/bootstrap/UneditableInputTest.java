@@ -14,7 +14,7 @@ public class UneditableInputTest extends TestBase {
     private static final Logger logger = Logger.getLogger(UneditableInputTest.class);
 
     Form form = new Form(null, "Form Title");
-    UneditableInput uneditableInput = new UneditableInput(form, "UneditableInput:");
+    UneditableInput uneditableInput = new UneditableInput(form, "Span:");
     UneditableInput budgetUneditableInput = new UneditableInput(form, "Budget:");
 
     @BeforeClass

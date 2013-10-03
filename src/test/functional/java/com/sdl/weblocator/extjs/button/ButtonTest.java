@@ -7,39 +7,31 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class ButtonTest extends TestBase {
     private static final Logger logger = Logger.getLogger(ButtonTest.class);
     Window dateFieldWindow = new Window("DateFieldWindow");
-    Button submitButton = new Button(dateFieldWindow, "Submit");
     Button closeButton = new Button(dateFieldWindow, "Close");
     Button dateFieldButton = new Button(null, "DateField");
 
     Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
     Panel panel = new Panel("Find Elements when contains quotes");
+
     Button dontAcceptButton = new Button(panel, "Don't Accept");
     Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
     Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
     Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
 
-    @BeforeMethod
-    public void startTests() {
-        dateFieldButton.click();
-    }
-
-    @AfterMethod
-    public void endTests() {
-        dateFieldWindow.close();
-    }
-
     @Test
     public void isDisplayed() {
+        dateFieldButton.click();
         assertTrue(driver.findElement(By.xpath(closeButton.getPath())).isDisplayed());
+        dateFieldWindow.close();
     }
 
     @Test void performanceTestClick(){
@@ -56,5 +48,28 @@ public class ButtonTest extends TestBase {
         assertTrue(dontAcceptButton1.isElementPresent());
         assertTrue(dontAcceptButton2.isElementPresent());
         assertTrue(dontAcceptButton3.isElementPresent());
+    }
+
+    @DataProvider
+    public Object[][] renderMillis() {
+        return new Object[][]{
+                {1000},
+                {3000},
+                {5000}
+        };
+    }
+
+    @Test (dataProvider = "renderMillis")
+    void tryToClickOnButtonThatDoesNotExist(long millis){
+        Button button = new Button(panel, "ButtonThatDoesNotExist").setRenderMillis(millis);
+
+        long startMs = System.currentTimeMillis();
+        boolean clicked = button.click();
+        long endMs = System.currentTimeMillis();
+
+        logger.info(String.format("took %s ms", endMs - startMs));
+        assertFalse(clicked, "Nu trebuia sa faca click");
+        assertTrue(endMs - startMs < millis + 500, "Took too long");
+        assertTrue(endMs - startMs >= millis, "Did not waited expected time");
     }
 }

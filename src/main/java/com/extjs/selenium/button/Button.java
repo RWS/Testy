@@ -79,12 +79,15 @@ public class Button extends ExtJsComponent {
     public boolean click() {
         // to scroll to this element (if element is not visible)
         WebLocator buttonEl = new WebLocator(this, "//button").setInfoMessage(this.toString() + "//button");
+        buttonEl.setRenderMillis(getRenderMillis());
+        boolean buttonExist = true;
         if (hasWebDriver()) {
             buttonEl.sendKeys(Keys.TAB);
+            buttonExist = buttonEl.currentElement != null;
         } else {
             buttonEl.focus();
         }
-        boolean clicked = super.click();
+        boolean clicked = buttonExist && isElementPresent() && super.doClick();
         if (clicked) {
             Utils.sleep(50);
         } else {
