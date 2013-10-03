@@ -14,13 +14,11 @@ public class Window extends WebLocator {
     public Window(String title) {
         this();
         setTitle(title);
+        setElPathSuffix(" and count(*[contains(@class,'-header')]//*[text()='" + getTitle() + "']) > 0");
     }
 
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
-        if (hasTitle()) {
-            selector += " and count(*[contains(@class,'-header')]//*[text()='" + getTitle() + "']) > 0";
-        }
         selector = Utils.fixPathSelector(selector);
         return "".equals(selector) ? "//*[@role='dialog' and @aria-hidden='false']" : "//*[@role='dialog' and @aria-hidden='false' and " + selector + "]";
     }

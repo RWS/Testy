@@ -27,12 +27,13 @@ public class WebLocatorTest {
                 {new WebLocator().setId("ID").setCls("Cls"), "//*[@id='ID' and contains(@class, 'Cls')]"},
                 {new WebLocator().setCls("Cls").setText("Text"), "//*[contains(@class, 'Cls') and contains(text(),'Text')]"},
                 {new WebLocator().setCls("Cls").setText("Text").setElPath("//a//div//input"), "//a//div//input"},
-                {new WebLocator().setCls("Cls").setDeepness(".//[text()='Texts']"), "//*[contains(@class, 'Cls') and count(.//[text()='Texts']) > 0]"},
+                {new WebLocator().setCls("Cls").setElPathSuffix(" and count(.//[text()='Texts']) > 0"), "//*[contains(@class, 'Cls') and count(.//[text()='Texts']) > 0]"},
                 {new WebLocator().setTag("textarea"), "//textarea"},
                 {new WebLocator(container).setTag("textarea"), "//*[contains(@class, 'container')]//textarea"},
                 {new WebLocator().setCls("Cls").setTag("textarea"), "//textarea[contains(@class, 'Cls')]"},
                 {new WebLocator(container, "//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(@class, 'container')]//*[contains(@class, 'testcls')]"},
-                {new WebLocator().setDeepness("div"), "//*[count(div) > 0]"},
+                {new WebLocator().setElPathSuffix("count(div) > 0"), "//*[count(div) > 0]"},
+                {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
 
         };
     }

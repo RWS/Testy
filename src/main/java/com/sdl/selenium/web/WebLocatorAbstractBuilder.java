@@ -19,14 +19,14 @@ public abstract class WebLocatorAbstractBuilder {
     private String baseCls;
     private String cls;
     private List<String> classes;
-    private String excludeCls;
+    private List<String> excludeClasses;
     private String name;
     private String text;
     private SearchType searchTextType = SearchType.CONTAINS;
     private String style;
     private String elCssSelector;
     private String title;
-    private String deepness;
+    private String elPathSuffix;
 
     private String infoMessage;
 
@@ -116,12 +116,17 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public String getExcludeCls() {
-        return excludeCls;
+    public List<String> getExcludeClasses() {
+        return excludeClasses;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setExcludeCls(final String excludeCls) {
-        this.excludeCls = excludeCls;
+    public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String ...excludeClasses) {
+        if (excludeClasses != null) {
+            this.excludeClasses = new ArrayList<String>();
+            for (String excludeCls : excludeClasses) {
+                this.excludeClasses.add(excludeCls);
+            }
+        }
         return (T) this;
     }
 
@@ -184,12 +189,12 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public String getDeepness() {
-        return deepness;
+    public String getElPathSuffix() {
+        return elPathSuffix;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setDeepness(String deepness) {
-        this.deepness = deepness;
+    public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
+        this.elPathSuffix = elPathSuffix;
         return (T) this;
     }
 
@@ -312,8 +317,8 @@ public abstract class WebLocatorAbstractBuilder {
         return classes != null && classes.size() > 0;
     }
 
-    public Boolean hasExcludeCls() {
-        return excludeCls != null && !excludeCls.equals("");
+    public Boolean hasExcludeClasses() {
+        return excludeClasses != null && excludeClasses.size() > 0;
     }
 
     public Boolean hasBaseCls() {
@@ -348,8 +353,8 @@ public abstract class WebLocatorAbstractBuilder {
         return title != null && !title.equals("");
     }
 
-    public Boolean hasDeepness() {
-        return deepness != null && !deepness.equals("");
+    public Boolean hasElPathSuffix() {
+        return elPathSuffix != null && !elPathSuffix.equals("");
     }
 
     public Boolean hasPosition() {
@@ -386,11 +391,13 @@ public abstract class WebLocatorAbstractBuilder {
                 selector.append(" and contains(@class, '").append(cls).append("')");
             }
         }
-        if (hasExcludeCls()) {
-            selector.append(" and not(contains(@class, '").append(getExcludeCls()).append("'))");
+        if (hasExcludeClasses()) {
+            for (String excludeClasses : getExcludeClasses()) {
+                selector.append(" and not(contains(@class, '").append(excludeClasses).append("'))");
+            }
         }
-        if (hasDeepness()) {
-            selector.append(" and count(").append(getDeepness()).append(") > 0");
+        if (hasElPathSuffix()) {
+            selector.append(getElPathSuffix());
         }
         selector.append(getItemPathText());
         if (!WebLocator.isIE()) {

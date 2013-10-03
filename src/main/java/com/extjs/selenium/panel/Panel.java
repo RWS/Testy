@@ -34,7 +34,7 @@ public class Panel extends ExtJsComponent {
     public Panel(String cls, WebLocator container, String excludeClass) {
         this(container);
         setCls(cls);
-        setExcludeCls(excludeClass);
+        setExcludeClasses(excludeClass);
     }
 
     public String getHeaderBaseCls() {
