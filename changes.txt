@@ -8,6 +8,8 @@ version 1.7-SNAPSHOT
 5) improvement Utils.getEscapeQuotesText()
 6) improvement getBasePathSelector()
 7) implemented type attribute for SimpleTextField.java
+8) rename Span in UneditableInput
+9) add WebLink class
 
 version 1.6
 1) Improvement setValue for TextField
