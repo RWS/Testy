@@ -15,6 +15,10 @@ version 1.7-SNAPSHOT
 12) rename attribute deepness in elPathSuffix
 13) move specification Browser in WebDriverConfig
 14) remove methods type(String text) and typeKeys(String text) from WebLocator
+15) add interface ITextField
+16) move copyToClipboard in Utils
+17) mark setCls(final String cls) and getCls() Depricate
+18) improvement maximize method from Panel
 
 version 1.6
 1) Improvement setValue for TextField
