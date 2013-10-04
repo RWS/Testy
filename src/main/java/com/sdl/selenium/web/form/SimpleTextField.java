@@ -48,10 +48,7 @@ public class SimpleTextField extends WebLocator implements ITextField {
     }
 
     public boolean setValue(String value) {
-        if (value != null) {
-            return executor.setValue(this, value);
-        }
-        return false;
+        return executor.setValue(this, value);
     }
 
 

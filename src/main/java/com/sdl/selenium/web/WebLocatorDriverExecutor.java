@@ -195,25 +195,27 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public boolean setValue(WebLocator el, String value) {
         boolean executed = false;
-        // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
-        //if (executor.isSamePath(this, this.getPath()) || ready()) {
-        if (el.ready()) {
-            try {
-                el.currentElement.clear();
-                el.currentElement.sendKeys(value);
-                executed = true;
-            } catch (StaleElementReferenceException exception) {
-                logger.warn("StaleElementReferenceException" + exception);
-                logger.warn("Set value(" + this + ") second try:  '" + value + "'");
-                if (el.ready()) {
+        if (value != null) {
+            // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
+            //if (executor.isSamePath(this, this.getPath()) || ready()) {
+            if (el.ready()) {
+                try {
                     el.currentElement.clear();
                     el.currentElement.sendKeys(value);
                     executed = true;
+                } catch (StaleElementReferenceException exception) {
+                    logger.warn("StaleElementReferenceException" + exception);
+                    logger.warn("Set value(" + this + ") second try:  '" + value + "'");
+                    if (el.ready()) {
+                        el.currentElement.clear();
+                        el.currentElement.sendKeys(value);
+                        executed = true;
+                    }
                 }
+                logger.info("Set value(" + el + "): '" + value + "'");
+            } else {
+                logger.warn("setValue : field is not ready for use: " + this);
             }
-            logger.info("Set value(" + el + "): '" + value + "'");
-        } else {
-            logger.warn("setValue : field is not ready for use: " + this);
         }
         return executed;
     }

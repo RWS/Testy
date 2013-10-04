@@ -168,15 +168,17 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean setValue(WebLocator el, String value) {
-        if (el.ready()) {
-            String path = el.getPath();
-            selenium.focus(path); // to scroll to this element (if element is not visible)
-            selenium.type(path, value);
-            selenium.keyUp(path, value.substring(value.length() - 1));
-            selenium.fireEvent(path, "blur");
-            return true;
-        } else {
-            logger.warn("getValue : field is not ready for use: " + this);
+        if (value != null) {
+            if (el.ready()) {
+                String path = el.getPath();
+                selenium.focus(path); // to scroll to this element (if element is not visible)
+                selenium.type(path, value);
+                selenium.keyUp(path, value.substring(value.length() - 1));
+                selenium.fireEvent(path, "blur");
+                return true;
+            } else {
+                logger.warn("getValue : field is not ready for use: " + this);
+            }
         }
         return false;
     }

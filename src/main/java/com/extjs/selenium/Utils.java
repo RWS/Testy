@@ -6,6 +6,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.awt.*;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -125,6 +129,17 @@ public class Utils {
             selector = selector.substring(0, selector.length() - 1);
         }
         return selector;
+    }
+
+    public static void copyToClipboard(final String text) {
+        final StringSelection stringSelection = new StringSelection(text);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection,
+                new ClipboardOwner() {
+                    @Override
+                    public void lostOwnership(final java.awt.datatransfer.Clipboard clipboard, final Transferable contents) {
+                        // do nothing
+                    }
+                });
     }
 
     public static String getValidFileName(String fileName) {

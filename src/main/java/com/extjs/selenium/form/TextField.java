@@ -3,16 +3,12 @@ package com.extjs.selenium.form;
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ITextField;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 
-import java.awt.*;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-
-public class TextField extends ExtJsComponent {
+public class TextField extends ExtJsComponent implements ITextField {
     private static final Logger logger = Logger.getLogger(TextField.class);
 
     public TextField() {
@@ -63,9 +59,7 @@ public class TextField extends ExtJsComponent {
         selector += " and not(@type='hidden')";
         // TODO use also if disabled some parents then can;t click/select some children
         // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        selector = Utils.fixPathSelector(selector);
-
-        return selector;
+        return Utils.fixPathSelector(selector);
     }
 
     public String getItemPath(boolean disabled) {
@@ -74,22 +68,11 @@ public class TextField extends ExtJsComponent {
         return selector;
     }
 
-    public static void copyToClipboard(final String text) {
-        final StringSelection stringSelection = new StringSelection(text);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection,
-                new ClipboardOwner() {
-                    @Override
-                    public void lostOwnership(final java.awt.datatransfer.Clipboard clipboard, final Transferable contents) {
-                        // do nothing
-                    }
-                });
-    }
-
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {
                 currentElement.clear();
-                copyToClipboard(value);
+                Utils.copyToClipboard(value);
                 currentElement.sendKeys(Keys.CONTROL, "v");
                 logger.info("Set value(" + this + "): " + value + "'");
                 return true;
@@ -101,10 +84,7 @@ public class TextField extends ExtJsComponent {
     }
 
     public boolean setValue(String value) {
-        if (value != null) {
-            return executor.setValue(this, value);
-        }
-        return false;
+        return executor.setValue(this, value);
     }
 
     public boolean assertSetValue(String value) {
@@ -130,6 +110,7 @@ public class TextField extends ExtJsComponent {
      * @param value
      * @return
      */
+    @Deprecated
     public boolean verifyValue(String value) {
         String v = getValue();
         logger.debug("The values '" + v + "' and '" + value + "' " + (value.equals(v) ? "" : "do NOT ") + "match");
@@ -144,6 +125,7 @@ public class TextField extends ExtJsComponent {
         if (ready()) {
             String triggerPath = getTriggerPath(icon);
             WebLocator iconLocator = new WebLocator(this, triggerPath);
+            iconLocator.setRenderMillis(500);
             iconLocator.setInfoMessage("trigger-" + icon);
             try {
                 if (hasWebDriver()) {
