@@ -1,11 +1,14 @@
 package com.sdl.weblocator.extjs;
 
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class WebLocatorTest extends TestBase {
     private static final Logger logger = Logger.getLogger(WebLocatorTest.class);
@@ -28,6 +31,12 @@ public class WebLocatorTest extends TestBase {
     @Test
     public void attributeForNotFoundElement() {
         assertEquals(webLocatorNotAttribute.getAttributeClass(), null);
+    }
+
+    @Test
+    public void webDriverConfig() {
+        assertFalse(WebDriverConfig.isChrome());
+        assertTrue(WebDriverConfig.isFireFox());
     }
 
 

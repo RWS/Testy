@@ -3,6 +3,7 @@ package com.extjs.selenium.button;
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
@@ -173,7 +174,7 @@ public class Button extends ExtJsComponent {
 //            logger.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
             WebLocator menu = new WebLocator("x-menu-floating");
-            if (isIE()) {
+            if (WebDriverConfig.isIE()) {
                 // menu.isVisible is not considered but is executed and is just consuming time.
 //                if(menu.isVisible()){
 //                    logger.info("In IE is visible");

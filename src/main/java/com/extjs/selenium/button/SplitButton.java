@@ -2,6 +2,7 @@ package com.extjs.selenium.button;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -45,7 +46,7 @@ public class SplitButton extends Button {
 //            click();
             showMenu();
             WebLocator menu = new WebLocator("x-menu-floating");
-            if (isIE()) {
+            if (WebDriverConfig.isIE()) {
                 if (menu.isVisible()) {
                     logger.info("In IE is visible");
                 }

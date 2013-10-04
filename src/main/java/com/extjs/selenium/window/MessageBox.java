@@ -2,7 +2,7 @@ package com.extjs.selenium.window;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.button.Button;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.WebDriverConfig;
 import org.apache.log4j.Logger;
 
 /**
@@ -74,7 +74,7 @@ public class MessageBox {
     }
 
     private static String press(final Button button) {
-        if (WebLocator.isIE() && !messageBoxWindow.isVisible()) {
+        if (WebDriverConfig.isIE() && !messageBoxWindow.isVisible()) {
             return null;
         }
         String msg = getMessage();

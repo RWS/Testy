@@ -1,6 +1,7 @@
 package com.extjs.selenium;
 
 import com.extjs.selenium.form.TextField;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -42,7 +43,7 @@ public class AdvancedTextField extends TextField {
             Utils.sleep(500);
             //TODO move this in a menu class
             String stylePath ="";
-            if(!isIE()){
+            if(!WebDriverConfig.isIE()){
                 stylePath = " and contains(@style,'visible')";
             }
             String valuePath = "//*[contains(@class, '" + menuClass + "')" + stylePath + "]//*[text()='" + value + "']";

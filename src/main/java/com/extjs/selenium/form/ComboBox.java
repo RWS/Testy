@@ -1,6 +1,7 @@
 package com.extjs.selenium.form;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
@@ -73,7 +74,7 @@ public class ComboBox extends TextField {
 //                    selected = setValueWithJs(componentId, value);
 //                    return selected;
 //                }
-                if (isIE()) {
+                if (WebDriverConfig.isIE()) {
                     comboListElement.setId(getListId());
                     option.setContainer(comboListElement);
                 }

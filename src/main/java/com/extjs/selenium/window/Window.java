@@ -2,6 +2,7 @@ package com.extjs.selenium.window;
 
 import com.extjs.selenium.Utils;
 import com.extjs.selenium.panel.Panel;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -28,7 +29,7 @@ public class Window extends Panel {
         // test for IE be cause of :
         // http://jira.openqa.org/browse/SEL-545
         // and http://code.google.com/p/selenium/issues/detail?id=1716
-        if (!isIE()) {
+        if (!WebDriverConfig.isIE()) {
             setStyle("visibility: visible;");
         }
     }
@@ -56,7 +57,7 @@ public class Window extends Panel {
             // test for IE be cause of :
             // http://jira.openqa.org/browse/SEL-545
             // and http://code.google.com/p/selenium/issues/detail?id=1716
-            if (isIE()) {
+            if (WebDriverConfig.isIE()) {
                 selector += " and preceding-sibling::*[contains(@class, 'ext-el-mask')]";
             } else {
                 selector += " and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]";

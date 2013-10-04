@@ -400,7 +400,7 @@ public abstract class WebLocatorAbstractBuilder {
             selector.append(getElPathSuffix());
         }
         selector.append(getItemPathText());
-        if (!WebLocator.isIE()) {
+        if (!WebDriverConfig.isIE()) {
             if (hasStyle()) {
                 selector.append(" and contains(@style ,'").append(getStyle()).append("')");
             }

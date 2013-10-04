@@ -5,8 +5,6 @@ import com.thoughtworks.selenium.Selenium;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
@@ -15,8 +13,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public static WebDriver driver;
     public static Selenium selenium;
 
-    private static boolean isIE;
-    private static boolean isChrome = false;
     private String currentElementPath = "";
     public WebElement currentElement;
 
@@ -25,15 +21,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     protected static WebLocatorExecutor executor;
-
-    /**
-     * driver is InternetExplorerDriver
-     *
-     * @return boolean
-     */
-    public static boolean isIE() {
-        return isIE;
-    }
 
     public WebLocator() {
     }
@@ -73,13 +60,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public static void setDriver(WebDriver driver) {
         WebLocator.driver = driver;
         executor = new WebLocatorDriverExecutor(driver);
-        if (driver != null) {
-            if (driver instanceof InternetExplorerDriver) {
-                isIE = true;
-            } else if (driver instanceof ChromeDriver) {
-                isChrome = true;
-            }
-        }
+        WebDriverConfig.init(driver);
     }
 
     public static Selenium getSelenium() {
