@@ -111,18 +111,24 @@ public class Panel extends ExtJsComponent {
 
     public boolean close() {
         boolean closed = clickOnTool("close");
-        Utils.sleep(50);
+        if(closed){
+            Utils.sleep(50);
+        }
         return closed;
     }
 
     public boolean maximize() {
-        boolean maximized = clickOnTool("maximize");
-        Utils.sleep(50);
+        boolean isMaximized = isMaximized();
+        boolean maximized = isMaximized || clickOnTool("maximize");
+        if(!isMaximized && maximized){
+            Utils.sleep(50);
+        }
         return maximized;
     }
 
     public boolean isMaximized() {
-        return !new WebLocator(this, "//*[contains(@class,'x-tool-maximize')]").isVisible();
+        WebLocator maximizeTool = new WebLocator(this, "//*[contains(@class,'x-tool-maximize')]");
+        return !maximizeTool.isVisible();
     }
 
     public boolean restore() {
