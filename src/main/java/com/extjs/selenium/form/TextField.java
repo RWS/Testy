@@ -6,7 +6,6 @@ import com.sdl.selenium.web.WebLocator;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
 
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
@@ -103,33 +102,7 @@ public class TextField extends ExtJsComponent {
 
     public boolean setValue(String value) {
         if (value != null) {
-            // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
-            //if (executor.isSamePath(this, this.getPath()) || ready()) {
-            if (ready()) {
-                if (hasWebDriver()) {
-                    try {
-                        currentElement.clear();
-                        currentElement.sendKeys(value);
-                    } catch (StaleElementReferenceException exception){
-                        logger.warn("StaleElementReferenceException" + exception);
-                        logger.warn("Set value(" + this + ") second try:  '" + value + "'");
-                        if(ready()){
-                            currentElement.clear();
-                            currentElement.sendKeys(value);
-                        }
-                    }
-                } else {
-                    String path = getPath();
-                    selenium.focus(path); // to scroll to this element (if element is not visible)
-                    selenium.type(path, value);
-                    selenium.keyUp(path, (value.length() == 0) ? "\13" : value.substring(value.length() - 1));
-                    selenium.fireEvent(path, "blur");
-                }
-                logger.info("Set value(" + this + "): '" + value + "'");
-                return true;
-            } else {
-                logger.warn("setValue : field is not ready for use: " + this);
-            }
+            return executor.setValue(this, value);
         }
         return false;
     }
@@ -148,22 +121,7 @@ public class TextField extends ExtJsComponent {
      * @return
      */
     public String getValue() {
-        String value = "";
-        if (ready()) {
-            if (hasWebDriver()) {
-                final String attributeValue = currentElement.getAttribute("value");
-                if (attributeValue != null) {
-                    value = attributeValue;
-                } else {
-                    logger.warn("getValue : value attribute is null: " + this);
-                }
-            } else {
-                value = selenium.getValue(getPath());
-            }
-        } else {
-            logger.warn("getValue : field is not ready for use: " + this);
-        }
-        return value;
+        return executor.getValue(this);
     }
 
     /**

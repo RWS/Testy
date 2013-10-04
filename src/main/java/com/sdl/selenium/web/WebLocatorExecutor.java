@@ -29,6 +29,10 @@ public interface WebLocatorExecutor {
 
     String getHtmlSource(WebLocator el);
 
+    boolean setValue(WebLocator el, String value);
+
+    String getValue(WebLocator el);
+
     boolean clear(WebLocator el);
 
     boolean doubleClickAt(WebLocator el);

@@ -42,7 +42,7 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
         return null;
     }
 
-    public WebElement waitElement(final WebLocator el, final long millis){
+    public WebElement waitElement(final WebLocator el, final long millis) {
         return null;
     }
 
@@ -164,5 +164,30 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     @Override
     public void blur(WebLocator el) {
         selenium.fireEvent(el.getPath(), "blur");
+    }
+
+    @Override
+    public boolean setValue(WebLocator el, String value) {
+        if (el.ready()) {
+            String path = el.getPath();
+            selenium.focus(path); // to scroll to this element (if element is not visible)
+            selenium.type(path, value);
+            selenium.keyUp(path, value.substring(value.length() - 1));
+            selenium.fireEvent(path, "blur");
+            return true;
+        } else {
+            logger.warn("getValue : field is not ready for use: " + this);
+        }
+        return false;
+    }
+
+    @Override
+    public String getValue(WebLocator el) {
+        if (el.ready()) {
+            return selenium.getValue(el.getPath());
+        } else {
+            logger.warn("getValue : field is not ready for use: " + this);
+            return "";
+        }
     }
 }

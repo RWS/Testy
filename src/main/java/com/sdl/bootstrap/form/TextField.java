@@ -9,8 +9,7 @@ public class TextField extends SimpleTextField {
 
     public TextField() {
         setClassName("TextField");
-        setTag("input");
-        setType("text");
+            setType("text"); // TODO try to move in SimpleTextField
     }
 
     public TextField(WebLocator container) {
