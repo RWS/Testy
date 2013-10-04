@@ -268,7 +268,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return this;
     }
 
-    public Object executeScript(String script, Object... objects) {
+    protected Object executeScript(String script, Object... objects) {
         return executor.executeScript(script, objects);
     }
 
