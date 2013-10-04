@@ -14,7 +14,7 @@ version 1.7-SNAPSHOT
 11) rename attribute  excludeCls in excludeClasses list
 12) rename attribute deepness in elPathSuffix
 13) move specification Browser in WebDriverConfig
-14)
+14) remove methods type(String text) and typeKeys(String text) from WebLocator
 
 version 1.6
 1) Improvement setValue for TextField

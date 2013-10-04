@@ -158,16 +158,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void type(WebLocator el, String text) {
-        el.sendKeys(text);
-    }
-
-    @Override
-    public void typeKeys(WebLocator el, String text) {
-        el.currentElement.sendKeys(text);
-    }
-
-    @Override
     public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         try {
             el.currentElement.sendKeys(charSequences);

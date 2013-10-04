@@ -138,16 +138,6 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void type(WebLocator el, String text) {
-        selenium.type(el.getPath(), text);
-    }
-
-    @Override
-    public void typeKeys(WebLocator el, String text) {
-        selenium.typeKeys(el.getPath(), text);
-    }
-
-    @Override
     public void doSendKeys(WebLocator el, CharSequence... charSequences) {
         logger.warn("TODO not implemented yet for selenium");
     }

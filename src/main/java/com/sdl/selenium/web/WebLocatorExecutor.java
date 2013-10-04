@@ -39,10 +39,6 @@ public interface WebLocatorExecutor {
 
     Object executeScript(String script, Object... objects);
 
-    void type(WebLocator el, String text);
-
-    void typeKeys(WebLocator el, String text);
-
     void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
     boolean isTextPresent(WebLocator el, String text);

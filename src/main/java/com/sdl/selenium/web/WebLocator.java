@@ -309,37 +309,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * Using XPath only
      *
-     * @param text
-     * @return
-     */
-    public WebLocator type(String text) {
-        String info = toString();
-        if (ready()) {
-            executor.type(this, text);
-            logger.info("type = '" + text + "' in: " + info);
-        }
-        return this;
-    }
-
-    /**
-     * Using only selenium
-     *
-     * @param text
-     * @return
-     */
-    public WebLocator typeKeys(String text) {
-        String info = toString();
-        if (ready()) {
-            executor.typeKeys(this, text);
-            logger.info("typeKeys = '" + text + "' in: " + info);
-        }
-        return this;
-    }
-
-
-    /**
-     * Using XPath only
-     *
      * @return
      */
     public boolean isVisible() {
