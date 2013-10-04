@@ -94,19 +94,21 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @Depricate please use getClasses()
+     * @depricate please use getClasses()
      * @return
      */
+    @Deprecated
     public String getCls() {
         return cls;
     }
 
     /**
-     * @Depricate please use setClasses("cls")
+     * @deprecated please use setClasses("cls")
      * @param cls
      * @param <T>
      * @return
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
         this.cls = cls;
         return (T) this;
