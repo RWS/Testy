@@ -70,13 +70,21 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             logger.debug("currentElement already found one time: " + el);
             //return el.currentElement;
         }
-        el.currentElement = waitElement(el, 0);
+        doWaitElement(el, 0);
         el.setCurrentElementPath(path);
         return el.currentElement;
     }
 
     @Override
     public WebElement waitElement(final WebLocator el, final long millis) {
+        doWaitElement(el, millis);
+        if(el.currentElement == null){
+            logger.warn("Element not found after " + millis + " millis; " + el);
+        }
+        return el.currentElement;
+    }
+
+    private WebElement doWaitElement(final WebLocator el, final long millis) {
         WebDriverWait wait = new WebDriverWait(driver, 0, 100);
         wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
         final String xpath = el.getPath();
@@ -87,7 +95,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 }
             });
         } catch (TimeoutException e) {
-            logger.warn("Element not found after " + millis + " millis; " + el);
             el.currentElement = null;
         }
         return el.currentElement;
@@ -318,7 +325,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public Object executeScript(String script, Object... objects) {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-        return javascriptExecutor.executeScript(script, objects);
+        try {
+            return javascriptExecutor.executeScript(script, objects);
+        } catch (Exception e){
+            logger.error("executeScript: " + script, e);
+            return null;
+        }
     }
 
     private void highlightElementWithDriver(WebElement el) {
