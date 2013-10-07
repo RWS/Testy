@@ -534,6 +534,8 @@ public abstract class WebLocatorAbstractBuilder {
             info = getId();
         } else if (hasName()) {
             info = getName();
+        } else if (hasClasses()) {
+            info = classes.size() == 1 ? classes.get(0) : classes.toString();
         } else if (hasCls()) {
             info = getCls();
         } else if (hasLabel()) {
