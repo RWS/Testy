@@ -19,6 +19,7 @@ version 1.7-SNAPSHOT
 16) move copyToClipboard in Utils
 17) mark setCls(final String cls) and getCls() Depricate
 18) improvement maximize method from Panel
+19) add try in executeScript. findElement should not log "Element not found after" when element is not found.
 
 version 1.6
 1) Improvement setValue for TextField
