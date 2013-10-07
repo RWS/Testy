@@ -385,7 +385,7 @@ public abstract class WebLocatorAbstractBuilder {
     public String getBasePathSelector() {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
-        StringBuffer selector = new StringBuffer();
+        StringBuilder selector = new StringBuilder();
         if (hasId()) {
             selector.append(" and @id='").append(getId()).append("'");
         }
@@ -448,12 +448,17 @@ public abstract class WebLocatorAbstractBuilder {
             String text = getText();
             text = Utils.getEscapeQuotesText(text);
             selector += " and ";
-            if (SearchType.EQUALS.equals(getSearchTextType())) {
-                selector += "text()=" + text;
-            } else if (SearchType.CONTAINS.equals(getSearchTextType())) {
-                selector += "contains(text()," + text + ")";
-            } else if (SearchType.STARTS_WITH.equals(getSearchTextType())) {
-                selector += "starts-with(text()," + text + ")";
+            String pathText = "text()";
+            if(searchTextType.isTrim()){
+                pathText = "normalize-space(" + pathText + ")";
+            }
+
+            if (searchTextType.isSameType(SearchType.EQUALS)) {
+                selector += pathText + "=" + text;
+            } else if (searchTextType.isSameType(SearchType.CONTAINS)) {
+                selector += "contains(" + pathText + "," + text + ")";
+            } else if (searchTextType.isSameType(SearchType.STARTS_WITH)) {
+                selector += "starts-with(" + pathText + "," + text + ")";
             } else {
                 logger.warn("searchType did not math to any accepted values");
                 selector = "";
