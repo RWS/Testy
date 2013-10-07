@@ -26,7 +26,7 @@ public class EditorGridPanel extends GridPanel {
 
     public EditorGridPanel(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     public EditorGridPanel(String cls, String searchColumnId) {
@@ -65,7 +65,7 @@ public class EditorGridPanel extends GridPanel {
     public TextField getActiveEditor() {
         TextField editor;
         WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl = new WebLocator(container).setCls("-focus");
+        WebLocator editableEl = new WebLocator(container).setClasses("-focus");
         String stringClass = editableEl.getAttributeClass();
         logger.debug("stringClass: " + stringClass);
         if (stringClass == null) {
@@ -83,7 +83,7 @@ public class EditorGridPanel extends GridPanel {
             logger.debug("TextField");
             editor = new TextField();
         }
-        editor.setContainer(this).setCls("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
+        editor.setContainer(this).setClasses("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
 //        logger.debug("editor: " + editor.getPath());
         return editor;
     }

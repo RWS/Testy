@@ -32,7 +32,7 @@ public class GridPanel extends Panel {
 
     public GridPanel(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     public GridPanel(WebLocator container) {
@@ -52,7 +52,7 @@ public class GridPanel extends Panel {
 
     public GridPanel(WebLocator container, String cls, String searchColumnId) {
         this(container);
-        setCls(cls);
+        setClasses(cls);
         setSearchColumnId(searchColumnId);
     }
 

@@ -39,7 +39,7 @@ public class Button extends ExtJsComponent {
      */
     public Button(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     /**

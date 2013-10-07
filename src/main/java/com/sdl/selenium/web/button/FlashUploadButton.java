@@ -16,7 +16,7 @@ public class FlashUploadButton extends SelectFilesHandler {
 
     public FlashUploadButton(WebLocator container, String cls) {
         this();
-        getButtonElement().setCls(cls);
+        getButtonElement().setClasses(cls);
         getButtonElement().setContainer(container);
     }
 
@@ -26,7 +26,7 @@ public class FlashUploadButton extends SelectFilesHandler {
 
     public FlashUploadButton(String label, WebLocator container) {
         this();
-        getButtonElement().setCls("swfupload");
+        getButtonElement().setClasses("swfupload");
         ExtJsComponent button = new ExtJsComponent(container);
         button.setLabel(label);
         getButtonElement().setContainer(button);

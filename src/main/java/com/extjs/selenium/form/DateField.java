@@ -23,7 +23,7 @@ public class DateField extends TextField {
 
     public DateField(WebLocator container, String cls) {
         this(container);
-        setCls(cls);
+        setClasses(cls);
     }
 
     public DateField(String name, WebLocator container) {

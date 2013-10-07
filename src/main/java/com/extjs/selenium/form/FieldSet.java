@@ -25,7 +25,7 @@ public class FieldSet extends WebLocator {
 
     public FieldSet(WebLocator container, String cls, String text) {
         this(container, text);
-        setCls(cls);
+        setClasses(cls);
     }
 
     public String getDefaultExcludePath() {

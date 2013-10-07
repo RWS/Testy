@@ -16,7 +16,7 @@ public class AdvancedTextField extends TextField {
 
     public AdvancedTextField(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     public AdvancedTextField(ExtJsComponent container) {
@@ -33,7 +33,7 @@ public class AdvancedTextField extends TextField {
     public AdvancedTextField(String cls, ExtJsComponent container) {
         this();
         setContainer(container);
-        setCls(cls);
+        setClasses(cls);
     }
 
     public boolean select(String value) {

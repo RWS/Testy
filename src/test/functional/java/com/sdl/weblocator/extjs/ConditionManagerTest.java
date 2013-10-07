@@ -19,7 +19,7 @@ public class ConditionManagerTest extends TestBase {
     Button expect2Button = new Button(conditionManagerPanel, "Expect2");
     Button expect3Button = new Button(conditionManagerPanel, "Expect3");
 
-    private Window messageBoxWindow = new Window(true).setCls("x-window-dlg").setInfoMessage("MessageBox");
+    private Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
     Button button = new Button(messageBoxWindow, "Nossss");
 
     @Test

@@ -29,7 +29,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @param cls
      */
     public WebLocator(String cls) {
-        setCls(cls);
+        setClasses(cls);
     }
 
     public WebLocator(WebLocator container) {
@@ -43,7 +43,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public WebLocator(String cls, WebLocator container) {
         this(container);
-        setCls(cls);
+        setClasses(cls);
     }
 
     public WebLocator(String text, String cls, WebLocator container) {

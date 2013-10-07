@@ -18,7 +18,7 @@ public class TextField extends ExtJsComponent implements ITextField {
 
     public TextField(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     public TextField(WebLocator container) {

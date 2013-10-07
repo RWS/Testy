@@ -21,7 +21,7 @@ public class ComboBox extends TextField {
      */
     public ComboBox(String cls) {
         this();
-        this.setCls(cls);
+        this.setClasses(cls);
     }
 
     public ComboBox(WebLocator container) {
@@ -44,7 +44,7 @@ public class ComboBox extends TextField {
     public ComboBox(WebLocator container, String cls, String name, boolean hasName) {
         this();
         setContainer(container);
-        setCls(cls);
+        setClasses(cls);
         setName(name);
     }
 

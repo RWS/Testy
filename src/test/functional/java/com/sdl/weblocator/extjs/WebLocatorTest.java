@@ -13,8 +13,8 @@ import static org.testng.Assert.assertTrue;
 public class WebLocatorTest extends TestBase {
     private static final Logger logger = Logger.getLogger(WebLocatorTest.class);
     WebLocator webLocatorId = new WebLocator().setId("webLocatorId");
-    WebLocator webLocatorCls = new WebLocator().setCls("webLocatorCls");
-    WebLocator webLocatorNotAttribute = new WebLocator().setCls("notExist");
+    WebLocator webLocatorCls = new WebLocator().setClasses("webLocatorCls");
+    WebLocator webLocatorNotAttribute = new WebLocator().setClasses("notExist");
 
     @Test
     public void identifyById() {

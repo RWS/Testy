@@ -33,7 +33,7 @@ public class Panel extends ExtJsComponent {
 
     public Panel(String cls, WebLocator container, String excludeClass) {
         this(container);
-        setCls(cls);
+        setClasses(cls);
         setExcludeClasses(excludeClass);
     }
 
@@ -104,7 +104,7 @@ public class Panel extends ExtJsComponent {
     }
 
     public boolean clickOnTool(String id) {
-        WebLocator toolElement = new WebLocator(this).setCls("x-tool-" + id).setVisibility(true);
+        WebLocator toolElement = new WebLocator(this).setClasses("x-tool-" + id).setVisibility(true);
         toolElement.setInfoMessage("x-tool-" + id);
         return toolElement.click();
     }

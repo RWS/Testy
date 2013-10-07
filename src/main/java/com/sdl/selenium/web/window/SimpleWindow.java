@@ -26,7 +26,7 @@ public class SimpleWindow extends WebLocator {
     }
 
     public String getMessageWindow() {
-        WebLocator webLocator = new WebLocator(this).setCls("ui-dialog-content ui-widget-content");
+        WebLocator webLocator = new WebLocator(this).setClasses("ui-dialog-content ui-widget-content");
         return webLocator.getHtmlText();
     }
 

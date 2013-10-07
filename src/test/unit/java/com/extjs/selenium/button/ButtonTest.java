@@ -6,8 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-
 public class ButtonTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
 
@@ -27,15 +25,5 @@ public class ButtonTest {
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
         Assert.assertEquals(button.getPath(), expectedXpath);
-    }
-
-    @Test
-    public void createInstancesWithBuilders() {
-        Button locatorBuilder1 = new Button().setId("ID1").setCls("CLS");
-
-        assertEquals(locatorBuilder1.getTag(), "table");
-        assertEquals(locatorBuilder1.getId(), "ID1");
-        assertEquals(locatorBuilder1.getCls(), "CLS");
-        assertEquals(locatorBuilder1.getClassName(), "Button");
     }
 }

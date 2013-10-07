@@ -15,7 +15,7 @@ public class ExtJsComponent extends WebLocator {
      */
     public ExtJsComponent(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     public ExtJsComponent(WebLocator container) {
@@ -30,7 +30,7 @@ public class ExtJsComponent extends WebLocator {
 
     public ExtJsComponent(String cls, WebLocator container) {
         this(container);
-        setCls(cls);
+        setClasses(cls);
     }
 
     public ExtJsComponent(String text, String cls, WebLocator container) {

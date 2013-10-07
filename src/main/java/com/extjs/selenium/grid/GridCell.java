@@ -31,7 +31,7 @@ public class GridCell extends Cell {
     public GridCell(String text, WebLocator container) {
         this(container);
         setText(text);
-        setCls("x-grid3-cell-inner");
+        setClasses("x-grid3-cell-inner");
     }
 
     public GridCell(WebLocator container, String text, SearchType searchType) {

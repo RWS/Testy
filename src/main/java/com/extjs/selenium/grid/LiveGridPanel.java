@@ -15,7 +15,7 @@ public class LiveGridPanel extends GridPanel {
 
     public LiveGridPanel(String cls) {
         this();
-        setCls(cls);
+        setClasses(cls);
     }
 
     public LiveGridPanel(WebLocator container) {
@@ -35,7 +35,7 @@ public class LiveGridPanel extends GridPanel {
 
     public LiveGridPanel(WebLocator container, String cls, String searchColumnId) {
         this(container);
-        setCls(cls);
+        setClasses(cls);
         setSearchColumnId(searchColumnId);
     }
 

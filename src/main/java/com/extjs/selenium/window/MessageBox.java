@@ -16,7 +16,7 @@ public class MessageBox {
     public static String BUTTON_YES = "Yes";
     public static String BUTTON_NO = "No";
 
-    private static Window messageBoxWindow = new Window(true).setCls("x-window-dlg").setInfoMessage("MessageBox");
+    private static Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
 
     private static Button okButton = new Button(messageBoxWindow, BUTTON_OK);
     private static Button cancelButton = new Button(messageBoxWindow, BUTTON_CANCEL);
