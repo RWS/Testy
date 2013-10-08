@@ -21,6 +21,9 @@ version 1.7-SNAPSHOT
 18) improvement maximize method from Panel
 19) add try in executeScript. findElement should not log "Element not found after" when element is not found.
 20) add tests to WebLocator for toString method : shouldShowClassInToStringWhenHasOneClass and shouldShowClassesInToStringWhenHasManyClass
+21) improvement getItemPathText with normalize-space
+22) add InputButton class
+23) change Boolean in boolean into WebLocatorAbstractBuilder
 
 version 1.6
 1) Improvement setValue for TextField

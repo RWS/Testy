@@ -317,59 +317,59 @@ public abstract class WebLocatorAbstractBuilder {
         this.className = className;
     }
 
-    public Boolean hasId() {
+    public boolean hasId() {
         return id != null && !id.equals("");
     }
 
-    public Boolean hasCls() {
+    public boolean hasCls() {
         return cls != null && !cls.equals("");
     }
 
-    public Boolean hasClasses() {
+    public boolean hasClasses() {
         return classes != null && classes.size() > 0;
     }
 
-    public Boolean hasExcludeClasses() {
+    public boolean hasExcludeClasses() {
         return excludeClasses != null && excludeClasses.size() > 0;
     }
 
-    public Boolean hasBaseCls() {
+    public boolean hasBaseCls() {
         return baseCls != null && !baseCls.equals("");
     }
 
-    public Boolean hasName() {
+    public boolean hasName() {
         return name != null && !name.equals("");
     }
 
-    public Boolean hasText() {
+    public boolean hasText() {
         return text != null && !text.equals("");
     }
 
-    public Boolean hasStyle() {
+    public boolean hasStyle() {
         return style != null && !style.equals("");
     }
 
-    public Boolean hasElPath() {
+    public boolean hasElPath() {
         return elPath != null && !elPath.equals("");
     }
 
-    public Boolean hasElCssSelector() {
+    public boolean hasElCssSelector() {
         return elCssSelector != null && !elCssSelector.equals("");
     }
 
-    public Boolean hasLabel() {
+    public boolean hasLabel() {
         return label != null && !label.equals("");
     }
 
-    public Boolean hasTitle() {
+    public boolean hasTitle() {
         return title != null && !title.equals("");
     }
 
-    public Boolean hasElPathSuffix() {
+    public boolean hasElPathSuffix() {
         return elPathSuffix != null && !elPathSuffix.equals("");
     }
 
-    public Boolean hasPosition() {
+    public boolean hasPosition() {
         return position > 0;
     }
 
