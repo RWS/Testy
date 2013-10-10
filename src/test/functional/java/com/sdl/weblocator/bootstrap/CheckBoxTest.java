@@ -2,6 +2,7 @@ package com.sdl.weblocator.bootstrap;
 
 import com.sdl.bootstrap.form.CheckBox;
 import com.sdl.bootstrap.form.Form;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
@@ -15,6 +16,7 @@ public class CheckBoxTest extends TestBase {
 
     Form form = new Form(null, "Form Title");
     CheckBox checkBox = new CheckBox(form);
+    CheckBox withEnterWebLocator = new CheckBox(form).setText("Label with Enter.").setSearchTextType(SearchType.CHILD_NODE);
 
     @BeforeClass
     public void startTests() {
@@ -25,5 +27,10 @@ public class CheckBoxTest extends TestBase {
     public void check() {
         assertTrue(checkBox.click());
         assertTrue(checkBox.isSelected());
+    }
+
+    @Test
+    public void clickWith() {
+        assertTrue(withEnterWebLocator.click());
     }
 }
