@@ -27,6 +27,7 @@ version 1.7-SNAPSHOT
 24) rename setSearchTextType in setSearchTextTypes witch accept list
 25) improvement getItemPathText() for cases where the item has multiple enters
 26) add SearchType enum TRIM, CHILD_NODE, DEEP_CHILD_NODE
+27) update setText(final String text, final SearchType ...searchType) with SearchType options
 
 version 1.6
 1) Improvement setValue for TextField
