@@ -16,7 +16,7 @@ public class InputData extends Properties {
     public static final String RESOURCES_PATH = "src/test/resources/";
     public static final String FUNCTIONAL_PATH = "src/test/functional/";
 
-    private static InputData singleton = new InputData();
+    private static InputData properties = new InputData();
 
     public InputData() {
         try {
@@ -42,12 +42,14 @@ public class InputData extends Properties {
     public static final String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
     public static final String FUNCTIONAL_PATH_ABSOLUTE = "file:///" + new File(FUNCTIONAL_PATH).getAbsolutePath();
 
-    public static final String SERVER_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("server.url");
-    public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("bootstrap.url");
-    public static final String WEB_LOCATOR_URL = FUNCTIONAL_PATH_ABSOLUTE + singleton.getProperty("web.locator.url");
+    public static final String SERVER_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("server.url");
+    public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("bootstrap.url");
+    public static final String WEB_LOCATOR_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("web.locator.url");
 
-    public static final String FIREFOX_PROFILE = singleton.getProperty("firefox.profile");
-    public static final String CHROME_DRIVER_DIR = RESOURCES_DIRECTORY_PATH + singleton.getProperty("chrome.driver.dir");
-    public static final String BROWSER = singleton.getProperty("browser");
+    public static final String BROWSER = properties.getProperty("browser");
 
+    public static final String FIREFOX_PROFILE = properties.getProperty("firefox.profile");
+
+    public static final String DRIVER_PATH_CHROME = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.chrome");
+    public static final String DRIVER_PATH_IE = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.ie");
 }

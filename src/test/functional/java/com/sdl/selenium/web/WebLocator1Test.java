@@ -16,8 +16,8 @@ public class WebLocator1Test extends TestBase {
     WebLocator webLocatorNotAttribute = new WebLocator().setClasses("notExist");
 
     WebLocator webLocatorWithMoreEnter = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div");
-    WebLocator webLocatorWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div").setSearchTextType(SearchType.DEEP_CHILD_NODE);
-    WebLocator webLocatorNoWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div").setSearchTextType(SearchType.DEEP_CHILD_NODE);
+    WebLocator webLocatorWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
+    WebLocator webLocatorNoWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
     WebLocator webLocatorNoWithMoreEnter = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div");
     WebLocator webLocatorLogger = new WebLocator().setId("logger");
 

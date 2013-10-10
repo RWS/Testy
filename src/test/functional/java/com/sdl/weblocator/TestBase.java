@@ -109,13 +109,17 @@ public class TestBase {
                 return new FirefoxDriver();
             }
         } else if (browser.equalsIgnoreCase("*iexplore")) {
+            String driverPathIe = InputData.DRIVER_PATH_IE;
+            if (driverPathIe != null && !driverPathIe.equals("")) {
+                System.setProperty("webdriver.ie.driver", driverPathIe);
+            }
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
             return new InternetExplorerDriver(ieCapabilities);
 //            return new InternetExplorerDriver();
         } else if (browser.equalsIgnoreCase("*chrome")) {
-            if (InputData.CHROME_DRIVER_DIR != null && !InputData.CHROME_DRIVER_DIR.equals("")) {
-                System.setProperty("webdriver.chrome.driver", InputData.CHROME_DRIVER_DIR);
+            if (InputData.DRIVER_PATH_CHROME != null && !InputData.DRIVER_PATH_CHROME.equals("")) {
+                System.setProperty("webdriver.chrome.driver", InputData.DRIVER_PATH_CHROME);
             }
             return new ChromeDriver();
         } else if (browser.equalsIgnoreCase("*htmlunit")) {
