@@ -42,12 +42,6 @@
     margin-right: 15px;
 }
 
-.experiment-tile label.checkbox{
-    position: absolute;
-    bottom: 10px;
-    left: 15px;
-}
-
 .experiment-row input[type="checkbox"]{
     margin-left: 10px;
 }

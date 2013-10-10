@@ -31,6 +31,8 @@ public class Button extends ExtJsComponent {
         setBaseCls("x-btn");
         setTag("table");
         setVisibility(true);
+        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
+        setSearchTextType(SearchType.EQUALS);
     }
 
     /**
@@ -53,14 +55,13 @@ public class Button extends ExtJsComponent {
     public Button(WebLocator container, String text) {
         this(container);
         setText(text);
-        setSearchTextType(SearchType.EQUALS);
     }
 
     // Methods
 
     @Override
     public String getItemPathText() {
-        String selector = hasText() ? " and count(.//*[" + Utils.fixPathSelector(super.getItemPathText()) + "]) > 0" : "";
+        String selector = hasText() ? super.getItemPathText() : "";
         if (hasIconCls()) {
             selector += " and count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
         }

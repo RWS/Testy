@@ -24,6 +24,9 @@ version 1.7-SNAPSHOT
 21) improvement getItemPathText with normalize-space
 22) add InputButton class
 23) change Boolean in boolean into WebLocatorAbstractBuilder
+24) rename setSearchTextType in setSearchTextTypes witch accept list
+25) improvement getItemPathText() for cases where the item has multiple enters
+26) add SearchType enum TRIM, CHILD_NODE, DEEP_CHILD_NODE
 
 version 1.6
 1) Improvement setValue for TextField

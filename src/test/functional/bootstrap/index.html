@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Bootstrap WebDriver</title>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -32,15 +32,25 @@
         </div>
     </div>
 
-    <label class="checkbox"><input type="checkbox" value="">
-        Stop the process?
-    </label>
+    <div>
+        <label class="checkbox"><input type="checkbox" value="">
+            Stop the process?
+        </label>
+    </div>
+    <div>
+        <label class="checkbox checkbox-enter">
+            <input type="checkbox" value="">
+            Label with Enter.
+        </label>
+    </div>
 
     <div>
         <label class="control-label">TPT Test:</label>
+
         <div>
             <div class="fileupload fileupload-new" data-provides="fileupload">
-                <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span>
+                <span class="btn btn-file"><span class="fileupload-new">Select file</span><span
+                    class="fileupload-exists">Change</span><input type="file"/></span>
                 <span class="fileupload-preview"></span>
                 <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
             </div>
@@ -48,11 +58,13 @@
     </div>
 
     <label class="control-label">Span:</label>
+
     <div class="controls">
         <span data-bind="span" class="uneditable-input input-block-level">test</span>
     </div>
 
     <label class="control-label">Budget:</label>
+
     <div class="controls">
         <div class="input-prepend input-block-level">
             <span class="add-on">$</span>
@@ -61,14 +73,20 @@
     </div>
 
     <label class="control-label">Project Data:</label>
+
     <div class="controls">
-        <button id="downloadProjectDataButton" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+        <button id="downloadProjectDataButton" class="btn download-btn" type="button"><i class="icon-download-alt"></i>
+            Download
+        </button>
     </div>
 
     <label class="control-label">DownloadNegative:</label>
+
     <div class="controls">
-        <button id="downloadNegative" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+        <button id="downloadNegative" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download
+        </button>
     </div>
+
 
 </form>
 
@@ -81,19 +99,19 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.selectpicker').selectpicker();
-        var today = new Date();
+    $('.selectpicker').selectpicker();
+    var today = new Date();
 
-        $('#dp3').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            keyboardNavigation: true
-        });
-        $('#dp3').datepicker('setValue', today);
+    $('#dp3').datepicker({
+    format: 'dd-mm-yyyy',
+    autoclose: true,
+    keyboardNavigation: true
+    });
+    $('#dp3').datepicker('setValue', today);
 
-        $('#downloadProjectDataButton').on('click', function(){
-            window.location.href = '../../resources/upload/text.docx';
-        });
+    $('#downloadProjectDataButton').on('click', function(){
+    window.location.href = '../../resources/upload/text.docx';
+    });
     });
 </script>
 </body>

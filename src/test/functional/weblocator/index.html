@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>WebLocator</title>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+<h2>WebLocator</h2>
+
+<!-- used for shouldFindAllCombinationsForTextSearchTypeTest -->
+<div class="searchTextType">WebLocator text for search type</div>
+<div class="searchTextType deep"><span class="wrapper"><span class="icon"></span>WebLocator text for search type</span></div>
+
+<div id="webLocatorId">WebLocator with id</div>
+<div class="webLocatorCls">WebLocator with class</div>
+
+<div class="more-elements-inside with-enter element1">
+    <a href="#">
+        <span class="xx"></span>
+        more enter inside div
+    </a>
+</div>
+<div class="more-elements-inside with-enter element2">
+    <span class="xx"></span>
+    more enter inside div
+</div>
+
+<div class="more-elements-inside no-enter element3"><a href="#"><span class="xx"></span>more enter inside div</a></div>
+<div class="more-elements-inside no-enter element4"><span class="xx"></span>more enter inside div</div>
+
+<div class="more-elements-inside with-enter element5">
+    more enter inside div
+    <span class="xx"></span>
+</div>
+
+<div id="logger"></div>
+
+<script type="text/javascript" src="../bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="js/WebLocator.js"></script>
+</body>
+</html>
+

@@ -3,7 +3,6 @@
 <suite name="WebLocator Unit Test Suite" verbose="1">
     <test name="AllTests">
         <packages>
-            <package name="com.beglobal.selenium.*"/>
             <package name="com.extjs.selenium.*"/>
             <package name="com.sdl.selenium.web.*"/>
             <package name="com.sdl.bootstrap.*"/>

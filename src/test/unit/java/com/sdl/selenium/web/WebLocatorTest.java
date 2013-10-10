@@ -34,12 +34,47 @@ public class WebLocatorTest {
                 {new WebLocator(container, "//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(@class, 'container')]//*[contains(@class, 'testcls')]"},
                 {new WebLocator().setElPathSuffix("count(div) > 0"), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
+        };
+    }
+
+    @DataProvider
+    public static Object[][] testConstructorPathDataProviderText() {
+        String text = "WebLocator text for search type";
+        return new Object[][]{
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.CONTAINS), "//*[contains(@class, 'searchTextType') and contains(text(),'WebLocator text for search type')]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.EQUALS), "//*[contains(@class, 'searchTextType') and text()='WebLocator text for search type']"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.STARTS_WITH), "//*[contains(@class, 'searchTextType') and starts-with(text(),'WebLocator text for search type')]"},
+
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.CONTAINS, SearchType.CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(text()[contains(.,'WebLocator text for search type')]) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.EQUALS, SearchType.CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(text()[.='WebLocator text for search type']) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.STARTS_WITH, SearchType.CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(text()[starts-with(.,'WebLocator text for search type')]) > 0]"},
+
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.CONTAINS, SearchType.DEEP_CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(*//text()[contains(.,'WebLocator text for search type')]) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.EQUALS, SearchType.DEEP_CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(*//text()[.='WebLocator text for search type']) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.STARTS_WITH, SearchType.DEEP_CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(*//text()[starts-with(.,'WebLocator text for search type')]) > 0]"},
+
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.CONTAINS, SearchType.TRIM), "//*[contains(@class, 'searchTextType') and contains(normalize-space(text()),'WebLocator text for search type')]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.EQUALS, SearchType.TRIM), "//*[contains(@class, 'searchTextType') and normalize-space(text())='WebLocator text for search type']"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.STARTS_WITH, SearchType.TRIM), "//*[contains(@class, 'searchTextType') and starts-with(normalize-space(text()),'WebLocator text for search type')]"},
+
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.CONTAINS, SearchType.TRIM, SearchType.CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(text()[contains(normalize-space(.),'WebLocator text for search type')]) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.EQUALS, SearchType.TRIM, SearchType.CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(text()[normalize-space(.)='WebLocator text for search type']) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.STARTS_WITH, SearchType.TRIM, SearchType.CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(text()[starts-with(normalize-space(.),'WebLocator text for search type')]) > 0]"},
+
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.CONTAINS, SearchType.TRIM, SearchType.DEEP_CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(*//text()[contains(normalize-space(.),'WebLocator text for search type')]) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.EQUALS, SearchType.TRIM, SearchType.DEEP_CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(*//text()[normalize-space(.)='WebLocator text for search type']) > 0]"},
+                {new WebLocator().setClasses("searchTextType").setText(text).setSearchTextType(SearchType.STARTS_WITH, SearchType.TRIM, SearchType.DEEP_CHILD_NODE), "//*[contains(@class, 'searchTextType') and count(*//text()[starts-with(normalize-space(.),'WebLocator text for search type')]) > 0]"},
 
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
+        assertEquals(el.getPath(), expectedXpath);
+    }
+
+    @Test(dataProvider = "testConstructorPathDataProviderText")
+    public void getPathSelectorCorrectlyFromConstructorsByText(WebLocator el, String expectedXpath) {
         assertEquals(el.getPath(), expectedXpath);
     }
 

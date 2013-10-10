@@ -22,7 +22,8 @@ public abstract class WebLocatorAbstractBuilder {
     private List<String> excludeClasses;
     private String name;
     private String text;
-    private SearchType searchTextType = SearchType.CONTAINS;
+    protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
+    private List<SearchType> searchTextType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
     private String title;
@@ -160,7 +161,7 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public SearchType getSearchTextType() {
+    public List<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
@@ -169,8 +170,14 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>
      * @return
      */
-    public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType searchTextType) {
-        this.searchTextType = searchTextType;
+    public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
+        if (searchTextType != null) {
+            this.searchTextType = new ArrayList<SearchType>();
+            for (SearchType searchType : searchTextType) {
+                    this.searchTextType.add(searchType);
+            }
+            this.searchTextType.addAll(defaultSearchTextType);
+        }
         return (T) this;
     }
 
@@ -449,19 +456,28 @@ public abstract class WebLocatorAbstractBuilder {
             text = Utils.getEscapeQuotesText(text);
             selector += " and ";
             String pathText = "text()";
-            if(searchTextType.isTrim()){
+
+            boolean useChildNodesSearch = searchTextType.contains(SearchType.CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE);
+            if(useChildNodesSearch){
+                boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE);
+                selector += "count(" + (isDeepSearch ? "*//" : "") + "text()[";
+                pathText = ".";
+            }
+
+            if(searchTextType.contains(SearchType.TRIM)){
                 pathText = "normalize-space(" + pathText + ")";
             }
 
-            if (searchTextType.isSameType(SearchType.EQUALS)) {
+            if (searchTextType.contains(SearchType.EQUALS)) {
                 selector += pathText + "=" + text;
-            } else if (searchTextType.isSameType(SearchType.CONTAINS)) {
-                selector += "contains(" + pathText + "," + text + ")";
-            } else if (searchTextType.isSameType(SearchType.STARTS_WITH)) {
+            } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
                 selector += "starts-with(" + pathText + "," + text + ")";
             } else {
-                logger.warn("searchType did not math to any accepted values");
-                selector = "";
+                //searchTextType.contains(SearchType.CONTAINS)  //default
+                selector += "contains(" + pathText + "," + text + ")";
+            }
+            if(useChildNodesSearch){
+                selector += "]) > 0";
             }
         }
         return selector;

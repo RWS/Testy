@@ -49,11 +49,6 @@
             <class name="com.sdl.weblocator.extjs.form.TextFieldTest"/>
         </classes>
     </test>
-    <test name="WebLocatorTest">
-        <classes>
-            <class name="com.sdl.weblocator.extjs.WebLocatorTest"/>
-        </classes>
-    </test>
     <test name="WindowTest">
         <classes>
             <class name="com.sdl.weblocator.extjs.window.WindowTest"/>
@@ -98,6 +93,11 @@
     <test name="DownloadFileTest">
         <classes>
             <class name="com.sdl.weblocator.bootstrap.DownloadFileTest"/>
+        </classes>
+    </test>
+    <test name="WebLocator1Test">
+        <classes>
+            <class name="com.sdl.selenium.web.WebLocator1Test"/>
         </classes>
     </test>
 </suite>
