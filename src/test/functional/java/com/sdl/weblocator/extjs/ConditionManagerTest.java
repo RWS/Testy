@@ -6,6 +6,7 @@ import com.extjs.selenium.conditions.MessageBoxSuccessCondition;
 import com.extjs.selenium.panel.Panel;
 import com.extjs.selenium.window.MessageBox;
 import com.extjs.selenium.window.Window;
+import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
@@ -22,16 +23,28 @@ public class ConditionManagerTest extends TestBase {
     private Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
     Button button = new Button(messageBoxWindow, "Nossss");
 
-    @Test
-    public void conditionManagerTest() {
-        expect1Button.click();
+    private Condition doClick(Button button){
+        button.click();
+
         ConditionManager conditionManager = new ConditionManager(10000);
         conditionManager.add(new MessageBoxSuccessCondition("Expect1 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect2 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
-        Assert.assertTrue(conditionManager.execute().isSuccess());
-        MessageBox.pressOK();
 
+        Condition condition = conditionManager.execute();
+        return condition;
+    }
+
+    @Test
+    public void conditionManagerTest() {
+        Condition condition = doClick(expect1Button);
+
+        if(condition.isFail()){
+            logger.warn(condition.getResultMessage());
+        }
+        Assert.assertTrue(condition.isSuccess());
+
+        MessageBox.pressOK();
     }
 
     @Test
