@@ -18,7 +18,6 @@ public class TabPanel extends ExtJsComponent {
     private TabPanel() {
         setClassName("TabPanel");
         setBaseCls("x-tab-panel");
-        //logger.debug(getClassName() + "() constructor");
     }
 
     public TabPanel(String text) {
@@ -54,7 +53,7 @@ public class TabPanel extends ExtJsComponent {
         String selector = getBasePathSelector();
         if (hasText()) {
 //            selector += " and count(*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']) > 0"; //[viorel]
-            selector += " and not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[contains(text(),'" + getText() + "')]) > 0";
+            selector += " and not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[text()='" + getText() + "']) > 0";
         }
         selector = Utils.fixPathSelector(selector);
         return "//*[" + selector + "]";

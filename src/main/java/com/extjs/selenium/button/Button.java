@@ -32,7 +32,6 @@ public class Button extends ExtJsComponent {
         setTag("table");
         setVisibility(true);
         defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
-        setSearchTextType(SearchType.EQUALS);
     }
 
     /**
@@ -54,7 +53,7 @@ public class Button extends ExtJsComponent {
 
     public Button(WebLocator container, String text) {
         this(container);
-        setText(text);
+        setText(text, SearchType.EQUALS);
     }
 
     // Methods

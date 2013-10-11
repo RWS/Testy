@@ -4,8 +4,26 @@
     <test name="AllTests">
         <packages>
             <package name="com.extjs.selenium.*"/>
-            <package name="com.sdl.selenium.web.*"/>
             <package name="com.sdl.bootstrap.*"/>
         </packages>
+    </test>
+    <test name="FlashUploadButtonTest">
+        <classes>
+            <class name="com.sdl.selenium.web.button.FlashUploadButtonTest"/>
+            <class name="com.sdl.selenium.web.button.InputButtonTest"/>
+            <class name="com.sdl.selenium.web.button.SelectFilesHandlerTest"/>
+            <class name="com.sdl.selenium.web.button.SimpleUploadButtonTest"/>
+
+            <class name="com.sdl.selenium.web.form.CheckBoxSimpleTest"/>
+            <class name="com.sdl.selenium.web.form.SimpleComboBoxTest"/>
+            <class name="com.sdl.selenium.web.form.SimpleTextField"/>
+
+            <class name="com.sdl.selenium.web.link.WebLinkTest"/>
+
+            <class name="com.sdl.selenium.web.table.TableCellTest"/>
+            <class name="com.sdl.selenium.web.table.TableRowTest"/>
+            <class name="com.sdl.selenium.web.table.TableTest"/>
+            <class name="com.sdl.selenium.web.WebLocatorTest"/>
+        </classes>
     </test>
 </suite>

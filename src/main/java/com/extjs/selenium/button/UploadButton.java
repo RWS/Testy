@@ -12,7 +12,6 @@ public class UploadButton extends SelectFiles {
     public UploadButton() {
         setClassName("UploadButton");
         defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
-        setSearchTextType(SearchType.EQUALS);
     }
 
     public UploadButton(WebLocator container) {
@@ -22,7 +21,7 @@ public class UploadButton extends SelectFiles {
 
     public UploadButton(WebLocator container, String text) {
         this(container);
-        setText(text);
+        setText(text, SearchType.EQUALS);
     }
 
     public boolean upload(String [] filePath){

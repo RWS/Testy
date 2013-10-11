@@ -12,7 +12,6 @@ public class DownloadButton extends SelectFiles {
     public DownloadButton() {
         setClassName("DownloadButton");
         defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
-        setSearchTextType(SearchType.EQUALS);
     }
 
     public DownloadButton(WebLocator container) {
@@ -22,7 +21,7 @@ public class DownloadButton extends SelectFiles {
 
     public DownloadButton(WebLocator container, String text) {
         this(container);
-        setText(text);
+        setText(text, SearchType.EQUALS);
     }
 
     /**
