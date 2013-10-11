@@ -108,6 +108,7 @@ public class ExtJsComponent extends WebLocator {
         }
         boolean hasMask = mask.isElementPresent();
         if (logger.isDebugEnabled() && hasMask) {
+            logger.debug("MaskXPath=" + mask.getPath());
             logger.debug(this + " masked : " + hasMask);
         }
         return hasMask;
