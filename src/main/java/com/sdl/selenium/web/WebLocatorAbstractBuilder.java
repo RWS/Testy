@@ -4,6 +4,7 @@ import com.extjs.selenium.Utils;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,6 +58,11 @@ public abstract class WebLocatorAbstractBuilder {
         return tag;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param tag (type of DOM element) eg. input or h2
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setTag(final String tag) {
         this.tag = tag;
         return (T) this;
@@ -66,6 +72,11 @@ public abstract class WebLocatorAbstractBuilder {
         return id;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param id eg. id="buttonSubmit"
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setId(final String id) {
         this.id = id;
         return (T) this;
@@ -76,9 +87,11 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Once used all other attributes will be ignored. Try using this class to a minimum.
+     * Used for finding element process (to generate xpath address)
+     * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
-     * @param elPath
+     * @param elPath absolute way (xpath) to identify element
+     * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
         this.elPath = elPath;
@@ -89,6 +102,11 @@ public abstract class WebLocatorAbstractBuilder {
         return baseCls;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param baseCls base class
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setBaseCls(final String baseCls) {
         this.baseCls = baseCls;
         return (T) this;
@@ -96,7 +114,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * @depricate please use getClasses()
-     * @return
+     * @return class
      */
     @Deprecated
     public String getCls() {
@@ -104,10 +122,10 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
+     * Used for finding element process (to generate xpath address)
      * @deprecated please use setClasses("cls")
-     * @param cls
-     * @param <T>
-     * @return
+     * @param cls class of element
+     * @return this element
      */
     @Deprecated
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
@@ -119,12 +137,15 @@ public abstract class WebLocatorAbstractBuilder {
         return classes;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param classes list of classes
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setClasses(final String... classes) {
         if (classes != null) {
             this.classes = new ArrayList<String>();
-            for (String cls : classes) {
-                this.classes.add(cls);
-            }
+            Collections.addAll(this.classes, classes);
         }
         return (T) this;
     }
@@ -133,12 +154,15 @@ public abstract class WebLocatorAbstractBuilder {
         return excludeClasses;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param excludeClasses list of class to be excluded
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String ...excludeClasses) {
         if (excludeClasses != null) {
             this.excludeClasses = new ArrayList<String>();
-            for (String excludeCls : excludeClasses) {
-                this.excludeClasses.add(excludeCls);
-            }
+            Collections.addAll(this.excludeClasses, excludeClasses);
         }
         return (T) this;
     }
@@ -147,6 +171,11 @@ public abstract class WebLocatorAbstractBuilder {
         return name;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param name eg. name="buttonSubmit"
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setName(final String name) {
         this.name = name;
         return (T) this;
@@ -156,6 +185,12 @@ public abstract class WebLocatorAbstractBuilder {
         return text;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param text with which to identify the item
+     * @param searchType type search text element: see more details SearchType.java
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType ...searchType) {
         this.text = text;
         if(searchType != null){
@@ -169,9 +204,9 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
+     * Used for finding element process (to generate xpath address)
      * @param searchTextType accepted values are: SearchType.EQUALS
-     * @param <T>
-     * @return
+     * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
         if (searchTextType != null) {
@@ -188,6 +223,11 @@ public abstract class WebLocatorAbstractBuilder {
         return style;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param style of element
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setStyle(final String style) {
         this.style = style;
         return (T) this;
@@ -197,6 +237,11 @@ public abstract class WebLocatorAbstractBuilder {
         return elCssSelector;
     }
 
+    /**
+     * Used for finding element process (to generate css selector address)
+     * @param elCssSelector cssSelector
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
         this.elCssSelector = elCssSelector;
         return (T) this;
@@ -206,6 +251,11 @@ public abstract class WebLocatorAbstractBuilder {
         return title;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param title of element
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title) {
         this.title = title;
         return (T) this;
@@ -215,6 +265,11 @@ public abstract class WebLocatorAbstractBuilder {
         return elPathSuffix;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param elPathSuffix additional identification xpath element that will be added at the end
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
         this.elPathSuffix = elPathSuffix;
         return (T) this;
@@ -266,6 +321,11 @@ public abstract class WebLocatorAbstractBuilder {
         return container;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param container parent containing element.
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
         this.container = container;
         return (T) this;
@@ -275,6 +335,11 @@ public abstract class WebLocatorAbstractBuilder {
         return label;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param label text label element
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label) {
         this.label = label;
         return (T) this;
@@ -284,6 +349,11 @@ public abstract class WebLocatorAbstractBuilder {
         return labelTag;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param labelTag label tag element
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setLabelTag(String labelTag) {
         this.labelTag = labelTag;
         return (T) this;
@@ -293,6 +363,11 @@ public abstract class WebLocatorAbstractBuilder {
         return labelPosition;
     }
 
+    /**
+     * Used for finding element process (to generate xpath address)
+     * @param labelPosition label position
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
         return (T) this;
