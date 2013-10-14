@@ -141,4 +141,12 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setClasses("cls1", "cls2");
         assertEquals(locator.toString(), "[cls1, cls2]");
     }
+
+    @Test
+    public void resetSearchTextType(){
+        WebLocator locator = new WebLocator().setText("text", SearchType.EQUALS);
+        assertEquals(locator.getPath(), "//*[text()='text']");
+        locator.setSearchTextType(null);
+        assertEquals(locator.getPath(), "//*[contains(text(),'text')]");
+    }
 }

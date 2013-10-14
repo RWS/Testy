@@ -4,6 +4,7 @@ import com.extjs.selenium.Utils;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -144,8 +145,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setClasses(final String... classes) {
         if (classes != null) {
-            this.classes = new ArrayList<String>();
-            Collections.addAll(this.classes, classes);
+            this.classes = Arrays.asList(classes);
         }
         return (T) this;
     }
@@ -161,8 +161,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String ...excludeClasses) {
         if (excludeClasses != null) {
-            this.excludeClasses = new ArrayList<String>();
-            Collections.addAll(this.excludeClasses, excludeClasses);
+            this.excludeClasses = Arrays.asList(excludeClasses);
         }
         return (T) this;
     }
@@ -209,13 +208,11 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
+        this.searchTextType = new ArrayList<SearchType>();
         if (searchTextType != null) {
-            this.searchTextType = new ArrayList<SearchType>();
-            for (SearchType searchType : searchTextType) {
-                    this.searchTextType.add(searchType);
-            }
-            this.searchTextType.addAll(defaultSearchTextType);
+            Collections.addAll(this.searchTextType, searchTextType);
         }
+        this.searchTextType.addAll(defaultSearchTextType);
         return (T) this;
     }
 
