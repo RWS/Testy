@@ -78,7 +78,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public WebElement waitElement(final WebLocator el, final long millis) {
         doWaitElement(el, millis);
-        if(el.currentElement == null){
+        if (el.currentElement == null) {
             logger.warn("Element not found after " + millis + " millis; " + el);
         }
         return el.currentElement;
@@ -136,7 +136,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (WebDriverException e) {
-            logger.debug("getAttribute '" + attribute + "' SeleniumException: " + e);
+            logger.debug("getAttribute '" + attribute + "' WebDriverException: " + e);
         }
         return attributeValue;
     }
@@ -212,7 +212,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     executed = true;
                 } catch (StaleElementReferenceException exception) {
                     logger.warn("StaleElementReferenceException" + exception);
-                    logger.warn("Set value(" + this + ") second try:  '" + value + "'");
+                    logger.warn("Set value(" + el + ") second try:  '" + value + "'");
                     if (el.ready()) {
                         el.currentElement.clear();
                         el.currentElement.sendKeys(value);
@@ -221,7 +221,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 }
                 logger.info("Set value(" + el + "): '" + value + "'");
             } else {
-                logger.warn("setValue : field is not ready for use: " + this);
+                logger.warn("setValue : field is not ready for use: " + el);
             }
         }
         return executed;
@@ -235,10 +235,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             if (attributeValue != null) {
                 value = attributeValue;
             } else {
-                logger.warn("getValue : value attribute is null: " + this);
+                logger.warn("getValue : value attribute is null: " + el);
             }
         } else {
-            logger.warn("getValue : field is not ready for use: " + this);
+            logger.warn("getValue : field is not ready for use: " + el);
         }
         return value;
     }
@@ -327,7 +327,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
         try {
             return javascriptExecutor.executeScript(script, objects);
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.error("executeScript: " + script, e);
             return null;
         }
