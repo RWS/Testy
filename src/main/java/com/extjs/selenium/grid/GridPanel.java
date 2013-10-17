@@ -192,7 +192,7 @@ public class GridPanel extends Panel {
     public boolean assertRowSelect(String searchElement) {
         boolean selected = rowSelect(searchElement);
         if (!selected) {
-            Assert.fail("Could not select row with text: " + this);
+            Assert.fail("Could not select row with text: " + searchElement);
         }
         return selected;
     }

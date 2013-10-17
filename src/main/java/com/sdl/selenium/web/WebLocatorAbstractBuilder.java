@@ -464,7 +464,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return baseSelector
      */
-    public String getBasePathSelector() {
+    protected String getBasePathSelector() {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
         StringBuilder selector = new StringBuilder();
@@ -521,6 +521,7 @@ public abstract class WebLocatorAbstractBuilder {
         return selector;
     }
 
+    // TODO try to make this function protected
     /**
      * Construct selector if WebLocator has text
      *
