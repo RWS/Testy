@@ -62,12 +62,12 @@ public class TabPanel extends ExtJsComponent {
     /**
      * this method return the path of only one visible div from the main TabPanel
      *
-     * @param disabled
-     * @return
+     * @param disabled disabled
+     * @return xpath
      */
     public String getItemPath(boolean disabled) {
         String selector = getBaseTabPanelPath();
-            selector += "//*[contains(@class, 'x-tab-panel-body')]" +  //TODO
+            selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO
                     "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
 //        }
         return selector;
