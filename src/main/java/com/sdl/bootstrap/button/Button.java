@@ -54,6 +54,7 @@ public class Button extends WebLocator {
         return selector;
     }
 
+    @Override
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         selector = Utils.fixPathSelector(selector);

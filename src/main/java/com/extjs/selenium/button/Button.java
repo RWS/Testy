@@ -67,6 +67,7 @@ public class Button extends ExtJsComponent {
         return selector;
     }
 
+    @Override
     public String getItemPath(boolean disabled) {
         // TODO create iconCls & iconPath for buttons with no text
         String selector = getBasePathSelector();

@@ -8,7 +8,12 @@ public class RenderSuccessCondition extends SuccessCondition {
 
     private WebLocator component;
 
+    private RenderSuccessCondition(String message) {
+        super(message);
+    }
+
     public RenderSuccessCondition(WebLocator component){
+        this(component.toString());
         this.component = component;
     }
 
