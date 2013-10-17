@@ -316,7 +316,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         if (visible) {
             String style = getAttribute("style");
             style = style == null ? "" : style.toLowerCase();
-            if (style.contains("visibility: hidden") || style.contains("display: none")) {
+            style = style.replaceAll("\\s*:\\s*", ":");
+            if (style.contains("visibility:hidden") || style.contains("display:none")) {
                 visible = false;
             }
             /*else {
