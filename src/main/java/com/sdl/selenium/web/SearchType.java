@@ -1,5 +1,15 @@
 package com.sdl.selenium.web;
 
+/**
+ * Contains all Search types :
+ * see details for all in :
+ * <p>{@link SearchType#EQUALS}</p>
+ * <p>{@link SearchType#CONTAINS}</p>
+ * <p>{@link SearchType#STARTS_WITH}</p>
+ * <p>{@link SearchType#TRIM}</p>
+ * <p>{@link SearchType#CHILD_NODE}</p>
+ * <p>{@link SearchType#DEEP_CHILD_NODE}</p>
+ */
 public enum SearchType {
 
     EQUALS,

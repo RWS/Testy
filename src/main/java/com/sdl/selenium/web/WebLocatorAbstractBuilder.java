@@ -186,11 +186,15 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * Used for finding element process (to generate xpath address)
-     * @param text with which to identify the item
-     * @param searchType type search text element: see more details SearchType.java
+     * @param text
+     *  with which to identify the item
+     *
+     * @param searchType
+     * type search text element: see more details see {@link SearchType}
+     *
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType ...searchType) {
+    public <T extends WebLocatorAbstractBuilder> T setText(final String text, SearchType... searchType) {
         this.text = text;
         if(searchType != null){
             setSearchTextType(searchType);
