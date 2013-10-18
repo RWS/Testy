@@ -6,6 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+
 public class ButtonTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
 
@@ -25,5 +27,13 @@ public class ButtonTest {
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
         Assert.assertEquals(button.getPath(), expectedXpath);
+    }
+
+    @Test
+    public void resetSearchTextType(){
+        Button locator = new Button().setText("text", SearchType.STARTS_WITH);
+        assertEquals(locator.getPath(), "//table[contains(@class, 'x-btn') and count(*//text()[starts-with(.,'text')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]");
+        locator.setSearchTextType(null);
+        assertEquals(locator.getPath(), "//table[contains(@class, 'x-btn') and count(*//text()[contains(.,'text')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]");
     }
 }
