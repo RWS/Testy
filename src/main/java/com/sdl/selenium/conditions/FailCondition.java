@@ -3,6 +3,7 @@ package com.sdl.selenium.conditions;
 import com.sdl.selenium.web.WebLocator;
 
 public abstract class FailCondition extends Condition {
+
     public FailCondition(){
 
     }

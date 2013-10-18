@@ -1,12 +1,9 @@
 package com.sdl.selenium.conditions;
 
-public abstract class Condition implements Comparable<Condition> {
+public abstract class Condition implements Comparable<Condition>, ICondition {
+
     private String message;
     private String resultMessage;
-
-    public abstract boolean isSuccess();
-
-    public abstract boolean execute();
 
     private int priority = 5;
 
@@ -19,6 +16,7 @@ public abstract class Condition implements Comparable<Condition> {
         return false;
     }
 
+    @Override
     public boolean isFail() {
         return !isSuccess();
     }
@@ -41,22 +39,27 @@ public abstract class Condition implements Comparable<Condition> {
         return getClass().getSimpleName() + "@";
     }
 
+    @Override
     public boolean equals(String message) {
         return message != null && message.equals(getMessage());
     }
 
+    @Override
     public String getMessage() {
         return message;
     }
 
+    @Override
     public int getPriority() {
         return priority;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
     }
 
+    @Override
     public String getResultMessage() {
         return resultMessage;
     }

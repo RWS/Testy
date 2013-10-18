@@ -8,6 +8,7 @@ import com.extjs.selenium.window.MessageBox;
 import com.extjs.selenium.window.Window;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.conditions.RenderCondition;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -32,6 +33,8 @@ public class ConditionManagerTest extends TestBase {
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
 
         Condition condition = conditionManager.execute();
+        RenderCondition renderCondition = (RenderCondition)condition;
+
         return condition;
     }
 

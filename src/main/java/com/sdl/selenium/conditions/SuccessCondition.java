@@ -1,6 +1,7 @@
 package com.sdl.selenium.conditions;
 
 public abstract class SuccessCondition extends Condition {
+
     public SuccessCondition(){
 
     }

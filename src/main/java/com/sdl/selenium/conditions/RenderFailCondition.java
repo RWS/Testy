@@ -3,21 +3,24 @@ package com.sdl.selenium.conditions;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
-public class RenderSuccessCondition extends SuccessCondition implements RenderCondition {
-    private static final Logger logger = Logger.getLogger(RenderSuccessCondition.class);
+/**
+ * When specified element has been rendered, but it was considered as a fail result (instance of FailCondition)
+ */
+public class RenderFailCondition extends FailCondition implements RenderCondition {
+    private static final Logger logger = Logger.getLogger(RenderFailCondition.class);
 
     private WebLocator component;
 
-    private RenderSuccessCondition(String message) {
+    private RenderFailCondition(String message) {
         super(message);
     }
 
-    public RenderSuccessCondition(WebLocator component){
+    public RenderFailCondition(WebLocator component){
         this(component.toString());
         this.component = component;
     }
 
-    public RenderSuccessCondition(WebLocator component, int priority){
+    public RenderFailCondition(WebLocator component, int priority){
         this(component);
         setPriority(priority);
     }
@@ -41,4 +44,5 @@ public class RenderSuccessCondition extends SuccessCondition implements RenderCo
     public String getResultMessage() {
         return component.getHtmlText();
     }
+
 }
