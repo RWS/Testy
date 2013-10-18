@@ -8,7 +8,12 @@ public class ElementRemovedSuccessCondition extends SuccessCondition {
 
     private WebLocator component;
 
+    private ElementRemovedSuccessCondition(String message) {
+        super(message);
+    }
+
     public ElementRemovedSuccessCondition(WebLocator component){
+        this(component.toString());
         this.component = component;
     }
 

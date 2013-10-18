@@ -43,7 +43,7 @@ public class ExtJsComponent extends WebLocator {
      *
      * @return baseSelector
      */
-    public String getBasePathSelector() {
+    protected String getBasePathSelector() {
         String selector = super.getBasePathSelector();
 
         if (isVisibility()) {

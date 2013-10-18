@@ -53,7 +53,7 @@ public class TextField extends ExtJsComponent implements ITextField {
      *
      * @return baseSelector
      */
-    public String getBasePathSelector() {
+    protected String getBasePathSelector() {
         String selector = super.getBasePathSelector();
 
         selector += " and not(@type='hidden')";
