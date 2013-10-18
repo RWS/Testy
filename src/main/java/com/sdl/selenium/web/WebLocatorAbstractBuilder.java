@@ -194,7 +194,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setText(final String text, SearchType... searchType) {
+    public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
         if(searchType != null){
             setSearchTextType(searchType);
