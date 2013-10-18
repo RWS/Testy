@@ -502,6 +502,7 @@ public abstract class WebLocatorAbstractBuilder {
             }
             // TODO make specific for WebLocator
             if (isVisibility()) {
+//               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
                 selector.append(" and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
             }
         }
