@@ -33,7 +33,7 @@ public class FieldSet extends WebLocator {
     }
 
     @Override
-    public String getItemPathText(){
+    protected String getItemPathText(){
         String selector = "";
         if (hasText()) {
             //selector += " and count(.//*[contains(text(),'" + getText() + "')]) > 0";

@@ -37,6 +37,7 @@ public class TableCell extends Cell {
         setSearchTextType(searchType);
     }
 
+    @Override
     public String addPositionToPath(String itemPath) {
         if (hasPosition()) {
             itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(getItemPathText()) ? "" : "[" + Utils.fixPathSelector(getItemPathText()) + "]");
@@ -44,7 +45,8 @@ public class TableCell extends Cell {
         return itemPath;
     }
 
-    public String getItemPathText() {
+    @Override
+    protected String getItemPathText() {
         String selector = super.getItemPathText();
         if (!"".equals(selector)) {
             String text = Utils.fixPathSelector(selector);

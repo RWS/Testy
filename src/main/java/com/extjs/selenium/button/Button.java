@@ -59,7 +59,7 @@ public class Button extends ExtJsComponent {
     // Methods
 
     @Override
-    public String getItemPathText() {
+    protected String getItemPathText() {
         String selector = hasText() ? super.getItemPathText() : "";
         if (hasIconCls()) {
             selector += " and count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";

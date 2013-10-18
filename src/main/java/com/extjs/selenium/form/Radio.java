@@ -35,7 +35,7 @@ public class Radio extends ExtJsComponent {
         setLabel(label);
     }
 
-    public String getItemPathText() {
+    protected String getItemPathText() {
         String selector = "";
         if (hasText()) {
             selector += " and @value='" + getText() + "'";

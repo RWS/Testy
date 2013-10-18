@@ -39,7 +39,7 @@ public class TabPanel extends ExtJsComponent {
     }
 
     @Override
-    public String getItemPathText(){
+    protected String getItemPathText(){
         return ""; // because text is used as title in TabPanel
     }
 

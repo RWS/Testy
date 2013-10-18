@@ -55,6 +55,7 @@ public class GridRow extends Row {
         return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + textCondition + "]) > 0";
     }
 
+    @Override
     protected String getSearchPath(int columnIndex, String textCondition) {
         return "count(*[contains(@class, 'x-grid3-row-table')]//td[" + columnIndex + "]//*[" + textCondition + "]) > 0";
     }

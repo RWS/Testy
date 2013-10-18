@@ -51,6 +51,12 @@ public class GridCell extends Cell {
         setContainer(container);
     }
 
+    @Override
+    protected String getItemPathText(){
+        return super.getItemPathText();
+    }
+
+    @Override
     public String addPositionToPath(String itemPath) {
         if (hasPosition()) {
             itemPath = "//td[" + getPosition() + "]" + itemPath;

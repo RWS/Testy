@@ -33,7 +33,7 @@ public class InputButton extends WebLocator {
     // Methods
 
     @Override
-    public String getItemPathText() {
+    protected String getItemPathText() {
         return hasText() ? " and @value="+ Utils.getEscapeQuotesText(getText()) : "";
     }
 

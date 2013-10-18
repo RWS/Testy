@@ -528,7 +528,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return
      */
-    public String getItemPathText() {
+    protected String getItemPathText() {
         String selector = "";
         if (hasText()) {
             String text = getText();

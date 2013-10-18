@@ -13,8 +13,9 @@ public abstract class Row extends Cell {
     protected void setRowCells(Cell... cells){
         String path = "";
         for (Cell cell : cells) {
-            if (cell.getPosition() != -1 && !"".equals(cell.getItemPathText())) {
-                path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(cell.getItemPathText()));
+            String itemPathText = cell.getItemPathText();
+            if (cell.getPosition() != -1 && !"".equals(itemPathText)) {
+                path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(itemPathText));
             } else {
                 logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
             }

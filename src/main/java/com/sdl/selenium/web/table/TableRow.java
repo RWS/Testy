@@ -30,12 +30,14 @@ public class TableRow extends Row {
         setRowCells(cells);
     }
 
+    @Override
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         return "//" + getTag() + ("".equals(selector) ? "" : "[" + selector + "]");
     }
 
-    public String getItemPathText() {
+    @Override
+    protected String getItemPathText() {
         String selector = super.getItemPathText();
         if (!"".equals(selector)) {
             String text = Utils.fixPathSelector(selector);
