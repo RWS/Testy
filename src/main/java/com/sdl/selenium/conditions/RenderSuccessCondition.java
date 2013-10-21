@@ -37,6 +37,10 @@ public class RenderSuccessCondition extends SuccessCondition implements RenderCo
          return component;
     }
 
+    /**
+     *
+     * @return component.getHtmlText()
+     */
     @Override
     public String getResultMessage() {
         return component.getHtmlText();

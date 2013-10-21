@@ -526,7 +526,6 @@ public abstract class WebLocatorAbstractBuilder {
         return selector;
     }
 
-    // TODO try to make this function protected
     /**
      * Construct selector if WebLocator has text
      *
@@ -652,7 +651,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
 
-    public String afterItemPathCreated(String itemPath) {
+    protected String afterItemPathCreated(String itemPath) {
         if (hasLabel()) {
             itemPath = getLabelPath() + getLabelPosition() + itemPath;
         }
@@ -660,14 +659,14 @@ public abstract class WebLocatorAbstractBuilder {
         return itemPath;
     }
 
-    public String addPositionToPath(String itemPath) {
+    protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
             itemPath += "[position() = " + getPosition() + "]";
         }
         return itemPath;
     }
 
-    public String getLabelPath() {
+    protected String getLabelPath() {
         return "//" + getLabelTag() + "[text()=" + Utils.getEscapeQuotesText(getLabel()) + "]"; // new Label(getLabel()).getPath()
     }
 }

@@ -35,6 +35,7 @@ public class Radio extends ExtJsComponent {
         setLabel(label);
     }
 
+    @Override
     protected String getItemPathText() {
         String selector = "";
         if (hasText()) {
@@ -43,7 +44,8 @@ public class Radio extends ExtJsComponent {
         return selector;
     }
 
-    public String afterItemPathCreated(String itemPath) {
+    @Override
+    protected String afterItemPathCreated(String itemPath) {
         if (hasLabel()) {
             itemPath = itemPath + getLabelPosition() + getLabelPath();
         }

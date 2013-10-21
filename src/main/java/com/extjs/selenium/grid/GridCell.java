@@ -57,7 +57,7 @@ public class GridCell extends Cell {
     }
 
     @Override
-    public String addPositionToPath(String itemPath) {
+    protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
             itemPath = "//td[" + getPosition() + "]" + itemPath;
         }

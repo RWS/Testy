@@ -40,6 +40,10 @@ public class RenderFailCondition extends FailCondition implements RenderConditio
          return component;
     }
 
+    /**
+     *
+     * @return component.getHtmlText()
+     */
     @Override
     public String getResultMessage() {
         return component.getHtmlText();
