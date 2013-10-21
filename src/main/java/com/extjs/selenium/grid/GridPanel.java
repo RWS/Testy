@@ -727,7 +727,7 @@ public class GridPanel extends Panel {
         return getCheckerCell(searchText, false);
     }
 
-    private GridCell getCheckerCell(final String searchText, boolean containsText) {
+    public GridCell getCheckerCell(final String searchText, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//*[contains(@class, 'x-grid3-row-checker')]";
         return new GridCell(getGridRow(), cellPath).setInfoMessage("row-checker (" + searchText + ")");
