@@ -33,19 +33,7 @@ public class DownloadLink extends ExtJsComponent {
      */
     @Override
     public boolean waitToActivate(int seconds) {
-        return isContainer("LiveGridPanel") || super.waitToActivate(seconds);
-    }
-
-    private boolean isContainer(String className) {
-        WebLocator webLocator = getContainer();
-        while (webLocator != null) {
-            logger.debug(webLocator.getClassName());
-            if (className.equals(webLocator.getClassName())) {
-                return true;
-            }
-            webLocator = webLocator.getContainer();
-        }
-        return false;
+        return getPath().contains("ext-ux-livegrid") || super.waitToActivate(seconds);
     }
 
     /**
