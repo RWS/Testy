@@ -13,7 +13,6 @@ public class DownloadLink extends ExtJsComponent {
 
     public DownloadLink() {
         setClassName("DownloadLink");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
         setTag("a");
     }
 
