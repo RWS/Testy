@@ -1,11 +1,12 @@
 package com.extjs.selenium.button;
 
+import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.button.SelectFiles;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.interactions.Actions;
 
-public class UploadButton extends SelectFiles {
+public class UploadButton extends Button {
 
     private static final Logger logger = Logger.getLogger(UploadButton.class);
 
@@ -26,5 +27,15 @@ public class UploadButton extends SelectFiles {
 
     public boolean upload(String [] filePath){
         return upload(this, filePath);
+    }
+
+    private boolean upload(WebLocator el, String[] filePath) {
+        driver.switchTo().window(driver.getWindowHandle());
+        el.focus();
+        Actions builder = new Actions(driver);
+        builder.moveToElement(el.currentElement).build().perform();
+        builder.click().perform();
+        driver.switchTo().defaultContent();
+        return RunExe.getInstance().upload(filePath);
     }
 }
