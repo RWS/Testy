@@ -29,6 +29,7 @@ public class DownloadButton extends Button {
      * Download file with AutoIT. Work only on FireFox.
      * Use only this: button.download(new String[]{"C:\\downloadAndCancel.exe", "TestSet.tmx"});
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     *
      * @param filePath
      */
     public boolean download(String[] filePath) {

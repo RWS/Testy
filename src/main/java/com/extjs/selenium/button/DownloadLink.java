@@ -27,6 +27,28 @@ public class DownloadLink extends ExtJsComponent {
     }
 
     /**
+     * Wait for the element to be activated when there is deactivation mask on top of it
+     *
+     * @param seconds
+     */
+    @Override
+    public boolean waitToActivate(int seconds) {
+        return isContainer("LiveGridPanel") || super.waitToActivate(seconds);
+    }
+
+    private boolean isContainer(String className) {
+        WebLocator webLocator = getContainer();
+        while (webLocator != null) {
+            logger.debug(webLocator.getClassName());
+            if (className.equals(webLocator.getClassName())) {
+                return true;
+            }
+            webLocator = webLocator.getContainer();
+        }
+        return false;
+    }
+
+    /**
      * Download file with AutoIT. Work only on FireFox.
      * Use only this: button.download(new String[]{"C:\\downloadAndCancel.exe", "TestSet.tmx"});
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
