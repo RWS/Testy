@@ -488,7 +488,8 @@ public abstract class WebLocatorAbstractBuilder {
             for (String cls : getClasses()) {
                 // TODO try to use this way : $x("//*[contains(concat(' ', @class, ' '), ' x-panel ')]")
                 // so result will be only exact math of class
-                selector.append(" and contains(@class, '").append(cls).append("')");
+//                selector.append(" and contains(@class, '").append(cls).append("')");
+                selector.append(" and contains(concat(' ', @class, ' '), ' ").append(cls).append(" ')");
             }
         }
         if (hasExcludeClasses()) {
