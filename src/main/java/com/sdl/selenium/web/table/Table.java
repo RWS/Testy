@@ -5,9 +5,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleCheckBox;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Keys;
-
-import java.util.*;
 
 public class Table extends Row {
     private static final Logger logger = Logger.getLogger(Table.class);
@@ -41,6 +38,7 @@ public class Table extends Row {
      *
      * @return true if scrolled
      */
+    @Deprecated
     public boolean scrollTop() {
         String id = getAttributeId();
         String script = "(function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
@@ -49,7 +47,7 @@ public class Table extends Row {
         }
         return executeScrollScript("scrollTop", script);
     }
-
+    @Deprecated
     public boolean scrollBottom() {
         String id = getAttributeId();
         String script = "(function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
@@ -64,6 +62,7 @@ public class Table extends Row {
      *
      * @return true if scrolled
      */
+    @Deprecated
     public boolean scrollPageUp() {
         String id = getAttributeId();
         String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop>0){b.dom.scrollTop-=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
@@ -78,6 +77,7 @@ public class Table extends Row {
      *
      * @return true if scrolled
      */
+    @Deprecated
     public boolean scrollPageDown() {
         String id = getAttributeId();
         String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
@@ -183,44 +183,6 @@ public class Table extends Row {
         return false;
     }
 
-    public WebLocator getSelectAllChecker(String columnId) {
-        waitToRender();
-        return new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
-    }
-
-    private WebLocator getHeader(String columnId) {
-        waitToRender();
-        WebLocator headerEl = new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
-        headerEl.setInfoMessage(itemToString() + " Header[" + columnId + "]");
-        return headerEl;
-    }
-
-    /**
-     * @param columnId - "x-grid3-hd-" + columnId
-     *                 example: x-grid3-hd-userName in this case "userName" is the columnId
-     * @return
-     */
-    public boolean clickOnHeader(String columnId) {
-        return getHeader(columnId).click();
-    }
-
-    public boolean assertClickOnHeader(String columnId) {
-        return getHeader(columnId).assertClick();
-    }
-
-    public boolean doubleClickOnHeader(String columnId) {
-        return clickOnHeader(columnId) && clickOnHeader(columnId);
-    }
-
-    public boolean assertCheckSelectAll(String columnId) {
-        logger.debug("Select-all checker path: " + getSelectAllChecker(columnId));
-        if (hasWebDriver()) {
-            return getSelectAllChecker(columnId).assertClick();
-        } else {
-            return getSelectAllChecker(columnId).assertClickAt();
-        }
-    }
-
     /**
      * returns if a table contains a certain element
      *
@@ -268,32 +230,6 @@ public class Table extends Row {
         } else {
             logger.warn("table is not ready to be used");
             // TODO could try to verify row count with mask on table or when is disabled also.
-            return -1;
-        }
-    }
-
-    public int getSelectedRowIndex() {
-        if (ready()) {
-            int rowCount = getCount();
-            int rowIndex = 1;
-            int index = -1;
-
-            //TODO Try better search mecanism
-            while (rowIndex <= rowCount) {
-                WebLocator row = getTableRow(rowIndex);
-                String cls = row.getAttributeClass();
-                if (cls != null && cls.contains("x-grid3-row-selected")) {
-                    index = rowIndex;
-                    break;
-                }
-                rowIndex++;
-            }
-            if (index == -1) {
-                logger.warn("no selected row was not found.");
-            }
-            return index;
-        } else {
-            logger.warn("getSelectedRowIndex : table is not ready for use: " + toString());
             return -1;
         }
     }
@@ -447,12 +383,6 @@ public class Table extends Row {
         return rowElements;
     }
 
-    public boolean isRowDisable(String searchText) {
-        ready(true);
-        String cls = getTableRow(searchText).getAttributeClass();
-        return cls.contains("x-item-disabled");
-    }
-
     /**
      * get all strings as array from specified columnIndex
      *
@@ -500,110 +430,6 @@ public class Table extends Row {
         return text != null && text.trim().equals(compareText);
     }
 
-    public boolean checkboxSMSelectRow(int rowIndex) {
-        if (ready(true)) {
-            String path;
-            if (rowIndex != -1) {
-                TableRow tableRow = getTableRow(rowIndex);
-                String cls = tableRow.getAttributeClass();
-                boolean isSelected = cls != null && cls.contains("x-grid3-row-selected");
-                path = "//*[contains(@class, 'x-grid3-row-checker')]";
-                WebLocator element = new WebLocator(tableRow, path);
-                element.setInfoMessage("row-checker");
-                if (element.exists()) {
-                    // TODO (verify if is working) to scroll to this element (if element is not visible)
-                    new WebLocator(this, "//*[contains(@class,'x-grid3-focus')]").sendKeys(Keys.TAB); //TODO work with selenium????
-                    element.click();
-                    logger.info("Clicking on checkbox corresponding to line index: " + rowIndex);
-                } else {
-                    logger.warn("Could not click on checkbox corresponding to line index: " + rowIndex + "; path = " + path);
-                    return false;
-                }
-                cls = tableRow.getAttributeClass();
-                return (cls != null && cls.contains("x-grid3-row-selected")) != isSelected;
-            }
-            return false;
-        } else {
-            logger.warn("checkboxSMSelectRow : table is not ready for use: " + toString());
-            return false;
-        }
-    }
-
-    public int checkboxSMSelectRow(List<String> searchTexts) {
-        int selected = 0;
-        List<TableCell> cells = new ArrayList<TableCell>();
-        for (String searchText : searchTexts) {
-            cells.add(getCheckerCell(searchText));
-        }
-        if (ready(true)) {
-            scrollTop();
-            do {
-                for (Iterator<TableCell> it = cells.iterator(); it.hasNext(); ) {
-                    if (it.next().clickAt()) {
-                        selected++;
-                        it.remove(); // remove to not try to select it more times
-                    }
-                }
-            } while (selected < searchTexts.size() && scrollPageDown());
-        } else {
-            logger.warn("checkboxSMSelectRow : table is not ready for use: " + toString());
-        }
-        return selected;
-    }
-
-    public int checkboxSMSelectRow(HashSet<String> searchTexts) {
-        return checkboxSMSelectRow(new ArrayList<String>(searchTexts));
-    }
-
-    public int checkboxSMSelectRow(String[] searchTexts) {
-        return checkboxSMSelectRow(Arrays.asList(searchTexts));
-    }
-
-    public boolean checkboxSMSelectRow(String searchText) {
-        return checkboxSMSelectRow(searchText, false);
-    }
-
-    public boolean checkboxSMSelectRow(String searchText, boolean containsText) {
-        if (ready(true)) {
-            boolean selected;
-            scrollTop();
-            TableCell cell = getCheckerCell(searchText, containsText);
-            do {
-                selected = cell.clickAt();
-            } while (!selected && scrollPageDown());
-            return selected;
-        } else {
-            logger.warn("checkboxSMSelectRow : table is not ready for use: " + toString());
-            return false;
-        }
-    }
-
-    private TableCell getCheckerCell(final String searchText) {
-        return getCheckerCell(searchText, false);
-    }
-
-    private TableCell getCheckerCell(final String searchText, boolean containsText) {
-        String cellPath = getTableRowSearchPath(searchText, containsText);
-        cellPath += "//*[contains(@class, 'x-grid3-row-checker')]";
-        return new TableCell(getTableRow(searchText)).setElPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
-    }
-
-    private TableCell getCheckboxCell(final String searchText, int columnIndex) {
-        return getCheckboxCell(searchText, columnIndex, false);
-    }
-
-    public TableCell getCheckboxCell(final String searchText, int columnIndex, boolean containsText) {
-        String cellPath = getTableRowSearchPath(searchText, containsText);
-        cellPath += "//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-check-col')]";
-        return new TableCell(getTableRow(searchText)).setElPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
-    }
-
-    private String getTableRowSearchPath(String searchText, boolean containsText) {
-        String text = containsText ? ("contains(text(),'" + searchText + "')") : ("text()='" + searchText + "'");
-        String searchCondition = "[count(//*[" + text + "]) > 0]";
-        return "//tr" + searchCondition;
-    }
-
     public boolean checkboxColumnSelect(String searchText, int columnIndex) {
         return checkboxColumnSelect(searchText, columnIndex, SearchType.EQUALS);
     }
@@ -628,47 +454,6 @@ public class Table extends Row {
             selected = !simpleCheckBox.isSelected() || simpleCheckBox.click();
         }
         return selected;
-    }
-
-    /**
-     * clicks in the checkbox found at the beginning of the table which contains a specific element
-     *
-     * @param searchText
-     * @return
-     */
-    public boolean checkboxColumnSelect(String searchText) {
-        boolean selected = false;
-        if (ready(true)) {
-            String tablePath = getPath();
-            String path;
-            int rowIndex = getRowIndex(searchText);
-            if (rowIndex != -1) {
-//                path = .getPath() + "//div[contains(@class,'x-grid3-check-col')]";
-
-//                if (element.ready()) {
-//                    selected = isCheckBoxColumnSelected(searchText) ? true : element.click();
-//                } else {
-//                    logger.warn("Could not click on checkboxColumnSelect corresponding to line : " + searchText );
-//                    return false;
-//                }
-            }
-        } else {
-            logger.warn("checkboxColumnSelect: table is not ready for use: " + toString());
-            selected = false;
-        }
-        return selected;
-    }
-
-    public boolean isCheckBoxColumnSelected(String searchText) {
-        boolean isSelected = false;
-        if (ready(true)) {
-            int rowIndex = getRowIndex(searchText);
-            if (rowIndex != -1) {
-                String path = getTableRow(rowIndex).getPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
-                isSelected = new WebLocator(null, path).exists();
-            }
-        }
-        return isSelected;
     }
 
     public boolean waitToPopulate() {
