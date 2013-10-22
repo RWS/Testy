@@ -14,11 +14,11 @@ public class GridCellTest {
                 {new GridCell(), "//*"},
                 {new GridCell(grid),                        grid.getPath() + "//*"},
                 {new GridCell(grid, 1),                     grid.getPath() + "//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {new GridCell("text", grid),                grid.getPath() + "//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {new GridCell(grid, "text", SearchType.EQUALS),          grid.getPath() + "//*[contains(@class, 'x-grid3-cell-inner') and text()='text']"},
+                {new GridCell("text", grid),                grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},
+                {new GridCell(grid, "text", SearchType.EQUALS),          grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and text()='text']"},
                 {new GridCell(grid, 2, "text", SearchType.EQUALS),       grid.getPath() + "//td[2]//*[text()='text']"},
-                {new GridCell(grid, "text", SearchType.CONTAINS),    grid.getPath() + "//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {new GridCell(grid, "text", SearchType.STARTS_WITH), grid.getPath() + "//*[contains(@class, 'x-grid3-cell-inner') and starts-with(text(),'text')]"},
+                {new GridCell(grid, "text", SearchType.CONTAINS),    grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},
+                {new GridCell(grid, "text", SearchType.STARTS_WITH), grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and starts-with(text(),'text')]"},
                 {new GridCell(grid.findGridRow(new GridCell(2, "text", SearchType.EQUALS))).setPosition(8).setText("Continue"), grid.getPath() + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[2]//*[text()='text']) > 0]//td[8]//*[contains(text(),'Continue')]"},
         };
     }

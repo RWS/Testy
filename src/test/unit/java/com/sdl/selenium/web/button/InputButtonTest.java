@@ -12,9 +12,9 @@ public class InputButtonTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new InputButton(),                  "//input"},
-                {new InputButton(container),         "//*[contains(@class, 'container')]//input"},
-                {new InputButton(container, "ButtonText"), "//*[contains(@class, 'container')]//input[@value='ButtonText']"},
-                {new InputButton(container).setId("ID"), "//*[contains(@class, 'container')]//input[@id='ID']"},
+                {new InputButton(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input"},
+                {new InputButton(container, "ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
+                {new InputButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
         };
     }
 

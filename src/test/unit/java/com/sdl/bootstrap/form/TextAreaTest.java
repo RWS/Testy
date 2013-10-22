@@ -13,9 +13,9 @@ public class TextAreaTest {
         return new Object[][]{
                 {new TextArea(),                                       "//textarea"},
                 {new TextArea().setId("ID"),                           "//textarea[@id='ID']"},
-                {new TextArea(container),                              "//*[contains(@class, 'container')]//textarea"},
-                {new TextArea(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(@class, 'container')]//*[contains(text(), 'Register')]"},
-                {new TextArea(container, "TextAriaLabel"),             "//*[contains(@class, 'container')]//label[text()='TextAriaLabel']//following-sibling::*//textarea"},
+                {new TextArea(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
+                {new TextArea(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new TextArea(container, "TextAriaLabel"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextAriaLabel']//following-sibling::*//textarea"},
         };
     }
 

@@ -12,10 +12,10 @@ public class FlashUploadButtonTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new FlashUploadButton(),                   "//object"},
-                {new FlashUploadButton(container, "Class"), "//*[contains(@class, 'container')]//object[contains(@class, 'Class')]"},
-                {new FlashUploadButton(null, "Class"),      "//object[contains(@class, 'Class')]"},
-                {new FlashUploadButton(container),          "//*[contains(@class, 'container')]//object[contains(@class, 'swfupload')]"},
-                {new FlashUploadButton("label", container), "//*[contains(@class, 'container')]//label[text()='label']//following-sibling::*//*//object[contains(@class, 'swfupload')]"},
+                {new FlashUploadButton(container, "Class"), "//*[contains(concat(' ', @class, ' '), ' container ')]//object[contains(concat(' ', @class, ' '), ' Class ')]"},
+                {new FlashUploadButton(null, "Class"),      "//object[contains(concat(' ', @class, ' '), ' Class ')]"},
+                {new FlashUploadButton(container),          "//*[contains(concat(' ', @class, ' '), ' container ')]//object[contains(concat(' ', @class, ' '), ' swfupload ')]"},
+                {new FlashUploadButton("label", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='label']//following-sibling::*//*//object[contains(concat(' ', @class, ' '), ' swfupload ')]"},
         };
     }
 

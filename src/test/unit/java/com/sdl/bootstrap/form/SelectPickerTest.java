@@ -13,9 +13,9 @@ public class SelectPickerTest {
         return new Object[][]{
                 {new SelectPicker(),                                       "//*"},
                 {new SelectPicker().setId("ID"),                           "//*[@id='ID']"},
-                {new SelectPicker(container),                              "//*[contains(@class, 'container')]//*"},
-                {new SelectPicker(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(@class, 'container')]//*[contains(text(), 'Register')]"},
-                {new SelectPicker(container, "SelectPickerLabel"),         "//*[contains(@class, 'container')]//label[text()='SelectPickerLabel']//following-sibling::*//*"},
+                {new SelectPicker(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
+                {new SelectPicker(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new SelectPicker(container, "SelectPickerLabel"),         "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='SelectPickerLabel']//following-sibling::*//*"},
         };
     }
 

@@ -13,8 +13,8 @@ public class FormTest {
         return new Object[][]{
                 {new Form(),                      "//form"},
                 {new Form().setId("ID"),          "//form[@id='ID']"},
-                {new Form(container),             "//*[contains(@class, 'container')]//form"},
-                {new Form(container, "TitleForm"),"//*[contains(@class, 'container')]//form[count(.//legend[text()='TitleForm']) > 0]"},
+                {new Form(container),             "//*[contains(concat(' ', @class, ' '), ' container ')]//form"},
+                {new Form(container, "TitleForm"),"//*[contains(concat(' ', @class, ' '), ' container ')]//form[count(.//legend[text()='TitleForm']) > 0]"},
         };
     }
 

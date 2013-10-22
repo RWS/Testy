@@ -12,8 +12,8 @@ public class TextAreaTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new TextArea(), "//textarea[not(@type='hidden')]"},
-                {new TextArea(container, "TextAreaText"), "//*[contains(@class, 'container')]//label[text()='TextAreaText']//following-sibling::*//textarea[not(@type='hidden')]"},
-                {new TextArea("name", container), "//*[contains(@class, 'container')]//textarea[@name='name' and not(@type='hidden')]"},
+                {new TextArea(container, "TextAreaText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextAreaText']//following-sibling::*//textarea[not(@type='hidden')]"},
+                {new TextArea("name", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[@name='name' and not(@type='hidden')]"},
                 {new TextArea().setId("IdTextArea"), "//textarea[@id='IdTextArea' and not(@type='hidden')]"},
         };
     }

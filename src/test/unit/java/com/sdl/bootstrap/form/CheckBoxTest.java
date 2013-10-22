@@ -13,9 +13,9 @@ public class CheckBoxTest {
         return new Object[][]{
                 {new CheckBox(),                                       "//input[@type='checkbox']"},
                 {new CheckBox().setId("ID"),                           "//*[@id='ID']//input[@type='checkbox']"},
-                {new CheckBox(container),                              "//*[contains(@class, 'container')]//input[@type='checkbox']"},
-                {new CheckBox(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(@class, 'container')]//*[contains(text(), 'Register')]"},
-                {new CheckBox(container, "TextFieldText"),             "//*[contains(@class, 'container')]//label[contains(text(),'TextFieldText')]//input[@type='checkbox']"},
+                {new CheckBox(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
+                {new CheckBox(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new CheckBox(container, "TextFieldText"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[contains(text(),'TextFieldText')]//input[@type='checkbox']"},
         };
     }
 

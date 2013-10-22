@@ -3,7 +3,7 @@ package com.sdl.selenium.web.button;
 import com.sdl.selenium.web.WebLocator;
 
 public class SelectFilesHandlerTest {
-    public static WebLocator container = new WebLocator(null, "//*[contains(@class, 'container')]");
+    public static WebLocator container = new WebLocator(null, "//*[contains(concat(' ', @class, ' '), ' container ')]");
 
 //    @DataProvider
 //    public static Object[][] testConstructorPathDataProvider() {
@@ -20,6 +20,6 @@ public class SelectFilesHandlerTest {
 //
 //    @Test
 //    public void getPathSelectorCorrectlySetId() {
-//        //Assert.assertEquals(new SelectFilesHandler().setButtonElement(container).getPath(), "//*[contains(@class, 'container')]");
+//        //Assert.assertEquals(new SelectFilesHandler().setButtonElement(container).getPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]");
 //    }
 }

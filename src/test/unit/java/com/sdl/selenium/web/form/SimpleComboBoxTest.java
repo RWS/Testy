@@ -12,7 +12,7 @@ public class SimpleComboBoxTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new SimpleComboBox(),             "//select"},
-                {new SimpleComboBox(container),    "//*[contains(@class, 'container')]//select"},
+                {new SimpleComboBox(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
                 {new SimpleComboBox().setId("ID"), "//select[@id='ID']"},
         };
     }

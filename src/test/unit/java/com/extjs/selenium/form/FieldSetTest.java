@@ -12,8 +12,8 @@ public class FieldSetTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new FieldSet(),                                         "//fieldset[contains(@class, 'x-fieldset') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
-                {new FieldSet(container, "FieldSetText"),                "//*[contains(@class, 'container')]//fieldset[contains(@class, 'x-fieldset') and count(.//*[normalize-space(text())='FieldSetText']) > 0 and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
-                {new FieldSet(container, "FieldSetCls", "FieldSetText"), "//*[contains(@class, 'container')]//fieldset[contains(@class, 'x-fieldset') and contains(@class, 'FieldSetCls') and count(.//*[normalize-space(text())='FieldSetText']) > 0 and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
+                {new FieldSet(container, "FieldSetText"),                "//*[contains(concat(' ', @class, ' '), ' container ')]//fieldset[contains(@class, 'x-fieldset') and count(.//*[normalize-space(text())='FieldSetText']) > 0 and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
+                {new FieldSet(container, "FieldSetCls", "FieldSetText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//fieldset[contains(@class, 'x-fieldset') and contains(concat(' ', @class, ' '), ' FieldSetCls ') and count(.//*[normalize-space(text())='FieldSetText']) > 0 and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
         };
     }
 

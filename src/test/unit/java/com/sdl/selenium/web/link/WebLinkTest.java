@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class WebLinkTest {
     private static WebLocator container = new WebLocator("container");
 
-    private static String CONTAINER_PATH = "//*[contains(@class, 'container')]";
+    private static String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

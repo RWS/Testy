@@ -11,10 +11,10 @@ public class UploadFileTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new UploadFile(),                          "//div[contains(@class, 'fileupload')]"},
-                {new UploadFile(container),                 "//*[@id='ID']//div[contains(@class, 'fileupload')]"},
-                {new UploadFile(container, "ButtonLabel"),  "//*[@id='ID']//label[text()='ButtonLabel']//following-sibling::*//div[contains(@class, 'fileupload')]"},
-                {new UploadFile(container).setId("ID"),     "//*[@id='ID']//div[@id='ID' and contains(@class, 'fileupload')]"},
+                {new UploadFile(),                          "//div[contains(concat(' ', @class, ' '), ' fileupload ')]"},
+                {new UploadFile(container),                 "//*[@id='ID']//div[contains(concat(' ', @class, ' '), ' fileupload ')]"},
+                {new UploadFile(container, "ButtonLabel"),  "//*[@id='ID']//label[text()='ButtonLabel']//following-sibling::*//div[contains(concat(' ', @class, ' '), ' fileupload ')]"},
+                {new UploadFile(container).setId("ID"),     "//*[@id='ID']//div[@id='ID' and contains(concat(' ', @class, ' '), ' fileupload ')]"},
         };
     }
 

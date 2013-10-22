@@ -12,8 +12,8 @@ public class DisplayFieldTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new DisplayField(),                    "//*[contains(@class, 'x-form-display-field') and not(@type='hidden')]"},
-                {new DisplayField(container, "Label"),  "//*[contains(@class, 'container')]//label[text()='Label']//following-sibling::*//*[contains(@class, 'x-form-display-field') and not(@type='hidden')]"},
-                {new DisplayField("name", container),   "//*[contains(@class, 'container')]//*[@name='name' and contains(@class, 'x-form-display-field') and not(@type='hidden')]"},
+                {new DisplayField(container, "Label"),  "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Label']//following-sibling::*//*[contains(@class, 'x-form-display-field') and not(@type='hidden')]"},
+                {new DisplayField("name", container),   "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@name='name' and contains(@class, 'x-form-display-field') and not(@type='hidden')]"},
         };
     }
 

@@ -12,8 +12,8 @@ public class LabelTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Label("LabelText"),            "//label[contains(text(),'LabelText')]"},
-                {new Label(container),              "//*[contains(@class, 'container')]//label"},
-                {new Label(container, "LabelText"), "//*[contains(@class, 'container')]//label[contains(text(),'LabelText')]"},
+                {new Label(container),              "//*[contains(concat(' ', @class, ' '), ' container ')]//label"},
+                {new Label(container, "LabelText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[contains(text(),'LabelText')]"},
         };
     }
 

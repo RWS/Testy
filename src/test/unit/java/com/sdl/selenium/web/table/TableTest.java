@@ -13,7 +13,7 @@ public class TableTest{
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Table(),             "//table"},
-                {new Table(container),    "//*[contains(@class, 'container')]//table"},
+                {new Table(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//table"},
                 {new Table().setId("ID"), "//table[@id='ID']"},
         };
     }
