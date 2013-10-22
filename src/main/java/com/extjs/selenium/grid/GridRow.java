@@ -10,9 +10,6 @@ import org.apache.log4j.Logger;
 public class GridRow extends Row {
     private static final Logger logger = Logger.getLogger(GridRow.class);
 
-    private static final String GRID_ROW_PATH = "[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]";
-    private static final String GRID_ROW_SELECTED_PATH = "[contains(@class,'x-grid3-row-selected') and (not (contains(@class,'x-grid3-row-checker')))]";
-
     public GridRow() {
         setRenderMillis(200);
         setClassName("GridRow");
@@ -28,12 +25,16 @@ public class GridRow extends Row {
     public GridRow(GridPanel gridPanel) {
         this();
         setContainer(gridPanel);
-        setElPath("//div" + GRID_ROW_PATH);
+        setTag("div");
+        setClasses("x-grid3-row");
+        setExcludeClasses("x-grid3-row-checker");
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex) {
-        this(gridPanel);
-        setElPath("//div[" + rowIndex + "]" + GRID_ROW_PATH);
+        setContainer(gridPanel);
+        setTag("div[" + rowIndex + "]");
+        setClasses("x-grid3-row");
+        setExcludeClasses("x-grid3-row-checker");
     }
 
     public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType searchType) {
@@ -42,12 +43,14 @@ public class GridRow extends Row {
 
     public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType searchType) {
         this(gridPanel);
+        setTag("*");
         GridCell cell = new GridCell(null, searchElement, searchType);
         setElPath("//" + getTag() + "[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText())) + "]");
     }
 
     public GridRow(GridPanel gridPanel, Cell... cells) {
         this(gridPanel);
+        setTag("*");
         setRowCells(cells);
     }
 
@@ -67,7 +70,9 @@ public class GridRow extends Row {
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {
         this(gridPanel, rowIndex);
         if (isSelected) {
-            setElPath("//div[" + rowIndex + "]" + GRID_ROW_SELECTED_PATH);
+            setTag("div[" + rowIndex + "]");
+            setClasses("x-grid3-row-selected");
+            setExcludeClasses("x-grid3-row-checker");
         }
     }
 }

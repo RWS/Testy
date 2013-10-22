@@ -41,19 +41,19 @@ public class GridPanelTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider1() {
         return new Object[][]{
-                {grid.getGridRow(), GRID_PATH + "//div[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridCls.getGridRow(), GRID_CLS_PATH + "//div[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridContainer.getGridRow(), CONTAINER_PATH + GRID_PATH + "//div[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridClsAndColumn.getGridRow(), GRID_CLS_PATH + "//div[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridContainerAndColumn.getGridRow(), CONTAINER_PATH + GRID_PATH + "//div[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridContainerAndClsAndColumn.getGridRow(), CONTAINER_PATH + GRID_CLS_PATH + "//div[contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
+                {grid.getGridRow(), GRID_PATH + "//div[contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridCls.getGridRow(), GRID_CLS_PATH + "//div[contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainer.getGridRow(), CONTAINER_PATH + GRID_PATH + "//div[contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridClsAndColumn.getGridRow(), GRID_CLS_PATH + "//div[contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndColumn.getGridRow(), CONTAINER_PATH + GRID_PATH + "//div[contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndClsAndColumn.getGridRow(), CONTAINER_PATH + GRID_CLS_PATH + "//div[contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
 
-                {grid.getGridRow(1), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridCls.getGridRow(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridContainer.getGridRow(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridClsAndColumn.getGridRow(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridContainerAndColumn.getGridRow(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"},
-                {gridContainerAndClsAndColumn.getGridRow(1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]"}
+                {grid.getGridRow(1), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridCls.getGridRow(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainer.getGridRow(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridClsAndColumn.getGridRow(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndColumn.getGridRow(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndClsAndColumn.getGridRow(1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]"}
         };
     }
 
@@ -65,19 +65,19 @@ public class GridPanelTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider2() {
         return new Object[][]{
-                {grid.getGridCell(1), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//*[contains(@class, 'x-grid3-td-0')]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridCls.getGridCell(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//*[contains(@class, 'x-grid3-td-0')]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridContainer.getGridCell(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//*[contains(@class, 'x-grid3-td-0')]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridClsAndColumn.getGridCell(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//*[contains(@class, 'x-grid3-td-1')]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridContainerAndColumn.getGridCell(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//*[contains(@class, 'x-grid3-td-1')]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridContainerAndClsAndColumn.getGridCell(1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//*[contains(@class, 'x-grid3-td-1')]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {grid.getGridCell(1), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//*[contains(@class, 'x-grid3-td-0')]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridCls.getGridCell(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//*[contains(@class, 'x-grid3-td-0')]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridContainer.getGridCell(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//*[contains(@class, 'x-grid3-td-0')]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridClsAndColumn.getGridCell(1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//*[contains(@class, 'x-grid3-td-1')]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridContainerAndColumn.getGridCell(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//*[contains(@class, 'x-grid3-td-1')]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridContainerAndClsAndColumn.getGridCell(1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//*[contains(@class, 'x-grid3-td-1')]//*[contains(@class, 'x-grid3-cell-inner')]"},
 
-                {grid.getGridCell(1, 1), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridCls.getGridCell(1, 1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridContainer.getGridCell(1, 1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridClsAndColumn.getGridCell(1, 1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridContainerAndColumn.getGridCell(1, 1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
-                {gridContainerAndClsAndColumn.getGridCell(1, 1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {grid.getGridCell(1, 1), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridCls.getGridCell(1, 1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridContainer.getGridCell(1, 1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridClsAndColumn.getGridCell(1, 1), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridContainerAndColumn.getGridCell(1, 1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
+                {gridContainerAndClsAndColumn.getGridCell(1, 1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
 
                 {grid.getGridCell("search", false), GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
                 {gridCls.getGridCell("search", false), GRID_CLS_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
@@ -107,12 +107,12 @@ public class GridPanelTest {
                 {gridContainerAndColumn.getGridCell("search", "2", 2), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-2')]//*[contains(text(),'search')]) > 0]//td[2]//*[contains(@class, 'x-grid3-cell-inner')]"},
                 {gridContainerAndClsAndColumn.getGridCell("search", "2", 2), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-2')]//*[contains(text(),'search')]) > 0]//td[2]//*[contains(@class, 'x-grid3-cell-inner')]"},
 
-                {grid.getGridCell(1, 1, "text"), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {gridCls.getGridCell(1, 1, "text"), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {gridContainer.getGridCell(1, 1, "text"), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {gridClsAndColumn.getGridCell(1, 1, "text"), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {gridContainerAndColumn.getGridCell(1, 1, "text"), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
-                {gridContainerAndClsAndColumn.getGridCell(1, 1, "text"), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and (not (contains(@class,'x-grid3-row-checker')))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
+                {grid.getGridCell(1, 1, "text"), GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
+                {gridCls.getGridCell(1, 1, "text"), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
+                {gridContainer.getGridCell(1, 1, "text"), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
+                {gridClsAndColumn.getGridCell(1, 1, "text"), GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
+                {gridContainerAndColumn.getGridCell(1, 1, "text"), CONTAINER_PATH + GRID_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
+                {gridContainerAndClsAndColumn.getGridCell(1, 1, "text"), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(@class, 'x-grid3-row') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
 
                 {grid.getGridCell("SearchText", 1, "text"), GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
                 {gridCls.getGridCell("SearchText", 1, "text"), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-0')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(@class, 'x-grid3-cell-inner') and contains(text(),'text')]"},
