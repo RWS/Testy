@@ -62,35 +62,28 @@ public class EditorGridPanel extends GridPanel {
      * @return active editor
      */
     public TextField getActiveEditor() {
-        TextField editor = null;
+        TextField editor;
         WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableComboEl = new WebLocator(container).setClasses("x-trigger-wrap-focus");
-        String stringComboClass = editableComboEl.getAttributeClass();
-        if (stringComboClass != null) {
-            if (stringComboClass.contains("x-form-field-trigger-wrap")) {
-                // TODO when is DateField
-                logger.debug("getActiveEditor: grid active combo x-editor");
-                editor = new ComboBox();
-                editor.setInfoMessage("active combo editor");
-            }
+        WebLocator editableEl = new WebLocator(container).setClasses("-focus");
+        String stringClass = editableEl.getAttributeClass();
+        logger.debug("stringClass: " + stringClass);
+        if (stringClass == null) {
+            stringClass = "";
+        }
+        if (stringClass.contains("x-form-field-trigger-wrap")) {
+            // TODO when is DateField
+            logger.debug("getActiveEditor: grid active combo x-editor");
+            editor = new ComboBox();
+            editor.setInfoMessage("active combo editor");
+        } else if (stringClass.contains("x-form-textarea")) {
+            logger.debug("TextArea");
+            editor = new TextArea();
         } else {
-            WebLocator editableEl = new WebLocator(container).setClasses("x-form-focus");
-            String stringClass = editableEl.getAttributeClass();
-            logger.debug("stringClass: " + stringClass);
-            if (stringClass != null) {
-                if (stringClass.contains("x-form-textarea")) {
-                    logger.debug("TextArea");
-                    editor = new TextArea();
-                } else {
-                    logger.debug("TextField");
-                    editor = new TextField();
-                }
-            }
+            logger.debug("TextField");
+            editor = new TextField();
         }
-        if (editor != null) {
-            editor.setContainer(this).setClasses("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
+        editor.setContainer(this).setClasses("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
 //        logger.debug("editor: " + editor.getPath());
-        }
         return editor;
     }
 
