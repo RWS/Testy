@@ -16,7 +16,6 @@ public class EditorGridPanel extends GridPanel {
 
     public EditorGridPanel() {
         setClassName("EditorGridPanel");
-        //logger.debug(getClassName() + "() constructor");
     }
 
     public EditorGridPanel(WebLocator container) {
@@ -60,7 +59,7 @@ public class EditorGridPanel extends GridPanel {
     /**
      * Use only after click/doubleClicked in that row or the editor is already opened
      *
-     * @return
+     * @return active editor
      */
     public TextField getActiveEditor() {
         TextField editor;
@@ -179,43 +178,27 @@ public class EditorGridPanel extends GridPanel {
 
     public boolean setRowValue(int rowIndex, int colIndex, String value) {
         logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
-        if (startEdit(rowIndex, colIndex)) {
-            return setRowValue(value);
-        }
-        return false;
+        return startEdit(rowIndex, colIndex) && setRowValue(value);
     }
 
     public boolean setRowValueSafe(int rowIndex, int colIndex, String value) {
-        if (setRowValue(rowIndex, colIndex, value)) {
-            return true;
-        } else {
-            return setRowValue(rowIndex, colIndex, value);
-        }
+        return setRowValue(rowIndex, colIndex, value) || setRowValue(rowIndex, colIndex, value);
     }
 
     public boolean appendRowValue(int rowIndex, int colIndex, String value) {
         logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
-        if (startEdit(rowIndex, colIndex)) {
-            return appendRowValue(value);
-        }
-        return false;
+        return startEdit(rowIndex, colIndex) && appendRowValue(value);
     }
 
 
     public boolean setRowValue(String searchElement, int colIndex, String value) {
         logger.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
-        if (startEdit(searchElement, colIndex)) {
-            return setRowValue(value);
-        }
-        return false;
+        return startEdit(searchElement, colIndex) && setRowValue(value);
     }
 
     public boolean appendRowValue(String searchElement, int colIndex, String value) {
         logger.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
-        if (startEdit(searchElement, colIndex)) {
-            return appendRowValue(value);
-        }
-        return false;
+        return startEdit(searchElement, colIndex) && appendRowValue(value);
     }
 
     private void setCursorPosition(TextField editor, int position) {
