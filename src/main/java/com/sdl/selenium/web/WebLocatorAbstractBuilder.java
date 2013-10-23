@@ -60,7 +60,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param tag (type of DOM element) eg. input or h2
      * @return this element
      */
@@ -74,7 +74,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param id eg. id="buttonSubmit"
      * @return this element
      */
@@ -88,7 +88,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
      * @param elPath absolute way (xpath) to identify element
@@ -104,7 +104,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param baseCls base class
      * @return this element
      */
@@ -114,21 +114,18 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @depricate please use getClasses()
      * @return class
      */
-    @Deprecated
     public String getCls() {
         return cls;
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
-     * @deprecated please use setClasses("cls")
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Find element with exact math of specified class (equals)</p>
      * @param cls class of element
      * @return this element
      */
-    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
         this.cls = cls;
         return (T) this;
@@ -139,7 +136,11 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Use it when element must have all specified css classes (order is not important).</p>
+     * <ul>
+     *     <li>Provided classes must be conform css rules.</li>
+     * </ul>
      * @param classes list of classes
      * @return this element
      */
@@ -155,7 +156,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param excludeClasses list of class to be excluded
      * @return this element
      */
@@ -171,7 +172,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param name eg. name="buttonSubmit"
      * @return this element
      */
@@ -185,7 +186,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param text
      *  with which to identify the item
      *
@@ -207,7 +208,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param searchTextType accepted values are: SearchType.EQUALS
      * @return this element
      */
@@ -225,7 +226,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param style of element
      * @return this element
      */
@@ -253,7 +254,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param title of element
      * @return this element
      */
@@ -267,7 +268,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
@@ -323,7 +324,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param container parent containing element.
      * @return this element
      */
@@ -337,7 +338,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param label text label element
      * @return this element
      */
@@ -351,7 +352,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param labelTag label tag element
      * @return this element
      */
@@ -365,7 +366,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * Used for finding element process (to generate xpath address)
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * @param labelPosition label position
      * @return this element
      */
@@ -482,7 +483,7 @@ public abstract class WebLocatorAbstractBuilder {
             selector.append(" and contains(@class, '").append(getBaseCls()).append("')");
         }
         if (hasCls()) {
-            selector.append(" and contains(@class, '").append(getCls()).append("')");
+            selector.append(" and @class='").append(getCls()).append("'");
         }
         if (hasClasses()) {
             for (String cls : getClasses()) {
