@@ -325,18 +325,24 @@ public class Utils {
         String result = "";
         for (int i = 0; i < (splitted.length - 1); i++) {
             result += splitted[i];
-
         }
         result += insertedText + "." + (extension == null ? splitted[splitted.length - 1] : extension);
         return result;
     }
 
+    /**
+     * @deprecated
+     * Please use getFileNameFromPath instead
+     * @param filePath
+     * @return
+     */
     public static String getFileFromPath(String filePath) {
+        return getFileNameFromPath(filePath);
+    }
+
+    public static String getFileNameFromPath(String filePath) {
         File file = new File(filePath);
         return file.getName();
-//        String[] pathSplit = filePath.split("\\\\");
-//        String fileName = pathSplit[pathSplit.length-1];
-//        return fileName;
     }
 
     public static void main(String args[]) {

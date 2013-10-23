@@ -16,7 +16,7 @@ public class MessageBox {
     public static String BUTTON_YES = "Yes";
     public static String BUTTON_NO = "No";
 
-    private static Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
+    private static Window messageBoxWindow = new MessageBoxWindow();
 
     private static Button okButton = new Button(messageBoxWindow, BUTTON_OK);
     private static Button cancelButton = new Button(messageBoxWindow, BUTTON_CANCEL);
@@ -42,6 +42,7 @@ public class MessageBox {
      * @return
      */
     public static String getMessage(int waitSeconds) {
+        // TODO verify if can be be simplified using WebLocator instead of ExtJsComponent
         ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", messageBoxWindow);
         mbTextElement.setInfoMessage("MessageBox ext-mb-text");
         String msg;
