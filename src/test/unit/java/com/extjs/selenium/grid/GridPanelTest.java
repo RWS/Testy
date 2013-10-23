@@ -17,8 +17,8 @@ public class GridPanelTest {
     private static GridPanel gridClsPos = new GridPanel("GridPanelCls").setPosition(2);
 
     private static final String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
-    private static final String GRID_PATH = "//*[contains(@class, 'x-grid-panel') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc') or contains(@class, 'x-panel-tl') or contains(@class, 'x-panel-tr')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
-    private static final String GRID_CLS_PATH = "//*[contains(@class, 'x-grid-panel') and contains(concat(' ', @class, ' '), ' GridPanelCls ') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc') or contains(@class, 'x-panel-tl') or contains(@class, 'x-panel-tr')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
+    private static final String GRID_PATH = "//*[contains(@class, 'x-grid-panel') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
+    private static final String GRID_CLS_PATH = "//*[contains(@class, 'x-grid-panel') and contains(concat(' ', @class, ' '), ' GridPanelCls ') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

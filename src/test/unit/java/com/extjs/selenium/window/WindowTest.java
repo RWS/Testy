@@ -15,9 +15,9 @@ public class WindowTest {
                 {new Window().setClasses("Cls"),   "//*[contains(@class, 'x-window') and contains(concat(' ', @class, ' '), ' Cls ') and contains(@style ,'visibility: visible;')]"},
                 {new Window(true),                 "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]]"},
                 {new Window(false),                "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;')]"},
-                {new Window("WindowTitle"),        "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count(div[1]//*[text()='WindowTitle']) > 0]"},
-                {new Window("WindowTitle", true),  "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count(div[1]//*[text()='WindowTitle']) > 0 and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]]"},
-                {new Window("WindowTitle", false), "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count(div[1]//*[text()='WindowTitle']) > 0]"},
+                {new Window("WindowTitle"),        "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='WindowTitle']) > 0]"},
+                {new Window("WindowTitle", true),  "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='WindowTitle']) > 0 and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]]"},
+                {new Window("WindowTitle", false), "//*[contains(@class, 'x-window') and contains(@style ,'visibility: visible;') and count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='WindowTitle']) > 0]"},
         };
     }
 

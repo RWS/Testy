@@ -72,6 +72,25 @@ Ext.onReady(function(){
                             title: 'Panel with frame2',
                             frame: true,
                             html: 'panel content <span class="element">element 4</span>'
+                        }),
+                        new Ext.Panel({
+                            title: 'x',
+                            cls: 'panel-with-no-title',
+                            items: [
+                                new Ext.Panel({
+                                    items: [
+                                        new Ext.Panel({
+                                            title: 'panel1',
+                                            html: 'content1'
+                                        }),
+                                        new Ext.Panel({
+                                            title: 'panel2',
+                                            frame: true,
+                                            html: 'content2'
+                                        })
+                                    ]
+                                })
+                            ]
                         })
                     ]
                 }),

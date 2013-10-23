@@ -62,7 +62,7 @@ public class Panel extends ExtJsComponent {
      */
     public String getDefaultExcludePath() {
         return " and not(starts-with(@id, 'ext-gen')) " +
-                "and not(contains(@class, '" + getHeaderBaseCls() + "-tc') or contains(@class, '" + getHeaderBaseCls() + "-tl') or contains(@class, '" + getHeaderBaseCls() + "-tr')) " +
+                "and not(contains(@class, '" + getHeaderBaseCls() + "-tc')) " +
                 "and not(contains(@class, 'x-hide-display')) " +
                 "and not(contains(@class, 'x-masked'))";
     }
@@ -70,7 +70,7 @@ public class Panel extends ExtJsComponent {
     protected String getHeaderSelector() {
         String selector = "";
         if (hasTitle()) {
-            selector = " and count(div[1]//*[text()='" + getTitle() + "']) > 0";
+            selector = " and count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='" + getTitle() + "']) > 0";
         }
         return selector;
     }
