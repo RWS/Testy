@@ -131,10 +131,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         try {
-            if(logger.isDebugEnabled()){
-                logger.debug("getCurrentElementAttribute: (el.currentElement != null)" + (el.currentElement != null));
-            }
-            if (el.currentElement != null || isElementPresent(el)) {
+            boolean exists = el.currentElement != null;
+            if (exists || isElementPresent(el)) {
+                if(logger.isDebugEnabled() && !exists){
+                    logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try)");
+                }
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (StaleElementReferenceException e) {
