@@ -3,6 +3,7 @@ package com.extjs.selenium.list;
 import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.grid.GridPanel;
 import com.extjs.selenium.grid.GridRow;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -28,7 +29,7 @@ public class List extends GridPanel {
 
     public boolean selectRows(String[] values) {
         boolean select = false;
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             sendKeys(Keys.CONTROL, Keys.DOWN);
             for (String value : values) {
                 select = rowSelect(value, false);

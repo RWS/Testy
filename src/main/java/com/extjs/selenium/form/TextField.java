@@ -2,6 +2,7 @@ package com.extjs.selenium.form;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITextField;
 import junit.framework.Assert;
@@ -128,7 +129,7 @@ public class TextField extends ExtJsComponent implements ITextField {
             iconLocator.setRenderMillis(500);
             iconLocator.setInfoMessage("trigger-" + icon);
             try {
-                if (hasWebDriver()) {
+                if (WebDriverConfig.hasWebDriver()) {
                     return iconLocator.click();
                 } else {
                     return iconLocator.clickAt();

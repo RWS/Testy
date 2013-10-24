@@ -52,8 +52,10 @@ public abstract class WebLocatorAbstractBuilder {
     // =========================================
 
     /**
-     * @return tag (type of DOM element)
-     *         default to "*"
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setTag(String)}
+     * <p>tag (type of DOM element)</p>
+     * <pre>default to "*"</pre>
      */
     public String getTag() {
         return tag;
@@ -69,6 +71,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setId(String)}
+     */
     public String getId() {
         return id;
     }
@@ -83,6 +89,11 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setElPath(String)}
+     * <p>returned value does not include containers path</p>
+     */
     public String getElPath() {
         return elPath;
     }
@@ -99,6 +110,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setBaseCls(String)}
+     */
     public String getBaseCls() {
         return baseCls;
     }
@@ -114,7 +129,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @return class
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setCls(String)}
      */
     public String getCls() {
         return cls;
@@ -131,6 +147,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setClasses(String...)}
+     */
     public List<String> getClasses() {
         return classes;
     }
@@ -151,6 +171,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setExcludeClasses(String...)}
+     */
     public List<String> getExcludeClasses() {
         return excludeClasses;
     }
@@ -167,6 +191,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setName(String)}
+     */
     public String getName() {
         return name;
     }
@@ -181,6 +209,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setText(String, SearchType...)}
+     */
     public String getText() {
         return text;
     }
@@ -203,13 +235,17 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setSearchTextType(SearchType...)}
+     */
     public List<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @param searchTextType accepted values are: SearchType.EQUALS
+     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
@@ -221,6 +257,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setStyle(String)}
+     */
     public String getStyle() {
         return style;
     }
@@ -235,12 +275,18 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b>not implemented yet</b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setElCssSelector(String)}
+     */
     public String getElCssSelector() {
         return elCssSelector;
     }
 
     /**
-     * Used for finding element process (to generate css selector address)
+     * <p><b>not implemented yet</b></p>
+     * <p><b>Used for finding element process (to generate css address)<b></p>
      * @param elCssSelector cssSelector
      * @return this element
      */
@@ -249,6 +295,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setTitle(String)}
+     */
     public String getTitle() {
         return title;
     }
@@ -263,12 +313,20 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setElPathSuffix(String)}
+     */
     public String getElPathSuffix() {
         return elPathSuffix;
     }
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Example:</p>
+     * <pre>
+     *     TODO
+     * </pre>
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
@@ -277,15 +335,29 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used in logging process</i><b></p>
+     * @return value that has been set in {@link #setInfoMessage(String)}
+     */
     public String getInfoMessage() {
         return infoMessage;
     }
 
+    /**
+     * <p><b><i>Used in logging process</i><b></p>
+     * @param infoMessage
+     * @param <T>
+     * @return
+     */
     public <T extends WebLocatorAbstractBuilder> T setInfoMessage(final String infoMessage) {
         this.infoMessage = infoMessage;
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setVisibility(boolean)}
+     */
     public boolean isVisibility() {
         return visibility;
     }
@@ -333,6 +405,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setLabel(String)}
+     */
     public String getLabel() {
         return label;
     }
@@ -347,6 +423,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setLabel(String)}
+     */
     public String getLabelTag() {
         return labelTag;
     }
@@ -361,6 +441,10 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setLabelPosition(String)}
+     */
     public String getLabelPosition() {
         return labelPosition;
     }
@@ -375,18 +459,24 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return value that has been set in {@link #setPosition(int)}
+     */
     public int getPosition() {
         return position;
     }
 
     /**
-     * example: //*[contains(@class, 'x-grid-panel') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))][position() = 1]
-     *
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[contains(@class, 'x-grid-panel')][position() = 1]
+     * </pre>
      * @param position starting index = 1
      * @param <T>
      * @return
      */
-
     public <T extends WebLocatorAbstractBuilder> T setPosition(int position) {
         this.position = position;
         return (T) this;
@@ -573,9 +663,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * disabled is false
      *
-     * @return
+     * @return final xpath (including containers xpath), used for interacting with browser
      */
     public final String getPath() {
         return getPath(false);

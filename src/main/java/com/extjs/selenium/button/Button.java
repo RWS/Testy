@@ -86,7 +86,7 @@ public class Button extends ExtJsComponent {
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
         buttonEl.setRenderMillis(getRenderMillis());
         boolean buttonExist = true;
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             buttonEl.sendKeys(Keys.TAB);
             buttonExist = buttonEl.currentElement != null;
         } else {

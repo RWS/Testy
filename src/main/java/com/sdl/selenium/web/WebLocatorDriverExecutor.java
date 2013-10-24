@@ -338,8 +338,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
         try {
             return javascriptExecutor.executeScript(script, objects);
-        } catch (Exception e) {
-            logger.error("executeScript: " + script, e);
+        } catch (WebDriverException e) {
+            logger.error("WebDriverException in executeScript: " + script, e);
             return null;
         }
     }

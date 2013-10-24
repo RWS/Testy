@@ -8,6 +8,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 public class WebDriverConfig {
+    private static WebDriver driver;
 
     private static boolean isIE;
     private static boolean isOpera;
@@ -37,6 +38,7 @@ public class WebDriverConfig {
 
     public static void init(WebDriver driver){
         if (driver != null) {
+            WebDriverConfig.driver = driver;
             if (driver instanceof InternetExplorerDriver) {
                 isIE = true;
             } else if (driver instanceof ChromeDriver) {
@@ -49,5 +51,9 @@ public class WebDriverConfig {
                 isOpera = true;
             }
         }
+    }
+
+    public static boolean hasWebDriver() {
+        return driver != null;
     }
 }

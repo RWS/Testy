@@ -1,6 +1,7 @@
 package com.extjs.selenium.tree;
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
@@ -28,7 +29,7 @@ public class TreePanel extends ExtJsComponent {
         String path = "//*[contains(@class,'x-tree-node-el')]//*[starts-with(text(),'" + searchElement + "')]";
         if (new WebLocator(null, path).exists()) {
             logger.debug("Expanding the tree");
-            if(hasWebDriver()){
+            if(WebDriverConfig.hasWebDriver()){
                 Actions builder = new Actions(driver);
                 builder.doubleClick(driver.findElement(By.xpath(path))).build().perform();
             } else {
