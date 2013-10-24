@@ -105,19 +105,6 @@ public class TextField extends ExtJsComponent implements ITextField {
         return executor.getValue(this);
     }
 
-    /**
-     * Using xPath only
-     *
-     * @param value
-     * @return
-     */
-    @Deprecated
-    public boolean verifyValue(String value) {
-        String v = getValue();
-        logger.debug("The values '" + v + "' and '" + value + "' " + (value.equals(v) ? "" : "do NOT ") + "match");
-        return value.equals(v);
-    }
-
     public String getTriggerPath(String icon) {
         return "/parent::*//*[contains(@class,'x-form-" + icon + "-trigger')]";
     }
