@@ -78,6 +78,7 @@ public class Button extends ExtJsComponent {
         return "//" + getTag() + "[" + selector + "]";
     }
 
+    @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
         WebLocator buttonEl = new WebLocator(this, "//button").setInfoMessage(this.toString() + "//button");
