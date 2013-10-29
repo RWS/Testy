@@ -1,6 +1,7 @@
 package com.extjs.selenium.grid;
 
 import com.extjs.selenium.button.Button;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -47,7 +48,7 @@ public class LiveGridPanel extends GridPanel {
     public boolean scrollTop() {
         String id = getAttributeId();
         String script = "(function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop!=0){b.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             return executeScrollScript("scrollTop", "return " + script);
         } else {
             return executeScrollScript("scrollTop", script);
@@ -93,7 +94,7 @@ public class LiveGridPanel extends GridPanel {
     public boolean scrollPageDown() {
         String id = getAttributeId();
         String script = "(function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop<(h-b.getHeight()-1)){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             return executeScrollScript("scrollPageDown", "return " + script);
         } else {
             return executeScrollScript("scrollPageDown", script);

@@ -72,8 +72,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         executor = new WebLocatorSeleniumExecutor(selenium);
     }
 
+    /**
+     * @deprecated use from WebDriverConfig.hasWebDriver()
+     * @return
+     */
     public static boolean hasWebDriver() {
-        return driver != null;
+        return WebDriverConfig.hasWebDriver();
     }
 
     /**

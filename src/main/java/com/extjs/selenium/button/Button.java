@@ -78,12 +78,15 @@ public class Button extends ExtJsComponent {
         return "//" + getTag() + "[" + selector + "]";
     }
 
+    @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
         WebLocator buttonEl = new WebLocator(this, "//button").setInfoMessage(this.toString() + "//button");
+        // TODO try to click on button that has mask - with first solution is not saying that has mask
+        //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
         buttonEl.setRenderMillis(getRenderMillis());
         boolean buttonExist = true;
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             buttonEl.sendKeys(Keys.TAB);
             buttonExist = buttonEl.currentElement != null;
         } else {

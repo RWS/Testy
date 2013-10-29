@@ -30,20 +30,19 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 el.currentElement.click();
                 clicked = true;
             } catch (StaleElementReferenceException e) {
-                logger.error("StaleElementReferenceException: ", e);
+                logger.error("StaleElementReferenceException in doClick: " + el, e);
                 el.setCurrentElementPath("");
-                el.findElement();
+                findElement(el);
                 el.currentElement.click(); // not sure it will click now
                 clicked = true;
-                logger.info("Exception at Click on ");
             } catch (ElementNotVisibleException e) {
-                logger.error("ElementNotVisibleException: ", e);
+                logger.error("ElementNotVisibleException in doClick: " + el, e);
                 throw e;
             } catch (Exception e) {
-                logger.error(e);
+                logger.error("Exception in doClick: " + el, e);
             }
         } else {
-            logger.error("currentElement is null");
+            logger.error("currentElement is null for: " + el);
         }
         return clicked;
     }
@@ -132,11 +131,23 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         try {
-            if (el.currentElement != null || isElementPresent(el)) {
+            boolean exists = el.currentElement != null;
+            if (exists || isElementPresent(el)) {
+                if(logger.isDebugEnabled() && !exists){
+                    logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try)");
+                }
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
+        } catch (StaleElementReferenceException e) {
+            logger.warn("StaleElementReferenceException in getCurrentElementAttribute: " + attribute + ": " + el, e);
+            el.setCurrentElementPath("");
+            if(isElementPresent(el)){
+                attributeValue = el.currentElement.getAttribute(attribute);
+            } else {
+                logger.error("StaleElementReferenceException in getCurrentElementAttribute (second try): " + attribute + ": " + el, e);
+            }
         } catch (WebDriverException e) {
-            logger.debug("getAttribute '" + attribute + "' WebDriverException: " + e);
+            logger.error("WebDriverException in getCurrentElementAttribute: " + attribute + ": " + el, e);
         }
         return attributeValue;
     }
@@ -169,7 +180,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             el.currentElement.sendKeys(charSequences);
         } catch (ElementNotVisibleException e) {
-            logger.error("sendKeys: ElementNotVisibleException");
+            logger.error("ElementNotVisibleException in sendKeys: " + el, e);
             throw e;
         } catch (WebDriverException e) {
             //TODO this fix is for Chrome
@@ -211,7 +222,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     el.currentElement.sendKeys(value);
                     executed = true;
                 } catch (StaleElementReferenceException exception) {
-                    logger.warn("StaleElementReferenceException" + exception);
+                    logger.warn("StaleElementReferenceException in setValue: " + el, exception);
                     logger.warn("Set value(" + el + ") second try:  '" + value + "'");
                     if (el.ready()) {
                         el.currentElement.clear();
@@ -266,7 +277,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             clicked = true;
         } catch (Exception e) {
             // http://code.google.com/p/selenium/issues/detail?id=244
-            logger.debug(e);
+            logger.warn("Exception in doubleClickAt", e);
             fireEventWithJS(el, "dblclick");
         }
         logger.info("doubleClickAt " + el);
@@ -327,8 +338,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
         try {
             return javascriptExecutor.executeScript(script, objects);
-        } catch (Exception e) {
-            logger.error("executeScript: " + script, e);
+        } catch (WebDriverException e) {
+            logger.error("WebDriverException in executeScript: " + script, e);
             return null;
         }
     }

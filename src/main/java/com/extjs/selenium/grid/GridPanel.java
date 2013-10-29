@@ -8,6 +8,7 @@ import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
@@ -117,7 +118,7 @@ public class GridPanel extends Panel {
     public boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
         //logger.info(this + " - " + info);
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             scrolled = (Boolean) executeScript(script);
         } else {
             scrolled = Boolean.parseBoolean((String) executeScript(script));
@@ -135,7 +136,7 @@ public class GridPanel extends Panel {
     public boolean scrollTop() {
         String id = getAttributeId();
         String script = "(function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             script = "return " + script;
         }
         return executeScrollScript("scrollTop", script);
@@ -144,7 +145,7 @@ public class GridPanel extends Panel {
     public boolean scrollBottom() {
         String id = getAttributeId();
         String script = "(function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             script = "return " + script;
         }
         return executeScrollScript("scrollButtom", script);
@@ -158,7 +159,7 @@ public class GridPanel extends Panel {
     public boolean scrollPageUp() {
         String id = getAttributeId();
         String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop>0){b.dom.scrollTop-=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             script = "return " + script;
         }
         return executeScrollScript("scrollPageUp", script);
@@ -172,7 +173,7 @@ public class GridPanel extends Panel {
     public boolean scrollPageDown() {
         String id = getAttributeId();
         String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             return executeScrollScript("scrollPageDown", "return " + script);
         } else {
             return executeScrollScript("scrollPageDown", script);
@@ -330,7 +331,7 @@ public class GridPanel extends Panel {
 
     public boolean assertCheckSelectAll(String columnId) {
         logger.debug("Select-all checker path: " + getSelectAllChecker(columnId));
-        if (hasWebDriver()) {
+        if (WebDriverConfig.hasWebDriver()) {
             return getSelectAllChecker(columnId).assertClick();
         } else {
             return getSelectAllChecker(columnId).assertClickAt();

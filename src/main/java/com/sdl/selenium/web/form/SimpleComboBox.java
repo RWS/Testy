@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.ui.Select;
@@ -19,7 +20,7 @@ public class SimpleComboBox extends WebLocator {
 
     public boolean select(String value) {
         if (ready()) {
-            if (hasWebDriver()) {
+            if (WebDriverConfig.hasWebDriver()) {
                 if ("".equals(value)) {
                     return true;
                 } else {

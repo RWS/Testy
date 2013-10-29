@@ -2,6 +2,7 @@ package com.extjs.selenium.slider;
 
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -44,7 +45,7 @@ public class Slider extends ExtJsComponent {
         WebLocator element = new WebLocator(null, thumbPath);
         if (thumbPath != null && element.exists()) {
             // to scroll to this element (if element is not visible)
-            if (hasWebDriver()) {
+            if (WebDriverConfig.hasWebDriver()) {
                 WebElement thumbElement = driver.findElement(By.xpath(thumbPath));
                 element.sendKeys(Keys.TAB);
                 element.click();

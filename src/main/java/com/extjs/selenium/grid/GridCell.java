@@ -1,6 +1,7 @@
 package com.extjs.selenium.grid;
 
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import org.apache.log4j.Logger;
@@ -66,7 +67,7 @@ public class GridCell extends Cell {
 
     public boolean select() {
         try {
-            if (hasWebDriver()) {
+            if (WebDriverConfig.hasWebDriver()) {
                 return click();
             } else {
                 return clickAt();
