@@ -25,6 +25,7 @@ Ext.onReady(function(){
                     disabled:true
                 },{
                     text: 'Close',
+                    id: 'close',
                     handler: function(){
                         win.close();
                     }

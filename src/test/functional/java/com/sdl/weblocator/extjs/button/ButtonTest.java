@@ -31,6 +31,7 @@ public class ButtonTest extends TestBase {
     public void isDisplayed() {
         dateFieldButton.click();
         assertTrue(driver.findElement(By.xpath(closeButton.getPath())).isDisplayed());
+        assertTrue(driver.findElement(By.id("close")).isDisplayed());
         dateFieldWindow.close();
     }
 

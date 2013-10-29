@@ -53,7 +53,6 @@ public class ComboBox extends TextField {
      * @return true if value was selected
      */
     public boolean setValue(String value) {
-        logger.debug("setValue:" + value);
         return select(value);
     }
 
