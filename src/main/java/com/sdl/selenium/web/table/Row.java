@@ -6,11 +6,11 @@ import org.apache.log4j.Logger;
 public abstract class Row extends Cell {
     private static final Logger logger = Logger.getLogger(Row.class);
 
-    public Row(){
+    public Row() {
         setClassName("Row");
     }
 
-    protected void setRowCells(Cell... cells){
+    protected void setRowCells(Cell... cells) {
         String path = "";
         for (Cell cell : cells) {
             String itemPathText = cell.getItemPathText();

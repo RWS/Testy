@@ -15,7 +15,9 @@ public class TableRowTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new TableRow(),             "//tr"},
+                {new TableRow(),      "//tr"},
+                {new TableRow(table), "//table[@id='ID']//tr"},
+                {new TableRow(table).setElPathSuffix("not(@style='display: none;')"), "//table[@id='ID']//tr[not(@style='display: none;')]"},
                 {new TableRow(table, "Text", SearchType.EQUALS), "//table[@id='ID']//tr[text()='Text' or count(.//*[text()='Text']) > 0]"},
                 {new TableRow(table, new TableCell(3, "1234", SearchType.EQUALS), new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table[@id='ID']//tr[count(td[3][text()='1234' or count(.//*[text()='1234']) > 0]) > 0 and count(td[4][text()='Eng-Fra' or count(.//*[text()='Eng-Fra']) > 0]) > 0]"},
                 {new TableRow(table, new TableCell(), new TableCell()), "//table[@id='ID']//tr[]"},
