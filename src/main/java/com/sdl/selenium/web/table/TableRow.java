@@ -12,11 +12,17 @@ public class TableRow extends Row {
         setRenderMillis(200);
         setClassName("TableRow");
         setTag("tr");
+        setElPathSuffix("not(@style='display: none;')");
     }
 
     public TableRow(WebLocator container){
         this();
         setContainer(container);
+    }
+
+    public TableRow(WebLocator container, int indexRow){
+        this(container);
+        setPosition(indexRow);
     }
 
     public TableRow(WebLocator table, String searchElement, SearchType searchType) {
@@ -41,7 +47,7 @@ public class TableRow extends Row {
         String selector = super.getItemPathText();
         if (!"".equals(selector)) {
             String text = Utils.fixPathSelector(selector);
-            selector = text + " or count(.//*[" + text + "]) > 0";
+            selector = selector + " or count(.//*[" + text + "]) > 0";
         }
         return selector;
     }

@@ -95,6 +95,7 @@ public class Table extends Row {
      * @param searchElement the searchElement of the table element on which the search is done
      * @return true if selected
      */
+    @Deprecated
     public boolean rowSelect(String searchElement) {
         return rowSelect(searchElement, false);
     }
@@ -106,6 +107,7 @@ public class Table extends Row {
      * @param startWith
      * @return
      */
+    @Deprecated
     public boolean rowSelect(String searchElement, Boolean startWith) {
         ready();
         TableCell cell = getTableCell(searchElement, startWith);
@@ -117,6 +119,7 @@ public class Table extends Row {
      * @param searchType    accepted values are: {"equals"/"eq", "starts-with", "contains"}
      * @return
      */
+    @Deprecated
     public boolean rowSelect(String searchElement, SearchType searchType) {
         ready(true);
         TableCell cell = getTableCell(searchElement, searchType);
@@ -129,21 +132,24 @@ public class Table extends Row {
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
      * @return
      */
-
+    @Deprecated
     public boolean rowSelect(String searchElement, int columnId, SearchType searchType) {
         ready();
         TableCell cell = new TableCell(this, columnId, searchElement, searchType);
         return doCellSelect(cell);
     }
 
+    @Deprecated
     public boolean doCellSelect(TableCell tableCell) {
         return doCellAction(tableCell, null);
     }
 
+    @Deprecated
     public boolean doCellDoubleClickAt(TableCell tableCell) {
         return doCellAction(tableCell, "doubleClickAt");
     }
 
+    @Deprecated
     private boolean doCellAction(WebLocator cell, String action) {
         boolean selected;
         scrollTop(); // make sure always start from top then scroll down till the end of the page
@@ -274,7 +280,7 @@ public class Table extends Row {
     }
 
     public TableRow getTableRow(int rowIndex) {
-        return new TableRow(this).setElPath("//tr[" + rowIndex + "]").setInfoMessage("row - Table");
+        return new TableRow(this, rowIndex).setInfoMessage("row - Table");
     }
 
     public TableRow getTableRow(String searchElement) {
@@ -303,7 +309,7 @@ public class Table extends Row {
 
     public TableCell getTableCell(int rowIndex, int columnIndex) {
         TableRow tableRow = getTableRow(rowIndex);
-        return new TableCell(tableRow).setElPath("//td[" + columnIndex + "]");
+        return new TableCell(tableRow, columnIndex).setInfoMessage("cell - Table");
     }
 
     /**
@@ -407,7 +413,7 @@ public class Table extends Row {
         String text = null;
         TableRow tableRow = new TableRow(this, searchText, SearchType.EQUALS);
         if (tableRow.ready()) {
-            text = new WebLocator(tableRow, "//td[" + columnId + "]").getHtmlText();
+            text = new TableCell(tableRow, columnId).getHtmlText();
         } else {
             logger.warn("searchText was not found in table: " + searchText);
         }
