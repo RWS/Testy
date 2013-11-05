@@ -11,9 +11,9 @@ public class CheckBoxTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Checkbox(),                  "//input[contains(@class, 'x-form-checkbox')]"},
-                {new Checkbox(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(@class, 'x-form-checkbox')]"},
-                {new Checkbox(container, "name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(@class, 'x-form-checkbox')]"},
+                {new Checkbox(),                  "//input[contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
+                {new Checkbox(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
+                {new Checkbox(container, "name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
         };
     }
 

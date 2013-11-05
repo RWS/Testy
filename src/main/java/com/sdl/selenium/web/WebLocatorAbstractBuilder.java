@@ -570,7 +570,7 @@ public abstract class WebLocatorAbstractBuilder {
             selector.append(" and @name='").append(getName()).append("'");
         }
         if (hasBaseCls()) {
-            selector.append(" and contains(@class, '").append(getBaseCls()).append("')");
+            selector.append(" and contains(concat(' ', @class, ' '), ' ").append(getBaseCls()).append(" ')");
         }
         if (hasCls()) {
             selector.append(" and @class='").append(getCls()).append("'");

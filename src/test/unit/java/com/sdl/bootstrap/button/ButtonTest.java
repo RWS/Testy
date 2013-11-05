@@ -12,11 +12,11 @@ public class ButtonTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Button(),                  "//button[contains(@class, 'btn')]"},
-                {new Button(container),         "//*[@id='ID']//button[contains(@class, 'btn')]"},
-                {new Button(container, "ButtonText"), "//*[@id='ID']//button[contains(@class, 'btn') and text()='ButtonText']"},
-                {new Button(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), "//*[@id='ID']//button[contains(@class, 'btn') and contains(text(),'ButtonText')]"},
-                {new Button(container).setId("ID"), "//*[@id='ID']//button[@id='ID' and contains(@class, 'btn')]"},
+                {new Button(),                  "//button[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new Button(container),         "//*[@id='ID']//button[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new Button(container, "ButtonText"), "//*[@id='ID']//button[contains(concat(' ', @class, ' '), ' btn ') and text()='ButtonText']"},
+                {new Button(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), "//*[@id='ID']//button[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'ButtonText')]"},
+                {new Button(container).setId("ID"), "//*[@id='ID']//button[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
         };
     }
 
