@@ -653,6 +653,13 @@ public abstract class WebLocatorAbstractBuilder {
             if(useChildNodesSearch){
                 selector += "]) > 0";
             }
+
+            if(searchTextType.contains(SearchType.HTML_NODE)){
+                String a = "normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5] ))=" + text;
+                String b = "normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ',  text()[4], ' ', ./*[4]//text(), ' ',  text()[5], ' ', ./*[5]//text()))=" + text;
+
+                selector = " and (" + a + " or "+ b +")";
+            }
         }
         return selector;
     }

@@ -2,6 +2,8 @@ package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.Table;
+import com.sdl.selenium.web.table.TableCell;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,6 +19,7 @@ public class ButtonLinkTest {
                 {new ButtonLink(container, "ButtonText"), "//*[@id='ID']//a[contains(@class, 'btn') and text()='ButtonText']"},
                 {new ButtonLink(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), "//*[@id='ID']//a[contains(@class, 'btn') and contains(text(),'ButtonText')]"},
                 {new ButtonLink(container).setId("ID"), "//*[@id='ID']//a[@id='ID' and contains(@class, 'btn')]"},
+                {new ButtonLink(new Table().findRow(new TableCell(1, "Test", SearchType.EQUALS)), "ButtonText"), "//table//tr[count(td[1][text()='Test' or count(.//*[text()='Test']) > 0]) > 0]//a[contains(@class, 'btn') and text()='ButtonText']"},
         };
     }
 

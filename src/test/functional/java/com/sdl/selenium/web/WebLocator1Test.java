@@ -19,6 +19,8 @@ public class WebLocator1Test extends TestBase {
     WebLocator webLocatorWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
     WebLocator webLocatorNoWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
     WebLocator webLocatorNoWithMoreEnter = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div");
+    WebLocator webLocatorWithMoreText = new WebLocator().setElPath("//*[contains(@class, 'element7') and concat(text()[1], ./*/text(), text()[2], ./*/text()[contains(.,'care')], text()[3])='Some important text care trebuie']");
+    WebLocator webLocatorComplex = new WebLocator().setClasses("element11").setText("Some more important text that is very important . end", SearchType.HTML_NODE);
     WebLocator webLocatorLogger = new WebLocator().setId("logger");
 
 
@@ -56,6 +58,8 @@ public class WebLocator1Test extends TestBase {
         assertEquals(webLocatorWithMoreEnterMoreElements.getAttributeClass(), "more-elements-inside with-enter element1");
         assertEquals(webLocatorNoWithMoreEnterMoreElements.getAttributeClass(), "more-elements-inside no-enter element3");
         assertEquals(webLocatorNoWithMoreEnter.getAttributeClass(), "more-elements-inside no-enter element4");
+        assertEquals(webLocatorWithMoreText.getAttributeClass(), "more-elements-inside with-enter element7");
+        assertEquals(webLocatorComplex.getAttributeClass(), "more-elements-inside with-enter element11");
     }
 
     @Test (dataProviderClass = WebLocatorTest.class, dataProvider = "testConstructorPathDataProviderText" )
