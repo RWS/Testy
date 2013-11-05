@@ -134,7 +134,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             boolean exists = el.currentElement != null;
             if (exists || isElementPresent(el)) {
                 if(logger.isDebugEnabled() && !exists){
-                    logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try)");
+                    logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try)" + el);
                 }
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
@@ -159,8 +159,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 text = el.currentElement.getText();
             } catch (WebDriverException e) {
-                logger.debug("element has vanished meanwhile: " + el.getPath());
-                logger.debug(e);
+                logger.error("element has vanished meanwhile: " + el.getPath(), e);
             }
         }
         return text;

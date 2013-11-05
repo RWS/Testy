@@ -66,20 +66,20 @@ public class EditorGridPanel extends GridPanel {
         WebLocator container = new WebLocator("x-editor", this);
         WebLocator editableEl = new WebLocator(container, "//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
-        logger.debug("stringClass: " + stringClass);
+        logger.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {
             stringClass = "";
         }
         if (stringClass.contains("x-form-field-trigger-wrap")) {
             // TODO when is DateField
-            logger.debug("getActiveEditor: grid active combo x-editor");
+            logger.debug("active editor is ComboBox");
             editor = new ComboBox();
             editor.setInfoMessage("active combo editor");
         } else if (stringClass.contains("x-form-textarea")) {
-            logger.debug("TextArea");
+            logger.debug("active editor is TextArea");
             editor = new TextArea();
         } else {
-            logger.debug("TextField");
+            logger.debug("active editor is TextField");
             editor = new TextField();
         }
         editor.setContainer(this).setClasses("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
