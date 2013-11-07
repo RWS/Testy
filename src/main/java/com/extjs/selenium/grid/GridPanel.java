@@ -538,7 +538,7 @@ public class GridPanel extends Panel {
     }
 
     public GridRow findGridRow(GridCell... byCells) {
-        return new GridRow(this, byCells);
+        return new GridRow(this, byCells).setInfoMessage("-GridRow");
     }
 
     public boolean selectRow(GridCell... byCells) {

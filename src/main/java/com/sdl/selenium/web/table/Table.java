@@ -353,7 +353,7 @@ public class Table extends Row {
     }
 
     public TableRow findRow(TableCell... byCells) {
-        return new TableRow(this, byCells);
+        return new TableRow(this, byCells).setInfoMessage("-TableRow");
     }
 
     public TableCell getTableCell(int columnIndex, TableCell... byCells) {
@@ -364,6 +364,7 @@ public class Table extends Row {
         return new TableCell(findRow(byCells), columnIndex, text, SearchType.EQUALS);
     }
 
+    @Deprecated //TODO fix it
     public String[] getRow(int rowIndex) {
         String[] rowElements = null;
         if (rowIndex != -1) {
@@ -381,6 +382,7 @@ public class Table extends Row {
      * @param searchText
      * @return
      */
+    @Deprecated //TODO fix it
     public String[] getRow(String searchText) {
         String[] rowElements = null;
         String text = getTableRow(searchText).getHtmlText();
