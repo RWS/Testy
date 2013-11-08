@@ -68,6 +68,7 @@ public class EditorGridPanel extends GridPanel {
         String stringClass = editableEl.getAttributeClass();
         logger.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {
+            logger.warn("active editor stringClass is null: " + editableEl); // TODO investigate this problem
             stringClass = "";
         }
         if (stringClass.contains("x-form-field-trigger-wrap")) {
@@ -82,8 +83,7 @@ public class EditorGridPanel extends GridPanel {
             logger.debug("active editor is TextField");
             editor = new TextField();
         }
-        editor.setContainer(this).setClasses("x-form-focus").setRenderSeconds(1).setInfoMessage("active textfield editor");
-//        logger.debug("editor: " + editor.getPath());
+        editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
         return editor;
     }
 

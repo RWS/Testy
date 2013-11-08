@@ -124,6 +124,7 @@ public class GridPanel extends Panel {
             scrolled = Boolean.parseBoolean((String) executeScript(script));
         }
         logger.info(this + " - " + info + " > " + scrolled);
+        // TODO make configurable if has buffer view
         Utils.sleep(200); // because of Buffer view that can have scroll delay
         return scrolled;
     }

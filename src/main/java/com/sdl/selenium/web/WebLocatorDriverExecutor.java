@@ -123,6 +123,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         String attributeValue = null;
         if (isElementPresent(el)) {
             attributeValue = getCurrentElementAttribute(el, attribute);
+        } else {
+            if(logger.isDebugEnabled()){
+                logger.debug("Element not found to getAttribute(" + attribute + "): " + el);
+            }
         }
         return attributeValue;
     }
@@ -134,12 +138,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             boolean exists = el.currentElement != null;
             if (exists || isElementPresent(el)) {
                 if(logger.isDebugEnabled() && !exists){
-                    logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try)" + el);
+                    logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try) " + el);
                 }
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (StaleElementReferenceException e) {
-            logger.warn("StaleElementReferenceException in getCurrentElementAttribute: " + attribute + ": " + el, e);
+            logger.warn("StaleElementReferenceException in getCurrentElementAttribute(" + attribute + "): " + el, e);
             el.setCurrentElementPath("");
             if(isElementPresent(el)){
                 attributeValue = el.currentElement.getAttribute(attribute);
@@ -147,7 +151,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 logger.error("StaleElementReferenceException in getCurrentElementAttribute (second try): " + attribute + ": " + el, e);
             }
         } catch (WebDriverException e) {
-            logger.error("WebDriverException in getCurrentElementAttribute: " + attribute + ": " + el, e);
+            logger.error("WebDriverException in getCurrentElementAttribute(" + attribute + "): " + el, e);
         }
         return attributeValue;
     }
