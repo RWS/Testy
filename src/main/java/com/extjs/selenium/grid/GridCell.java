@@ -27,6 +27,7 @@ public class GridCell extends Cell {
     public GridCell(WebLocator container, int columnIndex) {
         this(container);
         setElPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
+        setInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
     }
 
     public GridCell(String text, WebLocator container) {
