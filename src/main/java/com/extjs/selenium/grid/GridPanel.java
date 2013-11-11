@@ -130,12 +130,25 @@ public class GridPanel extends Panel {
     }
 
     /**
+     * Will Fail if id is null
+     * @return
+     */
+    private String getAttrId() {
+        String id = getAttributeId();
+        if(id == null){
+            logger.warn("GridPanel id is null: " + getPath());
+            Assert.fail("Could not scroll because id of grid is null: " + this);
+        }
+        return id;
+    }
+
+    /**
      * Scroll on the top in Grid
      *
      * @return true if scrolled
      */
     public boolean scrollTop() {
-        String id = getAttributeId();
+        String id = getAttrId();
         String script = "(function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         if (WebDriverConfig.hasWebDriver()) {
             script = "return " + script;
@@ -144,7 +157,7 @@ public class GridPanel extends Panel {
     }
 
     public boolean scrollBottom() {
-        String id = getAttributeId();
+        String id = getAttrId();
         String script = "(function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
         if (WebDriverConfig.hasWebDriver()) {
             script = "return " + script;
@@ -158,7 +171,7 @@ public class GridPanel extends Panel {
      * @return true if scrolled
      */
     public boolean scrollPageUp() {
-        String id = getAttributeId();
+        String id = getAttrId();
         String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop>0){b.dom.scrollTop-=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         if (WebDriverConfig.hasWebDriver()) {
             script = "return " + script;
@@ -172,7 +185,7 @@ public class GridPanel extends Panel {
      * @return true if scrolled
      */
     public boolean scrollPageDown() {
-        String id = getAttributeId();
+        String id = getAttrId();
         String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         if (WebDriverConfig.hasWebDriver()) {
             return executeScrollScript("scrollPageDown", "return " + script);
