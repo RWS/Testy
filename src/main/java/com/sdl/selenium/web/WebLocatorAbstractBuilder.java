@@ -490,7 +490,7 @@ public abstract class WebLocatorAbstractBuilder {
         return className;
     }
 
-    public void setClassName(final String className) {
+    protected void setClassName(final String className) {
         this.className = className;
     }
 
