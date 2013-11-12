@@ -15,8 +15,8 @@ public class LiveGridPanelTest {
     private static LiveGridPanel gridContainerAndClsAndColumn = new LiveGridPanel(container, "GridPanelCls", "1");
 
     private static String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
-    private static String LIVE_GRID_PATH = "//*[contains(concat(' ', @class, ' '), ' ext-ux-livegrid ') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
-    private static String LIVE_GRID_PANEL_CLS= "//*[contains(concat(' ', @class, ' '), ' ext-ux-livegrid ') and contains(concat(' ', @class, ' '), ' GridPanelCls ') and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-panel-tc')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
+    private static String LIVE_GRID_PATH = "//*[contains(concat(' ', @class, ' '), ' ext-ux-livegrid ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
+    private static String LIVE_GRID_PANEL_CLS= "//*[contains(concat(' ', @class, ' '), ' ext-ux-livegrid ') and contains(concat(' ', @class, ' '), ' GridPanelCls ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

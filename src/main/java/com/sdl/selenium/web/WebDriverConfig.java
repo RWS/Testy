@@ -1,13 +1,20 @@
 package com.sdl.selenium.web;
 
 import com.opera.core.systems.OperaDesktopDriver;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
 public class WebDriverConfig {
+    private static final Logger logger = Logger.getLogger(WebDriverConfig.class);
+
     private static WebDriver driver;
 
     private static boolean isIE;

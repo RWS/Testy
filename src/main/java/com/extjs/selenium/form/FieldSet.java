@@ -28,8 +28,8 @@ public class FieldSet extends WebLocator {
         setClasses(cls);
     }
 
-    public String getDefaultExcludePath() {
-        return " and not(starts-with(@id, 'ext-gen')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))";
+    protected String getDefaultExcludePath() {
+        return " and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))";
     }
 
     @Override

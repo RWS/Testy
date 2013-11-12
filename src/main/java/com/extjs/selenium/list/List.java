@@ -23,7 +23,7 @@ public class List extends GridPanel {
     }
 
     @Override
-    public String getDefaultExcludePath() {
+    protected String getDefaultExcludePath() {
         return "";
     }
 

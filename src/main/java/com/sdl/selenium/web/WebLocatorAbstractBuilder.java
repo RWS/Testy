@@ -138,7 +138,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * <p>Find element with exact math of specified class (equals)</p>
+     * <p>Find element with <b>exact math</b> of specified class (equals)</p>
      * @param cls class of element
      * @return this element
      */

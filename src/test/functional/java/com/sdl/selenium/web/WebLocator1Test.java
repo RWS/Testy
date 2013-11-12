@@ -48,8 +48,18 @@ public class WebLocator1Test extends TestBase {
 
     @Test
     public void webDriverConfig() {
-        assertFalse(WebDriverConfig.isChrome());
-        assertTrue(WebDriverConfig.isFireFox());
+        WebLocator l = new WebLocator().setClasses("x-tool-maximize");
+        logger.debug(l.getPath());
+        logger.debug("//*[contains(@class,'x-tool-maximize')]");
+
+        final String browser = InputData.BROWSER;
+        if("*firefox".equalsIgnoreCase(browser)){
+            assertTrue(WebDriverConfig.isFireFox());
+        } else if("*chrome".equalsIgnoreCase(browser)){
+            assertTrue(WebDriverConfig.isChrome());
+        } else if("*iexplore".equalsIgnoreCase(browser)){
+            assertTrue(WebDriverConfig.isIE());
+        }
     }
 
     @Test

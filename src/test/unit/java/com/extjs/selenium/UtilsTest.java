@@ -50,8 +50,6 @@ public class UtilsTest {
 
     @Test(dataProvider = "validateFileName")
     public void convertToValidFileName(String originalFileName, String validFileName) {
-        System.out.println("modified file name " + Utils.getValidFileName(originalFileName));
-        System.out.println("valid file name = " + validFileName);
         Assert.assertEquals(Utils.getValidFileName(originalFileName), validFileName);
     }
 

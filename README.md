@@ -1,8 +1,14 @@
 Testy
 =====
 
-Automated Acceptance Testing. Selenium and Selenium WebDriver test framework for web applications (best suited for ExtJS and complex UI)
-
+Automated Acceptance Testing.
+Selenium and Selenium WebDriver test framework for web applications.
+Optimized for:
+- dynamic html
+- ExtJS
+- Bootstrap
+- complex UI
+- simple web applications/sites
 
 Prerequisites
 -------------

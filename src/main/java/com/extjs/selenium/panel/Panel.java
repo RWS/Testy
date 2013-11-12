@@ -60,10 +60,8 @@ public class Panel extends ExtJsComponent {
      *
      * @return
      */
-    public String getDefaultExcludePath() {
-        return " and not(starts-with(@id, 'ext-gen')) " +
-                "and not(contains(@class, '" + getHeaderBaseCls() + "-tc')) " +
-                "and not(contains(@class, 'x-hide-display')) " +
+    protected String getDefaultExcludePath() {
+        return " and not(contains(@class, 'x-hide-display')) " +
                 "and not(contains(@class, 'x-masked'))";
     }
 
@@ -123,7 +121,7 @@ public class Panel extends ExtJsComponent {
     }
 
     public boolean isMaximized() {
-        WebLocator maximizeTool = new WebLocator(this, "//*[contains(@class,'x-tool-maximize')]");
+        WebLocator maximizeTool = new WebLocator(this).setClasses("x-tool-maximize");
         return !maximizeTool.isVisible();
     }
 
