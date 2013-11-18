@@ -128,6 +128,13 @@ public class GridPanelTest {
                 {gridContainerAndColumn.getGridCell("SearchText", 1, "text", SearchType.EQUALS), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and text()='text']"},
                 {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "text", SearchType.EQUALS), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and text()='text']"},
 
+                {grid.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
+                {gridCls.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
+                {gridContainer.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
+                {gridClsAndColumn.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
+                {gridContainerAndColumn.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), CONTAINER_PATH + GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
+                {gridContainerAndClsAndColumn.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
+
         };
     }
 

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -25,8 +24,6 @@ public class InputData extends Properties {
 
             FileInputStream fileInputStream = new FileInputStream(RESOURCES_PATH + testEnvironment + ".properties");
             load(fileInputStream);
-        } catch (FileNotFoundException e) {
-            logger.error(e);
         } catch (IOException e) {
             logger.error(e);
         }

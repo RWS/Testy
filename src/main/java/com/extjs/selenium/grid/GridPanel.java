@@ -568,6 +568,10 @@ public class GridPanel extends Panel {
         return new GridCell(findGridRow(byCells)).setPosition(position).setText(text);
     }
 
+    public GridCell getGridCell(int position, GridCell... byCells) {
+        return new GridCell(findGridRow(byCells)).setPosition(position);
+    }
+
     public String[] getRow(int rowIndex) {
         String[] rowElements = null;
         if (rowIndex != -1) {

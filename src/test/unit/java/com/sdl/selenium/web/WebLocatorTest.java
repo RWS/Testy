@@ -34,6 +34,7 @@ public class WebLocatorTest {
                 {new WebLocator(container, "//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
                 {new WebLocator().setElPathSuffix("count(div) > 0"), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
+                {new WebLocator().setTag("body").setExcludeClasses("masked"), "//body[not(contains(@class, 'masked'))]"},
         };
     }
 
