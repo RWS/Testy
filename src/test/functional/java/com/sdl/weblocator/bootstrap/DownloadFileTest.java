@@ -18,6 +18,7 @@ public class DownloadFileTest extends TestBase {
 
     Form form = new Form(null, "Form Title");
     DownloadFile downloadFile = new DownloadFile(form, "Project Data:");
+    DownloadFile downloadFile1 = new DownloadFile(form).setText("Download");
     DownloadFile downloadFileNegative = new DownloadFile(form, "DownloadNegative:");
 
     @BeforeClass
@@ -29,6 +30,12 @@ public class DownloadFileTest extends TestBase {
     @Test
      public void download() {
         assertTrue(downloadFile.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
+    }
+
+    @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
+    @Test
+    public void download1() {
+        assertTrue(downloadFile1.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
     }
 
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")

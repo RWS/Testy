@@ -8,6 +8,8 @@ import com.extjs.selenium.form.TextField;
 import com.extjs.selenium.grid.EditorGridPanel;
 import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.window.Window;
+import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
@@ -65,7 +67,7 @@ public class EditorGridPanelTest extends TestBase {
         editorGridPanel.setRowValue(1, 3, "Sun or Shade");
         String[] texRow = editorGridPanel.getRow(1);
         List<String> optionList = Arrays.asList(texRow);
-        assertTrue(optionList.containsAll(Arrays.asList(new String[]{"WebLocator Company", "TestTest", "Sun or Shade"})));
+        assertTrue(optionList.containsAll(Arrays.asList("WebLocator Company", "TestTest", "Sun or Shade")));
     }
 
     @Test(dependsOnMethods = "editGridPanel")
@@ -110,5 +112,12 @@ public class EditorGridPanelTest extends TestBase {
             assertTrue(editorGridPanel.setRowValue(i, 1, "1"));
         }
         Utils.sleep(1000);
+    }
+
+    @Test(dependsOnMethods = "editGridPanelAndScrollClearCell")
+    public void assertRowEditorGridPanel() {
+        ConditionManager conditionManager = new ConditionManager(1000);
+        conditionManager.add(new RenderSuccessCondition(editorGridPanel.findGridRow(new GridCell(1, "Adder's-Tongue", SearchType.EQUALS), new GridCell(2, "Erythronium americanum", SearchType.EQUALS))));
+        assertTrue(conditionManager.execute().isSuccess());
     }
 }
