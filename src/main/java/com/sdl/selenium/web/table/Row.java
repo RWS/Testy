@@ -16,6 +16,8 @@ public abstract class Row extends Cell {
             String itemPathText = cell.getItemPathText();
             if (cell.getPosition() != -1 && !"".equals(itemPathText)) {
                 path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(itemPathText));
+            } else if (cell.getPosition() == -1 && !"".equals(itemPathText)) {
+                path += " and " + getSearchPath(Utils.fixPathSelector(itemPathText));
             } else {
                 logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
             }
@@ -25,5 +27,9 @@ public abstract class Row extends Cell {
 
     protected String getSearchPath(int columnIndex, String textCondition) {
         return "count(td[" + columnIndex + "][" + textCondition + "]) > 0";
+    }
+
+    protected String getSearchPath(String textCondition) {
+        return "count(td/*[" + textCondition + "]) > 0";
     }
 }

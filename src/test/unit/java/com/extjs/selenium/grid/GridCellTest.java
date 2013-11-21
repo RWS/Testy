@@ -15,6 +15,7 @@ public class GridCellTest {
                 {new GridCell(grid),                        grid.getPath() + "//*"},
                 {new GridCell(grid, 1),                     grid.getPath() + "//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
                 {new GridCell("text", grid),                grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},
+                {new GridCell("text", SearchType.EQUALS),          "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and text()='text']"},
                 {new GridCell(grid, "text", SearchType.EQUALS),          grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and text()='text']"},
                 {new GridCell(grid, 2, "text", SearchType.EQUALS),       grid.getPath() + "//td[2]//*[text()='text']"},
                 {new GridCell(grid, "text", SearchType.CONTAINS),    grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},

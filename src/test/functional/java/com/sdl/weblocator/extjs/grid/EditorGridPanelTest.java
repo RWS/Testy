@@ -25,7 +25,7 @@ import static org.testng.Assert.assertTrue;
 public class EditorGridPanelTest extends TestBase {
 
     Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, 1).setTitle("EditableGrid");
+    EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
     Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider
@@ -119,5 +119,20 @@ public class EditorGridPanelTest extends TestBase {
         ConditionManager conditionManager = new ConditionManager(1000);
         conditionManager.add(new RenderSuccessCondition(editorGridPanel.findGridRow(new GridCell(1, "Adder's-Tongue", SearchType.EQUALS), new GridCell(2, "Erythronium americanum", SearchType.EQUALS))));
         assertTrue(conditionManager.execute().isSuccess());
+    }
+
+    @Test(dependsOnMethods = "assertRowEditorGridPanel")
+     public void rowSelect() {
+        assertTrue(editorGridPanel.rowSelect("Spring-Beauty"));
+    }
+
+    @Test(dependsOnMethods = "rowSelect")
+    public void rowSelectStartWith() {
+        assertTrue(editorGridPanel.rowSelect("Spring", SearchType.STARTS_WITH));
+    }
+
+    @Test(dependsOnMethods = "rowSelectStartWith")
+    public void rowSelectContains() {
+        assertTrue(editorGridPanel.rowSelect("Beauty", 1, SearchType.CONTAINS));
     }
 }

@@ -30,7 +30,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 el.currentElement.click();
                 clicked = true;
             } catch (StaleElementReferenceException e) {
-                logger.error("StaleElementReferenceException in doClick: " + el, e);
+                logger.error("StaleElementReferenceException in doClick: " + el);
                 el.setCurrentElementPath("");
                 findElement(el);
                 el.currentElement.click(); // not sure it will click now

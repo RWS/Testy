@@ -201,7 +201,7 @@ public class GridPanel extends Panel {
      * @return true if selected
      */
     public boolean rowSelect(String searchElement) {
-        return rowSelect(searchElement, false);
+        return rowSelect(searchElement, SearchType.EQUALS);
     }
 
     public boolean assertRowSelect(String searchElement) {
@@ -221,7 +221,7 @@ public class GridPanel extends Panel {
      */
     public boolean rowSelect(String searchElement, Boolean startWith) {
         ready();
-        GridCell cell = getGridCell(searchElement, startWith);
+        GridCell cell = getGridCell(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);;
         return doCellSelect(cell);
     }
 
