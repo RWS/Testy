@@ -168,7 +168,7 @@ public class Utils {
             File file = new File(filePath);
             screenShot.renameTo(file);
         } catch (Exception e) {
-            logger.error("Failed to capture screenshot: " + e);
+            logger.error("Failed to capture screenshot: ", e);
         }
         return fileName;
     }
@@ -208,34 +208,38 @@ public class Utils {
         out.close();
     }
 
-    //
-    public static boolean unZip2(String filePath, String extractedFilePath) {
-        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+    /**
+     *
+     * @param zipFilePath
+     * @param outputFolderPath if null of empty will extract in same folder as zipFilePath
+     * @return
+     */
+    public static boolean unZip(String zipFilePath, String outputFolderPath) {
         byte[] buffer = new byte[1024];
-
         try {
-
-            //create output directory is not exists
-            File folder = new File(extractedFilePath);
+            long startMs = System.currentTimeMillis();
+            //create output directory if doesn't exists
+            if(outputFolderPath == null || "".equals(outputFolderPath)){
+                // unzip in same folder as zip file
+                outputFolderPath = new File(zipFilePath).getParent();
+            }
+            File folder = new File(outputFolderPath);
             if (!folder.exists()) {
                 folder.mkdir();
             }
 
             //get the zip file content
             ZipInputStream zis =
-                    new ZipInputStream(new FileInputStream(filePath));
+                    new ZipInputStream(new FileInputStream(zipFilePath));
             //get the zipped file list entry
             ZipEntry ze = zis.getNextEntry();
 
             while (ze != null) {
 
                 String fileName = ze.getName();
-                //String fileName = dfm.format(new DateField()) + ze.getName();
-                File newFile = new File(extractedFilePath + File.separator + fileName);
-
+                File newFile = new File(outputFolderPath + File.separator + fileName);
 
                 logger.info("file unzip : " + newFile.getAbsoluteFile());
-                //System.out.println("file unzip : "+ newFile.getAbsoluteFile());
 
                 //create all non exists folders
                 //else you will hit FileNotFoundException for compressed folder
@@ -255,14 +259,26 @@ public class Utils {
             zis.closeEntry();
             zis.close();
 
-            logger.info("Unzip Done!!!");
-
+            logger.info("Unzip Done: " + zipFilePath);
+            long endMs = System.currentTimeMillis();
+            logger.debug(String.format("unzip took %s ms", endMs - startMs));
         } catch (IOException ex) {
             ex.printStackTrace();
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @deprecated
+     * use {@link #unZip(String, String)}
+     * @param filePath
+     * @param extractedFilePath
+     * @return
+     */
+    public static boolean unZip2(String filePath, String extractedFilePath) {
+        return unZip(filePath, extractedFilePath);
     }
 
     public static boolean deleteFile(String filePath) {
@@ -328,16 +344,6 @@ public class Utils {
         }
         result += insertedText + "." + (extension == null ? splitted[splitted.length - 1] : extension);
         return result;
-    }
-
-    /**
-     * @deprecated
-     * Please use getFileNameFromPath instead
-     * @param filePath
-     * @return
-     */
-    public static String getFileFromPath(String filePath) {
-        return getFileNameFromPath(filePath);
     }
 
     public static String getFileNameFromPath(String filePath) {
