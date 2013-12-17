@@ -610,7 +610,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param disabled
      * @return
      */
-    public String getItemPath(boolean disabled) {
+    protected String getItemPath(boolean disabled) {
         String selector = getBaseItemPath();
         selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
         return selector;

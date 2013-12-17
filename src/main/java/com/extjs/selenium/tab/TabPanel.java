@@ -65,6 +65,7 @@ public class TabPanel extends ExtJsComponent {
      * @param disabled disabled
      * @return xpath
      */
+    @Override
     public String getItemPath(boolean disabled) {
         String selector = getBaseTabPanelPath();
             selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO

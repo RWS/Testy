@@ -64,8 +64,14 @@ public class GridPanel extends Panel {
     // TODO find better solution for GridPanel that is used in TabPanel
     public static GridPanel getInstanceByTabPanel(TabPanel tabPanel, String searchColumnId) {
         GridPanel gridPanel = new GridPanel();
-        gridPanel.setContainer(tabPanel.getContainer());
-        gridPanel.setElPath(tabPanel.getItemPath(false));
+        WebLocator container = tabPanel.getContainer();
+        gridPanel.setContainer(container);
+
+        tabPanel.setContainer(null); // hack to have path without container
+        String elPath = tabPanel.getPath();
+        tabPanel.setContainer(container); // set container back
+
+        gridPanel.setElPath(elPath);
         gridPanel.setSearchColumnId(searchColumnId);
         return gridPanel;
     }
