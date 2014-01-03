@@ -42,7 +42,7 @@ public class DateField extends TextField {
     private boolean setDate(String day, String month, String year) {
         WebLocator calendarLayer = new WebLocator("x-layer").setStyle("visibility: visible;");
         Button monthYearButton = new Button(calendarLayer);
-        WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer);
+        WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).setInfoMessage("Ok");
         if (click()) {
             monthYearButton.click();
             Utils.sleep(100);
