@@ -9,6 +9,8 @@
     <name>testy</name>
     <version>1.7.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+	<description>Test framework for web applications</description>
+	<url>https://github.com/SDLLanguageTechnologies/Testy</url>
 
     <organization>
         <name>SDL LanguageWeaver</name>
