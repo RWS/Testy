@@ -102,13 +102,12 @@ public class ExtJsComponent extends WebLocator {
             }
         }
         if (id != null && !id.equals("")) {
-            WebLocator thisEl = new WebLocator();
-            thisEl.setId(id);
+            WebLocator thisEl = new WebLocator().setId(id);
             mask.setContainer(thisEl);
         }
         boolean hasMask = mask.isElementPresent();
         if (logger.isDebugEnabled() && hasMask) {
-            logger.debug("MaskXPath=" + mask.getPath());
+//            logger.debug("MaskXPath=" + mask.getPath());
             logger.debug(this + " masked : " + hasMask);
         }
         return hasMask;
