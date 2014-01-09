@@ -125,7 +125,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (isElementPresent(el)) {
             attributeValue = getCurrentElementAttribute(el, attribute);
         } else {
-            if(logger.isDebugEnabled()){
+            if (logger.isDebugEnabled()) {
                 logger.debug("Element not found to getAttribute(" + attribute + "): " + el);
             }
         }
@@ -138,7 +138,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             boolean exists = el.currentElement != null;
             if (exists || isElementPresent(el)) {
-                if(logger.isDebugEnabled() && !exists){
+                if (logger.isDebugEnabled() && !exists) {
                     logger.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try) " + el);
                 }
                 attributeValue = el.currentElement.getAttribute(attribute);
@@ -146,7 +146,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } catch (StaleElementReferenceException e) {
             logger.warn("StaleElementReferenceException in getCurrentElementAttribute(" + attribute + "): " + el, e);
             el.setCurrentElementPath("");
-            if(isElementPresent(el)){
+            if (isElementPresent(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
             } else {
                 logger.error("StaleElementReferenceException in getCurrentElementAttribute (second try): " + attribute + ": " + el, e);
@@ -277,7 +277,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         boolean clicked = false;
         try {
             Actions builder = new Actions(driver);
-            builder.doubleClick(el.currentElement).build().perform();
+            builder.doubleClick(el.currentElement).perform();
             clicked = true;
         } catch (Exception e) {
             // http://code.google.com/p/selenium/issues/detail?id=244
@@ -307,26 +307,18 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public void fireEventWithJS(WebLocator el, String eventName) {
-        String script;
+        String script = "if(document.createEvent) {" +
+                "var evObj = document.createEvent('MouseEvents');\n" +
+                "evObj.initEvent( '" + eventName + "', true, true );\n" +
+                "fireOnThis.dispatchEvent(evObj);\n" +
+                "} else if( document.createEventObject ) {" +
+                "fireOnThis.fireEvent('on" + eventName + "');" +
+                "}";
         String id = getAttributeId(el);
         if (!"".equals(id)) {
-            script = "var fireOnThis = document.getElementById('" + id + "');\n" +
-                    "if(document.createEvent) {" +
-                    "var evObj = document.createEvent('MouseEvents');\n" +
-                    "evObj.initEvent( '" + eventName + "', true, true );\n" +
-                    "fireOnThis.dispatchEvent(evObj);\n" +
-                    "} else if( document.createEventObject ) {" +
-                    "fireOnThis.fireEvent('on" + eventName + "');" +
-                    "}";
+            script = "var fireOnThis = document.getElementById('" + id + "');\n" + script;
         } else if (!"".equals(getAttribute(el, "class"))) {
-            script = "var fireOnThis = document.getElementsByClassName('" + getAttribute(el, "class") + "');\n" +
-                    "if(document.createEvent) {" +
-                    "var evObj = document.createEvent('MouseEvents');\n" +
-                    "evObj.initEvent( '" + eventName + "', true, true );\n" +
-                    "fireOnThis[0].dispatchEvent(evObj);\n" +
-                    "} else if( document.createEventObject ) {" +
-                    "fireOnThis[0].fireEvent('on" + eventName + "');" +
-                    "}";
+            script = "var fireOnThis = document.getElementsByClassName('" + getAttribute(el, "class") + "');\n" + script;
         } else {
             script = "var fireOnThis = document.evaluate(\"" + el.getPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                     "var evObj = document.createEvent('MouseEvents');\n" +
