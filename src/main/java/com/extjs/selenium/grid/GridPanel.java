@@ -565,7 +565,7 @@ public class GridPanel extends Panel {
         GridRow gridRow = findGridRow(byCells);
         boolean selected;
         do {
-            selected = gridRow.clickAt();
+            selected = new GridCell(gridRow, 1).clickAt();
         } while (!selected && scrollPageDown());
         return selected;
     }
