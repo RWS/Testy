@@ -33,6 +33,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 logger.error("StaleElementReferenceException in doClick: " + el);
                 el.setCurrentElementPath("");
                 findElement(el);
+                logger.debug("class of currentElemenent: " + el.currentElement.getAttribute("class"));
                 el.currentElement.click(); // not sure it will click now
                 clicked = true;
             } catch (ElementNotVisibleException e) {
