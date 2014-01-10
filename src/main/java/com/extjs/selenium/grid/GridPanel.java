@@ -562,10 +562,10 @@ public class GridPanel extends Panel {
     }
 
     public boolean selectRow(GridCell... byCells) {
-        GridRow gridRow = findGridRow(byCells);
+        GridCell gridCell = getGridCell(1, byCells);
         boolean selected;
         do {
-            selected = gridRow.clickAt();
+            selected = gridCell.clickAt();
         } while (!selected && scrollPageDown());
         return selected;
     }
