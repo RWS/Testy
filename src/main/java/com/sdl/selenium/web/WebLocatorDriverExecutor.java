@@ -310,11 +310,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public void fireEventWithJS(WebLocator el, String eventName) {
-        String script = "if(document.createEvent) {" +
+        String script = "if(document.createEvent){" +
                 "var evObj = document.createEvent('MouseEvents');\n" +
-                "evObj.initEvent( '" + eventName + "', true, true );\n" +
+                "evObj.initEvent('" + eventName + "', true, true);\n" +
                 "fireOnThis.dispatchEvent(evObj);\n" +
-                "} else if( document.createEventObject ) {" +
+                "} else if(document.createEventObject) {" +
                 "fireOnThis.fireEvent('on" + eventName + "');" +
                 "}";
         String id = getAttributeId(el);
