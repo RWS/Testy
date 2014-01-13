@@ -19,6 +19,8 @@ public abstract class Row extends Cell {
             } else if (cell.getPosition() == -1 && !"".equals(itemPathText)) {
                 path += " and " + getSearchPath(Utils.fixPathSelector(itemPathText));
             } else {
+                logger.warn("cell.getPosition()=" + cell.getPosition());
+                logger.warn("itemPathText=" + itemPathText);
                 logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
             }
         }
