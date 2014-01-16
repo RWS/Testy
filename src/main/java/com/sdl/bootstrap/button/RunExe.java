@@ -20,6 +20,10 @@ public class RunExe {
         return download(filePath, downloadWindowName());
     }
 
+    public boolean download(String filePath) {
+        return doRun(filePath);
+    }
+
     public boolean download(String[] filePath, String downloadWindowName) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName);
     }
@@ -32,7 +36,7 @@ public class RunExe {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"");
     }
 
-    public boolean doRun(String filePath) {
+    private boolean doRun(String filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath);
             if (0 == process.waitFor()) {

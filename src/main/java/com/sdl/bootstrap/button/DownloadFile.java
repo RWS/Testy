@@ -33,12 +33,27 @@ public class DownloadFile extends WebLocator {
      * @param filePath
      */
     public boolean download(String[] filePath) {
+        openBrowse();
+        return RunExe.getInstance().download(filePath);
+    }
+
+    /**
+     * Download file with AutoIT. Work only on FireFox.
+     * Use only this: button.download("C:\\downloadAndSave.exe");
+     * return true if the downloaded file is success, otherwise returns false.
+     * @param filePath
+     */
+    public boolean download(String filePath) {
+        openBrowse();
+        return RunExe.getInstance().download(filePath);
+    }
+
+    private void openBrowse(){
         driver.switchTo().window(driver.getWindowHandle());
         focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
-        return RunExe.getInstance().download(filePath);
     }
 }
