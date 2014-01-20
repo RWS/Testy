@@ -4,9 +4,9 @@ $result = 1
 $txt = ""
 Sleep(200)
 $activeWindowTitle = WinGetTitle(WinWait("[CLASS:MozillaDialogClass]", "", 3))
-;$activeWindowTitle = WinGetTitle("[ACTIVE]")
 WinFlash($activeWindowTitle, "", 1, 50) ; Just to Flash the window
 _FileWriteLog($hFile, "ActiveWindowTitle1='" & $activeWindowTitle & "'")
+Sleep(20)
 Send("!s");
 Send("{ENTER}")
 $activeWindowTitle = WinGetTitle(WinWait("[CLASS:#32770]", " ", 3))
