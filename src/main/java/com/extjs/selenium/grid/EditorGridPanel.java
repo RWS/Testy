@@ -157,6 +157,22 @@ public class EditorGridPanel extends GridPanel {
     public boolean setRowValue(String value) {
         logger.debug("setRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
+        boolean edited = editor.setValue(value);
+        if (edited) {
+            editor.blur();
+        }
+        return edited;
+    }
+
+    /**
+     * set row value in active editor
+     *
+     * @param value
+     * @return
+     */
+    public boolean pasteRowValue(String value) {
+        logger.debug("setRowValue(" + value + ") - in active editor");
+        TextField editor = getActiveEditor();
         boolean edited;
         if(editor instanceof ComboBox){
             edited = editor.setValue(value);
