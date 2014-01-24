@@ -1,6 +1,5 @@
 package com.sdl.selenium.web;
 
-import com.extjs.selenium.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -32,24 +31,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 clicked = true;
             } catch (StaleElementReferenceException e) {
                 logger.error("StaleElementReferenceException in doClick: " + el);
-                el.setCurrentElementPath("");
-                findElement(el);
-                if (el.currentElement != null) {
-                    el.currentElement.click(); // not sure it will click now
-                    clicked = true;
-                } else  {
-                    logger.error("currentElement is null after to try currentElement: " + el);
-                }
+                tryAgainDoClick(el);
+                clicked = true;
             } catch (InvalidElementStateException e) {
                 logger.error("InvalidElementStateException in doClick: " + el);
-                el.setCurrentElementPath("");
-                findElement(el);
-                if (el.currentElement != null) {
-                    el.currentElement.click(); // not sure it will click now
-                    clicked = true;
-                } else  {
-                    logger.error("currentElement is null after to try currentElement: " + el);
-                }
+                tryAgainDoClick(el);
+                clicked = true;
             } catch (ElementNotVisibleException e) {
                 logger.error("ElementNotVisibleException in doClick: " + el, e);
                 throw e;
@@ -60,6 +47,16 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             logger.error("currentElement is null for: " + el);
         }
         return clicked;
+    }
+
+    private void tryAgainDoClick(WebLocator el) {
+        el.setCurrentElementPath("");
+        findElement(el);
+        if (el.currentElement != null) {
+            el.currentElement.click(); // not sure it will click now
+        } else {
+            logger.error("currentElement is null after to try currentElement: " + el);
+        }
     }
 
     @Override
