@@ -24,7 +24,8 @@ public class SelectPicker extends WebLocator {
 
     public boolean select(String value) {
         if (click()) {
-            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']").setInfoMessage("SelectPicker");
+            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
+                    .setInfoMessage("select: '" + value + "'");
             return select.click();
         }
         return false;
