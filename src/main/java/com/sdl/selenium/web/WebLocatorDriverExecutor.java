@@ -155,7 +155,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (StaleElementReferenceException e) {
-            logger.warn("StaleElementReferenceException in getCurrentElementAttribute(" + attribute + "): " + el, e);
+            logger.warn("StaleElementReferenceException in getCurrentElementAttribute(" + attribute + "): " + el);
             el.setCurrentElementPath("");
             if (isElementPresent(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
