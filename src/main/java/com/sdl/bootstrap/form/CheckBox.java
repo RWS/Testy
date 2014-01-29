@@ -21,7 +21,7 @@ public class CheckBox extends SimpleTextField {
 
     public CheckBox(WebLocator container, String label) {
         this(container);
-        setText(label, SearchType.EQUALS);
+        setText(label, SearchType.CONTAINS);
     }
 
     public CheckBox(String label, WebLocator container) {
