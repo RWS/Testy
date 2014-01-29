@@ -21,13 +21,13 @@ public class CheckBox extends SimpleTextField {
 
     public CheckBox(WebLocator container, String label) {
         this(container);
-        setLabelTag("label");
-        setLabel(label);
+        setText(label, SearchType.EQUALS);
     }
 
     public CheckBox(String label, WebLocator container) {
         this(container);
-        setText(label, SearchType.EQUALS);
+        setLabelTag("label");
+        setLabel(label);
     }
 
     public String getItemPath(boolean disabled) {
