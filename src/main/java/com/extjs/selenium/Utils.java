@@ -174,7 +174,11 @@ public class Utils {
     }
 
     public static boolean eq(Object a, Object b) {
-        return a == b || (a != null && a.equals(b));
+        boolean equals = a == b || (a != null && a.equals(b));
+        if(!equals){
+            logger.debug(a + "is not equals with " + b);
+        }
+        return equals;
     }
 
     public static boolean eqArray(String[] a, String[] b) {
