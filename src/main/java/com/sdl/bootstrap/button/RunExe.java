@@ -1,12 +1,13 @@
 package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 
 public class RunExe {
-
+    private static final Logger logger = Logger.getLogger(RunExe.class);
     private static RunExe instance = new RunExe();
 
     private RunExe() {
@@ -39,6 +40,7 @@ public class RunExe {
     private boolean doRun(String filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath);
+            logger.debug(filePath);
             if (0 == process.waitFor()) {
                 return true;
             }
