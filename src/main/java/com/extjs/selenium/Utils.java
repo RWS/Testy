@@ -175,8 +175,8 @@ public class Utils {
 
     public static boolean eq(Object a, Object b) {
         boolean equals = a == b || (a != null && a.equals(b));
-        if(!equals){
-            logger.debug(a + "is not equals with " + b);
+        if (!equals) {
+            logger.debug("'" + a + "' is not equals with '" + b + "'");
         }
         return equals;
     }
@@ -213,7 +213,6 @@ public class Utils {
     }
 
     /**
-     *
      * @param zipFilePath
      * @param outputFolderPath if null of empty will extract in same folder as zipFilePath
      * @return
@@ -223,7 +222,7 @@ public class Utils {
         try {
             long startMs = System.currentTimeMillis();
             //create output directory if doesn't exists
-            if(outputFolderPath == null || "".equals(outputFolderPath)){
+            if (outputFolderPath == null || "".equals(outputFolderPath)) {
                 // unzip in same folder as zip file
                 outputFolderPath = new File(zipFilePath).getParent();
             }
@@ -275,11 +274,10 @@ public class Utils {
     }
 
     /**
-     * @deprecated
-     * use {@link #unZip(String, String)}
      * @param filePath
      * @param extractedFilePath
      * @return
+     * @deprecated use {@link #unZip(String, String)}
      */
     public static boolean unZip2(String filePath, String extractedFilePath) {
         return unZip(filePath, extractedFilePath);
