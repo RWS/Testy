@@ -2,7 +2,7 @@
 Local $hFile = FileOpen(@ScriptDir & "\upload.log", 1)
 Local $result = 1
 Sleep(400)
-$activeWindow = WinWaitActive("[TITLE:File; CLASS:#32770]", " ", 3)
+$activeWindow = WinWaitActive("[TITLE:File; CLASS:#32770]", " ", 6)
 If WinExists($activeWindow) Then
    _FileWriteLog($hFile, "File$activeWindow='" & $activeWindow & "'")
 Else
