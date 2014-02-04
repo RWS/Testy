@@ -3,7 +3,8 @@ Local $hFile = FileOpen(@ScriptDir & "\downloadAndSave.log", 1)
 $result = 1
 $txt = ""
 Sleep(200)
-$activeWindow = WinWaitActive("[TITLE:Opening; CLASS:MozillaDialogClass]", "", 3)
+$activeWindow = WinWait("[TITLE:Opening; CLASS:MozillaDialogClass]", "", 3)
+WinActivate($activeWindow)
 $activeWindowTitle = WinGetTitle($activeWindow)
 WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
 _FileWriteLog($hFile, "ActiveWindowTitle1='" & $activeWindowTitle & "'")
@@ -11,7 +12,8 @@ If WinExists($activeWindow) Then
    Sleep(20)
    Send("!s");
    Send("{ENTER}")
-   $activeWindow = WinWaitActive("[TITLE:Enter; CLASS:#32770]", "", 3)
+   $activeWindow = WinWait("[TITLE:Enter; CLASS:#32770]", "", 3)
+   WinActivate($activeWindow)
    $activeWindowTitle = WinGetTitle($activeWindow)
    _FileWriteLog($hFile, "ActiveWindowTitle2='" & $activeWindowTitle & "'")
    WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
