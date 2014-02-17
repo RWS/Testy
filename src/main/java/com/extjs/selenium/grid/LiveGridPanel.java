@@ -115,6 +115,6 @@ public class LiveGridPanel extends GridPanel {
 
     public boolean refresh() {
         Button refreshButton = new Button(this).setIconCls("x-tbar-loading").setInfoMessage("Loading...");
-        return refreshButton.clickAt();
+        return ready(true) && refreshButton.clickAt() && ready(true);
     }
 }

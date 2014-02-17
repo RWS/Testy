@@ -3,12 +3,9 @@ package com.extjs.selenium.button;
 import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
 
 public class UploadButton extends Button {
-
-    private static final Logger logger = Logger.getLogger(UploadButton.class);
 
     public UploadButton() {
         setClassName("UploadButton");
