@@ -137,11 +137,13 @@ public class GridPanel extends Panel {
 
     /**
      * Will Fail if id is null
+     *
      * @return
      */
     private String getAttrId() {
         String id = getAttributeId();
-        if(id == null){
+        logger.debug("id=" + id);
+        if (id == null) {
             logger.warn("GridPanel id is null: " + getPath());
             Assert.fail("Could not scroll because id of grid is null: " + this);
         }
@@ -227,7 +229,7 @@ public class GridPanel extends Panel {
      */
     public boolean rowSelect(String searchElement, Boolean startWith) {
         ready();
-        GridCell cell = getGridCell(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);;
+        GridCell cell = getGridCell(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);
         return doCellSelect(cell);
     }
 
@@ -289,6 +291,7 @@ public class GridPanel extends Panel {
 
     /**
      * Scroll Page Down to find the cell. If you found it return true, if not return false.
+     *
      * @param searchElement
      * @param columnId
      * @param searchType
@@ -322,7 +325,7 @@ public class GridPanel extends Panel {
 
     public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-       return new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
+        return new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
     }
 
     private WebLocator getHeader(String columnId) {
