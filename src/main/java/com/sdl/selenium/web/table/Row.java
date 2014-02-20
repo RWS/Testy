@@ -24,7 +24,7 @@ public abstract class Row extends Cell {
                 logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
             }
         }
-        setElPath("//" + getTag() + "[" + Utils.fixPathSelector(path) + "]");
+        setElPath("//" + getTag() + (isVisibility() ? "[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]" : "") + "[" + Utils.fixPathSelector(path) + "]");
     }
 
     protected String getSearchPath(int columnIndex, String textCondition) {
