@@ -35,7 +35,8 @@ public class ButtonTest extends TestBase {
         dateFieldWindow.close();
     }
 
-    @Test void performanceTestClick(){
+    @Test
+    public void performanceTestClick() {
         long startMs = System.currentTimeMillis();
         for (int i = 0; i < 10; i++) {
             cancelButton.click();
@@ -44,7 +45,8 @@ public class ButtonTest extends TestBase {
         logger.info(String.format("performanceTestClick took %s ms", endMs - startMs));
     }
 
-    @Test void findButtonWithQuotes(){
+    @Test (dependsOnMethods = "performanceTestClick")
+    public void findButtonWithQuotes() {
         assertTrue(dontAcceptButton.isElementPresent());
         assertTrue(dontAcceptButton1.isElementPresent());
         assertTrue(dontAcceptButton2.isElementPresent());
@@ -60,8 +62,8 @@ public class ButtonTest extends TestBase {
         };
     }
 
-    @Test (dataProvider = "renderMillis")
-    void tryToClickOnButtonThatDoesNotExist(long millis){
+    @Test(dataProvider = "renderMillis")
+    void tryToClickOnButtonThatDoesNotExist(long millis) {
         Button button = new Button(panel, "ButtonThatDoesNotExist").setRenderMillis(millis);
 
         long startMs = System.currentTimeMillis();
