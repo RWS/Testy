@@ -10,13 +10,16 @@ import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.ITable;
+import com.sdl.selenium.web.table.Row;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
 import java.util.*;
 
-public class GridPanel extends Panel {
+public class GridPanel extends Panel implements ITable {
     private static final Logger logger = Logger.getLogger(GridPanel.class);
 
     private String searchColumnId = "0";
@@ -121,7 +124,7 @@ public class GridPanel extends Panel {
         return waitToLoad() && (!waitRows || waitToPopulate());
     }
 
-    public boolean executeScrollScript(String info, String script) {
+    protected boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
         //logger.info(this + " - " + info);
         if (WebDriverConfig.hasWebDriver()) {
@@ -202,14 +205,9 @@ public class GridPanel extends Panel {
         }
     }
 
-    /**
-     * selects (clicks) on a grid which contains a certain element
-     *
-     * @param searchElement the searchElement of the grid element on which the search is done
-     * @return true if selected
-     */
-    public boolean rowSelect(String searchElement) {
-        return rowSelect(searchElement, SearchType.EQUALS);
+    @Override
+    public boolean rowSelect(String searchText) {
+        return rowSelect(searchText, SearchType.EQUALS);
     }
 
     public boolean assertRowSelect(String searchElement) {
@@ -221,6 +219,7 @@ public class GridPanel extends Panel {
     }
 
     /**
+     * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
      * Use this method when really need to select some records not for verification if row is in grid
      *
      * @param searchElement
@@ -233,14 +232,10 @@ public class GridPanel extends Panel {
         return doCellSelect(cell);
     }
 
-    /**
-     * @param searchElement
-     * @param searchType    accepted values are: {"equals"/"eq", "starts-with", "contains"}
-     * @return
-     */
-    public boolean rowSelect(String searchElement, SearchType searchType) {
+    @Override
+    public boolean rowSelect(String searchText, SearchType searchType) {
         ready(true);
-        GridCell cell = getGridCell(searchElement, searchType);
+        GridCell cell = getGridCell(searchText, searchType);
         return doCellSelect(cell);
     }
 
@@ -397,9 +392,7 @@ public class GridPanel extends Panel {
         return getRowCount(searchElement, true);
     }
 
-    /**
-     * @return row count. -1 if not grid not ready to be used or not found
-     */
+    @Override
     public int getCount() {
         if (ready()) {
             return new GridRow(this).size();
@@ -478,7 +471,17 @@ public class GridPanel extends Panel {
         return new GridRow(this);
     }
 
+    /**
+     * @deprecated use getRowLocator
+     * @param rowIndex
+     * @return
+     */
     public GridRow getGridRow(int rowIndex) {
+        return new GridRow(this, rowIndex);
+    }
+
+    @Override
+    public Row getRowLocator(int rowIndex) {
         return new GridRow(this, rowIndex);
     }
 
@@ -490,9 +493,20 @@ public class GridPanel extends Panel {
         return new GridRow(this, searchColumnId, searchElement, searchType);
     }
 
+    /**
+     * @deprecated use getCell
+     * @param rowIndex
+     * @param columnIndex
+     * @return
+     */
     public GridCell getGridCell(int rowIndex, int columnIndex) {
-        WebLocator gridRow = getGridRow(rowIndex);
-        return new GridCell(gridRow, columnIndex);
+        return getCell(rowIndex, columnIndex);
+    }
+
+    @Override
+    public GridCell getCell(int rowIndex, int columnIndex) {
+        Row row = getRowLocator(rowIndex);
+        return new GridCell(row, columnIndex);
     }
 
     public GridCell getGridCell(int rowIndex) {
@@ -560,8 +574,17 @@ public class GridPanel extends Panel {
         return new GridCell(gridRow, columnIndex);
     }
 
-    public GridRow findGridRow(GridCell... byCells) {
+    public GridRow getRow(Cell... byCells) {
         return new GridRow(this, byCells).setInfoMessage("-GridRow");
+    }
+
+    /**
+     * @deprecated use getRow
+     * @param byCells
+     * @return
+     */
+    public GridRow findGridRow(GridCell... byCells) {
+        return getRow(byCells);
     }
 
     public boolean selectRow(GridCell... byCells) {
@@ -575,17 +598,17 @@ public class GridPanel extends Panel {
     }
 
     public GridCell getGridCell(int position, String text, GridCell... byCells) {
-        return new GridCell(findGridRow(byCells)).setPosition(position).setText(text);
+        return new GridCell(getRow(byCells)).setPosition(position).setText(text);
     }
 
     public GridCell getGridCell(int position, GridCell... byCells) {
-        return new GridCell(findGridRow(byCells)).setPosition(position);
+        return new GridCell(getRow(byCells)).setPosition(position);
     }
 
     public String[] getRow(int rowIndex) {
         String[] rowElements = null;
         if (rowIndex != -1) {
-            GridRow row = getGridRow(rowIndex);
+            Row row = getRowLocator(rowIndex);
             String text = row.getHtmlText();
             if (text != null) {
                 rowElements = text.split("\n");

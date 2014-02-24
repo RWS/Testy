@@ -19,8 +19,8 @@ public class TableCell extends Cell {
         setContainer(container);
     }
 
-    public TableCell(Row row, int columnIndex) {
-        this(row);
+    public TableCell(WebLocator container, int columnIndex) {
+        this(container);
         setPosition(columnIndex);
     }
 
@@ -31,8 +31,8 @@ public class TableCell extends Cell {
         setSearchTextType(searchType);
     }
 
-    public TableCell(Row row, int columnIndex, String columnText, SearchType searchType) {
-        this(row, columnIndex);
+    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
+        this(container, columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }

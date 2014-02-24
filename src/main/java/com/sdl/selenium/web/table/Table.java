@@ -7,7 +7,10 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleCheckBox;
 import org.apache.log4j.Logger;
 
-public class Table extends Row {
+/**
+ * @deprecated use {@link SimpleTable}
+ */
+public class Table extends WebLocator {
     private static final Logger logger = Logger.getLogger(Table.class);
 
     private int timeout = 30;
