@@ -96,6 +96,11 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    public String getHtmlSource() {
+        return selenium.getBodyText();
+    }
+
+    @Override
     public String getHtmlSource(WebLocator el) {
         String text = null;
         if (isElementPresent(el)) {

@@ -5,7 +5,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleCheckBox;
 import org.apache.log4j.Logger;
 
-public class SimpleTable extends WebLocator implements ITable {
+public class SimpleTable extends WebLocator implements ITable <TableRow, TableCell>{
     private static final Logger logger = Logger.getLogger(SimpleTable.class);
 
     private int timeout = 30;
@@ -99,7 +99,7 @@ public class SimpleTable extends WebLocator implements ITable {
     }
 
     @Override
-    public Row getRowLocator(int rowIndex) {
+    public TableRow getRowLocator(int rowIndex) {
         return new TableRow(this, rowIndex).setInfoMessage("row - Table");
     }
 
@@ -128,7 +128,7 @@ public class SimpleTable extends WebLocator implements ITable {
     }
 
     @Override
-    public Cell getCell(int rowIndex, int columnIndex) {
+    public TableCell getCell(int rowIndex, int columnIndex) {
         Row row = getRowLocator(rowIndex);
         return new TableCell(row, columnIndex).setInfoMessage("cell - Table");
     }
@@ -174,8 +174,7 @@ public class SimpleTable extends WebLocator implements ITable {
     }
 
     @Override
-    // TODO how to restrict to TableCell's only
-    public TableRow getRow(Cell... byCells) {
+    public TableRow getRow(TableCell... byCells) {
         return new TableRow(this, byCells).setInfoMessage("-TableRow");
     }
 

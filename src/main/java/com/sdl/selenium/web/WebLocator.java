@@ -1,6 +1,7 @@
 package com.sdl.selenium.web;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.WebLocatorUtils;
 import com.thoughtworks.selenium.Selenium;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -116,15 +117,15 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getCurrentElementAttribute(this, attribute);
     }
 
-    public String getHtmlSource() {
-        return executor.getHtmlSource(this);
-    }
-
+    // TODO remove from this class, it does not belong to this element
     /**
-     * xPath only
-     *
+     * @deprecated use {@link com.sdl.selenium.WebLocatorUtils#getPageHtmlSource()}
      * @return
      */
+    public String getHtmlSource() {
+        return WebLocatorUtils.getPageHtmlSource();
+    }
+
     public String getHtmlText() {
         return getHtmlText(false);
     }
@@ -164,7 +165,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * Use xPath only. Click once do you catch exceptions StaleElementReferenceException.
+     * Click once do you catch exceptions StaleElementReferenceException.
      *
      * @return
      */
@@ -229,11 +230,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.clear(this);
     }
 
-    /**
-     * Using XPath only
-     *
-     * @return
-     */
     public boolean mouseOver() {
         if (ready()) {
             logger.info("mouseOver on " + this);
@@ -272,8 +268,15 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return this;
     }
 
+    // TODO remove from this class, it does not belong to this element
+    /**
+     * @deprecated use {@link com.sdl.selenium.WebLocatorUtils#doExecuteScript(String, Object...)}
+     * @param script
+     * @param objects
+     * @return
+     */
     protected Object executeScript(String script, Object... objects) {
-        return executor.executeScript(script, objects);
+        return WebLocatorUtils.doExecuteScript(script, objects);
     }
 
     /**
@@ -306,15 +309,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.exists(this);
     }
 
+    // TODO see where is used and if is necessary to be public
     public WebElement findElement() {
         return executor.findElement(this);
     }
 
-    /**
-     * Using XPath only
-     *
-     * @return
-     */
     public boolean isVisible() {
         boolean visible = isElementPresent();
         if (visible) {
@@ -332,13 +331,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return visible;
     }
 
+    // TODO remove from this class, it does not belong to this element
     public boolean isTextPresent(String text) {
         return executor.isTextPresent(this, text);
     }
 
     /**
      * wait 5 seconds (or specified value for renderSeconds)
-     * Using xPath only.
      *
      * @return
      */
@@ -347,7 +346,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * Using xPath only
      *
      * @param seconds
      * @return

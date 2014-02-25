@@ -182,6 +182,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    public String getHtmlSource() {
+        return driver.getPageSource();
+    }
+
+    @Override
     public String getHtmlSource(WebLocator el) {
         String text = null;
         if (isElementPresent(el)) {

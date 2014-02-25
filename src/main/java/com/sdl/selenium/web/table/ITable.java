@@ -1,8 +1,9 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.SearchType;
 
-public interface ITable {
+public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
 
     /**
      * selects (clicks) on a table which contains a certain element
@@ -30,10 +31,10 @@ public interface ITable {
      * @param rowIndex
      * @return
      */
-    Row getRowLocator(int rowIndex);
+    R getRowLocator(int rowIndex);
 
-    Row getRow(Cell... byCells);
+    R getRow(C... byCells);
 
-    Cell getCell(int rowIndex, int columnIndex);
+    C getCell(int rowIndex, int columnIndex);
 
 }

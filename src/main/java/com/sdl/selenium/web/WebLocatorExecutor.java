@@ -27,6 +27,8 @@ public interface WebLocatorExecutor {
 
     String getHtmlText(WebLocator el);
 
+    String getHtmlSource();
+
     String getHtmlSource(WebLocator el);
 
     boolean setValue(WebLocator el, String value);

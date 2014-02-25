@@ -19,7 +19,7 @@ import org.testng.Assert;
 
 import java.util.*;
 
-public class GridPanel extends Panel implements ITable {
+public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     private static final Logger logger = Logger.getLogger(GridPanel.class);
 
     private String searchColumnId = "0";
@@ -481,7 +481,7 @@ public class GridPanel extends Panel implements ITable {
     }
 
     @Override
-    public Row getRowLocator(int rowIndex) {
+    public GridRow getRowLocator(int rowIndex) {
         return new GridRow(this, rowIndex);
     }
 
@@ -574,7 +574,8 @@ public class GridPanel extends Panel implements ITable {
         return new GridCell(gridRow, columnIndex);
     }
 
-    public GridRow getRow(Cell... byCells) {
+    @Override
+    public GridRow getRow(GridCell... byCells) {
         return new GridRow(this, byCells).setInfoMessage("-GridRow");
     }
 
