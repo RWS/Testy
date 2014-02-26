@@ -5,6 +5,7 @@ package com.sdl.selenium.web;
  * @since 2/25/14
  */
 public interface IWebLocator {
+
     String getHtmlText();
 
     boolean isElementPresent();
