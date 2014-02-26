@@ -2,6 +2,7 @@ package com.extjs.selenium.form;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ICheck;
 import org.apache.log4j.Logger;
 
 /**
@@ -9,7 +10,7 @@ import org.apache.log4j.Logger;
  *    - tag      : input
  *    - baseCls  : x-form-checkbox
  */
-public class Checkbox extends ExtJsComponent {
+public class Checkbox extends ExtJsComponent implements ICheck {
 
     private static final Logger logger = Logger.getLogger(Checkbox.class);
 
@@ -29,6 +30,7 @@ public class Checkbox extends ExtJsComponent {
         setName(name);
     }
 
+    @Override
     public boolean isSelected(){
         return isElementPresent() && executor.isSelected(this);
     }

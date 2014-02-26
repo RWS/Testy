@@ -4,7 +4,7 @@ import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
-public class InputButton extends WebLocator {
+public class InputButton extends WebLocator implements IButton {
     private static final Logger logger = Logger.getLogger(InputButton.class);
 
     public InputButton() {
@@ -37,6 +37,7 @@ public class InputButton extends WebLocator {
         return hasText() ? " and @value="+ Utils.getEscapeQuotesText(getText()) : "";
     }
 
+    @Override
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         selector = Utils.fixPathSelector(selector);

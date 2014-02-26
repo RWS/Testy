@@ -3,7 +3,7 @@ package com.sdl.selenium.web.form;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
-public class SimpleCheckBox extends WebLocator {
+public class SimpleCheckBox extends WebLocator implements ICheck {
     private static final Logger logger = Logger.getLogger(SimpleCheckBox.class);
 
     public SimpleCheckBox() {
@@ -26,6 +26,7 @@ public class SimpleCheckBox extends WebLocator {
         return "//" + getTag() + "[@type='checkbox'" + ("".equals(selector) ? "" : " and " + selector) + "]";
     }
 
+    @Override
     public boolean isSelected() {
         return ready() && executor.isSelected(this);
     }

@@ -1,9 +1,10 @@
 package com.sdl.bootstrap.form;
 
+import com.sdl.selenium.web.IText;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
-public class UneditableInput extends WebLocator {
+public class UneditableInput extends WebLocator implements IText {
     private static final Logger logger = Logger.getLogger(UneditableInput.class);
 
     public UneditableInput() {

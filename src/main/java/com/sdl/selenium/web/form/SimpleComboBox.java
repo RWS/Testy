@@ -5,7 +5,7 @@ import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.ui.Select;
 
-public class SimpleComboBox extends WebLocator {
+public class SimpleComboBox extends WebLocator implements ICombo {
     private static final Logger logger = Logger.getLogger(SimpleComboBox.class);
 
     public SimpleComboBox() {
@@ -18,6 +18,7 @@ public class SimpleComboBox extends WebLocator {
         setContainer(container);
     }
 
+    @Override
     public boolean select(String value) {
         if (ready()) {
             if (WebDriverConfig.hasWebDriver()) {
@@ -35,6 +36,12 @@ public class SimpleComboBox extends WebLocator {
         return false;
     }
 
+    @Override
+    public boolean setValue(String value) {
+        return select(value);
+    }
+
+    @Override
     public String getValue() {
         String value = this.getAttribute("value");
         return new WebLocator(this, "//option[contains(@value, '" + value + "')]").getHtmlText();

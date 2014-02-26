@@ -6,8 +6,6 @@ package com.sdl.selenium.web;
  */
 public interface IWebLocator {
 
-    String getHtmlText();
-
     boolean isElementPresent();
 
     int size();

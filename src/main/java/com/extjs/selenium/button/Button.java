@@ -5,10 +5,11 @@ import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.button.IButton;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 
-public class Button extends ExtJsComponent {
+public class Button extends ExtJsComponent implements IButton {
     private static final Logger logger = Logger.getLogger(Button.class);
 
     public String getIconCls() {

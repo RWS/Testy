@@ -3,10 +3,11 @@ package com.extjs.selenium.form;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ICombo;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
 
-public class ComboBox extends TextField {
+public class ComboBox extends TextField implements ICombo {
     private static final Logger logger = Logger.getLogger(ComboBox.class);
     private static String listClass = "x-combo-list";
 
@@ -52,6 +53,7 @@ public class ComboBox extends TextField {
      * @param value
      * @return true if value was selected
      */
+    @Override
     public boolean setValue(String value) {
         return select(value);
     }
@@ -127,6 +129,7 @@ public class ComboBox extends TextField {
         return selected;
     }
 
+    @Override
     public boolean select(String value) {
         return select(value, false);
     }
