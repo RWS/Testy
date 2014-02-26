@@ -77,10 +77,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public WebElement findElement(WebLocator el) {
         final String path = el.getPath();
-        if (isSamePath(el, path)) {
-            logger.debug("currentElement already found one time: " + el);
+//        if (isSamePath(el, path)) {
+//            logger.debug("currentElement already found one time: " + el);
             //return el.currentElement;
-        }
+//        }
         doWaitElement(el, 0);
         el.setCurrentElementPath(path);
         return el.currentElement;
