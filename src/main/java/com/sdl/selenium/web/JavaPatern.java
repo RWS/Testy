@@ -1,7 +1,5 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.form.ITextField;
-
 interface IButton {
     void click();
 }
@@ -20,7 +18,7 @@ class WebLocatorImp extends WebLocatorAbstractBuilder  {
     }
 }
 
-class TextField1 extends WebLocatorAbstractBuilder implements ITextField/*, ITextFieldPath*/ {
+class TextField1 extends WebLocatorAbstractBuilder /*implements ITextField*//*, ITextFieldPath*/ {
 
     private WebLocatorImp webLocatorImp = null;
 
@@ -32,12 +30,12 @@ class TextField1 extends WebLocatorAbstractBuilder implements ITextField/*, ITex
         webLocatorImp.type();
     }
 
-    @Override
+    //@Override
     public boolean setValue(String value) {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
+    //@Override
     public String getValue() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
