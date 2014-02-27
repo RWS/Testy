@@ -2,6 +2,7 @@ package com.extjs.selenium.tab;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -94,7 +95,7 @@ public class TabPanel extends ExtJsComponent {
             String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
             String script = "return Ext.getCmp('" + id + "').setActiveTab(" + getTabCount(getText(), path) + ");";
             logger.warn("force TabPanel setActive with js: " + script);
-            executeScript(script);
+            WebLocatorUtils.doExecuteScript(script);
             activated = true; // TODO verify when is not executed
         }
         if(activated){

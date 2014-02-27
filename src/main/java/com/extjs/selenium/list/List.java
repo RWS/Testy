@@ -3,6 +3,7 @@ package com.extjs.selenium.list;
 import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.grid.GridPanel;
 import com.extjs.selenium.grid.GridRow;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.commons.lang3.StringUtils;
@@ -55,7 +56,7 @@ public class List extends GridPanel {
 
     public boolean selectRowsWithJs(String[] values) {
         String id = getAttributeId();
-        return (Boolean) executeScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + StringUtils.join(values, ",") + "');");
+        return (Boolean) WebLocatorUtils.doExecuteScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + StringUtils.join(values, ",") + "');");
     }
 
     public boolean isSelectedRows(String[] values) {
@@ -79,6 +80,12 @@ public class List extends GridPanel {
         return cell;
     }
 
+    /**
+     * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
+     * @param searchElement
+     * @param startWith
+     * @return
+     */
     @Override
     public boolean rowSelect(String searchElement, Boolean startWith) {
         //TODO When Override ScrollTop method, this method must be removed
@@ -86,8 +93,18 @@ public class List extends GridPanel {
         return cell.select();
     }
 
+    /**
+     * @deprecated use getRowLocator
+     * @param rowIndex
+     * @return
+     */
     @Override
     public GridRow getGridRow(int rowIndex) {
+        return getRowLocator(rowIndex);
+    }
+
+    @Override
+    public GridRow getRowLocator(int rowIndex) {
         return new GridRow(this, "//dl[" + rowIndex + "]");
     }
 }

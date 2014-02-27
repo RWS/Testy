@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.table;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
@@ -28,9 +29,9 @@ public class Table extends WebLocator {
     public boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
         if (WebDriverConfig.hasWebDriver()) {
-            scrolled = (Boolean) executeScript(script);
+            scrolled = (Boolean) WebLocatorUtils.doExecuteScript(script);
         } else {
-            scrolled = Boolean.parseBoolean((String) executeScript(script));
+            scrolled = Boolean.parseBoolean((String) WebLocatorUtils.doExecuteScript(script));
         }
         logger.info(this + " - " + info + " > " + scrolled);
         Utils.sleep(200); // because of Buffer view that can have scroll delay

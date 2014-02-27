@@ -1,6 +1,7 @@
 package com.extjs.selenium.form;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
@@ -107,7 +108,7 @@ public class ComboBox extends TextField implements ICombo {
         componentId = getAttributeId();
         String getListIdScript = "return Ext.getCmp('" + componentId + "').list.id;";
         logger.debug("script:" + getListIdScript);
-        String listId = (String) executeScript(getListIdScript);
+        String listId = (String) WebLocatorUtils.doExecuteScript(getListIdScript);
         logger.debug("listId:" + listId);
         return listId;
     }
@@ -124,7 +125,7 @@ public class ComboBox extends TextField implements ICombo {
         String script = "return (function(){var c  = Ext.getCmp('" + componentId + "'); var record = c.findRecord(c.displayField, '" + value + "');" +
                 "if(record){c.onSelect(record, c.store.indexOf(record)); return true;} return false;})()";
         logger.warn("force ComboBox Value with js: " + script);
-        selected = (Boolean) executeScript(script);
+        selected = (Boolean) WebLocatorUtils.doExecuteScript(script);
         logger.warn("force ComboBox select result: " + selected);
         return selected;
     }

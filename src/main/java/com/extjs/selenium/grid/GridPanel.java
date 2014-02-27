@@ -4,6 +4,7 @@ import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.extjs.selenium.panel.Panel;
 import com.extjs.selenium.tab.TabPanel;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
@@ -128,9 +129,9 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
         Boolean scrolled;
         //logger.info(this + " - " + info);
         if (WebDriverConfig.hasWebDriver()) {
-            scrolled = (Boolean) executeScript(script);
+            scrolled = (Boolean) WebLocatorUtils.doExecuteScript(script);
         } else {
-            scrolled = Boolean.parseBoolean((String) executeScript(script));
+            scrolled = Boolean.parseBoolean((String) WebLocatorUtils.doExecuteScript(script));
         }
         logger.info(this + " - " + info + " > " + scrolled);
         // TODO make configurable if has buffer view
