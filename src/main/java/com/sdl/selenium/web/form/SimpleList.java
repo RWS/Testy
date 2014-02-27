@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
@@ -63,5 +64,23 @@ public class SimpleList extends WebLocator implements ICombo, IWebLocator {
             sendKeys(Keys.UP);
         }
         return select;
+    }
+
+    protected String getItemPath(boolean disabled) {
+        String selector = getBasePathSelector();
+        selector = Utils.fixPathSelector(selector);
+        selector = getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
+        return selector;
+    }
+
+    @Override
+    protected String afterItemPathCreated(String itemPath) {
+        if (hasLabel()) {
+            itemPath = getLabelPath() + "//following-sibling::" + itemPath;
+        } else {
+            itemPath = "//" + itemPath;
+        }
+        itemPath = addPositionToPath(itemPath);
+        return itemPath;
     }
 }
