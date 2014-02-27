@@ -1,55 +1,28 @@
 package com.sdl.selenium.web.form;
 
 import com.extjs.selenium.Utils;
-import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.Select;
 
-public class SimpleList extends WebLocator implements ICombo, IWebLocator {
-    private static final Logger logger = Logger.getLogger(SimpleList.class);
+public class SimpleMultipleSelect extends SimpleComboBox {
+    private static final Logger logger = Logger.getLogger(SimpleMultipleSelect.class);
 
-    public SimpleList() {
-        setClassName("SimpleList");
-        setTag("select");
+    public SimpleMultipleSelect() {
+        setClassName("SimpleMultipleSelect");
     }
 
-    public SimpleList(WebLocator container) {
+    public SimpleMultipleSelect(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public SimpleList(WebLocator container, String label) {
+    public SimpleMultipleSelect(WebLocator container, String label) {
         this(container);
         setLabel(label);
     }
 
-    @Override
-    public boolean select(String value) {
-        boolean selected = false;
-        if (ready()) {
-            new Select(currentElement).selectByVisibleText(value);
-            selected = true;
-        }
-        if (selected) {
-            logger.info("Set value(" + this + "): " + value);
-        }
-        return selected;
-    }
-
-    @Override
-    public boolean setValue(String value) {
-        return select(value);
-    }
-
-    @Override
-    public String getValue() {
-        String value = this.getAttribute("value");
-        return new WebLocator(this, "//option[contains(@value, '" + value + "')]").getHtmlText();
-    }
-
-    public boolean selectRows(String[] values) {
+    public boolean selectRows(String... values) {
         boolean select = false;
         if (ready()) {
             sendKeys(Keys.CONTROL, Keys.DOWN);

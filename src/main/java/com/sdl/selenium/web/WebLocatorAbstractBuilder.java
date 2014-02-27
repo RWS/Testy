@@ -486,6 +486,11 @@ public abstract class WebLocatorAbstractBuilder {
     // =============== Methods =================
     // =========================================
 
+    /**
+     * <p>Used only to identify class type of current object</p>
+     * <p> Not used for css class!</p>
+     * @return
+     */
     public String getClassName() {
         return className;
     }
