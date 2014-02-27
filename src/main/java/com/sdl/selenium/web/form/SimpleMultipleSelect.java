@@ -25,7 +25,7 @@ public class SimpleMultipleSelect extends SimpleComboBox {
     public boolean selectRows(String... values) {
         boolean select = false;
         if (ready()) {
-            sendKeys(Keys.CONTROL, Keys.DOWN);
+            sendKeys(Keys.CONTROL);
             for (String value : values) {
                 WebLocator el = new WebLocator(this, "//*[contains(text(),'" + value + "')]");
                 select = el.click();
