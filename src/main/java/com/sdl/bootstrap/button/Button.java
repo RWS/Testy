@@ -61,4 +61,9 @@ public class Button extends WebLocator implements IButton {
         selector = Utils.fixPathSelector(selector);
         return "//" + getTag() + ("".equals(selector) ? "" : "[" + selector + "]");
     }
+
+    public boolean isDisabled(){
+        logger.debug("this.getAttribute('disabled')=" + this.getAttribute("disabled"));
+        return this.getAttribute("disabled") != null ? true : false;
+    }
 }
