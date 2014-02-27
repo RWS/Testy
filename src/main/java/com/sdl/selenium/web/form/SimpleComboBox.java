@@ -4,6 +4,7 @@ import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.ui.Select;
+import sun.util.logging.resources.logging;
 
 public class SimpleComboBox extends WebLocator implements ICombo {
     private static final Logger logger = Logger.getLogger(SimpleComboBox.class);
@@ -20,20 +21,25 @@ public class SimpleComboBox extends WebLocator implements ICombo {
 
     @Override
     public boolean select(String value) {
+        boolean selected = false;
         if (ready()) {
             if (WebDriverConfig.hasWebDriver()) {
                 if ("".equals(value)) {
-                    return true;
+                    logger.warn("value is empty");
+                    selected = true;
                 } else {
                     new Select(currentElement).selectByVisibleText(value);
-                    return true;
+                    selected = true;
                 }
             } else {
                 selenium.select(getPath(), value);
-                return true;
+                selected = true;
             }
         }
-        return false;
+        if (selected) {
+            logger.info("Set value(" + this + "): " + value);
+        }
+        return selected;
     }
 
     @Override
