@@ -11,7 +11,6 @@ import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.ITable;
 import com.sdl.selenium.web.table.Row;
 import org.apache.log4j.Logger;
@@ -313,7 +312,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     public boolean clickInGrid(int rowIndex, int columnIndex) {
         ready(true);
         if (rowIndex > 0) {
-            GridCell cell = getGridCell(rowIndex, columnIndex);
+            GridCell cell = getCell(rowIndex, columnIndex);
             return cell.select();
         }
         return false;
@@ -412,7 +411,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
 
             //TODO Try better search mecanism
             while (rowIndex <= rowCount) {
-                GridRow row = getGridRow(rowIndex);
+                GridRow row = getRowLocator(rowIndex);
                 String cls = row.getAttributeClass();
                 if (cls != null && cls.contains("x-grid3-row-selected")) {
                     index = rowIndex;
@@ -512,7 +511,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
 
     public GridCell getGridCell(int rowIndex) {
         String rowPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[contains(@class, 'x-grid3-cell-inner')]";
-        return new GridCell(getGridRow(rowIndex), rowPath);
+        return new GridCell(getRowLocator(rowIndex), rowPath);
     }
 
     /**
@@ -547,7 +546,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     }
 
     public GridCell getGridCell(int rowIndex, int columnIndex, String text) {
-        GridRow gridRow = getGridRow(rowIndex);
+        GridRow gridRow = getRowLocator(rowIndex);
         return getGridCellWithText(gridRow, columnIndex, text, SearchType.CONTAINS);
     }
 
@@ -682,7 +681,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     }
 
     public String getText(int rowIndex, int columnIndex) {
-        GridCell cell = getGridCell(rowIndex, columnIndex);
+        GridCell cell = getCell(rowIndex, columnIndex);
         return cell.getHtmlText();
     }
 
@@ -703,7 +702,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
         if (ready(true)) {
             String path;
             if (rowIndex != -1) {
-                GridRow gridRow = getGridRow(rowIndex);
+                GridRow gridRow = getRowLocator(rowIndex);
                 String cls = gridRow.getAttributeClass();
                 boolean isSelected = cls != null && cls.contains("x-grid3-row-selected");
                 path = "//*[contains(@class, 'x-grid3-row-checker')]";
@@ -858,7 +857,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
             String path;
             int rowIndex = getRowIndex(searchText);
             if (rowIndex != -1) {
-                path = getGridRow(rowIndex).getPath() + "//div[contains(@class,'x-grid3-check-col')]";
+                path = getRowLocator(rowIndex).getPath() + "//div[contains(@class,'x-grid3-check-col')]";
                 WebLocator element = new WebLocator(null, path);
                 if (element.exists()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
@@ -882,7 +881,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
         if (ready(true)) {
             int rowIndex = getRowIndex(searchText);
             if (rowIndex != -1) {
-                String path = getGridRow(rowIndex).getPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
+                String path = getRowLocator(rowIndex).getPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
                 isSelected = new WebLocator(null, path).exists();
             }
         }
@@ -904,7 +903,7 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
 
     public boolean waitToPopulate(int seconds) {
         //logger.debug("waitToPopulate: " + seconds + "; " + toString());
-        WebLocator firstRow = getGridRow(1).setInfoMessage("first row");
+        WebLocator firstRow = getRowLocator(1).setInfoMessage("first row");
         return firstRow.waitToRender(seconds);
     }
 

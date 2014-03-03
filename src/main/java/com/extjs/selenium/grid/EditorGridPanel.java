@@ -96,7 +96,7 @@ public class EditorGridPanel extends GridPanel {
      */
     public boolean startEdit(int rowIndex, int colIndex) {
         logger.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
-        GridCell cell = getGridCell(rowIndex, colIndex);
+        GridCell cell = getCell(rowIndex, colIndex);
 //        cell.sendKeys(Keys.TAB);
 //        return startEdit(cell);
         return prepareEdit(cell);
@@ -174,7 +174,7 @@ public class EditorGridPanel extends GridPanel {
         logger.debug("setRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         boolean edited;
-        if(editor instanceof ComboBox){
+        if (editor instanceof ComboBox) {
             edited = editor.setValue(value);
         } else {
             edited = editor.pasteInValue(value);
@@ -190,11 +190,8 @@ public class EditorGridPanel extends GridPanel {
         TextField editor = getActiveEditor();
         editor.sendKeys(Keys.END);
         editor.sendKeys(value);
-        boolean edited = true;
-        if (edited) {
-            editor.blur();
-        }
-        return edited;
+        editor.blur();
+        return true;
     }
 
     public boolean setRowValue(int rowIndex, int colIndex, String value) {
