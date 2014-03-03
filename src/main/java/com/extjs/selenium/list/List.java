@@ -29,7 +29,7 @@ public class List extends GridPanel {
         return "";
     }
 
-    public boolean selectRows(String[] values) {
+    public boolean selectRows(String ...values) {
         boolean select = false;
         if (WebDriverConfig.hasWebDriver()) {
             sendKeys(Keys.CONTROL, Keys.DOWN);
@@ -55,12 +55,12 @@ public class List extends GridPanel {
         return select;
     }
 
-    public boolean selectRowsWithJs(String[] values) {
+    public boolean selectRowsWithJs(String ...values) {
         String id = getAttributeId();
         return (Boolean) WebLocatorUtils.doExecuteScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + StringUtils.join(values, ",") + "');");
     }
 
-    public boolean isSelectedRows(String[] values) {
+    public boolean isSelectedRows(String ...values) {
         boolean select = false;
         for (String value : values) {
             WebLocator webLocator = new WebLocator(getGridCell(value, false), "/parent::*/parent::dl");

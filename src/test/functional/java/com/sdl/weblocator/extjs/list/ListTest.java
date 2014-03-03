@@ -31,13 +31,13 @@ public class ListTest extends TestBase {
     @Ignores (value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
     @Test
     public void select() {
-        assertTrue(multiSelectList.selectRows(new String[]{"English", "French", "Spanish"}));
-        assertTrue(multiSelectList.isSelectedRows(new String[]{"English", "French", "Spanish"}));
+        assertTrue(multiSelectList.selectRows("English", "French", "Spanish"));
+        assertTrue(multiSelectList.isSelectedRows("English", "French", "Spanish"));
     }
 
     @Test
     public void selectWithJs() {
-        assertTrue(multiSelectList.selectRowsWithJs(new String[]{"German", "Japanese", "Russian"}));
-        assertTrue(multiSelectList.isSelectedRows(new String[]{"German", "Japanese", "Russian"}));
+        assertTrue(multiSelectList.selectRowsWithJs("German", "Japanese", "Russian"));
+        assertTrue(multiSelectList.isSelectedRows("German", "Japanese", "Russian"));
     }
 }
