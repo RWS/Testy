@@ -4,6 +4,7 @@ import com.extjs.selenium.grid.GridCell;
 import com.extjs.selenium.grid.GridPanel;
 import com.extjs.selenium.grid.GridRow;
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +34,7 @@ public class List extends GridPanel {
         if (WebDriverConfig.hasWebDriver()) {
             sendKeys(Keys.CONTROL, Keys.DOWN);
             for (String value : values) {
-                select = rowSelect(value, false);
+                select = rowSelect(value, SearchType.EQUALS);
                 if (!select) {
                     sendKeys(Keys.UP);
                     return false;
@@ -43,7 +44,7 @@ public class List extends GridPanel {
         } else {
             selenium.controlKeyDown();
             for (String value : values) {
-                select = rowSelect(value, false);
+                select = rowSelect(value, SearchType.EQUALS);
                 if (!select) {
                     selenium.controlKeyUp();
                     return false;
@@ -72,8 +73,8 @@ public class List extends GridPanel {
     }
 
     @Override
-    public GridCell getGridCell(String searchElement, Boolean startWidth) {
-        String textCondition = startWidth ? ("starts-with(text(),'" + searchElement + "')") : ("text()='" + searchElement + "'");
+    public GridCell getGridCell(String searchElement, SearchType searchType) {
+        String textCondition = searchType.equals(SearchType.STARTS_WITH) ? ("starts-with(text(),'" + searchElement + "')") : ("text()='" + searchElement + "'");
         String cellPath = "//*[" + textCondition + "]";
         GridCell cell = new GridCell(this, cellPath);
         cell.setInfoMessage("cell(" + searchElement + ")");
@@ -81,15 +82,14 @@ public class List extends GridPanel {
     }
 
     /**
-     * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
      * @param searchElement
-     * @param startWith
+     * @param searchType
      * @return
      */
     @Override
-    public boolean rowSelect(String searchElement, Boolean startWith) {
+    public boolean rowSelect(String searchElement, SearchType searchType) {
         //TODO When Override ScrollTop method, this method must be removed
-        GridCell cell = getGridCell(searchElement, startWith);
+        GridCell cell = getGridCell(searchElement, searchType);
         return cell.select();
     }
 
