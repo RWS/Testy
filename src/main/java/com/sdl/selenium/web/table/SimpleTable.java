@@ -33,12 +33,12 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
     }
 
     @Deprecated
-    public boolean doCellSelect(TableCell tableCell) {
+    private boolean doCellSelect(TableCell tableCell) {
         return doCellAction(tableCell, null);
     }
 
     @Deprecated
-    public boolean doCellDoubleClickAt(TableCell tableCell) {
+    private boolean doCellDoubleClickAt(TableCell tableCell) {
         return doCellAction(tableCell, "doubleClickAt");
     }
 
@@ -77,14 +77,14 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
         return found;
     }
 
-    public Number getRowCount(String searchElement, Boolean startWith) {
+    public Number getRowCount(String searchElement, SearchType searchType) {
         ready();
-        String rowPath = getTableCell(searchElement, startWith).getPath();
+        String rowPath = getTableCell(searchElement, searchType).getPath();
         return new WebLocator(null, rowPath).size();
     }
 
     public Number getRowCount(String searchElement) {
-        return getRowCount(searchElement, true);
+        return getRowCount(searchElement, SearchType.STARTS_WITH);
     }
 
     @Override
