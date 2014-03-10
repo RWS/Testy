@@ -35,7 +35,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     private String label;
     private String labelTag = "label";
-    private String labelPosition = "//following-sibling::*";
+    private String labelPosition = "//following-sibling::*//";
 
     private int position = -1;
 
@@ -451,7 +451,8 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @param labelPosition label position
+     * @param labelPosition position of this element reported to label
+     * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabelPosition(String labelPosition) {
@@ -754,6 +755,10 @@ public abstract class WebLocatorAbstractBuilder {
 
     protected String afterItemPathCreated(String itemPath) {
         if (hasLabel()) {
+            // remove '//' because labelPath already has and include
+            if(itemPath.indexOf("//") == 0) {
+                itemPath = itemPath.substring(2);
+            }
             itemPath = getLabelPath() + getLabelPosition() + itemPath;
         }
         itemPath = addPositionToPath(itemPath);
