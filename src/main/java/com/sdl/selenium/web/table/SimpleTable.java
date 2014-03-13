@@ -90,7 +90,8 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
     @Override
     public int getCount() {
         if (ready()) {
-            return new TableRow(this).size();
+            WebLocator body = new WebLocator(this).setTag("tbody");
+            return new TableRow(body).size();
         } else {
             logger.warn("table is not ready to be used");
             // TODO could try to verify row count with mask on table or when is disabled also.
