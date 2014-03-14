@@ -117,7 +117,7 @@ public class EditorGridPanelTest extends TestBase {
     @Test(dependsOnMethods = "editGridPanelAndScrollClearCell")
     public void assertRowEditorGridPanel() {
         ConditionManager conditionManager = new ConditionManager(1000);
-        conditionManager.add(new RenderSuccessCondition(editorGridPanel.findGridRow(new GridCell(1, "Adder's-Tongue", SearchType.EQUALS), new GridCell(2, "Erythronium americanum", SearchType.EQUALS))));
+        conditionManager.add(new RenderSuccessCondition(editorGridPanel.getRow(new GridCell(1, "Adder's-Tongue", SearchType.EQUALS), new GridCell(2, "Erythronium americanum", SearchType.EQUALS))));
         assertTrue(conditionManager.execute().isSuccess());
     }
 
@@ -136,8 +136,8 @@ public class EditorGridPanelTest extends TestBase {
         assertTrue(editorGridPanel.rowSelect("Beauty", 1, SearchType.CONTAINS));
     }
 
-    @Test(dependsOnMethods = "rowSelectContains")
+    @Test//(dependsOnMethods = "rowSelectContains")
     public void rowSelectMoreContains() {
-        assertTrue(editorGridPanel.rowSelect("Spring/Beauty", SearchType.MORE_CONTAINS));
+        assertTrue(editorGridPanel.rowSelect("Spring/Beauty", 1, SearchType.MORE_CONTAINS));
     }
 }
