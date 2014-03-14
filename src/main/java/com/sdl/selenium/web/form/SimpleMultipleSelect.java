@@ -44,7 +44,7 @@ public class SimpleMultipleSelect extends SimpleComboBox {
 
     public List<String> getValues() {
         List<WebElement> elements = WebLocator.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         for (int i = 0; i < elements.size(); i++) {
             String text = elements.get(i).getText();
             logger.debug(text);
