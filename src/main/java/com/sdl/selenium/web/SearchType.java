@@ -61,6 +61,17 @@ public enum SearchType {
      * <p>so must be used like:</p>
      * <pre>WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel is Button text", SearchType.HTML_NODE);</pre>
      */
-    HTML_NODE
+    HTML_NODE,
 
+    //TODO documentatia nu e buna!!!
+    /**
+     * For finding elements that contain and text 'Cancel' and text 'Button'.
+     * <pre>
+     &lt;div class="btn">
+     &lt;span class="btn-text">Cancel is a Button&lt;/span>
+     &lt;/div></pre>
+     * <p>so must be used like:</p>
+     * <pre>WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel/Button", SearchType.MORE_CONTAINS);</pre>
+     */
+    MORE_CONTAINS,
 }

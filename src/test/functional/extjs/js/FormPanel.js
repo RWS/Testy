@@ -40,15 +40,15 @@ Ext.onReady(function(){
             emptyText: 'Select a file',
             fieldLabel: 'Upload File',
             name: 'photo-path',
-            buttonText: 'Browse',
+            buttonText: 'Browse'
         }, {
             xtype: 'checkbox',
             fieldLabel: '',
             labelSeparator: '',
-            boxLabel: 'CatRight',
+            boxLabel: 'CatRight'
         }, {
             xtype: 'checkbox',
-            fieldLabel: 'CatLeft',
+            fieldLabel: 'CatLeft'
         }
         ],
 
@@ -64,9 +64,9 @@ Ext.onReady(function(){
             }
         },{
             text: 'Stress',
-            id: 'stress',
+            id: 'stress'
         },{
-            text: 'Don\'\"t Accept',
+            text: 'Don\'\"t Accept'
         },{
             text: 'Cancel'
         }]

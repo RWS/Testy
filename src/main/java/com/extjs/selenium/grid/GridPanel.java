@@ -19,7 +19,7 @@ import org.testng.Assert;
 
 import java.util.*;
 
-public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
+public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     private static final Logger logger = Logger.getLogger(GridPanel.class);
 
     private String searchColumnId = "0";
@@ -219,12 +219,11 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     }
 
     /**
-     * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
-     * Use this method when really need to select some records not for verification if row is in grid
-     *
      * @param searchElement
      * @param startWith
      * @return
+     * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
+     *             Use this method when really need to select some records not for verification if row is in grid
      */
     public boolean rowSelect(String searchElement, Boolean startWith) {
         ready();
@@ -472,9 +471,9 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     }
 
     /**
-     * @deprecated use getRowLocator
      * @param rowIndex
      * @return
+     * @deprecated use getRowLocator
      */
     public GridRow getGridRow(int rowIndex) {
         return new GridRow(this, rowIndex);
@@ -494,10 +493,10 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     }
 
     /**
-     * @deprecated use getCell
      * @param rowIndex
      * @param columnIndex
      * @return
+     * @deprecated use getCell
      */
     public GridCell getGridCell(int rowIndex, int columnIndex) {
         return getCell(rowIndex, columnIndex);
@@ -528,6 +527,16 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
             textCondition = "contains(text(),'" + searchElement + "')";
         } else if (SearchType.STARTS_WITH.equals(searchType)) {
             textCondition = "starts-with(text(),'" + searchElement + "')";
+        } else if (SearchType.MORE_CONTAINS.equals(searchType)) {
+            String[] strings = searchElement.split("/");
+            String textTmp = "";
+            for (String str : strings) {
+                textTmp += "contains(text()," + str + ") and ";
+            }
+            if (textTmp.endsWith(" and ")) {
+                textTmp = textTmp.substring(0, textTmp.length() - 5);
+            }
+            textCondition = textTmp;
         } else {
             logger.warn("searchType did not math to any accepted values");
         }
@@ -580,9 +589,9 @@ public class GridPanel extends Panel implements ITable <GridRow, GridCell>{
     }
 
     /**
-     * @deprecated use getRow
      * @param byCells
      * @return
+     * @deprecated use getRow
      */
     public GridRow findGridRow(GridCell... byCells) {
         return getRow(byCells);

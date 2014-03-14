@@ -30,6 +30,8 @@ If WinExists($activeWindow) Then
    $txt = ControlGetText($activeWindowTitle, "", "[CLASS:Edit; INSTANCE:1]")
    _FileWriteLog($hFile, "txt='" & $txt & "'")
    $allText = ControlSetText($activeWindowTitle, "", "Edit1", @ScriptDir &"\"& $txt)
+   _FileWriteLog($hFile, "deleting file: '" & @ScriptDir &"\"& $txt &"'")
+   FileDelete(@ScriptDir &"\"& $txt)
    $click = ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:1]")
    $close = WinWaitClose($activeWindowTitle, " ", 3)
    Sleep(200)
@@ -48,4 +50,5 @@ If WinExists($activeWindow) Then
    EndIf
 EndIf
 FileClose($hFile)
-Exit $result
+_FileWriteLog($hFile, "$result='" & $result & "'")
+Exit ($result)

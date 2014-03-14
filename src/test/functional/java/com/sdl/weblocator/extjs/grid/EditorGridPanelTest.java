@@ -135,4 +135,9 @@ public class EditorGridPanelTest extends TestBase {
     public void rowSelectContains() {
         assertTrue(editorGridPanel.rowSelect("Beauty", 1, SearchType.CONTAINS));
     }
+
+    @Test(dependsOnMethods = "rowSelectContains")
+    public void rowSelectMoreContains() {
+        assertTrue(editorGridPanel.rowSelect("Spring/Beauty", SearchType.MORE_CONTAINS));
+    }
 }
