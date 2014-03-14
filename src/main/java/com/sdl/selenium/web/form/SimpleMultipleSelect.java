@@ -1,9 +1,14 @@
 package com.sdl.selenium.web.form;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleMultipleSelect extends SimpleComboBox {
     private static final Logger logger = Logger.getLogger(SimpleMultipleSelect.class);
@@ -25,19 +30,29 @@ public class SimpleMultipleSelect extends SimpleComboBox {
     public boolean selectRows(String... values) {
         boolean select = false;
         if (ready()) {
-            sendKeys(Keys.CONTROL);
+//            sendKeys(Keys.CONTROL);
             for (String value : values) {
-                WebLocator el = new WebLocator(this, "//*[contains(text(),'" + value + "')]");
+                WebLocator el = new WebLocator(this).setText(value, SearchType.EQUALS);
                 select = el.click();
                 if (!select) {
-                    sendKeys(Keys.UP);
                     return false;
                 }
             }
-            sendKeys(Keys.UP);
         }
         return select;
     }
+
+    public List<String> getValues() {
+        List<WebElement> elements = WebLocator.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < elements.size(); i++) {
+            String text = elements.get(i).getText();
+            logger.debug(text);
+            list.add(text);
+        }
+        return list;
+    }
+
 
     protected String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
