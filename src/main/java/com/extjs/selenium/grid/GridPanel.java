@@ -263,7 +263,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         boolean selected;
         scrollTop(); // make sure always start from top then scroll down till the end of the page
         do {
-            // if the row is not in visible (need to scroll down - errors when used BufferView in grid)
+            ready();// if the row is not in visible (need to scroll down - errors when used BufferView in grid)
             if ("doubleClickAt".equals(action)) {
                 selected = cell.doubleClickAt();
             } else {
