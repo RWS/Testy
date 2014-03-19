@@ -514,34 +514,14 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * TODO improve *reuse searchType from WebLocator
      *
      * @param searchElement Text searched.
-     * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
+     * @param searchType
      * @return GridCell
      */
     public GridCell getGridCell(String searchElement, SearchType searchType) {
-        String textCondition = "text()='" + searchElement + "'";
-        if (SearchType.EQUALS.equals(searchType)) {
-        } else if (SearchType.CONTAINS.equals(searchType)) {
-            textCondition = "contains(text(),'" + searchElement + "')";
-        } else if (SearchType.STARTS_WITH.equals(searchType)) {
-            textCondition = "starts-with(text(),'" + searchElement + "')";
-        } else if (SearchType.CONTAINS_ALL.equals(searchType) || SearchType.CONTAINS_ANY.equals(searchType)) {
-            String splitChar = "\\" + String.valueOf(searchElement.charAt(0));
-            String[] strings = searchElement.substring(1).split(splitChar);
-            String textTmp = "";
-            for (String str : strings) {
-                textTmp += "contains(text() ,'" + str + "')" + (SearchType.CONTAINS_ALL.equals(searchType) ? " and " : " or ");
-            }
-            if (textTmp.endsWith((SearchType.CONTAINS_ALL.equals(searchType) ? " and " : " or "))) {
-                textTmp = textTmp.substring(0, textTmp.length() - (SearchType.CONTAINS_ALL.equals(searchType) ? 5 : 4));
-            }
-            textCondition = textTmp;
-        } else {
-            logger.warn("searchType did not math to any accepted values");
-        }
-        String cellPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + textCondition + "]";
+        WebLocator textCell = new WebLocator().setText(searchElement, searchType);
+        String cellPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + textCell.getPath();
         GridCell cell = new GridCell(this, cellPath);
         cell.setInfoMessage("cell(" + searchElement + ")");
         return cell;

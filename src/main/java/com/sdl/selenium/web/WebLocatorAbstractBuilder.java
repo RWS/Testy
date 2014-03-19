@@ -1,12 +1,14 @@
 package com.sdl.selenium.web;
 
 import com.extjs.selenium.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -667,7 +669,8 @@ public abstract class WebLocatorAbstractBuilder {
         String selector = "";
         if (hasText()) {
             String text = getText();
-            if (!(searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ANY))) {
+            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
+            if (!(hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY))) {
                 text = Utils.getEscapeQuotesText(text);
             }
             selector += " and ";
@@ -688,17 +691,14 @@ public abstract class WebLocatorAbstractBuilder {
                 selector += pathText + "=" + text;
             } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
                 selector += "starts-with(" + pathText + "," + text + ")";
-            } else if (searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+            } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
                 String splitChar = "\\" + String.valueOf(text.charAt(0));
                 String[] strings = text.substring(1).split(splitChar);
-                String textTmp = "";
-                for (String str : strings) {
-                    textTmp += "contains(" + pathText + ",'" + str + "')" + (searchTextType.contains(SearchType.CONTAINS_ALL) ? " and " : " or ");
+                for (int i = 0; i < strings.length; i++) {
+                    strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
                 }
-                if (textTmp.endsWith((searchTextType.contains(SearchType.CONTAINS_ALL) ? " and " : " or "))) {
-                    textTmp = textTmp.substring(0, textTmp.length() - (searchTextType.contains(SearchType.CONTAINS_ALL) ? 5 : 4));
-                }
-                selector += textTmp;
+                String operator = hasContainsAll ? " and " : " or ";
+                selector += StringUtils.join(strings, operator);
             } else {
                 //searchTextType.contains(SearchType.CONTAINS)  //default
                 selector += "contains(" + pathText + "," + text + ")";
