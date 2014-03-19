@@ -692,8 +692,9 @@ public abstract class WebLocatorAbstractBuilder {
             } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
                 selector += "starts-with(" + pathText + "," + text + ")";
             } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
-                String splitChar = "\\" + String.valueOf(text.charAt(0));
-                String[] strings = text.substring(1).split(splitChar);
+                String splitChar = String.valueOf(text.charAt(0));
+                Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
+                String[] strings = pattern.split(text.substring(1));
                 for (int i = 0; i < strings.length; i++) {
                     strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
                 }
