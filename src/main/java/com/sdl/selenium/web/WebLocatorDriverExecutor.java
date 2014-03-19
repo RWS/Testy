@@ -79,7 +79,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         final String path = el.getPath();
 //        if (isSamePath(el, path)) {
 //            logger.debug("currentElement already found one time: " + el);
-            //return el.currentElement;
+        //return el.currentElement;
 //        }
         doWaitElement(el, 0);
         el.setCurrentElementPath(path);
@@ -177,9 +177,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             } catch (StaleElementReferenceException e) {
                 logger.error("getHtmlText (second try): " + el.getPath(), e);
                 el.setCurrentElementPath("");
-                isElementPresent(el);
-                text = el.currentElement.getText();
-            }catch (WebDriverException e) {
+                if (isElementPresent(el)) {
+                    text = el.currentElement.getText();
+                }
+            } catch (WebDriverException e) {
                 logger.error("element has vanished meanwhile: " + el.getPath(), e);
             }
         }
