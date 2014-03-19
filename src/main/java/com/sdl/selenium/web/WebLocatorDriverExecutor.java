@@ -174,7 +174,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (isElementPresent(el)) {
             try {
                 text = el.currentElement.getText();
-            } catch (WebDriverException e) {
+            } catch (StaleElementReferenceException e) {
+                logger.error("getHtmlText (second try): " + el.getPath(), e);
+                el.setCurrentElementPath("");
+                isElementPresent(el);
+                text = el.currentElement.getText();
+            }catch (WebDriverException e) {
                 logger.error("element has vanished meanwhile: " + el.getPath(), e);
             }
         }
