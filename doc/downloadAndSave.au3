@@ -1,4 +1,5 @@
 #include <File.au3>
+FileDelete(@ScriptDir & "\downloadAndSave.log")
 Local $hFile = FileOpen(@ScriptDir & "\downloadAndSave.log", 1)
 $result = 1
 $txt = ""
@@ -6,10 +7,11 @@ Sleep(200)
 $activeWindow = WinWait("[TITLE:Opening; CLASS:MozillaDialogClass]", "", 3)
 WinActivate($activeWindow)
 $activeWindowTitle = WinGetTitle($activeWindow)
-WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
+$flash = WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
 _FileWriteLog($hFile, "ActiveWindowTitle1='" & $activeWindowTitle & "'")
+_FileWriteLog($hFile, "$flash1='" & $flash & "'")
 If WinExists($activeWindow) Then
-   Sleep(200)
+   Sleep(300)
    Send("!s");
    Send("{ENTER}")
    Sleep(100)
@@ -17,15 +19,19 @@ If WinExists($activeWindow) Then
    WinActivate($activeWindow)
    Sleep(200)
    If NOT WinExists($activeWindow) Then
-       Sleep(100)
+       $flash = WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
+       _FileWriteLog($hFile, "$flash2='" & $flash & "'")
+       Sleep(200)
        Send("!s");
        Send("{ENTER}")
-       Sleep(100)
+       Sleep(200)
        $activeWindow = WinWait("[TITLE:Enter; CLASS:#32770]", "", 3)
        WinActivate($activeWindow)
+       Sleep(200)
    EndIf
    $activeWindowTitle = WinGetTitle($activeWindow)
    _FileWriteLog($hFile, "ActiveWindowTitle2='" & $activeWindowTitle & "'")
+   _FileWriteLog($hFile, "$activeWindow2='" & $activeWindow & "'")
    WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
    $txt = ControlGetText($activeWindowTitle, "", "[CLASS:Edit; INSTANCE:1]")
    _FileWriteLog($hFile, "txt='" & $txt & "'")
@@ -33,7 +39,7 @@ If WinExists($activeWindow) Then
    _FileWriteLog($hFile, "deleting file: '" & @ScriptDir &"\"& $txt &"'")
    FileDelete(@ScriptDir &"\"& $txt)
    $click = ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:1]")
-   $close = WinWaitClose($activeWindowTitle, " ", 3)
+   $close = WinWaitClose($activeWindowTitle, "", 3)
    Sleep(200)
    WinClose($activeWindowTitle, "")
    _FileWriteLog($hFile, "$close='" & $close & "'")
@@ -51,4 +57,5 @@ If WinExists($activeWindow) Then
 EndIf
 FileClose($hFile)
 _FileWriteLog($hFile, "$result='" & $result & "'")
+_FileWriteLog($hFile, "------------------------- NewDownloadAndSave --------------------------------")
 Exit ($result)

@@ -1,4 +1,5 @@
 #include <File.au3>
+FileDelete(@ScriptDir & "\upload.log")
 Local $hFile = FileOpen(@ScriptDir & "\upload.log", 1)
 Local $result = 1
 Sleep(400)
@@ -29,7 +30,9 @@ Else
    _FileWriteLog($hFile, "saveStraniu='" & $save & "'")
 EndIf
 Sleep(300)
+$result = $result AND WinWaitClose($activeWindowTitle, "", 3)
 _FileWriteLog($hFile, "win='" & $activeWindowTitle & "'")
-_FileWriteLog($hFile, "save='" & $result & "'")
+_FileWriteLog($hFile, "$result='" & $result & "'")
+_FileWriteLog($hFile, "------------------------- New Upload --------------------------")
 FileClose($hFile)
-Exit $result AND WinWaitNotActive($activeWindowTitle, "", 3)
+Exit $result
