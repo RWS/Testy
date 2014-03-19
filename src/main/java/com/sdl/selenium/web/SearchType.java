@@ -9,6 +9,9 @@ package com.sdl.selenium.web;
  * <p>{@link SearchType#TRIM}</p>
  * <p>{@link SearchType#CHILD_NODE}</p>
  * <p>{@link SearchType#DEEP_CHILD_NODE}</p>
+ * <p>{@link SearchType#HTML_NODE}</p>
+ * <p>{@link SearchType#CONTAINS_ALL}</p>
+ * <p>{@link SearchType#CONTAINS_ANY}</p>
  */
 public enum SearchType {
 
