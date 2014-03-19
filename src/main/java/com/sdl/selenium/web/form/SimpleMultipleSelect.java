@@ -60,15 +60,4 @@ public class SimpleMultipleSelect extends SimpleComboBox {
         selector = getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
         return selector;
     }
-
-    @Override
-    protected String afterItemPathCreated(String itemPath) {
-        if (hasLabel()) {
-            itemPath = getLabelPath() + "//following-sibling::" + itemPath;
-        } else {
-            itemPath = "//" + itemPath;
-        }
-        itemPath = addPositionToPath(itemPath);
-        return itemPath;
-    }
 }
