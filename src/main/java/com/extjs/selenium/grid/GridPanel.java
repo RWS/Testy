@@ -516,9 +516,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * TODO improve *reuse searchType from WebLocator
      *
-     * @param searchElement
+     * @param searchElement Text searched.
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
-     * @return
+     * @return GridCell
      */
     public GridCell getGridCell(String searchElement, SearchType searchType) {
         String textCondition = "text()='" + searchElement + "'";
@@ -527,14 +527,15 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             textCondition = "contains(text(),'" + searchElement + "')";
         } else if (SearchType.STARTS_WITH.equals(searchType)) {
             textCondition = "starts-with(text(),'" + searchElement + "')";
-        } else if (SearchType.MORE_CONTAINS.equals(searchType)) {
-            String[] strings = searchElement.split("/");
+        } else if (SearchType.CONTAINS_ALL.equals(searchType) || SearchType.CONTAINS_ANY.equals(searchType)) {
+            String splitChar = "\\" + String.valueOf(searchElement.charAt(0));
+            String[] strings = searchElement.substring(1).split(splitChar);
             String textTmp = "";
             for (String str : strings) {
-                textTmp += "contains(text()," + str + ") and ";
+                textTmp += "contains(text() ,'" + str + "')" + (SearchType.CONTAINS_ALL.equals(searchType) ? " and " : " or ");
             }
-            if (textTmp.endsWith(" and ")) {
-                textTmp = textTmp.substring(0, textTmp.length() - 5);
+            if (textTmp.endsWith((SearchType.CONTAINS_ALL.equals(searchType) ? " and " : " or "))) {
+                textTmp = textTmp.substring(0, textTmp.length() - (SearchType.CONTAINS_ALL.equals(searchType) ? 5 : 4));
             }
             textCondition = textTmp;
         } else {

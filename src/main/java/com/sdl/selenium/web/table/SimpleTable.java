@@ -32,17 +32,14 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
         return doCellSelect(cell);
     }
 
-    @Deprecated
     private boolean doCellSelect(TableCell tableCell) {
         return doCellAction(tableCell, null);
     }
 
-    @Deprecated
     private boolean doCellDoubleClickAt(TableCell tableCell) {
         return doCellAction(tableCell, "doubleClickAt");
     }
 
-    @Deprecated
     private boolean doCellAction(WebLocator cell, String action) {
         boolean selected;
         if ("doubleClickAt".equals(action)) {

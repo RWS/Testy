@@ -22,7 +22,7 @@
 
             <class name="com.sdl.selenium.web.table.TableCellTest"/>
             <class name="com.sdl.selenium.web.table.TableRowTest"/>
-            <class name="com.sdl.selenium.web.table.TableTest"/>
+            <class name="com.sdl.selenium.web.table.SimpleTableTest"/>
             <class name="com.sdl.selenium.web.WebLocatorTest"/>
         </classes>
     </test>

@@ -667,7 +667,9 @@ public abstract class WebLocatorAbstractBuilder {
         String selector = "";
         if (hasText()) {
             String text = getText();
-            text = Utils.getEscapeQuotesText(text);
+            if (!(searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ANY))) {
+                text = Utils.getEscapeQuotesText(text);
+            }
             selector += " and ";
             String pathText = "text()";
 
@@ -686,14 +688,15 @@ public abstract class WebLocatorAbstractBuilder {
                 selector += pathText + "=" + text;
             } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
                 selector += "starts-with(" + pathText + "," + text + ")";
-            } else if (searchTextType.contains(SearchType.MORE_CONTAINS)) {
-                String[] strings = text.split("'")[1].split("'")[0].split("/");
+            } else if (searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+                String splitChar = "\\" + String.valueOf(text.charAt(0));
+                String[] strings = text.substring(1).split(splitChar);
                 String textTmp = "";
                 for (String str : strings) {
-                    textTmp += "contains(" + pathText + ",'" + str + "') and ";
+                    textTmp += "contains(" + pathText + ",'" + str + "')" + (searchTextType.contains(SearchType.CONTAINS_ALL) ? " and " : " or ");
                 }
-                if (textTmp.endsWith(" and ")) {
-                    textTmp = textTmp.substring(0, textTmp.length() - 5);
+                if (textTmp.endsWith((searchTextType.contains(SearchType.CONTAINS_ALL) ? " and " : " or "))) {
+                    textTmp = textTmp.substring(0, textTmp.length() - (searchTextType.contains(SearchType.CONTAINS_ALL) ? 5 : 4));
                 }
                 selector += textTmp;
             } else {

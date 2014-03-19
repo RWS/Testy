@@ -57,21 +57,40 @@ public enum SearchType {
      &lt;div class="btn">
         &lt;span class="icon">&lt;/span>
         &lt;span class="btn-text">Cancel&lt;/span>
-     &lt;/div></pre>
+     &lt;/div>
+     </pre>
      * <p>so must be used like:</p>
      * <pre>WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel is Button text", SearchType.HTML_NODE);</pre>
      */
     HTML_NODE,
 
-    //TODO documentatia nu e buna!!!
     /**
-     * For finding elements that contain and text 'Cancel' and text 'Button'.
+     * <p>For finding elements that contain all text segments.</p>
+     * <p>Segments will be made by splitting text into elements with first char of input text</p>
      * <pre>
      &lt;div class="btn">
      &lt;span class="btn-text">Cancel is a Button&lt;/span>
      &lt;/div></pre>
      * <p>so must be used like:</p>
-     * <pre>WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel/Button", SearchType.MORE_CONTAINS);</pre>
+     * <pre>
+     *     WebLocator cancelBtn = new WebLocator().setClasses("btn")
+     *          .setText("&Cancel&Button", SearchType.CONTAINS_ALL);
+     * </pre>
      */
-    MORE_CONTAINS,
+    CONTAINS_ALL,
+
+    /**
+     * <p>For finding elements that contain any text segments.</p>
+     * <p>Segments will be made by splitting text into elements with first char of input text</p>
+     * <pre>
+     &lt;div class="btn">
+        &lt;span class="btn-text">Cancel is a Button&lt;/span>
+     &lt;/div></pre>
+     * <p>so must be used like:</p>
+     * <pre>
+     WebLocator cancelBtn = new WebLocator().setClasses("btn")
+        .setText("|Cancel|Button", SearchType.CONTAINS_ANY);</pre>
+     */
+    CONTAINS_ANY
+
 }
