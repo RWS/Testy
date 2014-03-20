@@ -1,11 +1,9 @@
 package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
 
 public class DownloadFile extends WebLocator {
-    private static final Logger logger = Logger.getLogger(DownloadFile.class);
 
     public DownloadFile() {
         setClassName("DownloadFile");
@@ -37,6 +35,11 @@ public class DownloadFile extends WebLocator {
         return RunExe.getInstance().download(filePath);
     }
 
+    public boolean download(String[] filePath, Long timeout) {
+        openBrowse();
+        return RunExe.getInstance().download(filePath, timeout);
+    }
+
     /**
      * Download file with AutoIT. Work only on FireFox.
      * Use only this: button.download("C:\\downloadAndSave.exe");
@@ -46,6 +49,11 @@ public class DownloadFile extends WebLocator {
     public boolean download(String filePath) {
         openBrowse();
         return RunExe.getInstance().download(filePath);
+    }
+
+    public boolean download(String filePath, Long timeout) {
+        openBrowse();
+        return RunExe.getInstance().download(filePath, timeout);
     }
 
     private void openBrowse(){

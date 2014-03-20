@@ -12,7 +12,8 @@ _FileWriteLog($hFile, "ActiveWindowTitle1='" & $activeWindowTitle & "'")
 _FileWriteLog($hFile, "$flash1='" & $flash & "'")
 If WinExists($activeWindow) Then
    Sleep(300)
-   Send("!s");
+   Send("!s")
+   Sleep(100)
    Send("{ENTER}")
    Sleep(100)
    $activeWindow = WinWait("[TITLE:Enter; CLASS:#32770]", "", 3)
@@ -21,8 +22,9 @@ If WinExists($activeWindow) Then
    If NOT WinExists($activeWindow) Then
        $flash = WinFlash($activeWindowTitle, "", 2, 50) ; Just to Flash the window
        _FileWriteLog($hFile, "$flash2='" & $flash & "'")
-       Sleep(200)
-       Send("!s");
+       Sleep(300)
+       Send("!s")
+       Sleep(100)
        Send("{ENTER}")
        Sleep(200)
        $activeWindow = WinWait("[TITLE:Enter; CLASS:#32770]", "", 3)
@@ -50,12 +52,13 @@ If WinExists($activeWindow) Then
    Else
 	  ControlClick("[CLASS:#32770]", "", "[CLASS:Button; INSTANCE:2]")
 	  Sleep(100)
-	  WinClose("[ACTIVE]", "")
+	  WinClose("[TITLE:Enter; CLASS:#32770]", "")
+	  WinClose("[TITLE:Opening; CLASS:MozillaDialogClass]", "")
 	  _FileWriteLog($hFile, "nu este bine='" & $close & "'")
 	  $result = 1
    EndIf
 EndIf
-FileClose($hFile)
 _FileWriteLog($hFile, "$result='" & $result & "'")
 _FileWriteLog($hFile, "------------------------- NewDownloadAndSave --------------------------------")
+FileClose($hFile)
 Exit ($result)

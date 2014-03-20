@@ -11,7 +11,7 @@ public class ExtJsComponent extends WebLocator {
     }
 
     /**
-     * @param cls
+     * @param cls css class
      */
     public ExtJsComponent(String cls) {
         this();
@@ -57,8 +57,8 @@ public class ExtJsComponent extends WebLocator {
     }
 
     /**
-     * @param disabled
-     * @return
+     * @param disabled disabled
+     * @return string
      */
     @Override
     public String getPath(boolean disabled) {

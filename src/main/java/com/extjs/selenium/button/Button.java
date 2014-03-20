@@ -37,7 +37,7 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     /**
-     * @param cls
+     * @param cls css class
      * @deprecated
      */
     public Button(String cls) {
@@ -46,7 +46,7 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     /**
-     * @param container
+     * @param container parent
      */
     public Button(WebLocator container) {
         this();
@@ -108,11 +108,7 @@ public class Button extends ExtJsComponent implements IButton {
         if (ready()) {
             String cls = getAttributeClass();
             boolean contains = cls.contains("x-btn-pressed");
-            if (state && !contains || !state && contains) {
-                toggled = click();
-            } else {
-                toggled = true;
-            }
+            toggled = !(state && !contains || !state && contains) || click();
         }
         return toggled;
     }
@@ -120,7 +116,7 @@ public class Button extends ExtJsComponent implements IButton {
     /**
      * TO Be used in extreme cases when simple .click is not working
      *
-     * @return
+     * @return true or false
      */
     public boolean clickWithExtJS() {
         String id = getAttributeId();
@@ -132,24 +128,22 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     /**
-     * Using XPath only
-     *
-     * @return
+     * @return true or false
      */
     public boolean isDisabled() {
         return new WebLocator(null, getPath(true)).exists();
     }
 
     /**
-     * @param milliseconds
-     * @return
+     * @param milliseconds milliseconds
+     * @return true or false
      */
     public boolean waitToEnable(long milliseconds) {
         return waitToRender(milliseconds);
     }
 
     /**
-     * @return
+     * @return  true or false
      */
     public boolean isEnabled() {
         return exists();
@@ -170,8 +164,8 @@ public class Button extends ExtJsComponent implements IButton {
     /**
      * new String[]{"option1", "option2", "option3-click"}
      *
-     * @param menuOptions
-     * @return
+     * @param menuOptions new String[]{"option1", "option2", "option3-click"}
+     * @return true or false
      */
     public boolean clickOnMenu(String[] menuOptions) {
         logger.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
@@ -208,8 +202,8 @@ public class Button extends ExtJsComponent implements IButton {
 
 
     /**
-     * @param option
-     * @return
+     * @param option new String[]{"option1", "option2", "option3-click"}
+     * @return true or false
      */
     public boolean clickOnMenu(String option) {
         return clickOnMenu(new String[]{option});

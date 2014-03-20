@@ -1,11 +1,9 @@
 package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
 
 public class UploadFile extends WebLocator {
-    private static final Logger logger = Logger.getLogger(UploadFile.class);
 
     public UploadFile() {
         setClassName("UploadFile");
@@ -36,6 +34,11 @@ public class UploadFile extends WebLocator {
     public boolean upload(String text, String[] filePath) {
         WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
         return upload(upload, filePath);
+    }
+
+    public boolean upload(String text, String[] filePath, Long timeout) {
+        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
+        return upload(upload, filePath, timeout);
     }
 
     public void change(String[] filePath) {
@@ -74,12 +77,21 @@ public class UploadFile extends WebLocator {
     }
 
     public boolean upload(WebLocator el, String[] filePath) {
+        browse(el);
+        return RunExe.getInstance().upload(filePath);
+    }
+
+    public boolean upload(WebLocator el, String[] filePath, Long timeout) {
+        browse(el);
+        return RunExe.getInstance().upload(filePath, timeout);
+    }
+
+    private void browse(WebLocator el) {
         driver.switchTo().window(driver.getWindowHandle());
         el.focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(el.currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
-        return RunExe.getInstance().upload(filePath);
     }
 }

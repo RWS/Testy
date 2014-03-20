@@ -37,7 +37,7 @@ public abstract class FailCondition extends Condition {
 
     /**
      * Return new FailCondition with message: Could not click on {WebLocator}
-     * @param {WebLocator} element
+     * @param element element
      * @return <code>FailCondition</code>
      */
     public static FailCondition clickFail(WebLocator element){

@@ -28,7 +28,7 @@ public class MessageBox {
     /**
      * instant get MessageBox text if is present
      *
-     * @return
+     * @return MessageBox text if is present
      */
     public static String getMessage() {
         return getMessage(0);
@@ -38,8 +38,8 @@ public class MessageBox {
      * Wait MessageBox to appear and get text.
      * Use this method when you realy expect some message box but don't know exact time when it appear
      *
-     * @param waitSeconds
-     * @return
+     * @param waitSeconds seconds
+     * @return MessageBox text if is present
      */
     public static String getMessage(int waitSeconds) {
         // TODO verify if can be be simplified using WebLocator instead of ExtJsComponent

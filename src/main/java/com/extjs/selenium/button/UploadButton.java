@@ -26,13 +26,26 @@ public class UploadButton extends Button {
         return upload(this, filePath);
     }
 
+    public boolean upload(String [] filePath, Long timeout){
+        return upload(this, filePath, timeout);
+    }
+
     private boolean upload(WebLocator el, String[] filePath) {
+        browse(el);
+        return RunExe.getInstance().upload(filePath);
+    }
+
+    private boolean upload(WebLocator el, String[] filePath, Long timeout) {
+        browse(el);
+        return RunExe.getInstance().upload(filePath, timeout);
+    }
+
+    private void browse(WebLocator el) {
         driver.switchTo().window(driver.getWindowHandle());
         el.focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(el.currentElement).build().perform();
         builder.click().perform();
         driver.switchTo().defaultContent();
-        return RunExe.getInstance().upload(filePath);
     }
 }

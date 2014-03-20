@@ -68,8 +68,8 @@ public class ExtjsConditionManager extends ConditionManager {
 
     /**
      * add each message to MessageBoxFailCondition
-     * @param messages
-     * @return
+     * @param messages messages
+     * @return this
      */
     public ExtjsConditionManager addFailConditions(String... messages){
         for (String message : messages){
@@ -82,8 +82,8 @@ public class ExtjsConditionManager extends ConditionManager {
 
     /**
      * add each message to MessageBoxSuccessCondition
-     * @param messages
-     * @return
+     * @param messages messages
+     * @return this
      */
     public ExtjsConditionManager addSuccessConditions(String... messages){
         for (String message : messages){

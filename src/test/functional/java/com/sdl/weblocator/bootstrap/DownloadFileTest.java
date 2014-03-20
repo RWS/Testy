@@ -41,7 +41,7 @@ public class DownloadFileTest extends TestBase {
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void downloadAndSave() {
-        assertTrue(downloadFile1.download(InputData.RESOURCES_DIRECTORY_PATH + "\\drivers\\downloadAndSave.exe"));
+        assertTrue(downloadFile1.download(InputData.RESOURCES_DIRECTORY_PATH + "\\drivers\\downloadAndSave.exe", 9000L));
     }
 
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
