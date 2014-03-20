@@ -170,6 +170,11 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
         return new TableRow(this, byCells).setInfoMessage("-TableRow");
     }
 
+    public TableRow getRow(int indexRow, TableCell... byCells) {
+        return new TableRow(this, indexRow, byCells).setInfoMessage("-TableRow");
+    }
+
+
     public TableCell getTableCell(int columnIndex, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex);
     }

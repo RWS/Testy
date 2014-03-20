@@ -36,6 +36,11 @@ public class TableRow extends Row {
         setRowCells(cells);
     }
 
+    public TableRow(WebLocator table, int indexRow, Cell... cells) {
+        this(table, indexRow);
+        setRowCells(cells);
+    }
+
     @Override
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
