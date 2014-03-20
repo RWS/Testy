@@ -48,7 +48,7 @@ public class TabPanel extends ExtJsComponent {
     /**
      * this method return the path of the main TabPanel (that contains also this Tab/Panel)
      *
-     * @return
+     * @return the path of the main TabPanel
      */
     public String getBaseTabPanelPath() {
         String selector = getBasePathSelector();
@@ -64,7 +64,7 @@ public class TabPanel extends ExtJsComponent {
      * this method return the path of only one visible div from the main TabPanel
      *
      * @param disabled disabled
-     * @return xpath
+     * @return the path of only one visible div from the main TabPanel
      */
     @Override
     public String getItemPath(boolean disabled) {
@@ -78,7 +78,7 @@ public class TabPanel extends ExtJsComponent {
     /**
      * After the tab is set to active will wait 50ms to make sure tab is rendered
      *
-     * @return
+     * @return true or false
      */
     public boolean setActive() {
         String baseTabPath = "//*[" + Utils.fixPathSelector(getBasePathSelector()) + "]";

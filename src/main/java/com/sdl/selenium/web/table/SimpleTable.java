@@ -63,8 +63,7 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
      * returns if a table contains a certain element
      *
      * @param searchElement the searchElement of the table element on which the search is done
-     * @return
-     * @throws Exception
+     * @return if a table contains a certain element
      */
     public boolean isRowPresent(String searchElement) {
         ready();
@@ -132,11 +131,9 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
     }
 
     /**
-     * TODO improve *reuse searchType from WebLocator
-     *
-     * @param searchElement
+     * @param searchElement searchElement
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
-     * @return
+     * @return TableCell
      */
     public TableCell getTableCell(String searchElement, SearchType searchType) {
         String selector = getSearchTypePath(searchElement, searchType);
@@ -145,9 +142,6 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
 
     /**
      * @deprecated use getTableCell(String searchElement, SearchType searchType)
-     * @param searchElement
-     * @param startWidth
-     * @return
      */
     public TableCell getTableCell(String searchElement, Boolean startWidth) {
         return getTableCell(searchElement, startWidth ? SearchType.STARTS_WITH : SearchType.EQUALS);
@@ -187,8 +181,8 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
     /**
      * returns all text elements from a table
      *
-     * @param searchText
-     * @return
+     * @param searchText searchText
+     * @return all text elements from a table
      */
     @Deprecated //TODO fix it
     public String[] getRow(String searchText) {
@@ -203,8 +197,8 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
     /**
      * get all strings as array from specified columnIndex
      *
-     * @param columnIndex
-     * @return
+     * @param columnIndex columnIndex
+     * @return all strings as array from specified columnIndex
      */
     public String[] getCollTexts(int columnIndex) {
         int count = getCount();
@@ -240,7 +234,7 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
      * @param searchText  the element that is already part of the table
      * @param columnIndex the column index where the comparison is done (STARTS AT 0)
      * @param compareText the text to which the element found is compared to
-     * @return
+     * @return if a specific Table contains a certain element
      */
     public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
         String text = getText(searchText, columnIndex);

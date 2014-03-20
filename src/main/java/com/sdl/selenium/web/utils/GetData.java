@@ -38,11 +38,11 @@ public class GetData {
     /**
      * Get Current day (+/- number of days/months/years)
      *
-     * @param days
-     * @param months
-     * @param years
-     * @param format
-     * @return
+     * @param days days
+     * @param months months
+     * @param years years
+     * @param format format
+     * @return data
      */
     public static String getDate(int days, int months, int years, String format) {
         return getDate(days, months, years, format, Locale.ENGLISH);

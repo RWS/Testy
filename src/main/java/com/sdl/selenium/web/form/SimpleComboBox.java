@@ -4,7 +4,6 @@ import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.ui.Select;
-import sun.util.logging.resources.logging;
 
 public class SimpleComboBox extends WebLocator implements ICombo {
     private static final Logger logger = Logger.getLogger(SimpleComboBox.class);

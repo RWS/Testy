@@ -42,8 +42,8 @@ public class FieldSet extends WebLocator {
         return selector;
     }
     /**
-     * @param disabled
-     * @return
+     * @param disabled disabled
+     * @return String path
      */
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();

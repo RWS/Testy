@@ -30,7 +30,7 @@ Else
    _FileWriteLog($hFile, "saveStraniu='" & $save & "'")
 EndIf
 Sleep(300)
-$result = $result AND WinWaitClose($activeWindowTitle, "", 3)
+WinWaitClose($activeWindowTitle, "", 3)
 _FileWriteLog($hFile, "win='" & $activeWindowTitle & "'")
 _FileWriteLog($hFile, "$result='" & $result & "'")
 _FileWriteLog($hFile, "------------------------- New Upload --------------------------")

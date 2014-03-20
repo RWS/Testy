@@ -107,9 +107,9 @@ public class Table extends WebLocator {
     /**
      * Use this method when really need to select some records not for verification if row is in table
      *
-     * @param searchElement
-     * @param startWith
-     * @return
+     * @param searchElement a
+     * @param startWith  a
+     * @return a
      */
     @Deprecated
     public boolean rowSelect(String searchElement, Boolean startWith) {
@@ -119,9 +119,9 @@ public class Table extends WebLocator {
     }
 
     /**
-     * @param searchElement
+     * @param searchElement a
      * @param searchType    accepted values are: {"equals"/"eq", "starts-with", "contains"}
-     * @return
+     * @return a
      */
     @Deprecated
     public boolean rowSelect(String searchElement, SearchType searchType) {
@@ -131,10 +131,10 @@ public class Table extends WebLocator {
     }
 
     /**
-     * @param searchElement
-     * @param columnId
+     * @param searchElement a
+     * @param columnId a
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
-     * @return
+     * @return a
      */
     @Deprecated
     public boolean rowSelect(String searchElement, int columnId, SearchType searchType) {
@@ -198,8 +198,7 @@ public class Table extends WebLocator {
      * returns if a table contains a certain element
      *
      * @param searchElement the searchElement of the table element on which the search is done
-     * @return
-     * @throws Exception
+     * @return a
      */
     public boolean isRowPresent(String searchElement) {
         ready();
@@ -249,7 +248,7 @@ public class Table extends WebLocator {
      * returns the index of the table that contains a certain element
      *
      * @param searchElement the name of the table element on which the search is done
-     * @return
+     * @return a
      */
     public int getRowIndex(String searchElement) {
         return getRowIndex(searchElement, 1);
@@ -319,9 +318,9 @@ public class Table extends WebLocator {
     /**
      * TODO improve *reuse searchType from WebLocator
      *
-     * @param searchElement
+     * @param searchElement a
      * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
-     * @return
+     * @return  a
      */
     public TableCell getTableCell(String searchElement, SearchType searchType) {
         String selector = getSearchTypePath(searchElement, searchType);
@@ -330,9 +329,9 @@ public class Table extends WebLocator {
 
     /**
      * @deprecated use getTableCell(String searchElement, SearchType searchType)
-     * @param searchElement
-     * @param startWidth
-     * @return
+     * @param searchElement a
+     * @param startWidth  a
+     * @return    a
      */
     public TableCell getTableCell(String searchElement, Boolean startWidth) {
         return getTableCell(searchElement, startWidth ? SearchType.STARTS_WITH : SearchType.EQUALS);
@@ -383,8 +382,8 @@ public class Table extends WebLocator {
     /**
      * returns all text elements from a table
      *
-     * @param searchText
-     * @return
+     * @param searchText s
+     * @return     a
      */
     @Deprecated //TODO fix it
     public String[] getRow(String searchText) {
@@ -399,8 +398,8 @@ public class Table extends WebLocator {
     /**
      * get all strings as array from specified columnIndex
      *
-     * @param columnIndex
-     * @return
+     * @param columnIndex a
+     * @return a
      */
     public String[] getCollTexts(int columnIndex) {
         int count = getCount();
@@ -436,7 +435,7 @@ public class Table extends WebLocator {
      * @param searchText  the element that is already part of the table
      * @param columnIndex the column index where the comparison is done (STARTS AT 0)
      * @param compareText the text to which the element found is compared to
-     * @return
+     * @return  a
      */
     public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
         String text = getText(searchText, columnIndex);

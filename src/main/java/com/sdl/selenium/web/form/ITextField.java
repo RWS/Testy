@@ -8,13 +8,13 @@ public interface ITextField extends IWebLocator, Editable {
     /**
      * Set value to DOM element
      * @param value
-     * @return
+     * @return true
      */
     boolean setValue(String value);
 
     /**
      * Get value from DOM element
-     * @return
+     * @return value
      */
     String getValue();
 

@@ -58,7 +58,7 @@ public class Panel extends ExtJsComponent {
     /**
      * exclude ids that start-with ext-gen (Ext auto generated ids)
      *
-     * @return
+     * @return string
      */
     protected String getDefaultExcludePath() {
         return " and not(contains(@class, 'x-hide-display')) " +
@@ -87,7 +87,7 @@ public class Panel extends ExtJsComponent {
     /**
      * return only body path but no panel path
      *
-     * @return
+     * @return string
      */
     public String getBodyPath() {
         return "//*[contains(@class, '" + getBaseCls() + "-body')]";

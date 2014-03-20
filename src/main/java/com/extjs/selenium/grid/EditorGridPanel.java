@@ -90,9 +90,9 @@ public class EditorGridPanel extends GridPanel {
     /**
      * Click/doubleClicked in specified cell to open the editor
      *
-     * @param rowIndex
-     * @param colIndex
-     * @return
+     * @param rowIndex rowIndex
+     * @param colIndex colIndex
+     * @return true or false
      */
     public boolean startEdit(int rowIndex, int colIndex) {
         logger.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
@@ -151,8 +151,8 @@ public class EditorGridPanel extends GridPanel {
     /**
      * set row value in active editor
      *
-     * @param value
-     * @return
+     * @param value value
+     * @return true or false
      */
     public boolean setRowValue(String value) {
         logger.debug("setRowValue(" + value + ") - in active editor");
@@ -167,8 +167,8 @@ public class EditorGridPanel extends GridPanel {
     /**
      * set row value in active editor
      *
-     * @param value
-     * @return
+     * @param value value
+     * @return true or false
      */
     public boolean pasteRowValue(String value) {
         logger.debug("setRowValue(" + value + ") - in active editor");

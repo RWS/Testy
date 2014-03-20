@@ -51,7 +51,7 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     /**
-     * @param value
+     * @param value value
      * @return true if value was selected
      */
     @Override
@@ -117,8 +117,8 @@ public class ComboBox extends TextField implements ICombo {
      * this method is used in case normal flow for selection fails
      *
      * @param componentId ComboBox id so we can use directly js to force selection of that value
-     * @param value
-     * @return
+     * @param value value
+     * @return true or false
      */
     private boolean setValueWithJs(final String componentId, final String value) {
         boolean selected;

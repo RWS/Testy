@@ -82,9 +82,9 @@ public class List extends GridPanel {
     }
 
     /**
-     * @param searchElement
-     * @param searchType
-     * @return
+     * @param searchElement searchElement
+     * @param searchType searchType
+     * @return true or fasle
      */
     @Override
     public boolean rowSelect(String searchElement, SearchType searchType) {
@@ -95,8 +95,6 @@ public class List extends GridPanel {
 
     /**
      * @deprecated use getRowLocator
-     * @param rowIndex
-     * @return
      */
     @Override
     public GridRow getGridRow(int rowIndex) {

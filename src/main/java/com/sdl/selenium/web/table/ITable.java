@@ -15,9 +15,9 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
     boolean rowSelect(String searchText);
 
     /**
-     * @param searchText
-     * @param searchType
-     * @return
+     * @param searchText searchText
+     * @param searchType searchType
+     * @return true or false
      */
     public boolean rowSelect(String searchText, SearchType searchType);
 
@@ -28,8 +28,8 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
 
     /**
      * TODO rename in getRow
-     * @param rowIndex
-     * @return
+     * @param rowIndex rowIndex
+     * @return R
      */
     R getRowLocator(int rowIndex);
 

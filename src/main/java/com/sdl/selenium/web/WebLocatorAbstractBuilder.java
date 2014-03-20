@@ -372,9 +372,8 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b><i>Used in logging process</i><b></p>
      *
-     * @param infoMessage
-     * @param <T>
-     * @return
+     * @param infoMessage info Message
+     * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setInfoMessage(final String infoMessage) {
         this.infoMessage = infoMessage;
@@ -512,8 +511,7 @@ public abstract class WebLocatorAbstractBuilder {
      * </pre>
      *
      * @param position starting index = 1
-     * @param <T>
-     * @return
+     * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setPosition(int position) {
         this.position = position;
@@ -528,7 +526,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p>Used only to identify class type of current object</p>
      * <p> Not used for css class!</p>
      *
-     * @return
+     * @return string
      */
     public String getClassName() {
         return className;
@@ -651,8 +649,8 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * this method is meant to be overridden by each component
      *
-     * @param disabled
-     * @return
+     * @param disabled disabled
+     * @return String
      */
     protected String getItemPath(boolean disabled) {
         String selector = getBaseItemPath();
@@ -663,7 +661,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * Construct selector if WebLocator has text
      *
-     * @return
+     * @return String
      */
     protected String getItemPathText() {
         String selector = "";
@@ -731,8 +729,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @param disabled
-     * @return
+     * @param disabled disabled
+     * @return String
      */
     public String getPath(boolean disabled) {
         String returnPath;

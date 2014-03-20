@@ -99,7 +99,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     /**
      * getValue using xPath only, depending on the parameter
      *
-     * @return
+     * @return string
      */
     public String getValue() {
         return executor.getValue(this);

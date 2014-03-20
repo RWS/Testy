@@ -51,12 +51,6 @@ public class SimpleTextField extends WebLocator implements ITextField {
         return executor.setValue(this, value);
     }
 
-
-    /**
-     * getValue using xPath
-     *
-     * @return
-     */
     public String getValue() {
         return executor.getValue(this);
     }

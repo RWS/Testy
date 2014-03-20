@@ -27,7 +27,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @param cls
+     * @param cls css class
      */
     public WebLocator(String cls) {
         setClasses(cls);
@@ -75,7 +75,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * @deprecated use from WebDriverConfig.hasWebDriver()
-     * @return
+     * @return true or false
      */
     public static boolean hasWebDriver() {
         return WebDriverConfig.hasWebDriver();
@@ -120,7 +120,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     // TODO remove from this class, it does not belong to this element
     /**
      * @deprecated use {@link com.sdl.selenium.WebLocatorUtils#getPageHtmlSource()}
-     * @return
+     * @return string
      */
     public String getHtmlSource() {
         return WebLocatorUtils.getPageHtmlSource();
@@ -137,9 +137,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return null;
     }
 
-    /**
-     * Using XPath only
-     */
     public boolean clickAt() {
         boolean clickAt = ready() && doClickAt();
         if (clickAt) {
@@ -167,7 +164,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * Click once do you catch exceptions StaleElementReferenceException.
      *
-     * @return
+     * @return true | false
      */
     public boolean click() {
         boolean click = waitToRender() && doClick();
@@ -180,7 +177,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * //TODO Daca nu a facut click pe element sa se intrerupa testul de facut si pentru clickAt() si sa fie setabil
      *
-     * @return
+     * @return  true
      */
 
     public boolean assertClick() {
@@ -194,7 +191,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * doClick does not make sure element is present, if you are not sure about this, please use click() instead
      *
-     * @return
+     * @return true | false
      */
     protected boolean doClick() {
         return executor.doClick(this);
@@ -203,7 +200,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * doClickAt does not make sure element is present, if you are not sure about this, please use click() instead
      *
-     * @return
+     * @return true | false
      */
     protected boolean doClickAt() {
         return executor.doClickAt(this);
@@ -258,7 +255,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * Using XPath only
      *
-     * @return
+     * @return true | false
      */
     public WebLocator focus() {
         if (ready()) {
@@ -273,16 +270,14 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @deprecated use {@link com.sdl.selenium.WebLocatorUtils#doExecuteScript(String, Object...)}
      * @param script
      * @param objects
-     * @return
+     * @return Object
      */
     protected Object executeScript(String script, Object... objects) {
         return WebLocatorUtils.doExecuteScript(script, objects);
     }
 
     /**
-     * Using XPath only
-     *
-     * @return
+     * @return  true | false
      */
     public boolean doubleClickAt() {
         boolean clicked = false;
@@ -293,9 +288,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * Using xPath only
-     *
-     * @return
+     * @return true | false
      */
     public boolean isElementPresent() {
         return executor.isElementPresent(this);
@@ -339,7 +332,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * wait 5 seconds (or specified value for renderSeconds)
      *
-     * @return
+     * @return true | false
      */
     public boolean waitToRender() {
         return waitToRender(getRenderMillis());
@@ -347,8 +340,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      *
-     * @param seconds
-     * @return
+     * @param seconds time in seconds
+     * @return true | false
      */
     public boolean waitToRender(int seconds) {
         return waitToRender((long) seconds * 1000);
@@ -360,8 +353,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @param seconds
-     * @return
+     * @param seconds time in seconds
+     * @return String
      */
     public String waitTextToRender(int seconds) {
         return waitTextToRender(seconds, "");
@@ -371,9 +364,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * Waits for the text to be loaded by looking at the content and not take in consideration the excludeText
      * text or what ever text is given as parameter
      *
-     * @param seconds
-     * @param excludeText
-     * @return
+     * @param seconds time in seconds
+     * @param excludeText exclude text
+     * @return string
      */
     public String waitTextToRender(int seconds, String excludeText) {
         String text = null;
@@ -403,7 +396,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * Wait for the element to be activated when there is deactivation mask on top of it
      *
-     * @param seconds
+     * @param seconds time in seconds
      */
     public boolean waitToActivate(int seconds) {
         return true;

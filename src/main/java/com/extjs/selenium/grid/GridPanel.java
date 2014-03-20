@@ -141,7 +141,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * Will Fail if id is null
      *
-     * @return
+     * @return attribute
      */
     private String getAttrId() {
         String id = getAttributeId();
@@ -219,9 +219,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @param searchElement
-     * @param startWith
-     * @return
      * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
      *             Use this method when really need to select some records not for verification if row is in grid
      */
@@ -239,10 +236,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @param searchElement
-     * @param columnId
-     * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
-     * @return
+     * @param searchElement searchElement
+     * @param columnId 1,2,3...
+     * @param searchType    accepted values are: SearchType.EQUALS
+     * @return true or false
      */
 
     public boolean rowSelect(String searchElement, int columnId, SearchType searchType) {
@@ -286,10 +283,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * Scroll Page Down to find the cell. If you found it return true, if not return false.
      *
-     * @param searchElement
-     * @param columnId
-     * @param searchType
-     * @return
+     * @param searchElement searchElement
+     * @param columnId columnId
+     * @param searchType SearchType.EQUALS
+     * @return true or false
      */
     public boolean isCellPresent(String searchElement, int columnId, SearchType searchType) {
         ready();
@@ -332,7 +329,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * @param columnId - "x-grid3-hd-" + columnId
      *                 example: x-grid3-hd-userName in this case "userName" is the columnId
-     * @return
+     * @return true or false
      */
     public boolean clickOnHeader(String columnId) {
         return getHeader(columnId).click();
@@ -359,8 +356,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      * returns if a grid contains a certain element
      *
      * @param searchElement the searchElement of the grid element on which the search is done
-     * @return
-     * @throws Exception
+     * @return true or false
      */
     public boolean isRowPresent(String searchElement) {
         ready();
@@ -432,7 +428,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      * returns the index of the grid that contains a certain element
      *
      * @param searchElement the name of the grid element on which the search is done
-     * @return
+     * @return int
      */
     public int getRowIndex(String searchElement) {
         return getRowIndex(searchElement, 1);
@@ -471,8 +467,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @param rowIndex
-     * @return
      * @deprecated use getRowLocator
      */
     public GridRow getGridRow(int rowIndex) {
@@ -493,9 +487,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @param rowIndex
-     * @param columnIndex
-     * @return
      * @deprecated use getCell
      */
     public GridCell getGridCell(int rowIndex, int columnIndex) {
@@ -516,7 +507,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      *
      * @param searchElement Text searched.
-     * @param searchType
+     * @param searchType SearchType.EQUALS
      * @return GridCell
      */
     public GridCell getGridCell(String searchElement, SearchType searchType) {
@@ -570,8 +561,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @param byCells
-     * @return
      * @deprecated use getRow
      */
     public GridRow findGridRow(GridCell... byCells) {
@@ -581,11 +570,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public boolean selectRow(GridCell... byCells) {
         GridCell gridCell = getGridCell(1, byCells);
         return doCellSelect(gridCell);
-//        boolean selected;
-//        do {
-//            selected = gridCell.clickAt();
-//        } while (!selected && scrollPageDown());
-//        return selected;
     }
 
     public GridCell getGridCell(int position, String text, GridCell... byCells) {
@@ -611,8 +595,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * returns all text elements from a grid
      *
-     * @param searchText
-     * @return
+     * @param searchText searchText
+     * @return all text elements from a grid
      */
     public String[] getRow(String searchText) {
         String[] rowElements = null;
@@ -632,8 +616,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * get all strings as array from specified columnIndex
      *
-     * @param columnIndex
-     * @return
+     * @param columnIndex columnIndex
+     * @return all strings as array from specified columnIndex
      */
     public String[] getCollTexts(int columnIndex) {
         int count = getCount();
@@ -681,7 +665,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      * @param searchText  the element that is already part of the grid
      * @param columnIndex the column index where the comparison is done (STARTS AT 0)
      * @param compareText the text to which the element found is compared to
-     * @return
+     * @return if a specific Grid contains a certain element
      */
     public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
         String text = getText(searchText, columnIndex);
@@ -837,8 +821,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * clicks in the checkbox found at the beginning of the grid which contains a specific element
      *
-     * @param searchText
-     * @return
+     * @param searchText searchText
+     * @return true or false
      */
     public boolean checkboxColumnSelect(String searchText) {
         boolean selected = false;

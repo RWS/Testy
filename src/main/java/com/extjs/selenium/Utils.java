@@ -46,7 +46,7 @@ public class Utils {
      * TODO find better solution
      *
      * @param milliseconds Try to make more specific method for grids for example (with parameter loadMsg)
-     * @return
+     * @return True | False
      */
     public static boolean pleaseWait(int milliseconds) {
         int i = 0;
@@ -65,8 +65,8 @@ public class Utils {
      * TODO find better solution
      * Try to make more specific method for grids for example (with parameter loadMsg)
      *
-     * @param milliseconds
-     * @return
+     * @param milliseconds milliseconds
+     * @return True | False
      */
     public static boolean loading(int milliseconds) {
         int i = 0;
@@ -84,8 +84,8 @@ public class Utils {
     /**
      * remove the first " and "
      *
-     * @param selector
-     * @return
+     * @param selector " and"
+     * @return String
      */
     public static String fixPathSelector(String selector) {
         if (selector.startsWith(" and ")) {
@@ -119,8 +119,8 @@ public class Utils {
     /**
      * add 'css=' at the beginning of the string
      *
-     * @param selector
-     * @return
+     * @param selector "css="
+     * @return String
      */
     public static String fixCssSelector(String selector) {
         selector = selector.replaceAll("css=", "");
@@ -213,9 +213,9 @@ public class Utils {
     }
 
     /**
-     * @param zipFilePath
+     * @param zipFilePath zipFilePath
      * @param outputFolderPath if null of empty will extract in same folder as zipFilePath
-     * @return
+     * @return True | False
      */
     public static boolean unZip(String zipFilePath, String outputFolderPath) {
         byte[] buffer = new byte[1024];
@@ -274,9 +274,9 @@ public class Utils {
     }
 
     /**
-     * @param filePath
-     * @param extractedFilePath
-     * @return
+     * @param filePath filePath
+     * @param extractedFilePath extractedFilePath
+     * @return  true | false
      * @deprecated use {@link #unZip(String, String)}
      */
     public static boolean unZip2(String filePath, String extractedFilePath) {
