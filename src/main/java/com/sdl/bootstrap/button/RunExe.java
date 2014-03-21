@@ -10,7 +10,7 @@ import java.io.IOException;
 public class RunExe {
     private static final Logger logger = Logger.getLogger(RunExe.class);
     private static RunExe instance = new RunExe();
-    private static Long RUN_EXE_THREAD_INTERVAL = 500L;
+    private static long RUN_EXE_THREAD_INTERVAL = 500;
 
     private RunExe() {
     }
@@ -19,27 +19,27 @@ public class RunExe {
         return instance;
     }
 
-    public boolean download(String[] filePath) {
-        return download(filePath, downloadWindowName());
+    public boolean download(String... filePath) {
+        return download(downloadWindowName(), filePath);
     }
 
-    public boolean download(String[] filePath, Long timeout) {
-        return download(filePath, downloadWindowName(), timeout);
+    public boolean download(long timeout, String... filePath) {
+        return download(downloadWindowName(), timeout, filePath);
     }
 
     public boolean download(String filePath) {
         return doRun(filePath);
     }
 
-    public boolean download(String filePath, Long timeout) {
+    public boolean download(String filePath, long timeout) {
         return doRun(filePath, timeout);
     }
 
-    public boolean download(String[] filePath, String downloadWindowName) {
+    public boolean download(String downloadWindowName, String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName);
     }
 
-    public boolean download(String[] filePath, String downloadWindowName, Long timeout) {
+    public boolean download(String downloadWindowName, long timeout, String ...filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName, timeout);
     }
 
@@ -47,21 +47,20 @@ public class RunExe {
         return WebLocator.driver instanceof FirefoxDriver ? "Opening" : "Save As";
     }
 
-    public boolean upload(String[] filePath) {
+    public boolean upload(String ...filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"");
     }
 
-    public boolean upload(String[] filePath, Long timeout) {
+    public boolean upload(long timeout, String ...filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"", timeout);
     }
 
-    private boolean doRun(String filePath, Long timeout) {
+    private boolean doRun(String filePath, long timeout) {
         //create a thread in witch will run the exe file
         RunExeThread myRunThread = new RunExeThread(filePath);
         myRunThread.start();
 
         //waiting for the thread to execute complete the exe file
-
         while (myRunThread.getRunOk() == null) {
             Utils.sleep(RUN_EXE_THREAD_INTERVAL);
             timeout -= RUN_EXE_THREAD_INTERVAL;

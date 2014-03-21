@@ -3,7 +3,7 @@ package com.sdl.bootstrap.button;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.interactions.Actions;
 
-public class DownloadFile extends WebLocator {
+public class DownloadFile extends WebLocator implements Download {
 
     public DownloadFile() {
         setClassName("DownloadFile");
@@ -12,7 +12,7 @@ public class DownloadFile extends WebLocator {
     }
 
     /**
-     * @param container
+     * @param container parent
      */
     public DownloadFile(WebLocator container) {
         this();
@@ -26,32 +26,33 @@ public class DownloadFile extends WebLocator {
 
     /**
      * Download file with AutoIT. Work only on FireFox.
-     * Use only this: button.download(new String[]{"C:\\downloadAndCancel.exe", "TestSet.tmx"});
+     * Use only this: button.download("C:\\downloadAndCancel.exe", "TestSet.tmx");
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
-     * @param filePath
+     * @param filePath e.g. "C:\\downloadAndCancel.exe", "TestSet.tmx"
      */
-    public boolean download(String[] filePath) {
+    @Override
+    public boolean download(String ...filePath) {
         openBrowse();
         return RunExe.getInstance().download(filePath);
     }
 
-    public boolean download(String[] filePath, Long timeout) {
+    public boolean download(long timeout, String ...filePath) {
         openBrowse();
-        return RunExe.getInstance().download(filePath, timeout);
+        return RunExe.getInstance().download(timeout, filePath);
     }
 
     /**
      * Download file with AutoIT. Work only on FireFox.
      * Use only this: button.download("C:\\downloadAndSave.exe");
      * return true if the downloaded file is success, otherwise returns false.
-     * @param filePath
+     * @param filePath e.g. "C:\\downloadAndSave.exe"
      */
     public boolean download(String filePath) {
         openBrowse();
         return RunExe.getInstance().download(filePath);
     }
 
-    public boolean download(String filePath, Long timeout) {
+    public boolean download(String filePath, long timeout) {
         openBrowse();
         return RunExe.getInstance().download(filePath, timeout);
     }

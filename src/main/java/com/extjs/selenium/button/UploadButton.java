@@ -1,11 +1,12 @@
 package com.extjs.selenium.button;
 
 import com.sdl.bootstrap.button.RunExe;
+import com.sdl.bootstrap.button.Upload;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.interactions.Actions;
 
-public class UploadButton extends Button {
+public class UploadButton extends Button implements Upload {
 
     public UploadButton() {
         setClassName("UploadButton");
@@ -22,22 +23,23 @@ public class UploadButton extends Button {
         setText(text, SearchType.EQUALS);
     }
 
-    public boolean upload(String [] filePath){
+    @Override
+    public boolean upload(String ...filePath){
         return upload(this, filePath);
     }
 
-    public boolean upload(String [] filePath, Long timeout){
-        return upload(this, filePath, timeout);
+    public boolean upload(long timeout, String ...filePath){
+            return upload(this, timeout, filePath);
     }
 
-    private boolean upload(WebLocator el, String[] filePath) {
+    private boolean upload(WebLocator el, String ...filePath) {
         browse(el);
         return RunExe.getInstance().upload(filePath);
     }
 
-    private boolean upload(WebLocator el, String[] filePath, Long timeout) {
+    private boolean upload(WebLocator el, long timeout, String ...filePath) {
         browse(el);
-        return RunExe.getInstance().upload(filePath, timeout);
+        return RunExe.getInstance().upload(timeout, filePath);
     }
 
     private void browse(WebLocator el) {

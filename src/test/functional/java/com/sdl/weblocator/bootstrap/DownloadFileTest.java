@@ -29,13 +29,13 @@ public class DownloadFileTest extends TestBase {
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
      public void download() {
-        assertTrue(downloadFile.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
+        assertTrue(downloadFile.download(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"));
     }
 
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void download1() {
-        assertTrue(downloadFile1.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
+        assertTrue(downloadFile1.download(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"));
     }
 
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
@@ -47,6 +47,6 @@ public class DownloadFileTest extends TestBase {
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void downloadNegative() {
-        assertFalse(downloadFileNegative.download(new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"}));
+        assertFalse(downloadFileNegative.download(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\downloadAndCancel.exe", "text.docx"));
     }
 }

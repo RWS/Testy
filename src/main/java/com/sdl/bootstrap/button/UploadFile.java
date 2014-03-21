@@ -3,7 +3,7 @@ package com.sdl.bootstrap.button;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.interactions.Actions;
 
-public class UploadFile extends WebLocator {
+public class UploadFile extends WebLocator implements Upload {
 
     public UploadFile() {
         setClassName("UploadFile");
@@ -12,7 +12,7 @@ public class UploadFile extends WebLocator {
     }
 
     /**
-     * @param container
+     * @param container parent
      */
     public UploadFile(WebLocator container) {
         this();
@@ -26,42 +26,43 @@ public class UploadFile extends WebLocator {
 
     /**
      * Upload file with AutoIT.
-     * Use only this: button.upload("Browse", new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     * Use only this: button.upload("Browse", "C:\\upload.exe", "C:\\text.txt");
      *
-     * @param text
-     * @param filePath
+     * @param text button text
+     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
      */
-    public boolean upload(String text, String[] filePath) {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
-        return upload(upload, filePath);
+    public boolean upload(String text, String ...filePath) {
+            WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
+            return upload(upload, filePath);
     }
 
-    public boolean upload(String text, String[] filePath, Long timeout) {
+    public boolean upload(String text, long timeout, String ...filePath) {
         WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
-        return upload(upload, filePath, timeout);
+        return upload(upload, timeout, filePath);
     }
 
-    public void change(String[] filePath) {
+    public void change(String ...filePath) {
         change("Change", filePath);
     }
 
-    public boolean change(String text, String[] filePath) {
+    public boolean change(String text, String ...filePath) {
         WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setText(text);
         return upload(upload, filePath);
     }
 
     /**
      * Upload file with AutoIT.
-     * Use only this: button.upload(new String[] {"C:\\upload.exe", "C:\\text.txt"});
+     * Use only this: button.upload("C:\\upload.exe", "C:\\text.txt");
      *
      * @param filePath new String[] {"C:\\upload.exe", "C:\\text.txt"}
      */
-    public boolean upload(String[] filePath) {
+    @Override
+    public boolean upload(String ...filePath) {
         WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-new").setElPathSuffix(" and count(.//i[@class='icon-folder-open']) > 0");
         return upload(uploadButton, filePath);
     }
 
-    public boolean reUpload(String[] filePath) {
+    public boolean reUpload(String ...filePath) {
         WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setElPathSuffix(" and count(.//i[@class='icon-refresh']) > 0");
         return upload(uploadButton, filePath);
     }
@@ -76,14 +77,14 @@ public class UploadFile extends WebLocator {
         return upload.getHtmlText();
     }
 
-    public boolean upload(WebLocator el, String[] filePath) {
+    public boolean upload(WebLocator el, String ...filePath) {
         browse(el);
         return RunExe.getInstance().upload(filePath);
     }
 
-    public boolean upload(WebLocator el, String[] filePath, Long timeout) {
+    public boolean upload(WebLocator el, long timeout, String ...filePath) {
         browse(el);
-        return RunExe.getInstance().upload(filePath, timeout);
+        return RunExe.getInstance().upload(timeout, filePath);
     }
 
     private void browse(WebLocator el) {
