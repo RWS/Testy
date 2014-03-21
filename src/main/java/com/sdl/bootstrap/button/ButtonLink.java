@@ -2,10 +2,8 @@ package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
 
 public class ButtonLink extends Button {
-    private static final Logger logger = Logger.getLogger(ButtonLink.class);
 
     public ButtonLink() {
         setClassName("ButtonLink");

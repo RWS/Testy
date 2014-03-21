@@ -44,7 +44,6 @@ public class TabPanel extends ExtJsComponent {
         return ""; // because text is used as title in TabPanel
     }
 
-
     /**
      * this method return the path of the main TabPanel (that contains also this Tab/Panel)
      *
@@ -116,5 +115,4 @@ public class TabPanel extends ExtJsComponent {
         }
         return -1;
     }
-
 }

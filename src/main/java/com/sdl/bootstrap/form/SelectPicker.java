@@ -2,10 +2,8 @@ package com.sdl.bootstrap.form;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
-import org.apache.log4j.Logger;
 
 public class SelectPicker extends WebLocator implements ICombo {
-    private static final Logger logger = Logger.getLogger(SelectPicker.class);
 
     public SelectPicker() {
         setClassName("SelectPicker");

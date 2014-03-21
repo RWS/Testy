@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class TableCellTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
 
-    public static Table table = new Table().setId("ID");
+    public static SimpleTable table = new SimpleTable().setId("ID");
     public static TableRow tableRow = new TableRow(table, "Text", SearchType.EQUALS);
 
     @DataProvider
