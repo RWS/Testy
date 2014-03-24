@@ -70,6 +70,7 @@ public class RunExe {
                 return false;
             }
         }
+        logger.debug("myRunThread.getRunOk()=" + myRunThread.getRunOk());
         return myRunThread.getRunOk();
     }
 
