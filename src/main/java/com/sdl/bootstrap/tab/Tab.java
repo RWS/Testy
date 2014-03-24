@@ -4,10 +4,6 @@ import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class Tab extends WebLocator {
     private static final Logger logger = Logger.getLogger(Tab.class);
@@ -28,10 +24,11 @@ public class Tab extends WebLocator {
         setContainer(container);
     }
 
-    private String getTitlePath() {
+    private String getTitlePath(boolean active) {
         String returnPath = "";
         if (hasText()) {
-            returnPath = "//ul[" + getBaseCls() + " and count(.//li[not(@class='active')]//a[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0]";
+            String isActive = active ? "@class='active'" : "not(@class='active')";
+            returnPath = "//ul[" + getBaseCls() + " and count(.//li[" + isActive + "]//a[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0]";
         }
         return returnPath;
     }
@@ -62,32 +59,19 @@ public class Tab extends WebLocator {
     }
 
     /**
-     * After the tab is set to active will wait 50ms to make sure tab is rendered
+     * After the tab is set to active
      *
      * @return true or false
      */
     public boolean setActive() {
-//        String baseTabPath = "//*[" + Utils.fixPathSelector(getBasePath()) + "]";
-//        String titlePath = baseTabPath + getTitlePath();
-        WebLocator titleElement = new WebLocator(getContainer(), getTitlePath()).setInfoMessage(getText() + " Tab");
-        boolean activated = titleElement.click();
+        boolean activated = new WebLocator(getContainer(), getTitlePath(true)).ready();
+        if (!activated) {
+            WebLocator titleElement = new WebLocator(getContainer(), getTitlePath(false)).setInfoMessage(getText() + " Tab");
+            activated = titleElement.click();
+        }
         if (activated) {
             logger.info("setActive : " + toString());
-            Utils.sleep(30); // need to make sure this tab is rendered
         }
         return activated;
-    }
-
-    public int getTabCount(String nameTab, String path) {
-        List<WebElement> element = driver.findElements(By.xpath(path));
-        int count = 0;
-        for (WebElement el : element) {
-            if (nameTab.equals(el.getText())) {
-                logger.debug(count + " : " + el.getText());
-                return count;
-            }
-            count++;
-        }
-        return -1;
     }
 }
