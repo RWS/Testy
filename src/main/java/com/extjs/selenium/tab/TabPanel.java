@@ -3,6 +3,7 @@ package com.extjs.selenium.tab;
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -12,9 +13,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class TabPanel extends ExtJsComponent {
-
     private static final Logger logger = Logger.getLogger(TabPanel.class);
-    public int serialNumber = 0;
 
     private TabPanel() {
         setClassName("TabPanel");
@@ -23,7 +22,7 @@ public class TabPanel extends ExtJsComponent {
 
     public TabPanel(String text) {
         this();
-        setText(text);
+        setText(text, SearchType.EQUALS);
     }
 
     public TabPanel(WebLocator container, String text) {
@@ -34,14 +33,9 @@ public class TabPanel extends ExtJsComponent {
     public String getTitlePath() {
         String returnPath = "";
         if (hasText()) {
-            returnPath = "//*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']";
+            returnPath = "//*[contains(@class,'x-tab-panel-header')]//*[" + Utils.fixPathSelector(getItemPathText()) + "]";
         }
         return returnPath;
-    }
-
-    @Override
-    protected String getItemPathText(){
-        return ""; // because text is used as title in TabPanel
     }
 
     /**
@@ -50,10 +44,10 @@ public class TabPanel extends ExtJsComponent {
      * @return the path of the main TabPanel
      */
     public String getBaseTabPanelPath() {
-        String selector = getBasePathSelector();
+        String selector = getBasePath();
         if (hasText()) {
 //            selector += " and count(*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']) > 0"; //[viorel]
-            selector += " and not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[text()='" + getText() + "']) > 0";
+            selector += " and not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0";
         }
         selector = Utils.fixPathSelector(selector);
         return "//*[" + selector + "]";
@@ -80,7 +74,7 @@ public class TabPanel extends ExtJsComponent {
      * @return true or false
      */
     public boolean setActive() {
-        String baseTabPath = "//*[" + Utils.fixPathSelector(getBasePathSelector()) + "]";
+        String baseTabPath = "//*[" + Utils.fixPathSelector(getBasePath()) + "]";
         String titlePath = baseTabPath + getTitlePath();
         WebLocator titleElement = new WebLocator(getContainer(), titlePath).setInfoMessage(getText() + " Tab");
         logger.info("setActive : " + toString());
