@@ -28,7 +28,7 @@ public class Tab extends WebLocator {
         String returnPath = "";
         if (hasText()) {
             String isActive = active ? "@class='active'" : "not(@class='active')";
-            returnPath = "//ul[" + getBaseCls() + " and count(.//li[" + isActive + "]//a[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0]";
+            returnPath = "//ul[@class='" + getBaseCls() + "' and count(.//li[" + isActive + "]//a[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0]";
         }
         return returnPath;
     }
