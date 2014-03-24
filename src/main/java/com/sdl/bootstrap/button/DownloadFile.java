@@ -1,9 +1,11 @@
 package com.sdl.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
 
 public class DownloadFile extends WebLocator implements Download {
+    private static final Logger logger = Logger.getLogger(DownloadFile.class);
 
     public DownloadFile() {
         setClassName("DownloadFile");
@@ -54,7 +56,9 @@ public class DownloadFile extends WebLocator implements Download {
 
     public boolean download(String filePath, long timeout) {
         openBrowse();
-        return RunExe.getInstance().download(filePath, timeout);
+        boolean success = RunExe.getInstance().download(filePath, timeout);
+        logger.debug("download=" + success);
+        return success;
     }
 
     private void openBrowse(){

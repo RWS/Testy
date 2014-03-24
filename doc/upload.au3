@@ -21,17 +21,20 @@ ControlSetText($activeWindowTitle, "", "Edit1", $CmdLine[1])
 $save = ControlCommand($activeWindowTitle, "", "Button1", "IsVisible", "")
 _FileWriteLog($hFile, "---save='" & $save & "'")
 If ($save = 1) Then
-   ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:1]")
+   $click = ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:1]")
    $result = 0
    _FileWriteLog($hFile, "saveDefault='" & $save & "'")
+   _FileWriteLog($hFile, "$clickDefault='" & $click & "'")
 Else
-   ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:2]") ;Pentru browserul straniu de la BeGlobal
+   $click = ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:2]") ;Pentru browserul straniu de la BeGlobal
    $result = 0
    _FileWriteLog($hFile, "saveStraniu='" & $save & "'")
+   _FileWriteLog($hFile, "$clickStraniu = ='" & $click =  & "'")
 EndIf
 Sleep(300)
-WinWaitClose($activeWindowTitle, "", 3)
+$close = WinWaitClose($activeWindowTitle, "", 3)
 _FileWriteLog($hFile, "win='" & $activeWindowTitle & "'")
+_FileWriteLog($hFile, "$close='" & $close & "'")
 _FileWriteLog($hFile, "$result='" & $result & "'")
 _FileWriteLog($hFile, "------------------------- New Upload --------------------------")
 FileClose($hFile)

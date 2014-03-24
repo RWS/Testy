@@ -39,7 +39,7 @@ public class RunExe {
         return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName);
     }
 
-    public boolean download(String downloadWindowName, long timeout, String ...filePath) {
+    public boolean download(String downloadWindowName, long timeout, String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName, timeout);
     }
 
@@ -47,11 +47,11 @@ public class RunExe {
         return WebLocator.driver instanceof FirefoxDriver ? "Opening" : "Save As";
     }
 
-    public boolean upload(String ...filePath) {
+    public boolean upload(String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"");
     }
 
-    public boolean upload(long timeout, String ...filePath) {
+    public boolean upload(long timeout, String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"", timeout);
     }
 
@@ -64,11 +64,13 @@ public class RunExe {
         while (myRunThread.getRunOk() == null) {
             Utils.sleep(RUN_EXE_THREAD_INTERVAL);
             timeout -= RUN_EXE_THREAD_INTERVAL;
-            logger.debug("Waiting for " + filePath + " to finish executing.");
+            logger.debug("Waiting for " + filePath + " to finish executing in " + timeout);
             if (timeout <= 0) {
+                logger.debug("return false");
                 return false;
             }
         }
+        logger.debug("myRunThread.getRunOk()=" + myRunThread.getRunOk());
         return myRunThread.getRunOk();
     }
 
