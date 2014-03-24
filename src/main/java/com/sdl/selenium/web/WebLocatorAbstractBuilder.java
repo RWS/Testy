@@ -605,6 +605,24 @@ public abstract class WebLocatorAbstractBuilder {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
         StringBuilder selector = new StringBuilder();
+        selector.append(getBasePath());
+        selector.append(getItemPathText());
+        if (!WebDriverConfig.isIE()) {
+            if (hasStyle()) {
+                selector.append(" and contains(@style ,'").append(getStyle()).append("')");
+            }
+            // TODO make specific for WebLocator
+            if (isVisibility()) {
+//               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
+                selector.append(" and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+            }
+        }
+
+        return Utils.fixPathSelector(selector.toString());
+    }
+
+    protected String getBasePath() {
+        StringBuilder selector = new StringBuilder();
         if (hasId()) {
             selector.append(" and @id='").append(getId()).append("'");
         }
@@ -631,19 +649,7 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasElPathSuffix()) {
             selector.append(getElPathSuffix());
         }
-        selector.append(getItemPathText());
-        if (!WebDriverConfig.isIE()) {
-            if (hasStyle()) {
-                selector.append(" and contains(@style ,'").append(getStyle()).append("')");
-            }
-            // TODO make specific for WebLocator
-            if (isVisibility()) {
-//               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                selector.append(" and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
-            }
-        }
-
-        return Utils.fixPathSelector(selector.toString());
+        return selector.toString();
     }
 
     /**
