@@ -40,7 +40,7 @@ public enum SearchType {
     CHILD_NODE,
 
     /**
-     * For finding elements that contain text (and text is not in any of direct chileNodes in that element, but inside of them).
+     * For finding elements that contain text (and text is not in any of direct childNodes in that element, but inside of them).
      * eg. next button has the span.icon as first childNode in html, and text is inside span.btn-text childNode:
      * <pre>
      &lt;div class="btn">
@@ -52,18 +52,17 @@ public enum SearchType {
      */
     DEEP_CHILD_NODE,
 
-    //TODO documentatia nu e buna!!!
     /**
-     * For finding elements that contain text (and text is not in any of direct chileNodes in that element, but inside of them).
-     * eg. next button has the span.icon as first childNode in html, and text is inside span.btn-text childNode:
+     * TODO add better documentation and working example
+     * For finding elements that contain text  composed by html nodes
+     * eg. "Get an instant Quote" button contains text containing html node &lt;span>instant &lt;/span>
      * <pre>
      &lt;div class="btn">
-        &lt;span class="icon">&lt;/span>
-        &lt;span class="btn-text">Cancel&lt;/span>
+        Get an &lt;span class="bold">instant&lt;/span> Quote
      &lt;/div>
      </pre>
      * <p>so must be used like:</p>
-     * <pre>WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel is Button text", SearchType.HTML_NODE);</pre>
+     * <pre>WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Get an instant Quote", SearchType.HTML_NODE);</pre>
      */
     HTML_NODE,
 
