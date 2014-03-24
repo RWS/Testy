@@ -70,10 +70,10 @@ public class Tab extends WebLocator {
 //        String baseTabPath = "//*[" + Utils.fixPathSelector(getBasePath()) + "]";
 //        String titlePath = baseTabPath + getTitlePath();
         WebLocator titleElement = new WebLocator(getContainer(), getTitlePath()).setInfoMessage(getText() + " Tab");
-        logger.info("setActive : " + toString());
         boolean activated = titleElement.click();
         if (activated) {
-            Utils.sleep(300); // need to make sure this tab is rendered
+            logger.info("setActive : " + toString());
+            Utils.sleep(30); // need to make sure this tab is rendered
         }
         return activated;
     }
