@@ -622,34 +622,34 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     protected String getBasePath() {
-        StringBuilder selector = new StringBuilder();
+        ArrayList<String> selector = new ArrayList<String>();
         if (hasId()) {
-            selector.append(" and @id='").append(getId()).append("'");
+            selector.add("@id='" + getId() + "'");
         }
         if (hasName()) {
-            selector.append(" and @name='").append(getName()).append("'");
+            selector.add("@name='" + getName() + "'");
         }
         if (hasBaseCls()) {
-            selector.append(" and contains(concat(' ', @class, ' '), ' ").append(getBaseCls()).append(" ')");
+            selector.add("contains(concat(' ', @class, ' '), ' " + getBaseCls() + " ')");
         }
         if (hasCls()) {
-            selector.append(" and @class='").append(getCls()).append("'");
+            selector.add("@class='" + getCls() + "'");
         }
         if (hasClasses()) {
             for (String cls : getClasses()) {
 //                selector.append(" and contains(@class, '").append(cls).append("')");
-                selector.append(" and contains(concat(' ', @class, ' '), ' ").append(cls).append(" ')");
+                selector.add("contains(concat(' ', @class, ' '), ' " + cls + " ')");
             }
         }
         if (hasExcludeClasses()) {
             for (String excludeClasses : getExcludeClasses()) {
-                selector.append(" and not(contains(@class, '").append(excludeClasses).append("'))");
+                selector.add("not(contains(@class, '" + excludeClasses + "'))");
             }
         }
         if (hasElPathSuffix()) {
-            selector.append(getElPathSuffix());
+            selector.add(getElPathSuffix());
         }
-        return selector.toString();
+        return StringUtils.join(selector, " and ");
     }
 
     /**

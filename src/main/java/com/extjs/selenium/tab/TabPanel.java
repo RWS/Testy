@@ -74,7 +74,7 @@ public class TabPanel extends ExtJsComponent {
      * @return true or false
      */
     public boolean setActive() {
-        String baseTabPath = "//*[" + Utils.fixPathSelector(getBasePath()) + "]";
+        String baseTabPath = "//*[" + getBasePath() + "]";
         String titlePath = baseTabPath + getTitlePath();
         WebLocator titleElement = new WebLocator(getContainer(), titlePath).setInfoMessage(getText() + " Tab");
         logger.info("setActive : " + toString());

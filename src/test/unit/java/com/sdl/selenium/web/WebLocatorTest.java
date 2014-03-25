@@ -27,7 +27,7 @@ public class WebLocatorTest {
                 {new WebLocator().setId("ID").setClasses("Cls"), "//*[@id='ID' and contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator().setClasses("Cls").setText("Text"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and contains(text(),'Text')]"},
                 {new WebLocator().setClasses("Cls").setText("Text").setElPath("//a//div//input"), "//a//div//input"},
-                {new WebLocator().setClasses("Cls").setElPathSuffix(" and count(.//[text()='Texts']) > 0"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and count(.//[text()='Texts']) > 0]"},
+                {new WebLocator().setClasses("Cls").setElPathSuffix("count(.//[text()='Texts']) > 0"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and count(.//[text()='Texts']) > 0]"},
                 {new WebLocator().setTag("textarea"), "//textarea"},
                 {new WebLocator(container).setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
                 {new WebLocator().setClasses("Cls").setTag("textarea"), "//textarea[contains(concat(' ', @class, ' '), ' Cls ')]"},
