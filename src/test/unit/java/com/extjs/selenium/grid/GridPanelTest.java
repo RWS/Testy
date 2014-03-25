@@ -48,12 +48,12 @@ public class GridPanelTest {
                 {gridContainerAndColumn.getGridRow(), CONTAINER_PATH + GRID_PATH + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
                 {gridContainerAndClsAndColumn.getGridRow(), CONTAINER_PATH + GRID_CLS_PATH + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
 
-                {grid.getRow(1), GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridCls.getRow(1), GRID_CLS_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridContainer.getRow(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridClsAndColumn.getRow(1), GRID_CLS_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridContainerAndColumn.getRow(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridContainerAndClsAndColumn.getRow(1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"}
+                {grid.getRowLocator(1), GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridCls.getRowLocator(1), GRID_CLS_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainer.getRowLocator(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridClsAndColumn.getRowLocator(1), GRID_CLS_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndColumn.getRowLocator(1), CONTAINER_PATH + GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndClsAndColumn.getRowLocator(1), CONTAINER_PATH + GRID_CLS_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"}
         };
     }
 
@@ -129,7 +129,7 @@ public class GridPanelTest {
                 {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "text", SearchType.EQUALS), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and text()='text']"},
 
                 {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "/text/exe", SearchType.CONTAINS_ALL), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text') and contains(text(),'exe')]"},
-                {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "|text|exe", SearchType.CONTAINS_ANY), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text') or contains(text(),'exe')]"},
+                {gridContainerAndClsAndColumn.getGridCell("SearchText", 1, "|text|exe", SearchType.CONTAINS_ANY), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-1')]//*[contains(text(),'SearchText')]) > 0]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and (contains(text(),'text') or contains(text(),'exe'))]"},
 
                 {grid.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), GRID_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
                 {gridCls.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
@@ -139,7 +139,7 @@ public class GridPanelTest {
                 {gridContainerAndClsAndColumn.getGridCell(1, new GridCell(1, "text", SearchType.EQUALS)), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[text()='text']) > 0]//td[1]//*"},
 
                 {gridContainerAndClsAndColumn.getGridCell(1, new GridCell(1, "/text/exe", SearchType.CONTAINS_ALL)), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[contains(text(),'text') and contains(text(),'exe')]) > 0]//td[1]//*"},
-                {gridContainerAndClsAndColumn.getGridCell(1, new GridCell(1, "|text|exe", SearchType.CONTAINS_ANY)), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[contains(text(),'text') or contains(text(),'exe')]) > 0]//td[1]//*"},
+                {gridContainerAndClsAndColumn.getGridCell(1, new GridCell(1, "|text|exe", SearchType.CONTAINS_ANY)), CONTAINER_PATH + GRID_CLS_PATH + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[1]//*[(contains(text(),'text') or contains(text(),'exe'))]) > 0]//td[1]//*"},
 
         };
     }

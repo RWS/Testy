@@ -57,8 +57,8 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setTag(String)}
-     *         <p>tag (type of DOM element)</p>
-     *         <pre>default to "*"</pre>
+     * <p>tag (type of DOM element)</p>
+     * <pre>default to "*"</pre>
      */
     public String getTag() {
         return tag;
@@ -99,7 +99,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setElPath(String)}
-     *         <p>returned value does not include containers path</p>
+     * <p>returned value does not include containers path</p>
      */
     public String getElPath() {
         return elPath;
@@ -703,7 +703,7 @@ public abstract class WebLocatorAbstractBuilder {
                     strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
                 }
                 String operator = hasContainsAll ? " and " : " or ";
-                selector += StringUtils.join(strings, operator);
+                selector += hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
             } else {
                 //searchTextType.contains(SearchType.CONTAINS)  //default
                 selector += "contains(" + pathText + "," + text + ")";
