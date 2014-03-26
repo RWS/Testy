@@ -15,7 +15,7 @@ public class Window extends WebLocator implements IWebLocator {
     public Window(String title) {
         this();
         setTitle(title);
-        setElPathSuffix(" and count(*[contains(@class,'-header')]//*[text()='" + getTitle() + "']) > 0");
+        setElPathSuffix("count(*[contains(@class,'-header')]//*[text()='" + getTitle() + "']) > 0");
     }
 
     public String getItemPath(boolean disabled) {
