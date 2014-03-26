@@ -1,6 +1,5 @@
 package com.sdl.selenium.web.table;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
@@ -15,12 +14,12 @@ public class TableRow extends Row {
         setVisibility(true);
     }
 
-    public TableRow(WebLocator container){
+    public TableRow(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public TableRow(WebLocator container, int indexRow){
+    public TableRow(WebLocator container, int indexRow) {
         this(container);
         setPosition(indexRow);
     }
@@ -44,15 +43,14 @@ public class TableRow extends Row {
     @Override
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
-        return "//" + getTag() + ("".equals(selector) ? "" : "[" + selector + "]");
+        return "//" + getTag() + ("".equals(selector) && selector == null ? null : "[" + selector + "]");
     }
 
     @Override
     protected String getItemPathText() {
         String selector = super.getItemPathText();
-        if (!"".equals(selector)) {
-            String text = Utils.fixPathSelector(selector);
-            selector = text + " or count(.//*[" + text + "]) > 0";
+        if (!"".equals(selector) && selector != null) {
+            selector = selector + " or count(.//*[" + selector + "]) > 0";
         }
         return selector;
     }

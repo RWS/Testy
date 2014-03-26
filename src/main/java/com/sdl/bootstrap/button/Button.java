@@ -52,7 +52,7 @@ public class Button extends WebLocator implements IButton {
         if (hasIconCls()) {
             selector += " and count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
         }
-        return selector;
+        return selector.length() == 0 ? null : selector;
     }
 
     @Override

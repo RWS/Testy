@@ -1,6 +1,5 @@
 package com.sdl.selenium.web.table;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
@@ -40,7 +39,7 @@ public class TableCell extends Cell {
     @Override
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
-            itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(getItemPathText()) ? "" : "[" + Utils.fixPathSelector(getItemPathText()) + "]");
+            itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(getItemPathText()) ? "" : (getItemPathText() == null ? "" : "[" + getItemPathText() + "]"));
         }
         return itemPath;
     }
@@ -48,9 +47,8 @@ public class TableCell extends Cell {
     @Override
     protected String getItemPathText() {
         String selector = super.getItemPathText();
-        if (!"".equals(selector)) {
-            String text = Utils.fixPathSelector(selector);
-            selector = text + " or count(.//*[" + text + "]) > 0";
+        if (!"".equals(selector) && selector != null) {
+            selector = selector + " or count(.//*[" + selector + "]) > 0";
         }
         return selector;
     }

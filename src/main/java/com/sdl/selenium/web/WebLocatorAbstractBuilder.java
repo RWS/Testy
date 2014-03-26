@@ -1,13 +1,11 @@
 package com.sdl.selenium.web;
 
 import com.extjs.selenium.Utils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -57,8 +55,8 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setTag(String)}
-     * <p>tag (type of DOM element)</p>
-     * <pre>default to "*"</pre>
+     *         <p>tag (type of DOM element)</p>
+     *         <pre>default to "*"</pre>
      */
     public String getTag() {
         return tag;
@@ -99,7 +97,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setElPath(String)}
-     * <p>returned value does not include containers path</p>
+     *         <p>returned value does not include containers path</p>
      */
     public String getElPath() {
         return elPath;
@@ -604,25 +602,26 @@ public abstract class WebLocatorAbstractBuilder {
     protected String getBasePathSelector() {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
-        StringBuilder selector = new StringBuilder();
-        selector.append(getBasePath());
-        selector.append(getItemPathText());
+        List<String> selector = new ArrayList<String>();
+        CollectionUtils.addIgnoreNull(selector, getBasePath());
+        CollectionUtils.addIgnoreNull(selector, getItemPathText());
+
         if (!WebDriverConfig.isIE()) {
             if (hasStyle()) {
-                selector.append(" and contains(@style ,'").append(getStyle()).append("')");
+                selector.add("contains(@style ,'" + getStyle() + "')");
             }
             // TODO make specific for WebLocator
             if (isVisibility()) {
 //               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                selector.append(" and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+                selector.add("count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
             }
         }
 
-        return Utils.fixPathSelector(selector.toString());
+        return selector.isEmpty() ? "" : StringUtils.join(selector, " and ");
     }
 
     protected String getBasePath() {
-        ArrayList<String> selector = new ArrayList<String>();
+        List<String> selector = new ArrayList<String>();
         if (hasId()) {
             selector.add("@id='" + getId() + "'");
         }
@@ -649,7 +648,7 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasElPathSuffix()) {
             selector.add(getElPathSuffix());
         }
-        return StringUtils.join(selector, " and ");
+        return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
 
     /**
@@ -660,7 +659,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     protected String getItemPath(boolean disabled) {
         String selector = getBaseItemPath();
-        selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
+        selector = "//" + getTag() + (selector != null && (selector.length() > 0) ? ("[" + selector + "]") : "");
         return selector;
     }
 
@@ -670,14 +669,14 @@ public abstract class WebLocatorAbstractBuilder {
      * @return String
      */
     protected String getItemPathText() {
-        String selector = "";
+        String selector = null;
         if (hasText()) {
+            selector = "";
             String text = getText();
             boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
             if (!(hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY))) {
                 text = Utils.getEscapeQuotesText(text);
             }
-            selector += " and ";
             String pathText = "text()";
 
             boolean useChildNodesSearch = searchTextType.contains(SearchType.CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE);
@@ -716,15 +715,14 @@ public abstract class WebLocatorAbstractBuilder {
                 String a = "normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=" + text;
                 String b = "normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=" + text;
 
-                selector = " and (" + a + " or " + b + ")";
+                selector = "(" + a + " or " + b + ")";
             }
         }
         return selector;
     }
 
     private String getBaseItemPath() {
-        String selector = getBasePathSelector();
-        return Utils.fixPathSelector(selector);
+        return getBasePathSelector();
     }
 
     /**

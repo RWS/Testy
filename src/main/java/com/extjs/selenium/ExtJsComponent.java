@@ -51,8 +51,6 @@ public class ExtJsComponent extends WebLocator {
         }
         // TODO use also if disabled some parents then can;t click/select some children
         // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        selector = Utils.fixPathSelector(selector);
-
         return selector;
     }
 

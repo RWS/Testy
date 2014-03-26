@@ -15,10 +15,10 @@ public abstract class Row extends WebLocator {
         String path = "";
         for (Cell cell : cells) {
             String itemPathText = cell.getItemPathText();
-            if (cell.getPosition() != -1 && !"".equals(itemPathText)) {
-                path += " and " + getSearchPath(cell.getPosition(), Utils.fixPathSelector(itemPathText));
-            } else if (cell.getPosition() == -1 && !"".equals(itemPathText)) {
-                path += " and " + getSearchPath(Utils.fixPathSelector(itemPathText));
+            if (cell.getPosition() != -1 && !"".equals(itemPathText) && itemPathText != null) {
+                path += " and " + getSearchPath(cell.getPosition(),itemPathText);
+            } else if (cell.getPosition() == -1 && !"".equals(itemPathText) && itemPathText != null) {
+                path += " and " + getSearchPath(itemPathText);
             } else {
                 logger.warn("cell.getPosition()=" + cell.getPosition());
                 logger.warn("itemPathText=" + itemPathText);

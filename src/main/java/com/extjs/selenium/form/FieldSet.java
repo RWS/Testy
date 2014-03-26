@@ -11,6 +11,7 @@ public class FieldSet extends WebLocator {
         setClassName("FieldSet");
         setBaseCls("x-fieldset");
         setTag("fieldset");
+        setExcludeClasses("x-hide-display", "x-masked");
     }
 
     public FieldSet(WebLocator container) {
@@ -28,28 +29,9 @@ public class FieldSet extends WebLocator {
         setClasses(cls);
     }
 
-    protected String getDefaultExcludePath() {
-        return " and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))";
-    }
-
     @Override
-    protected String getItemPathText(){
-        String selector = "";
-        if (hasText()) {
-            //selector += " and count(.//*[contains(text(),'" + getText() + "')]) > 0";
-            selector += " and count(.//*[normalize-space(text())='" + getText() + "']) > 0";
-        }
-        return selector;
-    }
-    /**
-     * @param disabled disabled
-     * @return String path
-     */
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        // limit results to fieldset only
-        selector += getDefaultExcludePath();
-        return "//" + getTag() + "[" + selector + "]";
+    protected String getItemPathText() {
+        return hasText() ? "count(.//*[normalize-space(text())='" + getText() + "']) > 0" : null;
     }
 
     // methods
@@ -61,7 +43,7 @@ public class FieldSet extends WebLocator {
     public boolean expand() {
         WebLocator legendElement = new WebLocator(this).setText(getText());
         boolean expanded = !isCollapsed() || legendElement.click();
-        if(expanded){
+        if (expanded) {
             Utils.sleep(500);
         }
         return expanded;
