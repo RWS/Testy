@@ -1,6 +1,7 @@
 package com.extjs.selenium.form;
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,6 +14,8 @@ public class LabelTest {
         return new Object[][]{
                 {new Label("LabelText"),            "//label[contains(text(),'LabelText')]"},
                 {new Label(container),              "//*[contains(concat(' ', @class, ' '), ' container ')]//label"},
+                {new Label(container).setLabel("Label", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[contains(text(),'Label')]//following-sibling::*//label"},
+                {new Label(container).setLabel("Label", SearchType.CONTAINS, SearchType.HTML_NODE), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))='Label' or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))='Label')]//following-sibling::*//label"},
                 {new Label(container, "LabelText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[contains(text(),'LabelText')]"},
         };
     }
