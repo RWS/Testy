@@ -57,10 +57,10 @@ public class TextField extends ExtJsComponent implements ITextField {
     protected String getBasePathSelector() {
         String selector = super.getBasePathSelector();
 
-        selector += " and not(@type='hidden')";
+        selector = selector != null ? selector += " and not(@type='hidden')" : "not(@type='hidden')";
         // TODO use also if disabled some parents then can;t click/select some children
         // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        return Utils.fixPathSelector(selector);
+        return selector;
     }
 
     public String getItemPath(boolean disabled) {
