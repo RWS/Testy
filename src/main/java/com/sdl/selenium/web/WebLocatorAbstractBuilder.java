@@ -26,6 +26,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String text;
     protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
     private List<SearchType> searchTextType = new ArrayList<SearchType>();
+    private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
     private String title;
@@ -273,6 +274,20 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     *
+     * @param searchLabelType accepted values are: {@link SearchType}
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
+        this.searchLabelType = new ArrayList<SearchType>();
+        if (searchLabelType != null) {
+            Collections.addAll(this.searchLabelType, searchLabelType);
+        }
+        return (T) this;
+    }
+
+    /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setStyle(String)}
@@ -434,7 +449,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
-     * @return value that has been set in {@link #setLabel(String)}
+     * @return value that has been set in {@link #setLabel(String, SearchType...)}
      */
     public String getLabel() {
         return label;
@@ -446,15 +461,18 @@ public abstract class WebLocatorAbstractBuilder {
      * @param label text label element
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setLabel(String label) {
+    public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
+        if (searchType != null) {
+            setSearchLabelType(searchType);
+        }
         return (T) this;
     }
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
-     * @return value that has been set in {@link #setLabel(String)}
+     * @return value that has been set in {@link #setLabel(String, SearchType...)}
      */
     public String getLabelTag() {
         return labelTag;
@@ -824,6 +842,13 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     protected String getLabelPath() {
-        return "//" + getLabelTag() + "[text()=" + Utils.getEscapeQuotesText(getLabel()) + "]"; // new Label(getLabel()).getPath()
+        if(searchLabelType.size() == 0) {
+            searchLabelType.add(SearchType.EQUALS);
+        }
+        SearchType[] st = new SearchType[searchLabelType.size()];
+        for (int i = 0; i < searchLabelType.size(); i++) {
+            st[i] = searchLabelType.get(i);
+        }
+        return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getPath();
     }
 }
