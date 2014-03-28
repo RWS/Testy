@@ -7,7 +7,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.7.1-SNAPSHOT</version>
+    <version>1.7.1</version>
     <packaging>jar</packaging>
 	<description>Test framework for web applications</description>
 	<url>https://github.com/SDLLanguageTechnologies/Testy</url>
