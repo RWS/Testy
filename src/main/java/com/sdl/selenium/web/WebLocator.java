@@ -1,7 +1,6 @@
 package com.sdl.selenium.web;
 
 import com.extjs.selenium.Utils;
-import com.sdl.selenium.WebLocatorUtils;
 import com.thoughtworks.selenium.Selenium;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -74,14 +73,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use from WebDriverConfig.hasWebDriver()
-     * @return true or false
-     */
-    public static boolean hasWebDriver() {
-        return WebDriverConfig.hasWebDriver();
-    }
-
-    /**
      * @return id
      */
     public String getAttributeId() {
@@ -115,15 +106,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     protected String getCurrentElementAttribute(String attribute){
         return executor.getCurrentElementAttribute(this, attribute);
-    }
-
-    // TODO remove from this class, it does not belong to this element
-    /**
-     * @deprecated use {@link com.sdl.selenium.WebLocatorUtils#getPageHtmlSource()}
-     * @return string
-     */
-    public String getHtmlSource() {
-        return WebLocatorUtils.getPageHtmlSource();
     }
 
     public String getHtmlText() {
@@ -263,17 +245,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             logger.info("focus on " + toString());
         }
         return this;
-    }
-
-    // TODO remove from this class, it does not belong to this element
-    /**
-     * @deprecated use {@link com.sdl.selenium.WebLocatorUtils#doExecuteScript(String, Object...)}
-     * @param script
-     * @param objects
-     * @return Object
-     */
-    protected Object executeScript(String script, Object... objects) {
-        return WebLocatorUtils.doExecuteScript(script, objects);
     }
 
     /**

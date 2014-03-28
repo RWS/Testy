@@ -93,14 +93,6 @@ public class List extends GridPanel {
         return cell.select();
     }
 
-    /**
-     * @deprecated use getRowLocator
-     */
-    @Override
-    public GridRow getGridRow(int rowIndex) {
-        return getRowLocator(rowIndex);
-    }
-
     @Override
     public GridRow getRowLocator(int rowIndex) {
         return new GridRow(this, "//dl[" + rowIndex + "]");

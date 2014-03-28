@@ -7,7 +7,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.7.1</version>
+    <version>1.7.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<description>Test framework for web applications</description>
 	<url>https://github.com/SDLLanguageTechnologies/Testy</url>
@@ -42,22 +42,22 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>2.40.0</version>
+            <version>2.41.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
-            <version>2.40.0</version>
+            <version>2.41.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-ie-driver</artifactId>
-            <version>2.40.0</version>
+            <version>2.41.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.40.0</version>
+            <version>2.41.0</version>
         </dependency>
         <dependency>
             <groupId>com.opera</groupId>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-safari-driver</artifactId>
-            <version>2.40.0</version>
+            <version>2.41.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

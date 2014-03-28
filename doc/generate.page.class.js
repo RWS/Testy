@@ -20,8 +20,8 @@ var _classGen = {
         if(classCode.indexOf('TextArea') != -1){
             imports.push('import com.sdl.bootstrap.form.TextArea;')
         }
-        if(classCode.indexOf('Table') != -1){
-            imports.push('import com.sdl.selenium.web.table.Table;')
+        if(classCode.indexOf('SimpleTable') != -1){
+            imports.push('import com.sdl.selenium.web.table.SimpleTable;')
         }
         if(classCode.indexOf('Form') != -1){
             imports.push('import com.sdl.bootstrap.form.Form;')
@@ -140,7 +140,7 @@ var _classGen = {
                 code = '';
             }
         } else if(tag == 'table'){
-            className = 'Table';
+            className = 'SimpleTable';
             if(className){
                 name = item.prop("id"); // create order for variable name
                 name = _classGen.getVarName(name) + className;

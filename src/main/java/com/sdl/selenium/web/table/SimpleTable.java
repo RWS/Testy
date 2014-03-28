@@ -140,13 +140,6 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
         return new TableCell(this).setElPath("//tr//td[" + selector + "]");
     }
 
-    /**
-     * @deprecated use getTableCell(String searchElement, SearchType searchType)
-     */
-    public TableCell getTableCell(String searchElement, Boolean startWidth) {
-        return getTableCell(searchElement, startWidth ? SearchType.STARTS_WITH : SearchType.EQUALS);
-    }
-
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
         Row row = getRowLocator(rowIndex);
         return new TableCell(row).setElPath("//td[" + getSearchTypePath(text, SearchType.EQUALS) + "][" + columnIndex + "]");
@@ -188,8 +181,9 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
      *
      * @param searchText searchText
      * @return all text elements from a table
+     * @deprecated //TODO fix it
      */
-    @Deprecated //TODO fix it
+
     public String[] getRow(String searchText) {
         String[] rowElements = null;
         String text = getTableRow(searchText).getHtmlText();

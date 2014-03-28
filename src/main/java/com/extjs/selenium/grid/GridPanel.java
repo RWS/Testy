@@ -218,16 +218,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return selected;
     }
 
-    /**
-     * @deprecated use rowSelect(searchText, SearchType.STARTS_WITH)
-     *             Use this method when really need to select some records not for verification if row is in grid
-     */
-    public boolean rowSelect(String searchElement, Boolean startWith) {
-        ready();
-        GridCell cell = getGridCell(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);
-        return doCellSelect(cell);
-    }
-
     @Override
     public boolean rowSelect(String searchText, SearchType searchType) {
         ready(true);
@@ -466,13 +456,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridRow(this);
     }
 
-    /**
-     * @deprecated use getRowLocator
-     */
-    public GridRow getGridRow(int rowIndex) {
-        return new GridRow(this, rowIndex);
-    }
-
     @Override
     public GridRow getRowLocator(int rowIndex) {
         return new GridRow(this, rowIndex);
@@ -484,13 +467,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public GridRow getGridRow(String searchElement, SearchType searchType) {
         return new GridRow(this, searchColumnId, searchElement, searchType);
-    }
-
-    /**
-     * @deprecated use getCell
-     */
-    public GridCell getGridCell(int rowIndex, int columnIndex) {
-        return getCell(rowIndex, columnIndex);
     }
 
     @Override
@@ -558,13 +534,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     @Override
     public GridRow getRow(GridCell... byCells) {
         return new GridRow(this, byCells).setInfoMessage("-GridRow");
-    }
-
-    /**
-     * @deprecated use getRow
-     */
-    public GridRow findGridRow(GridCell... byCells) {
-        return getRow(byCells);
     }
 
     public boolean selectRow(GridCell... byCells) {
