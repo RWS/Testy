@@ -159,7 +159,10 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     *
+     * <p>Example:</p>
+     * <pre>
+     *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
+     * </pre>
      * @return value that has been set in {@link #setClasses(String...)}
      */
     public List<String> getClasses() {
