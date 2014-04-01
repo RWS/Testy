@@ -120,11 +120,15 @@ public class Button extends ExtJsComponent implements IButton {
      */
     public boolean clickWithExtJS() {
         String id = getAttributeId();
-        String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
+        if (hasId(id)) {
+            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
 //        logger.debug("clickWithExtJS: "+ script);
-        Object object = WebLocatorUtils.doExecuteScript(script);
-        logger.debug("clickWithExtJS result: " + object);
-        return (Boolean) object;
+            Object object = WebLocatorUtils.doExecuteScript(script);
+            logger.debug("clickWithExtJS result: " + object);
+            return (Boolean) object;
+        }
+        logger.debug("id is: " + id);
+        return false;
     }
 
     /**
@@ -143,21 +147,26 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     /**
-     * @return  true or false
+     * @return true or false
      */
     public boolean isEnabled() {
         return exists();
     }
 
+    public boolean hasId(String id) {
+        return id != null && !"".equals(id);
+    }
+
     public boolean showMenu() {
         // TODO try to find solution without runScript
         final String id = getAttributeId();
-        if (id != null && !id.equals("")) {
+        if (hasId(id)) {
             String script = "Ext.getCmp('" + id + "').showMenu()";
             Boolean showMenu = (Boolean) WebLocatorUtils.doExecuteScript(script);
             Utils.sleep(200);
             return showMenu;
         }
+        logger.debug("id is: " + id);
         return false;
     }
 
