@@ -1,6 +1,7 @@
 package com.extjs.selenium.form;
 
 import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,11 @@ public class RadioGroup extends ExtJsComponent {
     }
 
     public boolean selectByLabel(String label) {
-        radio.setLabel(label);
+        return selectByLabel(label, SearchType.EQUALS);
+    }
+
+    public boolean selectByLabel(String label, SearchType searchType) {
+        radio.setLabel(label, searchType);
         boolean selected = !isDisabled() && radio.click();
         radio.setLabel(null);
         return selected;

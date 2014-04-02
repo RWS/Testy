@@ -3,6 +3,7 @@ package com.sdl.weblocator.extjs.form;
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.form.RadioGroup;
 import com.extjs.selenium.window.Window;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -38,6 +39,7 @@ public class RadioGroupTest extends TestBase {
     @Test
     public void selectRadioGroup() {
         assertTrue(enabledRadioGroup.selectByLabel("Item 2"));
+        assertTrue(enabledRadioGroup.selectByLabel("5", SearchType.CONTAINS));
         assertTrue(enabledRadioGroup.selectByValue("3"));
         assertFalse(disabledRadioGroup.selectByLabel("Item 1"));
         assertFalse(disabledRadioGroup.selectByValue("4"));
