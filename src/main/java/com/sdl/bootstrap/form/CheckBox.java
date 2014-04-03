@@ -46,4 +46,8 @@ public class CheckBox extends SimpleTextField implements ICheck {
     public boolean isSelected() {
         return isElementPresent() && executor.isSelected(this);
     }
+
+    public boolean isDisabled(){
+        return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
+    }
 }
