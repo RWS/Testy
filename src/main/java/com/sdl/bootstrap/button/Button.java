@@ -63,6 +63,6 @@ public class Button extends WebLocator implements IButton {
     }
 
     public boolean isDisabled(){
-        return this.getAttribute("disabled") != null;
+        return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
     }
 }
