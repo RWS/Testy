@@ -1,8 +1,6 @@
 package com.sdl.bootstrap.button;
 
-import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 
@@ -17,20 +15,12 @@ public class RunExe {
         return instance;
     }
 
-    public boolean download(String ...filePath) {
-        return download(downloadWindowName(), filePath);
-    }
-
     public boolean download(String filePath) {
         return doRun(filePath);
     }
 
-    public boolean download(String downloadWindowName, String... filePath) {
-        return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName);
-    }
-
-    private String downloadWindowName() {
-        return WebLocator.driver instanceof FirefoxDriver ? "Opening" : "Save As";
+    public boolean download(String downloadWindowName, String filePath) {
+        return doRun(filePath + " " + downloadWindowName);
     }
 
     public boolean upload(String... filePath) {

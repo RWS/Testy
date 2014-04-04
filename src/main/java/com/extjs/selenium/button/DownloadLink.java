@@ -38,12 +38,12 @@ public class DownloadLink extends ExtJsComponent implements Download {
 
     /**
      * Download file with AutoIT. Work only on FireFox.
-     * Use only this: button.download("C:\\downloadAndCancel.exe", "TestSet.tmx");
+     * Use only this: button.download("C:\\TestSet.tmx");
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
-     * @param filePath e.g. "C:\\downloadAndCancel.exe", "TestSet.tmx"
+     * @param filePath e.g. "C:\\TestSet.tmx"
      */
     @Override
-    public boolean download(String ...filePath) {
+    public boolean download(String filePath) {
         openBrowse();
         return RunExe.getInstance().download(filePath);
     }
