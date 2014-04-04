@@ -28,18 +28,9 @@ public class UploadButton extends Button implements Upload {
         return upload(this, filePath);
     }
 
-    public boolean upload(long timeout, String ...filePath){
-            return upload(this, timeout, filePath);
-    }
-
     private boolean upload(WebLocator el, String ...filePath) {
         browse(el);
         return RunExe.getInstance().upload(filePath);
-    }
-
-    private boolean upload(WebLocator el, long timeout, String ...filePath) {
-        browse(el);
-        return RunExe.getInstance().upload(timeout, filePath);
     }
 
     private void browse(WebLocator el) {

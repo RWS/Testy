@@ -1,6 +1,5 @@
 package com.sdl.bootstrap.button;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,7 +9,6 @@ import java.io.IOException;
 public class RunExe {
     private static final Logger logger = Logger.getLogger(RunExe.class);
     private static RunExe instance = new RunExe();
-    private static long RUN_EXE_THREAD_INTERVAL = 500;
 
     private RunExe() {
     }
@@ -19,28 +17,16 @@ public class RunExe {
         return instance;
     }
 
-    public boolean download(String... filePath) {
+    public boolean download(String ...filePath) {
         return download(downloadWindowName(), filePath);
-    }
-
-    public boolean download(long timeout, String... filePath) {
-        return download(downloadWindowName(), timeout, filePath);
     }
 
     public boolean download(String filePath) {
         return doRun(filePath);
     }
 
-    public boolean download(String filePath, long timeout) {
-        return doRun(filePath, timeout);
-    }
-
     public boolean download(String downloadWindowName, String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName);
-    }
-
-    public boolean download(String downloadWindowName, long timeout, String... filePath) {
-        return doRun(filePath[0] + " \"" + filePath[1] + "\" " + downloadWindowName, timeout);
     }
 
     private String downloadWindowName() {
@@ -49,29 +35,6 @@ public class RunExe {
 
     public boolean upload(String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"");
-    }
-
-    public boolean upload(long timeout, String... filePath) {
-        return doRun(filePath[0] + " \"" + filePath[1] + "\"", timeout);
-    }
-
-    private boolean doRun(String filePath, long timeout) {
-        //create a thread in witch will run the exe file
-        RunExeThread myRunThread = new RunExeThread(filePath);
-        myRunThread.start();
-
-        //waiting for the thread to execute complete the exe file
-        while (myRunThread.getRunOk() == null) {
-            Utils.sleep(RUN_EXE_THREAD_INTERVAL);
-            timeout -= RUN_EXE_THREAD_INTERVAL;
-            logger.debug("Waiting for " + filePath + " to finish executing in " + timeout);
-            if (timeout <= 0) {
-                logger.debug("return false");
-                return false;
-            }
-        }
-        logger.debug("myRunThread.getRunOk()=" + myRunThread.getRunOk());
-        return myRunThread.getRunOk();
     }
 
     private boolean doRun(String filePath) {
@@ -87,29 +50,5 @@ public class RunExe {
             e.printStackTrace();
         }
         return false;
-    }
-
-    private String uploadWindowName() {
-        return WebLocator.driver instanceof FirefoxDriver ? "File Upload" : "Open";
-    }
-
-    /**
-     * The thread that will run an exe file
-     */
-    public class RunExeThread extends Thread {
-        private String filePath;
-        private Boolean runOk = null;
-
-        public RunExeThread(String filePath) {
-            this.filePath = filePath;
-        }
-
-        public void run() {
-            runOk = doRun(filePath);
-        }
-
-        public Boolean getRunOk() {
-            return runOk;
-        }
     }
 }

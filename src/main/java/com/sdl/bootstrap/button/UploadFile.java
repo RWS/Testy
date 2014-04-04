@@ -36,11 +36,6 @@ public class UploadFile extends WebLocator implements Upload {
             return upload(upload, filePath);
     }
 
-    public boolean upload(String text, long timeout, String ...filePath) {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
-        return upload(upload, timeout, filePath);
-    }
-
     public void change(String ...filePath) {
         change("Change", filePath);
     }
@@ -80,11 +75,6 @@ public class UploadFile extends WebLocator implements Upload {
     public boolean upload(WebLocator el, String ...filePath) {
         browse(el);
         return RunExe.getInstance().upload(filePath);
-    }
-
-    public boolean upload(WebLocator el, long timeout, String ...filePath) {
-        browse(el);
-        return RunExe.getInstance().upload(timeout, filePath);
     }
 
     private void browse(WebLocator el) {

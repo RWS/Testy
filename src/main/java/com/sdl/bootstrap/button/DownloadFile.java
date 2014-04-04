@@ -4,6 +4,8 @@ import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
 
+import java.io.File;
+
 public class DownloadFile extends WebLocator implements Download {
     private static final Logger logger = Logger.getLogger(DownloadFile.class);
 
@@ -38,27 +40,14 @@ public class DownloadFile extends WebLocator implements Download {
         return RunExe.getInstance().download(filePath);
     }
 
-    public boolean download(long timeout, String ...filePath) {
-        openBrowse();
-        return RunExe.getInstance().download(timeout, filePath);
-    }
-
     /**
-     * Download file with AutoIT. Work only on FireFox.
-     * Use only this: button.download("C:\\downloadAndSave.exe");
-     * return true if the downloaded file is success, otherwise returns false.
-     * @param filePath e.g. "C:\\downloadAndSave.exe"
+     * Download file.
+     * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     * @param filePath e.g. "D:\\temp\\text.docx""
      */
-    public boolean download(String filePath) {
+    public boolean assertDownload(String filePath) {
         openBrowse();
-        return RunExe.getInstance().download(filePath);
-    }
-
-    public boolean download(String filePath, long timeout) {
-        openBrowse();
-        boolean success = RunExe.getInstance().download(filePath, timeout);
-        logger.debug("download=" + success);
-        return success;
+        return new File(filePath).exists();
     }
 
     private void openBrowse(){

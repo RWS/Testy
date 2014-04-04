@@ -6,6 +6,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.interactions.Actions;
 
+import java.io.File;
+
 public class DownloadButton extends Button implements Download {
 
     public DownloadButton() {
@@ -32,12 +34,26 @@ public class DownloadButton extends Button implements Download {
      */
     @Override
     public boolean download(String ...filePath) {
+        openBrowse();
+        return RunExe.getInstance().download(filePath);
+    }
+
+    /**
+     * Download file.
+     * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     * @param filePath e.g. "D:\\temp\\text.docx""
+     */
+    public boolean assertDownload(String filePath) {
+        openBrowse();
+        return new File(filePath).exists();
+    }
+
+    private void openBrowse(){
         driver.switchTo().window(driver.getWindowHandle());
         focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(currentElement).build().perform();
-        builder.click().perform();
+        builder.click().build().perform();
         driver.switchTo().defaultContent();
-        return RunExe.getInstance().download(filePath);
     }
 }

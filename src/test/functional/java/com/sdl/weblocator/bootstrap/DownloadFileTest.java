@@ -5,9 +5,13 @@ import com.sdl.bootstrap.form.Form;
 import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 import static com.sdl.weblocator.Ignores.Driver.CHROME;
 import static org.testng.Assert.assertFalse;
@@ -41,7 +45,18 @@ public class DownloadFileTest extends TestBase {
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void downloadAndSave() {
-        assertTrue(downloadFile1.download(InputData.RESOURCES_DIRECTORY_PATH + "\\drivers\\downloadAndSave.exe", 9000L));
+        assertTrue(downloadFile1.download(InputData.RESOURCES_DIRECTORY_PATH + "\\drivers\\downloadAndSave.exe"));
+
+    }
+
+    @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
+    @Test
+    public void assertDownload() {
+        try {
+            FileUtils.cleanDirectory(new File("D:\\temp"));
+        } catch (IOException e) {
+        }
+        assertTrue(downloadFile1.assertDownload("D:\\temp\\text.docx"));
     }
 
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")

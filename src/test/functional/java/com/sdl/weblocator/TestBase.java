@@ -1,7 +1,6 @@
 package com.sdl.weblocator;
 
 import com.extjs.selenium.Utils;
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -104,6 +103,17 @@ public class TestBase {
         if (browser.equalsIgnoreCase("*firefox")) {
             ProfilesIni allProfiles = new ProfilesIni();
             FirefoxProfile myProfile = allProfiles.getProfile(InputData.FIREFOX_PROFILE);
+            myProfile.setPreference("browser.download.folderList", 2);
+            myProfile.setPreference("browser.download.manager.showWhenStarting", false);
+            myProfile.setPreference("browser.download.manager.closeWhenDone", true);
+            myProfile.setPreference("browser.download.dir", "D:\\temp");
+            myProfile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+                    "text/csv,text/apex,application/pdf,application/csv,application/vnd.ms-excel,application/x-xpinstall;application/x-zip;application/x-zip-compressed;application/octet-stream;application/zip;application/pdf;application/msword;text/plain;application/octet;application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            // Set to false so popup not displayed when download finished.
+            myProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
+            myProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
+            myProfile.setPreference("browser.download.manager.showWhenStartinge", false);
+            myProfile.setPreference("browser.download.panel.shown", false);
             if (myProfile != null) {
                 return new FirefoxDriver(myProfile);
             } else {
