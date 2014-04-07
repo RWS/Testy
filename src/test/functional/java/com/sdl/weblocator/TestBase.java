@@ -1,22 +1,14 @@
 package com.sdl.weblocator;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.Browser;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
@@ -94,15 +86,7 @@ public class TestBase {
         logger.debug("tearDown << exit");
         logger.info("\n");
     }
-
-    /**
-     * This method returns the correct driver, depending on what parameter is given
-     *
-     * @param browser
-     * @return
-     */
-
-    public WebDriver getWebDriver(String browser) {
+    /*public WebDriver getWebDriver(String browser) {
         try {
             new File(InputData.DOWNLOAD_DIRECTORY).mkdir();
             FileUtils.cleanDirectory(new File(InputData.DOWNLOAD_DIRECTORY));
@@ -127,7 +111,6 @@ public class TestBase {
                     "text/csv,text/apex,application/pdf,application/csv,application/vnd.ms-excel,application/x-xpinstall;application/x-zip;application/x-zip-compressed;application/octet-stream;application/zip;application/pdf;application/msword;text/plain;application/octet;application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             // Set to false so popup not displayed when download finished.
             myProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
-            myProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
             myProfile.setPreference("browser.download.manager.showWhenStartinge", false);
             myProfile.setPreference("browser.download.panel.shown", false);
             return new FirefoxDriver(myProfile);
@@ -151,7 +134,7 @@ public class TestBase {
             logger.error("Browser not supported");
             return null;
         }
-    }
+    }*/
 
     private void initSeleniumStart() throws Exception {
         logger.info("===============================================================");
@@ -159,7 +142,7 @@ public class TestBase {
         logger.info("|          AUT URL: " + SERVER);
         logger.info("===============================================================\n");
 
-        driver = getWebDriver(InputData.BROWSER);
+        driver = WebDriverConfig.getWebDriver(Browser.FIREFOX, "D:\\Testy\\src\\test\\resources\\localhost.properties");
         driver.manage().window().maximize();
         driver.get(SERVER);
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);

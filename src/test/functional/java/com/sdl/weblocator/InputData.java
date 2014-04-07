@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
 
 public class InputData extends PropertiesReader {
     private static final Logger logger = Logger.getLogger(InputData.class);
@@ -41,8 +40,8 @@ public class InputData extends PropertiesReader {
 
     public static final String BROWSER = properties.getProperty("browser");
 
-    public static final String FIREFOX_PROFILE = properties.getProperty("firefox.profile");
+//    public static final String FIREFOX_PROFILE = properties.getProperty("firefox.profile");
 
-    public static final String DRIVER_PATH_CHROME = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.chrome");
-    public static final String DRIVER_PATH_IE = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.ie");
+//    public static final String DRIVER_PATH_CHROME = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.chrome");
+//    public static final String DRIVER_PATH_IE = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.ie");
 }

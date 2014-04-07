@@ -47,7 +47,7 @@ public class WebDriverConfig {
         return isFireFox;
     }
 
-    public static void init(WebDriver driver){
+    public static void init(WebDriver driver) {
         if (driver != null) {
             WebDriverConfig.driver = driver;
             if (driver instanceof InternetExplorerDriver) {
@@ -102,18 +102,59 @@ public class WebDriverConfig {
     private static void createFirefoxDriver(PropertiesReader properties) {
         DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
         String version = properties.getProperty("browser.version");
-        if(version != null){
+        if (version != null) {
             firefoxCapabilities.setCapability("version", version);
         }
         String homeDir = properties.getProperty("browser.binary.path");
-        if(homeDir != null){
+        if (homeDir != null) {
             firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
         }
-
-        ProfilesIni allProfiles = new ProfilesIni();
         String profileName = properties.getProperty("browser.profile.name");
-        FirefoxProfile myProfile = allProfiles.getProfile(profileName);
+        FirefoxProfile myProfile;
+        if (!"".equals(profileName) && profileName != null) {
+            ProfilesIni allProfiles = new ProfilesIni();
+            myProfile = allProfiles.getProfile(profileName);
+        } else {
+            myProfile = new FirefoxProfile();
+        }
         if (myProfile != null) {
+            String maxRunTimeScript = properties.getProperty("dom.max_script_run_time");
+            if (maxRunTimeScript != null && !"".equals(maxRunTimeScript)) {
+                myProfile.setPreference("dom.max_script_run_time", Integer.valueOf(maxRunTimeScript));
+            }
+            String folderList = properties.getProperty("browser.download.folderList");
+            if (folderList != null && !"".equals(folderList)) {
+                myProfile.setPreference("browser.download.folderList", Integer.valueOf(folderList));
+            }
+            String showWhenStarting = properties.getProperty("browser.download.manager.showWhenStarting");
+            if (showWhenStarting != null && !"".equals(showWhenStarting)) {
+                myProfile.setPreference("browser.download.manager.showWhenStarting", Boolean.valueOf(showWhenStarting));
+            }
+            String closeWhenDone = properties.getProperty("browser.download.manager.closeWhenDone");
+            if (closeWhenDone != null && !"".equals(closeWhenDone)) {
+                myProfile.setPreference("browser.download.manager.closeWhenDone", Boolean.valueOf(closeWhenDone));
+            }
+            String showAlertOnComplete = properties.getProperty("browser.download.manager.showAlertOnComplete");
+            if (showAlertOnComplete != null && !"".equals(showAlertOnComplete)) {
+                myProfile.setPreference("browser.download.manager.showAlertOnComplete", Boolean.valueOf(showAlertOnComplete));
+            }
+            String showWhenStartinge = properties.getProperty("browser.download.manager.showWhenStartinge");
+            if (showWhenStartinge != null && !"".equals(showWhenStartinge)) {
+                myProfile.setPreference("browser.download.manager.showWhenStartinge", Boolean.valueOf(showWhenStartinge));
+            }
+            String downloadDir = properties.getProperty("browser.download.dir");
+            if (downloadDir != null && !"".equals(downloadDir)) {
+                myProfile.setPreference("browser.download.dir", downloadDir);
+            }
+            String typeFile = properties.getProperty("browser.helperApps.neverAsk.saveToDisk");
+            if (typeFile != null && !"".equals(typeFile)) {
+                myProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", typeFile);
+            }
+            String panelShown = properties.getProperty("browser.download.panel.shown");
+            if (panelShown != null && !"".equals(panelShown)) {
+                myProfile.setPreference("browser.download.panel.shown", Boolean.valueOf(panelShown));
+            }
+
             driver = new FirefoxDriver(myProfile);
         } else {
             String profilePath = properties.getProperty("browser.profile.path");
