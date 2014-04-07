@@ -1,5 +1,6 @@
 package com.sdl.weblocator;
 
+import com.sdl.selenium.web.utils.PropertiesReader;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -7,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class InputData extends Properties {
+public class InputData extends PropertiesReader {
     private static final Logger logger = Logger.getLogger(InputData.class);
 
     public static final String ENV_PROPERTY = "env";
@@ -27,12 +28,6 @@ public class InputData extends Properties {
         } catch (IOException e) {
             logger.error(e);
         }
-    }
-
-    public String getProperty(String key) {
-        String property = System.getProperty(key, super.getProperty(key));
-        logger.debug("getProperty: " + key + " = " + property);
-        return property;
     }
 
     // ==============================
