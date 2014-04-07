@@ -46,7 +46,7 @@ public class DownloadButton extends Button implements Download {
     public boolean assertDownload(String filePath) {
         openBrowse();
         File file = new File(filePath);
-        return file.exists() && file.isFile();
+        return file.exists() && filePath.equals(file.getAbsolutePath());
     }
 
     private void openBrowse(){
