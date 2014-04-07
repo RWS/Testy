@@ -4,6 +4,7 @@ import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.log4j.Logger;
 
@@ -30,10 +31,11 @@ public class TreePanel extends ExtJsComponent {
         if (new WebLocator(null, path).exists()) {
             logger.debug("Expanding the tree");
             if(WebDriverConfig.hasWebDriver()){
+                WebDriver driver = WebDriverConfig.getDriver();
                 Actions builder = new Actions(driver);
                 builder.doubleClick(driver.findElement(By.xpath(path))).build().perform();
             } else {
-                selenium.doubleClick(path);
+                WebDriverConfig.getSelenium().doubleClick(path);
             }
             return true;
         }

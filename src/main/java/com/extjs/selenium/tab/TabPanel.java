@@ -4,11 +4,12 @@ import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebElement;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class TabPanel extends ExtJsComponent {
     }
 
     public int getTabCount(String nameTab, String path) {
-        List<WebElement> element = driver.findElements(By.xpath(path));
+        List<WebElement> element = WebDriverConfig.getDriver().findElements(By.xpath(path));
         int count = 0;
         for (WebElement el : element) {
             if (nameTab.equals(el.getText())) {

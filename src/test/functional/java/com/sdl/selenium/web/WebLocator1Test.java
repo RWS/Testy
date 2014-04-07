@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
@@ -86,12 +87,16 @@ public class WebLocator1Test extends TestBase {
         logger.debug(l.getPath());
         logger.debug("//*[contains(@class,'x-tool-maximize')]");
 
-//        final String browser = InputData.BROWSER;
-        if (Browser.FIREFOX.name().equalsIgnoreCase("*firefox")) {
+        String browserConfig = InputData.BROWSER_CONFIG;
+        PropertiesReader properties = new PropertiesReader(browserConfig);
+        String browserName = properties.getProperty("browser");
+
+        Browser browser = Browser.valueOf(browserName.toUpperCase());
+        if (browser == Browser.FIREFOX) {
             assertTrue(WebDriverConfig.isFireFox());
-        } else if (Browser.CHROME.name().equalsIgnoreCase("*chrome")) {
+        } else if (browser == Browser.CHROME) {
             assertTrue(WebDriverConfig.isChrome());
-        } else if (Browser.IEXPLORE.name().equalsIgnoreCase("*iexplore")) {
+        } else if (browser == Browser.IEXPLORE) {
             assertTrue(WebDriverConfig.isIE());
         }
     }

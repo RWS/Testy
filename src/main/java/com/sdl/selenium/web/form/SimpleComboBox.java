@@ -31,7 +31,7 @@ public class SimpleComboBox extends WebLocator implements ICombo {
                     selected = true;
                 }
             } else {
-                selenium.select(getPath(), value);
+                WebDriverConfig.getSelenium().select(getPath(), value);
                 selected = true;
             }
         }

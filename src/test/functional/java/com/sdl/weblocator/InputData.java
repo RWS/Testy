@@ -12,7 +12,6 @@ public class InputData extends PropertiesReader {
 
     public static final String ENV_PROPERTY = "env";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
-    public static final String RESOURCES_PATH = "src/test/resources/";
     public static final String FUNCTIONAL_PATH = "src/test/functional/";
 
     private static InputData properties = new InputData();
@@ -30,7 +29,6 @@ public class InputData extends PropertiesReader {
     }
 
     // ==============================
-    public static final String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
     public static final String DOWNLOAD_DIRECTORY = RESOURCES_DIRECTORY_PATH + "\\temp\\";
     public static final String FUNCTIONAL_PATH_ABSOLUTE = "file:///" + new File(FUNCTIONAL_PATH).getAbsolutePath();
 
@@ -39,9 +37,4 @@ public class InputData extends PropertiesReader {
     public static final String WEB_LOCATOR_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("web.locator.url");
 
     public static final String BROWSER_CONFIG = RESOURCES_PATH + properties.getProperty("browser.config");
-
-//    public static final String FIREFOX_PROFILE = properties.getProperty("firefox.profile");
-
-//    public static final String DRIVER_PATH_CHROME = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.chrome");
-//    public static final String DRIVER_PATH_IE = RESOURCES_DIRECTORY_PATH + properties.getProperty("driver.path.ie");
 }

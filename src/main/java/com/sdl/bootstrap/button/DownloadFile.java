@@ -1,7 +1,9 @@
 package com.sdl.bootstrap.button;
 
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
@@ -52,6 +54,7 @@ public class DownloadFile extends WebLocator implements Download {
     }
 
     private void openBrowse(){
+        WebDriver driver = WebDriverConfig.getDriver();
         driver.switchTo().window(driver.getWindowHandle());
         focus();
         Actions builder = new Actions(driver);

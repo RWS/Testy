@@ -1,6 +1,6 @@
 package com.extjs.selenium;
 
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.WebDriverConfig;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -57,7 +57,7 @@ public class Utils {
                 logger.warn("pleaseWait. Waited for 60x" + milliseconds + " milliseconds.");
                 return false;
             }
-        } while (ExtJsComponent.driver.getPageSource().contains("Please Wait..."));
+        } while (WebDriverConfig.getDriver().getPageSource().contains("Please Wait..."));
         return true;
     }
 
@@ -77,7 +77,7 @@ public class Utils {
                 logger.warn("loading. Waited for 60x" + milliseconds + " milliseconds.");
                 return false;
             }
-        } while (ExtJsComponent.driver.getPageSource().contains("Loading..."));
+        } while (WebDriverConfig.getDriver().getPageSource().contains("Loading..."));
         return true;
     }
 
@@ -150,7 +150,7 @@ public class Utils {
     }
 
     public static String getScreenShot(String fileName, String screensPath) {
-        WebDriver driver = WebLocator.getDriver();
+        WebDriver driver = WebDriverConfig.getDriver();
         DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         fileName = (dfm.format(new Date())) + "-" + fileName + ".jpg";
         fileName = getValidFileName(fileName);

@@ -5,20 +5,18 @@ package com.sdl.selenium.web;
  * @since 3/7/14
  */
 public enum Browser {
-    IEXPLORE("ie", "*iexplore", "iexplore"),
+    IEXPLORE("ie"),
 
-    FIREFOX("firefox", "*firefox", "firefox"),
+    FIREFOX("firefox"),
 
-    CHROME("chrome", "*chrome"),
+    CHROME("chrome"),
 
-    HTMLUNIT("htmlunit", "*htmlunit");
+    HTMLUNIT("htmlunit");
 
     private String driverKey;
-    private String[] names;
 
-    Browser(String driverKey, String... names){
+    Browser(String driverKey){
         this.driverKey = driverKey;
-        this.names = names;
     }
 
     public String getDriverKey() {

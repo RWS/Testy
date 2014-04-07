@@ -2,6 +2,7 @@ package com.sdl.selenium.web.utils;
 
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -13,6 +14,8 @@ import java.util.Properties;
  * @since 4/7/2014
  */
 public class PropertiesReader extends Properties {
+    public static final String RESOURCES_PATH = "src/test/resources/";
+    public static final String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
 
     private static final Logger logger = Logger.getLogger(PropertiesReader.class);
 

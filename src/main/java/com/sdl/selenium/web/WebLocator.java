@@ -10,7 +10,6 @@ import org.testng.Assert;
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger logger = Logger.getLogger(WebLocator.class);
 
-    public static WebDriver driver;
     public static Selenium selenium;
 
     private String currentElementPath = "";
@@ -53,22 +52,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     // getters and setters
 
-    public static WebDriver getDriver() {
-        return driver;
-    }
-
-    public static void setDriver(WebDriver driver) {
-        WebLocator.driver = driver;
+    public static void setDriverExecutor(WebDriver driver) {
         executor = new WebLocatorDriverExecutor(driver);
-        WebDriverConfig.init(driver);
     }
 
-    public static Selenium getSelenium() {
-        return selenium;
-    }
 
-    public static void setSelenium(Selenium selenium) {
-        WebLocator.selenium = selenium;
+    public static void setSeleniumExecutor(Selenium selenium) {
         executor = new WebLocatorSeleniumExecutor(selenium);
     }
 

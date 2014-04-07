@@ -2,6 +2,7 @@ package com.sdl.selenium.web;
 
 import com.opera.core.systems.OperaDesktopDriver;
 import com.sdl.selenium.web.utils.PropertiesReader;
+import com.thoughtworks.selenium.Selenium;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,12 +21,21 @@ public class WebDriverConfig {
     private static final Logger logger = Logger.getLogger(WebDriverConfig.class);
 
     private static WebDriver driver;
+    private static Selenium selenium;
 
     private static boolean isIE;
     private static boolean isOpera;
     private static boolean isSafari;
     private static boolean isChrome;
     private static boolean isFireFox;
+
+    public static WebDriver getDriver() {
+        return driver;
+    }
+
+    public static Selenium getSelenium() {
+        return selenium;
+    }
 
     public static boolean isIE() {
         return isIE;
@@ -49,7 +59,9 @@ public class WebDriverConfig {
 
     public static void init(WebDriver driver) {
         if (driver != null) {
+            logger.info("========= init WebDriver =========");
             WebDriverConfig.driver = driver;
+            WebLocator.setDriverExecutor(getDriver());
             if (driver instanceof InternetExplorerDriver) {
                 isIE = true;
             } else if (driver instanceof ChromeDriver) {
@@ -68,10 +80,12 @@ public class WebDriverConfig {
         return driver != null;
     }
 
-    public static WebDriver getWebDriver(String propertiesName) {
-        PropertiesReader properties = new PropertiesReader(propertiesName);
-        Browser browser = Browser.valueOf(properties.getProperty("browser"));
-        String driverPath = new File(propertiesName).getParent() + properties.getProperty("browser.driver.path");
+    public static WebDriver getWebDriver(String browserProperties) {
+        PropertiesReader properties = new PropertiesReader(browserProperties);
+        String browserKey = properties.getProperty("browser");
+        browserKey = browserKey.toUpperCase();
+        Browser browser = Browser.valueOf(browserKey);
+        String driverPath = PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.driver.path");
         if (browser == Browser.FIREFOX) {
             createFirefoxDriver(properties);
         } else if (browser == Browser.IEXPLORE) {

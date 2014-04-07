@@ -2,6 +2,7 @@ package com.sdl.selenium.web.form;
 
 import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -43,7 +44,7 @@ public class SimpleMultipleSelect extends SimpleComboBox {
     }
 
     public List<String> getValues() {
-        List<WebElement> elements = WebLocator.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
+        List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < elements.size(); i++) {
             String text = elements.get(i).getText();

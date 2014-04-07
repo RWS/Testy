@@ -103,32 +103,7 @@
                         <suiteXmlFile>src/test/resources/unit/testng-unit.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
-               <!-- <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>-->
             </plugin>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.16</version>
-                <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/integration/testngIntegration.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -164,5 +139,12 @@
                 </excludes>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
     </build>
+    <repositories></repositories>
+    <pluginRepositories></pluginRepositories>
 </project>

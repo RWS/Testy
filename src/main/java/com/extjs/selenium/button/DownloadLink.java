@@ -4,7 +4,9 @@ import com.extjs.selenium.ExtJsComponent;
 import com.sdl.bootstrap.button.Download;
 import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
@@ -60,6 +62,7 @@ public class DownloadLink extends ExtJsComponent implements Download {
     }
 
     private void openBrowse(){
+        WebDriver driver = WebDriverConfig.getDriver();
         driver.switchTo().window(driver.getWindowHandle());
         focus();
         Actions builder = new Actions(driver);

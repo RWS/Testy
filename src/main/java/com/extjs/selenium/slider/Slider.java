@@ -4,8 +4,10 @@ package com.extjs.selenium.slider;
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.log4j.Logger;
@@ -46,11 +48,13 @@ public class Slider extends ExtJsComponent {
         if (thumbPath != null && element.exists()) {
             // to scroll to this element (if element is not visible)
             if (WebDriverConfig.hasWebDriver()) {
+                WebDriver driver = WebDriverConfig.getDriver();
                 WebElement thumbElement = driver.findElement(By.xpath(thumbPath));
                 element.sendKeys(Keys.TAB);
                 element.click();
                 new Actions(driver).dragAndDropBy(thumbElement, distance, 1).build().perform();
             } else {
+                Selenium selenium = WebDriverConfig.getSelenium();
                 selenium.focus(thumbPath);
                 selenium.dragAndDrop(thumbPath, "" + distance + ",0");
             }

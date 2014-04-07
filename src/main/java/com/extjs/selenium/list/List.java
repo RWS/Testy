@@ -7,6 +7,7 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.thoughtworks.selenium.Selenium;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
@@ -42,6 +43,7 @@ public class List extends GridPanel {
             }
             sendKeys(Keys.UP);
         } else {
+            Selenium selenium = WebDriverConfig.getSelenium();
             selenium.controlKeyDown();
             for (String value : values) {
                 select = rowSelect(value, SearchType.EQUALS);
