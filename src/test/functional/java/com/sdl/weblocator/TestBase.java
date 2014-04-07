@@ -1,7 +1,6 @@
 package com.sdl.weblocator;
 
 import com.extjs.selenium.Utils;
-import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
@@ -138,11 +137,11 @@ public class TestBase {
 
     private void initSeleniumStart() throws Exception {
         logger.info("===============================================================");
-        logger.info("|          Browser: " + InputData.BROWSER);
+        logger.info("|          Browser: " + InputData.BROWSER_CONFIG);
         logger.info("|          AUT URL: " + SERVER);
         logger.info("===============================================================\n");
 
-        driver = WebDriverConfig.getWebDriver(Browser.FIREFOX, "D:\\Testy\\src\\test\\resources\\localhost.properties");
+        driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
         driver.manage().window().maximize();
         driver.get(SERVER);
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);

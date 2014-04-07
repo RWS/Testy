@@ -38,7 +38,7 @@ public class InputData extends PropertiesReader {
     public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("bootstrap.url");
     public static final String WEB_LOCATOR_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("web.locator.url");
 
-    public static final String BROWSER = properties.getProperty("browser");
+    public static final String BROWSER_CONFIG = RESOURCES_PATH + properties.getProperty("browser.config");
 
 //    public static final String FIREFOX_PROFILE = properties.getProperty("firefox.profile");
 

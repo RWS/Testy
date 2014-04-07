@@ -68,20 +68,21 @@ public class WebDriverConfig {
         return driver != null;
     }
 
-    public static WebDriver getWebDriver(Browser browser, String propertiesName) {
+    public static WebDriver getWebDriver(String propertiesName) {
         PropertiesReader properties = new PropertiesReader(propertiesName);
-        String driverPath = properties.getProperty("browser.driver.path");
+        Browser browser = Browser.valueOf(properties.getProperty("browser"));
+        String driverPath = new File(propertiesName).getParent() + properties.getProperty("browser.driver.path");
         if (browser == Browser.FIREFOX) {
             createFirefoxDriver(properties);
         } else if (browser == Browser.IEXPLORE) {
             DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
             ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-            if (driverPath != null && !driverPath.equals("")) {
+            if (!"".equals(driverPath)) {
                 System.setProperty("webdriver.ie.driver", driverPath);
             }
             driver = new InternetExplorerDriver(ieCapabilities);
         } else if (browser == Browser.CHROME) {
-            if (driverPath != null && !driverPath.equals("")) {
+            if (!"".equals(driverPath)) {
                 System.setProperty("webdriver.chrome.driver", driverPath);
             }
             ChromeOptions options = new ChromeOptions();

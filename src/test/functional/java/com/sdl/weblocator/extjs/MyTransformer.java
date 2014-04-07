@@ -1,7 +1,7 @@
 package com.sdl.weblocator.extjs;
 
+import com.sdl.selenium.web.Browser;
 import com.sdl.weblocator.Ignores;
-import com.sdl.weblocator.InputData;
 import org.apache.log4j.Logger;
 import org.testng.annotations.ITestAnnotation;
 import org.testng.internal.annotations.IAnnotationTransformer;
@@ -14,15 +14,14 @@ public class MyTransformer implements IAnnotationTransformer {
 
     @Override
     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
-        String browser = InputData.BROWSER;
         Ignores ignores = testMethod.getAnnotation(Ignores.class);
         if (ignores != null) {
             for (Ignores.Driver ignore : ignores.value()) {
-                if ("CHROME".equals(ignore.name()) && "*chrome".equals(browser)) {
+                if (Browser.CHROME.name().equals(ignore.name())) {
                     annotation.setEnabled(false);
-                } else if ("FIREFOX".equals(ignore.name()) && "*firefox".equals(browser)) {
+                } else if (Browser.FIREFOX.name().equals(ignore.name())) {
                     annotation.setEnabled(false);
-                } else if ("IE".equals(ignore.name()) && "*iexplore".equals(browser)) {
+                } else if (Browser.IEXPLORE.name().equals(ignore.name())) {
                     annotation.setEnabled(false);
                 } else if ("ALL".equals(ignore.name())) {
                     annotation.setEnabled(false);
