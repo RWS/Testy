@@ -47,7 +47,8 @@ public class DownloadFile extends WebLocator implements Download {
      */
     public boolean assertDownload(String filePath) {
         openBrowse();
-        return new File(filePath).exists();
+        File file = new File(filePath);
+        return file.exists() && file.isFile();
     }
 
     private void openBrowse(){
