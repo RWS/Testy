@@ -141,22 +141,14 @@ public class WebDriverConfig {
             if (folderList != null && !"".equals(folderList)) {
                 myProfile.setPreference("browser.download.folderList", Integer.valueOf(folderList));
             }
-            String showWhenStarting = properties.getProperty("browser.download.manager.showWhenStarting");
-            if (showWhenStarting != null && !"".equals(showWhenStarting)) {
-                myProfile.setPreference("browser.download.manager.showWhenStarting", Boolean.valueOf(showWhenStarting));
-            }
-            String closeWhenDone = properties.getProperty("browser.download.manager.closeWhenDone");
-            if (closeWhenDone != null && !"".equals(closeWhenDone)) {
-                myProfile.setPreference("browser.download.manager.closeWhenDone", Boolean.valueOf(closeWhenDone));
-            }
-            String showAlertOnComplete = properties.getProperty("browser.download.manager.showAlertOnComplete");
-            if (showAlertOnComplete != null && !"".equals(showAlertOnComplete)) {
-                myProfile.setPreference("browser.download.manager.showAlertOnComplete", Boolean.valueOf(showAlertOnComplete));
-            }
-            String showWhenStartinge = properties.getProperty("browser.download.manager.showWhenStartinge");
-            if (showWhenStartinge != null && !"".equals(showWhenStartinge)) {
-                myProfile.setPreference("browser.download.manager.showWhenStartinge", Boolean.valueOf(showWhenStartinge));
-            }
+            setBooleanProperties(properties, myProfile,
+                    "browser.download.manager.showWhenStarting",
+                    "browser.download.manager.closeWhenDone",
+                    "browser.download.manager.showAlertOnComplete",
+                    "browser.download.manager.showWhenStartinge",
+                    "browser.download.panel.shown"
+            );
+
             String downloadDir = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir")).getAbsolutePath();
             if (downloadDir != null && !"".equals(downloadDir)) {
                 myProfile.setPreference("browser.download.dir", downloadDir);
@@ -165,10 +157,7 @@ public class WebDriverConfig {
             if (typeFile != null && !"".equals(typeFile)) {
                 myProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", typeFile);
             }
-            String panelShown = properties.getProperty("browser.download.panel.shown");
-            if (panelShown != null && !"".equals(panelShown)) {
-                myProfile.setPreference("browser.download.panel.shown", Boolean.valueOf(panelShown));
-            }
+
 
             driver = new FirefoxDriver(myProfile);
         } else {
@@ -178,6 +167,15 @@ public class WebDriverConfig {
                 driver = new FirefoxDriver(firefoxProfile);
             } else {
                 driver = new FirefoxDriver(firefoxCapabilities);
+            }
+        }
+    }
+
+    private static void setBooleanProperties(PropertiesReader properties, FirefoxProfile myProfile, String... keys) {
+        for (String key : keys) {
+            String showWhenStarting = properties.getProperty(key);
+            if (showWhenStarting != null && !"".equals(showWhenStarting)) {
+                myProfile.setPreference(key, Boolean.valueOf(showWhenStarting));
             }
         }
     }
