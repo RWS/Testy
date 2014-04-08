@@ -173,9 +173,9 @@ public class WebDriverConfig {
 
     private static void setBooleanProperties(PropertiesReader properties, FirefoxProfile myProfile, String... keys) {
         for (String key : keys) {
-            String showWhenStarting = properties.getProperty(key);
-            if (showWhenStarting != null && !"".equals(showWhenStarting)) {
-                myProfile.setPreference(key, Boolean.valueOf(showWhenStarting));
+            String property = properties.getProperty(key);
+            if (property != null && !"".equals(property)) {
+                myProfile.setPreference(key, Boolean.valueOf(property));
             }
         }
     }
