@@ -16,6 +16,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WebDriverConfig {
     private static final Logger logger = Logger.getLogger(WebDriverConfig.class);
@@ -100,10 +102,19 @@ public class WebDriverConfig {
                 System.setProperty("webdriver.chrome.driver", driverPath);
             }
             ChromeOptions options = new ChromeOptions();
+            //options.addArguments("--start-maximized");
             options.addArguments("--lang=en");
             options.addArguments("--allow-running-insecure-content");
             options.addArguments("--enable-logging --v=1");
-            driver = new ChromeDriver(options);
+            Map<String, Object> prefs = new HashMap<String, Object>();
+            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir")).getAbsolutePath();
+            if (downloadDir != null && !"".equals(downloadDir)) {
+                prefs.put("download.default_directory", downloadDir);
+            }
+            options.setExperimentalOption("prefs", prefs);
+            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+            driver = new ChromeDriver(capabilities);
         } else if (browser == Browser.HTMLUNIT) {
             driver = new HtmlUnitDriver(true);
         } else {
