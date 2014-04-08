@@ -157,7 +157,7 @@ public class WebDriverConfig {
             if (showWhenStartinge != null && !"".equals(showWhenStartinge)) {
                 myProfile.setPreference("browser.download.manager.showWhenStartinge", Boolean.valueOf(showWhenStartinge));
             }
-            String downloadDir = properties.getProperty("browser.download.dir");
+            String downloadDir = PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir");
             if (downloadDir != null && !"".equals(downloadDir)) {
                 myProfile.setPreference("browser.download.dir", downloadDir);
             }
