@@ -126,15 +126,6 @@ public class WebDriverConfig {
     }
 
     private static void createFirefoxDriver(PropertiesReader properties) {
-        DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
-        String version = properties.getProperty("browser.version");
-        if (version != null) {
-            firefoxCapabilities.setCapability("version", version);
-        }
-        String homeDir = properties.getProperty("browser.binary.path");
-        if (homeDir != null) {
-            firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
-        }
         String profileName = properties.getProperty("browser.profile.name");
         FirefoxProfile myProfile;
         if (!"".equals(profileName) && profileName != null) {
@@ -144,6 +135,7 @@ public class WebDriverConfig {
             myProfile = new FirefoxProfile();
         }
         if (myProfile != null) {
+            logger.info("profile not null");
             setProperties(properties, myProfile, Integer.class,
                     "dom.max_script_run_time",
                     "browser.download.folderList"
@@ -172,6 +164,15 @@ public class WebDriverConfig {
                 FirefoxProfile firefoxProfile = new FirefoxProfile(new File(profilePath));
                 driver = new FirefoxDriver(firefoxProfile);
             } else {
+                DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
+                String version = properties.getProperty("browser.version");
+                if (version != null) {
+                    firefoxCapabilities.setCapability("version", version);
+                }
+                String homeDir = properties.getProperty("browser.binary.path");
+                if (homeDir != null) {
+                    firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
+                }
                 driver = new FirefoxDriver(firefoxCapabilities);
             }
         }
