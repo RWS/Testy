@@ -20,6 +20,7 @@ public class DownloadFileTest extends TestBase {
     DownloadFile downloadFile = new DownloadFile(form, "Project Data:");
     DownloadFile downloadFile1 = new DownloadFile(form).setText("Download");
     DownloadFile downloadFileNegative = new DownloadFile(form, "DownloadNegative:");
+    DownloadFile downloadApex = new DownloadFile(form, "DownloadApex:");
 
     @BeforeClass
     public void startTests() {
@@ -55,6 +56,12 @@ public class DownloadFileTest extends TestBase {
     @Test
     public void assertDownloadIsNotFile() {
         assertFalse(downloadFile1.assertDownload(InputData.DOWNLOAD_DIRECTORY));
+    }
+
+    @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
+    @Test
+    public void assertDownloadApexFile() {
+        assertTrue(downloadApex.assertDownload(InputData.DOWNLOAD_DIRECTORY + "create_training.apex"));
     }
 
     /*@Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")

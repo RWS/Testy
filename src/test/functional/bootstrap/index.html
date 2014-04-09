@@ -87,6 +87,12 @@
         </button>
     </div>
 
+    <label class="control-label">DownloadApex:</label>
+
+    <div class="controls">
+        <button id="downloadApex" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+    </div>
+
     <label class="control-label">LPID for Merge:</label>
     <div class="controls">
         <div class="input-append input-block-level">
@@ -106,19 +112,22 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    $('.selectpicker').selectpicker();
-    var today = new Date();
+        $('.selectpicker').selectpicker();
+        var today = new Date();
 
-    $('#dp3').datepicker({
-    format: 'dd-mm-yyyy',
-    autoclose: true,
-    keyboardNavigation: true
-    });
-    $('#dp3').datepicker('setValue', today);
+        $('#dp3').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            keyboardNavigation: true
+        });
+        $('#dp3').datepicker('setValue', today);
 
-    $('#downloadProjectDataButton').on('click', function(){
-    window.location.href = '../../resources/upload/text.docx';
-    });
+        $('#downloadProjectDataButton').on('click', function(){
+            window.location.href = '../../resources/upload/text.docx';
+        });
+        $('#downloadApex').on('click', function(){
+            window.location.href = '../../resources/upload/create_training.apex';
+        });
     });
 </script>
 </body>

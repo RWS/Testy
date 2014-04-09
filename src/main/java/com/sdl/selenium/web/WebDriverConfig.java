@@ -157,7 +157,8 @@ public class WebDriverConfig {
                     "browser.download.manager.closeWhenDone",
                     "browser.download.manager.showAlertOnComplete",
                     "browser.download.manager.showWhenStartinge",
-                    "browser.download.panel.shown"
+                    "browser.download.panel.shown",
+                    "browser.helperApps.alwaysAsk.force"
             );
 
             String downloadDir = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir")).getAbsolutePath();
