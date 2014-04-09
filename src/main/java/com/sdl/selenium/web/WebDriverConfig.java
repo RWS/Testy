@@ -144,31 +144,26 @@ public class WebDriverConfig {
             myProfile = new FirefoxProfile();
         }
         if (myProfile != null) {
-            String maxRunTimeScript = properties.getProperty("dom.max_script_run_time");
-            if (maxRunTimeScript != null && !"".equals(maxRunTimeScript)) {
-                myProfile.setPreference("dom.max_script_run_time", Integer.valueOf(maxRunTimeScript));
-            }
-            String folderList = properties.getProperty("browser.download.folderList");
-            if (folderList != null && !"".equals(folderList)) {
-                myProfile.setPreference("browser.download.folderList", Integer.valueOf(folderList));
-            }
-            setBooleanProperties(properties, myProfile,
+            setProperties(properties, myProfile, Integer.class,
+                    "dom.max_script_run_time",
+                    "browser.download.folderList"
+            );
+            setProperties(properties, myProfile, Boolean.class,
                     "browser.download.manager.showWhenStarting",
                     "browser.download.manager.closeWhenDone",
                     "browser.download.manager.showAlertOnComplete",
                     "browser.download.panel.shown",
                     "browser.helperApps.alwaysAsk.force"
             );
+            setProperties(properties, myProfile, String.class,
+                    "browser.helperApps.neverAsk.saveToDisk",
+                    "browser.helperApps.neverAsk.openFile"
+            );
 
             String downloadDir = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir")).getAbsolutePath();
             if (downloadDir != null && !"".equals(downloadDir)) {
                 myProfile.setPreference("browser.download.dir", downloadDir);
             }
-            String typeFile = properties.getProperty("browser.helperApps.neverAsk.saveToDisk");
-            if (typeFile != null && !"".equals(typeFile)) {
-                myProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", typeFile);
-            }
-
 
             driver = new FirefoxDriver(myProfile);
         } else {
@@ -182,11 +177,17 @@ public class WebDriverConfig {
         }
     }
 
-    private static void setBooleanProperties(PropertiesReader properties, FirefoxProfile myProfile, String... keys) {
+    private static <T> void setProperties(PropertiesReader properties, FirefoxProfile myProfile, java.lang.Class<T> objectType, String... keys) {
         for (String key : keys) {
             String property = properties.getProperty(key);
             if (property != null && !"".equals(property)) {
-                myProfile.setPreference(key, Boolean.valueOf(property));
+                if (objectType == Boolean.class) {
+                    myProfile.setPreference(key, Boolean.valueOf(property));
+                } else if (objectType == Integer.class) {
+                    myProfile.setPreference(key, Integer.valueOf(property));
+                } else {
+                    myProfile.setPreference(key, property);
+                }
             }
         }
     }
