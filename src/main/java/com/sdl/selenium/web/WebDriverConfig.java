@@ -30,6 +30,7 @@ public class WebDriverConfig {
     private static boolean isSafari;
     private static boolean isChrome;
     private static boolean isFireFox;
+    private static boolean isSalientDownload;
 
     public static WebDriver getDriver() {
         return driver;
@@ -82,6 +83,14 @@ public class WebDriverConfig {
         return driver != null;
     }
 
+    public static boolean isSalientDownload() {
+        return isSalientDownload;
+    }
+
+    public static void setSalientDownload(boolean isSalientDownload) {
+        WebDriverConfig.isSalientDownload = isSalientDownload;
+    }
+
     public static WebDriver getWebDriver(String browserProperties) {
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
@@ -107,7 +116,8 @@ public class WebDriverConfig {
             options.addArguments("--allow-running-insecure-content");
             options.addArguments("--enable-logging --v=1");
             Map<String, Object> prefs = new HashMap<String, Object>();
-            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir")).getAbsolutePath();
+            String property = properties.getProperty("browser.download.dir");
+            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + property).getAbsolutePath();
             if (downloadDir != null && !"".equals(downloadDir)) {
                 prefs.put("download.default_directory", downloadDir);
             }
@@ -115,6 +125,7 @@ public class WebDriverConfig {
             DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             driver = new ChromeDriver(capabilities);
+            WebDriverConfig.setSalientDownload(!"".equals(property));
         } else if (browser == Browser.HTMLUNIT) {
             driver = new HtmlUnitDriver(true);
         } else {
@@ -158,6 +169,17 @@ public class WebDriverConfig {
             }
 
             driver = new FirefoxDriver(myProfile);
+            WebDriverConfig.setSalientDownload(
+                    !"".equals(properties.getProperty("browser.download.dir")) &&
+                            !"".equals(properties.getProperty("browser.helperApps.neverAsk.openFile")) &&
+                            !"".equals(properties.getProperty("browser.helperApps.neverAsk.saveToDisk")) &&
+                            !(Boolean.valueOf(properties.getProperty("browser.helperApps.alwaysAsk.force"))) &&
+                            !(Boolean.valueOf(properties.getProperty("browser.download.panel.shown"))) &&
+                            !(Boolean.valueOf(properties.getProperty("browser.download.manager.showAlertOnComplete"))) &&
+                            (Boolean.valueOf(properties.getProperty("browser.download.manager.closeWhenDone"))) &&
+                            !(Boolean.valueOf(properties.getProperty("browser.download.manager.showWhenStarting"))) &&
+                            (Integer.valueOf(properties.getProperty("browser.download.folderList")) == 2)
+            );
         } else {
             String profilePath = properties.getProperty("browser.profile.path");
             if (profilePath != null && !profilePath.equals("")) {

@@ -35,6 +35,7 @@ public class DownloadFile extends WebLocator implements Download {
      * Download file with AutoIT. Work only on FireFox.
      * Use only this: button.download("C:\\TestSet.tmx");
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     *
      * @param filePath e.g. "C:\\TestSet.tmx"
      */
     @Override
@@ -46,16 +47,18 @@ public class DownloadFile extends WebLocator implements Download {
     /**
      * Download file.
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     *
      * @param filePath e.g. "D:\\temp\\text.docx""
      */
     public boolean assertDownload(String filePath) {
+        logger.debug("WebDriverConfig.isSalientDownload()=" + WebDriverConfig.isSalientDownload());
         openBrowse();
         File file = new File(filePath);
-        FileUtils.waitFor(file, 5);
-        return file.exists() && filePath.equals(file.getAbsolutePath());
+        return FileUtils.waitFor(file, 10) &&
+                file.exists() && filePath.equals(file.getAbsolutePath());
     }
 
-    private void openBrowse(){
+    private void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
         driver.switchTo().window(driver.getWindowHandle());
         focus();

@@ -5,12 +5,15 @@ import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 
 public class DownloadButton extends Button implements Download {
+    private static final Logger logger = Logger.getLogger(DownloadButton.class);
 
     public DownloadButton() {
         setClassName("DownloadButton");
@@ -43,15 +46,18 @@ public class DownloadButton extends Button implements Download {
     /**
      * Download file.
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     *
      * @param filePath e.g. "D:\\temp\\text.docx""
      */
     public boolean assertDownload(String filePath) {
+        logger.debug("WebDriverConfig.isSalientDownload()=" + WebDriverConfig.isSalientDownload());
         openBrowse();
         File file = new File(filePath);
-        return file.exists() && filePath.equals(file.getAbsolutePath());
+        return FileUtils.waitFor(file, 10) &&
+                file.exists() && filePath.equals(file.getAbsolutePath());
     }
 
-    private void openBrowse(){
+    private void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
         driver.switchTo().window(driver.getWindowHandle());
         focus();
