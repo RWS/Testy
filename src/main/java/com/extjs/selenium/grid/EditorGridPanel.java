@@ -171,7 +171,7 @@ public class EditorGridPanel extends GridPanel {
      * @return true or false
      */
     public boolean pasteRowValue(String value) {
-        logger.debug("setRowValue(" + value + ") - in active editor");
+        logger.debug("pasteRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         boolean edited;
         if (editor instanceof ComboBox) {
@@ -186,7 +186,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(String value) {
-        logger.debug("setRowValue(" + value + ") - in active editor");
+        logger.debug("appendRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         editor.sendKeys(Keys.END);
         editor.sendKeys(value);
@@ -204,7 +204,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(int rowIndex, int colIndex, String value) {
-        logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
+        logger.debug("appendRowValue(" + rowIndex + ", " + colIndex + "): " + value);
         return startEdit(rowIndex, colIndex) && appendRowValue(value);
     }
 
@@ -215,7 +215,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(String searchElement, int colIndex, String value) {
-        logger.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
+        logger.debug("appendRowValue(" + searchElement + ", " + colIndex + "): " + value);
         return startEdit(searchElement, colIndex) && appendRowValue(value);
     }
 
