@@ -87,7 +87,7 @@ public class WebDriverConfig {
         return isSalientDownload;
     }
 
-    public static void setSalientDownload(boolean isSalientDownload) {
+    private static void setSalientDownload(boolean isSalientDownload) {
         WebDriverConfig.isSalientDownload = isSalientDownload;
     }
 
