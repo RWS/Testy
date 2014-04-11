@@ -18,7 +18,12 @@ $activeWindowTitle = WinGetTitle($activeWindow)
 WinFlash($activeWindowTitle, "", 1, 50) ; Just to Flash the window
 ;ControlSetText($activeWindowTitle, "", "Edit1", "D:\Mill\src\test\resources\file\export.xml")
 ControlSetText($activeWindowTitle, "", "Edit1", $CmdLine[1])
-$save = ControlCommand($activeWindowTitle, "", "Button1", "IsVisible", "")
+;Sleep(300)
+;$save = ControlCommand($activeWindowTitle, "", "Button1", "IsVisible", "")
+While Not ControlCommand($activeWindowTitle, "", "Button1", "IsEnabled", "")
+    Sleep(100)
+WEnd
+$save = ControlClick($activeWindowTitle, "", "Button1")
 _FileWriteLog($hFile, "---save='" & $save & "'")
 If ($save = 1) Then
    $click = ControlClick($activeWindowTitle, "", "[CLASS:Button; INSTANCE:1]")

@@ -1,6 +1,8 @@
 package com.sdl.bootstrap.tab;
 
 import com.extjs.selenium.Utils;
+import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
@@ -64,7 +66,7 @@ public class Tab extends WebLocator {
      * @return true or false
      */
     public boolean setActive() {
-        boolean activated = new WebLocator(getContainer(), getTitlePath(true)).ready();
+        boolean activated = new ConditionManager(200).add(new RenderSuccessCondition(new WebLocator(getContainer(), getTitlePath(true)))).execute().isSuccess();
         if (!activated) {
             WebLocator titleElement = new WebLocator(getContainer(), getTitlePath(false)).setInfoMessage(getText() + " Tab");
             activated = titleElement.click();

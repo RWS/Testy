@@ -20,9 +20,9 @@ public class CheckBox extends SimpleTextField implements ICheck {
         setContainer(container);
     }
 
-    public CheckBox(WebLocator container, String label) {
+    public CheckBox(WebLocator container, String text) {
         this(container);
-        setText(label, SearchType.CONTAINS);
+        setText(text, SearchType.CONTAINS);
     }
 
     public CheckBox(String label, WebLocator container) {
