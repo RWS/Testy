@@ -5,7 +5,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.9.0-SNAPSHOT</version>
+    <version>1.7.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Test framework for web applications</description>
     <url>https://github.com/SDLLanguageTechnologies/Testy</url>
@@ -38,15 +38,6 @@
         <url>git@github.com:SDLLanguageTechnologies/Testy.git</url>
     </scm>
 
-    <!--<distributionManagement>-->
-        <!--<repository>-->
-            <!--<id>sonatype-nexus-staging</id>-->
-            <!--<name>Nexus Staging Repository</name>-->
-            <!--&lt;!&ndash;<url>https://oss.sonatype.org/content/repositories/</url>&ndash;&gt;-->
-            <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-        <!--</repository>-->
-    <!--</distributionManagement>-->
-
     <distributionManagement>
         <snapshotRepository>
             <id>sonatype-nexus-snapshots</id>
@@ -54,18 +45,13 @@
         </snapshotRepository>
         <repository>
             <id>sonatype-nexus-staging</id>
+            <name>Nexus Staging Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
 
     <dependencies>
-        <dependency>
-            <groupId>org.divxdede</groupId>
-            <artifactId>jbusycomponent</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -166,7 +152,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <executions>
@@ -178,16 +164,11 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.5</version>
             </plugin>
 
         </plugins>
