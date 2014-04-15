@@ -5,7 +5,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.9.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Test framework for web applications</description>
     <url>https://github.com/SDLLanguageTechnologies/Testy</url>
@@ -38,14 +38,26 @@
         <url>git@github.com:SDLLanguageTechnologies/Testy.git</url>
     </scm>
 
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>sonatype-nexus-staging</id>-->
+            <!--<name>Nexus Staging Repository</name>-->
+            <!--&lt;!&ndash;<url>https://oss.sonatype.org/content/repositories/</url>&ndash;&gt;-->
+            <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+        <!--</repository>-->
+    <!--</distributionManagement>-->
+
     <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
         <repository>
             <id>sonatype-nexus-staging</id>
-            <name>Nexus Staging Repository</name>
-            <!--<url>https://oss.sonatype.org/content/repositories/</url>-->
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
 
     <dependencies>
         <dependency>
