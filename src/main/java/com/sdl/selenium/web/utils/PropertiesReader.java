@@ -14,8 +14,8 @@ import java.util.Properties;
  * @since 4/7/2014
  */
 public class PropertiesReader extends Properties {
-    public static final String RESOURCES_PATH = "src/test/resources/";
-    public static final String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
+    public static String RESOURCES_PATH = "src/test/resources/";
+    public static String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
 
     private static final Logger logger = Logger.getLogger(PropertiesReader.class);
 
@@ -24,6 +24,8 @@ public class PropertiesReader extends Properties {
 
     public PropertiesReader(String resourcePath) {
         try {
+            RESOURCES_PATH = new File(resourcePath).getParent() + File.separator;
+            RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
         } catch (IOException e) {
