@@ -32,22 +32,18 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public ComboBox(WebLocator container, String label) {
-        this();
-        setContainer(container);
+        this(container);
         setLabel(label);
     }
 
     public ComboBox(String name, WebLocator container) {
-        this();
-        setContainer(container);
+        this(container);
         setName(name);
     }
 
     public ComboBox(WebLocator container, String cls, String name, boolean hasName) {
-        this();
-        setContainer(container);
+        this(name, container);
         setClasses(cls);
-        setName(name);
     }
 
     /**
@@ -59,14 +55,14 @@ public class ComboBox extends TextField implements ICombo {
         return select(value);
     }
 
-    public boolean select(String value, Boolean startWith) {
+    public boolean select(String value, boolean startWith, long time) {
         boolean selected;
         String componentId;
         String info = toString();
 
         String valueTest = startWith ? ("starts-with(text(),'" + value + "')") : ("text()='" + value + "'");
         WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage("ComboList");
-        WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(300).setInfoMessage(value);
+        WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(time).setInfoMessage(value);
 
         if (clickIcon("arrow")) {
             try {
@@ -102,6 +98,10 @@ public class ComboBox extends TextField implements ICombo {
         return false;
     }
 
+    public boolean select(String value, boolean startWith) {
+        return select(value, startWith, 300);
+    }
+
     private String getListId() {
         String componentId;
         ready();
@@ -117,7 +117,7 @@ public class ComboBox extends TextField implements ICombo {
      * this method is used in case normal flow for selection fails
      *
      * @param componentId ComboBox id so we can use directly js to force selection of that value
-     * @param value value
+     * @param value       value
      * @return true or false
      */
     private boolean setValueWithJs(final String componentId, final String value) {
