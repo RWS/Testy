@@ -92,7 +92,7 @@ public class WebDriverConfig {
     }
 
     public static WebDriver getWebDriver(String browserProperties) {
-//        logger.debug("PropertiesReader.RESOURCES_PATH=" + PropertiesReader.RESOURCES_PATH);
+        logger.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
         browserKey = browserKey.toUpperCase();
