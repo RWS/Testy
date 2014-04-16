@@ -188,37 +188,6 @@
             </testResource>
         </testResources>
     </build>
-    <!--<profiles>-->
-    <!--<profile>-->
-    <!--<id>sonatype-oss-release</id>-->
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.apache.maven.plugins</groupId>-->
-    <!--<artifactId>maven-source-plugin</artifactId>-->
-    <!--</plugin>-->
-    <!--<plugin>-->
-    <!--<groupId>org.apache.maven.plugins</groupId>-->
-    <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-    <!--</plugin>-->
-    <!--<plugin>-->
-    <!--<groupId>org.apache.maven.plugins</groupId>-->
-    <!--<artifactId>maven-gpg-plugin</artifactId>-->
-    <!--<executions>-->
-    <!--<execution>-->
-    <!--<id>sign-artifacts</id>-->
-    <!--<phase>verify</phase>-->
-    <!--<goals>-->
-    <!--<goal>sign</goal>-->
-    <!--</goals>-->
-    <!--</execution>-->
-    <!--</executions>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
-    <!--</profile>-->
-    <!--</profiles>-->
-
     <repositories/>
     <pluginRepositories/>
 </project>
