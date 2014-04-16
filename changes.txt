@@ -1,6 +1,12 @@
 CHANGES:
 
-version 1.7-SNAPSHOT
+version 1.7.2-SNAPSHOT
+1) webdriver version 2.41
+2) move getDriver in WebDriverConfig
+3) remove deprecated class and methods
+4) assertDownload works with localhost-firefox.properties
+
+version 1.7.1
 1) improvement waitToRender() with WebDriverWait
 2) fixed when Button text or Label of TextField contains quotes.
 3) add constructor with container for all elements
@@ -17,7 +23,7 @@ version 1.7-SNAPSHOT
 14) remove methods type(String text) and typeKeys(String text) from WebLocator
 15) add interface ITextField
 16) move copyToClipboard in Utils
-17) mark setCls(final String cls) and getCls() Depricate
+17) mark setCls(final String cls) and getCls() Deprecate
 18) improvement maximize method from Panel
 19) add try in executeScript. findElement should not log "Element not found after" when element is not found.
 20) add tests to WebLocator for toString method : shouldShowClassInToStringWhenHasOneClass and shouldShowClassesInToStringWhenHasManyClass
