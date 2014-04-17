@@ -7,20 +7,35 @@ version 1.7.2-SNAPSHOT
 4) assertDownload works with localhost-firefox.properties
 5) fix SimpleMultipleSelect path
 6) Testy is public repository,
-    - for use internal, mast put in pom this:
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <url>http://cfg-mgmt-server:8081/nexus/content/groups/public</url>
-            <snapshots>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </repository>
-    </repositories>
-    - for use external, mast put in pom this:
+    - for use internal, should put in pom this:
+        <repositories>
+            <repository>
+                <id>nexus</id>
+                <url>http://cfg-mgmt-server:8081/nexus/content/groups/public</url>
+                <snapshots>
+                    <updatePolicy>always</updatePolicy>
+                </snapshots>
+                <releases>
+                    <updatePolicy>always</updatePolicy>
+                </releases>
+            </repository>
+        </repositories>
+    - for use external, should put in pom this if you want to use SNAPSHOT:
+        <profiles>
+            <profile>
+                <id>sonatype-nexus-snapshots</id>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
+                <repositories>
+                    <repository>
+                        <id>sonatype-nexus-snapshots</id>
+                        <name>sonatype-nexus-snapshots</name>
+                        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    </repository>
+                </repositories>
+            </profile>
+        </profiles>
 
 
 version 1.7.1
