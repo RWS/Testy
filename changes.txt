@@ -5,6 +5,23 @@ version 1.7.2-SNAPSHOT
 2) move getDriver in WebDriverConfig
 3) remove deprecated class and methods
 4) assertDownload works with localhost-firefox.properties
+5) fix SimpleMultipleSelect path
+6) Testy is public repository,
+    - for use internal, mast put in pom this:
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://cfg-mgmt-server:8081/nexus/content/groups/public</url>
+            <snapshots>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+    </repositories>
+    - for use external, mast put in pom this:
+
 
 version 1.7.1
 1) improvement waitToRender() with WebDriverWait

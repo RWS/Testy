@@ -13,7 +13,8 @@ public class SimpleMultipleSelectTest {
         return new Object[][]{
                 {new SimpleMultipleSelect(),             "//select"},
                 {new SimpleMultipleSelect(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
-                {new SimpleMultipleSelect(container, "Label"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Label']//following-sibling::select"},
+                {new SimpleMultipleSelect(container).setId("id"),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select[@id='id']"},
+                {new SimpleMultipleSelect(container, "Label"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Label']//following-sibling::*//select"},
         };
     }
 

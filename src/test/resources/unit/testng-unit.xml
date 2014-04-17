@@ -16,7 +16,8 @@
 
             <class name="com.sdl.selenium.web.form.CheckBoxSimpleTest"/>
             <class name="com.sdl.selenium.web.form.SimpleComboBoxTest"/>
-            <class name="com.sdl.selenium.web.form.SimpleTextField"/>
+            <class name="com.sdl.selenium.web.form.SimpleTextFieldTest"/>
+            <class name="com.sdl.selenium.web.form.SimpleMultipleSelectTest"/>
 
             <class name="com.sdl.selenium.web.link.WebLinkTest"/>
 

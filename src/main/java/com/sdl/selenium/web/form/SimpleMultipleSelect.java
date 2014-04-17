@@ -1,6 +1,5 @@
 package com.sdl.selenium.web.form;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
@@ -52,13 +51,5 @@ public class SimpleMultipleSelect extends SimpleComboBox {
             list.add(text);
         }
         return list;
-    }
-
-
-    protected String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        selector = Utils.fixPathSelector(selector);
-        selector = getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
-        return selector;
     }
 }
