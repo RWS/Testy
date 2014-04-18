@@ -36,6 +36,7 @@ version 1.7.2-SNAPSHOT
                 </repositories>
             </profile>
         </profiles>
+7) sendKeys return null if element doesn't ready;
 
 
 version 1.7.1

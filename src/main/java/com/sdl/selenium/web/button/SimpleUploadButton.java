@@ -19,8 +19,8 @@ public class SimpleUploadButton extends WebLocator {
         setId(id);
     }
 
-    public void uploadFile(String path) {
-        sendKeys(path);
+    public boolean uploadFile(String path) {
+        return sendKeys(path) != null;
     }
 
     /*public void uploadFileWithJS(String path, String id) {

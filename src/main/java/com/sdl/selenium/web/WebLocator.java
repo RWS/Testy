@@ -93,7 +93,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getAttribute(this, attribute);
     }
 
-    protected String getCurrentElementAttribute(String attribute){
+    protected String getCurrentElementAttribute(String attribute) {
         return executor.getCurrentElementAttribute(this, attribute);
     }
 
@@ -102,7 +102,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public String getHtmlText(boolean instant) {
-        if(instant || ready()){
+        if (instant || ready()) {
             return executor.getHtmlText(this);
         }
         return null;
@@ -148,7 +148,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * //TODO Daca nu a facut click pe element sa se intrerupa testul de facut si pentru clickAt() si sa fie setabil
      *
-     * @return  true
+     * @return true
      */
 
     public boolean assertClick() {
@@ -188,8 +188,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
-        if(ready()){
+        if (ready()) {
             executor.doSendKeys(this, charSequences);
+        } else {
+            logger.debug("Element is not ready " + toString());
+            return null;
         }
         return this;
     }
@@ -237,7 +240,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @return  true | false
+     * @return true | false
      */
     public boolean doubleClickAt() {
         boolean clicked = false;
@@ -299,7 +302,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     *
      * @param seconds time in seconds
      * @return true | false
      */
@@ -324,7 +326,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * Waits for the text to be loaded by looking at the content and not take in consideration the excludeText
      * text or what ever text is given as parameter
      *
-     * @param seconds time in seconds
+     * @param seconds     time in seconds
      * @param excludeText exclude text
      * @return string
      */
