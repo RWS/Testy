@@ -49,19 +49,19 @@ public class DownloadFileTest extends TestBase {
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void assertDownload() {
-        assertTrue(downloadFile1.assertDownload(InputData.DOWNLOAD_DIRECTORY + "text.docx"));
+        assertTrue(downloadFile1.download(InputData.DOWNLOAD_DIRECTORY + "text.docx"));
     }
 
     @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void assertDownloadIsNotFile() {
-        assertFalse(downloadFile1.assertDownload(InputData.DOWNLOAD_DIRECTORY));
+        assertFalse(downloadFile1.download(InputData.DOWNLOAD_DIRECTORY));
     }
 
     /*@Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void assertDownloadApexFile() {
-        assertTrue(downloadApex.assertDownload(InputData.DOWNLOAD_DIRECTORY + "create_training.apex"));
+        assertTrue(downloadApex.download(InputData.DOWNLOAD_DIRECTORY + "create_training.apex"));
     }*/
 
     /*@Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")

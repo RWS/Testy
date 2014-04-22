@@ -185,6 +185,18 @@ public class Utils {
         return Arrays.equals(a, b);
     }
 
+    public static boolean waitFileIfIsEmpty(File file) {
+        boolean empty;
+        int time = 0;
+        do {
+            logger.debug("Content file is empty in: " + time);
+            time++;
+            Utils.sleep(50);
+            empty = file.length() > 0;
+        } while (!empty && time < 100);
+        return empty;
+    }
+
     public static String getTextFromFile(String pathFile) {
         String strLine = "";
         try {

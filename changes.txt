@@ -37,6 +37,8 @@ version 1.7.2-SNAPSHOT
             </profile>
         </profiles>
 7) sendKeys return null if element doesn't ready;
+8) move assertDownload(String filePath) in download(String filePath)
+9) add Utils.waitFileIfIsEmpty(File file), Wait 5 seconds.
 
 
 version 1.7.1
