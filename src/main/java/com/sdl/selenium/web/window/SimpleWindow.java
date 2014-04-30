@@ -1,7 +1,7 @@
 package com.sdl.selenium.web.window;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 
 public class SimpleWindow extends WebLocator {
 

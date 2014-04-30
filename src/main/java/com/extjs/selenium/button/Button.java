@@ -1,12 +1,12 @@
 package com.extjs.selenium.button;
 
 import com.extjs.selenium.ExtJsComponent;
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.IButton;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 

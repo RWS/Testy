@@ -1,6 +1,7 @@
 package com.extjs.selenium;
 
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class ExtJsComponent extends WebLocator {

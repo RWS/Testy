@@ -1,8 +1,8 @@
 package com.sdl.bootstrap.button;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -42,7 +42,7 @@ public class DownloadFile extends WebLocator implements Download {
         openBrowse();
         if (WebDriverConfig.isSalientDownload()) {
             File file = new File(filePath);
-            return Utils.waitFileIfIsEmpty(file) && filePath.equals(file.getAbsolutePath());
+            return FileUtils.waitFileIfIsEmpty(file) && filePath.equals(file.getAbsolutePath());
         } else {
             return RunExe.getInstance().download(filePath);
         }

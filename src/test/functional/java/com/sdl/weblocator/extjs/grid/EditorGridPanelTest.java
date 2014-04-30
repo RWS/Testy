@@ -1,6 +1,5 @@
 package com.sdl.weblocator.extjs.grid;
 
-import com.extjs.selenium.Utils;
 import com.extjs.selenium.button.Button;
 import com.extjs.selenium.form.ComboBox;
 import com.extjs.selenium.form.TextArea;
@@ -11,6 +10,7 @@ import com.extjs.selenium.window.Window;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

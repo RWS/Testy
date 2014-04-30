@@ -1,7 +1,7 @@
 package com.sdl.weblocator;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;

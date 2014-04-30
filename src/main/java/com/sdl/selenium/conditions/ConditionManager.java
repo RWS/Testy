@@ -1,6 +1,6 @@
 package com.sdl.selenium.conditions;
 
-import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

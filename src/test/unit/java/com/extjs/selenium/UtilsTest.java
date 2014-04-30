@@ -1,5 +1,7 @@
 package com.extjs.selenium;
 
+import com.sdl.selenium.web.utils.FileUtils;
+import com.sdl.selenium.web.utils.Utils;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -50,7 +52,7 @@ public class UtilsTest {
 
     @Test(dataProvider = "validateFileName")
     public void convertToValidFileName(String originalFileName, String validFileName) {
-        Assert.assertEquals(Utils.getValidFileName(originalFileName), validFileName);
+        Assert.assertEquals(FileUtils.getValidFileName(originalFileName), validFileName);
     }
 
     @Test(dataProvider = "validateTextWithQuotes")

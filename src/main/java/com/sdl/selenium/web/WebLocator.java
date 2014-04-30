@@ -1,6 +1,6 @@
 package com.sdl.selenium.web;
 
-import com.extjs.selenium.Utils;
+import com.sdl.selenium.web.utils.Utils;
 import com.thoughtworks.selenium.Selenium;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

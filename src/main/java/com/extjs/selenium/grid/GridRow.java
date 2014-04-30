@@ -1,10 +1,10 @@
 package com.extjs.selenium.grid;
 
-import com.extjs.selenium.Utils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class GridRow extends Row {

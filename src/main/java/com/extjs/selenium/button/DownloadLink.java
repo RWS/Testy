@@ -1,12 +1,12 @@
 package com.extjs.selenium.button;
 
 import com.extjs.selenium.ExtJsComponent;
-import com.extjs.selenium.Utils;
 import com.sdl.bootstrap.button.Download;
 import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -52,7 +52,7 @@ public class DownloadLink extends ExtJsComponent implements Download {
         openBrowse();
         if (WebDriverConfig.isSalientDownload()) {
             File file = new File(filePath);
-            return Utils.waitFileIfIsEmpty(file) && filePath.equals(file.getAbsolutePath());
+            return FileUtils.waitFileIfIsEmpty(file) && filePath.equals(file.getAbsolutePath());
         } else {
             return RunExe.getInstance().download(filePath);
         }

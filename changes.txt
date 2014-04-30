@@ -39,6 +39,8 @@ version 1.7.2-SNAPSHOT
 7) sendKeys return null if element doesn't ready;
 8) move assertDownload(String filePath) in download(String filePath)
 9) add Utils.waitFileIfIsEmpty(File file), Wait 5 seconds.
+10) move Utils from com.extjs.selenium.Utils to com.sdl.selenium.web.utils.Utils;
+11) create FileUtils
 
 
 version 1.7.1

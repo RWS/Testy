@@ -1,10 +1,10 @@
 package com.extjs.selenium.grid;
 
-import com.extjs.selenium.Utils;
 import com.extjs.selenium.form.ComboBox;
 import com.extjs.selenium.form.TextArea;
 import com.extjs.selenium.form.TextField;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;

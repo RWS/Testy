@@ -1,9 +1,9 @@
 package com.sdl.selenium.web.button;
 
-import com.extjs.selenium.Utils;
 import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
