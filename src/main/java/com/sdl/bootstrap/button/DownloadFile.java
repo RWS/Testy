@@ -30,7 +30,7 @@ public class DownloadFile extends WebLocator implements Download {
     }
 
     /**
-     * if WebDriverConfig.isSalientDownload() is true, se face silentDownload, is is false se face download with AutoIT.
+     * if WebDriverConfig.isSilentDownload() is true, se face silentDownload, is is false se face download with AutoIT.
      * Download file with AutoIT, works only on FireFox. SilentDownload works FireFox and Chrome
      * Use only this: button.download("C:\\TestSet.tmx");
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
@@ -40,7 +40,7 @@ public class DownloadFile extends WebLocator implements Download {
     @Override
     public boolean download(String filePath) {
         openBrowse();
-        if (WebDriverConfig.isSalientDownload()) {
+        if (WebDriverConfig.isSilentDownload()) {
             File file = new File(filePath);
             return FileUtils.waitFileIfIsEmpty(file) && filePath.equals(file.getAbsolutePath());
         } else {

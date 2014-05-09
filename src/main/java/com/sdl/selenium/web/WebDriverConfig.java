@@ -30,7 +30,7 @@ public class WebDriverConfig {
     private static boolean isSafari;
     private static boolean isChrome;
     private static boolean isFireFox;
-    private static boolean isSalientDownload;
+    private static boolean isSilentDownload;
 
     /**
      * 
@@ -87,12 +87,12 @@ public class WebDriverConfig {
         return driver != null;
     }
 
-    public static boolean isSalientDownload() {
-        return isSalientDownload;
+    public static boolean isSilentDownload() {
+        return isSilentDownload;
     }
 
     private static void setSilentDownload(boolean isSalientDownload) {
-        WebDriverConfig.isSalientDownload = isSalientDownload;
+        WebDriverConfig.isSilentDownload = isSalientDownload;
     }
 
     /**
