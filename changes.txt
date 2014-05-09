@@ -41,6 +41,7 @@ version 1.7.2-SNAPSHOT
 9) add Utils.waitFileIfIsEmpty(File file), Wait 5 seconds.
 10) move Utils from com.extjs.selenium.Utils to com.sdl.selenium.web.utils.Utils;
 11) create FileUtils
+12) convert to boolean fireEventWithJS
 
 
 version 1.7.1
