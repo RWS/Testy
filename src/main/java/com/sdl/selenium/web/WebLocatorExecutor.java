@@ -53,5 +53,5 @@ public interface WebLocatorExecutor {
 
     boolean isSelected(WebLocator el);
 
-    void blur(WebLocator el);
+    boolean blur(WebLocator el);
 }

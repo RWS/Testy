@@ -232,8 +232,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void blur(WebLocator el) {
-        fireEventWithJS(el, "blur");
+    public boolean blur(WebLocator el) {
+        return fireEventWithJS(el, "blur");
     }
 
     @Override
@@ -296,7 +296,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean doubleClickAt(WebLocator el) {
-        boolean clicked = false;
+        boolean clicked;
         try {
             Actions builder = new Actions(driver);
             builder.doubleClick(el.currentElement).perform();
@@ -304,16 +304,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } catch (Exception e) {
             // http://code.google.com/p/selenium/issues/detail?id=244
             logger.warn("Exception in doubleClickAt", e);
-            fireEventWithJS(el, "dblclick");
+            clicked = fireEventWithJS(el, "dblclick");
         }
-        logger.info("doubleClickAt " + el);
+        if(clicked){
+            logger.info("doubleClickAt " + el);
+        }
         return clicked;
     }
 
     @Override
     public boolean doMouseOver(WebLocator el) {
-        fireEventWithJS(el, "mouseover");
-        return true;
+        return fireEventWithJS(el, "mouseover");
     }
 
     public String getAttributeId(WebLocator el) {
@@ -328,7 +329,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return pathId;
     }
 
-    public void fireEventWithJS(WebLocator el, String eventName) {
+    public boolean fireEventWithJS(WebLocator el, String eventName) {
         String script = "if(document.createEvent){" +
                 "var evObj = document.createEvent('MouseEvents');\n" +
                 "evObj.initEvent('" + eventName + "', true, true);\n" +
@@ -349,7 +350,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     "fireOnThis.dispatchEvent(evObj);";
         }
 //        logger.debug("fireEventWithJS : " + eventName);
-        executeScript(script);
+        if (executeScript(script) instanceof Boolean) {
+            return (Boolean) executeScript(script);
+        } else {
+            return false;
+        }
     }
 
     @Override

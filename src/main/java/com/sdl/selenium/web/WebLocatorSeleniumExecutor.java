@@ -167,8 +167,15 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void blur(WebLocator el) {
-        selenium.fireEvent(el.getPath(), "blur");
+    public boolean blur(WebLocator el) {
+        boolean success = false;
+        try{
+            selenium.fireEvent(el.getPath(), "blur");
+            success = true;
+        } catch (Exception e){
+
+        }
+        return success;
     }
 
     @Override
