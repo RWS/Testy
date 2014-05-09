@@ -32,6 +32,10 @@ public class WebDriverConfig {
     private static boolean isFireFox;
     private static boolean isSalientDownload;
 
+    /**
+     * 
+     * @return last created driver (current one)
+     */
     public static WebDriver getDriver() {
         return driver;
     }
@@ -87,10 +91,15 @@ public class WebDriverConfig {
         return isSalientDownload;
     }
 
-    private static void setSalientDownload(boolean isSalientDownload) {
+    private static void setSilentDownload(boolean isSalientDownload) {
         WebDriverConfig.isSalientDownload = isSalientDownload;
     }
 
+    /**
+     * Create and return new WebDriver
+     * @param browserProperties
+     * @return
+     */
     public static WebDriver getWebDriver(String browserProperties) {
         //logger.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
         PropertiesReader properties = new PropertiesReader(browserProperties);
@@ -126,7 +135,7 @@ public class WebDriverConfig {
             DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             driver = new ChromeDriver(capabilities);
-            WebDriverConfig.setSalientDownload(!"".equals(property));
+            WebDriverConfig.setSilentDownload(!"".equals(property));
         } else if (browser == Browser.HTMLUNIT) {
             driver = new HtmlUnitDriver(true);
         } else {
@@ -170,7 +179,7 @@ public class WebDriverConfig {
             }
 
             driver = new FirefoxDriver(myProfile);
-            WebDriverConfig.setSalientDownload(
+            WebDriverConfig.setSilentDownload(
                     !"".equals(properties.getProperty("browser.download.dir")) &&
                             !"".equals(properties.getProperty("browser.helperApps.neverAsk.openFile")) &&
                             !"".equals(properties.getProperty("browser.helperApps.neverAsk.saveToDisk")) &&
