@@ -32,6 +32,7 @@ public class WebDriverConfig {
     private static boolean isChrome;
     private static boolean isFireFox;
     private static boolean isSilentDownload;
+    private static String downloadPath;
 
     /**
      * 
@@ -96,6 +97,14 @@ public class WebDriverConfig {
         WebDriverConfig.isSilentDownload = isSalientDownload;
     }
 
+    public static String getDownloadPath() {
+        return downloadPath;
+    }
+
+    public static void setDownloadPath(String downloadPath) {
+        WebDriverConfig.downloadPath = downloadPath;
+    }
+
     /**
      * Create and return new WebDriver
      * @param browserProperties
@@ -128,7 +137,9 @@ public class WebDriverConfig {
             options.addArguments("--enable-logging --v=1");
             Map<String, Object> prefs = new HashMap<String, Object>();
             String property = properties.getProperty("browser.download.dir");
-            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + property).getCanonicalPath();
+            File file = new File(PropertiesReader.RESOURCES_PATH + property);
+            setDownloadPath(file.getAbsolutePath());
+            String downloadDir = file.getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {
                 prefs.put("download.default_directory", downloadDir);
             }
@@ -147,7 +158,7 @@ public class WebDriverConfig {
         return driver;
     }
 
-    private static void createFirefoxDriver(PropertiesReader properties) {
+    private static void createFirefoxDriver(PropertiesReader properties) throws IOException {
         String profileName = properties.getProperty("browser.profile.name");
         FirefoxProfile myProfile;
         if (!"".equals(profileName) && profileName != null) {
@@ -174,7 +185,9 @@ public class WebDriverConfig {
                     "browser.helperApps.neverAsk.openFile"
             );
 
-            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir")).getAbsolutePath();
+            File file = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir"));
+            setDownloadPath(file.getAbsolutePath());
+            String downloadDir = file.getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {
                 myProfile.setPreference("browser.download.dir", downloadDir);
             }

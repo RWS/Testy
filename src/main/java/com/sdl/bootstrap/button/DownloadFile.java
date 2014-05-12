@@ -3,15 +3,12 @@ package com.sdl.bootstrap.button;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
-import java.io.IOException;
 
 public class DownloadFile extends WebLocator implements Download {
-    private static final Logger logger = Logger.getLogger(DownloadFile.class);
 
     public DownloadFile() {
         setClassName("DownloadFile");
@@ -38,21 +35,17 @@ public class DownloadFile extends WebLocator implements Download {
      * Use only this: button.download("C:\\TestSet.tmx");
      * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
      *
-     * @param filePath e.g. "C:\\TestSet.tmx"
+     * @param fileName e.g. "TestSet.tmx"
      */
     @Override
-    public boolean download(String filePath) {
+    public boolean download(String fileName) {
         openBrowse();
         if (WebDriverConfig.isSilentDownload()) {
-            File file = new File(filePath);
-            try {
-                return FileUtils.waitFileIfIsEmpty(file) && filePath.equals(file.getCanonicalPath());
-            } catch (IOException e) {
-                logger.debug("File doesn't exist!");
-                return false;
-            }
+            fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
+            File file = new File(fileName);
+            return FileUtils.waitFileIfIsEmpty(file) && fileName.equals(file.getAbsolutePath());
         } else {
-            return RunExe.getInstance().download(filePath);
+            return RunExe.getInstance().download(fileName);
         }
     }
 
