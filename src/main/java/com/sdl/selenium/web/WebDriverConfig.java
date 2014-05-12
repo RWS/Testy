@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +101,7 @@ public class WebDriverConfig {
      * @param browserProperties
      * @return
      */
-    public static WebDriver getWebDriver(String browserProperties) {
+    public static WebDriver getWebDriver(String browserProperties) throws IOException {
         //logger.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
@@ -127,7 +128,7 @@ public class WebDriverConfig {
             options.addArguments("--enable-logging --v=1");
             Map<String, Object> prefs = new HashMap<String, Object>();
             String property = properties.getProperty("browser.download.dir");
-            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + property).getAbsolutePath();
+            String downloadDir = new File(PropertiesReader.RESOURCES_PATH + property).getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {
                 prefs.put("download.default_directory", downloadDir);
             }
