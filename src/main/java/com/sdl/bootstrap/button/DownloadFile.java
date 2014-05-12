@@ -3,12 +3,15 @@ package com.sdl.bootstrap.button;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
+import java.io.IOException;
 
 public class DownloadFile extends WebLocator implements Download {
+    private static final Logger logger = Logger.getLogger(DownloadFile.class);
 
     public DownloadFile() {
         setClassName("DownloadFile");
@@ -42,7 +45,12 @@ public class DownloadFile extends WebLocator implements Download {
         openBrowse();
         if (WebDriverConfig.isSilentDownload()) {
             File file = new File(filePath);
-            return FileUtils.waitFileIfIsEmpty(file) && filePath.equals(file.getAbsolutePath());
+            try {
+                return FileUtils.waitFileIfIsEmpty(file) && filePath.equals(file.getCanonicalPath());
+            } catch (IOException e) {
+                logger.debug("File doesn't exist!");
+                return false;
+            }
         } else {
             return RunExe.getInstance().download(filePath);
         }
