@@ -3,11 +3,14 @@ package com.sdl.selenium.web.utils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class FileUtils {
     private static final Logger logger = Logger.getLogger(FileUtils.class);
+    private static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\r\\n|\\r|\\n");
 
     public static String getValidFileName(String fileName) {
         String regex = "\\\\|:|/|\\*|\\?|\\<|\\>|\\|"; // matches special characters: ,(comma) (space)&><@?\/'"
@@ -133,35 +136,43 @@ public class FileUtils {
 
     }
 
-    public static boolean compareFiles(String filePath1, String filePath2) {
-        boolean equal = true;
-        BufferedReader br1 = null;
-        BufferedReader br2 = null;
+    public static boolean compareFiles(String file1Path, String file2Path) {
         try {
-
-            br1 = new BufferedReader(new FileReader(filePath1));
-            br2 = new BufferedReader(new FileReader(filePath2));
-
-            String strLine1, strLine2;
-
-            do {
-                strLine1 = br1.readLine();
-                strLine2 = br2.readLine();
-                if (strLine1 == null && strLine2 == null) {
-                    br1.close();
-                    br2.close();
-                    return true;
-                } else if (strLine1 == null || strLine2 == null || !strLine1.equals(strLine2)) {
-                    logger.debug("The files are not equal." + strLine1 + " != " + strLine2);
-                    br1.close();
-                    br2.close();
-                    return false;
-                }
-            } while (true);
-        } catch (IOException ex) {
-            logger.debug("Exception occured" + ex);
+            File file1 = new File(file1Path);
+            File file2 = new File(file2Path);
+            FileUtils.waitFileIfIsEmpty(file2);
+            String str1 = convertStreamToString(new FileInputStream(file1));
+            String str2 = convertStreamToString(new FileInputStream(file2));
+            return formatToSystemLineSeparator(str1).equals(formatToSystemLineSeparator(str2));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
-        return equal;
+    }
+
+    private static String formatToSystemLineSeparator(String input) {
+        return NEW_LINE_PATTERN.matcher(input).replaceAll(Matcher.quoteReplacement(System.getProperty("line.separator")));
+    }
+
+    public static String convertStreamToString(InputStream is) {
+        if (is != null) {
+            Writer writer = new StringWriter();
+            char[] buffer = new char[1024];
+            try {
+                Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                int n;
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "";
+            }
+            return writer.toString();
+        } else {
+            logger.debug("is is=" + is);
+            return "";
+        }
     }
 
     public static boolean compareFileSize(String filePath1, String filePath2) {
