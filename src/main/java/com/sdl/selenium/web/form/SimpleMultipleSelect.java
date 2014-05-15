@@ -42,13 +42,20 @@ public class SimpleMultipleSelect extends SimpleComboBox {
         return select;
     }
 
+    /**
+     *
+     * @return if return null, then component is not ready
+     */
     public List<String> getValues() {
-        List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < elements.size(); i++) {
-            String text = elements.get(i).getText();
-            logger.debug(text);
-            list.add(text);
+        List<String> list = null;
+        if (ready()) {
+            list = new ArrayList<String>();
+            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
+            for (int i = 0; i < elements.size(); i++) {
+                String text = elements.get(i).getText();
+                logger.debug(text);
+                list.add(text);
+            }
         }
         return list;
     }
