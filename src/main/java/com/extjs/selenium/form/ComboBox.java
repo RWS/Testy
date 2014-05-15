@@ -55,14 +55,14 @@ public class ComboBox extends TextField implements ICombo {
         return select(value);
     }
 
-    public boolean select(String value, boolean startWith, long time) {
+    public boolean select(String value, boolean startWith, long optionRenderMillis) {
         boolean selected;
         String componentId;
         String info = toString();
 
         String valueTest = startWith ? ("starts-with(text(),'" + value + "')") : ("text()='" + value + "'");
         WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage("ComboList");
-        WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(time).setInfoMessage(value);
+        WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(optionRenderMillis).setInfoMessage(value);
 
         if (clickIcon("arrow")) {
             try {
