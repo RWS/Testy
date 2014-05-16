@@ -17,6 +17,7 @@ import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,7 +116,12 @@ public class WebDriverConfig {
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
         browserKey = browserKey.toUpperCase();
-        Browser browser = Browser.valueOf(browserKey);
+        Browser browser = null;
+        try {
+            browser = Browser.valueOf(browserKey);
+        } catch (IllegalArgumentException e) {
+            logger.error("BROWSER not supported : " + browserKey + ". Supported browsers: " + Arrays.asList(Browser.values()));
+        }
         String driverPath = PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.driver.path");
         if (browser == Browser.FIREFOX) {
             createFirefoxDriver(properties);
