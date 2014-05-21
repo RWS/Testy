@@ -44,6 +44,7 @@ version 1.7.2-SNAPSHOT
 12) convert to boolean fireEventWithJS
 13) add weblocator.log.logXPathEnabled=false and weblocator.defaults.searchType=contains
 14) has make protected
+15) add MultiSelect class
 
 version 1.7.1
 1) improvement waitToRender() with WebDriverWait

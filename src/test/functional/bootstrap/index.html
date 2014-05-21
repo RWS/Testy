@@ -9,6 +9,7 @@
     <link href="css/datepicker.css" rel="stylesheet">
     <link href="css/bootstrap-fileupload.css" rel="stylesheet">
     <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="css/experiments.css" rel="stylesheet">
 </head>
 <body>
@@ -101,6 +102,20 @@
         </div>
     </div>
 
+    <label class="control-label">Source:</label>
+
+    <div class="controls">
+        <select id="example" class="multiselect" multiple="multiple">
+            <option value="cheese">Cheese</option>
+            <option value="tomatoes">Tomatoes</option>
+            <option value="mozarella">Mozzarella</option>
+            <option value="mushrooms">Mushrooms</option>
+            <option value="pepperoni">Pepperoni</option>
+            <option value="onions">Onions</option>
+            <option value="carrots">Carrots</option>
+        </select>
+    </div>
+
 </form>
 
 <!--<script src="http://code.jquery.com/jquery.js"></script>-->
@@ -109,24 +124,31 @@
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/bootstrap-fileupload.js"></script>
 <script src="js/bootstrap-select.js"></script>
+<script src="js/bootstrap-multiselect.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.selectpicker').selectpicker();
         var today = new Date();
 
         $('#dp3').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            keyboardNavigation: true
+            format:'dd-mm-yyyy',
+            autoclose:true,
+            keyboardNavigation:true
         });
         $('#dp3').datepicker('setValue', today);
 
-        $('#downloadProjectDataButton').on('click', function(){
+        $('#downloadProjectDataButton').on('click', function () {
             window.location.href = '../../resources/upload/text.docx';
         });
-        $('#downloadApex').on('click', function(){
+        $('#downloadApex').on('click', function () {
             window.location.href = '../../resources/upload/create_training.apex';
+        });
+
+        $('#example').multiselect({
+            includeSelectAllOption:true,
+            enableFiltering:true,
+            maxHeight:150
         });
     });
 </script>
