@@ -5,8 +5,7 @@ import org.apache.log4j.Logger;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
-import java.util.Properties;
+import java.util.*;
 
 public class WebLocatorConfig {
 
@@ -17,8 +16,12 @@ public class WebLocatorConfig {
 
     private static long defaultRenderMillis = 3000;
     private static boolean logUseClassName = false;
+    private static boolean logXPathEnabled = false;
     private static boolean logContainers = true;
     private static boolean highlight = false;
+    private static List<SearchType> searchTextType = new ArrayList<SearchType>() {{
+        add(SearchType.CONTAINS);
+    }};
 
     private static Properties properties = null;
 
@@ -79,6 +82,12 @@ public class WebLocatorConfig {
         if (logUseClassName != null) {
             setLogUseClassName(logUseClassName);
         }
+
+        Boolean isLogXPathEnabled = getBoolean("weblocator.log.logXPathEnabled");
+        if (isLogXPathEnabled != null) {
+            setLogXPathEnabled(isLogXPathEnabled);
+        }
+
         Boolean logContainers = getBoolean("weblocator.log.containers");
         if (logContainers != null) {
             setLogContainers(logContainers);
@@ -87,9 +96,22 @@ public class WebLocatorConfig {
         if (highlight != null) {
             setHighlight(highlight);
         }
-    }
 
-    //
+        String searchTextType = getString("weblocator.defaults.searchType");
+        if (searchTextType != null && !"".equals(searchTextType)) {
+            searchTextType = searchTextType.toUpperCase();
+            String[] searchTypes = searchTextType.split("\\s*,\\s*");
+            List<SearchType> list = new ArrayList<SearchType>();
+            for (String searchType : searchTypes) {
+                try {
+                    list.add(SearchType.valueOf(searchType));
+                } catch (IllegalArgumentException e) {
+                    logger.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + Arrays.asList(SearchType.values()));
+                }
+            }
+            setSearchTextType(list);
+        }
+    }
 
     public static long getDefaultRenderMillis() {
         return defaultRenderMillis;
@@ -105,6 +127,14 @@ public class WebLocatorConfig {
 
     public static void setLogUseClassName(boolean logUseClassName) {
         WebLocatorConfig.logUseClassName = logUseClassName;
+    }
+
+    public static boolean isLogXPathEnabled() {
+        return logXPathEnabled;
+    }
+
+    public static void setLogXPathEnabled(boolean logXPathEnabled) {
+        WebLocatorConfig.logXPathEnabled = logXPathEnabled;
     }
 
     public static boolean isLogContainers() {
@@ -123,34 +153,15 @@ public class WebLocatorConfig {
         WebLocatorConfig.highlight = highlight;
     }
 
-    public static void main(String args[]) {
-        logger.info("start");
+    @SuppressWarnings("unchecked")
+    public static List<SearchType> getSearchTextType() {
+        return  (List<SearchType>) ((ArrayList) searchTextType).clone();
+//        ArrayList<SearchType> copyOfArrayList = new ArrayList<SearchType>();
+//        copyOfArrayList.addAll(searchTextType);
+//        return copyOfArrayList;
+    }
 
-//        Window w = new Window("MyWin");
-//        Panel p = new Panel(w, "MyPanel");
-//        WebLocator el = new WebLocator("cls", p);
-//        logger.info(el.getRenderMillis());
-//        logger.info(el);
-        logger.info("isHighlight(): " + isHighlight());
-
-//        WebLocator el2 = new WebLocator(p, "//div/div[4]/div");
-//        logger.debug(el2);
-//
-//
-//        GridPanel grid = new GridPanel(p);
-//        logger.debug(grid);
-//
-//        p.setElPath("//div/div/div");
-//        p.setTitle(null);
-//        GridPanel grid1 = new GridPanel(p);
-//        logger.debug(grid1);
-
-        URL baseUrl = WebLocatorConfig.class.getResource("webLocator.properties");
-        logger.debug(baseUrl);
-//
-//        TextField s = new TextField("name", p);
-//        logger.debug(s);
-
-
+    public static void setSearchTextType(List<SearchType> searchTextType) {
+        WebLocatorConfig.searchTextType = searchTextType;
     }
 }

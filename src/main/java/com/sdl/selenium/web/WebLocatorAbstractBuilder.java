@@ -28,7 +28,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String name;
     private String text;
     protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
-    private List<SearchType> searchTextType = new ArrayList<SearchType>();
+    private List<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
@@ -166,6 +166,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
      * </pre>
+     *
      * @return value that has been set in {@link #setClasses(String...)}
      */
     public List<String> getClasses() {
@@ -271,8 +272,10 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
-        this.searchTextType = new ArrayList<SearchType>();
-        if (searchTextType != null) {
+        if(searchTextType == null) {
+            this.searchTextType = WebLocatorConfig.getSearchTextType();
+        } else {
+            this.searchTextType = new ArrayList<SearchType>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
@@ -594,6 +597,10 @@ public abstract class WebLocatorAbstractBuilder {
         return elPath != null && !elPath.equals("");
     }
 
+    protected boolean hasTag() {
+        return tag != null && !tag.equals("*");
+    }
+
     public boolean hasElCssSelector() {
         return elCssSelector != null && !elCssSelector.equals("");
     }
@@ -728,7 +735,6 @@ public abstract class WebLocatorAbstractBuilder {
                 String operator = hasContainsAll ? " and " : " or ";
                 selector += hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
             } else {
-                //searchTextType.contains(SearchType.CONTAINS)  //default
                 selector += "contains(" + pathText + "," + text + ")";
             }
             if (useChildNodesSearch) {
@@ -819,8 +825,10 @@ public abstract class WebLocatorAbstractBuilder {
             info = getTitle();
         } else if (hasBaseCls()) {
             info = getBaseCls();
-        } else if (hasElPath()) {// TODO verify with / without xpath
+        } else if (hasElPath()) {
             info = getElPath();
+        } else if (hasTag()) {
+            info = getTag();
         } else {
             info = getClassName();
         }
@@ -848,7 +856,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     protected String getLabelPath() {
-        if(searchLabelType.size() == 0) {
+        if (searchLabelType.size() == 0) {
             searchLabelType.add(SearchType.EQUALS);
         }
         SearchType[] st = new SearchType[searchLabelType.size()];

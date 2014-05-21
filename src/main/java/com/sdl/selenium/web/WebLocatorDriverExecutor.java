@@ -91,6 +91,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         doWaitElement(el, millis);
         if (el.currentElement == null) {
             logger.warn("Element not found after " + millis + " millis; " + el);
+            if(WebLocatorConfig.isLogXPathEnabled()){
+                logger.debug("\t" + el.getPath());
+            }
         }
         return el.currentElement;
     }

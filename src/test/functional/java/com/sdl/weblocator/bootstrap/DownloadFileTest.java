@@ -2,14 +2,12 @@ package com.sdl.weblocator.bootstrap;
 
 import com.sdl.bootstrap.button.DownloadFile;
 import com.sdl.bootstrap.form.Form;
-import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.sdl.weblocator.Ignores.Driver.CHROME;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -46,13 +44,11 @@ public class DownloadFileTest extends TestBase {
 
     }*/
 
-    @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void assertDownload() {
         assertTrue(downloadFile1.download("text.docx"));
     }
 
-    @Ignores(value = {CHROME}, reason = "Nu se downloadeaza cu Chrome")
     @Test
     public void assertDownloadIsNotFile() {
         assertFalse(downloadFile1.download(InputData.DOWNLOAD_DIRECTORY));

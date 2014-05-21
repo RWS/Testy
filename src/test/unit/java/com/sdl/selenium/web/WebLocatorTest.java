@@ -155,4 +155,10 @@ public class WebLocatorTest {
         locator.setSearchTextType(null);
         assertEquals(locator.getPath(), "//*[contains(text(),'text')]");
     }
+
+    @Test
+    public void setSearchTextType(){
+        WebLocator locator = new WebLocator().setText("text", SearchType.STARTS_WITH);
+        assertEquals(locator.getSearchTextType().size(), 1);
+    }
 }
