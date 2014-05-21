@@ -561,39 +561,39 @@ public abstract class WebLocatorAbstractBuilder {
         this.className = className;
     }
 
-    public boolean hasId() {
+    protected boolean hasId() {
         return id != null && !id.equals("");
     }
 
-    public boolean hasCls() {
+    protected boolean hasCls() {
         return cls != null && !cls.equals("");
     }
 
-    public boolean hasClasses() {
+    protected boolean hasClasses() {
         return classes != null && classes.size() > 0;
     }
 
-    public boolean hasExcludeClasses() {
+    protected boolean hasExcludeClasses() {
         return excludeClasses != null && excludeClasses.size() > 0;
     }
 
-    public boolean hasBaseCls() {
+    protected boolean hasBaseCls() {
         return baseCls != null && !baseCls.equals("");
     }
 
-    public boolean hasName() {
+    protected boolean hasName() {
         return name != null && !name.equals("");
     }
 
-    public boolean hasText() {
+    protected boolean hasText() {
         return text != null && !text.equals("");
     }
 
-    public boolean hasStyle() {
+    protected boolean hasStyle() {
         return style != null && !style.equals("");
     }
 
-    public boolean hasElPath() {
+    protected boolean hasElPath() {
         return elPath != null && !elPath.equals("");
     }
 
@@ -601,23 +601,23 @@ public abstract class WebLocatorAbstractBuilder {
         return tag != null && !tag.equals("*");
     }
 
-    public boolean hasElCssSelector() {
+    protected boolean hasElCssSelector() {
         return elCssSelector != null && !elCssSelector.equals("");
     }
 
-    public boolean hasLabel() {
+    protected boolean hasLabel() {
         return label != null && !label.equals("");
     }
 
-    public boolean hasTitle() {
+    protected boolean hasTitle() {
         return title != null && !title.equals("");
     }
 
-    public boolean hasElPathSuffix() {
+    protected boolean hasElPathSuffix() {
         return elPathSuffix != null && !elPathSuffix.equals("");
     }
 
-    public boolean hasPosition() {
+    protected boolean hasPosition() {
         return position > 0;
     }
 

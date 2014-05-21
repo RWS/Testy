@@ -42,7 +42,8 @@ version 1.7.2-SNAPSHOT
 10) move Utils from com.extjs.selenium.Utils to com.sdl.selenium.web.utils.Utils;
 11) create FileUtils
 12) convert to boolean fireEventWithJS
-
+13) add weblocator.log.logXPathEnabled=false and weblocator.defaults.searchType=contains
+14) has make protected
 
 version 1.7.1
 1) improvement waitToRender() with WebDriverWait

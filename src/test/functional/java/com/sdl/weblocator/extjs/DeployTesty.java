@@ -77,7 +77,7 @@ public class DeployTesty extends TestBase {
         String testyDir = System.getProperty("user.home") + "\\.m2\\repository\\com\\sdl\\lt\\Testy";
         cleanDir(testyDir);
         waitRenderEl(buildNowEl, 5000);
-        waitRemovedEl(buildNowEl, 120000);
+        waitRemovedEl(buildNowEl, 720000);
     }
 
     @Test(dependsOnMethods = "deployOnJenkins")
