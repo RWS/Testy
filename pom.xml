@@ -198,6 +198,6 @@
             </testResource>
         </testResources>
     </build>
-    <repositories/>
-    <pluginRepositories/>
+    <repositories />
+    <pluginRepositories />
 </project>
