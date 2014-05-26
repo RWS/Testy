@@ -1,13 +1,19 @@
 package com.sdl.bootstrap.form;
 
+import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICombo;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-public class MultiSelect extends WebLocator implements ICombo {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MultiSelect extends WebLocator {
 
     public MultiSelect() {
-        setClassName("SelectPicker");
-        setBaseCls("btn dropdown-toggle");
+        setClassName("MultiSelect");
+        setBaseCls("multiselect dropdown-toggle btn");
         setTag("button");
     }
 
@@ -21,23 +27,39 @@ public class MultiSelect extends WebLocator implements ICombo {
         setLabel(label);
     }
 
-    @Override
-    public boolean select(String value) {
+    public boolean select(String... values) {
+        boolean selected = false;
         if (click()) {
-            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
-                    .setInfoMessage("select: '" + value + "'");
-            return select.click();
+            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]");
+            select.ready();
+            for (String val : values) {
+                WebLocator el = new WebLocator(select).setTag("label").setText(val, SearchType.HTML_NODE);
+                CheckBox checkBox = new CheckBox(el).setInfoMessage("check: '" + val + "'");
+                selected = checkBox.click();
+                if (!selected) {
+                    return false;
+                }
+            }
+            click();
         }
-        return false;
+        return selected;
     }
 
-    @Override
-    public String getValue() {
-        return getHtmlText().trim();
-    }
-
-    @Override
-    public boolean setValue(String value) {
-        return select(value);
+    public List<String> getValueSelected() {
+        List<String> list = null;
+        if (click()) {
+            list = new ArrayList<String>();
+            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]");
+            WebLocator li = new WebLocator(select).setTag("li").setCls("active");
+            WebLocator el = new WebLocator(li).setTag("label");
+            el.ready();
+            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(el.getPath()));
+            for (WebElement element : elements) {
+                String text = element.getText();
+                list.add(text);
+            }
+            click();
+        }
+        return list;
     }
 }
