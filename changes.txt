@@ -1,5 +1,8 @@
 CHANGES:
 
+version 1.7.3-SNAPSHOT
+1)
+
 version 1.7.2-SNAPSHOT
 1) webdriver version 2.41
 2) move getDriver in WebDriverConfig

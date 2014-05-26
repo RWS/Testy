@@ -109,7 +109,7 @@ public class WebDriverConfig {
     /**
      * Create and return new WebDriver
      * @param browserProperties
-     * @return
+     * @return webDriver
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
         //logger.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
@@ -141,6 +141,7 @@ public class WebDriverConfig {
             options.addArguments("--lang=en");
             options.addArguments("--allow-running-insecure-content");
             options.addArguments("--enable-logging --v=1");
+            options.addArguments("--test-type");
             Map<String, Object> prefs = new HashMap<String, Object>();
             String property = properties.getProperty("browser.download.dir");
             File file = new File(PropertiesReader.RESOURCES_PATH + property);

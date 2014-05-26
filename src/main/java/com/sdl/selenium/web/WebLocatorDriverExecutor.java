@@ -37,9 +37,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 logger.error("InvalidElementStateException in doClick: " + el);
                 tryAgainDoClick(el);
                 clicked = true;
-            } catch (ElementNotVisibleException e) {
-                logger.error("ElementNotVisibleException in doClick: " + el, e);
-                throw e;
             } catch (Exception e) {
                 logger.error("Exception in doClick: " + el, e);
             }
