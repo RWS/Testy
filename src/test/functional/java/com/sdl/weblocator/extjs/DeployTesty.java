@@ -32,6 +32,9 @@ import java.io.IOException;
 public class DeployTesty extends TestBase {
     private static final Logger logger = Logger.getLogger(DeployTesty.class);
 
+    private static final String DOMAIN_USER = "user-ul de domeniu";
+    private static final String DOMAIN_PASS = "parola de domeniu";
+
     private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
     private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");
     private Form loginForm = new Form().setName("login");
@@ -65,8 +68,8 @@ public class DeployTesty extends TestBase {
     public void loginJenkins() {
         loginEl.click();
         loginForm.ready(10);
-        login.setValue("user-ul de domeniu");
-        pass.setValue("parola de domeniu");
+        login.setValue(DOMAIN_USER);
+        pass.setValue(DOMAIN_PASS);
         logInButton.click();
         logOutEl.ready(10);
     }
