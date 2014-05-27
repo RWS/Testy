@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 public class SimpleTableTest {
     public static WebLocator container = new WebLocator("container");
+    private static TableCell tableCell = new TableCell(3, "1234", SearchType.EQUALS).setTag("th");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -45,6 +46,7 @@ public class SimpleTableTest {
                 {new SimpleTable().getRow(new TableCell(3, "1234", SearchType.EQUALS), new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][count(td[3][text()='1234' or count(.//*[text()='1234']) > 0]) > 0 and count(td[4][text()='Eng-Fra' or count(.//*[text()='Eng-Fra']) > 0]) > 0]"},
                 {new SimpleTable().getTableCell(1, new TableCell(3, "1234", SearchType.EQUALS), new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][count(td[3][text()='1234' or count(.//*[text()='1234']) > 0]) > 0 and count(td[4][text()='Eng-Fra' or count(.//*[text()='Eng-Fra']) > 0]) > 0]//td[1]"},
                 {new SimpleTable().getTableCell(1, "111", new TableCell(3, "1234", SearchType.EQUALS), new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][count(td[3][text()='1234' or count(.//*[text()='1234']) > 0]) > 0 and count(td[4][text()='Eng-Fra' or count(.//*[text()='Eng-Fra']) > 0]) > 0]//td[1][text()='111' or count(.//*[text()='111']) > 0]"},
+                {new SimpleTable().getRow(tableCell, new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][count(th[3][text()='1234' or count(.//*[text()='1234']) > 0]) > 0 and count(td[4][text()='Eng-Fra' or count(.//*[text()='Eng-Fra']) > 0]) > 0]"},
         };
     }
 

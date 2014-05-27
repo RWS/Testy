@@ -20,6 +20,8 @@ public class TableCellTest {
                 {new TableCell(3, "Text", SearchType.EQUALS),        "//td[3][text()='Text' or count(.//*[text()='Text']) > 0]"},
                 {new TableCell(3, "Text", SearchType.CONTAINS),  "//td[3][contains(text(),'Text') or count(.//*[contains(text(),'Text')]) > 0]"},
                 {new TableCell(tableRow, 3, "Text", SearchType.EQUALS), "//table[@id='ID']//tr[text()='Text' or count(.//*[text()='Text']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]//td[3][text()='Text' or count(.//*[text()='Text']) > 0]"},
+                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("th"), "//th[1][count(*//text()[contains(.,'Text')]) > 0 or count(.//*[count(*//text()[contains(.,'Text')]) > 0]) > 0]"},
+                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("td"), "//td[1][count(*//text()[contains(.,'Text')]) > 0 or count(.//*[count(*//text()[contains(.,'Text')]) > 0]) > 0]"},
         };
     }
 

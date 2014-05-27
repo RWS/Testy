@@ -15,10 +15,11 @@ public abstract class Row extends WebLocator {
         String path = "";
         for (Cell cell : cells) {
             String itemPathText = cell.getItemPathText();
+            String tagCell = cell.getTag();
             if (cell.getPosition() != -1 && !"".equals(itemPathText) && itemPathText != null) {
-                path += " and " + getSearchPath(cell.getPosition(),itemPathText);
+                path += " and " + getSearchPath(cell.getPosition(), itemPathText, tagCell);
             } else if (cell.getPosition() == -1 && !"".equals(itemPathText) && itemPathText != null) {
-                path += " and " + getSearchPath(itemPathText);
+                path += " and " + getSearchPath(itemPathText, tagCell);
             } else {
                 logger.warn("cell.getPosition()=" + cell.getPosition());
                 logger.warn("itemPathText=" + itemPathText);
@@ -28,11 +29,17 @@ public abstract class Row extends WebLocator {
         setElPath("//" + getTag() + (isVisibility() ? "[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]" : "") + "[" + Utils.fixPathSelector(path) + "]");
     }
 
-    protected String getSearchPath(int columnIndex, String textCondition) {
-        return "count(td[" + columnIndex + "][" + textCondition + "]) > 0";
+    protected String getSearchPath(int columnIndex, String textCondition, String tag) {
+        if (tag == null || "".equals(tag)) {
+            tag = "td";
+        }
+        return "count(" + tag + "[" + columnIndex + "][" + textCondition + "]) > 0";
     }
 
-    protected String getSearchPath(String textCondition) {
-        return "count(td/*[" + textCondition + "]) > 0";
+    protected String getSearchPath(String textCondition, String tag) {
+        if (tag == null || "".equals(tag)) {
+            tag = "td";
+        }
+        return "count(" + tag + "/*[" + textCondition + "]) > 0";
     }
 }

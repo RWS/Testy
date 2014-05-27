@@ -54,13 +54,16 @@ public class GridRow extends Row {
         setRowCells(cells);
     }
 
-    private String getSearchPath(String searchColumnId, String textCondition) {
+    private String getSearchPath(String searchColumnId, String textCondition, String tag) {
         return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + textCondition + "]) > 0";
     }
 
     @Override
-    protected String getSearchPath(int columnIndex, String textCondition) {
-        return "count(*[contains(@class, 'x-grid3-row-table')]//td[" + columnIndex + "]//*[" + textCondition + "]) > 0";
+    protected String getSearchPath(int columnIndex, String textCondition, String tag) {
+        if (tag == null || "".equals(tag)) {
+            tag = "td";
+        }
+        return "count(*[contains(@class, 'x-grid3-row-table')]//" + tag + "[" + columnIndex + "]//*[" + textCondition + "]) > 0";
     }
 
     private String getSearchPath(int columnIndex, GridCell cell) {
