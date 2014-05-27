@@ -45,7 +45,7 @@ public class GridRow extends Row {
         this(gridPanel);
         setTag("*");
         GridCell cell = new GridCell(null, searchElement, searchType);
-        setElPath("//" + getTag() + "[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText())) + "]");
+        setElPath("//" + getTag() + "[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText()), getTag()) + "]");
     }
 
     public GridRow(GridPanel gridPanel, Cell... cells) {
@@ -60,7 +60,7 @@ public class GridRow extends Row {
 
     @Override
     protected String getSearchPath(int columnIndex, String textCondition, String tag) {
-        if (tag == null || "".equals(tag)) {
+        if (tag == null || "".equals(tag) || "*".equals(tag)) {
             tag = "td";
         }
         return "count(*[contains(@class, 'x-grid3-row-table')]//" + tag + "[" + columnIndex + "]//*[" + textCondition + "]) > 0";
