@@ -23,14 +23,14 @@ public class TableCell extends Cell {
         setPosition(columnIndex);
     }
 
-    public TableCell(int columnIndex, String columnText, SearchType searchType) {
+    public TableCell(int columnIndex, String columnText, SearchType ...searchType) {
         this();
         setPosition(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }
 
-    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
+    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType ...searchType) {
         this(container, columnIndex);
         setText(columnText);
         setSearchTextType(searchType);

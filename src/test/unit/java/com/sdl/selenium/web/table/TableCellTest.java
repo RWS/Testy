@@ -22,6 +22,7 @@ public class TableCellTest {
                 {new TableCell(tableRow, 3, "Text", SearchType.EQUALS), "//table[@id='ID']//tr[text()='Text' or count(.//*[text()='Text']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]//td[3][text()='Text' or count(.//*[text()='Text']) > 0]"},
                 {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("th"), "//th[1][count(*//text()[contains(.,'Text')]) > 0 or count(.//*[count(*//text()[contains(.,'Text')]) > 0]) > 0]"},
                 {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("td"), "//td[1][count(*//text()[contains(.,'Text')]) > 0 or count(.//*[count(*//text()[contains(.,'Text')]) > 0]) > 0]"},
+                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS), "//td[1][count(*//text()[.='Text']) > 0 or count(.//*[count(*//text()[.='Text']) > 0]) > 0]"},
         };
     }
 
