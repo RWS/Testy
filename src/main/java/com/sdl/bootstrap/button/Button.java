@@ -3,7 +3,6 @@ package com.sdl.bootstrap.button;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.IButton;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class Button extends WebLocator implements IButton {
@@ -50,15 +49,14 @@ public class Button extends WebLocator implements IButton {
     protected String getItemPathText() {
         String selector = hasText() ? super.getItemPathText() : "";
         if (hasIconCls()) {
-            selector += " and count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
         }
-        return selector.length() == 0 ? null : Utils.fixPathSelector(selector);
+        return selector.length() == 0 ? null : selector;
     }
 
     @Override
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
-        selector = Utils.fixPathSelector(selector);
         return "//" + getTag() + ("".equals(selector) ? "" : "[" + selector + "]");
     }
 

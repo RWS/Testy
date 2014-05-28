@@ -64,7 +64,7 @@ public class Button extends ExtJsComponent implements IButton {
     protected String getItemPathText() {
         String selector = hasText() ? super.getItemPathText() : "";
         if (hasIconCls()) {
-            selector += "count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
         }
         return selector.length() == 0 ? null : selector;
     }
@@ -76,7 +76,6 @@ public class Button extends ExtJsComponent implements IButton {
         if (!disabled) {
             selector += " and not(contains(@class, 'x-item-disabled'))";
         }
-        selector = Utils.fixPathSelector(selector);
         return "//" + getTag() + "[" + selector + "]";
     }
 

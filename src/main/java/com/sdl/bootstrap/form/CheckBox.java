@@ -4,7 +4,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.SimpleTextField;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class CheckBox extends SimpleTextField implements ICheck {
@@ -34,12 +33,11 @@ public class CheckBox extends SimpleTextField implements ICheck {
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         if (hasType()) {
-            selector += " and @type='" + getType() + "'";
+            selector += (selector.length() > 0 ? " and " : "") + "@type='" + getType() + "'";
         }
         if (hasText()) {
-            return "//" + getLabelTag() + "[" + Utils.fixPathSelector(getItemPathText()) + "]//" + getTag() + "[@type='" + getType() + "']";
+            return "//" + getLabelTag() + "[" + getItemPathText() + "]//" + getTag() + "[@type='" + getType() + "']";
         }
-        selector = Utils.fixPathSelector(selector);
         return "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
     }
 

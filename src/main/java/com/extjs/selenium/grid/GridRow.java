@@ -4,7 +4,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class GridRow extends Row {
@@ -45,7 +44,7 @@ public class GridRow extends Row {
         this(gridPanel);
         setTag("*");
         GridCell cell = new GridCell(null, searchElement, searchType);
-        setElPath("//" + getTag() + "[" + getSearchPath(searchColumnId, Utils.fixPathSelector(cell.getItemPathText()), getTag()) + "]");
+        setElPath("//" + getTag() + "[" + getSearchPaths(searchColumnId, cell.getItemPathText()) + "]");
     }
 
     public GridRow(GridPanel gridPanel, Cell... cells) {
@@ -54,7 +53,7 @@ public class GridRow extends Row {
         setRowCells(cells);
     }
 
-    private String getSearchPath(String searchColumnId, String textCondition, String tag) {
+    private String getSearchPaths(String searchColumnId, String textCondition) {
         return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + textCondition + "]) > 0";
     }
 

@@ -1,7 +1,6 @@
 package com.sdl.selenium.web.window;
 
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 
 public class SimpleWindow extends WebLocator {
 
@@ -19,9 +18,8 @@ public class SimpleWindow extends WebLocator {
     public String getItemPath(boolean disable) {
         String selector = getBasePathSelector();
         if (hasTitle()) {
-            selector += " and count(.//*[text()='" + getTitle() + "']) > 0";
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[text()='" + getTitle() + "']) > 0";
         }
-        selector = Utils.fixPathSelector(selector);
         return "//*[" + selector + "]";
     }
 

@@ -80,7 +80,6 @@ public class Panel extends ExtJsComponent {
         // limit results to panel only
         selector += getDefaultExcludePath();
 
-        selector = Utils.fixPathSelector(selector);
         return "//*[" + selector + "]";
     }
 

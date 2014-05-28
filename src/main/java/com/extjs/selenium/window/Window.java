@@ -3,7 +3,6 @@ package com.extjs.selenium.window;
 import com.extjs.selenium.panel.Panel;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class Window extends Panel {
@@ -63,8 +62,6 @@ public class Window extends Panel {
                 selector += " and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]";
             }
         }
-
-        selector = Utils.fixPathSelector(selector);
         return "//*[" + selector + "]";
     }
 

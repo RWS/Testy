@@ -2,7 +2,6 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.WebLocatorAbstractBuilder;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class SimpleTextField extends WebLocator implements ITextField {
@@ -41,9 +40,8 @@ public class SimpleTextField extends WebLocator implements ITextField {
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         if (hasType()) {
-            selector += " and @type='" + getType() + "'";
+            selector += (selector.length() > 0 ? " and " : "") + "@type='" + getType() + "'";
         }
-        selector = Utils.fixPathSelector(selector);
         return "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
     }
 

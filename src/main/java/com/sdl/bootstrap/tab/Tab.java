@@ -4,7 +4,6 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class Tab extends WebLocator {
@@ -30,7 +29,7 @@ public class Tab extends WebLocator {
         String returnPath = "";
         if (hasText()) {
             String isActive = active ? "@class='active'" : "not(@class='active')";
-            returnPath = "//ul[@class='" + getBaseCls() + "' and count(.//li[" + isActive + "]//a[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0]";
+            returnPath = "//ul[@class='" + getBaseCls() + "' and count(.//li[" + isActive + "]//a[" + getItemPathText() + "]) > 0]";
         }
         return returnPath;
     }
@@ -43,9 +42,8 @@ public class Tab extends WebLocator {
     public String getBaseTabPanelPath() {
         String selector = getBasePath();
         if (hasText()) {
-            selector += " and count(.//li[@class='active']//a[" + Utils.fixPathSelector(getItemPathText()) + "]) > 0";
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']//a[" + getItemPathText() + "]) > 0";
         }
-        selector = Utils.fixPathSelector(selector);
         return "//ul[" + selector + "]";
     }
 

@@ -25,6 +25,8 @@
             <class name="com.sdl.selenium.web.table.TableRowTest"/>
             <class name="com.sdl.selenium.web.table.SimpleTableTest"/>
             <class name="com.sdl.selenium.web.WebLocatorTest"/>
+
+            <class name="com.sdl.selenium.web.window.SimpleWindowTest"/>
         </classes>
     </test>
 </suite>

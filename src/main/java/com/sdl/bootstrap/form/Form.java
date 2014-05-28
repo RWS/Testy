@@ -2,7 +2,6 @@ package com.sdl.bootstrap.form;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleTextField;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class Form extends SimpleTextField {
@@ -26,10 +25,8 @@ public class Form extends SimpleTextField {
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
         if (hasTitle()) {
-            selector += "count(.//legend[text()='" + getTitle() + "']) > 0";
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//legend[text()='" + getTitle() + "']) > 0";
         }
-        selector = Utils.fixPathSelector(selector);
-        selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
-        return selector;
+        return "//" + getTag() + (selector.length() > 0 ? "[" + selector + "]" : "");
     }
 }

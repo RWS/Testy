@@ -2,7 +2,6 @@ package com.sdl.bootstrap.window;
 
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class Window extends WebLocator implements IWebLocator {
@@ -20,7 +19,6 @@ public class Window extends WebLocator implements IWebLocator {
 
     public String getItemPath(boolean disabled) {
         String selector = getBasePathSelector();
-        selector = Utils.fixPathSelector(selector);
         return "".equals(selector) ? "//*[@role='dialog' and @aria-hidden='false']" : "//*[@role='dialog' and @aria-hidden='false' and " + selector + "]";
     }
 
