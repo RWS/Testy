@@ -90,6 +90,11 @@
             <class name="com.sdl.weblocator.bootstrap.button.ButtonTest"/>
         </classes>
     </test>
+    <test name="MultiSelectTest">
+        <classes>
+            <class name="com.sdl.weblocator.bootstrap.MultiSelectTest"/>
+        </classes>
+    </test>
     <test name="SpanTest">
         <classes>
             <class name="com.sdl.weblocator.bootstrap.UneditableInputTest"/>
