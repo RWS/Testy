@@ -27,6 +27,7 @@
     <test name="DisplayFieldTest">
         <classes>
             <class name="com.sdl.weblocator.extjs.form.DisplayFieldTest"/>
+            <class name="com.sdl.weblocator.extjs.FireEventWithJSTest"/>
         </classes>
     </test>
     <test name="ListTest">

@@ -1,7 +1,10 @@
 CHANGES:
 
 version 1.7.3-SNAPSHOT
-1)
+1) fix return boolean fireEventWithJS
+2) remove unused Utils.fixPathSelector
+3) improvement Row with tableCell.setTag("th")
+4) improvement TableCell accept array of SearchTypes
 
 version 1.7.2-SNAPSHOT
 1) webdriver version 2.41
