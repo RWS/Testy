@@ -1,7 +1,7 @@
 CHANGES:
 
 version 1.7.3-SNAPSHOT
-1) fix return boolean fireEventWithJS
+1) revert void fireEventWithJS
 2) remove unused Utils.fixPathSelector
 3) improvement Row with tableCell.setTag("th")
 4) improvement TableCell accept array of SearchTypes

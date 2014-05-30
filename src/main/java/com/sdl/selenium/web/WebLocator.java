@@ -204,15 +204,16 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean mouseOver() {
         if (ready()) {
             logger.info("mouseOver on " + this);
-            return doMouseOver();
+            doMouseOver();
+            return true;
         } else {
             logger.warn("mouseOver on " + this + " failed");
             return false;
         }
     }
 
-    protected boolean doMouseOver() {
-        return executor.doMouseOver(this);
+    protected void doMouseOver() {
+        executor.doMouseOver(this);
     }
 
     public boolean blur() {

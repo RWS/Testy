@@ -10,12 +10,13 @@ import static org.testng.Assert.assertTrue;
 
 public class FireEventWithJSTest extends TestBase {
     private static final Logger logger = Logger.getLogger(FireEventWithJSTest.class);
-    Panel simpleForm = new Panel("Simple Form");
-    Button cancelButton = new Button(simpleForm, "Cancel");
+    private Panel simpleForm = new Panel("Simple Form");
+    private Button cancelButton = new Button(simpleForm, "Cancel");
 
 
     @Test
     public void fireEvent() {
+        cancelButton.focus();
         assertTrue(cancelButton.blur());
         assertTrue(cancelButton.mouseOver());
         assertTrue(cancelButton.doubleClickAt());

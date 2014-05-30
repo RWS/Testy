@@ -39,7 +39,7 @@ public interface WebLocatorExecutor {
 
     boolean doubleClickAt(WebLocator el);
 
-    boolean doMouseOver(WebLocator el);
+    void doMouseOver(WebLocator el);
 
     boolean isSamePath(WebLocator el, String path);
 
@@ -53,5 +53,5 @@ public interface WebLocatorExecutor {
 
     boolean isSelected(WebLocator el);
 
-    boolean blur(WebLocator el);
+    void blur(WebLocator el);
 }

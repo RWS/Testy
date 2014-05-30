@@ -132,9 +132,8 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public boolean doMouseOver(WebLocator el) {
+    public void doMouseOver(WebLocator el) {
         selenium.mouseOver(el.getPath());
-        return true;
     }
 
     @Override
@@ -167,15 +166,8 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public boolean blur(WebLocator el) {
-        boolean success = false;
-        try{
-            selenium.fireEvent(el.getPath(), "blur");
-            success = true;
-        } catch (Exception e){
-
-        }
-        return success;
+    public void blur(WebLocator el) {
+        selenium.fireEvent(el.getPath(), "blur");
     }
 
     @Override

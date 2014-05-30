@@ -232,8 +232,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public boolean blur(WebLocator el) {
-        return fireEventWithJS(el, "blur");
+    public void blur(WebLocator el) {
+        fireEventWithJS(el, "blur");
     }
 
     @Override
@@ -296,7 +296,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean doubleClickAt(WebLocator el) {
-        boolean clicked;
+        boolean clicked = false;
         try {
             Actions builder = new Actions(driver);
             builder.doubleClick(el.currentElement).perform();
@@ -304,7 +304,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } catch (Exception e) {
             // http://code.google.com/p/selenium/issues/detail?id=244
             logger.warn("Exception in doubleClickAt", e);
-            clicked = fireEventWithJS(el, "dblclick");
+            fireEventWithJS(el, "dblclick");
         }
         if(clicked){
             logger.info("doubleClickAt " + el);
@@ -313,8 +313,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public boolean doMouseOver(WebLocator el) {
-        return fireEventWithJS(el, "mouseover");
+    public void doMouseOver(WebLocator el) {
+        fireEventWithJS(el, "mouseover");
     }
 
     public String getAttributeId(WebLocator el) {
@@ -329,13 +329,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return pathId;
     }
 
-    public boolean fireEventWithJS(WebLocator el, String eventName) {
+    public void fireEventWithJS(WebLocator el, String eventName) {
         String script = "if(document.createEvent){" +
                 "var evObj = document.createEvent('MouseEvents');\n" +
                 "evObj.initEvent('" + eventName + "', true, true);\n" +
-                "return fireOnThis.dispatchEvent(evObj);\n" +
+                "fireOnThis.dispatchEvent(evObj);\n" +
                 "} else if(document.createEventObject) {" +
-                "return fireOnThis.fireEvent('on" + eventName + "');" +
+                "fireOnThis.fireEvent('on" + eventName + "');" +
                 "}";
         String id = getAttributeId(el);
         String cls;
@@ -347,15 +347,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             script = "var fireOnThis = document.evaluate(\"" + el.getPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                     "var evObj = document.createEvent('MouseEvents');\n" +
                     "evObj.initEvent( '" + eventName + "', true, true );\n" +
-                    "return fireOnThis.dispatchEvent(evObj);";
+                    "fireOnThis.dispatchEvent(evObj);";
         }
         Object o = executeScript(script);
         logger.debug("result executeScript: " + o);
-        if (o instanceof Boolean) {
-            return (Boolean) o;
-        } else {
-            return false;
-        }
     }
 
     @Override
