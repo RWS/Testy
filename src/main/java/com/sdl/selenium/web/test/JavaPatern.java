@@ -1,4 +1,4 @@
-package com.sdl.selenium.web;
+package com.sdl.selenium.web.test;
 
 interface IButton {
     void click();
