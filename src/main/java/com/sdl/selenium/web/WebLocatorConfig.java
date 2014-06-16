@@ -40,7 +40,17 @@ public class WebLocatorConfig {
                 init();
             }
         } catch (Exception e) {
-            logger.error("Error loading config file. " + CONFIG_FILE_NAME);
+            logger.error("Error loading config file. " + CONFIG_FILE_NAME +
+                            "\n If you want to customize certain settings in Testy," +
+                            "\n must brains " + CONFIG_FILE_NAME + " file in resources folder."+
+                            "\n And it populated with the following data: " +
+                            "\n\t weblocator.log.containers=false" +
+                            "\n\t weblocator.log.useClassName=false" +
+                            "\n\t weblocator.log.logXPathEnabled=false" +
+                            "\n\t weblocator.highlight=true" +
+                            "\n\t weblocator.defaults.renderMillis=3000" +
+                            "\n\t weblocator.defaults.searchType=contains"
+            );
         }
     }
 
@@ -155,7 +165,7 @@ public class WebLocatorConfig {
 
     @SuppressWarnings("unchecked")
     public static List<SearchType> getSearchTextType() {
-        return  (List<SearchType>) ((ArrayList) searchTextType).clone();
+        return (List<SearchType>) ((ArrayList) searchTextType).clone();
 //        ArrayList<SearchType> copyOfArrayList = new ArrayList<SearchType>();
 //        copyOfArrayList.addAll(searchTextType);
 //        return copyOfArrayList;
