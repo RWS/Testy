@@ -36,10 +36,4 @@ public class InputButton extends WebLocator implements IButton {
     protected String getItemPathText() {
         return hasText() ? "@value="+ Utils.getEscapeQuotesText(getText()) : null;
     }
-
-    @Override
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        return "//" + getTag() + (selector != null && "".equals(selector) ? "" : "[" + selector + "]");
-    }
 }

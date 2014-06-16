@@ -63,12 +63,6 @@ public class TextField extends ExtJsComponent implements ITextField {
         return selector;
     }
 
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        selector = "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
-        return selector;
-    }
-
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {

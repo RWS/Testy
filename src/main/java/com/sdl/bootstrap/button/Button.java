@@ -54,12 +54,6 @@ public class Button extends WebLocator implements IButton {
         return selector.length() == 0 ? null : selector;
     }
 
-    @Override
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        return "//" + getTag() + ("".equals(selector) ? "" : "[" + selector + "]");
-    }
-
     public boolean isDisabled(){
         return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
     }
