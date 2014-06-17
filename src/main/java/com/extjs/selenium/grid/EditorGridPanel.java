@@ -83,7 +83,7 @@ public class EditorGridPanel extends GridPanel {
             logger.debug("active editor is TextField");
             editor = new TextField();
         }
-        editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
+        editor.setRenderMillis(1000).setContainer(this).setClasses("x-form-focus").setInfoMessage("active editor");
         return editor;
     }
 
