@@ -21,17 +21,29 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     protected static WebLocatorExecutor executor;
 
-    public WebLocator() {
+    public WebLocator(By... bys) {
+        setPathBuilder(new PathBuilder(this, bys));
+    }
+
+    public WebLocator(PathBuilder pathBuilder) {
+        setPathBuilder(pathBuilder);
+    }
+
+    public WebLocator(WebLocator container, By... bys) {
+        this(bys);
+        getPathBuilder().setContainer(container);
     }
 
     /**
      * @param cls css class
      */
     public WebLocator(String cls) {
+        this();
         setClasses(cls);
     }
 
     public WebLocator(WebLocator container) {
+        this();
         setContainer(container);
     }
 

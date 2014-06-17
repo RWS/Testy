@@ -17,6 +17,17 @@ import java.util.regex.Pattern;
 public abstract class WebLocatorAbstractBuilder {
     private static final Logger logger = Logger.getLogger(WebLocatorAbstractBuilder.class);
 
+    private PathBuilder pathBuilder = new PathBuilder();
+
+    public PathBuilder getPathBuilder() {
+        return pathBuilder;
+    }
+
+    public void setPathBuilder(PathBuilder pathBuilder) {
+        this.pathBuilder = pathBuilder;
+    }
+
+    //
     private String className = "WebLocator";
     private String tag = "*";
     private String id;
@@ -68,12 +79,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param tag (type of DOM element) eg. input or h2
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTag(final String tag) {
         this.tag = tag;
+        pathBuilder.setTag(tag);
         return (T) this;
     }
 
@@ -88,12 +100,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated use new WebLocator(By.id("ID"))
      * @param id eg. id="buttonSubmit"
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setId(final String id) {
         this.id = id;
+        pathBuilder.setId(id);
         return (T) this;
     }
 
@@ -116,6 +129,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
         this.elPath = elPath;
+        pathBuilder.setElPath(elPath);
         return (T) this;
     }
 
@@ -151,12 +165,13 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * <p>Find element with <b>exact math</b> of specified class (equals)</p>
-     *
+     * @deprecated
      * @param cls class of element
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
         this.cls = cls;
+        pathBuilder.setCls(cls);
         return (T) this;
     }
 
@@ -179,7 +194,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
      * </ul>
-     *
+     *@deprecated
      * @param classes list of classes
      * @return this element
      */
@@ -187,6 +202,7 @@ public abstract class WebLocatorAbstractBuilder {
         if (classes != null) {
             this.classes = Arrays.asList(classes);
         }
+        pathBuilder.setClasses(classes);
         return (T) this;
     }
 
@@ -243,15 +259,17 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param text       with which to identify the item
      * @param searchType type search text element: see more details see {@link SearchType}
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
+        pathBuilder.setText(text);
         if (searchType != null) {
             setSearchTextType(searchType);
+            pathBuilder.setSearchTextType(searchType);
         }
         return (T) this;
     }
@@ -452,6 +470,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
         this.container = container;
+        pathBuilder.setContainer(container);
         return (T) this;
     }
 
@@ -767,6 +786,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return String
      */
     public String getPath(boolean disabled) {
+        logger.debug(getPathBuilder().getPath());
         String returnPath;
         if (hasElPath()) {
             returnPath = getElPath();

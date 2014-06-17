@@ -1,5 +1,7 @@
 package com.sdl.selenium.web.test;
 
+import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,16 +18,17 @@ public class ByTest {
                 {new WebLocator(container), CONTAINER_PATH + "//*"},
                 {new WebLocator(container, By.id("Id")), CONTAINER_PATH + "//*[@id='Id']"},
 
-                {new TextField(), "//*"},
-                {new TextField(By.id("Id")), "//*[@id='Id']"},
-                {new TextField(container), CONTAINER_PATH + "//*"},
-                {new TextField(container, By.id("Id"), By.xpath("")), CONTAINER_PATH + "//*[@id='Id']"},
-                {new TextField(container, By.id("Id"), By.text("ttt")), CONTAINER_PATH + "//*[@id='Id' and contains(text(),'ttt')]"},
+//                {new TextField(), "//*"},
+//                {new TextField(By.id("Id")), "//*[@id='Id']"},
+//                {new TextField(container), CONTAINER_PATH + "//*"},
+//                {new TextField(container, By.id("Id"), By.xpath("")), CONTAINER_PATH + "//*[@id='Id']"},
+//                {new TextField(container, By.id("Id"), By.text("ttt")), CONTAINER_PATH + "//*[@id='Id' and contains(text(),'ttt')]"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
+        Assert.assertEquals(el.getPath(), expectedXpath);
         Assert.assertEquals(el.getPathBuilder().getPath(), expectedXpath);
     }
 }

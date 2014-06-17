@@ -2,6 +2,7 @@ package com.sdl.selenium.web.test;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections.CollectionUtils;
