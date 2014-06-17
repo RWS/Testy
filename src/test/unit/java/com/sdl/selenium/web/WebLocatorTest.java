@@ -20,6 +20,7 @@ public class WebLocatorTest {
                 {new WebLocator(), "//*"},
                 {new WebLocator("testcls"), "//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
                 {new WebLocator(container), CONTAINER_PATH + "//*"},
+                {new WebLocator(container, By.text("ttt")), CONTAINER_PATH + "//*[contains(text(),'ttt')]"},
                 {new WebLocator(container).setClasses("Cls"), CONTAINER_PATH + "//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(By.classes("Cls")), "//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(By.classes("Cls", "Clss")), "//*[contains(concat(' ', @class, ' '), ' Cls ') and contains(concat(' ', @class, ' '), ' Clss ')]"},

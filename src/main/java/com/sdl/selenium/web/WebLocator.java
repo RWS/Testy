@@ -31,35 +31,26 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public WebLocator(WebLocator container, By... bys) {
         this(bys);
-        getPathBuilder().setContainer(container);
+        setContainer(container);
     }
 
     /**
      * @param cls css class
      */
     public WebLocator(String cls) {
-        this();
-        setClasses(cls);
-    }
-
-    public WebLocator(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.classes(cls));
     }
 
     public WebLocator(WebLocator container, String elPath) {
-        this(container);
-        setElPath(elPath);
+        this(container, By.xpath(elPath));
     }
 
     public WebLocator(String cls, WebLocator container) {
-        this(container);
-        setClasses(cls);
+        this(container, By.classes(cls));
     }
 
     public WebLocator(String text, String cls, WebLocator container) {
-        this(cls, container);
-        setText(text);
+        this(container, By.classes(cls), By.text(text));
     }
 
     // getters and setters

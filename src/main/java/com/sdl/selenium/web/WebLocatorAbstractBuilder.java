@@ -446,7 +446,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated
      * @param renderMillis milliseconds
      * @return this element
      */

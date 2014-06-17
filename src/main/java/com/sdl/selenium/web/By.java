@@ -471,28 +471,4 @@ public abstract class By<T> {
             webLocator.setVisibility(getValue());
         }
     }
-
-    public static By renderMillis(final Long renderMillis) {
-        if (renderMillis == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the visibility expression is null.");
-
-        return new ByRenderMillis(renderMillis);
-    }
-
-    public static class ByRenderMillis extends By<Long> {
-
-        public ByRenderMillis(Long renderMillis) {
-            setValue(renderMillis);
-        }
-
-        public String getPath() {
-            return getValue().toString();
-        }
-
-        public void init(PathBuilder builder, WebLocator webLocator) {
-            builder.setRenderMillis(getValue());
-            webLocator.setRenderMillis(getValue());
-        }
-    }
 }
