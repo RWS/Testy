@@ -7,8 +7,8 @@ public abstract class By<T> {
     private T value;
     private SearchType[] searchType;
 
-    private By() {
-    }
+//    private By() {
+//    }
 
     // abstract
     abstract public String getPath();
@@ -30,7 +30,7 @@ public abstract class By<T> {
     }
 
     //abstract void init(PathBuilder builder);
-    abstract void init(PathBuilder pathBuilder, WebLocator builder);
+    public abstract void init(PathBuilder pathBuilder, WebLocator builder);
 
     // =========================
 
