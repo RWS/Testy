@@ -27,7 +27,6 @@ public abstract class WebLocatorAbstractBuilder {
         this.pathBuilder = pathBuilder;
     }
 
-    //
     private String className = "WebLocator";
     private String tag = "*";
     private String id;
@@ -79,7 +78,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param tag (type of DOM element) eg. input or h2
      * @return this element
      */
@@ -100,7 +99,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated use new WebLocator(By.id("ID"))
+     *  use new WebLocator(By.id("ID"))
      * @param id eg. id="buttonSubmit"
      * @return this element
      */
@@ -123,7 +122,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
-     * @deprecated
+     * 
      * @param elPath absolute way (xpath) to identify element
      * @return this element
      */
@@ -165,7 +164,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * <p>Find element with <b>exact math</b> of specified class (equals)</p>
-     * @deprecated
+     * 
      * @param cls class of element
      * @return this element
      */
@@ -194,7 +193,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
      * </ul>
-     * @deprecated
+     * 
      * @param classes list of classes
      * @return this element
      */
@@ -217,7 +216,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param excludeClasses list of class to be excluded
      * @return this element
      */
@@ -240,7 +239,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param name eg. name="buttonSubmit"
      * @return this element
      */
@@ -261,7 +260,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param text       with which to identify the item
      * @param searchType type search text element: see more details see {@link SearchType}
      * @return this element
@@ -327,7 +326,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param style of element
      * @return this element
      */
@@ -370,7 +369,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param title of element
      * @return this element
      */
@@ -395,7 +394,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     * @deprecated
+     * 
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
@@ -416,7 +415,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used in logging process</i><b></p>
-     * @deprecated
+     * 
      * @param infoMessage info Message
      * @return this element
      */
@@ -428,7 +427,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     *  @deprecated
+     *  
      * @return value that has been set in {@link #setVisibility(boolean)}
      */
     public boolean isVisibility() {
@@ -497,7 +496,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param label text label element
      * @return this element
      */
@@ -522,7 +521,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param labelTag label tag element
      * @return this element
      */
@@ -543,7 +542,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * @deprecated
+     * 
      * @param labelPosition position of this element reported to label
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
@@ -569,7 +568,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
-     * @deprecated
+     * 
      * @param position starting index = 1
      * @return this element
      */
