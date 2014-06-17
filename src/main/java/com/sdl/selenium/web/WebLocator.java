@@ -14,6 +14,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     private String currentElementPath = "";
     public WebElement currentElement;
+    private long renderMillis = WebLocatorConfig.getDefaultRenderMillis();
+    private int activateSeconds = 60;
 
     public static WebLocatorExecutor getExecutor() {
         return executor;
@@ -294,6 +296,34 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     // TODO remove from this class, it does not belong to this element
     public boolean isTextPresent(String text) {
         return executor.isTextPresent(this, text);
+    }
+
+    public long getRenderMillis() {
+        return renderMillis;
+    }
+
+    /**
+     * @param renderMillis milliseconds
+     * @return this element
+     */
+
+    public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
+        this.renderMillis = renderMillis;
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
+        setRenderMillis(renderSeconds * 1000);
+        return (T) this;
+    }
+
+    public int getActivateSeconds() {
+        return activateSeconds;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
+        this.activateSeconds = activateSeconds;
+        return (T) this;
     }
 
     /**

@@ -56,9 +56,6 @@ public abstract class WebLocatorAbstractBuilder {
     //private int elIndex; // TODO try to find how can be used
 
     private boolean visibility;
-    private long renderMillis = WebLocatorConfig.getDefaultRenderMillis();
-    private int activateSeconds = 60;
-
     private WebLocator container;
 
     // =========================================
@@ -437,34 +434,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
         this.visibility = visibility;
         pathBuilder.setVisibility(visibility);
-        return (T) this;
-    }
-
-    public long getRenderMillis() {
-        return renderMillis;
-    }
-
-    /**
-     * @param renderMillis milliseconds
-     * @return this element
-     */
-
-    public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
-        this.renderMillis = renderMillis;
-        return (T) this;
-    }
-
-    public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
-        setRenderMillis(renderSeconds * 1000);
-        return (T) this;
-    }
-
-    public int getActivateSeconds() {
-        return activateSeconds;
-    }
-
-    public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
-        this.activateSeconds = activateSeconds;
         return (T) this;
     }
 
