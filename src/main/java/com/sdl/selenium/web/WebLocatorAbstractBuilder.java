@@ -123,7 +123,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
-     *
+     * @deprecated
      * @param elPath absolute way (xpath) to identify element
      * @return this element
      */
@@ -194,7 +194,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
      * </ul>
-     *@deprecated
+     * @deprecated
      * @param classes list of classes
      * @return this element
      */
@@ -217,13 +217,14 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param excludeClasses list of class to be excluded
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String... excludeClasses) {
         if (excludeClasses != null) {
             this.excludeClasses = Arrays.asList(excludeClasses);
+            pathBuilder.setExcludeClasses(excludeClasses);
         }
         return (T) this;
     }
@@ -239,12 +240,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param name eg. name="buttonSubmit"
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setName(final String name) {
         this.name = name;
+        pathBuilder.setName(name);
         return (T) this;
     }
 
@@ -325,12 +327,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param style of element
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setStyle(final String style) {
         this.style = style;
+        pathBuilder.setStyle(style);
         return (T) this;
     }
 
@@ -367,12 +370,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param title of element
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title) {
         this.title = title;
+        pathBuilder.setTitle(title);
         return (T) this;
     }
 
@@ -391,12 +395,13 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     *
+     * @deprecated
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
         this.elPathSuffix = elPathSuffix;
+        pathBuilder.setElPathSuffix(elPathSuffix);
         return (T) this;
     }
 
@@ -411,18 +416,19 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used in logging process</i><b></p>
-     *
+     * @deprecated
      * @param infoMessage info Message
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setInfoMessage(final String infoMessage) {
         this.infoMessage = infoMessage;
+        pathBuilder.setInfoMessage(infoMessage);
         return (T) this;
     }
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     *
+     *  @deprecated
      * @return value that has been set in {@link #setVisibility(boolean)}
      */
     public boolean isVisibility() {
@@ -431,12 +437,19 @@ public abstract class WebLocatorAbstractBuilder {
 
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
         this.visibility = visibility;
+        pathBuilder.setVisibility(visibility);
         return (T) this;
     }
 
     public long getRenderMillis() {
         return renderMillis;
     }
+
+    /**
+     * @deprecated
+     * @param renderMillis milliseconds
+     * @return this element
+     */
 
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
         this.renderMillis = renderMillis;
@@ -485,14 +498,16 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param label text label element
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
+        pathBuilder.setLabel(label);
         if (searchType != null) {
             setSearchLabelType(searchType);
+            pathBuilder.setSearchLabelType(searchType);
         }
         return (T) this;
     }
@@ -508,12 +523,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param labelTag label tag element
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabelTag(String labelTag) {
         this.labelTag = labelTag;
+        pathBuilder.setLabelTag(tag);
         return (T) this;
     }
 
@@ -528,13 +544,14 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     *
+     * @deprecated
      * @param labelPosition position of this element reported to label
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
     public <T extends WebLocatorAbstractBuilder> T setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
+        pathBuilder.setLabelPosition(labelPosition);
         return (T) this;
     }
 
@@ -553,12 +570,13 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
-     *
+     * @deprecated
      * @param position starting index = 1
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setPosition(int position) {
         this.position = position;
+        pathBuilder.setPosition(position);
         return (T) this;
     }
 
