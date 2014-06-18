@@ -21,11 +21,11 @@ public class TextField extends WebLocator {
 
     private String icon;
 
-    public String getIcon() {
+    public String icon() {
         return icon;
     }
 
-    public <T extends TextField> T setIcon(final String icon) {
+    public <T extends TextField> T icon(final String icon) {
         this.icon = icon;
         iconPathBuilder.icon(icon);
         return (T) this;

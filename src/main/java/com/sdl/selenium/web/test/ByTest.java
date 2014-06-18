@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.test;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,8 +18,7 @@ public class ByTest {
 //                {new WebLocator(container), CONTAINER_PATH + "//*"},
 //                {new WebLocator(container, By.id("Id")), CONTAINER_PATH + "//*[@id='Id']"},
 
-                {new TextField(By.id("Id"), By.text("text"), By.icon("icon")), "//*[@id='Id' and @name='name' and count(.//*[contains(@class, 'icon')]) > 0]"},
-                {new TextField(), "//*[@id='Id' and @name='name' and count(.//*[contains(@class, 'icon')]) > 0]"},
+                {new TextField(By.id("Id"), By.text("text")).icon("icon"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
 
 //                {new TextField(By.id("Id")), "//*[@id='Id']"},
 //                {new TextField(container), CONTAINER_PATH + "//*"},

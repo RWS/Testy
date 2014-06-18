@@ -27,16 +27,16 @@ public class IconPathBuilder extends PathBuilder {
         return (T) this;
     }
 
-//    public Boolean hasIconCls() {
-//        return icon != null && !icon.equals("");
-//    }
+    public Boolean hasIcon() {
+        return icon != null && !icon.equals("");
+    }
 
-//    @Override
-//    protected String getItemPathText() {
-//        String selector = hasText() ? super.getItemPathText() : "";
-//        if (hasIconCls()) {
-//            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + icon() + "')]) > 0";
-//        }
-//        return selector.length() == 0 ? null : selector;
-//    }
+    @Override
+    protected String getItemPathText() {
+        String selector = hasText() ? super.getItemPathText() : "";
+        if (hasIcon()) {
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + icon() + "')]) > 0";
+        }
+        return selector.length() == 0 ? null : selector;
+    }
 }
