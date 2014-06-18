@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * This class is used to simple construct xpath for WebLocator's
  */
 public abstract class WebLocatorAbstractBuilder {
-    private static final Logger logger = Logger.getLogger(WebLocatorAbstractBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(WebLocatorAbstractBuilder.class);
 
     private String className = "WebLocator";
     private String tag = "*";
@@ -425,6 +425,12 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * @deprecated use setRenderMillis
+     * @param renderSeconds
+     * @param <T>
+     * @return
+     */
     public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
         setRenderMillis(renderSeconds * 1000);
         return (T) this;

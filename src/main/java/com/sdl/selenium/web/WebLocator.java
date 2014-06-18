@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
-    private static final Logger logger = Logger.getLogger(WebLocator.class);
+    private static final Logger LOGGER = Logger.getLogger(WebLocator.class);
 
     public static Selenium selenium;
 
@@ -111,7 +111,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean clickAt() {
         boolean clickAt = ready() && doClickAt();
         if (clickAt) {
-            logger.info("ClickAt on " + this);
+            LOGGER.info("ClickAt on " + this);
         }
         return clickAt;
     }
@@ -140,7 +140,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean click() {
         boolean click = waitToRender() && doClick();
         if (click) {
-            logger.info("Click on " + this);
+            LOGGER.info("Click on " + this);
         }
         return click;
     }
@@ -191,7 +191,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         if (ready()) {
             executor.doSendKeys(this, charSequences);
         } else {
-            logger.debug("Element is not ready " + toString());
+            LOGGER.debug("Element is not ready " + toString());
             return null;
         }
         return this;
@@ -203,11 +203,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean mouseOver() {
         if (ready()) {
-            logger.info("mouseOver on " + this);
+            LOGGER.info("mouseOver on " + this);
             doMouseOver();
             return true;
         } else {
-            logger.warn("mouseOver on " + this + " failed");
+            LOGGER.warn("mouseOver on " + this + " failed");
             return false;
         }
     }
@@ -218,11 +218,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean blur() {
         if (ready()) {
-            logger.info("blur on " + this);
+            LOGGER.info("blur on " + this);
             executor.blur(this);
             return true;
         } else {
-            logger.warn("blur on " + this + " failed");
+            LOGGER.warn("blur on " + this + " failed");
             return false;
         }
     }
@@ -235,7 +235,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public WebLocator focus() {
         if (ready()) {
             executor.focus(this);
-            logger.info("focus on " + toString());
+            LOGGER.info("focus on " + toString());
         }
         return this;
     }
@@ -343,12 +343,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             }
             if (i == 0) {
                 // log only fist time
-                logger.debug("waitTextToRender");
+                LOGGER.debug("waitTextToRender");
             }
             Utils.sleep(200);
         }
-        //logger.debug("No text was found for Element after " + seconds + " sec; " + path);
-        logger.warn("No text was found for Element after " + seconds + " sec; " + this);
+        LOGGER.warn("No text was found for Element after " + seconds + " sec; " + this);
         return excludeText.equals(text) ? null : text;
     }
 
