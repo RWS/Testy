@@ -10,7 +10,7 @@ public class TextField extends WebLocator {
     private IconPathBuilder iconPathBuilder = new IconPathBuilder();
 
     public TextField(By... by) {
-        iconPathBuilder = new IconPathBuilder(this, by);
+        iconPathBuilder = new IconPathBuilder(by);
         setPathBuilder(iconPathBuilder);
     }
 

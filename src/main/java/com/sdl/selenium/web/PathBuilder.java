@@ -5,29 +5,43 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class PathBuilder {
 
-    private static final Logger logger = Logger.getLogger(PathBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(PathBuilder.class);
 
     public PathBuilder() {
 
     }
 
-    /*public PathBuilder(By... bys) {
-        for (By by : bys) {
+    public static void main(String[] args) {
+        PathBuilder pathBuilder = new PathBuilder(By.id("ID"));
+//        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, '%s')]) > 0", "save");
+        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, 'true')]) > 0");
+        LOGGER.debug(pathBuilder.getPath());
+    }
+
+    /*public PathBuilder(By... init) {
+        for (By by : init) {
             by.init(this);
         }
     }*/
 
-    public PathBuilder(WebLocator locator, By... bys) {
+    public PathBuilder(By... bys) {
+        init(bys);
+    }
+
+    public void init(By ...bys) {
         for (By by : bys) {
-            by.init(this, locator);
+            by.init(this);
+        }
+    }
+
+    public void defaults(By ...bys) {
+        for (By by : bys) {
+            by.initDefault(this);
         }
     }
 
@@ -47,7 +61,7 @@ public class PathBuilder {
     private String style;
     private String elCssSelector;
     private String title;
-    private String elPathSuffix;
+    private Map<String, String> pathSuffixs = new HashMap<String, String>();
 
     private String infoMessage;
 
@@ -378,7 +392,7 @@ public class PathBuilder {
      * @return value that has been set in {@link #setElPathSuffix(String)}
      */
     public String getElPathSuffix() {
-        return elPathSuffix;
+        return pathSuffixs.get("elPathSuffix");
     }
 
     /**
@@ -392,7 +406,18 @@ public class PathBuilder {
      * @return this element
      */
     public <T extends PathBuilder> T setElPathSuffix(String elPathSuffix) {
-        this.elPathSuffix = elPathSuffix;
+        setElPathSuffix("elPathSuffix", elPathSuffix);
+        return (T) this;
+    }
+
+    public <T extends PathBuilder> T setElPathSuffix(String key, String value, Object ...arguments) {
+        if(value == null) {
+            pathSuffixs.remove(key);
+        } else {
+            //value = MessageFormat.format(value, arguments);
+            value = String.format(value, arguments);
+            pathSuffixs.put(key, value);
+        }
         return (T) this;
     }
 
@@ -627,10 +652,6 @@ public class PathBuilder {
         return title != null && !title.equals("");
     }
 
-    protected boolean hasElPathSuffix() {
-        return elPathSuffix != null && !elPathSuffix.equals("");
-    }
-
     protected boolean hasPosition() {
         return position > 0;
     }
@@ -690,8 +711,9 @@ public class PathBuilder {
                 selector.add("not(contains(@class, '" + excludeClasses + "'))");
             }
         }
-        if (hasElPathSuffix()) {
-            selector.add(getElPathSuffix());
+
+        for (String suffix : pathSuffixs.values()) {
+            selector.add(suffix);
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }

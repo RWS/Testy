@@ -26,8 +26,9 @@ public abstract class By<T> {
         this.searchType = searchType;
     }
 
-//    abstract void init(PathBuilder builder);
-    public abstract void init(PathBuilder pathBuilder, WebLocator builder);
+    public abstract void init(PathBuilder builder);
+
+    public abstract void initDefault(PathBuilder builder);
 
     // =========================
 
@@ -39,7 +40,7 @@ public abstract class By<T> {
         return new ByClassName(className);
     }
 
-    public static class ByClassName extends By<String> {
+    private static class ByClassName extends By<String> {
 
         public ByClassName(String className) {
             setValue(className);
@@ -49,9 +50,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setClassName(getValue());
-            webLocator.setClassName(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -63,7 +69,7 @@ public abstract class By<T> {
         return new ByBaseCls(baseCls);
     }
 
-    public static class ByBaseCls extends By<String> {
+    private static class ByBaseCls extends By<String> {
 
         public ByBaseCls(String baseCls) {
             setValue(baseCls);
@@ -73,9 +79,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setBaseCls(getValue());
-            webLocator.setBaseCls(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -87,7 +98,7 @@ public abstract class By<T> {
         return new ByCls(cls);
     }
 
-    public static class ByCls extends By<String> {
+    private static class ByCls extends By<String> {
 
         public ByCls(String cls) {
             setValue(cls);
@@ -97,9 +108,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setCls(getValue());
-            webLocator.setCls(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -111,7 +127,7 @@ public abstract class By<T> {
         return new ByClasses(classes);
     }
 
-    public static class ByClasses extends By<String[]> {
+    private static class ByClasses extends By<String[]> {
 
         public ByClasses(String... classes) {
             if (classes != null) {
@@ -123,9 +139,14 @@ public abstract class By<T> {
             return Arrays.toString(getValue());
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setClasses(getValue());
-            webLocator.setClasses(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -137,7 +158,7 @@ public abstract class By<T> {
         return new ByExcludeClasses(excludeClasses);
     }
 
-    public static class ByExcludeClasses extends By<String[]> {
+    private static class ByExcludeClasses extends By<String[]> {
 
         public ByExcludeClasses(String... excludeClasses) {
             if (excludeClasses != null) {
@@ -149,9 +170,14 @@ public abstract class By<T> {
             return Arrays.toString(getValue());
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setExcludeClasses(getValue());
-            webLocator.setExcludeClasses(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -163,7 +189,7 @@ public abstract class By<T> {
         return new ById(id);
     }
 
-    public static class ById extends By<String> {
+    private static class ById extends By<String> {
 
         public ById(String id) {
             setValue(id);
@@ -173,9 +199,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setId(getValue());
-            webLocator.setId(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -187,7 +218,7 @@ public abstract class By<T> {
         return new ByName(name);
     }
 
-    public static class ByName extends By<String> {
+    private static class ByName extends By<String> {
 
         public ByName(String id) {
             setValue(id);
@@ -197,9 +228,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setName(getValue());
-            webLocator.setName(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -211,7 +247,7 @@ public abstract class By<T> {
         return new ByText(text, searchType);
     }
 
-    public static class ByText extends By<String> {
+    private static class ByText extends By<String> {
 
         public ByText(final String text, final SearchType... searchType) {
             setValue(text);
@@ -222,9 +258,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setText(getValue(), getSearchType());
-            webLocator.setText(getValue(), getSearchType());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getText() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -236,7 +277,7 @@ public abstract class By<T> {
         return new ByStyle(style);
     }
 
-    public static class ByStyle extends By<String> {
+    private static class ByStyle extends By<String> {
 
         public ByStyle(final String style) {
             setValue(style);
@@ -246,9 +287,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setStyle(getValue());
-            webLocator.setStyle(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -260,7 +306,7 @@ public abstract class By<T> {
         return new ByTitle(title);
     }
 
-    public static class ByTitle extends By<String> {
+    private static class ByTitle extends By<String> {
 
         public ByTitle(final String style) {
             setValue(style);
@@ -270,9 +316,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setTitle(getValue());
-            webLocator.setTitle(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -284,7 +335,7 @@ public abstract class By<T> {
         return new ByTag(tag);
     }
 
-    public static class ByTag extends By<String> {
+    private static class ByTag extends By<String> {
 
         public ByTag(String tag) {
             setValue(tag);
@@ -294,9 +345,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setTag(getValue());
-            webLocator.setTag(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if ("*".equals(builder.getTag())) {
+                init(builder);
+            }
         }
     }
 
@@ -308,7 +364,7 @@ public abstract class By<T> {
         return new ByLabelTag(labelTag);
     }
 
-    public static class ByLabelTag extends By<String> {
+    private static class ByLabelTag extends By<String> {
 
         public ByLabelTag(String labelTag) {
             setValue(labelTag);
@@ -318,9 +374,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setLabelTag(getValue());
-            webLocator.setLabelTag(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -332,9 +393,9 @@ public abstract class By<T> {
         return new ByLabel(label, searchType);
     }
 
-    public static class ByLabel extends By<String> {
+    private static class ByLabel extends By<String> {
 
-        public ByLabel(String label, SearchType ...searchTypes) {
+        public ByLabel(String label, SearchType... searchTypes) {
             setValue(label);
             setSearchType(searchTypes);
         }
@@ -343,9 +404,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setLabel(getValue(), getSearchType());
-            webLocator.setLabel(getValue(), getSearchType());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -357,7 +423,7 @@ public abstract class By<T> {
         return new ByLabelPosition(labelPosition);
     }
 
-    public static class ByLabelPosition extends By<String> {
+    private static class ByLabelPosition extends By<String> {
 
         public ByLabelPosition(String labelPosition) {
             setValue(labelPosition);
@@ -367,9 +433,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setLabelPosition(getValue());
-            webLocator.setLabelPosition(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -381,7 +452,7 @@ public abstract class By<T> {
         return new ByPosition(position);
     }
 
-    public static class ByPosition extends By<Integer> {
+    private static class ByPosition extends By<Integer> {
 
         public ByPosition(Integer position) {
             setValue(position);
@@ -391,9 +462,14 @@ public abstract class By<T> {
             return getValue().toString();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setPosition(getValue());
-            webLocator.setPosition(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -405,7 +481,7 @@ public abstract class By<T> {
         return new ByPathSuffix(pathSuffix);
     }
 
-    public static class ByPathSuffix extends By<String> {
+    private static class ByPathSuffix extends By<String> {
 
         public ByPathSuffix(String xpath) {
             setValue(xpath);
@@ -415,9 +491,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setElPathSuffix(getValue());
-            webLocator.setElPathSuffix(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -429,7 +510,7 @@ public abstract class By<T> {
         return new ByXpath(xpath);
     }
 
-    public static class ByXpath extends By<String> {
+    private static class ByXpath extends By<String> {
 
         public ByXpath(String xpath) {
             setValue(xpath);
@@ -439,9 +520,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setElPath(getValue());
-            webLocator.setElPath(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -453,7 +539,7 @@ public abstract class By<T> {
         return new ByContainer(container);
     }
 
-    public static class ByContainer extends By<WebLocator> {
+    private static class ByContainer extends By<WebLocator> {
 
         public ByContainer(WebLocator webLocator) {
             setValue(webLocator);
@@ -463,9 +549,14 @@ public abstract class By<T> {
             return getValue().getPath();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setContainer(getValue());
-            webLocator.setContainer(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -477,7 +568,7 @@ public abstract class By<T> {
         return new ByInfoMessage(infoMessage);
     }
 
-    public static class ByInfoMessage extends By<String> {
+    private static class ByInfoMessage extends By<String> {
 
         public ByInfoMessage(String infoMessage) {
             setValue(infoMessage);
@@ -487,9 +578,14 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setInfoMessage(getValue());
-            webLocator.setInfoMessage(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getBaseCls() == null) {
+                init(builder);
+            }
         }
     }
 
@@ -501,7 +597,7 @@ public abstract class By<T> {
         return new ByVisibility(visibility);
     }
 
-    public static class ByVisibility extends By<Boolean> {
+    private static class ByVisibility extends By<Boolean> {
 
         public ByVisibility(Boolean visibility) {
             setValue(visibility);
@@ -511,9 +607,43 @@ public abstract class By<T> {
             return getValue().toString();
         }
 
-        public void init(PathBuilder builder, WebLocator webLocator) {
+        public void init(PathBuilder builder) {
             builder.setVisibility(getValue());
-            webLocator.setVisibility(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (!builder.isVisibility()) {
+                init(builder);
+            }
+        }
+    }
+
+    public static By searchType(final SearchType... searchType) {
+        if (searchType == null)
+            throw new IllegalArgumentException(
+                    "Cannot find elements when the searchType expression is null.");
+
+        return new BySearchType(searchType);
+    }
+
+    private static class BySearchType extends By<SearchType[]> {
+
+        public BySearchType(SearchType... searchType) {
+            setValue(searchType);
+        }
+
+        public String getPath() {
+            return getValue().toString();
+        }
+
+        public void init(PathBuilder builder) {
+            builder.defaultSearchTextType.addAll(Arrays.asList(getValue()));
+        }
+
+        public void initDefault(PathBuilder builder) {
+//            if (builder.getSearchTextType() == null) {
+                init(builder);
+//            }
         }
     }
 }

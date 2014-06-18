@@ -2,7 +2,6 @@ package com.sdl.selenium.web.test;
 
 import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.PathBuilder;
-import com.sdl.selenium.web.WebLocator;
 
 
 public class IconPathBuilder extends PathBuilder {
@@ -10,8 +9,8 @@ public class IconPathBuilder extends PathBuilder {
     public IconPathBuilder() {
     }
 
-    public IconPathBuilder(WebLocator locator, By... bys) {
-        super(locator, bys);
+    public IconPathBuilder(By... bys) {
+        super(bys);
     }
 
     private String icon;

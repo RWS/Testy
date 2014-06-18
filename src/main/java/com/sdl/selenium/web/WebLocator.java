@@ -23,12 +23,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     protected static WebLocatorExecutor executor;
 
-    public WebLocator(By... bys) {
-        setPathBuilder(new PathBuilder(this, bys));
-    }
-
     public WebLocator(PathBuilder pathBuilder) {
         setPathBuilder(pathBuilder);
+    }
+
+    public WebLocator(By... bys) {
+        this(new PathBuilder(bys));
     }
 
     public WebLocator(WebLocator container, By... bys) {
