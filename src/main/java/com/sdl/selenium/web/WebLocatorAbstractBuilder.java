@@ -146,6 +146,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setBaseCls(final String baseCls) {
         this.baseCls = baseCls;
+        pathBuilder.setBaseCls(baseCls);
         return (T) this;
     }
 
@@ -563,6 +564,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     protected void setClassName(final String className) {
         this.className = className;
+        pathBuilder.setClassName(className);
     }
 
     protected boolean hasId() {
@@ -763,7 +765,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return final xpath (including containers xpath), used for interacting with browser
      */
     public final String getPath() {
-        return getPath(false);
+        return new PathBuilder().getPath(false);
     }
 
     /**

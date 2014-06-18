@@ -31,6 +31,54 @@ public abstract class By<T> {
 
     // =========================
 
+    public static By className(final String className) {
+        if (className == null)
+            throw new IllegalArgumentException(
+                    "Cannot find elements when the className expression is null.");
+
+        return new ByClassName(className);
+    }
+
+    public static class ByClassName extends By<String> {
+
+        public ByClassName(String className) {
+            setValue(className);
+        }
+
+        public String getPath() {
+            return getValue();
+        }
+
+        public void init(PathBuilder builder, WebLocator webLocator) {
+            builder.setClassName(getValue());
+            webLocator.setClassName(getValue());
+        }
+    }
+
+    public static By baseCls(final String baseCls) {
+        if (baseCls == null)
+            throw new IllegalArgumentException(
+                    "Cannot find elements when the baseCls expression is null.");
+
+        return new ByBaseCls(baseCls);
+    }
+
+    public static class ByBaseCls extends By<String> {
+
+        public ByBaseCls(String baseCls) {
+            setValue(baseCls);
+        }
+
+        public String getPath() {
+            return getValue();
+        }
+
+        public void init(PathBuilder builder, WebLocator webLocator) {
+            builder.setBaseCls(getValue());
+            webLocator.setBaseCls(getValue());
+        }
+    }
+
     public static By cls(final String cls) {
         if (cls == null)
             throw new IllegalArgumentException(
