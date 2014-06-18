@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebDriverConfig {
-    private static final Logger logger = Logger.getLogger(WebDriverConfig.class);
+    private static final Logger LOGGER = Logger.getLogger(WebDriverConfig.class);
 
     private static WebDriver driver;
     private static Selenium selenium;
@@ -36,7 +36,6 @@ public class WebDriverConfig {
     private static String downloadPath;
 
     /**
-     * 
      * @return last created driver (current one)
      */
     public static WebDriver getDriver() {
@@ -69,7 +68,7 @@ public class WebDriverConfig {
 
     public static void init(WebDriver driver) {
         if (driver != null) {
-            logger.info("========= init WebDriver =========");
+            LOGGER.info("========= init WebDriver =========");
             WebDriverConfig.driver = driver;
             WebLocator.setDriverExecutor(getDriver());
             if (driver instanceof InternetExplorerDriver) {
@@ -108,11 +107,12 @@ public class WebDriverConfig {
 
     /**
      * Create and return new WebDriver
+     *
      * @param browserProperties
      * @return webDriver
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
-        //logger.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
+        //LOGGER.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
         browserKey = browserKey.toUpperCase();
@@ -120,7 +120,7 @@ public class WebDriverConfig {
         try {
             browser = Browser.valueOf(browserKey);
         } catch (IllegalArgumentException e) {
-            logger.error("BROWSER not supported : " + browserKey + ". Supported browsers: " + Arrays.asList(Browser.values()));
+            LOGGER.error("BROWSER not supported : " + browserKey + ". Supported browsers: " + Arrays.asList(Browser.values()));
         }
         String driverPath = PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.driver.path");
         if (browser == Browser.FIREFOX) {
@@ -158,7 +158,7 @@ public class WebDriverConfig {
         } else if (browser == Browser.HTMLUNIT) {
             driver = new HtmlUnitDriver(true);
         } else {
-            logger.error("Browser not supported" + browser);
+            LOGGER.error("Browser not supported" + browser);
             driver = null;
         }
         init(driver);
@@ -175,7 +175,7 @@ public class WebDriverConfig {
             myProfile = new FirefoxProfile();
         }
         if (myProfile != null) {
-            logger.info("profile not null");
+            LOGGER.info("profile not null");
             setProperties(properties, myProfile, Integer.class,
                     "dom.max_script_run_time",
                     "browser.download.folderList"
@@ -185,7 +185,17 @@ public class WebDriverConfig {
                     "browser.download.manager.closeWhenDone",
                     "browser.download.manager.showAlertOnComplete",
                     "browser.download.panel.shown",
-                    "browser.helperApps.alwaysAsk.force"
+                    "browser.helperApps.alwaysAsk.force",
+                    "security.warn_entering_secure",
+                    "security.warn_entering_secure.show_once",
+                    "security.warn_entering_weak",
+                    "security.warn_entering_weak.show_once",
+                    "security.warn_leaving_secure",
+                    "security.warn_leaving_secure.show_once",
+                    "security.warn_submit_insecure",
+                    "security.warn_submit_insecure.show_once",
+                    "security.warn_viewing_mixed",
+                    "security.warn_viewing_mixed.show_once"
             );
             setProperties(properties, myProfile, String.class,
                     "browser.helperApps.neverAsk.saveToDisk",
