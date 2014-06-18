@@ -17,7 +17,8 @@ public class ByTest {
 //                {new WebLocator(container), CONTAINER_PATH + "//*"},
 //                {new WebLocator(container, By.id("Id")), CONTAINER_PATH + "//*[@id='Id']"},
 
-                {new TextField(By.id("Id"), By.name("name"), By.icon("icon")), "//*[@id='Id' and @name='name' and count(.//*[contains(@class, 'icon')]) > 0]"},
+                {new TextField(By.id("Id"), By.text("text"), By.icon("icon")), "//*[@id='Id' and @name='name' and count(.//*[contains(@class, 'icon')]) > 0]"},
+                {new TextField(), "//*[@id='Id' and @name='name' and count(.//*[contains(@class, 'icon')]) > 0]"},
 
 //                {new TextField(By.id("Id")), "//*[@id='Id']"},
 //                {new TextField(container), CONTAINER_PATH + "//*"},

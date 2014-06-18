@@ -7,10 +7,7 @@ public abstract class By<T> {
     private T value;
     private SearchType[] searchType;
 
-//    private By() {
-//    }
-
-    // abstract
+    // abstract TODO remove it
     abstract public String getPath();
 
     public T getValue() {
@@ -29,7 +26,7 @@ public abstract class By<T> {
         this.searchType = searchType;
     }
 
-    //abstract void init(PathBuilder builder);
+//    abstract void init(PathBuilder builder);
     public abstract void init(PathBuilder pathBuilder, WebLocator builder);
 
     // =========================

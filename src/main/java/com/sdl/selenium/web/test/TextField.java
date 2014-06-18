@@ -7,25 +7,16 @@ import org.apache.log4j.Logger;
 public class TextField extends WebLocator {
     private static final Logger LOGGER = Logger.getLogger(TextField.class);
 
-    private PathBuilder2 pathBuilder = new PathBuilder2();
+    private IconPathBuilder iconPathBuilder = new IconPathBuilder();
 
     public TextField(By... by) {
-        pathBuilder = new PathBuilder2(this, by){
-            @Override
-            protected String getItemPathText() {
-                String selector = hasText() ? super.getItemPathText() : "";
-                if (hasIconCls()) {
-                    selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + getIcon() + "')]) > 0";
-                }
-                return selector.length() == 0 ? null : selector;
-            }
-        };
-        setPathBuilder(pathBuilder);
+        iconPathBuilder = new IconPathBuilder(this, by);
+        setPathBuilder(iconPathBuilder);
     }
 
     public TextField(WebLocator container, By... by) {
         this(by);
-        pathBuilder.setContainer(container);
+        iconPathBuilder.setContainer(container);
     }
 
     private String icon;
@@ -36,11 +27,7 @@ public class TextField extends WebLocator {
 
     public <T extends TextField> T setIcon(final String icon) {
         this.icon = icon;
-        pathBuilder.setIcon(icon);
+        iconPathBuilder.icon(icon);
         return (T) this;
-    }
-
-    public Boolean hasIconCls() {
-        return icon != null && !icon.equals("");
     }
 }
