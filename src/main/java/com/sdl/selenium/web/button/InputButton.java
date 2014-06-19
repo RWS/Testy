@@ -1,7 +1,6 @@
 package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
 public class InputButton extends WebLocator implements IButton {
@@ -21,19 +20,11 @@ public class InputButton extends WebLocator implements IButton {
     }
 
     /**
-     *
      * @param container is parent of item
-     * @param text is value from input item
+     * @param text      is value from input item
      */
     public InputButton(WebLocator container, String text) {
         this(container);
-        setText(text);
-    }
-
-    // Methods
-
-    @Override
-    protected String getItemPathText() {
-        return hasText() ? "@value="+ Utils.getEscapeQuotesText(getText()) : null;
+        setTemplate("text", "@value='%s'", text);
     }
 }
