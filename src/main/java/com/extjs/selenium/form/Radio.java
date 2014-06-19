@@ -13,6 +13,7 @@ public class Radio extends ExtJsComponent {
         setTag("input");
         setBaseCls("x-form-radio");
         setLabelPosition("/..");
+        setTemplate("text", "@value='%s'");
     }
 
     public Radio(String value) {
@@ -33,11 +34,6 @@ public class Radio extends ExtJsComponent {
     public Radio(String label, WebLocator container) {
         this(container);
         setLabel(label);
-    }
-
-    @Override
-    protected String getItemPathText() {
-        return hasText() ? "@value='" + getText() + "'" : null;
     }
 
     @Override

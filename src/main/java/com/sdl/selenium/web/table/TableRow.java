@@ -41,13 +41,10 @@ public class TableRow extends Row {
     }
 
     @Override
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        return "//" + getTag() + ("".equals(selector) && selector == null ? null : "[" + selector + "]");
-    }
-
-    @Override
     protected String getItemPathText() {
+        // TODO think about solution for this
+        // "{0}"
+        // %s or count(.//*[%s]) > 0
         String selector = super.getItemPathText();
         if (!"".equals(selector) && selector != null) {
             selector = selector + " or count(.//*[" + selector + "]) > 0";

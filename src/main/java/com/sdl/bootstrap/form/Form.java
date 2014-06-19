@@ -10,6 +10,7 @@ public class Form extends SimpleTextField {
     public Form() {
         setClassName("Form");
         setTag("form");
+        setTemplate("title", "count(.//legend[text()='%s']) > 0");
     }
 
     public Form(WebLocator container) {
@@ -20,13 +21,5 @@ public class Form extends SimpleTextField {
     public Form(WebLocator container, String title) {
         this(container);
         setTitle(title);
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        if (hasTitle()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//legend[text()='" + getTitle() + "']) > 0";
-        }
-        return "//" + getTag() + (selector.length() > 0 ? "[" + selector + "]" : "");
     }
 }

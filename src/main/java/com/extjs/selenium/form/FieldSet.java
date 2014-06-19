@@ -12,6 +12,7 @@ public class FieldSet extends WebLocator {
         setBaseCls("x-fieldset");
         setTag("fieldset");
         setExcludeClasses("x-hide-display", "x-masked");
+        setTemplate("text", "count(.//*[normalize-space(text())='%s']) > 0");
     }
 
     public FieldSet(WebLocator container) {
@@ -27,11 +28,6 @@ public class FieldSet extends WebLocator {
     public FieldSet(WebLocator container, String cls, String text) {
         this(container, text);
         setClasses(cls);
-    }
-
-    @Override
-    protected String getItemPathText() {
-        return hasText() ? "count(.//*[normalize-space(text())='" + getText() + "']) > 0" : null;
     }
 
     // methods

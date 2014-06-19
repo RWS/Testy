@@ -18,16 +18,12 @@ public class List extends GridPanel {
     public List() {
         setClassName("List");
         setBaseCls("ux-form-multiselect");
+        setElPathSuffix("exclude-hide-cls", null);
     }
 
     public List(WebLocator container) {
         this();
         setContainer(container);
-    }
-
-    @Override
-    protected String getDefaultExcludePath() {
-        return "";
     }
 
     public boolean selectRows(String ...values) {

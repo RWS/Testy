@@ -14,6 +14,8 @@ public class Panel extends ExtJsComponent {
         setClassName("Panel");
         setBaseCls("x-panel");
         setHeaderBaseCls(getBaseCls());
+        setElPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
+        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
     public Panel(String title) {
@@ -55,45 +57,8 @@ public class Panel extends ExtJsComponent {
         return info;
     }
 
-    /**
-     * exclude ids that start-with ext-gen (Ext auto generated ids)
-     *
-     * @return string
-     */
-    protected String getDefaultExcludePath() {
-        return " and not(contains(@class, 'x-hide-display')) " +
-                "and not(contains(@class, 'x-masked'))";
-    }
-
-    protected String getHeaderSelector() {
-        String selector = "";
-        if (hasTitle()) {
-            selector = " and count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='" + getTitle() + "']) > 0";
-        }
-        return selector;
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        selector += getHeaderSelector();
-
-        // limit results to panel only
-        selector += getDefaultExcludePath();
-
-        return "//*[" + selector + "]";
-    }
-
-    /**
-     * return only body path but no panel path
-     *
-     * @return string
-     */
-    public String getBodyPath() {
-        return "//*[contains(@class, '" + getBaseCls() + "-body')]";
-    }
-
     public ExtJsComponent getBodyComponent() {
-        return new ExtJsComponent(this, getBodyPath());
+        return new ExtJsComponent(this, "//*[contains(@class, '" + getBaseCls() + "-body')]");
     }
 
     public boolean clickOnTool(String id) {
@@ -104,7 +69,7 @@ public class Panel extends ExtJsComponent {
 
     public boolean close() {
         boolean closed = clickOnTool("close");
-        if(closed){
+        if (closed) {
             Utils.sleep(50);
         }
         return closed;
@@ -113,7 +78,7 @@ public class Panel extends ExtJsComponent {
     public boolean maximize() {
         boolean isMaximized = isMaximized();
         boolean maximized = isMaximized || clickOnTool("maximize");
-        if(!isMaximized && maximized){
+        if (!isMaximized && maximized) {
             Utils.sleep(50);
         }
         return maximized;

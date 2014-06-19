@@ -12,6 +12,7 @@ public class SimpleTextField extends WebLocator implements ITextField {
     public SimpleTextField() {
         setClassName("SimpleTextField");
         setTag("input");
+        setTemplate("input-type", "@type='%s'");
     }
 
     public SimpleTextField(WebLocator container) {
@@ -30,19 +31,9 @@ public class SimpleTextField extends WebLocator implements ITextField {
 
     public <T extends WebLocatorAbstractBuilder> T setType(String type) {
         this.type = type;
+        String key = "input-type";
+        setElPathSuffix(key, applyTemplate(key, type));
         return (T) this;
-    }
-
-    public Boolean hasType() {
-        return type != null && !type.equals("");
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        if (hasType()) {
-            selector += (selector.length() > 0 ? " and " : "") + "@type='" + getType() + "'";
-        }
-        return "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
     }
 
     public boolean setValue(String value) {

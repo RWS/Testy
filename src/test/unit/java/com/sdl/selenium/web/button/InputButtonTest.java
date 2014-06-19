@@ -13,6 +13,7 @@ public class InputButtonTest {
         return new Object[][]{
                 {new InputButton(),                  "//input"},
                 {new InputButton(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input"},
+                {new InputButton(container).setText("ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
                 {new InputButton(container, "ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
                 {new InputButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
         };

@@ -9,6 +9,7 @@ public class InputButton extends WebLocator implements IButton {
     public InputButton() {
         setClassName("InputButton");
         setTag("input");
+        setTemplate("text", "@value='%s'");
     }
 
     /**
@@ -25,6 +26,6 @@ public class InputButton extends WebLocator implements IButton {
      */
     public InputButton(WebLocator container, String text) {
         this(container);
-        setTemplate("text", "@value='%s'", text);
+        setText(text);
     }
 }

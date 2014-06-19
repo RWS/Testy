@@ -19,20 +19,20 @@ public class Button extends ExtJsComponent implements IButton {
 
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
+        String key = "icon-cls";
+        setElPathSuffix(key, applyTemplate(key, iconCls));
         return (T) this;
     }
 
     private String iconCls;
-
-    public Boolean hasIconCls() {
-        return iconCls != null && !iconCls.equals("");
-    }
 
     public Button() {
         setClassName("Button");
         setBaseCls("x-btn");
         setTag("table");
         setVisibility(true);
+        setTemplate("enabled", " and not(contains(@class, 'x-item-disabled'))");
+        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
         defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
@@ -59,26 +59,6 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     // Methods
-
-    @Override
-    protected String getItemPathText() {
-        String selector = hasText() ? super.getItemPathText() : "";
-        if (hasIconCls()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
-        }
-        return selector.length() == 0 ? null : selector;
-    }
-
-    @Override
-    public String getItemPath(boolean disabled) {
-        // TODO create iconCls & iconPath for buttons with no text
-        String selector = getBasePathSelector();
-        if (!disabled) {
-            selector += " and not(contains(@class, 'x-item-disabled'))";
-        }
-        return "//" + getTag() + "[" + selector + "]";
-    }
-
     @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
