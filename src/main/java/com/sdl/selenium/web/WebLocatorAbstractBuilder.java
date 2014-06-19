@@ -5,17 +5,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
 public abstract class WebLocatorAbstractBuilder {
-    private static final Logger logger = Logger.getLogger(WebLocatorAbstractBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(WebLocatorAbstractBuilder.class);
 
     private PathBuilder pathBuilder = new PathBuilder();
 
@@ -43,7 +40,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String style;
     private String elCssSelector;
     private String title;
-    private String elPathSuffix;
+    private Map<String, String> template = new HashMap<String, String>();
 
     private String infoMessage;
 
@@ -56,6 +53,9 @@ public abstract class WebLocatorAbstractBuilder {
     //private int elIndex; // TODO try to find how can be used
 
     private boolean visibility;
+    private long renderMillis = WebLocatorConfig.getDefaultRenderMillis();
+    private int activateSeconds = 60;
+
     private WebLocator container;
 
     // =========================================
@@ -290,7 +290,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
-        if (searchTextType == null) {
+        if(searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
             this.searchTextType = new ArrayList<SearchType>();
@@ -387,7 +387,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setElPathSuffix(String)}
      */
     public String getElPathSuffix() {
-        return elPathSuffix;
+        return template.get("elPathSuffix");
     }
 
     /**
@@ -401,8 +401,17 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
-        this.elPathSuffix = elPathSuffix;
-        pathBuilder.setElPathSuffix(elPathSuffix);
+        setTemplate("elPathSuffix", elPathSuffix);
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value, Object... arguments) {
+        if (value == null) {
+            template.remove(key);
+        } else {
+            value = String.format(value, arguments);
+            template.put(key, value);
+        }
         return (T) this;
     }
 
@@ -439,6 +448,35 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
         this.visibility = visibility;
         pathBuilder.setVisibility(visibility);
+        return (T) this;
+    }
+
+    public long getRenderMillis() {
+        return renderMillis;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
+        this.renderMillis = renderMillis;
+        return (T) this;
+    }
+
+    /**
+     * @deprecated use setRenderMillis
+     * @param renderSeconds
+     * @param <T>
+     * @return
+     */
+    public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
+        setRenderMillis(renderSeconds * 1000);
+        return (T) this;
+    }
+
+    public int getActivateSeconds() {
+        return activateSeconds;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
+        this.activateSeconds = activateSeconds;
         return (T) this;
     }
 
@@ -624,10 +662,6 @@ public abstract class WebLocatorAbstractBuilder {
         return title != null && !title.equals("");
     }
 
-    protected boolean hasElPathSuffix() {
-        return elPathSuffix != null && !elPathSuffix.equals("");
-    }
-
     protected boolean hasPosition() {
         return position > 0;
     }
@@ -687,8 +721,8 @@ public abstract class WebLocatorAbstractBuilder {
                 selector.add("not(contains(@class, '" + excludeClasses + "'))");
             }
         }
-        if (hasElPathSuffix()) {
-            selector.add(getElPathSuffix());
+        for (String suffix : template.values()) {
+            selector.add(suffix);
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
