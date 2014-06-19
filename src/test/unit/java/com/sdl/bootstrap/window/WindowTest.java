@@ -12,8 +12,8 @@ public class WindowTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Window(),             "//*[@role='dialog' and @aria-hidden='false']"},
-                {new Window().setId("ID"), "//*[@role='dialog' and @aria-hidden='false' and @id='ID']"},
-                {new Window("WindowTitle"),"//*[@role='dialog' and @aria-hidden='false' and count(*[contains(@class,'-header')]//*[text()='WindowTitle']) > 0]"},
+                {new Window().setId("ID"), "//*[@id='ID' and @role='dialog' and @aria-hidden='false']"},
+                {new Window("WindowTitle"),"//*[count(*[contains(@class,'-header')]//*[text()='WindowTitle']) > 0 and @role='dialog' and @aria-hidden='false']"},
         };
     }
 

@@ -5,10 +5,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -33,7 +30,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String style;
     private String elCssSelector;
     private String title;
-    private String elPathSuffix;
+    private Map<String, String> template = new HashMap<String, String>();
 
     private String infoMessage;
 
@@ -364,7 +361,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setElPathSuffix(String)}
      */
     public String getElPathSuffix() {
-        return elPathSuffix;
+        return template.get("elPathSuffix");
     }
 
     /**
@@ -378,7 +375,17 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
-        this.elPathSuffix = elPathSuffix;
+        setTemplate("elPathSuffix", elPathSuffix);
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value, Object... arguments) {
+        if (value == null) {
+            template.remove(key);
+        } else {
+            value = String.format(value, arguments);
+            template.put(key, value);
+        }
         return (T) this;
     }
 
@@ -619,10 +626,6 @@ public abstract class WebLocatorAbstractBuilder {
         return title != null && !title.equals("");
     }
 
-    protected boolean hasElPathSuffix() {
-        return elPathSuffix != null && !elPathSuffix.equals("");
-    }
-
     protected boolean hasPosition() {
         return position > 0;
     }
@@ -682,8 +685,8 @@ public abstract class WebLocatorAbstractBuilder {
                 selector.add("not(contains(@class, '" + excludeClasses + "'))");
             }
         }
-        if (hasElPathSuffix()) {
-            selector.add(getElPathSuffix());
+        for (String suffix : template.values()) {
+            selector.add(suffix);
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }

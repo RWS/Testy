@@ -9,17 +9,13 @@ public class Window extends WebLocator implements IWebLocator {
 
     public Window() {
         setClassName("Window");
+        setTemplate("dialog", "@role='dialog' and @aria-hidden='false'");
     }
 
     public Window(String title) {
         this();
         setTitle(title);
         setElPathSuffix("count(*[contains(@class,'-header')]//*[text()='" + getTitle() + "']) > 0");
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        return "".equals(selector) ? "//*[@role='dialog' and @aria-hidden='false']" : "//*[@role='dialog' and @aria-hidden='false' and " + selector + "]";
     }
 
     public String getTitleWindow() {
