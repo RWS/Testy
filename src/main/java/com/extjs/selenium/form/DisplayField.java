@@ -9,6 +9,7 @@ public class DisplayField extends TextField {
     public DisplayField() {
         setClassName("DisplayField");
         setBaseCls("x-form-display-field");
+        setTag("*");
     }
 
     public DisplayField(WebLocator container) {
@@ -24,16 +25,6 @@ public class DisplayField extends TextField {
     public DisplayField(String name, WebLocator container) {
         this(container);
         setName(name);
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        if(selector != null && selector.length() > 0){
-            selector = "//*["+ selector +"]";
-        } else {
-            selector = "//*";
-        }
-        return selector;
     }
 
     public boolean setValue(String value) {
