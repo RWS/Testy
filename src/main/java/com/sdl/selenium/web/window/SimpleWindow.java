@@ -8,19 +8,12 @@ public class SimpleWindow extends WebLocator {
         setClassName("SimpleWindow");
         setBaseCls("ui-dialog ui-widget ui-widget-content");
         setStyle("display: block;");
+        setTemplate("title", "count(.//*[text()='%s']) > 0");
     }
 
     public SimpleWindow(String title) {
         this();
         setTitle(title);
-    }
-
-    public String getItemPath(boolean disable) {
-        String selector = getBasePathSelector();
-        if (hasTitle()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[text()='" + getTitle() + "']) > 0";
-        }
-        return "//*[" + selector + "]";
     }
 
     public String getMessageWindow() {

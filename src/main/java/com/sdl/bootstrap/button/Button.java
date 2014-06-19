@@ -8,25 +8,24 @@ import org.apache.log4j.Logger;
 public class Button extends WebLocator implements IButton {
     private static final Logger logger = Logger.getLogger(Button.class);
 
+    private String iconCls;
+
     public String getIconCls() {
         return iconCls;
     }
 
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
+        String key = "icon-cls";
+        setElPathSuffix(key, applyTemplate(key, iconCls));
         return (T) this;
-    }
-
-    private String iconCls;
-
-    public Boolean hasIconCls() {
-        return iconCls != null && !iconCls.equals("");
     }
 
     public Button() {
         setClassName("Button");
         setBaseCls("btn");
         setTag("button");
+        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
     /**
@@ -43,18 +42,7 @@ public class Button extends WebLocator implements IButton {
         setSearchTextType(SearchType.EQUALS);
     }
 
-    // Methods
-
-    @Override
-    protected String getItemPathText() {
-        String selector = hasText() ? super.getItemPathText() : "";
-        if (hasIconCls()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + getIconCls() + "')]) > 0";
-        }
-        return selector.length() == 0 ? null : selector;
-    }
-
-    public boolean isDisabled(){
+    public boolean isDisabled() {
         return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
     }
 }

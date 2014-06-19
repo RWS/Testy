@@ -1,6 +1,5 @@
 package com.sdl.bootstrap.form;
 
-import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.SimpleTextField;
@@ -19,26 +18,15 @@ public class CheckBox extends SimpleTextField implements ICheck {
         setContainer(container);
     }
 
-    public CheckBox(WebLocator container, String text) {
+    public CheckBox(WebLocator container, String label) {
         this(container);
-        setText(text, SearchType.CONTAINS);
-    }
-
-    public CheckBox(String label, WebLocator container) {
-        this(container);
-        setLabelTag("label");
         setLabel(label);
+        setLabelPosition("//");
     }
 
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        if (hasType()) {
-            selector += (selector.length() > 0 ? " and " : "") + "@type='" + getType() + "'";
-        }
-        if (hasText()) {
-            return "//" + getLabelTag() + "[" + getItemPathText() + "]//" + getTag() + "[@type='" + getType() + "']";
-        }
-        return "//" + getTag() + (selector.length() > 0 ? ("[" + selector + "]") : "");
+    public CheckBox(String boxLabel, WebLocator container) {
+        this(container);
+        setLabel(boxLabel);
     }
 
     public boolean isSelected() {

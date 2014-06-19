@@ -1,7 +1,5 @@
 package com.extjs.selenium;
 
-import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
@@ -9,13 +7,9 @@ import org.apache.log4j.Logger;
 public class ExtJsComponent extends WebLocator {
     private static final Logger logger = Logger.getLogger(ExtJsComponent.class);
 
-    public ExtJsComponent(PathBuilder pathBuilder) {
-        super(pathBuilder);
-        getPathBuilder().defaults(By.className("ExtJsComponent"));
-    }
-
-    public ExtJsComponent(By...bys) {
-        this(new PathBuilder(bys));
+    public ExtJsComponent() {
+        setClassName("ExtJsComponent");
+        setTemplate("visibility", getTemplate("visibility") + " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0");
     }
 
     /**

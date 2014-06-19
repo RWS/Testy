@@ -40,7 +40,8 @@ public abstract class WebLocatorAbstractBuilder {
     private String style;
     private String elCssSelector;
     private String title;
-    private Map<String, String> template = new HashMap<String, String>();
+    private Map<String, String> template = new LinkedHashMap<String, String>();
+    private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
 
     private String infoMessage;
 
@@ -290,7 +291,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
-        if(searchTextType == null) {
+        if (searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
             this.searchTextType = new ArrayList<SearchType>();
@@ -387,7 +388,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setElPathSuffix(String)}
      */
     public String getElPathSuffix() {
-        return template.get("elPathSuffix");
+        return elPathSuffix.get("elPathSuffix");
     }
 
     /**
@@ -401,18 +402,30 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
-        setTemplate("elPathSuffix", elPathSuffix);
+        setElPathSuffix("elPathSuffix", elPathSuffix);
         return (T) this;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value, Object... arguments) {
+    public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String key, String elPathSuffix) {
+        if (elPathSuffix == null) {
+            this.elPathSuffix.remove(key);
+        } else {
+            this.elPathSuffix.put(key, elPathSuffix);
+        }
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value) {
         if (value == null) {
             template.remove(key);
         } else {
-            value = String.format(value, arguments);
             template.put(key, value);
         }
         return (T) this;
+    }
+
+    public String getTemplate(String key) {
+        return template.get(key);
     }
 
     /**
@@ -461,10 +474,10 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use setRenderMillis
      * @param renderSeconds
      * @param <T>
      * @return
+     * @deprecated use setRenderMillis
      */
     public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
         setRenderMillis(renderSeconds * 1000);
@@ -710,6 +723,10 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasCls()) {
             selector.add("@class='" + getCls() + "'");
         }
+        if (hasTitle()) {
+            selector.add(applyTemplate("title", getTitle()));
+        }
+
         if (hasClasses()) {
             for (String cls : getClasses()) {
 //                selector.append(" and contains(@class, '").append(cls).append("')");
@@ -721,10 +738,18 @@ public abstract class WebLocatorAbstractBuilder {
                 selector.add("not(contains(@class, '" + excludeClasses + "'))");
             }
         }
-        for (String suffix : template.values()) {
+        for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
+    }
+
+    protected String applyTemplate(String key, Object... arguments) {
+        String tpl = template.get(key);
+        if (StringUtils.isNotEmpty(tpl)) {
+            return String.format(tpl, arguments);
+        }
+        return null;
     }
 
     /**
@@ -735,6 +760,12 @@ public abstract class WebLocatorAbstractBuilder {
      */
     protected String getItemPath(boolean disabled) {
         String selector = getBaseItemPath();
+        if (!disabled) {
+            String enabled = applyTemplate("enabled", getTemplate("enabled"));
+            if (enabled != null) {
+                selector += enabled;
+            }
+        }
         selector = "//" + getTag() + (selector != null && (selector.length() > 0) ? ("[" + selector + "]") : "");
         return selector;
     }
@@ -749,6 +780,11 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasText()) {
             selector = "";
             String text = getText();
+
+            if (template.get("text") != null) {
+                return String.format(template.get("text"), text);
+            }
+
             boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
             if (!(hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY))) {
                 text = Utils.getEscapeQuotesText(text);

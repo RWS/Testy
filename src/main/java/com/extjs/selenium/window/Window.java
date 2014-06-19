@@ -16,6 +16,18 @@ public class Window extends Panel {
 
     public void setModal(boolean modal) {
         this.modal = modal;
+        String selector = null;
+        if (modal) {
+            // test for IE be cause of :
+            // http://jira.openqa.org/browse/SEL-545
+            // and http://code.google.com/p/selenium/issues/detail?id=1716
+            if (WebDriverConfig.isIE()) {
+                selector = "preceding-sibling::*[contains(@class, 'ext-el-mask')]";
+            } else {
+                selector = "preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]";
+            }
+        }
+        setElPathSuffix("modal-window", selector);
     }
 
     /**
@@ -25,6 +37,8 @@ public class Window extends Panel {
         setClassName("Window");
         setBaseCls("x-window");
         setHeaderBaseCls(getBaseCls());
+        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+        setElPathSuffix("exclude-hide-cls", null);
         // test for IE be cause of :
         // http://jira.openqa.org/browse/SEL-545
         // and http://code.google.com/p/selenium/issues/detail?id=1716
@@ -35,7 +49,7 @@ public class Window extends Panel {
 
     public Window(Boolean modal) {
         this();
-        this.modal = modal;
+        setModal(modal);
     }
 
     public Window(String title) {
@@ -44,25 +58,8 @@ public class Window extends Panel {
     }
 
     public Window(String title, Boolean modal) {
-        this();
-        this.modal = modal;
+        this(modal);
         setTitle(title);
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        selector += getHeaderSelector();
-        if (isModal()) {
-            // test for IE be cause of :
-            // http://jira.openqa.org/browse/SEL-545
-            // and http://code.google.com/p/selenium/issues/detail?id=1716
-            if (WebDriverConfig.isIE()) {
-                selector += " and preceding-sibling::*[contains(@class, 'ext-el-mask')]";
-            } else {
-                selector += " and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]";
-            }
-        }
-        return "//*[" + selector + "]";
     }
 
     public String getTitleWindow() {

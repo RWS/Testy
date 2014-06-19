@@ -11,7 +11,7 @@ import static org.testng.Assert.assertTrue;
 
 public class WindowTest extends TestBase {
 
-    Window editorGridPanelWindow = new Window("EditorGridPanel Win");
+    private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
 
     @BeforeMethod
     public void startTests() {

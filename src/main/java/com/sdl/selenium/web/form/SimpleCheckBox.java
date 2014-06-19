@@ -9,6 +9,7 @@ public class SimpleCheckBox extends WebLocator implements ICheck {
     public SimpleCheckBox() {
         setClassName("SimpleCheckBox");
         setTag("input");
+        setElPathSuffix("type", "@type='checkbox'");
     }
 
     public SimpleCheckBox(WebLocator container) {
@@ -19,11 +20,6 @@ public class SimpleCheckBox extends WebLocator implements ICheck {
     public SimpleCheckBox(String id) {
         this();
         setId(id);
-    }
-
-    public String getItemPath(boolean disabled) {
-        String selector = getBasePathSelector();
-        return "//" + getTag() + "[@type='checkbox'" + ("".equals(selector) ? "" : " and " + selector) + "]";
     }
 
     @Override
