@@ -12,7 +12,7 @@ public class FieldSet extends WebLocator {
         setBaseCls("x-fieldset");
         setTag("fieldset");
         setExcludeClasses("x-hide-display", "x-masked");
-        setTemplate("text", "count(.//*[normalize-space(text())='%s']) > 0");
+        setTemplates("text", "count(.//*[normalize-space(text())='%s']) > 0");
     }
 
     public FieldSet(WebLocator container) {

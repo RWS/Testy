@@ -12,7 +12,7 @@ public class SimpleTextField extends WebLocator implements ITextField {
     public SimpleTextField() {
         setClassName("SimpleTextField");
         setTag("input");
-        setTemplate("input-type", "@type='%s'");
+        setTemplates("input-type", "@type='%s'");
     }
 
     public SimpleTextField(WebLocator container) {

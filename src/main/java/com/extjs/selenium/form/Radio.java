@@ -13,7 +13,7 @@ public class Radio extends ExtJsComponent {
         setTag("input");
         setBaseCls("x-form-radio");
         setLabelPosition("/..");
-        setTemplate("text", "@value='%s'");
+        setTemplates("text", "@value='%s'");
     }
 
     public Radio(String value) {

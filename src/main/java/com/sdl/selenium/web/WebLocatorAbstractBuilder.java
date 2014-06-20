@@ -40,7 +40,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String style;
     private String elCssSelector;
     private String title;
-    private Map<String, String> template = new LinkedHashMap<String, String>();
+    private Map<String, String> templates = new LinkedHashMap<String, String>();
     private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
 
     private String infoMessage;
@@ -415,17 +415,17 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value) {
+    public <T extends WebLocatorAbstractBuilder> T setTemplates(String key, String value) {
         if (value == null) {
-            template.remove(key);
+            templates.remove(key);
         } else {
-            template.put(key, value);
+            templates.put(key, value);
         }
         return (T) this;
     }
 
     public String getTemplate(String key) {
-        return template.get(key);
+        return templates.get(key);
     }
 
     /**
@@ -745,7 +745,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     protected String applyTemplate(String key, Object... arguments) {
-        String tpl = template.get(key);
+        String tpl = templates.get(key);
         if (StringUtils.isNotEmpty(tpl)) {
             return String.format(tpl, arguments);
         }
@@ -763,10 +763,10 @@ public abstract class WebLocatorAbstractBuilder {
         if (!disabled) {
             String enabled = applyTemplate("enabled", getTemplate("enabled"));
             if (enabled != null) {
-                selector += enabled;
+                selector += StringUtils.isNotEmpty(selector) ? " and " + enabled : enabled;
             }
         }
-        selector = "//" + getTag() + (selector != null && (selector.length() > 0) ? ("[" + selector + "]") : "");
+        selector = "//" + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
     }
 
@@ -781,8 +781,8 @@ public abstract class WebLocatorAbstractBuilder {
             selector = "";
             String text = getText();
 
-            if (template.get("text") != null) {
-                return String.format(template.get("text"), text);
+            if (templates.get("text") != null) {
+                return String.format(templates.get("text"), text);
             }
 
             boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);

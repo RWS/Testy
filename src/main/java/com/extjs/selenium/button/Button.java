@@ -31,8 +31,8 @@ public class Button extends ExtJsComponent implements IButton {
         setBaseCls("x-btn");
         setTag("table");
         setVisibility(true);
-        setTemplate("enabled", " and not(contains(@class, 'x-item-disabled'))");
-        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+        setTemplates("enabled", "not(contains(@class, 'x-item-disabled'))");
+        setTemplates("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
         defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
