@@ -32,6 +32,8 @@ import java.io.IOException;
 public class DeployTesty extends TestBase {
     private static final Logger logger = Logger.getLogger(DeployTesty.class);
 
+    // Rulati acest test dupa ce ati oprit orice test!!!!
+
     private static final String DOMAIN_USER = "user-ul de domeniu";
     private static final String DOMAIN_PASS = "parola de domeniu";
 
@@ -86,7 +88,11 @@ public class DeployTesty extends TestBase {
     @Test(dependsOnMethods = "deployOnJenkins")
     public void loginAsAdminSDLNexus() {
         driver.get("http://cfg-mgmt-server:8081/nexus/index.html#view-repositories;oss-sonatype-snapshots");
+        logInNexus.ready();
+        Utils.sleep(1000);
         logInNexus.click();
+        Utils.sleep(1000);
+        userName.ready();
         userName.setValue("admin");
         password.setValue("admin123");
         logIn.click();
@@ -98,6 +104,7 @@ public class DeployTesty extends TestBase {
         browseStorage.setActive();
         searchField.setValue("com/sdl/lt/Testy");
         testyDir.ready(10);
+        Utils.sleep(1000);
         Actions action = new Actions(driver);
         action.contextClick(testyDir.currentElement).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.RETURN).build().perform();
         confirmYesMSG("Delete the selected \"/com/sdl/lt/Testy/\" folder?");
@@ -108,7 +115,7 @@ public class DeployTesty extends TestBase {
         try {
             FileUtils.cleanDirectory(new File(path));
         } catch (IOException e) {
-            logger.debug("not found" + path);
+            logger.debug("not found " + path);
         }
     }
 
