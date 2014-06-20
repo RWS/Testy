@@ -10,7 +10,7 @@ public class Form extends SimpleTextField {
     public Form() {
         setClassName("Form");
         setTag("form");
-        setTemplate("title", "count(.//legend[text()='%s']) > 0");
+        setTemplates("title", "count(.//legend[text()='%s']) > 0");
     }
 
     public Form(WebLocator container) {
