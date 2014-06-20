@@ -1,5 +1,6 @@
 package com.sdl.bootstrap.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.SimpleTextField;
@@ -20,7 +21,7 @@ public class CheckBox extends SimpleTextField implements ICheck {
 
     public CheckBox(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        setLabel(label, SearchType.CONTAINS);
         setLabelPosition("//");
     }
 
