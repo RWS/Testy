@@ -39,7 +39,8 @@ public class TableCell extends Cell {
     @Override
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
-            itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(getItemPathText()) ? "" : (getItemPathText() == null ? "" : "[" + getItemPathText() + "]"));
+            String itemPathText = getItemPathText();
+            itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(itemPathText) ? "" : (itemPathText == null ? "" : "[" + itemPathText + "]"));
         }
         return itemPath;
     }
