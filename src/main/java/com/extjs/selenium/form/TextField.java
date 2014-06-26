@@ -15,7 +15,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     public TextField() {
         setClassName("TextField");
         setTag("input");
-        setElPathSuffix("hidden", "not(@type='hidden')");
+        setElPathSuffix("not-hidden", "not(@type='hidden')");
     }
 
     public TextField(String cls) {
