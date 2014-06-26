@@ -667,6 +667,7 @@ public abstract class WebLocatorAbstractBuilder {
             if (isVisibility()) {
 //               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
                 selector.add("count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", getTemplate("visibility")));
             }
         }
 
@@ -826,6 +827,9 @@ public abstract class WebLocatorAbstractBuilder {
         }
 
         returnPath = afterItemPathCreated(returnPath);
+        if(disabled){
+            returnPath += applyTemplate("disabled", getTemplate("disabled"));
+        }
 
         // add container path
         if (getContainer() != null) {

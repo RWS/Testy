@@ -9,7 +9,8 @@ public class ExtJsComponent extends WebLocator {
 
     public ExtJsComponent() {
         setClassName("ExtJsComponent");
-        setTemplates("visibility", getTemplate("visibility") + " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0");
+        setTemplates("visibility", "count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0");
+        setTemplates("disabled", "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]");
     }
 
     /**
@@ -38,40 +39,6 @@ public class ExtJsComponent extends WebLocator {
     public ExtJsComponent(String text, String cls, WebLocator container) {
         this(cls, container);
         setText(text);
-    }
-
-    /**
-     * Containing baseCls, class, name and style
-     *
-     * @return baseSelector
-     */
-    protected String getBasePathSelector() {
-        String selector = super.getBasePathSelector();
-
-        if (isVisibility()) {
-            selector += " and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0";
-        }
-        // TODO use also if disabled some parents then can;t click/select some children
-        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        return selector.length() == 0 ? null : selector;
-    }
-
-    /**
-     * @param disabled disabled
-     * @return string
-     */
-    @Override
-    public String getPath(boolean disabled) {
-        String returnPath = super.getPath(disabled);
-
-        // TODO this is ok but need test
-        // TODO make more specific for WebLocators in general
-        // TODO x-masked is used in hasMask
-        if (disabled) {
-            returnPath += "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]";
-//            returnPath = "+ [@class*='x-masked' or class=*'x-item-disabled'] " + returnPath + "+ [@class*='x-masked' or class=*'x-item-disabled']";
-        }
-        return returnPath;
     }
 
     @Override
