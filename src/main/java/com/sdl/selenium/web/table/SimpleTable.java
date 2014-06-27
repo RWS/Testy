@@ -252,7 +252,7 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
     }
 
     public boolean waitToPopulate(int seconds) {
-        Row row = getRowLocator(1).setInfoMessage("first row");
+        Row row = getRowLocator(1).setVisibility(true).setInfoMessage("first row");
         WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
         row.setContainer(body);
         return row.waitToRender(seconds);
