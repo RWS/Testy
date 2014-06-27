@@ -25,7 +25,7 @@ public class Button extends WebLocator implements IButton {
         setClassName("Button");
         setBaseCls("btn");
         setTag("button");
-        setTemplates("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
     /**

@@ -15,6 +15,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     public TextField() {
         setClassName("TextField");
         setTag("input");
+        setElPathSuffix("not-hidden", "not(@type='hidden')");
     }
 
     public TextField(String cls) {
@@ -47,20 +48,6 @@ public class TextField extends ExtJsComponent implements ITextField {
             info = super.itemToString();
         }
         return info;
-    }
-
-    /**
-     * Containing baseCls, class, name and style
-     *
-     * @return baseSelector
-     */
-    protected String getBasePathSelector() {
-        String selector = super.getBasePathSelector();
-
-        selector = selector != null ? selector += " and not(@type='hidden')" : "not(@type='hidden')";
-        // TODO use also if disabled some parents then can;t click/select some children
-        // x-panel x-panel-noborder x-masked-relative x-masked  x-border-panel
-        return selector;
     }
 
     public boolean pasteInValue(String value) {

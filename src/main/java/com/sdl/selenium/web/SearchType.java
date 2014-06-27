@@ -52,6 +52,8 @@ public enum SearchType {
      */
     DEEP_CHILD_NODE,
 
+    DEEP_CHILD_NODE_OR_SELF,
+
     /**
      * TODO add better documentation and working example
      * For finding elements that contain text  composed by html nodes

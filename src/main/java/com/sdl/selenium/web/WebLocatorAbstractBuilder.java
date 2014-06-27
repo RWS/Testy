@@ -59,6 +59,14 @@ public abstract class WebLocatorAbstractBuilder {
 
     private WebLocator container;
 
+    protected WebLocatorAbstractBuilder() {
+        setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+        setTemplate("id", "@id='%s'");
+        setTemplate("name", "@name='%s'");
+        setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
+        setTemplate("cls", "@class='%s'");
+    }
+
     // =========================================
     // ========== setters & getters ============
     // =========================================
@@ -415,12 +423,29 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setTemplates(String key, String value) {
+    /**
+     * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
+     * @param key name template
+     * @param value template
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value) {
         if (value == null) {
             templates.remove(key);
         } else {
             templates.put(key, value);
         }
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T addToTemplate(String key, String value) {
+        String template = getTemplate(key);
+        if(StringUtils.isNotEmpty(template)) {
+            template += " and ";
+        } else {
+            template = "";
+        }
+        setTemplate(key, template + value);
         return (T) this;
     }
 
@@ -702,7 +727,7 @@ public abstract class WebLocatorAbstractBuilder {
             // TODO make specific for WebLocator
             if (isVisibility()) {
 //               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                selector.add("count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", isVisibility()));
             }
         }
 
@@ -712,16 +737,16 @@ public abstract class WebLocatorAbstractBuilder {
     protected String getBasePath() {
         List<String> selector = new ArrayList<String>();
         if (hasId()) {
-            selector.add("@id='" + getId() + "'");
+            selector.add(applyTemplate("id", getId()));
         }
         if (hasName()) {
-            selector.add("@name='" + getName() + "'");
+            selector.add(applyTemplate("name", getName()));
         }
         if (hasBaseCls()) {
-            selector.add("contains(concat(' ', @class, ' '), ' " + getBaseCls() + " ')");
+            selector.add(applyTemplate("class", getBaseCls()));
         }
         if (hasCls()) {
-            selector.add("@class='" + getCls() + "'");
+            selector.add(applyTemplate("cls", getCls()));
         }
         if (hasTitle()) {
             selector.add(applyTemplate("title", getTitle()));
@@ -729,8 +754,7 @@ public abstract class WebLocatorAbstractBuilder {
 
         if (hasClasses()) {
             for (String cls : getClasses()) {
-//                selector.append(" and contains(@class, '").append(cls).append("')");
-                selector.add("contains(concat(' ', @class, ' '), ' " + cls + " ')");
+                selector.add(applyTemplate("class", cls));
             }
         }
         if (hasExcludeClasses()) {
@@ -791,35 +815,22 @@ public abstract class WebLocatorAbstractBuilder {
             }
             String pathText = "text()";
 
-            boolean useChildNodesSearch = searchTextType.contains(SearchType.CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE);
+            boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
+            boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
             if (useChildNodesSearch) {
-                boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE);
                 selector += "count(" + (isDeepSearch ? "*//" : "") + "text()[";
                 pathText = ".";
             }
 
-            if (searchTextType.contains(SearchType.TRIM)) {
-                pathText = "normalize-space(" + pathText + ")";
-            }
+            selector += getTextSearchTypePath(text, hasContainsAll, pathText);
 
-            if (searchTextType.contains(SearchType.EQUALS)) {
-                selector += pathText + "=" + text;
-            } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
-                selector += "starts-with(" + pathText + "," + text + ")";
-            } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
-                String splitChar = String.valueOf(text.charAt(0));
-                Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
-                String[] strings = pattern.split(text.substring(1));
-                for (int i = 0; i < strings.length; i++) {
-                    strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
-                }
-                String operator = hasContainsAll ? " and " : " or ";
-                selector += hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
-            } else {
-                selector += "contains(" + pathText + "," + text + ")";
-            }
             if (useChildNodesSearch) {
                 selector += "]) > 0";
+            }
+
+            if(searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+                String selfPath = getTextSearchTypePath(text, hasContainsAll, "text()");
+                selector = "("+ selfPath +" or " + selector + ")";
             }
 
             if (searchTextType.contains(SearchType.HTML_NODE)) {
@@ -828,6 +839,31 @@ public abstract class WebLocatorAbstractBuilder {
 
                 selector = "(" + a + " or " + b + ")";
             }
+        }
+        return selector;
+    }
+
+    private String getTextSearchTypePath(String text, boolean hasContainsAll, String pathText) {
+        String selector;
+        if (searchTextType.contains(SearchType.TRIM)) {
+            pathText = "normalize-space(" + pathText + ")";
+        }
+
+        if (searchTextType.contains(SearchType.EQUALS)) {
+            selector = pathText + "=" + text;
+        } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
+            selector = "starts-with(" + pathText + "," + text + ")";
+        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+            String splitChar = String.valueOf(text.charAt(0));
+            Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
+            String[] strings = pattern.split(text.substring(1));
+            for (int i = 0; i < strings.length; i++) {
+                strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
+            }
+            String operator = hasContainsAll ? " and " : " or ";
+            selector = hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
+        } else {
+            selector = "contains(" + pathText + "," + text + ")";
         }
         return selector;
     }
@@ -848,7 +884,31 @@ public abstract class WebLocatorAbstractBuilder {
      * @return String
      */
     public String getPath(boolean disabled) {
-        return getPathBuilder().getPath(disabled);
+        String returnPath;
+        if (hasElPath()) {
+            returnPath = getElPath();
+
+            String baseItemPath = getBaseItemPath();
+            if (baseItemPath != null && !baseItemPath.equals("")) {
+                // TODO "inject" baseItemPath to elPath
+//                logger.warn("TODO must inject: \"" + baseItemPath + "\" in \"" + returnPath + "\"");
+            }
+        } else {
+            returnPath = getItemPath(disabled);
+        }
+
+        returnPath = afterItemPathCreated(returnPath);
+        if(disabled){
+            returnPath += applyTemplate("disabled", getTemplate("disabled"));
+        }
+
+        // add container path
+        if (getContainer() != null) {
+            returnPath = getContainer().getPath() + returnPath;
+        }
+
+//        logger.debug(returnPath);
+        return returnPath;
     }
 
     @Override

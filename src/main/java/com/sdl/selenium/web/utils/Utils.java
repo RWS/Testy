@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.web.WebDriverConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -13,8 +14,7 @@ import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 /**
  * TODO Sa fie o metoda de Utils care sa poti seta din WebLocator path-ul unde sa salveze imaginile in dependenta de WebDriver ori Selenium
@@ -176,6 +176,6 @@ public class Utils {
         return Arrays.equals(a, b);
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
     }
 }

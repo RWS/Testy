@@ -11,7 +11,7 @@ public class TableRow extends Row {
         setRenderMillis(200);
         setClassName("TableRow");
         setTag("tr");
-        setVisibility(true);
+        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public TableRow(WebLocator container) {
@@ -38,17 +38,5 @@ public class TableRow extends Row {
     public TableRow(WebLocator table, int indexRow, Cell... cells) {
         this(table, indexRow);
         setRowCells(cells);
-    }
-
-    @Override
-    protected String getItemPathText() {
-        // TODO think about solution for this
-        // "{0}"
-        // %s or count(.//*[%s]) > 0
-        String selector = super.getItemPathText();
-        if (!"".equals(selector) && selector != null) {
-            selector = selector + " or count(.//*[" + selector + "]) > 0";
-        }
-        return selector;
     }
 }

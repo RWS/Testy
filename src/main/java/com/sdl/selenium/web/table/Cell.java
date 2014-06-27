@@ -7,9 +7,4 @@ public abstract class Cell extends WebLocator {
     private static final Logger logger = Logger.getLogger(Cell.class);
 
     //public abstract boolean ready(boolean waitRows);
-
-    @Override
-    protected String getItemPathText(){
-        return super.getItemPathText();
-    }
 }
