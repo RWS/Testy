@@ -11,6 +11,7 @@ public class TableCell extends Cell {
         setRenderMillis(200);
         setClassName("TableCell");
         setTag("td");
+        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public TableCell(WebLocator container) {
@@ -42,14 +43,5 @@ public class TableCell extends Cell {
             itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(getItemPathText()) ? "" : (getItemPathText() == null ? "" : "[" + getItemPathText() + "]"));
         }
         return itemPath;
-    }
-
-    @Override
-    protected String getItemPathText() {
-        String selector = super.getItemPathText();
-        if (!"".equals(selector) && selector != null) {
-            selector = selector + " or count(.//*[" + selector + "]) > 0";
-        }
-        return selector;
     }
 }

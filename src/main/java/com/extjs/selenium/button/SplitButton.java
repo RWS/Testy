@@ -10,7 +10,7 @@ public class SplitButton extends Button {
     private static final Logger logger = Logger.getLogger(Button.class);
 
     public SplitButton() {
-        setClassName("Button");
+        setClassName("SplitButton");
         setBaseCls("x-btn");
         //logger.debug(getClassName() + "() constructor");
         setVisibility(true);

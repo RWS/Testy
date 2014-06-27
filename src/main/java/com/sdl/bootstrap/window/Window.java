@@ -9,7 +9,7 @@ public class Window extends WebLocator implements IWebLocator {
 
     public Window() {
         setClassName("Window");
-        setTemplates("title", "count(*[contains(@class,'-header')]//*[text()='%s']) > 0");
+        setTemplate("title", "count(*[contains(@class,'-header')]//*[text()='%s']) > 0");
         setElPathSuffix("dialog-visible", "@role='dialog' and @aria-hidden='false'");
     }
 

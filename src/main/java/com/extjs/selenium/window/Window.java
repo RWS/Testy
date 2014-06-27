@@ -37,7 +37,7 @@ public class Window extends Panel {
         setClassName("Window");
         setBaseCls("x-window");
         setHeaderBaseCls(getBaseCls());
-        setTemplates("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
         setElPathSuffix("exclude-hide-cls", null);
         // test for IE be cause of :
         // http://jira.openqa.org/browse/SEL-545

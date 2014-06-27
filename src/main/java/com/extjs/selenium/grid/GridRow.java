@@ -43,8 +43,8 @@ public class GridRow extends Row {
     public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType searchType) {
         this(gridPanel);
         setTag("*");
-        GridCell cell = new GridCell(null, searchElement, searchType);
-        setElPath("//" + getTag() + "[" + getSearchPaths(searchColumnId, cell.getItemPathText()) + "]");
+        WebLocator cellEl = new WebLocator().setText(searchElement, searchType);
+        setElPath("//" + getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 
     public GridRow(GridPanel gridPanel, Cell... cells) {
@@ -53,16 +53,16 @@ public class GridRow extends Row {
         setRowCells(cells);
     }
 
-    private String getSearchPaths(String searchColumnId, String textCondition) {
-        return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[" + textCondition + "]) > 0";
+    private String getSearchPaths(String searchColumnId, WebLocator cellEl) {
+        return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + cellEl.getPath() + ") > 0";
     }
 
     @Override
-    protected String getSearchPath(int columnIndex, String textCondition, String tag) {
+    protected String getSearchPath(int columnIndex, WebLocator cellEl, String tag) {
         if (tag == null || "".equals(tag) || "*".equals(tag)) {
             tag = "td";
         }
-        return "count(*[contains(@class, 'x-grid3-row-table')]//" + tag + "[" + columnIndex + "]//*[" + textCondition + "]) > 0";
+        return "count(*[contains(@class, 'x-grid3-row-table')]//" + tag + "[" + columnIndex + "]" + cellEl.getPath() + ") > 0";
     }
 
     private String getSearchPath(int columnIndex, GridCell cell) {

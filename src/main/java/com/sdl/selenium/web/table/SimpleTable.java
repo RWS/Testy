@@ -108,22 +108,6 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
         return new TableRow(this, searchElement, searchType);
     }
 
-    private String getSearchTypePath(String searchElement, SearchType searchType) {
-        String selector = "";
-        if (SearchType.EQUALS.equals(searchType)) {
-            selector += "text()='" + searchElement + "'";
-        } else if (SearchType.CONTAINS.equals(searchType)) {
-            selector += "contains(text(),'" + searchElement + "')";
-        } else if (SearchType.STARTS_WITH.equals(searchType)) {
-            selector += "starts-with(text(),'" + searchElement + "')";
-        } else {
-            logger.warn("searchType did not math to any accepted values");
-            selector = "";
-        }
-        selector = selector + " or count(.//*[" + selector + "]) > 0";
-        return selector;
-    }
-
     @Override
     public TableCell getCell(int rowIndex, int columnIndex) {
         Row row = getRowLocator(rowIndex);
@@ -136,26 +120,23 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
      * @return TableCell
      */
     public TableCell getTableCell(String searchElement, SearchType searchType) {
-        String selector = getSearchTypePath(searchElement, searchType);
-        return new TableCell(this).setElPath("//tr//td[" + selector + "]");
+        WebLocator row = new WebLocator(this).setTag("tr");
+        return new TableCell(row).setText(searchElement, searchType);
     }
 
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
         Row row = getRowLocator(rowIndex);
-        return new TableCell(row).setElPath("//td[" + getSearchTypePath(text, SearchType.EQUALS) + "][" + columnIndex + "]");
+        String selector = new WebLocator().setText(text, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE_OR_SELF).setTag("td").getPath();
+        return new TableCell(row).setElPath(selector + "[" + columnIndex + "]");
     }
 
     public TableCell getTableCell(String searchElement, String columnText, SearchType searchType) {
         TableRow tableRow = getTableRow(searchElement, SearchType.CONTAINS);
-        return getTableCellWithText(tableRow, columnText, searchType);
+        return new TableCell(tableRow).setText(columnText, searchType);
     }
 
     public TableCell getTableCell(String searchElement, int columnIndex, SearchType searchType) {
         return new TableCell(new TableRow(this, searchElement, searchType), columnIndex);
-    }
-
-    private TableCell getTableCellWithText(TableRow tableRow, String columnText, SearchType searchType) {
-        return new TableCell(tableRow).setElPath("//td[" + getSearchTypePath(columnText, searchType) + "]");
     }
 
     @Override
