@@ -15,9 +15,9 @@ import static org.testng.Assert.assertTrue;
 
 public class RadioGroupTest extends TestBase {
 
-    Window radioGroupWindow = new Window("RadioGroupsWindow");
-    RadioGroup enabledRadioGroup = new RadioGroup(radioGroupWindow, "enabledRadio");
-    RadioGroup disabledRadioGroup = new RadioGroup(radioGroupWindow, "disabledRadio");
+    private Window radioGroupWindow = new Window("RadioGroupsWindow");
+    private RadioGroup enabledRadioGroup = new RadioGroup(radioGroupWindow, "enabledRadio");
+    private RadioGroup disabledRadioGroup = new RadioGroup(radioGroupWindow, "disabledRadio");
 
     @BeforeClass
     public void startTests() {

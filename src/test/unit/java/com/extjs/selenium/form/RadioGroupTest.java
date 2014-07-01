@@ -12,6 +12,7 @@ public class RadioGroupTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new RadioGroup(), "//*[contains(concat(' ', @class, ' '), ' x-form-radio-group ')]"},
+                {new RadioGroup(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-form-radio-group ')]"},
                 {new RadioGroup(container, "Name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-form-radio-group ')]"},
         };
     }
