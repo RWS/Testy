@@ -31,7 +31,7 @@ public class TabPanel extends ExtJsComponent {
         setContainer(container);
     }
 
-    public String getTitlePath() {
+    private String getTitlePath() {
         String returnPath = "";
         if (hasText()) {
             returnPath = "//*[contains(@class,'x-tab-panel-header')]//*[" + getItemPathText() + "]";
@@ -44,7 +44,7 @@ public class TabPanel extends ExtJsComponent {
      *
      * @return the path of the main TabPanel
      */
-    public String getBaseTabPanelPath() {
+    private String getBaseTabPanelPath() {
         String selector = getBasePath();
         if (hasText()) {
 //            selector += " and count(*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']) > 0"; //[viorel]
