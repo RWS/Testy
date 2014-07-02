@@ -38,12 +38,12 @@ Sa presupunem ca doriti sa faceti teste automate pe o aplicatie web folosind fra
 
 Creiem un proiect java cu structura maven:
 
-AutomationProject
-    -src
-        -main
-            -java
-            -resources
-        -test
-            -java
-            -resources
-    -pom.xml
+    AutomationProject
+        -src
+            -main
+                -java
+                -resources
+            -test
+                -java
+                -resources
+        -pom.xml
