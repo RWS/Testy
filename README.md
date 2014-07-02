@@ -45,5 +45,18 @@ Creiem un proiect java cu structura maven:
     |   |   `--resources
     |   `--test
     |       |--java
+    |       |    `--com
+    |       |        `--mycompany
+    |       |            `--app
+    |       |               |--tests
+    |       |               |    `--FirstTest.java
+    |       |               |--TestBase.java
+    |       |               `--InputData.java
     |       `--resources
+    |           |--log4j.properties
+    |           |--webLocator.properties
+    |           |--localhost-chrome.properties
+    |           |--localhost-firefox.properties
+    |           |--localhost-iexplorer.properties
+    |           |--localhost.properties
     `--pom.xml
