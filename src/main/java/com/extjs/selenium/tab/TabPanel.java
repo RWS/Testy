@@ -62,9 +62,8 @@ public class TabPanel extends ExtJsComponent {
     @Override
     public String getItemPath(boolean disabled) {
         String selector = getBaseTabPanelPath();
-            selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO
-                    "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
-//        }
+        selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO
+                "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
         return selector;
     }
 
@@ -91,7 +90,7 @@ public class TabPanel extends ExtJsComponent {
             WebLocatorUtils.doExecuteScript(script);
             activated = true; // TODO verify when is not executed
         }
-        if(activated){
+        if (activated) {
             Utils.sleep(300); // need to make sure this tab is rendered
         }
         return activated;
