@@ -39,7 +39,7 @@ public class Tab extends WebLocator {
      *
      * @return the path of the main TabPanel
      */
-    public String getBaseTabPanelPath() {
+    private String getBaseTabPanelPath() {
         String selector = getBasePath();
         if (hasText()) {
             selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']//a[" + getItemPathText() + "]) > 0";

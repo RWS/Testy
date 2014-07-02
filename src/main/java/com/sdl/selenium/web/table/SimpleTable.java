@@ -255,7 +255,7 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
         Row row = getRowLocator(1).setVisibility(true).setInfoMessage("first row");
         WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
         row.setContainer(body);
-        return row.waitToRender(seconds);
+        return row.waitToRender(seconds * 1000L);
     }
 
     public boolean ready(boolean waitRows) {

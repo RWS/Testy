@@ -31,3 +31,32 @@ When running integration test from Intellij IDEA run :
 
     src\test\resources\integration\testngIntegration.xml
 
+How to use Testy?
+-----------------
+
+Sa presupunem ca doriti sa faceti teste automate pe o aplicatie web folosind framework-ul Testy.
+
+Creiem un proiect java cu structura maven:
+
+    AutomationProject
+    |--src
+    |   |--main
+    |   |   |--java
+    |   |   `--resources
+    |   `--test
+    |       |--java
+    |       |    `--com
+    |       |        `--mycompany
+    |       |            `--app
+    |       |               |--tests
+    |       |               |    `--FirstTest.java
+    |       |               |--TestBase.java
+    |       |               `--InputData.java
+    |       `--resources
+    |           |--log4j.properties
+    |           |--webLocator.properties
+    |           |--localhost-chrome.properties
+    |           |--localhost-firefox.properties
+    |           |--localhost-iexplorer.properties
+    |           `--localhost.properties
+    `--pom.xml

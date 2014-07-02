@@ -847,7 +847,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public boolean waitToPopulate(int seconds) {
         //logger.debug("waitToPopulate: " + seconds + "; " + toString());
         WebLocator firstRow = getRowLocator(1).setInfoMessage("first row");
-        return firstRow.waitToRender(seconds);
+        return firstRow.waitToRender(seconds * 1000L);
     }
 
     public boolean ready() {

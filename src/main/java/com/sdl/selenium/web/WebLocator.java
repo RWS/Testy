@@ -336,10 +336,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
+     * @deprecated use waitToRender(1000L) (with millis)
      * @param seconds time in seconds
      * @return true | false
      */
     public boolean waitToRender(int seconds) {
+        LOGGER.warn("waitToRender(seconds) is deprecated, please use waitToRender(millis). (eg. waitToRender(1000L).");
         return waitToRender((long) seconds * 1000);
     }
 
