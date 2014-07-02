@@ -58,5 +58,5 @@ Creiem un proiect java cu structura maven:
     |           |--localhost-chrome.properties
     |           |--localhost-firefox.properties
     |           |--localhost-iexplorer.properties
-    |           |--localhost.properties
+    |           `--localhost.properties
     `--pom.xml
