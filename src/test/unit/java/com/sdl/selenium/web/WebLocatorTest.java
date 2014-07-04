@@ -11,7 +11,7 @@ import static org.testng.Assert.assertEquals;
 public class WebLocatorTest {
     private static final Logger logger = Logger.getLogger(WebLocatorTest.class);
 
-    public static WebLocator container = new WebLocator("container");
+    private static WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -28,12 +28,12 @@ public class WebLocatorTest {
                 {new WebLocator().setId("ID").setClasses("Cls"), "//*[@id='ID' and contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator().setClasses("Cls").setText("Text"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and contains(text(),'Text')]"},
                 {new WebLocator().setClasses("Cls").setText("Text").setElPath("//a//div//input"), "//a//div//input"},
-                {new WebLocator().setClasses("Cls").setElPathSuffix("count(.//[text()='Texts']) > 0"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and count(.//[text()='Texts']) > 0]"},
+                {new WebLocator().setClasses("Cls").setElPathSuffix("has-test", "count(.//[text()='Texts']) > 0"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and count(.//[text()='Texts']) > 0]"},
                 {new WebLocator().setTag("textarea"), "//textarea"},
                 {new WebLocator(container).setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
                 {new WebLocator().setClasses("Cls").setTag("textarea"), "//textarea[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(container, "//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
-                {new WebLocator().setElPathSuffix("count(div) > 0"), "//*[count(div) > 0]"},
+                {new WebLocator().setElPathSuffix("has-div", "count(div) > 0"), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
                 {new WebLocator().setTag("body").setExcludeClasses("masked"), "//body[not(contains(@class, 'masked'))]"},
         };
@@ -46,7 +46,7 @@ public class WebLocatorTest {
         return new Object[][]{
                 {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(text(),'" + text + "')]"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
-                {new WebLocator().setClasses(cls).setText(text , SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
 
                 {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS, SearchType.CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(text()[contains(.,'" + text + "')]) > 0]"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS, SearchType.CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(text()[.='" + text + "']) > 0]"},
@@ -129,7 +129,7 @@ public class WebLocatorTest {
     }
 
     @Test
-    public void createInstancesWithBuilders(){
+    public void createInstancesWithBuilders() {
         WebLocator locatorBuilder1 = new WebLocator().setTag("div").setId("ID1");
         assertEquals(locatorBuilder1.getTag(), "div");
         assertEquals(locatorBuilder1.getId(), "ID1");
@@ -137,19 +137,19 @@ public class WebLocatorTest {
     }
 
     @Test
-    public void shouldShowClassInToStringWhenHasOneClass(){
+    public void shouldShowClassInToStringWhenHasOneClass() {
         WebLocator locator = new WebLocator().setClasses("cls1");
         assertEquals(locator.toString(), "cls1");
     }
 
     @Test
-    public void shouldShowClassesInToStringWhenHasManyClass(){
+    public void shouldShowClassesInToStringWhenHasManyClass() {
         WebLocator locator = new WebLocator().setClasses("cls1", "cls2");
         assertEquals(locator.toString(), "[cls1, cls2]");
     }
 
     @Test
-    public void resetSearchTextType(){
+    public void resetSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.EQUALS);
         assertEquals(locator.getPath(), "//*[text()='text']");
         locator.setSearchTextType(null);
@@ -157,7 +157,7 @@ public class WebLocatorTest {
     }
 
     @Test
-    public void setSearchTextType(){
+    public void setSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.STARTS_WITH);
         assertEquals(locator.getSearchTextType().size(), 1);
     }

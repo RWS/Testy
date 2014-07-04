@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class GridCellTest {
-    public static GridPanel grid = new GridPanel();
+    private static GridPanel grid = new GridPanel();
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -22,7 +22,8 @@ public class GridCellTest {
                 {new GridCell(grid, 2, "|text|exe", SearchType.CONTAINS_ANY),       grid.getPath() + "//td[2]//*[(contains(text(),'text') or contains(text(),'exe'))]"},
                 {new GridCell(grid, "text", SearchType.CONTAINS),    grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},
                 {new GridCell(grid, "text", SearchType.STARTS_WITH), grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and starts-with(text(),'text')]"},
-                {new GridCell(grid.getRow(new GridCell(2, "text", SearchType.EQUALS))).setPosition(8).setText("Continue"), grid.getPath() + "//*[count(*[contains(@class, 'x-grid3-row-table')]//td[2]//*[text()='text']) > 0]//td[8]//*[contains(text(),'Continue')]"},
+                {new GridCell(grid.getRow(new GridCell(2, "text", SearchType.EQUALS))).setPosition(8).setText("Continue"), grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker')) and count(*[contains(@class, 'x-grid3-row-table')]//td[2]//*[text()='text']) > 0]//td[8]//*[contains(text(),'Continue')]"},
+                {new GridCell(grid.getRow(new GridCell(2, "text", SearchType.EQUALS))).setPosition(8).setText("Continue").setVisibility(true), grid.getPath() + "//*[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker')) and count(*[contains(@class, 'x-grid3-row-table')]//td[2]//*[text()='text']) > 0]//td[8]//*[contains(text(),'Continue') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
         };
     }
 

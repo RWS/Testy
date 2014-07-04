@@ -57,17 +57,17 @@ public class UploadFile extends WebLocator implements Upload {
      */
     @Override
     public boolean upload(String... filePath) {
-        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-new").setElPathSuffix("count(.//i[@class='icon-folder-open']) > 0");
+        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-new").setElPathSuffix("icon-folder-open", "count(.//i[@class='icon-folder-open']) > 0");
         return upload(uploadButton, filePath);
     }
 
     public boolean reUpload(String... filePath) {
-        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setElPathSuffix("count(.//i[@class='icon-refresh']) > 0");
+        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setElPathSuffix("icon-refresh", "count(.//i[@class='icon-refresh']) > 0");
         return upload(uploadButton, filePath);
     }
 
     public boolean removeFile() {
-        WebLocator removeButton = new WebLocator(this).setTag("a").setClasses("fileupload-exists").setElPathSuffix("count(.//i[@class='icon-trash']) > 0");
+        WebLocator removeButton = new WebLocator(this).setTag("a").setClasses("fileupload-exists").setElPathSuffix("icon-trash", "count(.//i[@class='icon-trash']) > 0");
         return removeButton.clickAt();
     }
 
