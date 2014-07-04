@@ -1,28 +1,22 @@
 package com.sdl.bootstrap.window;
-import com.sdl.selenium.web.SearchType;
+
 import com.sdl.selenium.web.WebLocator;
 
 public class PopOver extends WebLocator {
 
-    private WebLocator container;
-
-    private PopOver(){
+    private PopOver() {
         setInfoMessage("PopOver");
-        container = new WebLocator().setCls("popover-title");
+        setClasses("popover");
+        setTemplate("title", "count(.//*[@class='popover-title' and text()='%s'])> 0");
     }
 
     public PopOver(String title, String message) {
-        this();
-        container.setText(title, SearchType.EQUALS);
-        setContainer(container);
-        setElPath("//following-sibling::*[@class='popover-content' and text()='" + message + "']");
-
+        this(title);
+        setTemplate("title", "count(.//*[@class='popover-title' and text()='%s']//following-sibling::*[@class='popover-content' and text()='" + message + "'])> 0");
     }
 
     public PopOver(String title) {
         this();
-        container.setText(title, SearchType.EQUALS);
-        setContainer(container);
-        setElPath("//following-sibling::*[@class='popover-content']");
+        setTitle(title);
     }
 }

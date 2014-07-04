@@ -1,18 +1,20 @@
 package com.sdl.bootstrap.window;
 
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.bootstrap.form.Form;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class PopOverTest {
-    public static WebLocator container = new WebLocator("container");
+    private static Form container = new Form(null, "Form");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new PopOver("Title"),             "//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content']"},
-                {new PopOver("Title", "Message"),  "//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message']"},
+                {new PopOver("Title"),             "//*[count(.//*[@class='popover-title' and text()='Title'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
+                {new PopOver("Title").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[count(.//*[@class='popover-title' and text()='Title'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
+                {new PopOver("Title", "Message"),  "//*[count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
+                {new PopOver("Title", "Message").setContainer(container),  "//form[count(.//legend[text()='Form']) > 0]//*[count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
         };
     }
 
