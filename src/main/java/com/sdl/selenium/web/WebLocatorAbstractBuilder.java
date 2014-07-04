@@ -400,12 +400,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * <p>Example:</p>
-     * <pre>
-     *     TODO
-     * </pre>
-     *
+     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
@@ -414,6 +409,17 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Example:</p>
+     * <pre>
+     *     TODO
+     * </pre>
+     *
+     * @param key suffix key
+     * @param elPathSuffix additional identification xpath element that will be added at the end
+     * @return this element
+     */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String key, String elPathSuffix) {
         if (elPathSuffix == null) {
             this.elPathSuffix.remove(key);

@@ -100,7 +100,7 @@ public class DeployTesty extends TestBase {
 
     @Test(dependsOnMethods = "loginAsAdminSDLNexus")
     public void removeFormSDLNexus() {
-        repositoryGridPanel.rowSelect("oss-sonatype-snapshots");
+        repositoryGridPanel.rowSelect("sonatype-nexus-snapshots");
         browseStorage.setActive();
         searchField.setValue("com/sdl/lt/Testy");
         testyDir.ready(10);

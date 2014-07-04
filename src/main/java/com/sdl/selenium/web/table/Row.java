@@ -31,7 +31,7 @@ public abstract class Row extends WebLocator {
                 logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
             }
         }
-        setElPath("//" + getTag() + (isVisibility() ? "[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]" : "") + "[" + Utils.fixPathSelector(path) + "]");
+        setElPathSuffix("row-cells", Utils.fixPathSelector(path));
     }
 
     protected String getSearchPath(int columnIndex, WebLocator cellEl, String tag) {
