@@ -49,7 +49,7 @@ public class DownloadFile extends WebLocator implements Download {
         }
     }
 
-    private void openBrowse() {
+    public void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
         driver.switchTo().window(driver.getWindowHandle());
         focus();
