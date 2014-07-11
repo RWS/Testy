@@ -58,4 +58,8 @@ public class DownloadFile extends WebLocator implements Download {
         builder.click().build().perform();
         driver.switchTo().defaultContent();
     }
+
+    public boolean isDisabled(){
+        return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
+    }
 }
