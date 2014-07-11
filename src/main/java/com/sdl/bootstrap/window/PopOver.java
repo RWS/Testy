@@ -1,5 +1,8 @@
 package com.sdl.bootstrap.window;
 
+import com.sdl.bootstrap.button.Button;
+import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.web.WebLocator;
 
 public class PopOver extends WebLocator {
@@ -18,5 +21,13 @@ public class PopOver extends WebLocator {
     public PopOver(String title) {
         this();
         setTitle(title);
+    }
+
+    public boolean close() {
+        return new Button(this, "Close").click() && waitClose(this, 2000);
+    }
+
+    private boolean waitClose(WebLocator popOver, long time) {
+        return new ConditionManager(time).add(new ElementRemovedSuccessCondition(popOver)).execute().isSuccess();
     }
 }
