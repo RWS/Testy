@@ -34,9 +34,8 @@ When running integration test from Intellij IDEA run :
 How to use Testy?
 -----------------
 
-Sa presupunem ca doriti sa faceti teste automate pe o aplicatie web folosind framework-ul Testy.
-
-Creiem un proiect java cu structura maven:
+Example:
+When you want to create tests using Testy you need to create a maven project with this structure:
 
     AutomationProject
     |--src
@@ -62,7 +61,9 @@ Creiem un proiect java cu structura maven:
     |           `--localhost.properties
     `--pom.xml
 
-log4j.properties contine:
+
+
+log4j.properties contains:
 
     ### set log levels - for more verbose logging change 'info' to 'debug' ###
     ### debug, info, warn, error, fatal, log ###
@@ -79,7 +80,7 @@ log4j.properties contine:
     log4j.logger.com=debug
     log4j.logger.org=info
 
-webLocator.properties contine:
+webLocator.properties contains:
 
     weblocator.log.containers=false
     weblocator.log.useClassName=false
@@ -89,7 +90,7 @@ webLocator.properties contine:
     weblocator.defaults.renderMillis=3000
     weblocator.defaults.searchType=contains
 
-localhost.properties contine:
+localhost.properties contains:
 
     browser.config=localhost-firefox.properties
     #browser.config=localhost-chrome.properties
@@ -97,13 +98,13 @@ localhost.properties contine:
 
     server.url=http://localhost:8080
 
-localhost-chrome.properties contine:
+localhost-chrome.properties contains:
 
     browser=chrome
     browser.driver.path=\\drivers\\chromedriver.exe
     browser.download.dir=\\temp\\
 
-localhost-firefox.properties contine:
+localhost-firefox.properties contains:
 
     browser=firefox
     browser.version=
@@ -133,3 +134,20 @@ localhost-firefox.properties contine:
     security.warn_viewing_mixed=false
     security.warn_viewing_mixed.show_once=false
 
+
+
+Problems
+--------
+
+Manual deploy maven in local .m2 folder
+1) run :
+        
+        mvn package
+        
+2) copy next files into .m2\repository\com\sdl\lt\Testy\1.7.3-SNAPSHOT\
+
+    target/Testy-1.7.3-SNAPSHOT.jar
+    target/Testy-1.7.3-SNAPSHOT-javadoc.jar
+    target/Testy-1.7.3-SNAPSHOT-sources.jar
+    
+3) copy pom.xml to .m2\repository\com\sdl\lt\Testy\1.7.3-SNAPSHOT\Testy-1.7.3-SNAPSHOT.pom

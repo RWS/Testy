@@ -351,7 +351,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     "fireOnThis.dispatchEvent(evObj);";
         }
         Object o = executeScript(script);
-        logger.debug("result executeScript: " + o);
+        if(o != null) {
+            logger.debug("result executeScript: " + o);
+        }
     }
 
     @Override

@@ -49,7 +49,7 @@ public class DownloadFile extends WebLocator implements Download {
         }
     }
 
-    private void openBrowse() {
+    public void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
         driver.switchTo().window(driver.getWindowHandle());
         focus();
@@ -57,5 +57,9 @@ public class DownloadFile extends WebLocator implements Download {
         builder.moveToElement(currentElement).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
+    }
+
+    public boolean isDisabled(){
+        return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
     }
 }
