@@ -87,7 +87,7 @@ public class DeployTesty extends TestBase {
 
     @Test(dependsOnMethods = "deployOnJenkins")
     public void loginAsAdminSDLNexus() {
-        driver.get("http://cfg-mgmt-server:8081/nexus/index.html#view-repositories;oss-sonatype-snapshots");
+        driver.get("http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots");
         logInNexus.ready();
         Utils.sleep(1000);
         logInNexus.click();
@@ -100,7 +100,7 @@ public class DeployTesty extends TestBase {
 
     @Test(dependsOnMethods = "loginAsAdminSDLNexus")
     public void removeFormSDLNexus() {
-        repositoryGridPanel.rowSelect("sonatype-nexus-snapshots");
+        repositoryGridPanel.rowSelect("OSS Sonatype Snapshots");
         browseStorage.setActive();
         searchField.setValue("com/sdl/lt/Testy");
         testyDir.ready(10);
