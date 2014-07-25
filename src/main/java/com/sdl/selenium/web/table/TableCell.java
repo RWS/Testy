@@ -24,14 +24,14 @@ public class TableCell extends Cell {
         setPosition(columnIndex);
     }
 
-    public TableCell(int columnIndex, String columnText, SearchType ...searchType) {
+    public TableCell(int columnIndex, String columnText, SearchType... searchType) {
         this();
         setPosition(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }
 
-    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType ...searchType) {
+    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
         this(container, columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
@@ -40,8 +40,7 @@ public class TableCell extends Cell {
     @Override
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
-            String itemPathText = getItemPathText();
-            itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(itemPathText) ? "" : (itemPathText == null ? "" : "[" + itemPathText + "]"));
+            itemPath = "//" + getTag() + "[" + getPosition() + "]" + itemPath.substring(4);
         }
         return itemPath;
     }
