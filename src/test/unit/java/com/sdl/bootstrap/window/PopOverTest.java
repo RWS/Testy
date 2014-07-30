@@ -11,10 +11,10 @@ public class PopOverTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new PopOver("Title"),             "//*[count(.//*[@class='popover-title' and text()='Title'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
-                {new PopOver("Title").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[count(.//*[@class='popover-title' and text()='Title'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
-                {new PopOver("Title", "Message"),  "//*[count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
-                {new PopOver("Title", "Message").setContainer(container),  "//form[count(.//legend[text()='Form']) > 0]//*[count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0 and contains(concat(' ', @class, ' '), ' popover ')]"},
+                {new PopOver("Title"),             "//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title'])> 0]"},
+                {new PopOver("Title").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title'])> 0]"},
+                {new PopOver("Title", "Message"),  "//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0]"},
+                {new PopOver("Title", "Message").setContainer(container),  "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0]"},
         };
     }
 

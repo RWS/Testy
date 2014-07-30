@@ -13,9 +13,9 @@ public class TooltipTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Tooltip(),                      "//*[contains(concat(' ', @class, ' '), ' tooltip ')]"},
-                {new Tooltip("Message"),             "//*[count(//*[@class='tooltip-inner' and text()='Message']) > 0 and contains(concat(' ', @class, ' '), ' tooltip ')]"},
-                {new Tooltip("Message").setId("Id"), "//*[@id='Id' and count(//*[@class='tooltip-inner' and text()='Message']) > 0 and contains(concat(' ', @class, ' '), ' tooltip ')]"},
-                {new Tooltip("Message").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[count(//*[@class='tooltip-inner' and text()='Message']) > 0 and contains(concat(' ', @class, ' '), ' tooltip ')]"},
+                {new Tooltip("Message"),             "//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+                {new Tooltip("Message").setId("Id"), "//*[@id='Id' and contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+                {new Tooltip("Message").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
         };
     }
 

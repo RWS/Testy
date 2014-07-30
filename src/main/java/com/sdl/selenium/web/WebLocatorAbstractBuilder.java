@@ -718,10 +718,6 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasCls()) {
             selector.add(applyTemplate("cls", getCls()));
         }
-        if (hasTitle()) {
-            selector.add(applyTemplate("title", getTitle()));
-        }
-
         if (hasClasses()) {
             for (String cls : getClasses()) {
                 selector.add(applyTemplate("class", cls));
@@ -731,6 +727,9 @@ public abstract class WebLocatorAbstractBuilder {
             for (String excludeClasses : getExcludeClasses()) {
                 selector.add("not(contains(@class, '" + excludeClasses + "'))");
             }
+        }
+        if (hasTitle()) {
+            selector.add(applyTemplate("title", getTitle()));
         }
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
