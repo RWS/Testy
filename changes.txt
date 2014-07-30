@@ -1,5 +1,10 @@
 CHANGES:
 
+version 1.7.5-SNAPSHOT
+1) webdriver version 2.42.2
+2) fix TableCell accept visibility
+3) add Tooltip class
+
 version 1.7.3-SNAPSHOT
 1) revert void fireEventWithJS
 2) remove unused Utils.fixPathSelector
@@ -17,7 +22,7 @@ version 1.7.2-SNAPSHOT
         <repositories>
             <repository>
                 <id>nexus</id>
-                <url>http://cfg-mgmt-server:8081/nexus/content/groups/public</url>
+                <url>http://cluj-nexus01//nexus/content/groups/public</url>
                 <snapshots>
                     <updatePolicy>always</updatePolicy>
                 </snapshots>
