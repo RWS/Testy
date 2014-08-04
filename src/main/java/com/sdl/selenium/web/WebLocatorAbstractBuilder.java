@@ -729,12 +729,19 @@ public abstract class WebLocatorAbstractBuilder {
             }
         }
         if (hasTitle()) {
-            selector.add(applyTemplate("title", getTitle()));
+            addTemplate(selector, "title", getTitle());
         }
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
+    }
+
+    private void addTemplate(List<String> selector, String key, Object... arguments) {
+        String tpl = applyTemplate(key, arguments);
+        if (StringUtils.isNotEmpty(tpl)) {
+            selector.add(tpl);
+        }
     }
 
     protected String applyTemplate(String key, Object... arguments) {
