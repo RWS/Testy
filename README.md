@@ -151,3 +151,9 @@ Manual deploy maven in local .m2 folder
     target/Testy-1.7.3-SNAPSHOT-sources.jar
     
 3) copy pom.xml to .m2\repository\com\sdl\lt\Testy\1.7.3-SNAPSHOT\Testy-1.7.3-SNAPSHOT.pom
+
+Links
+-----
+
+http://www.w3.org/TR/1999/REC-xpath-19991116/#node-sets
+https://dvcs.w3.org/hg/webdriver/raw-file/tip/webdriver-spec.html
