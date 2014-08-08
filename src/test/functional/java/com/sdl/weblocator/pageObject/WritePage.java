@@ -9,9 +9,6 @@ import org.openqa.selenium.support.How;
 public class WritePage {
     private static final Logger logger = Logger.getLogger(WritePage.class);
 
-    @FindBy(how = How.ID, using = "open")
-    private WebElement open;
-
     @FindBy(how = How.ID, using = "email")
     private WebElement email;
 
@@ -28,16 +25,20 @@ public class WritePage {
 //    private WebElement myModal;
 
     public void complete() {
-        open.click();
-//        myModal.isDisplayed();
+
         Utils.sleep(1000);
         email.sendKeys("culeaviorel@gmail.com");
         userName.sendKeys("Culea Viorel");
+
+//        save();
+//        open.click();
+//        email.sendKeys("culeaviorel@gmail.com");
+//        userName.sendKeys("Culea Viorel");
     }
 
     public void save() {
         saveButton.click();
         close.click();
-        Utils.sleep(100);
+        //Utils.sleep(100);
     }
 }
