@@ -26,6 +26,6 @@ public class SimplePage {
     public void save() {
         driver.findElement(By.id("saveButton")).click();
         driver.findElement(By.id("close")).click();
-//        Utils.sleep(100);
+        Utils.sleep(100);
     }
 }

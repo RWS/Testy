@@ -19,7 +19,7 @@ public class PageObjectTest {
 
         for (int i = 0; i < 20; i++) {
             pageObject(page);
-//            pageSimple(page2);
+            pageSimple(page2);
             logger.debug("------------------------------------------");
         }
         stop();

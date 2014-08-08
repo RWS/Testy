@@ -26,7 +26,7 @@ public class FileUtils {
         do {
             logger.debug("Content file is empty in: " + time);
             time++;
-            Utils.sleep(50);
+            Utils.sleep(100);
             empty = file.length() > 0;
         } while (!empty && time < 100);
         return empty;

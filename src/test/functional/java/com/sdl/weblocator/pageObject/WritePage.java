@@ -38,6 +38,6 @@ public class WritePage {
     public void save() {
         saveButton.click();
         close.click();
-//        Utils.sleep(100);
+        Utils.sleep(100);
     }
 }
