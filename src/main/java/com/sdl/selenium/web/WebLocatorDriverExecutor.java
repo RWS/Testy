@@ -88,7 +88,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         doWaitElement(el, millis);
         if (el.currentElement == null) {
             logger.warn("Element not found after " + millis + " millis; " + el);
-            if(WebLocatorConfig.isLogXPathEnabled()){
+            if (WebLocatorConfig.isLogXPathEnabled()) {
                 logger.debug("\t" + el.getPath());
             }
         }
@@ -206,13 +206,27 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             el.currentElement.sendKeys(charSequences);
         } catch (ElementNotVisibleException e) {
-            logger.error("ElementNotVisibleException in sendKeys: " + el, e);
-            throw e;
+            try {
+                tryAgainDoSendKeys(el, charSequences);
+            } catch (ElementNotVisibleException ex) {
+                logger.error("final ElementNotVisibleException in sendKeys: " + el, ex);
+                throw ex;
+            }
         } catch (WebDriverException e) {
             //TODO this fix is for Chrome
             Actions builder = new Actions(driver);
             builder.click(el.currentElement);
             builder.sendKeys(charSequences);
+        }
+    }
+
+    private void tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        el.setCurrentElementPath("");
+        findElement(el);
+        if (el.currentElement != null) {
+            el.currentElement.sendKeys(charSequences); // not sure it will click now
+        } else {
+            logger.error("currentElement is null after to try currentElement: " + el);
         }
     }
 
@@ -306,7 +320,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             logger.warn("Exception in doubleClickAt", e);
             fireEventWithJS(el, "dblclick");
         }
-        if(clicked){
+        if (clicked) {
             logger.info("doubleClickAt " + el);
         }
         return clicked;
@@ -350,7 +364,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     "fireOnThis.dispatchEvent(evObj);";
         }
         Object o = executeScript(script);
-        if(o != null) {
+        if (o != null) {
             logger.debug("result executeScript: " + o);
         }
     }

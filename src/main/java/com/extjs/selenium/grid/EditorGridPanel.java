@@ -6,7 +6,6 @@ import com.extjs.selenium.form.TextField;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;
 
 public class EditorGridPanel extends GridPanel {
@@ -97,29 +96,20 @@ public class EditorGridPanel extends GridPanel {
     public boolean startEdit(int rowIndex, int colIndex) {
         logger.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
         GridCell cell = getCell(rowIndex, colIndex);
-//        cell.sendKeys(Keys.TAB);
-//        return startEdit(cell);
         return prepareEdit(cell);
     }
 
     public boolean startEdit(String searchElement, int colIndex) {
         logger.debug("startEdit(" + searchElement + ", " + colIndex + ")");
         GridCell cell = getGridCell(searchElement, colIndex);
-//        cell.sendKeys(Keys.TAB);
-//        return startEdit(cell);
         return prepareEdit(cell);
     }
 
     private boolean prepareEdit(GridCell cell) {
-        boolean selected = false;
+        boolean selected;
         scrollTop();
         do {
-            try {
-                cell.sendKeys(Keys.TAB);
-                selected = true;
-            } catch (ElementNotVisibleException e) {
-                logger.error("sendKeys: ElementNotVisibleException");
-            }
+            selected = cell.sendKeys(Keys.TAB) != null;
         } while (!selected && scrollPageDown());
         return startEdit(cell);
     }

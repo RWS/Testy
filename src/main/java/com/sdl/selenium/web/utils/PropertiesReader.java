@@ -17,7 +17,7 @@ public class PropertiesReader extends Properties {
     public static String RESOURCES_PATH = "src/test/resources/";
     public static String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
 
-    private static final Logger logger = Logger.getLogger(PropertiesReader.class);
+    private static final Logger LOGGER = Logger.getLogger(PropertiesReader.class);
 
     public PropertiesReader() {
     }
@@ -29,14 +29,14 @@ public class PropertiesReader extends Properties {
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
         } catch (IOException e) {
-            logger.error(e);
+            LOGGER.error(e);
         }
     }
 
     @Override
     public String getProperty(String key) {
         String property = System.getProperty(key, super.getProperty(key));
-        logger.debug("getProperty: " + key + " = " + property);
+        LOGGER.debug("getProperty: " + key + " = " + property);
         return property;
     }
 
