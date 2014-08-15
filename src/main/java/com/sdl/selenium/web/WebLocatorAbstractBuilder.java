@@ -294,7 +294,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param searchLabelType accepted values are: {@link SearchType}
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
+    private  <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
         this.searchLabelType = new ArrayList<SearchType>();
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
@@ -346,6 +346,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
      *
      * @return value that has been set in {@link #setTitle(String)}
      */
@@ -355,6 +356,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
      *
      * @param title of element
      * @return this element
