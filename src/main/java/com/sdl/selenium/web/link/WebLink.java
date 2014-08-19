@@ -42,8 +42,12 @@ public class WebLink extends WebLocator {
     }
 
     public boolean returnDefaultWindow() {
-        WebDriver driver = WebDriverConfig.getDriver();
-        driver.close();
-        return driver.switchTo().window(oldTab) != null;
+        try {
+            WebDriver driver = WebDriverConfig.getDriver();
+            driver.close();
+            return driver.switchTo().window(oldTab) != null;
+        } catch (NoSuchWindowException e) {
+            return false;
+        }
     }
 }
