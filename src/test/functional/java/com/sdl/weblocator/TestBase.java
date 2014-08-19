@@ -101,7 +101,7 @@ public class TestBase {
         logger.info("===============================================================");
         logger.info("|          Stopping driver (closing browser)                   |");
         logger.info("===============================================================");
-        driver.close();
+        driver.quit();
         logger.debug("===============================================================");
         logger.debug("|         Driver stopped (browser closed)                     |");
         logger.debug("===============================================================\n");
