@@ -15,9 +15,9 @@ import static org.testng.Assert.assertTrue;
 public class WebLinkTest extends TestBase {
     private static final Logger logger = Logger.getLogger(WebLinkTest.class);
 
-    Form form = new Form(null, "Form Title");
-    WebLink link = new WebLink(form, "Link");
-    SelectPicker selectPicker = new SelectPicker(form, "Tech:");
+    private Form form = new Form(null, "Form Title");
+    private WebLink link = new WebLink(form, "Link");
+    private SelectPicker selectPicker = new SelectPicker(form, "Tech:");
 
     @BeforeClass
     public void startTests() {

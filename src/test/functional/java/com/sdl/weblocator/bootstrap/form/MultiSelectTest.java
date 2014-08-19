@@ -18,8 +18,8 @@ import static org.testng.Assert.assertTrue;
 public class MultiSelectTest extends TestBase {
     private static final Logger logger = Logger.getLogger(MultiSelectTest.class);
 
-    Form form = new Form(null, "Form Title");
-    MultiSelect multiSelect = new MultiSelect(form, "Source:");
+    private Form form = new Form(null, "Form Title");
+    private MultiSelect multiSelect = new MultiSelect(form, "Source:");
 
     @BeforeClass
     public void startTests() {
@@ -31,7 +31,6 @@ public class MultiSelectTest extends TestBase {
         assertTrue(multiSelect.select("Cheese", "Tomatoes"));
         List<String> list = multiSelect.getValueSelected();
         assertThat(list, contains(Arrays.asList("Cheese", "Tomatoes").toArray()));
-
     }
 
     @Test (dependsOnMethods = "selectTwo")
