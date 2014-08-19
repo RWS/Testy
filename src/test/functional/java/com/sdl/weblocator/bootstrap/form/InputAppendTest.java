@@ -1,4 +1,4 @@
-package com.sdl.weblocator.bootstrap;
+package com.sdl.weblocator.bootstrap.form;
 
 import com.sdl.bootstrap.form.Form;
 import com.sdl.bootstrap.form.InputAppend;
