@@ -1,10 +1,17 @@
 CHANGES:
 
+version 1.7.6-SNAPSHOT
+1) webdriver version 2.43.0 suported ff 31, 32
+2)
+3)
+4)
+
 version 1.7.5-SNAPSHOT
 1) webdriver version 2.42.2
 2) fix TableCell accept visibility
 3) add Tooltip class
 4) fix slow bug
+5) improvement upload.exe
 
 version 1.7.3-SNAPSHOT
 1) revert void fireEventWithJS

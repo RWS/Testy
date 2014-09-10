@@ -24,9 +24,9 @@ import static org.testng.Assert.assertTrue;
 
 public class EditorGridPanelTest extends TestBase {
 
-    Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
-    Button submitButton = new Button(editorGridPanelWindow, "Submit");
+    private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
+    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
+    private Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider
     public Object[][] createTestDP() {
