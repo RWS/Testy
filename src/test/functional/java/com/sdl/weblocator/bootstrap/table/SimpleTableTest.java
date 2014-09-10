@@ -13,6 +13,10 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class SimpleTableTest extends TestBase {
@@ -49,5 +53,45 @@ public class SimpleTableTest extends TestBase {
         TableCell email = new TableCell(4, "Email", SearchType.EQUALS).setTag("th");
         TableCell buttons = new TableCell(5, "Buttons", SearchType.EQUALS).setTag("th");
         assertTrue(table.getRow(row, firstName, lastName, email, buttons).ready());
+    }
+
+    @Test
+    public void getAllTexts() {
+        List<List<String>> listOfList = new ArrayList<List<String>>();
+
+        List<String> list = new ArrayList<String>(); // one inner list
+        list.add("");
+        list.add("John");
+        list.add("Carter");
+        list.add("johncarter@mail.com");
+        list.add("First (1) Second");
+        listOfList.add(list);
+
+        list = new ArrayList<String>(); // and another one
+        list.add("");
+        list.add("Peter");
+        list.add("Parker");
+        list.add("peterparker@mail.com");
+        list.add("First (2) Second");
+        listOfList.add(list);
+
+        list = new ArrayList<String>(); // and another one
+        list.add("");
+        list.add("John");
+        list.add("Rambo");
+        list.add("johnrambo@mail.com");
+        list.add("First (3) Second");
+        listOfList.add(list);
+
+        for (List<String> listEl : table.getCellsText()) {
+            System.out.println();
+            System.out.print("| ");
+            for (String el : listEl) {
+                System.out.print(el + " | ");
+            }
+        }
+        System.out.println();
+
+        assertEquals(table.getCellsText(), listOfList);
     }
 }

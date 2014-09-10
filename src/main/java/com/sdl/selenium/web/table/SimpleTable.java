@@ -5,7 +5,10 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleCheckBox;
 import org.apache.log4j.Logger;
 
-public class SimpleTable extends WebLocator implements ITable <TableRow, TableCell>{
+import java.util.ArrayList;
+import java.util.List;
+
+public class SimpleTable extends WebLocator implements ITable<TableRow, TableCell> {
     private static final Logger logger = Logger.getLogger(SimpleTable.class);
 
     private int timeout = 30;
@@ -188,6 +191,29 @@ public class SimpleTable extends WebLocator implements ITable <TableRow, TableCe
                 texts[i - 1] = getText(i, columnIndex);
             }
             return texts;
+        } else {
+            return null;
+        }
+    }
+
+    public List<List<String>> getCellsText() {
+        WebLocator parentEl = new WebLocator(this).setTag("tbody");
+        WebLocator rowsEl = new WebLocator(parentEl).setTag("tr");
+        WebLocator rowEl = new WebLocator(parentEl).setTag("tr").setPosition(1);
+        WebLocator columnsEl = new WebLocator(rowEl).setTag("td");
+        int rows = rowsEl.size() + 1;
+        int columns = columnsEl.size() + 1;
+
+        if (rows > 0) {
+            List<List<String>> listOfList = new ArrayList<List<String>>();
+            for (int i = 1; i < rows; i++) {
+                List<String> list = new ArrayList<String>();
+                for (int j = 1; j < columns; j++) {
+                    list.add(getCell(i, j).getHtmlText());
+                }
+                listOfList.add(list);
+            }
+            return listOfList;
         } else {
             return null;
         }
