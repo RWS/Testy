@@ -164,6 +164,8 @@ public class FileUtils {
                 while ((n = reader.read(buffer)) != -1) {
                     writer.write(buffer, 0, n);
                 }
+                reader.close();
+                is.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 return "";
