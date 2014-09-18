@@ -24,7 +24,7 @@ public class FileUtils {
         boolean empty;
         int time = 0;
         do {
-            logger.debug("Content file is empty in: " + time);
+            logger.debug("File exist: '" + file.exists() + "' and content file is empty in: " + time);
             time++;
             Utils.sleep(100);
             empty = file.length() > 0;
@@ -60,7 +60,7 @@ public class FileUtils {
     }
 
     /**
-     * @param zipFilePath zipFilePath
+     * @param zipFilePath      zipFilePath
      * @param outputFolderPath if null of empty will extract in same folder as zipFilePath
      * @return True | False
      */
@@ -121,9 +121,9 @@ public class FileUtils {
     }
 
     /**
-     * @param filePath filePath
+     * @param filePath          filePath
      * @param extractedFilePath extractedFilePath
-     * @return  true | false
+     * @return true | false
      * @deprecated use {@link #unZip(String, String)}
      */
     public static boolean unZip2(String filePath, String extractedFilePath) {
