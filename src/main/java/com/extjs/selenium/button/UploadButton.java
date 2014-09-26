@@ -37,11 +37,11 @@ public class UploadButton extends Button implements Upload {
 
     private void browse(WebLocator el) {
         WebDriver driver = WebDriverConfig.getDriver();
-        driver.switchTo().window(driver.getWindowHandle());
+//        driver.switchTo().window(driver.getWindowHandle());
         el.focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(el.currentElement).build().perform();
         builder.click().perform();
-        driver.switchTo().defaultContent();
+//        driver.switchTo().defaultContent();
     }
 }

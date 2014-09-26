@@ -1,7 +1,6 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.web.WebDriverConfig;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
