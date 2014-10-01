@@ -11,10 +11,11 @@ public class DownloadFileTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new DownloadFile(),                          "//button[contains(concat(' ', @class, ' '), ' btn ')]"},
-                {new DownloadFile(container),                 "//*[@id='ID']//button[contains(concat(' ', @class, ' '), ' btn ')]"},
-                {new DownloadFile(container, "ButtonLabel"),  "//*[@id='ID']//label[text()='ButtonLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' btn ')]"},
-                {new DownloadFile(container).setId("ID"),     "//*[@id='ID']//button[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new DownloadFile(),                                "//button[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new DownloadFile(container),                       "//*[@id='ID']//button[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new DownloadFile(container, "ButtonLabel"),        "//*[@id='ID']//label[text()='ButtonLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new DownloadFile(container).setText("ButtonText"), "//*[@id='ID']//button[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'ButtonText')]"},
+                {new DownloadFile(container).setId("ID"),           "//*[@id='ID']//button[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
         };
     }
 
