@@ -51,12 +51,10 @@ public class DownloadFile extends WebLocator implements Download {
 
     public void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
-        driver.switchTo().window(driver.getWindowHandle());
         focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(currentElement).build().perform();
-        builder.click().build().perform();
-        driver.switchTo().defaultContent();
+        builder.click().perform();
     }
 
     public boolean isDisabled(){

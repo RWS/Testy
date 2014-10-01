@@ -52,11 +52,9 @@ public class DownloadButton extends Button implements Download {
 
     private void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
-        driver.switchTo().window(driver.getWindowHandle());
         focus();
         Actions builder = new Actions(driver);
         builder.moveToElement(currentElement).build().perform();
-        builder.click().build().perform();
-        driver.switchTo().defaultContent();
+        builder.click().perform();
     }
 }
