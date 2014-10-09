@@ -1,7 +1,8 @@
 package com.sdl.selenium.conditions;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +31,7 @@ ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
  */
 public class ConditionManager  {
 
-    private static final Logger logger = Logger.getLogger(ConditionManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConditionManager.class);
 
     public static int SLEEP_INTERVAL = 50;
 

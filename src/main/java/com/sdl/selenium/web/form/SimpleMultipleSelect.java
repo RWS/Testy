@@ -3,7 +3,8 @@ package com.sdl.selenium.web.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleMultipleSelect extends SimpleComboBox {
-    private static final Logger logger = Logger.getLogger(SimpleMultipleSelect.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleMultipleSelect.class);
 
     public SimpleMultipleSelect() {
         setClassName("SimpleMultipleSelect");

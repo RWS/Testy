@@ -1,10 +1,11 @@
 package com.sdl.selenium.conditions;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RenderSuccessCondition extends SuccessCondition implements RenderCondition {
-    private static final Logger logger = Logger.getLogger(RenderSuccessCondition.class);
+    private static final Logger logger = LoggerFactory.getLogger(RenderSuccessCondition.class);
 
     private WebLocator component;
 

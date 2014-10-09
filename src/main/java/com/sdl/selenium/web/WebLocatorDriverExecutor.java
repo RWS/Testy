@@ -1,6 +1,7 @@
 package com.sdl.selenium.web;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
-    private static final Logger logger = Logger.getLogger(WebLocatorDriverExecutor.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLocatorDriverExecutor.class);
 
     private WebDriver driver;
 

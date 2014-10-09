@@ -3,7 +3,8 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  * This class is used to simple construct xpath for WebLocator's
  */
 public abstract class WebLocatorAbstractBuilder {
-    private static final Logger LOGGER = Logger.getLogger(WebLocatorAbstractBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
     private String className = "WebLocator";
     private String tag = "*";

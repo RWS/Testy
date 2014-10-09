@@ -1,13 +1,14 @@
 package com.sdl.weblocator.pageObject;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
 public class WritePage {
-    private static final Logger logger = Logger.getLogger(WritePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(WritePage.class);
 
     @FindBy(how = How.ID, using = "email")
     private WebElement email;

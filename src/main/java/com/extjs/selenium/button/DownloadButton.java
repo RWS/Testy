@@ -6,14 +6,15 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 
 public class DownloadButton extends Button implements Download {
-    private static final Logger logger = Logger.getLogger(DownloadButton.class);
+    private static final Logger logger = LoggerFactory.getLogger(DownloadButton.class);
 
     public DownloadButton() {
         setClassName("DownloadButton");

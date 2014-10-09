@@ -4,7 +4,8 @@ import com.sdl.bootstrap.button.UploadFile;
 import com.sdl.bootstrap.form.Form;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ import java.io.File;
 import static org.testng.Assert.assertTrue;
 
 public class UploadFileTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(UploadFileTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadFileTest.class);
 
     Form form = new Form(null, "Form Title");
     UploadFile uploadFile = new UploadFile(form, "TPT Test:");

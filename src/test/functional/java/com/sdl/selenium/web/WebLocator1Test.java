@@ -3,7 +3,8 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,7 +13,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class WebLocator1Test extends TestBase {
-    private static final Logger logger = Logger.getLogger(WebLocator1Test.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLocator1Test.class);
 
     WebLocator webLocatorId = new WebLocator().setId("webLocatorId");
     WebLocator webLocatorCls = new WebLocator().setClasses("webLocatorCls");

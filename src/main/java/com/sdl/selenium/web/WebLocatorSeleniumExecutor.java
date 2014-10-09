@@ -2,11 +2,12 @@ package com.sdl.selenium.web;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebElement;
 
 public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
-    private static final Logger logger = Logger.getLogger(WebLocatorSeleniumExecutor.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLocatorSeleniumExecutor.class);
 
     public Selenium selenium;
 
@@ -89,7 +90,7 @@ public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
                 text = selenium.getText(el.getPath());
             } catch (SeleniumException e) {
                 logger.debug("element has vanished meanwhile: " + el.getPath());
-                logger.debug(e);
+                logger.debug("SeleniumException: {}", e);
             }
         }
         return text;

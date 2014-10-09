@@ -1,12 +1,13 @@
 package com.sdl.selenium.conditions;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO is possible that ElementRemovedSuccessCondition is executed because some error messages have been arrived
 // think about some solutions to fix this.
 public class ElementRemovedSuccessCondition extends SuccessCondition {
-    private static final Logger logger = Logger.getLogger(ElementRemovedSuccessCondition.class);
+    private static final Logger logger = LoggerFactory.getLogger(ElementRemovedSuccessCondition.class);
 
     private WebLocator component;
 

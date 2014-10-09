@@ -2,11 +2,12 @@ package com.extjs.selenium.form;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Label extends ExtJsComponent {
 
-    private static final Logger logger = Logger.getLogger(Label.class);
+    private static final Logger logger = LoggerFactory.getLogger(Label.class);
 
     public Label() {
         setClassName("Label");

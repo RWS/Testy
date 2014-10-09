@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.utils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.regex.Matcher;
@@ -9,7 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class FileUtils {
-    private static final Logger logger = Logger.getLogger(FileUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
     private static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\r\\n|\\r|\\n");
 
     public static String getValidFileName(String fileName) {
@@ -40,10 +41,10 @@ public class FileUtils {
             while ((tmp = br.readLine()) != null) {
                 strLine += tmp;
             }
-            logger.debug(strLine.length());
+            logger.debug("length {}", strLine.length());
             br.close();
         } catch (Exception e) {
-            logger.debug("Error: " + e.getMessage());
+            logger.debug("Error: {}", e.getMessage());
         }
         return strLine;
     }

@@ -4,14 +4,15 @@ import com.sdl.bootstrap.form.DatePicker;
 import com.sdl.bootstrap.form.Form;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class DatePickerTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(DatePickerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(DatePickerTest.class);
 
     Form form = new Form(null, "Form Title");
     DatePicker datePicker = new DatePicker(form, "dp3");

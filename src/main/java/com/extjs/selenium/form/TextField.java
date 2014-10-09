@@ -6,11 +6,12 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITextField;
 import com.sdl.selenium.web.utils.Utils;
 import junit.framework.Assert;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 
 public class TextField extends ExtJsComponent implements ITextField {
-    private static final Logger logger = Logger.getLogger(TextField.class);
+    private static final Logger logger = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
         setClassName("TextField");

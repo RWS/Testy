@@ -6,10 +6,11 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
 import junit.framework.Assert;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ComboBox extends TextField implements ICombo {
-    private static final Logger logger = Logger.getLogger(ComboBox.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComboBox.class);
     private static String listClass = "x-combo-list";
 
     //TODO change the way comboBox is identified, without using cls

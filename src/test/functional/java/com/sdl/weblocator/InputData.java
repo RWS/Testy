@@ -1,14 +1,15 @@
 package com.sdl.weblocator;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class InputData extends PropertiesReader {
-    private static final Logger logger = Logger.getLogger(InputData.class);
+    private static final Logger logger = LoggerFactory.getLogger(InputData.class);
 
     public static final String ENV_PROPERTY = "env";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
@@ -24,7 +25,7 @@ public class InputData extends PropertiesReader {
             FileInputStream fileInputStream = new FileInputStream(RESOURCES_PATH + testEnvironment + ".properties");
             load(fileInputStream);
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("IOException: {}", e);
         }
     }
 

@@ -5,7 +5,8 @@ import com.sdl.bootstrap.form.SelectPicker;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class WebLinkTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(WebLinkTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLinkTest.class);
 
     private Form form = new Form(null, "Form Title");
     private WebLink link = new WebLink(form, "Link");

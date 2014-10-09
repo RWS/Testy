@@ -2,10 +2,11 @@ package com.extjs.selenium;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExtJsComponent extends WebLocator {
-    private static final Logger logger = Logger.getLogger(ExtJsComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExtJsComponent.class);
 
     public ExtJsComponent() {
         setClassName("ExtJsComponent");

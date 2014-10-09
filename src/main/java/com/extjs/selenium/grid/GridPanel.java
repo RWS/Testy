@@ -13,14 +13,15 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.ITable;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.util.*;
 
 public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
-    private static final Logger logger = Logger.getLogger(GridPanel.class);
+    private static final Logger logger = LoggerFactory.getLogger(GridPanel.class);
 
     private String searchColumnId = "0";
 

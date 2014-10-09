@@ -1,7 +1,8 @@
 package com.sdl.bootstrap.form;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.Date;
  * If you want more information about this datepicker visit this site: http://vitalets.github.io/bootstrap-datepicker/
  */
 public class DatePicker extends WebLocator {
-    private static final Logger logger = Logger.getLogger(DatePicker.class);
+    private static final Logger logger = LoggerFactory.getLogger(DatePicker.class);
 
     public DatePicker() {
         setClassName("DatePicker");
@@ -46,7 +47,7 @@ public class DatePicker extends WebLocator {
             fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);
         } catch (ParseException e) {
-            logger.error(e);
+            logger.error("ParseException: {}", e);
         }
         String[] dates = date.split("/");
         String day = dates[0];

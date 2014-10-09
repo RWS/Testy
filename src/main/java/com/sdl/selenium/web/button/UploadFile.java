@@ -4,12 +4,13 @@ import com.sdl.bootstrap.button.RunExe;
 import com.sdl.bootstrap.button.Upload;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class UploadFile extends WebLocator implements Upload {
-    private static final Logger LOGGER = Logger.getLogger(UploadFile.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFile.class);
 
     public UploadFile() {
         setClassName("UploadFile");

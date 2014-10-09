@@ -6,10 +6,11 @@ import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TreePanel extends ExtJsComponent {
-    private static final Logger logger = Logger.getLogger(TreePanel.class);
+    private static final Logger logger = LoggerFactory.getLogger(TreePanel.class);
 
     public TreePanel() {
         logger.warn("TreePanel is not implemented 100%");

@@ -3,10 +3,11 @@ package com.sdl.bootstrap.button;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.IButton;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Button extends WebLocator implements IButton {
-    private static final Logger logger = Logger.getLogger(Button.class);
+    private static final Logger logger = LoggerFactory.getLogger(Button.class);
 
     private String iconCls;
 

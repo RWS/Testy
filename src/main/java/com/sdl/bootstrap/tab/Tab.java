@@ -4,10 +4,11 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Tab extends WebLocator {
-    private static final Logger logger = Logger.getLogger(Tab.class);
+    private static final Logger logger = LoggerFactory.getLogger(Tab.class);
 
     private Tab() {
         setClassName("Tab");

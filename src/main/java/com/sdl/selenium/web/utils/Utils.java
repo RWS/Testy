@@ -1,7 +1,8 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.web.WebDriverConfig;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +20,7 @@ import java.util.*;
  * TODO Sa fie o metoda de Utils care sa poti seta din WebLocator path-ul unde sa salveze imaginile in dependenta de WebDriver ori Selenium
  */
 public class Utils {
-    private static final Logger logger = Logger.getLogger(Utils.class);
+    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
     public static void sleep(long milliseconds) {
         try {
@@ -27,7 +28,7 @@ public class Utils {
                 Thread.sleep(milliseconds);
             }
         } catch (InterruptedException e) {
-            logger.error(e);
+            logger.error("InterruptedException: {}", e);
         }
     }
 

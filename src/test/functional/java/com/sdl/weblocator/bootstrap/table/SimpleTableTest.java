@@ -9,7 +9,8 @@ import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.table.TableRow;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class SimpleTableTest extends TestBase {
-    private static final Logger LOGGER = Logger.getLogger(SimpleTableTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTableTest.class);
 
     private Form form = new Form(null, "Form Table");
     private SimpleTable table = new SimpleTable(form);

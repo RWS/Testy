@@ -2,7 +2,8 @@ package com.sdl.weblocator;
 
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -11,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    private static final Logger logger = Logger.getLogger(TestBase.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestBase.class);
     public static WebDriver driver;
 
     public static int TEST_RUNS = 0;

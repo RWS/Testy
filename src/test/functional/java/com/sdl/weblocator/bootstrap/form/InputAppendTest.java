@@ -4,14 +4,15 @@ import com.sdl.bootstrap.form.Form;
 import com.sdl.bootstrap.form.InputAppend;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class InputAppendTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(InputAppendTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(InputAppendTest.class);
 
     Form form = new Form(null, "Form Title");
     InputAppend inputAppend = new InputAppend(form, "LPID for Merge:");

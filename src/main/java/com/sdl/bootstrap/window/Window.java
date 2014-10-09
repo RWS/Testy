@@ -2,10 +2,11 @@ package com.sdl.bootstrap.window;
 
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Window extends WebLocator implements IWebLocator {
-    private static final Logger logger = Logger.getLogger(Window.class);
+    private static final Logger logger = LoggerFactory.getLogger(Window.class);
 
     public Window() {
         setClassName("Window");

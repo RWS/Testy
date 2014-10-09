@@ -1,13 +1,14 @@
 package com.sdl.weblocator.pageObject;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class SimplePage {
-    private static final Logger logger = Logger.getLogger(SimplePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePage.class);
 
     WebDriver driver = null;
 

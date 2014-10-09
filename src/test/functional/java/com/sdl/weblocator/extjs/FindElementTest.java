@@ -9,14 +9,15 @@ import com.extjs.selenium.window.Window;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class FindElementTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(FindElementTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(FindElementTest.class);
     Window elementWindow = new Window("Element");
     Button alertButton = new Button(elementWindow, "Alert");
     Button closeButton = new Button(elementWindow, "Close");

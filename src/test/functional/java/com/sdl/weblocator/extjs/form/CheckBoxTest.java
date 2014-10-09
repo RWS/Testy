@@ -1,10 +1,11 @@
 package com.sdl.weblocator.extjs.form;
 
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CheckBoxTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(CheckBoxTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(CheckBoxTest.class);
 
     /*Panel simpleFormPanel = new Panel(null, "Simple Form");
     Checkbox rightCheckBox = new Checkbox("CatRight", simpleFormPanel);

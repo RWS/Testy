@@ -1,10 +1,11 @@
 package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimpleCheckBox extends WebLocator implements ICheck {
-    private static final Logger logger = Logger.getLogger(SimpleCheckBox.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleCheckBox.class);
 
     public SimpleCheckBox() {
         setClassName("SimpleCheckBox");

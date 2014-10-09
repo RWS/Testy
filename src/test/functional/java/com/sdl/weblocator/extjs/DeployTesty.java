@@ -20,7 +20,8 @@ import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
@@ -30,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class DeployTesty extends TestBase {
-    private static final Logger logger = Logger.getLogger(DeployTesty.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeployTesty.class);
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 

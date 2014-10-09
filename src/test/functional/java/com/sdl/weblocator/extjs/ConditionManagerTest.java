@@ -10,12 +10,13 @@ import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderCondition;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ConditionManagerTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(ConditionManagerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConditionManagerTest.class);
     Panel conditionManagerPanel = new Panel("Condition Manager");
     Button expect1Button = new Button(conditionManagerPanel, "Expect1");
     Button expect2Button = new Button(conditionManagerPanel, "Expect2");

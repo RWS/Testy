@@ -4,7 +4,8 @@ import com.sdl.bootstrap.button.RunExe;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -13,7 +14,7 @@ import java.awt.event.KeyEvent;
 
 public class SelectFilesHandler {
 
-    private static final Logger logger = Logger.getLogger(SelectFilesHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(SelectFilesHandler.class);
     private WebLocator buttonElement;
 
     public SelectFilesHandler() {
@@ -70,7 +71,7 @@ public class SelectFilesHandler {
         try {
             robot = new Robot();
         } catch (AWTException e) {
-            logger.error(e);
+            logger.error("AWTException: {}", e);
         }
 
         writeFileName(path, robot);
@@ -83,7 +84,7 @@ public class SelectFilesHandler {
         try {
             robot = new Robot();
         } catch (AWTException e) {
-            logger.error(e);
+            logger.error("AWTException: {}", e);
         }
 
         pressEnter(robot); // open window

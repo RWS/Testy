@@ -1,15 +1,19 @@
 package com.sdl.selenium.web;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public class WebLocatorConfig {
 
-    private static Logger logger = Logger.getLogger(WebLocatorConfig.class);
+    private static Logger logger = LoggerFactory.getLogger(WebLocatorConfig.class);
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
     private static ClassLoader loader = WebLocatorConfig.class.getClassLoader();

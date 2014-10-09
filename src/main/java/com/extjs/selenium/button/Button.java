@@ -7,11 +7,12 @@ import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.IButton;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 
 public class Button extends ExtJsComponent implements IButton {
-    private static final Logger logger = Logger.getLogger(Button.class);
+    private static final Logger logger = LoggerFactory.getLogger(Button.class);
 
     public String getIconCls() {
         return iconCls;
@@ -77,7 +78,7 @@ public class Button extends ExtJsComponent implements IButton {
         if (clicked) {
             Utils.sleep(50);
         } else {
-            logger.error("(" + toString() + ") doesn't exists or is disabled. " + getPath());
+            logger.error("({}) doesn't exists or is disabled {}.", toString(), getPath());
         }
         return clicked;
     }
@@ -103,7 +104,7 @@ public class Button extends ExtJsComponent implements IButton {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
 //        logger.debug("clickWithExtJS: "+ script);
             Object object = WebLocatorUtils.doExecuteScript(script);
-            logger.debug("clickWithExtJS result: " + object);
+            logger.debug("clickWithExtJS result: {}", object);
             return (Boolean) object;
         }
         logger.debug("id is: " + id);

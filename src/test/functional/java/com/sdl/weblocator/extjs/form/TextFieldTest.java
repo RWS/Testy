@@ -4,7 +4,8 @@ import com.extjs.selenium.button.Button;
 import com.extjs.selenium.form.TextField;
 import com.extjs.selenium.window.Window;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -12,7 +13,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class TextFieldTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(TextFieldTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(TextFieldTest.class);
 
     Window textFieldWindow = new Window("TextFieldWindow");
     TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");

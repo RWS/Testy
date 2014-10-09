@@ -2,11 +2,12 @@ package com.extjs.selenium.form;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Radio extends ExtJsComponent {
 
-    private static final Logger logger = Logger.getLogger(Radio.class);
+    private static final Logger logger = LoggerFactory.getLogger(Radio.class);
 
     public Radio() {
         setClassName("Radio");

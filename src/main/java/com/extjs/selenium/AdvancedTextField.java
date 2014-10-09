@@ -4,11 +4,12 @@ import com.extjs.selenium.form.TextField;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO extend other class not textfield
 public class AdvancedTextField extends TextField {
-    private static final Logger logger = Logger.getLogger(AdvancedTextField.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdvancedTextField.class);
     private static String menuClass = "x-menu-floating";
 
     public AdvancedTextField() {

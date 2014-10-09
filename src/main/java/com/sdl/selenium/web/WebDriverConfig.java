@@ -3,7 +3,8 @@ package com.sdl.selenium.web;
 import com.opera.core.systems.OperaDesktopDriver;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.thoughtworks.selenium.Selenium;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebDriverConfig {
-    private static final Logger LOGGER = Logger.getLogger(WebDriverConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfig.class);
 
     private static WebDriver driver;
     private static Selenium selenium;

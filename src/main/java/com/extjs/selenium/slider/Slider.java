@@ -10,11 +10,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO this class is too specific to GeBlobal slider only
 public class Slider extends ExtJsComponent {
-    private static final Logger logger = Logger.getLogger(Slider.class);
+    private static final Logger logger = LoggerFactory.getLogger(Slider.class);
 
     public Slider() {
         setClassName("Slider");

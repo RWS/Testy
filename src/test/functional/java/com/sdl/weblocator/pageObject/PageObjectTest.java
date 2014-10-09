@@ -1,6 +1,7 @@
 package com.sdl.weblocator.pageObject;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -8,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 
 public class PageObjectTest {
-    private static final Logger logger = Logger.getLogger(PageObjectTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(PageObjectTest.class);
     static WebDriver driver = null;
     static WritePage page2 = null;
 

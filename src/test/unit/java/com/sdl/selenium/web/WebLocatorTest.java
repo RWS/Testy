@@ -2,14 +2,15 @@ package com.sdl.selenium.web;
 
 
 import com.extjs.selenium.ExtJsComponent;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 public class WebLocatorTest {
-    private static final Logger logger = Logger.getLogger(WebLocatorTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLocatorTest.class);
 
     private static WebLocator container = new WebLocator("container");
 

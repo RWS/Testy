@@ -1,10 +1,11 @@
 package com.extjs.selenium.form;
 
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DisplayField extends TextField {
-    private static final Logger logger = Logger.getLogger(DisplayField.class);
+    private static final Logger logger = LoggerFactory.getLogger(DisplayField.class);
 
     public DisplayField() {
         setClassName("DisplayField");

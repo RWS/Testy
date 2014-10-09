@@ -4,10 +4,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GridCell extends Cell {
-    private static final Logger logger = Logger.getLogger(GridCell.class);
+    private static final Logger logger = LoggerFactory.getLogger(GridCell.class);
 
     public GridCell() {
         setRenderMillis(200);

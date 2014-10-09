@@ -3,12 +3,13 @@ package com.sdl.selenium.web.table;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public abstract class Row extends WebLocator {
-    private static final Logger logger = Logger.getLogger(Row.class);
+    private static final Logger logger = LoggerFactory.getLogger(Row.class);
 
     public Row() {
         setClassName("Row");

@@ -2,10 +2,11 @@ package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TableCell extends Cell {
-    private static final Logger logger = Logger.getLogger(TableCell.class);
+    private static final Logger logger = LoggerFactory.getLogger(TableCell.class);
 
     public TableCell() {
         setRenderMillis(200);

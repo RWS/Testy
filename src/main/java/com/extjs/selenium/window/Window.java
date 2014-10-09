@@ -3,10 +3,11 @@ package com.extjs.selenium.window;
 import com.extjs.selenium.panel.Panel;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Window extends Panel {
-    private static final Logger logger = Logger.getLogger(Window.class);
+    private static final Logger logger = LoggerFactory.getLogger(Window.class);
 
     private boolean modal;
 

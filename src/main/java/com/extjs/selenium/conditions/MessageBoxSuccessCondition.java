@@ -3,10 +3,11 @@ package com.extjs.selenium.conditions;
 import com.extjs.selenium.window.MessageBox;
 import com.sdl.selenium.conditions.MessageBoxCondition;
 import com.sdl.selenium.conditions.SuccessCondition;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MessageBoxSuccessCondition extends SuccessCondition implements MessageBoxCondition {
-    private static final Logger logger = Logger.getLogger(MessageBoxSuccessCondition.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageBoxSuccessCondition.class);
     private boolean contains = false;
 
     public MessageBoxSuccessCondition(String message) {

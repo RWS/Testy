@@ -4,14 +4,15 @@ import com.sdl.bootstrap.button.Button;
 import com.sdl.bootstrap.form.Form;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class ButtonTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(ButtonTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ButtonTest.class);
 
     private Form form = new Form(null, "Form Title");
     private Button disableBtn = new Button(form, "DisableBtn");

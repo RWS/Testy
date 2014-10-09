@@ -3,13 +3,14 @@ package com.extjs.selenium.window;
 import com.extjs.selenium.ExtJsComponent;
 import com.extjs.selenium.button.Button;
 import com.sdl.selenium.web.WebDriverConfig;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Info/Error/Warning Message Box from ExtJs
  */
 public class MessageBox {
-    private static final Logger logger = Logger.getLogger(MessageBox.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageBox.class);
 
     public static String BUTTON_OK = "OK";
     public static String BUTTON_CANCEL = "Cancel";

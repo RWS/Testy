@@ -3,7 +3,8 @@ package com.extjs.selenium.form;
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * defaults:
@@ -12,7 +13,7 @@ import org.apache.log4j.Logger;
  */
 public class Checkbox extends ExtJsComponent implements ICheck {
 
-    private static final Logger logger = Logger.getLogger(Checkbox.class);
+    private static final Logger logger = LoggerFactory.getLogger(Checkbox.class);
 
     public Checkbox() {
         setClassName("Checkbox");

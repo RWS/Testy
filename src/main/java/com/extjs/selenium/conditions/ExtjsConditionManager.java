@@ -4,7 +4,8 @@ import com.extjs.selenium.window.MessageBox;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.MessageBoxCondition;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Example how to add conditions to ConditionManager:
@@ -28,7 +29,7 @@ ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
  */
 public class ExtjsConditionManager extends ConditionManager {
 
-    private static final Logger logger = Logger.getLogger(ExtjsConditionManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExtjsConditionManager.class);
 
     /**
      * default timeout in milliseconds is 10000.

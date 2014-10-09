@@ -2,11 +2,12 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.support.ui.Select;
 
 public class SimpleComboBox extends WebLocator implements ICombo {
-    private static final Logger logger = Logger.getLogger(SimpleComboBox.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleComboBox.class);
 
     public SimpleComboBox() {
         setClassName("SimpleComboBox");
