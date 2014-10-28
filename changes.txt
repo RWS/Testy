@@ -1,10 +1,13 @@
 CHANGES:
 
-version 1.7.6-SNAPSHOT
-1) webdriver version 2.43.0 suported ff 31, 32
+version 1.7.7-SNAPSHOT
+1) webdriver version 2.44.0 suported ff 33
 2)
 3)
 4)
+
+version 1.7.6-SNAPSHOT
+1) webdriver version 2.43.0 suported ff 31, 32
 
 version 1.7.5-SNAPSHOT
 1) webdriver version 2.42.2
