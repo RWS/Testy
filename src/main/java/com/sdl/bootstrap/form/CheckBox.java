@@ -36,6 +36,7 @@ public class CheckBox extends SimpleTextField implements ICheck {
     }
 
     public boolean isDisabled(){
-        return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
+        String cls = getAttributeClass();
+        return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
 }
