@@ -1,11 +1,12 @@
 package com.sdl.selenium.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,6 +37,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 clicked = true;
             } catch (InvalidElementStateException e) {
                 logger.error("InvalidElementStateException in doClick: " + el);
+                tryAgainDoClick(el);
+                clicked = true;
+            } catch (MoveTargetOutOfBoundsException e) {
+                logger.error("MoveTargetOutOfBoundsException in doClick: " + el);
                 tryAgainDoClick(el);
                 clicked = true;
             } catch (Exception e) {
