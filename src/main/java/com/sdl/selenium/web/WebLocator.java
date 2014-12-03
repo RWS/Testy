@@ -374,4 +374,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean ready(int seconds) {
         return waitToRender((long) seconds * 1000) && waitToActivate(seconds);
     }
+
+    public boolean isDisabled() {
+        return ready() && !currentElement.isEnabled();
+    }
 }

@@ -6,6 +6,8 @@ import com.extjs.selenium.form.TextField;
 import com.extjs.selenium.panel.Panel;
 import com.extjs.selenium.window.MessageBox;
 import com.extjs.selenium.window.Window;
+import com.sdl.bootstrap.button.DownloadFile;
+import com.sdl.bootstrap.form.SelectPicker;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;
@@ -14,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class FindElementTest extends TestBase {
     private static final Logger logger = LoggerFactory.getLogger(FindElementTest.class);
@@ -66,5 +68,31 @@ public class FindElementTest extends TestBase {
         MessageBox.pressOK();
         timeOutTextField.setValue("3001");
         logger.debug("wait1 = " + (endMs - startMs));
+    }
+
+    private <T extends WebLocator> boolean hasStatus(String status, T t) {
+        boolean is = false;
+        if (status.equals("disabled")) {
+            is =  t.isDisabled();
+        } else if (status.equals("enabled")){
+            is = !t.isDisabled();
+        }
+        return is;
+    }
+
+    @Test
+    public void testNewMethod() {
+        DownloadFile downloadFile = new DownloadFile(null, "Download");
+        assertFalse(hasStatus("disabled", downloadFile));
+        assertTrue(hasStatus("enabled", downloadFile));
+
+        SelectPicker selectPicker = new SelectPicker(null, "SimpleTextField");
+        assertFalse(hasStatus("disabled", selectPicker));
+        assertTrue(hasStatus("enabled", selectPicker));
+
+        WebLocator el = new WebLocator(null, "SimpleTextField");
+        assertFalse(hasStatus("disabled", el));
+        assertTrue(hasStatus("enabled", el));
+        assertFalse(hasStatus("test", el));
     }
 }
