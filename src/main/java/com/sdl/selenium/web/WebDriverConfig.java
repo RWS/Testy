@@ -123,7 +123,7 @@ public class WebDriverConfig {
         } catch (IllegalArgumentException e) {
             LOGGER.error("BROWSER not supported : " + browserKey + ". Supported browsers: " + Arrays.asList(Browser.values()));
         }
-        String driverPath = PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.driver.path");
+        String driverPath = properties.getProperty("browser.driver.path");
         if (browser == Browser.FIREFOX) {
             createFirefoxDriver(properties);
         } else if (browser == Browser.IEXPLORE) {
@@ -145,7 +145,7 @@ public class WebDriverConfig {
             options.addArguments("--test-type");
             Map<String, Object> prefs = new HashMap<String, Object>();
             String property = properties.getProperty("browser.download.dir");
-            File file = new File(PropertiesReader.RESOURCES_PATH + property);
+            File file = new File(property);
             setDownloadPath(file.getAbsolutePath());
             String downloadDir = file.getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {
@@ -203,7 +203,7 @@ public class WebDriverConfig {
                     "browser.helperApps.neverAsk.openFile"
             );
 
-            File file = new File(PropertiesReader.RESOURCES_PATH + properties.getProperty("browser.download.dir"));
+            File file = new File(properties.getProperty("browser.download.dir"));
             setDownloadPath(file.getAbsolutePath());
             String downloadDir = file.getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {

@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.web.utils.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +28,10 @@ public class WebLocatorConfig {
         add(SearchType.CONTAINS);
     }};
 
-    private static Properties properties = null;
+    private static PropertiesReader properties = null;
 
     static {
-        properties = new Properties();
+        properties = new PropertiesReader();
         try {
             String filePath = loader.getResource(CONFIG_FILE_NAME).getFile();
             logger.debug("reading: " + filePath);
@@ -58,15 +59,9 @@ public class WebLocatorConfig {
         }
     }
 
-    public static String getString(String key) {
-        String property = properties.getProperty(key);
-        logger.debug("get key: " + key + " = " + property);
-        return property;
-    }
-
     public static Boolean getBoolean(String key) {
         Boolean v = null;
-        String vString = getString(key);
+        String vString = properties.getProperty(key);
         if (vString != null) {
             v = Boolean.valueOf(vString);
         } else {
@@ -77,7 +72,7 @@ public class WebLocatorConfig {
 
     public static Integer getInt(String key) {
         Integer v = null;
-        String vString = getString(key);
+        String vString = properties.getProperty(key);
         if (vString != null) {
             v = Integer.valueOf(vString);
         } else {
@@ -111,7 +106,7 @@ public class WebLocatorConfig {
             setHighlight(highlight);
         }
 
-        String searchTextType = getString("weblocator.defaults.searchType");
+        String searchTextType = properties.getProperty("weblocator.defaults.searchType");
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");

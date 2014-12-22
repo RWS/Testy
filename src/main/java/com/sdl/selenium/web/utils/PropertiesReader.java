@@ -25,8 +25,6 @@ public class PropertiesReader extends Properties {
 
     public PropertiesReader(String resourcePath) {
         try {
-            RESOURCES_PATH = new File(resourcePath).getParent() + File.separator;
-            RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
         } catch (IOException e) {
