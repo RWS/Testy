@@ -112,7 +112,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean clickAt() {
         boolean clickAt = ready() && doClickAt();
         if (clickAt) {
-            LOGGER.info("ClickAt on " + this);
+            LOGGER.info("ClickAt on {}", toString());
         }
         return clickAt;
     }

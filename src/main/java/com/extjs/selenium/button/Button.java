@@ -104,7 +104,7 @@ public class Button extends ExtJsComponent implements IButton {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
 //        logger.debug("clickWithExtJS: "+ script);
             Object object = WebLocatorUtils.doExecuteScript(script);
-            logger.debug("clickWithExtJS result: {}", object);
+            logger.info("clickWithExtJS on {}; result: {}", toString(), object);
             return (Boolean) object;
         }
         logger.debug("id is: " + id);
