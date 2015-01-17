@@ -18,8 +18,7 @@ public class DateFieldTest extends TestBase {
 
     @BeforeMethod
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "DateField");
-        editorGridPanelButton.click();
+        showComponent("DateField");
     }
 
     @AfterMethod

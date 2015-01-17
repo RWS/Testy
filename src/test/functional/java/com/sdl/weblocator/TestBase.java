@@ -1,6 +1,8 @@
 package com.sdl.weblocator;
 
+import com.extjs.selenium.button.Button;
 import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,5 +114,11 @@ public class TestBase {
 //        TestProperties properties = TestProperties.getInstance();
 //        return properties.getProjectDir()+ "\\reports\\screens\\";
         return "\\reports\\screens\\";
+    }
+
+    public void showComponent(String buttonText) {
+        WebLocator tbar = new WebLocator().setId("top-toolbar");
+        Button showComponentButton = new Button(tbar, buttonText);
+        showComponentButton.click();
     }
 }

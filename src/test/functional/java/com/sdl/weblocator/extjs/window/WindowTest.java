@@ -15,8 +15,7 @@ public class WindowTest extends TestBase {
 
     @BeforeMethod
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "EditorGridPanel");
-        editorGridPanelButton.click();
+        showComponent("EditorGridPanel");
     }
 
     @AfterMethod

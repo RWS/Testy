@@ -22,8 +22,7 @@ public class TextFieldTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "TextField");
-        editorGridPanelButton.click();
+        showComponent("TextField");
     }
 
     @AfterClass

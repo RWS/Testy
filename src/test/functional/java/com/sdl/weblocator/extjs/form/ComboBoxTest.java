@@ -18,8 +18,7 @@ public class ComboBoxTest extends TestBase {
 
     @BeforeMethod
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "ComboBox");
-        editorGridPanelButton.click();
+        showComponent("ComboBox");
     }
 
     @AfterMethod
