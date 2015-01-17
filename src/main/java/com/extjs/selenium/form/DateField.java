@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateField extends TextField {
     private static final Logger logger = LoggerFactory.getLogger(DateField.class);
@@ -72,8 +73,12 @@ public class DateField extends TextField {
     }
 
     public boolean select(String date, String format) {
-        SimpleDateFormat inDateFormat = new SimpleDateFormat(format);
-        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy");
+        return select(date, format, Locale.ENGLISH);
+    }
+
+    public boolean select(String date, String format, Locale locale) {
+        SimpleDateFormat inDateFormat = new SimpleDateFormat(format, locale);
+        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy", locale);
         Date fromDate;
         try {
             fromDate = inDateFormat.parse(date);
