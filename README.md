@@ -10,6 +10,24 @@ Optimized for:
 - complex UI
 - simple web applications/sites
 
+Usage Example
+-------------
+
+
+```java
+    @Test
+    public void exampleTest() {
+        TextField f = new TextField().setLabel("User Name:");
+        logger.debug(f.getPath());
+        f.setValue("user@example.com");
+
+        WebLocator container = new WebLocator().setClasses("content-full-width");
+        WebLink link = new WebLink(container, "Inscrie-te acum!");
+        logger.debug(link.getPath());
+        f.assertClick();
+    }
+```
+
 Prerequisites
 -------------
 - Java
