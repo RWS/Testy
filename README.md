@@ -55,7 +55,7 @@ How to use Testy?
 Example:
 When you want to create tests using Testy you need to create a maven project with this structure:
 
-    AutomationProject
+AutomationProject
     |--src
     |   |--main
     |   |   |--java
@@ -78,7 +78,7 @@ When you want to create tests using Testy you need to create a maven project wit
     |           |--localhost-firefox.properties
     |           `--localhost.properties
     `--pom.xml
-    `--[see pom.xml](https://github.com/SDLLanguageTechnologies/Testy/blob/master/pom.xml)
+    `--[see pom.xml](https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/syntax_highlight_filter.rb)
 
 
 
