@@ -55,7 +55,7 @@ How to use Testy?
 Example:
 When you want to create tests using Testy you need to create a maven project with this structure:
 
-AutomationProject
+    AutomationProject
     |--src
     |   |--main
     |   |   |--java
@@ -82,22 +82,7 @@ AutomationProject
 
 
 
-log4j.properties contains:
-
-    ### set log levels - for more verbose logging change 'info' to 'debug' ###
-    ### debug, info, warn, error, fatal, log ###
-    log4j.rootLogger=debug, stdout
-
-    ### direct log messages to stdout ###
-    log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-    log4j.appender.stdout.Target=System.out
-    log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
-    log4j.appender.stdout.layout.ConversionPattern=%d{HH:mm:ss,SSS} %-5p: %c{1} - %m%n
-
-    ### filter log messages by package ###
-    log4j.logger=info
-    log4j.logger.com=debug
-    log4j.logger.org=info
+[log4j.properties contains](https://github.com/SDLLanguageTechnologies/Testy/blob/master/src/main/resources/log4j.properties)
 
 webLocator.properties contains:
 
