@@ -77,9 +77,7 @@ When you want to create tests using Testy you need to create a maven project wit
     |           |--localhost-chrome.properties
     |           |--localhost-firefox.properties
     |           `--localhost.properties
-    `--pom.xml
-    `--[see pom.xml](https://github.com/jch/html-pipeline/blob/master/lib/html/pipeline/syntax_highlight_filter.rb)
-
+    `--pom.xml (pom.xml)
 
 
 [log4j.properties contains](https://github.com/SDLLanguageTechnologies/Testy/blob/master/src/main/resources/log4j.properties)
