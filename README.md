@@ -78,7 +78,7 @@ When you want to create tests using Testy you need to create a maven project wit
     |           |--localhost-firefox.properties
     |           `--localhost.properties
     `--pom.xml
-    `--[pom.xml](pom.xml)
+    `--[see pom.xml](https://github.com/SDLLanguageTechnologies/Testy/blob/master/pom.xml)
 
 
 
