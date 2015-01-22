@@ -102,7 +102,6 @@ public class Button extends ExtJsComponent implements IButton {
         String id = getAttributeId();
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
-//        logger.debug("clickWithExtJS: "+ script);
             Object object = WebLocatorUtils.doExecuteScript(script);
             logger.info("clickWithExtJS on {}; result: {}", toString(), object);
             return (Boolean) object;
@@ -141,10 +140,11 @@ public class Button extends ExtJsComponent implements IButton {
         // TODO try to find solution without runScript
         final String id = getAttributeId();
         if (hasId(id)) {
-            String script = "Ext.getCmp('" + id + "').showMenu()";
-            Boolean showMenu = (Boolean) WebLocatorUtils.doExecuteScript(script);
+            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.showMenu(); return true;} return false;})()";
+            Object object = WebLocatorUtils.doExecuteScript(script);
+            logger.info("showMenu for {}; result: {}", toString(), object);
             Utils.sleep(200);
-            return showMenu;
+            return (Boolean) object;
         }
         logger.debug("id is: " + id);
         return false;

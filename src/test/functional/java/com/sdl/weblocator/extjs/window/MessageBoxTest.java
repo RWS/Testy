@@ -13,6 +13,16 @@ public class MessageBoxTest extends TestBase {
     Button expect1Button = new Button(conditionManagerPanel, "Expect1");
     Button instantMessageButton = new Button(conditionManagerPanel, "Instant Message");
 
+    public static void assertThatMessageBoxExists(String expected, int waitSeconds) {
+        String message = MessageBox.getMessage(waitSeconds);
+        Assert.assertEquals(message, expected);
+        MessageBox.pressOK();
+    }
+
+    public static void assertThatMessageBoxExists(String expected) {
+        assertThatMessageBoxExists(expected, 0);
+    }
+
     @Test
     public void getNullIfNoMessageExistTest() {
         String message = MessageBox.getMessage();
@@ -23,9 +33,7 @@ public class MessageBoxTest extends TestBase {
     public void getMessageIn1SecTest() {
         expect1Button.click();
         String expected = "Expect1 button was pressed";
-        String message = MessageBox.getMessage(5);
-        Assert.assertEquals(message, expected);
-        MessageBox.pressOK();
+        MessageBoxTest.assertThatMessageBoxExists(expected, 5);
     }
 
     @Test
