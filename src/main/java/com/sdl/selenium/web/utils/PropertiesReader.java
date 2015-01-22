@@ -25,6 +25,7 @@ public class PropertiesReader extends Properties {
 
     public PropertiesReader(String resourcePath) {
         try {
+            LOGGER.info("load properties file: {}", resourcePath);
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
         } catch (IOException e) {
