@@ -21,7 +21,7 @@ public class WebLocatorConfig {
 
     private static long defaultRenderMillis = 3000;
     private static boolean logUseClassName = false;
-    private static boolean logXPathEnabled = false;
+    private static boolean logXPathEnabled = true;
     private static boolean logContainers = true;
     private static boolean highlight = false;
     private static List<SearchType> searchTextType = new ArrayList<SearchType>() {{
@@ -49,9 +49,9 @@ public class WebLocatorConfig {
                             "\n If you want to customize certain settings in Testy," +
                             "\n must brains " + CONFIG_FILE_NAME + " file in resources folder."+
                             "\n And it populated with the following data: " +
-                            "\n\t weblocator.log.containers=false" +
+                            "\n\t weblocator.log.containers=true" +
                             "\n\t weblocator.log.useClassName=false" +
-                            "\n\t weblocator.log.logXPathEnabled=false" +
+                            "\n\t weblocator.log.logXPathEnabled=true" +
                             "\n\t weblocator.highlight=true" +
                             "\n\t weblocator.defaults.renderMillis=3000" +
                             "\n\t weblocator.defaults.searchType=contains"
