@@ -4,19 +4,24 @@ import com.sdl.selenium.web.utils.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.io.*;
+import java.util.*;
 
-public class WebLocatorConfig {
+public class WebLocatorConfig extends PropertiesReader {
 
-    private static Logger logger = LoggerFactory.getLogger(WebLocatorConfig.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(WebLocatorConfig.class);
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
+    private static final String DEFAULT_CONFIG = ""+
+            "\n weblocator.log.containers=true" +
+            "\n weblocator.log.useClassName=false" +
+            "\n weblocator.log.logXPathEnabled=true" +
+            "\n weblocator.highlight=true" +
+            "\n weblocator.defaults.renderMillis=3000" +
+            "\n weblocator.defaults.searchType=contains";
+    
+    
+
     private static ClassLoader loader = WebLocatorConfig.class.getClassLoader();
 
     private static long defaultRenderMillis = 3000;
@@ -34,7 +39,7 @@ public class WebLocatorConfig {
         properties = new PropertiesReader();
         try {
             String filePath = loader.getResource(CONFIG_FILE_NAME).getFile();
-            logger.debug("reading: " + filePath);
+            LOGGER.debug("reading: " + filePath);
 
             InputStream inputStream = loader.getSystemResourceAsStream(CONFIG_FILE_NAME);
             if (inputStream != null) {
@@ -45,9 +50,9 @@ public class WebLocatorConfig {
                 init();
             }
         } catch (Exception e) {
-            logger.error("Error loading config file. " + CONFIG_FILE_NAME +
+            LOGGER.warn("Error loading config file. " + CONFIG_FILE_NAME +
                             "\n If you want to customize certain settings in Testy," +
-                            "\n must brains " + CONFIG_FILE_NAME + " file in resources folder."+
+                            "\n must brains " + CONFIG_FILE_NAME + " file in resources folder." +
                             "\n And it populated with the following data: " +
                             "\n\t weblocator.log.containers=true" +
                             "\n\t weblocator.log.useClassName=false" +
@@ -65,7 +70,7 @@ public class WebLocatorConfig {
         if (vString != null) {
             v = Boolean.valueOf(vString);
         } else {
-            logger.debug("key not found:" + key);
+            LOGGER.debug("key not found:" + key);
         }
         return v;
     }
@@ -76,7 +81,7 @@ public class WebLocatorConfig {
         if (vString != null) {
             v = Integer.valueOf(vString);
         } else {
-            logger.debug("key not found:" + key);
+            LOGGER.debug("key not found:" + key);
         }
         return v;
     }
@@ -115,7 +120,7 @@ public class WebLocatorConfig {
                 try {
                     list.add(SearchType.valueOf(searchType));
                 } catch (IllegalArgumentException e) {
-                    logger.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + Arrays.asList(SearchType.values()));
+                    LOGGER.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + Arrays.asList(SearchType.values()));
                 }
             }
             setSearchTextType(list);

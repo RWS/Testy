@@ -3,9 +3,8 @@ package com.sdl.selenium.web.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
@@ -24,10 +23,33 @@ public class PropertiesReader extends Properties {
     }
 
     public PropertiesReader(String resourcePath) {
+        loadFile(resourcePath);
+    }
+    
+    public PropertiesReader(String resourcePath, String defaults) {
+        if(defaults != null){
+            loadDefaults(defaults);
+        }
+        if(resourcePath != null){
+            loadFile(resourcePath);
+        }
+    }
+
+    protected void loadFile(String resourcePath) {
         try {
             LOGGER.info("load properties file: {}", resourcePath);
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
+        } catch (IOException e) {
+            LOGGER.error("IOException: {}", e);
+        }
+    }
+    
+    protected void loadDefaults(String defaults) {
+        // load string as config if config file not found
+        InputStream stream = new ByteArrayInputStream(defaults.getBytes(StandardCharsets.UTF_8));
+        try {
+            load(stream);
         } catch (IOException e) {
             LOGGER.error("IOException: {}", e);
         }
