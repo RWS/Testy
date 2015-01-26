@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 
 public class Button extends ExtJsComponent implements IButton {
-    private static final Logger logger = LoggerFactory.getLogger(Button.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     public String getIconCls() {
         return iconCls;
@@ -76,9 +76,10 @@ public class Button extends ExtJsComponent implements IButton {
         }
         boolean clicked = buttonExist && isElementPresent() && super.doClick();
         if (clicked) {
+            LOGGER.info("Click on {} ", toString());
             Utils.sleep(50);
         } else {
-            logger.error("({}) doesn't exists or is disabled {}.", toString(), getPath());
+            LOGGER.error("({}) doesn't exists or is disabled {}.", toString(), getPath());
         }
         return clicked;
     }
@@ -103,10 +104,10 @@ public class Button extends ExtJsComponent implements IButton {
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.handler.call(b.scope || b, b); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            logger.info("clickWithExtJS on {}; result: {}", toString(), object);
+            LOGGER.info("clickWithExtJS on {}; result: {}", toString(), object);
             return (Boolean) object;
         }
-        logger.debug("id is: " + id);
+        LOGGER.debug("id is: " + id);
         return false;
     }
 
@@ -142,11 +143,11 @@ public class Button extends ExtJsComponent implements IButton {
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.showMenu(); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            logger.info("showMenu for {}; result: {}", toString(), object);
+            LOGGER.info("showMenu for {}; result: {}", toString(), object);
             Utils.sleep(200);
             return (Boolean) object;
         }
-        logger.debug("id is: " + id);
+        LOGGER.debug("id is: " + id);
         return false;
     }
 
@@ -157,16 +158,16 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean clickOnMenu(String[] menuOptions) {
-        logger.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
+        LOGGER.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
         if (click()) {
             String info = toString();
-//            logger.info("Click on button " + info);
+//            LOGGER.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
             WebLocator menu = new WebLocator("x-menu-floating");
             if (WebDriverConfig.isIE()) {
                 // menu.isVisible is not considered but is executed and is just consuming time.
 //                if(menu.isVisible()){
-//                    logger.info("In IE is visible");
+//                    LOGGER.info("In IE is visible");
 //                }
             } else {
                 menu.setStyle("visibility: visible;");
@@ -182,7 +183,7 @@ public class Button extends ExtJsComponent implements IButton {
             if (option.clickAt()) {
                 return true;
             } else {
-                logger.warn("Could not locate option '" + option.getText() + "'. Performing simple click on button : " + info);
+                LOGGER.warn("Could not locate option '" + option.getText() + "'. Performing simple click on button : " + info);
                 doClickAt();
             }
         }
