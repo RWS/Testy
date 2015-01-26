@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebElement;
 
+/**
+ * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+ */
 public class WebLocatorSeleniumExecutor implements WebLocatorExecutor {
     private static final Logger logger = LoggerFactory.getLogger(WebLocatorSeleniumExecutor.class);
 

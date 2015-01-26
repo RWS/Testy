@@ -11,6 +11,9 @@ import org.testng.Assert;
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
 
+    /**
+     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+     */
     public static Selenium selenium;
 
     private String currentElementPath = "";
@@ -58,6 +61,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
 
+    /**
+     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+     */
     public static void setSeleniumExecutor(Selenium selenium) {
         executor = new WebLocatorSeleniumExecutor(selenium);
     }

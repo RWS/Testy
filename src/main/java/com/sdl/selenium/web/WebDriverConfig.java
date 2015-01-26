@@ -26,6 +26,10 @@ public class WebDriverConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfig.class);
 
     private static WebDriver driver;
+
+    /**
+     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+     */
     private static Selenium selenium;
 
     private static boolean isIE;
@@ -43,6 +47,9 @@ public class WebDriverConfig {
         return driver;
     }
 
+    /**
+     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+     */
     public static Selenium getSelenium() {
         return selenium;
     }
@@ -86,6 +93,11 @@ public class WebDriverConfig {
         }
     }
 
+    /**
+     * @deprecated
+     * The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+     * When Selenium will be removed. Change your code as this method will return true
+     */
     public static boolean hasWebDriver() {
         return driver != null;
     }
