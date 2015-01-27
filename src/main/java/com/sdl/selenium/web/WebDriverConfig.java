@@ -2,9 +2,10 @@ package com.sdl.selenium.web;
 
 import com.opera.core.systems.OperaDesktopDriver;
 import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.utils.browsers.ChromeConfigReader;
+import com.sdl.selenium.web.utils.browsers.FirefoxConfigReader;
+import com.sdl.selenium.web.utils.browsers.IExplorerConfigReader;
 import com.thoughtworks.selenium.Selenium;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,6 +16,8 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -125,7 +128,42 @@ public class WebDriverConfig {
      * @return webDriver
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
-        //LOGGER.debug("PropertiesReader.RESOURCES_PATH(1.7.2-SNAPSHOT)=" + PropertiesReader.RESOURCES_PATH);
+        Browser browser = getBrowser(browserProperties);
+        return getDriver(browser, browserProperties);
+    }
+
+    /**
+     * Create and return new WebDriver
+     * @param browser see details {@link com.sdl.selenium.web.Browser}
+     * @return webDriver
+     * @throws IOException
+     */
+    public static WebDriver getWebDriver(Browser browser) throws IOException {
+        return getDriver(browser, null);
+    }
+
+    private static WebDriver getDriver(Browser browser, String browserProperties) throws IOException {
+        PropertiesReader properties;
+        if (browser == Browser.FIREFOX) {
+            properties = new FirefoxConfigReader(browserProperties);
+            createFirefoxDriver(properties);
+        } else if (browser == Browser.IEXPLORE) {
+            properties = new IExplorerConfigReader(browserProperties);
+            createIEDriver(properties);
+        } else if (browser == Browser.CHROME) {
+            properties = new ChromeConfigReader(browserProperties);
+            createChromeDriver(properties);
+        } else if (browser == Browser.HTMLUNIT) {
+            driver = new HtmlUnitDriver(true);
+        } else {
+            LOGGER.error("Browser not supported" + browser);
+            driver = null;
+        }
+        init(driver);
+        return driver;
+    }
+
+    private static Browser getBrowser(String browserProperties) {
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
         browserKey = browserKey.toUpperCase();
@@ -135,47 +173,43 @@ public class WebDriverConfig {
         } catch (IllegalArgumentException e) {
             LOGGER.error("BROWSER not supported : " + browserKey + ". Supported browsers: " + Arrays.asList(Browser.values()));
         }
+        return browser;
+    }
+
+    private static void createIEDriver(PropertiesReader properties) {
+        DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
+        ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
         String driverPath = properties.getProperty("browser.driver.path");
-        if (browser == Browser.FIREFOX) {
-            createFirefoxDriver(properties);
-        } else if (browser == Browser.IEXPLORE) {
-            DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
-            ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-            if (!"".equals(driverPath)) {
-                System.setProperty("webdriver.ie.driver", driverPath);
-            }
-            driver = new InternetExplorerDriver(ieCapabilities);
-        } else if (browser == Browser.CHROME) {
-            if (!"".equals(driverPath)) {
-                System.setProperty("webdriver.chrome.driver", driverPath);
-            }
-            ChromeOptions options = new ChromeOptions();
-            //options.addArguments("--start-maximized");
-            options.addArguments("--lang=en");
-            options.addArguments("--allow-running-insecure-content");
-            options.addArguments("--enable-logging --v=1");
-            options.addArguments("--test-type");
-            Map<String, Object> prefs = new HashMap<String, Object>();
-            String property = properties.getProperty("browser.download.dir");
-            File file = new File(property);
-            setDownloadPath(file.getAbsolutePath());
-            String downloadDir = file.getCanonicalPath();
-            if (downloadDir != null && !"".equals(downloadDir)) {
-                prefs.put("download.default_directory", downloadDir);
-            }
-            options.setExperimentalOption("prefs", prefs);
-            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-            driver = new ChromeDriver(capabilities);
-            WebDriverConfig.setSilentDownload(!"".equals(property));
-        } else if (browser == Browser.HTMLUNIT) {
-            driver = new HtmlUnitDriver(true);
-        } else {
-            LOGGER.error("Browser not supported" + browser);
-            driver = null;
+        if (!"".equals(driverPath)) {
+            System.setProperty("webdriver.ie.driver", driverPath);
         }
-        init(driver);
-        return driver;
+        driver = new InternetExplorerDriver(ieCapabilities);
+    }
+
+    private static void createChromeDriver(PropertiesReader properties) throws IOException {
+        String driverPath = properties.getProperty("browser.driver.path");
+        if (!"".equals(driverPath)) {
+            System.setProperty("webdriver.chrome.driver", driverPath);
+        }
+        ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--start-maximized");
+        options.addArguments("--lang=en");
+        options.addArguments("--allow-running-insecure-content");
+        options.addArguments("--enable-logging --v=1");
+        options.addArguments("--test-type");
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        String property = properties.getProperty("browser.download.dir");
+        File file = new File(property);
+        setDownloadPath(file.getAbsolutePath());
+        String downloadDir = file.getCanonicalPath();
+        if (downloadDir != null && !"".equals(downloadDir)) {
+            prefs.put("download.default_directory", downloadDir);
+        }
+        options.setExperimentalOption("prefs", prefs);
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        driver = new ChromeDriver(capabilities);
+        WebDriverConfig.setSilentDownload(!"".equals(property));
     }
 
     private static void createFirefoxDriver(PropertiesReader properties) throws IOException {

@@ -49,6 +49,7 @@ public class PropertiesReader extends Properties {
         // load string as config if config file not found
         InputStream stream = new ByteArrayInputStream(defaults.getBytes(StandardCharsets.UTF_8));
         try {
+            LOGGER.info("load properties defaults: {}", defaults);
             load(stream);
         } catch (IOException e) {
             LOGGER.error("IOException: {}", e);

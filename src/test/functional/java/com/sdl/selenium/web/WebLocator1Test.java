@@ -82,7 +82,7 @@ public class WebLocator1Test extends TestBase {
         assertEquals(webLocatorNotAttribute.getAttributeClass(), null);
     }
 
-    @Test
+    //@Test
     public void webDriverConfig() {
         WebLocator l = new WebLocator().setClasses("x-tool-maximize");
         logger.debug(l.getPath());
