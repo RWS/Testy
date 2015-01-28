@@ -35,8 +35,14 @@ public class DeployTesty extends TestBase {
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "user-ul de domeniu";
-    private static final String DOMAIN_PASS = "parola de domeniu";
+    private static final String DOMAIN_USER = "domain.user";
+    private static final String DOMAIN_PASS = "***";
+    
+    private static final String JENKINS_JOB_URL = "http://cluj-jenkins01:8080/job/testy/";
+    
+    private static final String NEXUS_REPOSITORY_URL = "http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots";
+    private static final String NEXUS_ADMIN_USER = "admin";
+    private static final String NEXUS_ADMIN_PASS = "***";
 
     private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
     private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");
@@ -64,7 +70,7 @@ public class DeployTesty extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://cluj-jenkins01:8080/job/testy/");
+        driver.get(JENKINS_JOB_URL);
     }
 
     @Test
@@ -88,14 +94,14 @@ public class DeployTesty extends TestBase {
 
     @Test(dependsOnMethods = "deployOnJenkins")
     public void loginAsAdminSDLNexus() {
-        driver.get("http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots");
+        driver.get(NEXUS_REPOSITORY_URL);
         logInNexus.ready();
         Utils.sleep(1000);
         logInNexus.click();
         Utils.sleep(1000);
         userName.ready();
-        userName.setValue("admin");
-        password.setValue("admin123");
+        userName.setValue(NEXUS_ADMIN_USER);
+        password.setValue(NEXUS_ADMIN_PASS);
         logIn.click();
     }
 
