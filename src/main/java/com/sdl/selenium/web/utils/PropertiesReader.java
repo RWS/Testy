@@ -37,9 +37,10 @@ public class PropertiesReader extends Properties {
 
     protected void loadFile(String resourcePath) {
         try {
-            LOGGER.info("load properties file: {}", resourcePath);
+            LOGGER.info("Override default properties : {}", resourcePath);
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
+            fileInputStream.close();
         } catch (IOException e) {
             LOGGER.error("IOException: {}", e);
         }

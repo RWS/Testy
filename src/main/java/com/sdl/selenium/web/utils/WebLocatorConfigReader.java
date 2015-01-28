@@ -1,0 +1,20 @@
+package com.sdl.selenium.web.utils;
+
+public class WebLocatorConfigReader extends PropertiesReader {
+
+    private static final String DEFAULT_CONFIG = ""+
+            "\n weblocator.log.containers=true" +
+            "\n weblocator.log.useClassName=false" +
+            "\n weblocator.log.logXPathEnabled=true" +
+            "\n weblocator.highlight=true" +
+            "\n weblocator.defaults.renderMillis=3000" +
+            "\n weblocator.defaults.searchType=contains";
+
+    public WebLocatorConfigReader() {
+        super(null, DEFAULT_CONFIG);
+    }
+
+    public WebLocatorConfigReader(String resourcePath) {
+        super(resourcePath, DEFAULT_CONFIG);
+    }
+}
