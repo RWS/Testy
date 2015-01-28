@@ -23,16 +23,11 @@ public class SimpleComboBox extends WebLocator implements ICombo {
     public boolean select(String value) {
         boolean selected = false;
         if (ready()) {
-            if (WebDriverConfig.hasWebDriver()) {
-                if ("".equals(value)) {
-                    logger.warn("value is empty");
-                    selected = true;
-                } else {
-                    new Select(currentElement).selectByVisibleText(value);
-                    selected = true;
-                }
+            if ("".equals(value)) {
+                logger.warn("value is empty");
+                selected = true;
             } else {
-                WebDriverConfig.getSelenium().select(getPath(), value);
+                new Select(currentElement).selectByVisibleText(value);
                 selected = true;
             }
         }

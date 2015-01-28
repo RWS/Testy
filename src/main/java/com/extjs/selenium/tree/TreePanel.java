@@ -31,13 +31,9 @@ public class TreePanel extends ExtJsComponent {
         String path = "//*[contains(@class,'x-tree-node-el')]//*[starts-with(text(),'" + searchElement + "')]";
         if (new WebLocator(null, path).exists()) {
             logger.debug("Expanding the tree");
-            if(WebDriverConfig.hasWebDriver()){
-                WebDriver driver = WebDriverConfig.getDriver();
-                Actions builder = new Actions(driver);
-                builder.doubleClick(driver.findElement(By.xpath(path))).build().perform();
-            } else {
-                WebDriverConfig.getSelenium().doubleClick(path);
-            }
+            WebDriver driver = WebDriverConfig.getDriver();
+            Actions builder = new Actions(driver);
+            builder.doubleClick(driver.findElement(By.xpath(path))).build().perform();
             return true;
         }
         return false;

@@ -98,11 +98,7 @@ public class TextField extends ExtJsComponent implements ITextField {
             iconLocator.setRenderMillis(500);
             iconLocator.setInfoMessage("trigger-" + icon);
             try {
-                if (WebDriverConfig.hasWebDriver()) {
-                    return iconLocator.click();
-                } else {
-                    return iconLocator.clickAt();
-                }
+                return iconLocator.click();
             } catch (Exception e) {
                 logger.error("Exception on clickIcon: " + e.getMessage());
                 return false;

@@ -48,17 +48,11 @@ public class Slider extends ExtJsComponent {
         WebLocator element = new WebLocator(null, thumbPath);
         if (thumbPath != null && element.exists()) {
             // to scroll to this element (if element is not visible)
-            if (WebDriverConfig.hasWebDriver()) {
-                WebDriver driver = WebDriverConfig.getDriver();
-                WebElement thumbElement = driver.findElement(By.xpath(thumbPath));
-                element.sendKeys(Keys.TAB);
-                element.click();
-                new Actions(driver).dragAndDropBy(thumbElement, distance, 1).build().perform();
-            } else {
-                Selenium selenium = WebDriverConfig.getSelenium();
-                selenium.focus(thumbPath);
-                selenium.dragAndDrop(thumbPath, "" + distance + ",0");
-            }
+            WebDriver driver = WebDriverConfig.getDriver();
+            WebElement thumbElement = driver.findElement(By.xpath(thumbPath));
+            element.sendKeys(Keys.TAB);
+            element.click();
+            new Actions(driver).dragAndDropBy(thumbElement, distance, 1).build().perform();
         } else {
             logger.warn("The slider for " + getLabel() + " has not been selected or is missing");
             exists = false;

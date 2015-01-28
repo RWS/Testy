@@ -67,13 +67,9 @@ public class Button extends ExtJsComponent implements IButton {
         // TODO try to click on button that has mask - with first solution is not saying that has mask
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
         buttonEl.setRenderMillis(getRenderMillis());
-        boolean buttonExist = true;
-        if (WebDriverConfig.hasWebDriver()) {
-            buttonEl.sendKeys(Keys.TAB);
-            buttonExist = buttonEl.currentElement != null;
-        } else {
-            buttonEl.focus();
-        }
+        boolean buttonExist;
+        buttonEl.sendKeys(Keys.TAB);
+        buttonExist = buttonEl.currentElement != null;
         boolean clicked = buttonExist && isElementPresent() && super.doClick();
         if (clicked) {
             LOGGER.info("Click on {} ", toString());

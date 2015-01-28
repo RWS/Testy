@@ -29,28 +29,15 @@ public class List extends GridPanel {
 
     public boolean selectRows(String ...values) {
         boolean select = false;
-        if (WebDriverConfig.hasWebDriver()) {
-            sendKeys(Keys.CONTROL, Keys.DOWN);
-            for (String value : values) {
-                select = rowSelect(value, SearchType.EQUALS);
-                if (!select) {
-                    sendKeys(Keys.UP);
-                    return false;
-                }
+        sendKeys(Keys.CONTROL, Keys.DOWN);
+        for (String value : values) {
+            select = rowSelect(value, SearchType.EQUALS);
+            if (!select) {
+                sendKeys(Keys.UP);
+                return false;
             }
-            sendKeys(Keys.UP);
-        } else {
-            Selenium selenium = WebDriverConfig.getSelenium();
-            selenium.controlKeyDown();
-            for (String value : values) {
-                select = rowSelect(value, SearchType.EQUALS);
-                if (!select) {
-                    selenium.controlKeyUp();
-                    return false;
-                }
-            }
-            selenium.controlKeyUp();
         }
+        sendKeys(Keys.UP);
         return select;
     }
 

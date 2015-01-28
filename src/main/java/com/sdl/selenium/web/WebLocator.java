@@ -1,7 +1,6 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
-import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -10,11 +9,6 @@ import org.testng.Assert;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
-
-    /**
-     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     */
-    public static Selenium selenium;
 
     private String currentElementPath = "";
     public WebElement currentElement;
@@ -58,14 +52,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public static void setDriverExecutor(WebDriver driver) {
         executor = new WebLocatorDriverExecutor(driver);
-    }
-
-
-    /**
-     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     */
-    public static void setSeleniumExecutor(Selenium selenium) {
-        executor = new WebLocatorSeleniumExecutor(selenium);
     }
 
     /**

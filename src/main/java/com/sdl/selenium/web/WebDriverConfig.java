@@ -5,7 +5,6 @@ import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.browsers.ChromeConfigReader;
 import com.sdl.selenium.web.utils.browsers.FirefoxConfigReader;
 import com.sdl.selenium.web.utils.browsers.IExplorerConfigReader;
-import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -30,11 +29,6 @@ public class WebDriverConfig {
 
     private static WebDriver driver;
 
-    /**
-     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     */
-    private static Selenium selenium;
-
     private static boolean isIE;
     private static boolean isOpera;
     private static boolean isSafari;
@@ -48,13 +42,6 @@ public class WebDriverConfig {
      */
     public static WebDriver getDriver() {
         return driver;
-    }
-
-    /**
-     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     */
-    public static Selenium getSelenium() {
-        return selenium;
     }
 
     public static boolean isIE() {
@@ -81,7 +68,7 @@ public class WebDriverConfig {
         if (driver != null) {
             LOGGER.info("========= init WebDriver =========");
             WebDriverConfig.driver = driver;
-            WebLocator.setDriverExecutor(getDriver());
+            WebLocator.setDriverExecutor(driver);
             if (driver instanceof InternetExplorerDriver) {
                 isIE = true;
             } else if (driver instanceof ChromeDriver) {
@@ -128,7 +115,7 @@ public class WebDriverConfig {
      * @return webDriver
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
-        Browser browser = getBrowser(browserProperties);
+        Browser browser = findBrowser(browserProperties);
         return getDriver(browser, browserProperties);
     }
 
@@ -163,9 +150,7 @@ public class WebDriverConfig {
         return driver;
     }
 
-    private static Browser getBrowser(String browserProperties) {
-        PropertiesReader properties = new PropertiesReader(browserProperties);
-        String browserKey = properties.getProperty("browser");
+    public static Browser getBrowser(String browserKey) {
         browserKey = browserKey.toUpperCase();
         Browser browser = null;
         try {
@@ -174,6 +159,12 @@ public class WebDriverConfig {
             LOGGER.error("BROWSER not supported : " + browserKey + ". Supported browsers: " + Arrays.asList(Browser.values()));
         }
         return browser;
+    }
+
+    private static Browser findBrowser(String browserProperties) {
+        PropertiesReader properties = new PropertiesReader(browserProperties);
+        String browserKey = properties.getProperty("browser");
+        return getBrowser(browserKey);
     }
 
     private static void createIEDriver(PropertiesReader properties) {

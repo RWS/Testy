@@ -70,11 +70,7 @@ public class GridCell extends Cell {
 
     public boolean select() {
         try {
-            if (WebDriverConfig.hasWebDriver()) {
-                return click();
-            } else {
-                return clickAt();
-            }
+            return click();
         } catch (Exception e) {
             logger.error("GridCell select ", e);
             return false;

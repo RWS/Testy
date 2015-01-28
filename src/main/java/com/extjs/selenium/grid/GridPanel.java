@@ -128,11 +128,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     protected boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
         //logger.info(this + " - " + info);
-        if (WebDriverConfig.hasWebDriver()) {
-            scrolled = (Boolean) WebLocatorUtils.doExecuteScript(script);
-        } else {
-            scrolled = Boolean.parseBoolean((String) WebLocatorUtils.doExecuteScript(script));
-        }
+        scrolled = (Boolean) WebLocatorUtils.doExecuteScript(script);
         logger.info(this + " - " + info + " > " + scrolled);
         // TODO make configurable if has buffer view
         Utils.sleep(200); // because of Buffer view that can have scroll delay
@@ -161,19 +157,13 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     public boolean scrollTop() {
         String id = getAttrId();
-        String script = "(function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (WebDriverConfig.hasWebDriver()) {
-            script = "return " + script;
-        }
+        String script = "return (function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollTop", script);
     }
 
     public boolean scrollBottom() {
         String id = getAttrId();
-        String script = "(function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
-        if (WebDriverConfig.hasWebDriver()) {
-            script = "return " + script;
-        }
+        String script = "return (function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollButtom", script);
     }
 
@@ -184,10 +174,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     public boolean scrollPageUp() {
         String id = getAttrId();
-        String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop>0){b.dom.scrollTop-=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (WebDriverConfig.hasWebDriver()) {
-            script = "return " + script;
-        }
+        String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop>0){b.dom.scrollTop-=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageUp", script);
     }
 
@@ -198,12 +185,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     public boolean scrollPageDown() {
         String id = getAttrId();
-        String script = "(function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        if (WebDriverConfig.hasWebDriver()) {
-            return executeScrollScript("scrollPageDown", "return " + script);
-        } else {
-            return executeScrollScript("scrollPageDown", script);
-        }
+        String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        return executeScrollScript("scrollPageDown", script);
     }
 
     @Override
@@ -336,11 +319,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public boolean assertCheckSelectAll(String columnId) {
         logger.debug("Select-all checker path: " + getSelectAllChecker(columnId));
-        if (WebDriverConfig.hasWebDriver()) {
-            return getSelectAllChecker(columnId).assertClick();
-        } else {
-            return getSelectAllChecker(columnId).assertClickAt();
-        }
+        return getSelectAllChecker(columnId).assertClick();
     }
 
     /**
