@@ -1,8 +1,5 @@
 package com.extjs.selenium.window;
 
-import com.extjs.selenium.ExtJsComponent;
-import com.extjs.selenium.button.Button;
-import com.sdl.selenium.web.WebDriverConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,19 +7,18 @@ import org.slf4j.LoggerFactory;
  * The Info/Error/Warning Message Box from ExtJs
  */
 public class MessageBox {
-    private static final Logger logger = LoggerFactory.getLogger(MessageBox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBox.class);
 
+    @Deprecated
     public static String BUTTON_OK = "OK";
+    @Deprecated
     public static String BUTTON_CANCEL = "Cancel";
+    @Deprecated
     public static String BUTTON_YES = "Yes";
+    @Deprecated
     public static String BUTTON_NO = "No";
 
-    private static Window messageBoxWindow = new MessageBoxWindow();
-
-    private static Button okButton = new Button(messageBoxWindow, BUTTON_OK);
-    private static Button cancelButton = new Button(messageBoxWindow, BUTTON_CANCEL);
-    private static Button yesButton = new Button(messageBoxWindow, BUTTON_YES);
-    private static Button noButton = new Button(messageBoxWindow, BUTTON_NO);
+    private static MessageBoxWindow messageBoxWindow = new MessageBoxWindow();
 
     private MessageBox(){}
 
@@ -32,7 +28,7 @@ public class MessageBox {
      * @return MessageBox text if is present
      */
     public static String getMessage() {
-        return getMessage(0);
+        return messageBoxWindow.getMessage();
     }
 
     /**
@@ -43,16 +39,7 @@ public class MessageBox {
      * @return MessageBox text if is present
      */
     public static String getMessage(int waitSeconds) {
-        // TODO verify if can be be simplified using WebLocator instead of ExtJsComponent
-        ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", messageBoxWindow);
-        mbTextElement.setInfoMessage("MessageBox ext-mb-text");
-        String msg;
-        if (waitSeconds == 0) {
-            msg = mbTextElement.getHtmlText(true);
-        } else {
-            msg = mbTextElement.waitTextToRender(waitSeconds);
-        }
-        return msg;
+        return messageBoxWindow.getMessage(waitSeconds);
     }
 
     public boolean close() {
@@ -60,44 +47,18 @@ public class MessageBox {
     }
 
     public static String press(String buttonText) {
-        Button button;
-        if(BUTTON_OK.equals(buttonText)){
-            button = okButton;
-        } else if(BUTTON_CANCEL.equals(buttonText)){
-            button = cancelButton;
-        } else if(BUTTON_YES.equals(buttonText)){
-            button = yesButton;
-        } else if(BUTTON_NO.equals(buttonText)){
-            button = noButton;
-        } else {
-            button = new Button(messageBoxWindow, buttonText);
-        }
-        return press(button);
-    }
-
-    private static String press(final Button button) {
-        if (WebDriverConfig.isIE() && !messageBoxWindow.isVisible()) {
-            return null;
-        }
-        String msg = getMessage();
-        if (msg != null) {
-            logger.info("Click on button " + button.getText() + " in the window with message: " + msg);
-            button.click();
-        } else {
-            logger.warn("There is no Message or Dialog");
-        }
-        return msg;
+        return messageBoxWindow.press(buttonText);
     }
 
     public static String pressOK() {
-        return press(okButton);
+        return messageBoxWindow.pressOK();
     }
 
     public static String pressYes() {
-        return press(yesButton);
+        return messageBoxWindow.pressYes();
     }
 
     public static String pressNo() {
-        return press(noButton);
+        return messageBoxWindow.pressNo();
     }
 }
