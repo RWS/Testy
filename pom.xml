@@ -25,11 +25,11 @@
             <organization>SDL</organization>
             <organizationUrl>www.sdl.com</organizationUrl>
         </developer>
-        <developer>
+        <!--<developer>
             <name>Matei Nicolae</name>
             <organization>SDL</organization>
             <organizationUrl>www.sdl.com</organizationUrl>
-        </developer>
+        </developer>-->
     </developers>
 
     <parent>
