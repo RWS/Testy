@@ -157,6 +157,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     public boolean scrollTop() {
         String id = getAttrId();
+        return scrollTop(id);
+    }
+    private boolean scrollTop(String id) {
         String script = "return (function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollTop", script);
     }
@@ -185,6 +188,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     public boolean scrollPageDown() {
         String id = getAttrId();
+        return scrollPageDown(id);
+    }
+    private boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageDown", script);
     }
@@ -232,7 +238,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     private boolean doCellAction(GridCell cell, String action) {
         boolean selected;
-        scrollTop(); // make sure always start from top then scroll down till the end of the page
+        String id = getAttrId();
+        scrollTop(id); // make sure always start from top then scroll down till the end of the page
         do {
             ready();// if the row is not in visible (need to scroll down - errors when used BufferView in grid)
             if ("doubleClickAt".equals(action)) {
@@ -240,7 +247,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             } else {
                 selected = cell.select();
             }
-        } while (!selected && scrollPageDown());
+        } while (!selected && scrollPageDown(id));
 
         if (selected) {
             logger.info("The element '" + cell + "' has been located.");
