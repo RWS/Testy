@@ -7,10 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleTable extends WebLocator implements ITable<TableRow, TableCell> {
-    private static final Logger logger = LoggerFactory.getLogger(SimpleTable.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTable.class);
 
     private int timeout = 30;
 
@@ -52,12 +53,12 @@ public class SimpleTable extends WebLocator implements ITable<TableRow, TableCel
             selected = cell.click();
         }
         if (selected) {
-            logger.info("The element '" + cell + "' has been located.");
+            LOGGER.info("The element '" + cell + "' has been located.");
         } else {
-            logger.warn("The element '" + cell + "' is not present in the list.");
-            if (logger.isDebugEnabled()) {
-                logger.debug("Path's element is: " + cell.getPath());
-                logger.debug("Total Rows: " + getCount());
+            LOGGER.warn("The element '" + cell + "' is not present in the list.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Path's element is: " + cell.getPath());
+                LOGGER.debug("Total Rows: " + getCount());
             }
         }
         return selected;
@@ -93,7 +94,7 @@ public class SimpleTable extends WebLocator implements ITable<TableRow, TableCel
             WebLocator body = new WebLocator(this).setTag("tbody");
             return new TableRow(body).size();
         } else {
-            logger.warn("table is not ready to be used");
+            LOGGER.warn("table is not ready to be used");
             // TODO could try to verify row count with mask on table or when is disabled also.
             return -1;
         }
@@ -226,7 +227,7 @@ public class SimpleTable extends WebLocator implements ITable<TableRow, TableCel
         if (tableRow.ready()) {
             text = new TableCell(tableRow, columnId).getHtmlText();
         } else {
-            logger.warn("searchText was not found in table: " + searchText);
+            LOGGER.warn("searchText was not found in table: " + searchText);
         }
         return text;
     }

@@ -84,14 +84,18 @@ public class SimpleTableTest extends TestBase {
         list.add("First (3) Second");
         listOfList.add(list);
 
+        long startMs = System.currentTimeMillis();
+        StringBuffer stringBuffer = new StringBuffer();
         for (List<String> listEl : table.getCellsText()) {
-            System.out.println();
-            System.out.print("| ");
+            stringBuffer.append("\n| ");
             for (String el : listEl) {
-                System.out.print(el + " | ");
+                stringBuffer.append(el).append(" | ");
             }
         }
-        System.out.println();
+        LOGGER.info("test {}", stringBuffer);
+
+        long endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("getAllTexts took %s ms", endMs - startMs));
 
         assertEquals(table.getCellsText(), listOfList);
     }
