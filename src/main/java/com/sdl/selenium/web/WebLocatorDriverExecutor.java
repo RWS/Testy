@@ -267,6 +267,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     el.currentElement.clear();
                     el.currentElement.sendKeys(value);
                     executed = true;
+                } catch (ElementNotVisibleException exception) {
+                    // TODO find what to do
+                    logger.error("ElementNotVisibleException in setValue: " + el, exception);
+                    if (WebLocatorConfig.isLogXPathEnabled()) {
+                        logger.debug("\t" + el.getPath());
+                    }
+                    throw exception;
                 } catch (StaleElementReferenceException exception) {
                     logger.warn("StaleElementReferenceException in setValue: " + el, exception);
                     logger.warn("Set value(" + el + ") second try:  '" + value + "'");
