@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class Label extends ExtJsComponent {
 
-    private static final Logger logger = LoggerFactory.getLogger(Label.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Label.class);
 
     public Label() {
         setClassName("Label");

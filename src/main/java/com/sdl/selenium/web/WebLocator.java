@@ -363,6 +363,14 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return waitToRender() && waitToActivate();
     }
 
+    public boolean assertReady() {
+        boolean ready = ready();
+        if (!ready) {
+            Assert.fail("Element is not ready : " + this);
+        }
+        return ready;
+    }
+
     public boolean ready(int seconds) {
         return waitToRender((long) seconds * 1000) && waitToActivate(seconds);
     }
