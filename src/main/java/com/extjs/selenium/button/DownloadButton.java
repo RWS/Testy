@@ -55,7 +55,7 @@ public class DownloadButton extends Button implements Download {
         WebDriver driver = WebDriverConfig.getDriver();
         focus();
         Actions builder = new Actions(driver);
-        builder.moveToElement(currentElement).build().perform();
+        builder.moveToElement(currentElement).perform();
         builder.click().perform();
     }
 }

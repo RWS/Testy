@@ -86,8 +86,8 @@ public class UploadFile extends WebLocator implements Upload {
             WebDriver driver = WebDriverConfig.getDriver();
             el.focus();
             Actions builder = new Actions(driver);
-            builder.moveToElement(el.currentElement).build().perform();
-            builder.click().build().perform();
+            builder.moveToElement(el.currentElement).perform();
+            builder.click().perform();
             return true;
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
