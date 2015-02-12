@@ -5,16 +5,14 @@ import com.extjs.selenium.grid.GridPanel;
 import com.extjs.selenium.grid.GridRow;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.thoughtworks.selenium.Selenium;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 
 public class List extends GridPanel {
-    private static final Logger logger = LoggerFactory.getLogger(List.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(List.class);
 
     public List() {
         setClassName("List");

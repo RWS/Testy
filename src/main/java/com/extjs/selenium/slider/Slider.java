@@ -4,7 +4,6 @@ package com.extjs.selenium.slider;
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -13,7 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO this class is too specific to GeBlobal slider only
+// TODO this class is too specific to BeBlobal slider only
 public class Slider extends ExtJsComponent {
     private static final Logger logger = LoggerFactory.getLogger(Slider.class);
 
