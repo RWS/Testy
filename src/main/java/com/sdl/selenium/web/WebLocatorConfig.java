@@ -17,20 +17,24 @@ public class WebLocatorConfig {
 
     private static ClassLoader loader = WebLocatorConfig.class.getClassLoader();
 
-    private static long defaultRenderMillis = 3000;
-    private static boolean logUseClassName = false;
-    private static boolean logXPathEnabled = true;
-    private static boolean logContainers = true;
-    private static boolean highlight = false;
+    private static long defaultRenderMillis;
+    private static boolean logUseClassName;
+    private static boolean logXPathEnabled;
+    private static boolean logContainers;
+    private static boolean highlight;
     private static List<SearchType> searchTextType = new ArrayList<SearchType>() {{
         add(SearchType.CONTAINS);
     }};
+    public static String defaultLabelPosition;
 
     private static WebLocatorConfigReader properties = null;
 
     static {
         URL resource = loader.getResource(CONFIG_FILE_NAME);
         String filePath = resource != null ? resource.getFile() : null;
+        if (filePath == null) {
+            LOGGER.info("override defaults by adding them in src/main/resources/{}", CONFIG_FILE_NAME);
+        }
         properties = new WebLocatorConfigReader(filePath);
         init();
     }
@@ -62,6 +66,8 @@ public class WebLocatorConfig {
         if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);
         }
+        String labelPosition = properties.getProperty("weblocator.defaults.labelPosition");
+        setDefaultLabelPosition(labelPosition);
 
         Boolean logUseClassName = getBoolean("weblocator.log.useClassName");
         if (logUseClassName != null) {
@@ -148,5 +154,13 @@ public class WebLocatorConfig {
 
     public static void setSearchTextType(List<SearchType> searchTextType) {
         WebLocatorConfig.searchTextType = searchTextType;
+    }
+
+    public static String getDefaultLabelPosition() {
+        return defaultLabelPosition;
+    }
+
+    public static void setDefaultLabelPosition(String defaultLabelPosition) {
+        WebLocatorConfig.defaultLabelPosition = defaultLabelPosition;
     }
 }

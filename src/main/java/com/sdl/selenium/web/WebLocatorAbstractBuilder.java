@@ -38,7 +38,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     private String label;
     private String labelTag = "label";
-    private String labelPosition = "//following-sibling::*//";
+    private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
     private int position = -1;
 

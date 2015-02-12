@@ -8,7 +8,8 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.log.logXPathEnabled=true" +
             "\n weblocator.highlight=false" +
             "\n weblocator.defaults.renderMillis=3000" +
-            "\n weblocator.defaults.searchType=contains";
+            "\n weblocator.defaults.searchType=contains" +
+            "\n weblocator.defaults.labelPosition=//following-sibling::*//";
 
     public WebLocatorConfigReader() {
         super(null, DEFAULT_CONFIG);
