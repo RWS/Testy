@@ -8,15 +8,14 @@ import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.ITable;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.utils.Utils;
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 
 import java.util.*;
 

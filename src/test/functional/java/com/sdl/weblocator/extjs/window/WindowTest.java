@@ -1,6 +1,5 @@
 package com.sdl.weblocator.extjs.window;
 
-import com.extjs.selenium.button.Button;
 import com.extjs.selenium.window.Window;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;

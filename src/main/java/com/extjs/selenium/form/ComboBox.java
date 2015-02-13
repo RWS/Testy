@@ -5,7 +5,7 @@ import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,11 +1,11 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
