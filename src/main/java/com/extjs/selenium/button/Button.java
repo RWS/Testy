@@ -38,15 +38,6 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     /**
-     * @param cls css class
-     * @deprecated
-     */
-    public Button(String cls) {
-        this();
-        setClasses(cls);
-    }
-
-    /**
      * @param container parent
      */
     public Button(WebLocator container) {
