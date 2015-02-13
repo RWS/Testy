@@ -16,10 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class FindElementTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(FindElementTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FindElementTest.class);
+    
     Window elementWindow = new Window("Element");
     Button alertButton = new Button(elementWindow, "Alert");
     Button closeButton = new Button(elementWindow, "Close");
@@ -28,8 +30,7 @@ public class FindElementTest extends TestBase {
     TextField timeOutTextField = new TextField(findElementsAfterTimeoutFormPanel, "Timeout:");
     Button showButton = new Button(findElementsAfterTimeoutFormPanel, "Show");
     Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").setRenderMillis(200);
-
-
+    
     @Test
     public void clickExtreme() {
         findElementButton.click();
@@ -53,7 +54,7 @@ public class FindElementTest extends TestBase {
         long startMs = System.currentTimeMillis();
         showButton1.waitToRender();
         long endMs = System.currentTimeMillis();
-        logger.debug("wait1 = " + (endMs - startMs));
+        LOGGER.debug("wait1 = " + (endMs - startMs));
     }
 
     @Test
@@ -67,7 +68,7 @@ public class FindElementTest extends TestBase {
 
         MessageBox.pressOK();
         timeOutTextField.setValue("3001");
-        logger.debug("wait1 = " + (endMs - startMs));
+        LOGGER.debug("wait1 = " + (endMs - startMs));
     }
 
     private <T extends WebLocator> boolean hasStatus(String status, T t) {

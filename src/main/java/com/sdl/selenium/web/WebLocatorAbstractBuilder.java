@@ -257,7 +257,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
-        if (searchType != null) {
+        if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
         }
         return (T) this;
@@ -532,7 +532,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
-        if (searchType != null) {
+        if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
         }
         return (T) this;
