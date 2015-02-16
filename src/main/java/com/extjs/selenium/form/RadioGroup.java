@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RadioGroup extends ExtJsComponent {
-    private static final Logger logger = LoggerFactory.getLogger(RadioGroup.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RadioGroup.class);
 
     private Radio radio = new Radio(this);
 

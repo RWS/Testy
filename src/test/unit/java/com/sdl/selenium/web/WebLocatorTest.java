@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
 public class WebLocatorTest {
-    private static final Logger logger = LoggerFactory.getLogger(WebLocatorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorTest.class);
 
     private static WebLocator container = new WebLocator("container");
 

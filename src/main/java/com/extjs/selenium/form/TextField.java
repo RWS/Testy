@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 
 public class TextField extends ExtJsComponent implements ITextField {
-    private static final Logger logger = LoggerFactory.getLogger(TextField.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
         setClassName("TextField");
@@ -56,11 +56,11 @@ public class TextField extends ExtJsComponent implements ITextField {
                 currentElement.clear();
                 Utils.copyToClipboard(value);
                 currentElement.sendKeys(Keys.CONTROL, "v");
-                logger.info("Set value(" + this + "): " + value + "'");
+                LOGGER.info("Set value(" + this + "): " + value + "'");
                 return true;
             }
         } else {
-            logger.warn("setValue : field is not ready for use: " + toString());
+            LOGGER.warn("setValue : field is not ready for use: " + toString());
         }
         return false;
     }
@@ -99,11 +99,11 @@ public class TextField extends ExtJsComponent implements ITextField {
             try {
                 return iconLocator.click();
             } catch (Exception e) {
-                logger.error("Exception on clickIcon: " + e.getMessage());
+                LOGGER.error("Exception on clickIcon: " + e.getMessage());
                 return false;
             }
         } else {
-            logger.warn("clickIcon : field is not ready for use: " + this);
+            LOGGER.warn("clickIcon : field is not ready for use: " + this);
         }
         return false;
     }

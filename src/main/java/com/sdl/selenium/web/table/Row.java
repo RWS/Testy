@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public abstract class Row extends WebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(Row.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Row.class);
 
     public Row() {
         setClassName("Row");
@@ -27,9 +27,9 @@ public abstract class Row extends WebLocator {
             } else if (cell.getPosition() == -1 && !"".equals(text) && text != null) {
                 path += " and " + getSearchPath(cellEl, tagCell);
             } else {
-                logger.warn("cell.getPosition()=" + cell.getPosition());
-                logger.warn("text=" + text);
-                logger.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
+                LOGGER.warn("cell.getPosition()=" + cell.getPosition());
+                LOGGER.warn("text=" + text);
+                LOGGER.warn("Please use : new TableCell(3, \"1234\", \"eq\")");
             }
         }
         setElPathSuffix("row-cells", Utils.fixPathSelector(path));

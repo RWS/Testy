@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
 
 public class ButtonTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(ButtonTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
 
     private Form form = new Form(null, "Form Title");
     private Button disableBtn = new Button(form, "DisableBtn");

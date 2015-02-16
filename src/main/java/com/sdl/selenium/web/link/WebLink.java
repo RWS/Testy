@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WebLink extends WebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(WebLink.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLink.class);
+    
     private String oldTab;
 
     public WebLink() {

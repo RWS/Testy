@@ -12,7 +12,7 @@ import java.util.Date;
  * If you want more information about this datepicker visit this site: http://vitalets.github.io/bootstrap-datepicker/
  */
 public class DatePicker extends WebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(DatePicker.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatePicker.class);
 
     public DatePicker() {
         setClassName("DatePicker");
@@ -47,7 +47,7 @@ public class DatePicker extends WebLocator {
             fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);
         } catch (ParseException e) {
-            logger.error("ParseException: {}", e);
+            LOGGER.error("ParseException: {}", e);
         }
         String[] dates = date.split("/");
         String day = dates[0];

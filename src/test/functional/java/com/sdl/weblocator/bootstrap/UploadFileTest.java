@@ -14,7 +14,7 @@ import java.io.File;
 import static org.testng.Assert.assertTrue;
 
 public class UploadFileTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(UploadFileTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFileTest.class);
 
     Form form = new Form(null, "Form Title");
     UploadFile uploadFile = new UploadFile(form, "TPT Test:");

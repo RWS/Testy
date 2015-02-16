@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Tab extends WebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(Tab.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     private Tab() {
         setClassName("Tab");
@@ -71,7 +71,7 @@ public class Tab extends WebLocator {
             activated = titleElement.click();
         }
         if (activated) {
-            logger.info("setActive : " + toString());
+            LOGGER.info("setActive : " + toString());
         }
         return activated;
     }

@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CheckBox extends SimpleTextField implements ICheck {
-    private static final Logger logger = LoggerFactory.getLogger(CheckBox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
         setClassName("CheckBox");

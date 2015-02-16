@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TableCell extends Cell {
-    private static final Logger logger = LoggerFactory.getLogger(TableCell.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableCell.class);
 
     public TableCell() {
         setRenderMillis(200);

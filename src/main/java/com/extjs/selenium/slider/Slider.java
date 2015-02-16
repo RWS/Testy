@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
 
 // TODO this class is too specific to BeBlobal slider only
 public class Slider extends ExtJsComponent {
-    private static final Logger logger = LoggerFactory.getLogger(Slider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Slider.class);
 
     public Slider() {
         setClassName("Slider");
-        //logger.debug(getClassName() + "() constructor");
+        //LOGGER.debug(getClassName() + "() constructor");
     }
 
     /**
@@ -53,7 +53,7 @@ public class Slider extends ExtJsComponent {
             element.click();
             new Actions(driver).dragAndDropBy(thumbElement, distance, 1).build().perform();
         } else {
-            logger.warn("The slider for " + getLabel() + " has not been selected or is missing");
+            LOGGER.warn("The slider for " + getLabel() + " has not been selected or is missing");
             exists = false;
         }
         return exists;

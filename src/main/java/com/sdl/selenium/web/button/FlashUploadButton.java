@@ -6,8 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FlashUploadButton extends SelectFilesHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(FlashUploadButton.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlashUploadButton.class);
 
     public FlashUploadButton() {
         WebLocator buttonElement = new WebLocator();

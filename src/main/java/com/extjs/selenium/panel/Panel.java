@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Panel extends ExtJsComponent {
-    private static final Logger logger = LoggerFactory.getLogger(Panel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Panel.class);
 
     private String headerBaseCls;
 

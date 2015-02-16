@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
 public class StartPage {
-    private static final Logger logger = LoggerFactory.getLogger(StartPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StartPage.class);
 
     @FindBy(how = How.ID, using = "open")
     private WebElement open;

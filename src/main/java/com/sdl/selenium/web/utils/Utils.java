@@ -20,7 +20,7 @@ import java.util.*;
  * TODO Sa fie o metoda de Utils care sa poti seta din WebLocator path-ul unde sa salveze imaginile in dependenta de WebDriver ori Selenium
  */
 public class Utils {
-    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     public static void sleep(long milliseconds) {
         try {
@@ -28,7 +28,7 @@ public class Utils {
                 Thread.sleep(milliseconds);
             }
         } catch (InterruptedException e) {
-            logger.error("InterruptedException: {}", e);
+            LOGGER.error("InterruptedException: {}", e);
         }
     }
 
@@ -52,7 +52,7 @@ public class Utils {
             Utils.sleep(milliseconds);
             i++;
             if (i == 60) {
-                logger.warn("pleaseWait. Waited for 60x" + milliseconds + " milliseconds.");
+                LOGGER.warn("pleaseWait. Waited for 60x" + milliseconds + " milliseconds.");
                 return false;
             }
         } while (WebDriverConfig.getDriver().getPageSource().contains("Please Wait..."));
@@ -72,7 +72,7 @@ public class Utils {
             Utils.sleep(milliseconds);
             i++;
             if (i == 60) {
-                logger.warn("loading. Waited for 60x" + milliseconds + " milliseconds.");
+                LOGGER.warn("loading. Waited for 60x" + milliseconds + " milliseconds.");
                 return false;
             }
         } while (WebDriverConfig.getDriver().getPageSource().contains("Loading..."));
@@ -151,7 +151,7 @@ public class Utils {
 //            String screensPath = properties.getProjectDir()+ "\\reports\\screens\\";
             File screensDir = new File(screensPath);
             screensDir.mkdirs();
-            logger.info("Screenshot: " + filePath);
+            LOGGER.info("Screenshot: " + filePath);
 
             TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
             File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
@@ -159,7 +159,7 @@ public class Utils {
             File file = new File(filePath);
             screenShot.renameTo(file);
         } catch (Exception e) {
-            logger.error("Failed to capture screenshot: ", e);
+            LOGGER.error("Failed to capture screenshot: ", e);
         }
         return fileName;
     }
@@ -167,7 +167,7 @@ public class Utils {
     public static boolean eq(Object a, Object b) {
         boolean equals = a == b || (a != null && a.equals(b));
         if (!equals) {
-            logger.debug("'" + a + "' is not equals with '" + b + "'");
+            LOGGER.debug("'" + a + "' is not equals with '" + b + "'");
         }
         return equals;
     }

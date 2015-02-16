@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DisplayField extends TextField {
-    private static final Logger logger = LoggerFactory.getLogger(DisplayField.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DisplayField.class);
 
     public DisplayField() {
         setClassName("DisplayField");
@@ -30,7 +30,7 @@ public class DisplayField extends TextField {
 
     public boolean setValue(String value) {
         // TODO find better way (maybe extending Field not text field directly)
-        logger.warn("can't set Value in display field");
+        LOGGER.warn("can't set Value in display field");
         return false;
     }
 
@@ -40,7 +40,7 @@ public class DisplayField extends TextField {
         if(ready()){
             value = getHtmlText();
         } else {
-            logger.warn("getValue : field is not ready for use: " + toString());
+            LOGGER.warn("getValue : field is not ready for use: " + toString());
         }
         return value;
     }

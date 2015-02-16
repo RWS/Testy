@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.openqa.selenium.Keys;
 
 public class EditorGridPanel extends GridPanel {
-    private static final Logger logger = LoggerFactory.getLogger(EditorGridPanel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditorGridPanel.class);
 
     private int clicksToEdit = 2;
 
@@ -66,21 +66,21 @@ public class EditorGridPanel extends GridPanel {
         WebLocator container = new WebLocator("x-editor", this);
         WebLocator editableEl = new WebLocator(container, "//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
-        logger.debug("active editor stringClass: " + stringClass);
+        LOGGER.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {
-            logger.warn("active editor stringClass is null: " + editableEl); // TODO investigate this problem
+            LOGGER.warn("active editor stringClass is null: " + editableEl); // TODO investigate this problem
             stringClass = "";
         }
         if (stringClass.contains("x-form-field-trigger-wrap")) {
             // TODO when is DateField
-            logger.debug("active editor is ComboBox");
+            LOGGER.debug("active editor is ComboBox");
             editor = new ComboBox();
             editor.setInfoMessage("active combo editor");
         } else if (stringClass.contains("x-form-textarea")) {
-            logger.debug("active editor is TextArea");
+            LOGGER.debug("active editor is TextArea");
             editor = new TextArea();
         } else {
-            logger.debug("active editor is TextField");
+            LOGGER.debug("active editor is TextField");
             editor = new TextField();
         }
         editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
@@ -95,13 +95,13 @@ public class EditorGridPanel extends GridPanel {
      * @return true or false
      */
     public boolean startEdit(int rowIndex, int colIndex) {
-        logger.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
+        LOGGER.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
         GridCell cell = getCell(rowIndex, colIndex);
         return prepareEdit(cell);
     }
 
     public boolean startEdit(String searchElement, int colIndex) {
-        logger.debug("startEdit(" + searchElement + ", " + colIndex + ")");
+        LOGGER.debug("startEdit(" + searchElement + ", " + colIndex + ")");
         GridCell cell = getGridCell(searchElement, colIndex);
         return prepareEdit(cell);
     }
@@ -146,7 +146,7 @@ public class EditorGridPanel extends GridPanel {
      * @return true or false
      */
     public boolean setRowValue(String value) {
-        logger.debug("setRowValue(" + value + ") - in active editor");
+        LOGGER.debug("setRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         boolean edited = editor.setValue(value);
         if (edited) {
@@ -162,7 +162,7 @@ public class EditorGridPanel extends GridPanel {
      * @return true or false
      */
     public boolean pasteRowValue(String value) {
-        logger.debug("pasteRowValue(" + value + ") - in active editor");
+        LOGGER.debug("pasteRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         boolean edited;
         if (editor instanceof ComboBox) {
@@ -177,7 +177,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(String value) {
-        logger.debug("appendRowValue(" + value + ") - in active editor");
+        LOGGER.debug("appendRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         editor.sendKeys(Keys.END);
         editor.sendKeys(value);
@@ -186,7 +186,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean setRowValue(int rowIndex, int colIndex, String value) {
-        logger.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
+        LOGGER.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
         return startEdit(rowIndex, colIndex) && setRowValue(value);
     }
 
@@ -195,18 +195,18 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(int rowIndex, int colIndex, String value) {
-        logger.debug("appendRowValue(" + rowIndex + ", " + colIndex + "): " + value);
+        LOGGER.debug("appendRowValue(" + rowIndex + ", " + colIndex + "): " + value);
         return startEdit(rowIndex, colIndex) && appendRowValue(value);
     }
 
 
     public boolean setRowValue(String searchElement, int colIndex, String value) {
-        logger.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
+        LOGGER.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
         return startEdit(searchElement, colIndex) && setRowValue(value);
     }
 
     public boolean appendRowValue(String searchElement, int colIndex, String value) {
-        logger.debug("appendRowValue(" + searchElement + ", " + colIndex + "): " + value);
+        LOGGER.debug("appendRowValue(" + searchElement + ", " + colIndex + "): " + value);
         return startEdit(searchElement, colIndex) && appendRowValue(value);
     }
 

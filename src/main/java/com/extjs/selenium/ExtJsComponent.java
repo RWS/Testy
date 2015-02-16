@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExtJsComponent extends WebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(ExtJsComponent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExtJsComponent.class);
 
     public ExtJsComponent() {
         setClassName("ExtJsComponent");
@@ -65,8 +65,8 @@ public class ExtJsComponent extends WebLocator {
         WebLocator mask = getMaskElement();
         if ((id == null || id.equals("")) && getContainer() != null) {
             id = getContainer().getAttributeId();
-            if(logger.isDebugEnabled()){
-                logger.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getContainer().getClassName());
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getContainer().getClassName());
             }
         }
         if (id != null && !id.equals("")) {
@@ -74,9 +74,9 @@ public class ExtJsComponent extends WebLocator {
             mask.setContainer(thisEl);
         }
         boolean hasMask = mask.isElementPresent();
-        if (logger.isDebugEnabled() && hasMask) {
-//            logger.debug("MaskXPath=" + mask.getPath());
-            logger.debug(this + " masked : " + hasMask);
+        if (LOGGER.isDebugEnabled() && hasMask) {
+//            LOGGER.debug("MaskXPath=" + mask.getPath());
+            LOGGER.debug(this + " masked : " + hasMask);
         }
         return hasMask;
     }
@@ -93,12 +93,12 @@ public class ExtJsComponent extends WebLocator {
      */
     public boolean waitToActivate(int seconds) {
         String info = toString();
-        //logger.debug("waitToActivate:" + seconds + " sec; " + info);
+        //LOGGER.debug("waitToActivate:" + seconds + " sec; " + info);
         int count = 0;
         boolean hasMask;
         while ((hasMask = hasMask()) && (count < seconds)) {
             count++;
-            logger.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
+            LOGGER.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
             Utils.sleep(1000);
         }
         return !hasMask;

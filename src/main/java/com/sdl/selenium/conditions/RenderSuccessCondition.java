@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RenderSuccessCondition extends SuccessCondition implements RenderCondition {
-    private static final Logger logger = LoggerFactory.getLogger(RenderSuccessCondition.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RenderSuccessCondition.class);
 
     private WebLocator component;
 

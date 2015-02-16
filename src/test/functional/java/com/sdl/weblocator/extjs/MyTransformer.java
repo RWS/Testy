@@ -11,7 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 public class MyTransformer implements IAnnotationTransformer {
-    private static final Logger logger = LoggerFactory.getLogger(MyTransformer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyTransformer.class);
 
     @Override
     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {

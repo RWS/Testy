@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DateField extends TextField {
-    private static final Logger logger = LoggerFactory.getLogger(DateField.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
     public DateField() {
         setClassName("DateField");
@@ -57,7 +57,7 @@ public class DateField extends TextField {
             WebLocator dayEl = new WebLocator(calendarLayer, "//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']").setInfoMessage("day " + day);
             return dayEl.click();
         } else {
-            logger.warn("The selected month doesn't have the " + day + " day.");
+            LOGGER.warn("The selected month doesn't have the " + day + " day.");
             return false;
         }
     }
@@ -84,10 +84,10 @@ public class DateField extends TextField {
             fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);
         } catch (ParseException e) {
-            logger.error("ParseException: {}", e);
+            LOGGER.error("ParseException: {}", e);
         }
 
-        logger.debug("select: " + date);
+        LOGGER.debug("select: " + date);
         String[] dates = date.split("/");
         String day = dates[0];
         String month = dates[1];

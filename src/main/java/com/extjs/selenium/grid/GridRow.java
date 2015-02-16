@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GridRow extends Row {
-    private static final Logger logger = LoggerFactory.getLogger(GridRow.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GridRow.class);
 
     public GridRow() {
         setRenderMillis(200);

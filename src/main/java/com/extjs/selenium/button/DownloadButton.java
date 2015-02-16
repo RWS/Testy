@@ -14,7 +14,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.io.File;
 
 public class DownloadButton extends Button implements Download {
-    private static final Logger logger = LoggerFactory.getLogger(DownloadButton.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadButton.class);
 
     public DownloadButton() {
         setClassName("DownloadButton");

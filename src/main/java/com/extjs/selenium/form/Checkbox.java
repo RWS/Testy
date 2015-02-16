@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  *    - baseCls  : x-form-checkbox
  */
 public class Checkbox extends ExtJsComponent implements ICheck {
-
-    private static final Logger logger = LoggerFactory.getLogger(Checkbox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Checkbox.class);
 
     public Checkbox() {
         setClassName("Checkbox");

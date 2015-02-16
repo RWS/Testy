@@ -15,7 +15,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class TabPanel extends ExtJsComponent {
-    private static final Logger logger = LoggerFactory.getLogger(TabPanel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TabPanel.class);
 
     private TabPanel() {
         setClassName("TabPanel");
@@ -77,17 +77,17 @@ public class TabPanel extends ExtJsComponent {
         String baseTabPath = "//*[" + getBasePath() + "]";
         String titlePath = baseTabPath + getTitlePath();
         WebLocator titleElement = new WebLocator(getContainer(), titlePath).setInfoMessage(getText() + " Tab");
-        logger.info("setActive : " + toString());
+        LOGGER.info("setActive : " + toString());
         boolean activated;
         try {
             activated = titleElement.click();
         } catch (ElementNotVisibleException e) {
-            logger.error("setActive Exception: " + e.getMessage());
+            LOGGER.error("setActive Exception: " + e.getMessage());
             WebLocator tabElement = new WebLocator(getContainer(), baseTabPath);
             String id = tabElement.getAttributeId();
             String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
             String script = "return Ext.getCmp('" + id + "').setActiveTab(" + getTabCount(getText(), path) + ");";
-            logger.warn("force TabPanel setActive with js: " + script);
+            LOGGER.warn("force TabPanel setActive with js: " + script);
             WebLocatorUtils.doExecuteScript(script);
             activated = true; // TODO verify when is not executed
         }
@@ -102,7 +102,7 @@ public class TabPanel extends ExtJsComponent {
         int count = 0;
         for (WebElement el : element) {
             if (nameTab.equals(el.getText())) {
-                logger.debug(count + " : " + el.getText());
+                LOGGER.debug(count + " : " + el.getText());
                 return count;
             }
             count++;

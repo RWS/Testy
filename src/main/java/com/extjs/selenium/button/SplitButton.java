@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SplitButton extends Button {
-    private static final Logger logger = LoggerFactory.getLogger(Button.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     public SplitButton() {
         setClassName("SplitButton");
         setBaseCls("x-btn");
-        //logger.debug(getClassName() + "() constructor");
+        //LOGGER.debug(getClassName() + "() constructor");
         setVisibility(true);
     }
 
@@ -33,23 +33,23 @@ public class SplitButton extends Button {
 
     public boolean clickOnMenu(String[] menuOptions) {
         int n = menuOptions.length;
-        logger.debug("clickOnMenu : " + menuOptions[n - 1]);
+        LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
         ready();
         String info = toString();
         if (isDisabled()) {
             // waiting period for some buttons to become enabled (monitor valid)
-            logger.debug("Button is disabled. Waiting ...");
+            LOGGER.debug("Button is disabled. Waiting ...");
             Utils.sleep(1000);
         }
         if (isEnabled()) {
-            logger.info("Click on button " + info);
+            LOGGER.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
 //            click();
             showMenu();
             WebLocator menu = new WebLocator("x-menu-floating");
             if (WebDriverConfig.isIE()) {
                 if (menu.isVisible()) {
-                    logger.info("In IE is visible");
+                    LOGGER.info("In IE is visible");
                 }
             } else {
                 menu.setStyle("visibility: visible;");
@@ -63,14 +63,14 @@ public class SplitButton extends Button {
                 }
             }
             if (option.clickAt()) {
-                logger.info("Button Select menu option : " + option.getText());
+                LOGGER.info("Button Select menu option : " + option.getText());
                 return true;
             } else {
-                logger.warn("Could not locate option '" + option.getText() + "'. Performing simple click on button : " + info);
+                LOGGER.warn("Could not locate option '" + option.getText() + "'. Performing simple click on button : " + info);
                 clickAt();
             }
         } else {
-            logger.error("(" + info + ") doesn't exists or is disabled. " + getPath());
+            LOGGER.error("(" + info + ") doesn't exists or is disabled. " + getPath());
         }
         return false;
     }

@@ -10,7 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ComboBox extends TextField implements ICombo {
-    private static final Logger logger = LoggerFactory.getLogger(ComboBox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
+    
     private static String listClass = "x-combo-list";
 
     //TODO change the way comboBox is identified, without using cls
@@ -79,22 +80,22 @@ public class ComboBox extends TextField implements ICombo {
                 }
                 selected = option.click();
             } catch (Exception e) {
-//                logger.error(e);
+//                LOGGER.error(e);
                 ready();
                 componentId = getAttributeId();
                 selected = setValueWithJs(componentId, value);
             }
 
             if (selected) {
-                logger.info("Set value(" + info + "): " + value);
+                LOGGER.info("Set value(" + info + "): " + value);
                 Utils.sleep(200);
                 return true;
             } else {
                 clickIcon("arrow"); // to close combo
             }
-            logger.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getPath());
+            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getPath());
         } else {
-            logger.debug("(" + info + ") The combo or arrow could not be located.");
+            LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return false;
     }
@@ -108,9 +109,9 @@ public class ComboBox extends TextField implements ICombo {
         ready();
         componentId = getAttributeId();
         String getListIdScript = "return Ext.getCmp('" + componentId + "').list.id;";
-        logger.debug("script:" + getListIdScript);
+        LOGGER.debug("script:" + getListIdScript);
         String listId = (String) WebLocatorUtils.doExecuteScript(getListIdScript);
-        logger.debug("listId:" + listId);
+        LOGGER.debug("listId:" + listId);
         return listId;
     }
 
@@ -125,9 +126,9 @@ public class ComboBox extends TextField implements ICombo {
         boolean selected;
         String script = "return (function(){var c  = Ext.getCmp('" + componentId + "'); var record = c.findRecord(c.displayField, '" + value + "');" +
                 "if(record){c.onSelect(record, c.store.indexOf(record)); return true;} return false;})()";
-        logger.warn("force ComboBox Value with js: " + script);
+        LOGGER.warn("force ComboBox Value with js: " + script);
         selected = (Boolean) WebLocatorUtils.doExecuteScript(script);
-        logger.warn("force ComboBox select result: " + selected);
+        LOGGER.warn("force ComboBox select result: " + selected);
         return selected;
     }
 

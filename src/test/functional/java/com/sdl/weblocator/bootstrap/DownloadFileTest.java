@@ -13,7 +13,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class DownloadFileTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(DownloadFileTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadFileTest.class);
 
     Form form = new Form(null, "Form Title");
     DownloadFile downloadFile = new DownloadFile(form, "Project Data:");

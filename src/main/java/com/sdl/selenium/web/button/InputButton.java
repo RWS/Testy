@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class InputButton extends WebLocator implements IButton {
-    private static final Logger logger = LoggerFactory.getLogger(InputButton.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InputButton.class);
 
     public InputButton() {
         setClassName("InputButton");

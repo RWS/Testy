@@ -10,7 +10,8 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
 
 public class FireEventWithJSTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(FireEventWithJSTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FireEventWithJSTest.class);
+    
     private Panel simpleForm = new Panel("Simple Form");
     private Button cancelButton = new Button(simpleForm, "Cancel");
 

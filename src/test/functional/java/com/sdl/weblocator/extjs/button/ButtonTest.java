@@ -17,7 +17,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class ButtonTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(ButtonTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
+    
     Window dateFieldWindow = new Window("DateFieldWindow");
     Button closeButton = new Button(dateFieldWindow, "Close");
     Button dateFieldButton = new Button(null, "DateField");
@@ -48,7 +49,7 @@ public class ButtonTest extends TestBase {
             cancelButton.click();
         }
         long endMs = System.currentTimeMillis();
-        logger.info(String.format("performanceTestClick took %s ms", endMs - startMs));
+        LOGGER.info(String.format("performanceTestClick took %s ms", endMs - startMs));
     }
 
     @Test (dependsOnMethods = "performanceTestClick")
@@ -76,7 +77,7 @@ public class ButtonTest extends TestBase {
         boolean clicked = button.click();
         long endMs = System.currentTimeMillis();
 
-        logger.info(String.format("took %s ms", endMs - startMs));
+        LOGGER.info(String.format("took %s ms", endMs - startMs));
         assertFalse(clicked, "Nu trebuia sa faca click");
         assertTrue(endMs - startMs < millis + 500, "Took too long");
         assertTrue(endMs - startMs >= millis, "Did not waited expected time");

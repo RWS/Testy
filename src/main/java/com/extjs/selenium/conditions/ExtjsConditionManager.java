@@ -28,8 +28,7 @@ ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
  </pre>
  */
 public class ExtjsConditionManager extends ConditionManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExtjsConditionManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExtjsConditionManager.class);
 
     /**
      * default timeout in milliseconds is 10000.
