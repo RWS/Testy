@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CheckBoxTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(CheckBoxTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxTest.class);
 
     /*Panel simpleFormPanel = new Panel(null, "Simple Form");
     Checkbox rightCheckBox = new Checkbox("CatRight", simpleFormPanel);

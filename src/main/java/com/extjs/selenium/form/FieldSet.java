@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FieldSet extends WebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(FieldSet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FieldSet.class);
 
     public FieldSet() {
         setClassName("FieldSet");

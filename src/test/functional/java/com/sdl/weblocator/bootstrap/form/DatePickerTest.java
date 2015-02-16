@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
 
 public class DatePickerTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(DatePickerTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatePickerTest.class);
 
     Form form = new Form(null, "Form Title");
     DatePicker datePicker = new DatePicker(form, "dp3");

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
-    private static final Logger logger = LoggerFactory.getLogger(GridPanel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GridPanel.class);
 
     private String searchColumnId = "0";
 
@@ -110,7 +110,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         Condition condition = new ConditionManager(seconds * 1000).add(new ElementRemovedSuccessCondition(mask)).execute();
         isLoaded = condition.isSuccess();
         if (!isLoaded) {
-            logger.warn(this + " still has x-mask-loading");
+            LOGGER.warn(this + " still has x-mask-loading");
         }
         return isLoaded;
     }
@@ -126,9 +126,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     protected boolean executeScrollScript(String info, String script) {
         Boolean scrolled;
-        //logger.info(this + " - " + info);
+        //LOGGER.info(this + " - " + info);
         scrolled = (Boolean) WebLocatorUtils.doExecuteScript(script);
-        logger.info(this + " - " + info + " > " + scrolled);
+        LOGGER.info(this + " - " + info + " > " + scrolled);
         // TODO make configurable if has buffer view
         Utils.sleep(200); // because of Buffer view that can have scroll delay
         return scrolled;
@@ -141,9 +141,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     private String getAttrId() {
         String id = getAttributeId();
-        logger.debug("id=" + id);
+        LOGGER.debug("id=" + id);
         if (id == null) {
-            logger.warn("GridPanel id is null: " + getPath());
+            LOGGER.warn("GridPanel id is null: " + getPath());
             Assert.fail("Could not scroll because id of grid is null: " + this);
         }
         return id;
@@ -249,12 +249,12 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         } while (!selected && scrollPageDown(id));
 
         if (selected) {
-            logger.info("The element '" + cell + "' has been located.");
+            LOGGER.info("The element '" + cell + "' has been located.");
         } else {
-            logger.warn("The element '" + cell + "' is not present in the list.");
-            if (logger.isDebugEnabled()) {
-                logger.debug("Path's element is: " + cell.getPath());
-                logger.debug("Total Rows: " + getCount());
+            LOGGER.warn("The element '" + cell + "' is not present in the list.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Path's element is: " + cell.getPath());
+                LOGGER.debug("Total Rows: " + getCount());
             }
         }
         return selected;
@@ -324,7 +324,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     public boolean assertCheckSelectAll(String columnId) {
-        logger.debug("Select-all checker path: " + getSelectAllChecker(columnId));
+        LOGGER.debug("Select-all checker path: " + getSelectAllChecker(columnId));
         return getSelectAllChecker(columnId).assertClick();
     }
 
@@ -368,7 +368,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (ready()) {
             return new GridRow(this).size();
         } else {
-            logger.warn("grid is not ready to be used");
+            LOGGER.warn("grid is not ready to be used");
             // TODO could try to verify row count with mask on grid or when is disabled also.
             return -1;
         }
@@ -391,11 +391,11 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 rowIndex++;
             }
             if (index == -1) {
-                logger.warn("no selected row was not found.");
+                LOGGER.warn("no selected row was not found.");
             }
             return index;
         } else {
-            logger.warn("getSelectedRowIndex : grid is not ready for use: " + toString());
+            LOGGER.warn("getSelectedRowIndex : grid is not ready for use: " + toString());
             return -1;
         }
     }
@@ -419,9 +419,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             WebLocator currentElement = new WebLocator(null, path);
             while (currentElement.isElementPresent()) {
                 String option = currentElement.getHtmlText();
-                //logger.debug("row[" + i + "]" + option);
+                //LOGGER.debug("row[" + i + "]" + option);
                 if (option != null && option.contains(searchElement)) {
-                    logger.debug("The '" + searchElement + "' element index is " + startRowIndex);
+                    LOGGER.debug("The '" + searchElement + "' element index is " + startRowIndex);
                     index = startRowIndex;
                     break;
                 }
@@ -430,10 +430,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 currentElement.setElPath(path);
             }
             if (index == -1) {
-                logger.warn("The element '" + searchElement + "' was not found.");
+                LOGGER.warn("The element '" + searchElement + "' was not found.");
             }
         } else {
-            logger.warn("getRowIndex : grid is not ready for use: " + toString());
+            LOGGER.warn("getRowIndex : grid is not ready for use: " + toString());
         }
         return index;
     }
@@ -593,7 +593,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (this.ready(true) && cell.ready()) {
             text = cell.getHtmlText();
         } else {
-            logger.warn("searchText was not found in grid: " + searchText);
+            LOGGER.warn("searchText was not found in grid: " + searchText);
         }
         return text;
     }
@@ -604,7 +604,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (this.ready(true) && cell.ready()) {
             text = cell.getHtmlText();
         } else {
-            logger.warn("searchText was not found in grid: " + searchText);
+            LOGGER.warn("searchText was not found in grid: " + searchText);
         }
         return text;
     }
@@ -641,9 +641,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
                     new WebLocator(this, "//*[contains(@class,'x-grid3-focus')]").sendKeys(Keys.TAB); //TODO work with selenium????
                     element.click();
-                    logger.info("Clicking on checkbox corresponding to line index: " + rowIndex);
+                    LOGGER.info("Clicking on checkbox corresponding to line index: " + rowIndex);
                 } else {
-                    logger.warn("Could not click on checkbox corresponding to line index: " + rowIndex + "; path = " + path);
+                    LOGGER.warn("Could not click on checkbox corresponding to line index: " + rowIndex + "; path = " + path);
                     return false;
                 }
                 cls = gridRow.getAttributeClass();
@@ -651,7 +651,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             }
             return false;
         } else {
-            logger.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
             return false;
         }
     }
@@ -673,7 +673,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 }
             } while (selected < searchTexts.size() && scrollPageDown());
         } else {
-            logger.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
         }
         return selected;
     }
@@ -700,7 +700,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             } while (!selected && scrollPageDown());
             return selected;
         } else {
-            logger.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
             return false;
         }
     }
@@ -746,7 +746,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             } else {
                 selected = gridCell.clickAt();
                 if (!selected) {
-                    logger.debug("gridCellPath: " + gridCell.getPath());
+                    LOGGER.debug("gridCellPath: " + gridCell.getPath());
                 }
             }
         }
@@ -764,7 +764,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             String cls = gridCell.getAttributeClass();
             boolean isSelected = cls != null && cls.contains("x-grid3-check-col-on");
             if (isSelected) {
-                logger.debug("path: " + gridCell.getPath());
+                LOGGER.debug("path: " + gridCell.getPath());
                 selected = gridCell.clickAt();
             } else {
                 selected = isSelected;
@@ -792,14 +792,14 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
                     new WebLocator(null, gridPath + "//*[contains(@class,'x-grid3-focus')]").sendKeys(Keys.TAB);
                     selected = isCheckBoxColumnSelected(searchText) || element.click();
-                    logger.info("Clicking on checkboxColumnSelect corresponding to line : " + searchText);
+                    LOGGER.info("Clicking on checkboxColumnSelect corresponding to line : " + searchText);
                 } else {
-                    logger.warn("Could not click on checkboxColumnSelect corresponding to line : " + searchText + "; path = " + path);
+                    LOGGER.warn("Could not click on checkboxColumnSelect corresponding to line : " + searchText + "; path = " + path);
                     return false;
                 }
             }
         } else {
-            logger.warn("checkboxColumnSelect: grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxColumnSelect: grid is not ready for use: " + toString());
             selected = false;
         }
         return selected;
@@ -831,7 +831,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     public boolean waitToPopulate(int seconds) {
-        //logger.debug("waitToPopulate: " + seconds + "; " + toString());
+        //LOGGER.debug("waitToPopulate: " + seconds + "; " + toString());
         WebLocator firstRow = getRowLocator(1).setInfoMessage("first row");
         return firstRow.waitToRender(seconds * 1000L);
     }

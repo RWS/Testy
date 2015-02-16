@@ -9,7 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 
 public class PageObjectTest {
-    private static final Logger logger = LoggerFactory.getLogger(PageObjectTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PageObjectTest.class);
+    
     static WebDriver driver = null;
     static WritePage page2 = null;
 
@@ -24,7 +25,7 @@ public class PageObjectTest {
         /*for (int i = 0; i < 20; i++) {
             pageObject2(page);
 //            pageSimple(page2);
-            logger.debug("------------------------------------------");
+            LOGGER.debug("------------------------------------------");
         }*/
         stop();
     }
@@ -44,7 +45,7 @@ public class PageObjectTest {
         page2.save();
 
         long endMs = System.currentTimeMillis();
-        logger.info(String.format("pageObject took %s ms", endMs - startMs));
+        LOGGER.info(String.format("pageObject took %s ms", endMs - startMs));
     }
 
     public static void pageObject2(StartPage page) {
@@ -55,7 +56,7 @@ public class PageObjectTest {
         page2.save();
 
         long endMs = System.currentTimeMillis();
-        logger.info(String.format("pageObject took %s ms", endMs - startMs));
+        LOGGER.info(String.format("pageObject took %s ms", endMs - startMs));
     }
 
     public static void pageSimple(SimplePage page) {
@@ -65,7 +66,7 @@ public class PageObjectTest {
         page.save();
 
         long endMs = System.currentTimeMillis();
-        logger.info(String.format("pageSimple took %s ms", endMs - startMs));
+        LOGGER.info(String.format("pageSimple took %s ms", endMs - startMs));
     }
 
     public static void stop() {

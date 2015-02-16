@@ -1,13 +1,12 @@
 package com.extjs.selenium.grid;
 
 import com.extjs.selenium.button.Button;
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LiveGridPanel extends GridPanel {
-    private static final Logger logger = LoggerFactory.getLogger(LiveGridPanel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LiveGridPanel.class);
 
     public LiveGridPanel() {
         setClassName("LiveGridPanel");
@@ -53,7 +52,7 @@ public class LiveGridPanel extends GridPanel {
     }
 
     public boolean scrollBottom() {
-        logger.warn("TODO not yet implemented.");
+        LOGGER.warn("TODO not yet implemented.");
         //TODO not yet implemented.
         /*String id = getAttributeId();
         String script = "return (function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
@@ -71,7 +70,7 @@ public class LiveGridPanel extends GridPanel {
      * @return true if scrolled
      */
     public boolean scrollPageUp() {
-        logger.warn("TODO not yet implemented.");
+        LOGGER.warn("TODO not yet implemented.");
         //TODO not yet implemented.
         /*String id = getAttributeId();
         String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop>0){b.dom.scrollTop-=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";

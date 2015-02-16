@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TextField extends SimpleTextField {
-    private static final Logger logger = LoggerFactory.getLogger(TextField.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
         setClassName("TextField");

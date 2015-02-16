@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Window extends WebLocator implements IWebLocator {
-    private static final Logger logger = LoggerFactory.getLogger(Window.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Window.class);
 
     public Window() {
         setClassName("Window");

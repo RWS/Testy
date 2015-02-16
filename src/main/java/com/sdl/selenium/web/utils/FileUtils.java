@@ -10,7 +10,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class FileUtils {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
+    
     private static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\r\\n|\\r|\\n");
 
     public static String getValidFileName(String fileName) {
@@ -25,7 +26,7 @@ public class FileUtils {
         boolean empty;
         int time = 0;
         do {
-            logger.debug("File exist: '" + file.exists() + "' and content file is empty in: " + time);
+            LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + time);
             time++;
             Utils.sleep(100);
             empty = file.length() > 0;
@@ -41,10 +42,10 @@ public class FileUtils {
             while ((tmp = br.readLine()) != null) {
                 strLine += tmp;
             }
-            logger.debug("length {}", strLine.length());
+            LOGGER.debug("length {}", strLine.length());
             br.close();
         } catch (Exception e) {
-            logger.debug("Error: {}", e.getMessage());
+            LOGGER.debug("Error: {}", e.getMessage());
         }
         return strLine;
     }
@@ -90,7 +91,7 @@ public class FileUtils {
                 String fileName = ze.getName();
                 File newFile = new File(outputFolderPath + File.separator + fileName);
 
-                logger.info("file unzip : " + newFile.getAbsoluteFile());
+                LOGGER.info("file unzip : " + newFile.getAbsoluteFile());
 
                 //create all non exists folders
                 //else you will hit FileNotFoundException for compressed folder
@@ -110,9 +111,9 @@ public class FileUtils {
             zis.closeEntry();
             zis.close();
 
-            logger.info("Unzip Done: " + zipFilePath);
+            LOGGER.info("Unzip Done: " + zipFilePath);
             long endMs = System.currentTimeMillis();
-            logger.debug(String.format("unzip took %s ms", endMs - startMs));
+            LOGGER.debug(String.format("unzip took %s ms", endMs - startMs));
         } catch (IOException ex) {
             ex.printStackTrace();
             return false;
@@ -173,7 +174,7 @@ public class FileUtils {
             }
             return writer.toString();
         } else {
-            logger.debug("is is=" + is);
+            LOGGER.debug("is is=" + is);
             return "";
         }
     }
@@ -182,8 +183,8 @@ public class FileUtils {
         boolean equal = false;
         File file1 = new File(filePath1);
         File file2 = new File(filePath2);
-        logger.info("file1.length = " + file1.length());
-        logger.info("file2.length = " + file2.length());
+        LOGGER.info("file1.length = " + file1.length());
+        LOGGER.info("file2.length = " + file2.length());
         if (file1.length() == file2.length()) {
             equal = true;
         }

@@ -13,8 +13,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class SelectFilesHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(SelectFilesHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SelectFilesHandler.class);
+    
     private WebLocator buttonElement;
 
     public SelectFilesHandler() {
@@ -34,7 +34,7 @@ public class SelectFilesHandler {
     }
 
     public void browse(String filePath) {
-        logger.info("browse filePath : " + filePath);
+        LOGGER.info("browse filePath : " + filePath);
         openBrowseWindow();
         selectFiles(filePath);
     }
@@ -71,7 +71,7 @@ public class SelectFilesHandler {
         try {
             robot = new Robot();
         } catch (AWTException e) {
-            logger.error("AWTException: {}", e);
+            LOGGER.error("AWTException: {}", e);
         }
 
         writeFileName(path, robot);
@@ -84,7 +84,7 @@ public class SelectFilesHandler {
         try {
             robot = new Robot();
         } catch (AWTException e) {
-            logger.error("AWTException: {}", e);
+            LOGGER.error("AWTException: {}", e);
         }
 
         pressEnter(robot); // open window
@@ -96,14 +96,14 @@ public class SelectFilesHandler {
 
     private void pressEnter(Robot robot) {
         robot.keyPress(KeyEvent.VK_ENTER);
-        logger.debug("keyPress VK_ENTER");
+        LOGGER.debug("keyPress VK_ENTER");
         robot.keyRelease(KeyEvent.VK_ENTER);
-        logger.debug("keyRelease VK_ENTER");
+        LOGGER.debug("keyRelease VK_ENTER");
         Utils.sleep(1000);
     }
 
     private void writeFileName(String filePath, Robot robot) {
-        logger.info("path written " + filePath);
+        LOGGER.info("path written " + filePath);
         char[] pathChars = filePath.toUpperCase().toCharArray();
         for (char c : pathChars) {
             if (c == '\\') {

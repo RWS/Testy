@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class InputData extends PropertiesReader {
-    private static final Logger logger = LoggerFactory.getLogger(InputData.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InputData.class);
 
     public static final String ENV_PROPERTY = "env";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
@@ -20,12 +20,12 @@ public class InputData extends PropertiesReader {
     public InputData() {
         try {
             String testEnvironment = System.getProperty(ENV_PROPERTY, ENV_PROPERTY_DEFAULT);
-            logger.info("test.environment : " + testEnvironment);
+            LOGGER.info("test.environment : " + testEnvironment);
 
             FileInputStream fileInputStream = new FileInputStream(RESOURCES_PATH + testEnvironment + ".properties");
             load(fileInputStream);
         } catch (IOException e) {
-            logger.error("IOException: {}", e);
+            LOGGER.error("IOException: {}", e);
         }
     }
 

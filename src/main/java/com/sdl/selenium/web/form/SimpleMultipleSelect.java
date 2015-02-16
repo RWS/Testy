@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleMultipleSelect extends SimpleComboBox {
-    private static final Logger logger = LoggerFactory.getLogger(SimpleMultipleSelect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMultipleSelect.class);
 
     public SimpleMultipleSelect() {
         setClassName("SimpleMultipleSelect");
@@ -54,7 +54,7 @@ public class SimpleMultipleSelect extends SimpleComboBox {
             List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
             for (int i = 0; i < elements.size(); i++) {
                 String text = elements.get(i).getText();
-                logger.debug(text);
+                LOGGER.debug(text);
                 list.add(text);
             }
         }

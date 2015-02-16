@@ -7,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MessageBoxSuccessCondition extends SuccessCondition implements MessageBoxCondition {
-    private static final Logger logger = LoggerFactory.getLogger(MessageBoxSuccessCondition.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBoxSuccessCondition.class);
+    
     private boolean contains = false;
 
     public MessageBoxSuccessCondition(String message) {

@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class SimplePage {
-    private static final Logger logger = LoggerFactory.getLogger(SimplePage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimplePage.class);
 
     WebDriver driver = null;
 

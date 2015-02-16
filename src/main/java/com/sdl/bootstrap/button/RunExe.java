@@ -6,7 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 public class RunExe {
-    private static final Logger logger = LoggerFactory.getLogger(RunExe.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunExe.class);
+    
     private static RunExe instance = new RunExe();
 
     private RunExe() {
@@ -31,7 +32,7 @@ public class RunExe {
     private boolean doRun(String filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath);
-            logger.debug(filePath);
+            LOGGER.debug(filePath);
             if (0 == process.waitFor()) {
                 return true;
             }

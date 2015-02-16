@@ -16,7 +16,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ConditionManagerTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(ConditionManagerTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManagerTest.class);
+    
     Panel conditionManagerPanel = new Panel("Condition Manager");
     Button expect1Button = new Button(conditionManagerPanel, "Expect1");
     Button expect2Button = new Button(conditionManagerPanel, "Expect2");
@@ -44,7 +45,7 @@ public class ConditionManagerTest extends TestBase {
         Condition condition = doClick(expect1Button);
 
         if(condition.isFail()){
-            logger.warn(condition.getResultMessage());
+            LOGGER.warn(condition.getResultMessage());
         }
         Assert.assertTrue(condition.isSuccess());
 

@@ -1,14 +1,13 @@
 package com.extjs.selenium.grid;
 
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GridCell extends Cell {
-    private static final Logger logger = LoggerFactory.getLogger(GridCell.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GridCell.class);
 
     public GridCell() {
         setRenderMillis(200);
@@ -72,7 +71,7 @@ public class GridCell extends Cell {
         try {
             return click();
         } catch (Exception e) {
-            logger.error("GridCell select ", e);
+            LOGGER.error("GridCell select ", e);
             return false;
         }
     }

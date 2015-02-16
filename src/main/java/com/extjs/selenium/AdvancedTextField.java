@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 
 // TODO extend other class not textfield
 public class AdvancedTextField extends TextField {
-    private static final Logger logger = LoggerFactory.getLogger(AdvancedTextField.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdvancedTextField.class);
+    
     private static String menuClass = "x-menu-floating";
 
     public AdvancedTextField() {
@@ -39,7 +40,7 @@ public class AdvancedTextField extends TextField {
     }
 
     public boolean select(String value) {
-        logger.debug("select: " + value);
+        LOGGER.debug("select: " + value);
         boolean found = false;
         if(clickIcon("arrow")){
             Utils.sleep(500);
@@ -53,7 +54,7 @@ public class AdvancedTextField extends TextField {
             iconLocator.setElPath(valuePath);
             found = iconLocator.clickAt();
             if (!found) {
-                logger.error("The option " + value + " could not be located.");
+                LOGGER.error("The option " + value + " could not be located.");
             }
         }
         return found;

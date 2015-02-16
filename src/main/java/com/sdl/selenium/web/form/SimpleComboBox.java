@@ -1,13 +1,12 @@
 package com.sdl.selenium.web.form;
 
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openqa.selenium.support.ui.Select;
 
 public class SimpleComboBox extends WebLocator implements ICombo {
-    private static final Logger logger = LoggerFactory.getLogger(SimpleComboBox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleComboBox.class);
 
     public SimpleComboBox() {
         setClassName("SimpleComboBox");
@@ -24,7 +23,7 @@ public class SimpleComboBox extends WebLocator implements ICombo {
         boolean selected = false;
         if (ready()) {
             if ("".equals(value)) {
-                logger.warn("value is empty");
+                LOGGER.warn("value is empty");
                 selected = true;
             } else {
                 new Select(currentElement).selectByVisibleText(value);
@@ -32,7 +31,7 @@ public class SimpleComboBox extends WebLocator implements ICombo {
             }
         }
         if (selected) {
-            logger.info("Set value(" + this + "): " + value);
+            LOGGER.info("Set value(" + this + "): " + value);
         }
         return selected;
     }

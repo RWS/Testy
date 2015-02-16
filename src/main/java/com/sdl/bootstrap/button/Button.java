@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * new Button(container, "Save") or new Button().setText("Save");
  */
 public class Button extends WebLocator implements IButton {
-    private static final Logger logger = LoggerFactory.getLogger(Button.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     private String iconCls;
 

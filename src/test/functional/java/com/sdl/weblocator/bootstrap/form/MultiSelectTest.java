@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 import static org.testng.Assert.assertTrue;
 
 public class MultiSelectTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(MultiSelectTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiSelectTest.class);
 
     private Form form = new Form(null, "Form Title");
     private MultiSelect multiSelect = new MultiSelect(form, "Source:");

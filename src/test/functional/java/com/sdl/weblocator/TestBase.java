@@ -14,7 +14,8 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(TestBase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
+    
     public static WebDriver driver;
 
     public static int TEST_RUNS = 0;
@@ -25,74 +26,74 @@ public class TestBase {
     // start suite & open browser
     @BeforeSuite(alwaysRun = true)
     public void startSuite() throws Exception {
-        logger.info("===============================================================");
-        logger.info("|          BeforeSuite START-SUITE >> enter                    |");
-        logger.info("=============================================================\n");
+        LOGGER.info("===============================================================");
+        LOGGER.info("|          BeforeSuite START-SUITE >> enter                    |");
+        LOGGER.info("=============================================================\n");
         initSeleniumStart();
     }
 
     @AfterSuite(alwaysRun = true)
     public void stopSuite() {
-        logger.info("===============================================================");
-        logger.info("|          AfterSuite STOP-SUITE >> enter                      |");
-        logger.info("===============================================================\n");
+        LOGGER.info("===============================================================");
+        LOGGER.info("|          AfterSuite STOP-SUITE >> enter                      |");
+        LOGGER.info("===============================================================\n");
         initSeleniumEnd();
     }
 
     @BeforeClass(alwaysRun = true)
     public void startTest() throws Exception {
-        logger.debug("===============================================================");
-        logger.debug("|         BeforeClass START-TEST >> enter                     |");
-        logger.debug("===============================================================\n");
+        LOGGER.debug("===============================================================");
+        LOGGER.debug("|         BeforeClass START-TEST >> enter                     |");
+        LOGGER.debug("===============================================================\n");
     }
 
     @AfterClass(alwaysRun = true)
     public void stopTest() {
-        logger.debug("==============================================================");
-        logger.debug("|         AfterClass STOP-TEST >> enter                       |");
-        logger.debug("==============================================================\n");
+        LOGGER.debug("==============================================================");
+        LOGGER.debug("|         AfterClass STOP-TEST >> enter                       |");
+        LOGGER.debug("==============================================================\n");
     }
 
 
     @BeforeMethod
     public void bm(Method method) throws Exception {
-        logger.info("===============================================================");
-        logger.info("|    Start Test (" + (++TEST_RUNS) + ") => " + method.getName());
-        logger.info("|    " + method.getDeclaringClass());
-        logger.info("===============================================================");
+        LOGGER.info("===============================================================");
+        LOGGER.info("|    Start Test (" + (++TEST_RUNS) + ") => " + method.getName());
+        LOGGER.info("|    " + method.getDeclaringClass());
+        LOGGER.info("===============================================================");
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
-        logger.debug("tearDown >> enter");
+        LOGGER.debug("tearDown >> enter");
         String testName = result.getName(); // TODO class name
         boolean isFailed = !result.isSuccess();
-        logger.info(result.getName() + " is " + (isFailed ? "FAILED" : "SUCCESS"));
+        LOGGER.info(result.getName() + " is " + (isFailed ? "FAILED" : "SUCCESS"));
         if (isFailed) {
-            logger.warn("tests message: " + result.getThrowable().getMessage());
+            LOGGER.warn("tests message: " + result.getThrowable().getMessage());
             String args = "";
             if (result.getParameters() != null) {
                 for (Object o : result.getParameters()) {
                     args += o.toString() + "; ";
                 }
             }
-            logger.warn("tests arguments: " + args);
+            LOGGER.warn("tests arguments: " + args);
             String fileName = testName + "-failed";
-            logger.error("tests. screen: " + Utils.getScreenShot(fileName, getScreensPath()));
+            LOGGER.error("tests. screen: " + Utils.getScreenShot(fileName, getScreensPath()));
 
-            logger.info("TOTAL FAILED TESTS: " + (++TEST_FAILED) + " of " + TEST_RUNS);
-            logger.info("Refresh page to clean up page for next tests.");
+            LOGGER.info("TOTAL FAILED TESTS: " + (++TEST_FAILED) + " of " + TEST_RUNS);
+            LOGGER.info("Refresh page to clean up page for next tests.");
             driver.navigate().refresh();
         }
-        logger.debug("tearDown << exit");
-        logger.info("\n");
+        LOGGER.debug("tearDown << exit");
+        LOGGER.info("\n");
     }
 
     private void initSeleniumStart() throws Exception {
-        logger.info("===============================================================");
-        logger.info("|          Browser: " + InputData.BROWSER_CONFIG);
-        logger.info("|          AUT URL: " + SERVER);
-        logger.info("===============================================================\n");
+        LOGGER.info("===============================================================");
+        LOGGER.info("|          Browser: " + InputData.BROWSER_CONFIG);
+        LOGGER.info("|          AUT URL: " + SERVER);
+        LOGGER.info("===============================================================\n");
 
         driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
         driver.manage().window().maximize();
@@ -101,13 +102,13 @@ public class TestBase {
     }
 
     private void initSeleniumEnd() {
-        logger.info("===============================================================");
-        logger.info("|          Stopping driver (closing browser)                   |");
-        logger.info("===============================================================");
+        LOGGER.info("===============================================================");
+        LOGGER.info("|          Stopping driver (closing browser)                   |");
+        LOGGER.info("===============================================================");
         driver.quit();
-        logger.debug("===============================================================");
-        logger.debug("|         Driver stopped (browser closed)                     |");
-        logger.debug("===============================================================\n");
+        LOGGER.debug("===============================================================");
+        LOGGER.debug("|         Driver stopped (browser closed)                     |");
+        LOGGER.debug("===============================================================\n");
     }
 
     public static String getScreensPath() {

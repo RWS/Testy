@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DownloadTest extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(DownloadTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadTest.class);
 
     private Panel simpleFormPanel = new Panel(null, "Simple Form");
     private DownloadButton downloadButton = new DownloadButton(simpleFormPanel, "Download");

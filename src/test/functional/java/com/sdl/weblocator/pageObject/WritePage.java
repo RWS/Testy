@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
 public class WritePage {
-    private static final Logger logger = LoggerFactory.getLogger(WritePage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WritePage.class);
 
     @FindBy(how = How.ID, using = "email")
     private WebElement email;

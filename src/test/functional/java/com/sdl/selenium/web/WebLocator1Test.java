@@ -13,7 +13,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class WebLocator1Test extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(WebLocator1Test.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator1Test.class);
 
     WebLocator webLocatorId = new WebLocator().setId("webLocatorId");
     WebLocator webLocatorCls = new WebLocator().setClasses("webLocatorCls");
@@ -85,8 +85,8 @@ public class WebLocator1Test extends TestBase {
     //@Test
     public void webDriverConfig() {
         WebLocator l = new WebLocator().setClasses("x-tool-maximize");
-        logger.debug(l.getPath());
-        logger.debug("//*[contains(@class,'x-tool-maximize')]");
+        LOGGER.debug(l.getPath());
+        LOGGER.debug("//*[contains(@class,'x-tool-maximize')]");
 
         String browserConfig = InputData.BROWSER_CONFIG;
         PropertiesReader properties = new PropertiesReader(browserConfig);
@@ -115,7 +115,7 @@ public class WebLocator1Test extends TestBase {
     @Test(dataProvider = "testConstructorPathDataProviderText")
     public void shouldFindAllCombinationsForTextSearchTypeTest(WebLocator el, String expectedPath) {
 
-        logger.debug(el.getPath());
+        LOGGER.debug(el.getPath());
         assertTrue(el.click());
 
         boolean useChildNodesSearch = el.getSearchTextType().contains(SearchType.DEEP_CHILD_NODE);

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UneditableInput extends WebLocator implements IText {
-    private static final Logger logger = LoggerFactory.getLogger(UneditableInput.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UneditableInput.class);
 
     public UneditableInput() {
         setClassName("UneditableInput");
