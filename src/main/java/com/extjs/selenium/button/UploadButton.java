@@ -12,7 +12,6 @@ public class UploadButton extends Button implements Upload {
 
     public UploadButton() {
         setClassName("UploadButton");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
     public UploadButton(WebLocator container) {

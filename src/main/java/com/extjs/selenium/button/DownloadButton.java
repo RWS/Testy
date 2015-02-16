@@ -18,7 +18,6 @@ public class DownloadButton extends Button implements Download {
 
     public DownloadButton() {
         setClassName("DownloadButton");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
     public DownloadButton(WebLocator container) {

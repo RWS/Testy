@@ -13,7 +13,6 @@ public class SplitButton extends Button {
     public SplitButton() {
         setClassName("SplitButton");
         setBaseCls("x-btn");
-        //LOGGER.debug(getClassName() + "() constructor");
         setVisibility(true);
     }
 
