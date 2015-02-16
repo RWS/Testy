@@ -532,7 +532,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
-        if (searchType != null && searchType.length > 0) {
+        if (searchType != null && (searchType.length > 0 || defaultSearchTextType.size() > 0)) {
             setSearchLabelType(searchType);
         }
         return (T) this;
