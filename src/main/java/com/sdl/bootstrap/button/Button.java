@@ -7,8 +7,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <button class="btn" type="button">Save</button>
- * new Button(container, "Save") or new Button().setText("Save");
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>
+ * {@code
+ *  <button class="btn" type="button">Save</button>
+ *}
+ * </pre>
+ * <p>In Java write this:</p>
+ * <pre>
+ * {@code
+ *  new Button(container, "Save") or new Button().setText("Save");
+ *  }
+ * </pre>
  */
 public class Button extends WebLocator implements IButton {
     private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
@@ -48,12 +59,20 @@ public class Button extends WebLocator implements IButton {
     }
 
     /**
-     * <button class="btn" type="button" disabled>DisableBtn</button>
-     * or <button class="btn disabled" type="button">DisableBtnCls</button>
+     * <pre>
+     *     {@code
+     *<button class="btn" type="button" disabled>DisableBtn</button>
+     *           <button class="btn disabled" type="button">DisableBtnCls</button>
+     * }
+     * </pre>
      *
-     * Example: Button disableButton = new Button().setText("DisableBtn");
-     *          disableButton.isDisabled();
-     *
+     * <p>Example:</p>
+     * <pre>
+     *     {@code
+     * Button disableButton = new Button().setText("DisableBtn");
+     *            disableButton.isDisabled();
+     * }
+     * </pre>
      * @return true if element has attribute disabled or class disabled otherwise false
      */
     public boolean isDisabled() {
