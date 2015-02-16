@@ -6,6 +6,10 @@ import com.sdl.selenium.web.button.IButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <button class="btn" type="button">Save</button>
+ * new Button(container, "Save") or new Button().setText("Save");
+ */
 public class Button extends WebLocator implements IButton {
     private static final Logger logger = LoggerFactory.getLogger(Button.class);
 
@@ -43,6 +47,15 @@ public class Button extends WebLocator implements IButton {
         setSearchTextType(SearchType.EQUALS);
     }
 
+    /**
+     * <button class="btn" type="button" disabled>DisableBtn</button>
+     * or <button class="btn disabled" type="button">DisableBtnCls</button>
+     *
+     * Example: Button disableButton = new Button().setText("DisableBtn");
+     *          disableButton.isDisabled();
+     *
+     * @return true if element has attribute disabled or class disabled otherwise false
+     */
     public boolean isDisabled() {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
