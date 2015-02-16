@@ -22,7 +22,7 @@ public class WebLocatorConfig {
     private static boolean logXPathEnabled;
     private static boolean logContainers;
     private static boolean highlight;
-    private static List<SearchType> searchTextType = new ArrayList<SearchType>() {{
+    private static Set<SearchType> searchTextType = new HashSet<SearchType>() {{
         add(SearchType.CONTAINS);
     }};
     public static String defaultLabelPosition;
@@ -92,7 +92,7 @@ public class WebLocatorConfig {
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");
-            List<SearchType> list = new ArrayList<SearchType>();
+            Set<SearchType> list = new HashSet<SearchType>();
             for (String searchType : searchTypes) {
                 try {
                     list.add(SearchType.valueOf(searchType));
@@ -145,14 +145,14 @@ public class WebLocatorConfig {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<SearchType> getSearchTextType() {
-        return (List<SearchType>) ((ArrayList) searchTextType).clone();
+    public static Set<SearchType> getSearchTextType() {
+        return (Set<SearchType>) ((HashSet) searchTextType).clone();
 //        ArrayList<SearchType> copyOfArrayList = new ArrayList<SearchType>();
 //        copyOfArrayList.addAll(searchTextType);
 //        return copyOfArrayList;
     }
 
-    public static void setSearchTextType(List<SearchType> searchTextType) {
+    public static void setSearchTextType(Set<SearchType> searchTextType) {
         WebLocatorConfig.searchTextType = searchTextType;
     }
 

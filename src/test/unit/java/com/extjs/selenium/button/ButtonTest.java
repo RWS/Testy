@@ -2,6 +2,9 @@ package com.extjs.selenium.button;
 
 import com.extjs.selenium.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocatorConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -9,6 +12,8 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
 public class ButtonTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
+    
     public static ExtJsComponent container = new ExtJsComponent("container");
     public static String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
 

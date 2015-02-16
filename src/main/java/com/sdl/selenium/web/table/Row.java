@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Set;
 
 public abstract class Row extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Row.class);
@@ -19,7 +20,7 @@ public abstract class Row extends WebLocator {
         String path = "";
         for (Cell cell : cells) {
             String text = cell.getText();
-            List<SearchType> searchTextType = cell.getSearchTextType();
+            Set<SearchType> searchTextType = cell.getSearchTextType();
             WebLocator cellEl = new WebLocator().setText(cell.getText(), searchTextType.toArray(new SearchType[searchTextType.size()]));
             String tagCell = cell.getTag();
             if (cell.getPosition() != -1 && !"".equals(text) && text != null) {

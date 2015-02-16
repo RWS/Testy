@@ -26,7 +26,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String name;
     private String text;
     protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
-    private List<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
+    private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
@@ -257,8 +257,10 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
-        if (searchType != null && (searchType.length > 0 || defaultSearchTextType.size() > 0)) {
+        if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
+        } else {
+            this.searchTextType.addAll(defaultSearchTextType);
         }
         return (T) this;
     }
@@ -268,7 +270,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return value that has been set in {@link #setSearchTextType(SearchType...)}
      */
-    public List<SearchType> getSearchTextType() {
+    public Set<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
@@ -282,7 +284,7 @@ public abstract class WebLocatorAbstractBuilder {
         if (searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new ArrayList<SearchType>();
+            this.searchTextType = new HashSet<SearchType>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
@@ -532,7 +534,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
-        if (searchType != null && (searchType.length > 0 || defaultSearchTextType.size() > 0)) {
+        if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
         }
         return (T) this;
