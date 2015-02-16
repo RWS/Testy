@@ -45,7 +45,21 @@ public class Button extends WebLocator implements IButton {
     }
 
     /**
-     * @param container
+     * <pre>
+     * {@code
+     * <form class="panel">
+     *          <button class="btn" type="button">Save</button>
+     *        </form>
+     * }
+     * </pre>
+     * <p>In Java appears like this:</p>
+     * <pre>
+     * {@code
+     * Form panelForm = new Form().setClasses("panel");
+     *        Button saveButton = new Button(panelForm);
+     * }
+     * </pre>
+     * @param container is component which contains the button
      */
     public Button(WebLocator container) {
         this();
