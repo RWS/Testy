@@ -1,11 +1,9 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.WebLocatorConfigReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -97,11 +95,19 @@ public class WebLocatorConfig {
                 try {
                     list.add(SearchType.valueOf(searchType));
                 } catch (IllegalArgumentException e) {
-                    LOGGER.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + Arrays.asList(SearchType.values()));
+                    LOGGER.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + changeToLowerCase(Arrays.asList(SearchType.values())));
                 }
             }
             setSearchTextType(list);
         }
+    }
+
+    private static ArrayList<String> changeToLowerCase(List<SearchType> list){
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for(SearchType searchType : list) {
+            arrayList.add(searchType.name().toLowerCase());
+        }
+        return arrayList;
     }
 
     public static long getDefaultRenderMillis() {
