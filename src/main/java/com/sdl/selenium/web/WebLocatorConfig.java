@@ -95,19 +95,11 @@ public class WebLocatorConfig {
                 try {
                     list.add(SearchType.valueOf(searchType));
                 } catch (IllegalArgumentException e) {
-                    LOGGER.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + changeToLowerCase(Arrays.asList(SearchType.values())));
+                    LOGGER.error("SearchType not supported : {}. Supported SearchTypes: {}", searchType, Arrays.asList(SearchType.values()));
                 }
             }
             setSearchTextType(list);
         }
-    }
-
-    private static ArrayList<String> changeToLowerCase(List<SearchType> list){
-        ArrayList<String> arrayList = new ArrayList<String>();
-        for(SearchType searchType : list) {
-            arrayList.add(searchType.name().toLowerCase());
-        }
-        return arrayList;
     }
 
     public static long getDefaultRenderMillis() {

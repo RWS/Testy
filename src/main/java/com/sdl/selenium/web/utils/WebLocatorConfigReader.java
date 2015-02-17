@@ -1,5 +1,9 @@
 package com.sdl.selenium.web.utils;
 
+import com.sdl.selenium.web.SearchType;
+
+import java.util.Arrays;
+
 public class WebLocatorConfigReader extends PropertiesReader {
 
     private static final String DEFAULT_CONFIG = ""+
@@ -8,7 +12,8 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.log.logXPathEnabled=true" +
             "\n weblocator.highlight=false" +
             "\n weblocator.defaults.renderMillis=3000" +
-            "\n weblocator.defaults.searchType=contains" +
+            "\n #accepted values for searchType: " + Arrays.asList(SearchType.values()) +
+            "\n weblocator.defaults.searchType=CONTAINS" +
             "\n weblocator.defaults.labelPosition=//following-sibling::*//";
 
     public WebLocatorConfigReader() {
