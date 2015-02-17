@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfig.class);
@@ -66,7 +67,9 @@ public class WebDriverConfig {
 
     public static void init(WebDriver driver) {
         if (driver != null) {
-            LOGGER.info("========= init WebDriver =========");
+            LOGGER.info("===============================================================");
+            LOGGER.info("|          Open Selenium Web Driver ");
+            LOGGER.info("===============================================================\n");
             WebDriverConfig.driver = driver;
             WebLocator.setDriverExecutor(driver);
             if (driver instanceof InternetExplorerDriver) {
@@ -80,7 +83,28 @@ public class WebDriverConfig {
             } else if (driver instanceof OperaDesktopDriver) {
                 isOpera = true;
             }
+
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(150, TimeUnit.MILLISECONDS);
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    if (WebLocatorConfig.getBoolean("weblocator.driver.autoClose")) {
+                        initSeleniumEnd();
+                    }
+                }
+            });
         }
+    }
+
+    private static void initSeleniumEnd() {
+        LOGGER.info("===============================================================");
+        LOGGER.info("|          Stopping driver (closing browser)                   |");
+        LOGGER.info("===============================================================");
+        driver.quit();
+        LOGGER.debug("===============================================================");
+        LOGGER.debug("|         Driver stopped (browser closed)                     |");
+        LOGGER.debug("===============================================================\n");
     }
 
     /**

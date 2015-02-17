@@ -37,9 +37,13 @@ public class WebLocatorConfig {
         init();
     }
 
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
     public static Boolean getBoolean(String key) {
         Boolean v = null;
-        String vString = properties.getProperty(key);
+        String vString = getProperty(key);
         if (vString != null) {
             v = Boolean.valueOf(vString);
         } else {
@@ -50,7 +54,7 @@ public class WebLocatorConfig {
 
     public static Integer getInt(String key) {
         Integer v = null;
-        String vString = properties.getProperty(key);
+        String vString = getProperty(key);
         if (vString != null) {
             v = Integer.valueOf(vString);
         } else {
@@ -64,7 +68,7 @@ public class WebLocatorConfig {
         if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);
         }
-        String labelPosition = properties.getProperty("weblocator.defaults.labelPosition");
+        String labelPosition = getProperty("weblocator.defaults.labelPosition");
         setDefaultLabelPosition(labelPosition);
 
         Boolean logUseClassName = getBoolean("weblocator.log.useClassName");
@@ -86,7 +90,7 @@ public class WebLocatorConfig {
             setHighlight(highlight);
         }
 
-        String searchTextType = properties.getProperty("weblocator.defaults.searchType");
+        String searchTextType = getProperty("weblocator.defaults.searchType");
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");

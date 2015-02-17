@@ -11,7 +11,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 
 public class TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
@@ -23,21 +22,12 @@ public class TestBase {
 
     public static final String SERVER = InputData.SERVER_URL;
 
-    // start suite & open browser
-    @BeforeSuite(alwaysRun = true)
-    public void startSuite() throws Exception {
-        LOGGER.info("===============================================================");
-        LOGGER.info("|          BeforeSuite START-SUITE >> enter                    |");
-        LOGGER.info("=============================================================\n");
-        initSeleniumStart();
-    }
-
-    @AfterSuite(alwaysRun = true)
-    public void stopSuite() {
-        LOGGER.info("===============================================================");
-        LOGGER.info("|          AfterSuite STOP-SUITE >> enter                      |");
-        LOGGER.info("===============================================================\n");
-        initSeleniumEnd();
+    static {
+        try {
+            startSuite();
+        } catch (Exception e) {
+            LOGGER.error("Exception when start suite", e);
+        }
     }
 
     @BeforeClass(alwaysRun = true)
@@ -89,26 +79,14 @@ public class TestBase {
         LOGGER.info("\n");
     }
 
-    private void initSeleniumStart() throws Exception {
+    private static void startSuite() throws Exception {
         LOGGER.info("===============================================================");
         LOGGER.info("|          Browser: " + InputData.BROWSER_CONFIG);
         LOGGER.info("|          AUT URL: " + SERVER);
         LOGGER.info("===============================================================\n");
 
         driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
-        driver.manage().window().maximize();
         driver.get(SERVER);
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-    }
-
-    private void initSeleniumEnd() {
-        LOGGER.info("===============================================================");
-        LOGGER.info("|          Stopping driver (closing browser)                   |");
-        LOGGER.info("===============================================================");
-        driver.quit();
-        LOGGER.debug("===============================================================");
-        LOGGER.debug("|         Driver stopped (browser closed)                     |");
-        LOGGER.debug("===============================================================\n");
     }
 
     public static String getScreensPath() {
