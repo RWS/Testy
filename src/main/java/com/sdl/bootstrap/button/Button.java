@@ -9,17 +9,14 @@ import org.slf4j.LoggerFactory;
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
  * <p>Example:</p>
- * <pre>
- * {@code
- *  <button class="btn" type="button">Save</button>
- *}
- * </pre>
+ * <pre>{@code
+ * <button class="btn" type="button">Save</button>
+ * }</pre>
  * <p>In Java write this:</p>
- * <pre>
- * {@code
- *  new Button(container, "Save") or new Button().setText("Save");
- *  }
- * </pre>
+ * <pre>{@code
+ * Button saveButton = new Button().setText("Save");
+ * saveButton.assertClick();
+ * }</pre>
  */
 public class Button extends WebLocator implements IButton {
     private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
@@ -44,23 +41,6 @@ public class Button extends WebLocator implements IButton {
         setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
-    /**
-     * <pre>
-     * {@code
-     * <form class="panel">
-     *          <button class="btn" type="button">Save</button>
-     *        </form>
-     * }
-     * </pre>
-     * <p>In Java appears like this:</p>
-     * <pre>
-     * {@code
-     * Form panelForm = new Form().setClasses("panel");
-     *        Button saveButton = new Button(panelForm);
-     * }
-     * </pre>
-     * @param container is component which contains the button
-     */
     public Button(WebLocator container) {
         this();
         setContainer(container);
@@ -73,20 +53,17 @@ public class Button extends WebLocator implements IButton {
     }
 
     /**
-     * <pre>
-     *     {@code
-     *<button class="btn" type="button" disabled>DisableBtn</button>
-     *           <button class="btn disabled" type="button">DisableBtnCls</button>
-     * }
-     * </pre>
-     *
+     * <pre>{@code
+     * <button class="btn" type="button" disabled>DisableBtn</button>
+     * <button class="btn disabled" type="button">DisableBtnCls</button>
+     * }</pre>
+     * <p/>
      * <p>Example:</p>
-     * <pre>
-     *     {@code
+     * <pre>{@code
      * Button disableButton = new Button().setText("DisableBtn");
-     *            disableButton.isDisabled();
-     * }
-     * </pre>
+     * disableButton.isDisabled();
+     * }</pre>
+     *
      * @return true if element has attribute disabled or class disabled otherwise false
      */
     public boolean isDisabled() {
