@@ -23,11 +23,7 @@ public class TestBase {
     public static final String SERVER = InputData.SERVER_URL;
 
     static {
-        try {
-            startSuite();
-        } catch (Exception e) {
-            LOGGER.error("Exception when start suite", e);
-        }
+        startSuite();
     }
 
     @BeforeClass(alwaysRun = true)
@@ -79,14 +75,18 @@ public class TestBase {
         LOGGER.info("\n");
     }
 
-    private static void startSuite() throws Exception {
+    private static void startSuite() {
         LOGGER.info("===============================================================");
         LOGGER.info("|          Browser: " + InputData.BROWSER_CONFIG);
         LOGGER.info("|          AUT URL: " + SERVER);
         LOGGER.info("===============================================================\n");
-
-        driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
-        driver.get(SERVER);
+        
+        try {
+            driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
+            driver.get(SERVER);
+        } catch (Exception e) {
+            LOGGER.error("Exception when start suite", e);
+        }
     }
 
     public static String getScreensPath() {
