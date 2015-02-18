@@ -85,11 +85,11 @@ public class WebDriverConfig {
             }
 
             driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("weblocator.driver.implicitlyWait"), TimeUnit.MILLISECONDS);
+            driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
-                    if (WebLocatorConfig.getBoolean("weblocator.driver.autoClose")) {
+                    if (WebLocatorConfig.getBoolean("driver.autoClose")) {
                         initSeleniumEnd();
                     }
                 }
