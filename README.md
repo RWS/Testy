@@ -92,7 +92,7 @@ And you need to instantiate the WebDriver with Testy as follows:
 [Here is how these lines appear in a project](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/src/test/java/org/fasttrackit/util/TestBase.java)
 
 Example:
-Here is a sample project with cucumber and testy:
+Here is a sample project with cucumber and Testy on Chrome browser:
 
 [Full example](https://github.com/nmatei/cucumber-testy-tutorial)
 
