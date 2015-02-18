@@ -52,6 +52,24 @@ When running integration test from Intellij IDEA run :
 How to use Testy?
 -----------------
 
+If you want to use Testy in your project you need to put in pom.xml following lines:
+
+```<repositories>
+     <repository>
+         <id>sonatype-nexus-snapshots</id>
+         <name>sonatype-nexus-snapshots</name>
+         <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+     </repository>
+```</repositories>
+
+```<dependency>
+       <groupId>com.sdl.lt</groupId>
+       <artifactId>Testy</artifactId>
+       <version>1.7.10-SNAPSHOT</version>
+```</dependency>
+
+[Here's how these lines appear in a project pom.xml](https://github.com/SDLLanguageTechnologies/Testy/blob/master/pom.xml)
+
 Example:
 When you want to create tests using Testy you need to create a maven project structure:
 
