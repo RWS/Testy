@@ -82,7 +82,7 @@ And you need to instantiate the WebDriver with Testy as follows:
 
     private static void startSuite() {
         try {
-            driver = WebDriverConfig.getWebDriver(Browser.CHROME);
+            driver = WebDriverConfig.getWebDriver(Browser.FIREFOX);
         } catch (Exception e) {
             LOGGER.error("Exception when start suite", e);
         }
