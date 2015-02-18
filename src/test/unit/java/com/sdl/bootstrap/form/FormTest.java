@@ -15,6 +15,7 @@ public class FormTest {
                 {new Form().setId("ID"),          "//form[@id='ID']"},
                 {new Form(container),             "//*[contains(concat(' ', @class, ' '), ' container ')]//form"},
                 {new Form(container, "TitleForm"),"//*[contains(concat(' ', @class, ' '), ' container ')]//form[count(.//legend[text()='TitleForm']) > 0]"},
+                {new Form(container).setTitle("TitleForm"),"//*[contains(concat(' ', @class, ' '), ' container ')]//form[count(.//legend[text()='TitleForm']) > 0]"},
                 {new Form(container, "TitleForm").setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//form[@id='ID' and count(.//legend[text()='TitleForm']) > 0]"},
         };
     }
