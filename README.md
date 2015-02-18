@@ -92,9 +92,9 @@ And you need to instantiate the WebDriver with Testy as follows:
 [Here is how these lines appear in a project](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/src/test/java/org/fasttrackit/util/TestBase.java)
 
 Example:
-When you want to create tests using Testy you need to create a maven project structure:
+Here is a sample project with cucumber and testy:
 
-[Here is a full example](https://github.com/nmatei/cucumber-testy-tutorial)
+[Full example](https://github.com/nmatei/cucumber-testy-tutorial)
 
 
 Problems
