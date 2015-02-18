@@ -54,15 +54,16 @@ How to use Testy?
 
 If you want to use Testy in your project you need to put in pom.xml following lines:
 
-```<repositories>
+```java
+    <repositories>
      <repository>
          <id>sonatype-nexus-snapshots</id>
          <name>sonatype-nexus-snapshots</name>
          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
      </repository>
-```</repositories>
+    </repositories>
 
-```<dependency>
+    <dependency>
        <groupId>com.sdl.lt</groupId>
        <artifactId>Testy</artifactId>
        <version>1.7.10-SNAPSHOT</version>
