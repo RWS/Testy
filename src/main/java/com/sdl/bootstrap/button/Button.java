@@ -57,7 +57,6 @@ public class Button extends WebLocator implements IButton {
      * <button class="btn" type="button" disabled>DisableBtn</button>
      * <button class="btn disabled" type="button">DisableBtnCls</button>
      * }</pre>
-     * <p/>
      * <p>Example:</p>
      * <pre>{@code
      * Button disableButton = new Button().setText("DisableBtn");
