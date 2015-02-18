@@ -1,4 +1,4 @@
-package com.sdl.weblocator.bootstrap;
+package com.sdl.weblocator.bootstrap.button;
 
 import com.sdl.bootstrap.button.DownloadFile;
 import com.sdl.bootstrap.form.Form;

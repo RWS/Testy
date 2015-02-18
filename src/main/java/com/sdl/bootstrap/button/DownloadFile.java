@@ -8,6 +8,20 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 
+/**
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <div class="controls">
+ *      <button class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+ * </div>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * DownloadFile downloadFile = new DownloadFile().setText(" Download");
+ * downloadFile.download("text.docx")
+ * }</pre>
+ */
 public class DownloadFile extends WebLocator implements Download {
 
     public DownloadFile() {
