@@ -71,6 +71,26 @@ If you want to use Testy in your project you need to put in pom.xml following li
 ```
 [Here is how these lines appear in a project pom.xml](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/pom.xml)
 
+And you need to instantiate the WebDriver with Testy as follows:
+
+```java
+    public static WebDriver driver;
+
+    static {
+        startSuite();
+    }
+
+    private static void startSuite() {
+        try {
+            driver = WebDriverConfig.getWebDriver(Browser.CHROME);
+        } catch (Exception e) {
+            LOGGER.error("Exception when start suite", e);
+        }
+    }
+```
+
+[Here is how these lines appear in a project](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/src/test/java/org/fasttrackit/util/TestBase.java)
+
 Example:
 When you want to create tests using Testy you need to create a maven project structure:
 
