@@ -7,6 +7,24 @@ import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
+/**
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <div>
+ *  <div class="fileupload fileupload-new" data-provides="fileupload">
+ *      <span class="btn btn-file"><span class="fileupload-new">Browse</span><spanclass="fileupload-exists">Change</span><input type="file"/></span>
+ *      <span class="fileupload-preview"></span>
+ *      <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+ *  </div>
+ * </div>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * private UploadButton uploadButton = new UploadButton().setText("Browse");
+ * uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx");
+ * }</pre>
+ */
 public class UploadFile extends WebLocator implements Upload {
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadFile.class);
 
