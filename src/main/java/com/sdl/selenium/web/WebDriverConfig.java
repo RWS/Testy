@@ -85,7 +85,7 @@ public class WebDriverConfig {
             }
 
             driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(150, TimeUnit.MILLISECONDS);
+            driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("weblocator.driver.implicitlyWait"), TimeUnit.MILLISECONDS);
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
