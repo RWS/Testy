@@ -69,7 +69,7 @@ If you want to use Testy in your project you need to put in pom.xml following li
         <version>1.7.10-SNAPSHOT</version>
     </dependency>
 ```
-[Here is how these lines appear in a project pom.xml](https://github.com/SDLLanguageTechnologies/Testy/blob/master/pom.xml)
+[Here is how these lines appear in a project pom.xml](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/pom.xml)
 
 Example:
 When you want to create tests using Testy you need to create a maven project structure:
