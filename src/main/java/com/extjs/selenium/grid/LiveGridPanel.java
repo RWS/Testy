@@ -51,6 +51,11 @@ public class LiveGridPanel extends GridPanel {
         return executeScrollScript("scrollTop", script);
     }
 
+    public boolean scrollTop(String id) {
+        String script = "return (function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop!=0){b.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        return executeScrollScript("scrollTop", script);
+    }
+
     public boolean scrollBottom() {
         LOGGER.warn("TODO not yet implemented.");
         //TODO not yet implemented.
@@ -89,6 +94,11 @@ public class LiveGridPanel extends GridPanel {
      */
     public boolean scrollPageDown() {
         String id = getAttributeId();
+        String script = "return (function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop<(h-b.getHeight()-1)){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        return executeScrollScript("scrollPageDown", script);
+    }
+
+    public boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop<(h-b.getHeight()-1)){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageDown", script);
     }

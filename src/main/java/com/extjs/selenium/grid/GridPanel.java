@@ -158,7 +158,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttrId();
         return scrollTop(id);
     }
-    private boolean scrollTop(String id) {
+    public boolean scrollTop(String id) {
         String script = "return (function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollTop", script);
     }
@@ -189,7 +189,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttrId();
         return scrollPageDown(id);
     }
-    private boolean scrollPageDown(String id) {
+    public boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageDown", script);
     }
