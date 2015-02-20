@@ -139,7 +139,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      *
      * @return attribute
      */
-    private String getAttrId() {
+    protected String getAttrId() {
         String id = getAttributeId();
         LOGGER.debug("id=" + id);
         if (id == null) {

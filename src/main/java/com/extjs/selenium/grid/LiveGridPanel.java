@@ -41,31 +41,24 @@ public class LiveGridPanel extends GridPanel {
     }
 
     /**
-     * Scroll on the top in LiveGrid
+     * Scroll Top one visible page in LiveGrid
      *
+     * @param id
      * @return true if scrolled
      */
-    public boolean scrollTop() {
-        String id = getAttributeId();
-        return scrollTop(id);
-    }
-
     protected boolean scrollTop(String id) {
         String script = "return (function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop!=0){b.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollTop", script);
     }
 
     public boolean scrollBottom() {
-        LOGGER.warn("TODO not yet implemented.");
-        //TODO not yet implemented.
-        /*String id = getAttributeId();
-        String script = "return (function(g){var a=g.view.scroller;a.dom.scrollTop=g.view.mainBody.getHeight();return true})(window.Ext.getCmp('" + id + "'))";
-        if (hasWebDriver()) {
-            return executeScrollScript("scrollBottom", "return " + script);
-        } else {
-            return executeScrollScript("scrollBottom", script);
-        }*/
-        return false;
+        String id = getAttrId();
+        boolean scroll;
+        do {
+            scroll = scrollPageDown(id);
+            LOGGER.warn("Scroll Page Down: {}", scroll);
+        } while (scroll);
+        return !scroll;
     }
 
     /**
@@ -89,13 +82,9 @@ public class LiveGridPanel extends GridPanel {
     /**
      * Scroll Down one visible page in LiveGrid
      *
+     * @param id
      * @return true if scrolled
      */
-    public boolean scrollPageDown() {
-        String id = getAttributeId();
-        return scrollPageDown(id);
-    }
-
     protected boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.liveScroller,d=a.liveScrollerInsets,n=d.length,h=n*d[0].style.height.replace('px','');if(b.dom.style.display=='none'){return false}if(b.dom.scrollTop<(h-b.getHeight()-1)){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageDown", script);
@@ -108,9 +97,9 @@ public class LiveGridPanel extends GridPanel {
     }
 
     @Override
-    public WebLocator getSelectAllChecker(String columnId){
+    public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        return new WebLocator(this,"//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div" );
+        return new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div");
     }
 
     public boolean refresh() {
