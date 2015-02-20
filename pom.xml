@@ -56,10 +56,10 @@
         </repository>
     </distributionManagement>
 
-    <properties>
-        <gpg.passphrase>53ABCC3C</gpg.passphrase>
+    <!--<properties>
+        <gpg.passphrase>9405AD47</gpg.passphrase>
         <gpg.useagent>true</gpg.useagent>
-    </properties>
+    </properties>-->
 
     <dependencies>
         <dependency>
