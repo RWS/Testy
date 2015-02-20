@@ -53,12 +53,8 @@ public class LiveGridPanel extends GridPanel {
 
     public boolean scrollBottom() {
         String id = getAttrId();
-        boolean scroll;
-        do {
-            scroll = scrollPageDown(id);
-            LOGGER.warn("Scroll Page Down: {}", scroll);
-        } while (scroll);
-        return !scroll;
+        while (scrollPageDown(id)){}
+        return true;
     }
 
     /**
