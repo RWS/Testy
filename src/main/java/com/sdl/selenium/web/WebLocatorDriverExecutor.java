@@ -133,7 +133,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public void focus(WebLocator el) {
-        doMouseOver(el);
+        el.ready();
+        Actions builder = new Actions(driver);
+        builder.moveToElement(el.currentElement).perform();
     }
 
     @Override
