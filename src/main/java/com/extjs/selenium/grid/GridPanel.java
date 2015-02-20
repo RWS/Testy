@@ -143,7 +143,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttributeId();
         LOGGER.debug("id=" + id);
         if (id == null) {
-            LOGGER.warn("GridPanel id is null: " + getPath());
+            LOGGER.warn("{} id is null. The path is: {}", getClassName(), getPath());
             Assert.fail("Could not scroll because id of grid is null: " + this);
         }
         return id;
