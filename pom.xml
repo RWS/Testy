@@ -5,7 +5,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.7.11-SNAPSHOT</version>
+    <version>1.7.11</version>
     <packaging>jar</packaging>
     <description>Test framework for web applications</description>
     <url>https://github.com/SDLLanguageTechnologies/Testy</url>
@@ -41,7 +41,7 @@
         <connection>scm:git:git@github.com:SDLLanguageTechnologies/Testy.git</connection>
         <developerConnection>scm:git:git@github.com:SDLLanguageTechnologies/Testy.git</developerConnection>
         <url>git@github.com:SDLLanguageTechnologies/Testy.git</url>
-    <tag>HEAD</tag>
+    <tag>Testy-1.7.11</tag>
   </scm>
 
     <distributionManagement>
