@@ -133,9 +133,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public void focus(WebLocator el) {
-        el.ready();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(el.currentElement).perform();
+        fireEventWithJS(el, "mouseover");
     }
 
     @Override
@@ -343,7 +341,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public void doMouseOver(WebLocator el) {
-        fireEventWithJS(el, "mouseover");
+        Actions builder = new Actions(driver);
+        builder.moveToElement(el.currentElement).perform();
     }
 
     public String getAttributeId(WebLocator el) {

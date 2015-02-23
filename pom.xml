@@ -56,11 +56,6 @@
         </repository>
     </distributionManagement>
 
-    <!--<properties>
-        <gpg.passphrase>9405AD47</gpg.passphrase>
-        <gpg.useagent>true</gpg.useagent>
-    </properties>-->
-
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
