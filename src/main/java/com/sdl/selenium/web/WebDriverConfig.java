@@ -238,31 +238,7 @@ public class WebDriverConfig {
         }
         if (myProfile != null) {
             LOGGER.info("profile not null");
-            setProperties(properties, myProfile, Integer.class,
-                    "dom.max_script_run_time",
-                    "browser.download.folderList"
-            );
-            setProperties(properties, myProfile, Boolean.class,
-                    "browser.download.manager.showWhenStarting",
-                    "browser.download.manager.closeWhenDone",
-                    "browser.download.manager.showAlertOnComplete",
-                    "browser.download.panel.shown",
-                    "browser.helperApps.alwaysAsk.force",
-                    "security.warn_entering_secure",
-                    "security.warn_entering_secure.show_once",
-                    "security.warn_entering_weak",
-                    "security.warn_entering_weak.show_once",
-                    "security.warn_leaving_secure",
-                    "security.warn_leaving_secure.show_once",
-                    "security.warn_submit_insecure",
-                    "security.warn_submit_insecure.show_once",
-                    "security.warn_viewing_mixed",
-                    "security.warn_viewing_mixed.show_once"
-            );
-            setProperties(properties, myProfile, String.class,
-                    "browser.helperApps.neverAsk.saveToDisk",
-                    "browser.helperApps.neverAsk.openFile"
-            );
+            setProfilePreferences(properties, myProfile);
 
             File file = new File(properties.getProperty("browser.download.dir"));
             setDownloadPath(file.getAbsolutePath());
@@ -272,17 +248,7 @@ public class WebDriverConfig {
             }
 
             driver = new FirefoxDriver(myProfile);
-            WebDriverConfig.setSilentDownload(
-                    !"".equals(properties.getProperty("browser.download.dir")) &&
-                            !"".equals(properties.getProperty("browser.helperApps.neverAsk.openFile")) &&
-                            !"".equals(properties.getProperty("browser.helperApps.neverAsk.saveToDisk")) &&
-                            !(Boolean.valueOf(properties.getProperty("browser.helperApps.alwaysAsk.force"))) &&
-                            !(Boolean.valueOf(properties.getProperty("browser.download.panel.shown"))) &&
-                            !(Boolean.valueOf(properties.getProperty("browser.download.manager.showAlertOnComplete"))) &&
-                            (Boolean.valueOf(properties.getProperty("browser.download.manager.closeWhenDone"))) &&
-                            !(Boolean.valueOf(properties.getProperty("browser.download.manager.showWhenStarting"))) &&
-                            (Integer.valueOf(properties.getProperty("browser.download.folderList")) == 2)
-            );
+            initSilentDownload(properties);
         } else {
             String profilePath = properties.getProperty("browser.profile.path");
             if (profilePath != null && !profilePath.equals("")) {
@@ -301,6 +267,48 @@ public class WebDriverConfig {
                 driver = new FirefoxDriver(firefoxCapabilities);
             }
         }
+    }
+
+    private static void initSilentDownload(PropertiesReader properties) {
+        WebDriverConfig.setSilentDownload(
+                !"".equals(properties.getProperty("browser.download.dir")) &&
+                        !"".equals(properties.getProperty("browser.helperApps.neverAsk.openFile")) &&
+                        !"".equals(properties.getProperty("browser.helperApps.neverAsk.saveToDisk")) &&
+                        !(Boolean.valueOf(properties.getProperty("browser.helperApps.alwaysAsk.force"))) &&
+                        !(Boolean.valueOf(properties.getProperty("browser.download.panel.shown"))) &&
+                        !(Boolean.valueOf(properties.getProperty("browser.download.manager.showAlertOnComplete"))) &&
+                        (Boolean.valueOf(properties.getProperty("browser.download.manager.closeWhenDone"))) &&
+                        !(Boolean.valueOf(properties.getProperty("browser.download.manager.showWhenStarting"))) &&
+                        (Integer.valueOf(properties.getProperty("browser.download.folderList")) == 2)
+        );
+    }
+
+    private static void setProfilePreferences(PropertiesReader properties, FirefoxProfile myProfile) {
+        setProperties(properties, myProfile, Integer.class,
+                "dom.max_script_run_time",
+                "browser.download.folderList"
+        );
+        setProperties(properties, myProfile, Boolean.class,
+                "browser.download.manager.showWhenStarting",
+                "browser.download.manager.closeWhenDone",
+                "browser.download.manager.showAlertOnComplete",
+                "browser.download.panel.shown",
+                "browser.helperApps.alwaysAsk.force",
+                "security.warn_entering_secure",
+                "security.warn_entering_secure.show_once",
+                "security.warn_entering_weak",
+                "security.warn_entering_weak.show_once",
+                "security.warn_leaving_secure",
+                "security.warn_leaving_secure.show_once",
+                "security.warn_submit_insecure",
+                "security.warn_submit_insecure.show_once",
+                "security.warn_viewing_mixed",
+                "security.warn_viewing_mixed.show_once"
+        );
+        setProperties(properties, myProfile, String.class,
+                "browser.helperApps.neverAsk.saveToDisk",
+                "browser.helperApps.neverAsk.openFile"
+        );
     }
 
     private static <T> void setProperties(PropertiesReader properties, FirefoxProfile myProfile, java.lang.Class<T> objectType, String... keys) {
