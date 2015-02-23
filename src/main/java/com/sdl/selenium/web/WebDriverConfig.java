@@ -108,9 +108,8 @@ public class WebDriverConfig {
     }
 
     /**
-     * @deprecated
-     * The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     * When Selenium will be removed. Change your code as this method will return true
+     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
+     *             When Selenium will be removed. Change your code as this method will return true
      */
     public static boolean hasWebDriver() {
         return driver != null;
@@ -145,6 +144,7 @@ public class WebDriverConfig {
 
     /**
      * Create and return new WebDriver
+     *
      * @param browser see details {@link com.sdl.selenium.web.Browser}
      * @return webDriver
      * @throws IOException
@@ -213,7 +213,7 @@ public class WebDriverConfig {
         options.addArguments("--enable-logging --v=1");
         options.addArguments("--test-type");
         Map<String, Object> prefs = new HashMap<String, Object>();
-        String property = properties.getProperty("browser.download.dir");
+        String property = properties.getProperty("profile.preference.browser.download.dir");
         File file = new File(property);
         setDownloadPath(file.getAbsolutePath());
         String downloadDir = file.getCanonicalPath();
@@ -240,11 +240,11 @@ public class WebDriverConfig {
             LOGGER.info("profile not null");
             setProfilePreferences(properties, myProfile);
 
-            File file = new File(properties.getProperty("browser.download.dir"));
+            File file = new File(properties.getProperty("profile.preference.browser.download.dir"));
             setDownloadPath(file.getAbsolutePath());
             String downloadDir = file.getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {
-                myProfile.setPreference("browser.download.dir", downloadDir);
+                myProfile.setPreference("profile.preference.browser.download.dir", downloadDir);
             }
 
             driver = new FirefoxDriver(myProfile);
@@ -271,56 +271,33 @@ public class WebDriverConfig {
 
     private static void initSilentDownload(PropertiesReader properties) {
         WebDriverConfig.setSilentDownload(
-                !"".equals(properties.getProperty("browser.download.dir")) &&
-                        !"".equals(properties.getProperty("browser.helperApps.neverAsk.openFile")) &&
-                        !"".equals(properties.getProperty("browser.helperApps.neverAsk.saveToDisk")) &&
-                        !(Boolean.valueOf(properties.getProperty("browser.helperApps.alwaysAsk.force"))) &&
-                        !(Boolean.valueOf(properties.getProperty("browser.download.panel.shown"))) &&
-                        !(Boolean.valueOf(properties.getProperty("browser.download.manager.showAlertOnComplete"))) &&
-                        (Boolean.valueOf(properties.getProperty("browser.download.manager.closeWhenDone"))) &&
-                        !(Boolean.valueOf(properties.getProperty("browser.download.manager.showWhenStarting"))) &&
-                        (Integer.valueOf(properties.getProperty("browser.download.folderList")) == 2)
+                !"".equals(properties.getProperty("profile.preference.browser.download.dir")) &&
+                        !"".equals(properties.getProperty("profile.preference.browser.helperApps.neverAsk.openFile")) &&
+                        !"".equals(properties.getProperty("profile.preference.browser.helperApps.neverAsk.saveToDisk")) &&
+                        !(Boolean.valueOf(properties.getProperty("profile.preference.browser.helperApps.alwaysAsk.force"))) &&
+                        !(Boolean.valueOf(properties.getProperty("profile.preference.browser.download.panel.shown"))) &&
+                        !(Boolean.valueOf(properties.getProperty("profile.preference.browser.download.manager.showAlertOnComplete"))) &&
+                        (Boolean.valueOf(properties.getProperty("profile.preference.browser.download.manager.closeWhenDone"))) &&
+                        !(Boolean.valueOf(properties.getProperty("profile.preference.browser.download.manager.showWhenStarting"))) &&
+                        (Integer.valueOf(properties.getProperty("profile.preference.browser.download.folderList")) == 2)
         );
     }
 
     private static void setProfilePreferences(PropertiesReader properties, FirefoxProfile myProfile) {
-        setProperties(properties, myProfile, Integer.class,
-                "dom.max_script_run_time",
-                "browser.download.folderList"
-        );
-        setProperties(properties, myProfile, Boolean.class,
-                "browser.download.manager.showWhenStarting",
-                "browser.download.manager.closeWhenDone",
-                "browser.download.manager.showAlertOnComplete",
-                "browser.download.panel.shown",
-                "browser.helperApps.alwaysAsk.force",
-                "security.warn_entering_secure",
-                "security.warn_entering_secure.show_once",
-                "security.warn_entering_weak",
-                "security.warn_entering_weak.show_once",
-                "security.warn_leaving_secure",
-                "security.warn_leaving_secure.show_once",
-                "security.warn_submit_insecure",
-                "security.warn_submit_insecure.show_once",
-                "security.warn_viewing_mixed",
-                "security.warn_viewing_mixed.show_once"
-        );
-        setProperties(properties, myProfile, String.class,
-                "browser.helperApps.neverAsk.saveToDisk",
-                "browser.helperApps.neverAsk.openFile"
-        );
-    }
-
-    private static <T> void setProperties(PropertiesReader properties, FirefoxProfile myProfile, java.lang.Class<T> objectType, String... keys) {
-        for (String key : keys) {
-            String property = properties.getProperty(key);
-            if (property != null && !"".equals(property)) {
-                if (objectType == Boolean.class) {
-                    myProfile.setPreference(key, Boolean.valueOf(property));
-                } else if (objectType == Integer.class) {
-                    myProfile.setPreference(key, Integer.valueOf(property));
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            String key = (String) entry.getKey();
+            if (key.startsWith("profile.preference.")) {
+                String preferenceKey = key.substring(19);
+                String value = (String) entry.getValue();
+                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                    myProfile.setPreference(preferenceKey, Boolean.valueOf(value));
                 } else {
-                    myProfile.setPreference(key, property);
+                    try {
+                        int intValue = Integer.parseInt(value);
+                        myProfile.setPreference(preferenceKey, intValue);
+                    } catch (NumberFormatException e) {
+                        myProfile.setPreference(preferenceKey, value);
+                    }
                 }
             }
         }

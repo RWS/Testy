@@ -70,7 +70,7 @@ public class UtilsTest {
         assertEquals(Utils.getEscapeQuotesText(original), expected);
     }
 
-    //@Test
+//    @Test
     public void propertiesFireFox() {
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("browser", "firefox");
@@ -79,26 +79,27 @@ public class UtilsTest {
         map.put("browser.profile.path", "");
         map.put("browser.binary.path", "");
         map.put("browser.driver.path", "");
-        map.put("dom.max_script_run_time", "500");
-        map.put("browser.download.folderList", "2");
-        map.put("browser.download.manager.showWhenStarting", "false");
-        map.put("browser.download.manager.closeWhenDone", "true");
-        map.put("browser.download.manager.showAlertOnComplete", "false");
-        map.put("browser.download.dir", "src\\test\\resources\\download\\");
-        map.put("browser.helperApps.neverAsk.openFile", "text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        map.put("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        map.put("browser.helperApps.alwaysAsk.force", "false");
-        map.put("browser.download.panel.shown", "false");
-        map.put("security.warn_entering_secure", "false");
-        map.put("security.warn_entering_secure.show_once", "false");
-        map.put("security.warn_entering_weak", "false");
-        map.put("security.warn_entering_weak.show_once", "false");
-        map.put("security.warn_leaving_secure", "false");
-        map.put("security.warn_leaving_secure.show_once", "false");
-        map.put("security.warn_submit_insecure", "false");
-        map.put("security.warn_submit_insecure.show_once", "false");
-        map.put("security.warn_viewing_mixed", "false");
-        map.put("security.warn_viewing_mixed.show_once", "false");
+        map.put("profile.preference.dom.max_script_run_time", "500");
+        map.put("profile.preference.browser.download.folderList", "2");
+        map.put("profile.preference.browser.download.manager.showWhenStarting", "false");
+        map.put("profile.preference.browser.download.manager.closeWhenDone", "true");
+        map.put("profile.preference.browser.download.manager.showAlertOnComplete", "false");
+        map.put("profile.preference.browser.download.dir", "src\\test\\resources\\download\\");
+        map.put("profile.preference.browser.helperApps.neverAsk.openFile", "text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        map.put("profile.preference.browser.helperApps.neverAsk.saveToDisk", "text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        map.put("profile.preference.browser.helperApps.alwaysAsk.force", "false");
+        map.put("profile.preference.browser.download.panel.shown", "false");
+        map.put("profile.preference.security.warn_entering_secure", "false");
+        map.put("profile.preference.security.warn_entering_secure.show_once", "false");
+        map.put("profile.preference.security.warn_entering_weak", "false");
+        map.put("profile.preference.security.warn_entering_weak.show_once", "false");
+        map.put("profile.preference.security.warn_leaving_secure", "false");
+        map.put("profile.preference.security.warn_leaving_secure.show_once", "false");
+        map.put("profile.preference.security.warn_submit_insecure", "false");
+        map.put("profile.preference.security.warn_submit_insecure.show_once", "false");
+        map.put("profile.preference.security.warn_viewing_mixed", "false");
+        map.put("profile.preference.security.warn_viewing_mixed.show_once", "false");
+        map.put("profile.preference.webdriver.load.strategy", "unstable");
 
         FirefoxConfigReader firefoxConfigReader = new FirefoxConfigReader();
 
@@ -116,9 +117,9 @@ public class UtilsTest {
         }
 
         map.put("browser.profile.name", "default");
-        map.put("browser.download.manager.closeWhenDone", "false");
-        map.put("browser.download.manager.showAlertOnComplete", "true");
-        map.put("browser.download.dir", "src\\test\\resources\\test\\");
+        map.put("profile.preference.browser.download.manager.closeWhenDone", "false");
+        map.put("profile.preference.browser.download.manager.showAlertOnComplete", "true");
+        map.put("profile.preference.browser.download.dir", "src\\test\\resources\\test\\");
 
         FirefoxConfigReader firefoxConfigReaderOverwrite = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-firefox-overwrite.properties");
         for (Map.Entry<Object, Object> entry : firefoxConfigReaderOverwrite.entrySet()) {
@@ -127,12 +128,12 @@ public class UtilsTest {
         }
     }
 
-    //@Test
+//    @Test
     public void propertiesChrome() {
         HashMap<String, String> mapChrome = new HashMap<String, String>();
         mapChrome.put("browser", "chrome");
         mapChrome.put("browser.driver.path", "src\\test\\resources\\drivers\\chromedriver.exe");
-        mapChrome.put("browser.download.dir", "src\\test\\resources\\download\\");
+        mapChrome.put("profile.preference.browser.download.dir", "src\\test\\resources\\download\\");
 
         ChromeConfigReader chromeConfigReader = new ChromeConfigReader();
 
@@ -141,7 +142,7 @@ public class UtilsTest {
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
         }
 
-        mapChrome.put("browser.download.dir", "src\\test\\resources\\test\\");
+        mapChrome.put("profile.preference.browser.download.dir", "src\\test\\resources\\test\\");
 
         ChromeConfigReader chromeConfigReader1 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-chrome-test.properties");
         for (Map.Entry<Object, Object> entry : chromeConfigReader1.entrySet()) {
@@ -149,7 +150,7 @@ public class UtilsTest {
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
         }
 
-        mapChrome.put("browser.download.dir", "src\\test\\resources\\download\\");
+        mapChrome.put("profile.preference.browser.download.dir", "src\\test\\resources\\download\\");
         mapChrome.put("browser.driver.path", "src\\test\\resources\\test\\chromedriver.exe");
 
         ChromeConfigReader chromeConfigReader2 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-chrome-overwrite.properties");
