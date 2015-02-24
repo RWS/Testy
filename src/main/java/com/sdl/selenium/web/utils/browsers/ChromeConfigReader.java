@@ -10,7 +10,7 @@ public class ChromeConfigReader extends PropertiesReader {
             "\n profile.preference.browser.download.dir=src\\\\test\\\\resources\\\\download\\\\";
 
     public ChromeConfigReader() {
-        super(null, DEFAULT_CONFIG);
+        this(null);
     }
 
     public ChromeConfigReader(String resourcePath) {

@@ -33,7 +33,7 @@ public class FirefoxConfigReader extends PropertiesReader {
             "\n profile.preference.security.warn_viewing_mixed.show_once=false";
 
     public FirefoxConfigReader() {
-        super(null, DEFAULT_CONFIG);
+        this(null);
     }
 
     public FirefoxConfigReader(String resourcePath) {

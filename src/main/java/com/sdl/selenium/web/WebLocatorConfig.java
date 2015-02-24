@@ -34,6 +34,7 @@ public class WebLocatorConfig {
             LOGGER.info("override defaults by adding them in src/main/resources/{}", CONFIG_FILE_NAME);
         }
         properties = new WebLocatorConfigReader(filePath);
+        LOGGER.info(properties.toString());
         init();
     }
 

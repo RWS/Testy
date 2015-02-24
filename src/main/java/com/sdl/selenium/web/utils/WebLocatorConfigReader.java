@@ -19,7 +19,7 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n driver.implicitlyWait=100";
 
     public WebLocatorConfigReader() {
-        super(null, DEFAULT_CONFIG);
+        this(null);
     }
 
     public WebLocatorConfigReader(String resourcePath) {

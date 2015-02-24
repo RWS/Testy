@@ -9,7 +9,7 @@ public class IExplorerConfigReader extends PropertiesReader {
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\IEDriverServer.exe";
 
     public IExplorerConfigReader() {
-        super(null, DEFAULT_CONFIG);
+        this(null);
     }
 
     public IExplorerConfigReader(String resourcePath) {

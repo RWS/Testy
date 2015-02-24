@@ -154,7 +154,7 @@ public class WebDriverConfig {
     }
 
     private static WebDriver getDriver(Browser browser, String browserProperties) throws IOException {
-        PropertiesReader properties;
+        PropertiesReader properties = null;
         if (browser == Browser.FIREFOX) {
             properties = new FirefoxConfigReader(browserProperties);
             createFirefoxDriver(properties);
@@ -169,6 +169,9 @@ public class WebDriverConfig {
         } else {
             LOGGER.error("Browser not supported" + browser);
             driver = null;
+        }
+        if(properties != null){
+            LOGGER.info(properties.toString());
         }
         init(driver);
         return driver;
@@ -188,6 +191,7 @@ public class WebDriverConfig {
     private static Browser findBrowser(String browserProperties) {
         PropertiesReader properties = new PropertiesReader(browserProperties);
         String browserKey = properties.getProperty("browser");
+        LOGGER.info("Browser is: {}", browserKey);
         return getBrowser(browserKey);
     }
 

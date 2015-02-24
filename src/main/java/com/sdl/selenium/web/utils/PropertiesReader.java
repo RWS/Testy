@@ -24,9 +24,7 @@ public class PropertiesReader extends OrderedProperties {
     }
 
     public PropertiesReader(String resourcePath) {
-        if (resourcePath != null) {
-            loadFile(resourcePath);
-        }
+        this(resourcePath, null);
     }
 
     public PropertiesReader(String resourcePath, String defaults) {
@@ -36,7 +34,6 @@ public class PropertiesReader extends OrderedProperties {
         if (resourcePath != null) {
             loadFile(resourcePath);
         }
-        LOGGER.info(this.toString());
     }
 
     protected void loadFile(String resourcePath) {
