@@ -1,5 +1,6 @@
 package com.sdl.bootstrap.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,14 @@ import java.util.Date;
  */
 public class DatePicker extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatePicker.class);
+
+    private WebLocator icon = new WebLocator(this).setClasses("icon-calendar").setInfoMessage("Open Calendar");
+    private WebLocator dataPicker = new WebLocator().setClasses("datepicker-dropdown dropdown-menu").setStyle("display: block;");
+    private WebLocator dataPickerDays = new WebLocator(dataPicker).setClasses("datepicker-days").setStyle("display: block;");
+    private WebLocator dataPickerMonths = new WebLocator(dataPicker).setClasses("datepicker-months").setStyle("display: block;");
+    private WebLocator dataPickerYear = new WebLocator(dataPicker).setClasses("datepicker-years").setStyle("display: block;");
+    private WebLocator switchDay = new WebLocator(dataPickerDays).setClasses("switch").setInfoMessage("switchMonth");
+    private WebLocator switchMonth = new WebLocator(dataPickerMonths).setClasses("switch").setInfoMessage("switchYear");
 
     public DatePicker() {
         setClassName("DatePicker");
@@ -50,32 +59,24 @@ public class DatePicker extends WebLocator {
             LOGGER.error("ParseException: {}", e);
         }
         String[] dates = date.split("/");
-        String day = dates[0];
+        String day = Integer.parseInt(dates[0]) + "";
         String month = dates[1];
         String year = dates[2];
         return setDate(day, month, year);
     }
-
-    private WebLocator icon = new WebLocator(this).setClasses("icon-calendar").setInfoMessage("Open Calendar");
-    private WebLocator dataPicker = new WebLocator().setClasses("datepicker-dropdown dropdown-menu").setStyle("display: block;");
-    private WebLocator dataPickerDays = new WebLocator(dataPicker).setClasses("datepicker-days").setStyle("display: block;");
-    private WebLocator dataPickerMonths = new WebLocator(dataPicker).setClasses("datepicker-months").setStyle("display: block;");
-    private WebLocator dataPickerYear = new WebLocator(dataPicker).setClasses("datepicker-years").setStyle("display: block;");
-    private WebLocator switchDay = new WebLocator(dataPickerDays).setClasses("switch").setInfoMessage("switchMonth");
-    private WebLocator switchMonth = new WebLocator(dataPickerMonths).setClasses("switch").setInfoMessage("switchYear");
 
     public boolean setDate(String day, String month, String year) {
         if (icon.click()) {
             switchDay.click();
             switchMonth.click();
 
-            WebLocator yearSelect = new WebLocator(dataPickerYear).setClasses("year").setText(year);
+            WebLocator yearSelect = new WebLocator(dataPickerYear).setClasses("year").setText(year, SearchType.EQUALS);
             boolean y = yearSelect.click();
 
             WebLocator monthSelect = new WebLocator(dataPickerMonths).setClasses("month").setText(month);
             boolean m = monthSelect.click();
 
-            WebLocator daySelect = new WebLocator(dataPickerDays).setClasses("day").setText(day);
+            WebLocator daySelect = new WebLocator(dataPickerDays).setClasses("day").setText(day, SearchType.EQUALS);
             return y && m && daySelect.click();
         }
         return false;

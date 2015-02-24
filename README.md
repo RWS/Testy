@@ -66,7 +66,7 @@ If you want to use Testy in your project you need to put in pom.xml following li
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.7.10-SNAPSHOT</version>
+        <version>1.7.13-SNAPSHOT</version>
     </dependency>
 ```
 [Here is how these lines appear in a project pom.xml](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/pom.xml)
