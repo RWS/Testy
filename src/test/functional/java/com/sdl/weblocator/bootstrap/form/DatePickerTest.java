@@ -24,13 +24,40 @@ public class DatePickerTest extends TestBase {
 
     @Test
     public void selectDate() {
-        datePicker.select("19/02/2013");
-        assertTrue("19-02-2013".equals(datePicker.getDate()));
+        long startMs = System.currentTimeMillis();
+        datePicker.select("19/02/2016");
+        long endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("selectDate1 took %s ms", endMs - startMs));
+        assertTrue("19-02-2016".equals(datePicker.getDate()));
+
+        startMs = System.currentTimeMillis();
+        datePicker.select("22/09/2016");
+        endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("selectDate2 took %s ms", endMs - startMs));
+        assertTrue("22-09-2016".equals(datePicker.getDate()));
+
+        startMs = System.currentTimeMillis();
+        datePicker.select("12/09/2016");
+        endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("selectDate3 took %s ms", endMs - startMs));
+        assertTrue("12-09-2016".equals(datePicker.getDate()));
+
+        startMs = System.currentTimeMillis();
+        datePicker.select("12/09/2016");
+        endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("selectDate4 took %s ms", endMs - startMs));
+        assertTrue("12-09-2016".equals(datePicker.getDate()));
     }
 
     @Test
     public void selectOldDate() {
         datePicker.select("11/08/2009");
         assertTrue("11-08-2009".equals(datePicker.getDate()));
+    }
+
+    @Test
+    public void selectNewDate() {
+        datePicker.select("02/08/2019");
+        assertTrue("02-08-2019".equals(datePicker.getDate()));
     }
 }
