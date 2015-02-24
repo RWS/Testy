@@ -11,12 +11,12 @@ public class FirefoxConfigReader extends PropertiesReader {
             "\n browser.profile.path=" +
             "\n browser.binary.path=" +
             "\n browser.driver.path=" +
+            "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
             "\n profile.preference.dom.max_script_run_time=500" +
             "\n profile.preference.browser.download.folderList=2" +
             "\n profile.preference.browser.download.manager.showWhenStarting=false" +
             "\n profile.preference.browser.download.manager.closeWhenDone=true" +
             "\n profile.preference.browser.download.manager.showAlertOnComplete=false" +
-            "\n profile.preference.browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
             "\n profile.preference.browser.helperApps.neverAsk.openFile=text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document" +
             "\n profile.preference.browser.helperApps.neverAsk.saveToDisk=text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document" +
             "\n profile.preference.browser.helperApps.alwaysAsk.force=false" +

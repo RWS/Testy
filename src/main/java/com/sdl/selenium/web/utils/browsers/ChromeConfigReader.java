@@ -7,7 +7,7 @@ public class ChromeConfigReader extends PropertiesReader {
     private static final String DEFAULT_CONFIG = "" +
             "\n browser=chrome" +
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
-            "\n profile.preference.browser.download.dir=src\\\\test\\\\resources\\\\download\\\\";
+            "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\";
 
     public ChromeConfigReader() {
         this(null);

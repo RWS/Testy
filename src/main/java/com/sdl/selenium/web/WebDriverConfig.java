@@ -244,11 +244,11 @@ public class WebDriverConfig {
             LOGGER.info("profile not null");
             setProfilePreferences(properties, myProfile);
 
-            File file = new File(properties.getProperty("profile.preference.browser.download.dir"));
+            File file = new File(properties.getProperty("browser.download.dir"));
             setDownloadPath(file.getAbsolutePath());
             String downloadDir = file.getCanonicalPath();
             if (downloadDir != null && !"".equals(downloadDir)) {
-                myProfile.setPreference("profile.preference.browser.download.dir", downloadDir);
+                myProfile.setPreference("browser.download.dir", downloadDir);
             }
 
             driver = new FirefoxDriver(myProfile);
