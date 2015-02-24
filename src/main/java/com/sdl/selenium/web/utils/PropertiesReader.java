@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -23,21 +25,22 @@ public class PropertiesReader extends Properties {
     }
 
     public PropertiesReader(String resourcePath) {
-        loadFile(resourcePath);
+        this(resourcePath, null);
     }
-    
+
     public PropertiesReader(String resourcePath, String defaults) {
-        if(defaults != null){
+        if (defaults != null) {
             loadDefaults(defaults);
         }
-        if(resourcePath != null){
+        if (resourcePath != null) {
             loadFile(resourcePath);
         }
+        LOGGER.info(this.toString());
     }
 
     protected void loadFile(String resourcePath) {
         try {
-            LOGGER.info("Override default properties : {}", resourcePath);
+            //LOGGER.info("Override default properties : {}", resourcePath);
             FileInputStream fileInputStream = new FileInputStream(resourcePath);
             load(fileInputStream);
             fileInputStream.close();
@@ -45,12 +48,12 @@ public class PropertiesReader extends Properties {
             LOGGER.error("IOException: {}", e);
         }
     }
-    
+
     protected void loadDefaults(String defaults) {
         // load string as config if config file not found
         InputStream stream = new ByteArrayInputStream(defaults.getBytes(StandardCharsets.UTF_8));
         try {
-            LOGGER.info("load properties defaults: {}", defaults);
+            //LOGGER.info("load properties defaults: {}", defaults);
             load(stream);
         } catch (IOException e) {
             LOGGER.error("IOException: {}", e);
@@ -60,8 +63,33 @@ public class PropertiesReader extends Properties {
     @Override
     public String getProperty(String key) {
         String property = System.getProperty(key, super.getProperty(key));
-        LOGGER.debug("getProperty: " + key + " = " + property);
+        //LOGGER.debug("getProperty: " + key + " = " + property);
         return property;
     }
 
+    public synchronized String toString() {
+        int max = size() - 1;
+        if (max == -1) {
+            return "\n";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        Iterator<Map.Entry<Object, Object>> it = entrySet().iterator();
+
+        sb.append("\n");
+        for (int i = 0; ; i++) {
+            Map.Entry<Object, Object> e = it.next();
+            Object key = e.getKey();
+            Object value = e.getValue();
+            sb.append("  ");
+            sb.append(key.toString());
+            sb.append('=');
+            sb.append(value.toString());
+
+            sb.append("\n");
+            if (i == max) {
+                return sb.toString();
+            }
+        }
+    }
 }
