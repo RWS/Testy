@@ -213,14 +213,6 @@ public class FileUtils {
         return file.getName();
     }
 
-    public static void cleanDirectory() {
-        try {
-            org.apache.commons.io.FileUtils.cleanDirectory(new File(InputData.DOWNLOAD_DIRECTORY));
-        } catch (IOException e) {
-            LOGGER.warn("IOException {}", e);
-        }
-    }
-
     public static void main(String args[]) {
 
     }

@@ -2,13 +2,16 @@ package com.sdl.weblocator.bootstrap.button;
 
 import com.sdl.bootstrap.button.DownloadFile;
 import com.sdl.bootstrap.form.Form;
-import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -25,14 +28,14 @@ public class DownloadFileTest extends TestBase {
     }
 
     @Test
-    public void assertDownload() {
+    public void assertDownload() throws IOException {
         assertTrue(downloadFile.download("text.docx"));
-        FileUtils.cleanDirectory();
+        FileUtils.cleanDirectory(new File(InputData.DOWNLOAD_DIRECTORY));
     }
 
     @Test
-    public void assertDownloadIsNotFile() {
+    public void assertDownloadIsNotFile() throws IOException {
         assertFalse(downloadFile.download(InputData.DOWNLOAD_DIRECTORY));
-        FileUtils.cleanDirectory();
+        FileUtils.cleanDirectory(new File(InputData.DOWNLOAD_DIRECTORY));
     }
 }

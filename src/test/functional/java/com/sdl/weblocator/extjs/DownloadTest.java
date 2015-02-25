@@ -2,12 +2,15 @@ package com.sdl.weblocator.extjs;
 
 import com.extjs.selenium.button.DownloadButton;
 import com.extjs.selenium.panel.Panel;
-import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.testng.Assert.assertTrue;
 
@@ -25,8 +28,8 @@ public class DownloadTest extends TestBase {
     }
 
     @Test
-    public void downloadFile() {
-        FileUtils.cleanDirectory();
+    public void downloadFile() throws IOException {
+        FileUtils.cleanDirectory(new File(InputData.DOWNLOAD_DIRECTORY));
         assertTrue(downloadFileButton.download("text.docx"));
     }
 
