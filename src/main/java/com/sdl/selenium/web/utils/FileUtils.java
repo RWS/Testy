@@ -1,6 +1,5 @@
 package com.sdl.selenium.web.utils;
 
-import com.sdl.weblocator.InputData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
