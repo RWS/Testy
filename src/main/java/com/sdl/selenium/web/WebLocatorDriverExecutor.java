@@ -215,8 +215,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 tryAgainDoSendKeys(el, charSequences);
             } catch (ElementNotVisibleException ex) {
-                LOGGER.error("final ElementNotVisibleException in sendKeys: " + el, ex);
-                throw ex;
+                try {
+                    trySecondDoSendKeys(el, charSequences);
+                } catch (ElementNotVisibleException exc) {
+                    LOGGER.error("final ElementNotVisibleException in sendKeys: " + el, exc);
+                    throw exc;
+                }
             }
         } catch (WebDriverException e) {
             //TODO this fix is for Chrome
@@ -229,6 +233,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private void tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         el.setCurrentElementPath("");
         findElement(el);
+        if (el.currentElement != null) {
+            el.currentElement.sendKeys(charSequences); // not sure it will click now
+        } else {
+            LOGGER.error("currentElement is null after to try currentElement: " + el);
+        }
+    }
+
+    private void trySecondDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        el.setCurrentElementPath("");
+        findElement(el);
+        doMouseOver(el);
         if (el.currentElement != null) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
         } else {
