@@ -218,7 +218,7 @@ public class WebDriverConfig {
         options.addArguments("--enable-logging --v=1");
         options.addArguments("--test-type");
         Map<String, Object> prefs = new HashMap<String, Object>();
-        String property = properties.getProperty("profile.preference.browser.download.dir");
+        String property = properties.getProperty("browser.download.dir");
         File file = new File(property);
         setDownloadPath(file.getAbsolutePath());
         String downloadDir = file.getCanonicalPath();
@@ -276,7 +276,7 @@ public class WebDriverConfig {
 
     private static void initSilentDownload(PropertiesReader properties) {
         WebDriverConfig.setSilentDownload(
-                !"".equals(properties.getProperty("profile.preference.browser.download.dir")) &&
+                !"".equals(properties.getProperty("browser.download.dir")) &&
                         !"".equals(properties.getProperty("profile.preference.browser.helperApps.neverAsk.openFile")) &&
                         !"".equals(properties.getProperty("profile.preference.browser.helperApps.neverAsk.saveToDisk")) &&
                         !(Boolean.valueOf(properties.getProperty("profile.preference.browser.helperApps.alwaysAsk.force"))) &&

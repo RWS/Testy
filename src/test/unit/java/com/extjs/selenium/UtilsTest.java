@@ -84,7 +84,7 @@ public class UtilsTest {
         map.put("profile.preference.browser.download.manager.showWhenStarting", "false");
         map.put("profile.preference.browser.download.manager.closeWhenDone", "true");
         map.put("profile.preference.browser.download.manager.showAlertOnComplete", "false");
-        map.put("profile.preference.browser.download.dir", "src\\test\\resources\\download\\");
+        map.put("browser.download.dir", "src\\test\\resources\\download\\");
         map.put("profile.preference.browser.helperApps.neverAsk.openFile", "text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         map.put("profile.preference.browser.helperApps.neverAsk.saveToDisk", "text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         map.put("profile.preference.browser.helperApps.alwaysAsk.force", "false");
@@ -119,7 +119,7 @@ public class UtilsTest {
         map.put("browser.profile.name", "default");
         map.put("profile.preference.browser.download.manager.closeWhenDone", "false");
         map.put("profile.preference.browser.download.manager.showAlertOnComplete", "true");
-        map.put("profile.preference.browser.download.dir", "src\\test\\resources\\test\\");
+        map.put("browser.download.dir", "src\\test\\resources\\test\\");
 
         FirefoxConfigReader firefoxConfigReaderOverwrite = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-firefox-overwrite.properties");
         for (Map.Entry<Object, Object> entry : firefoxConfigReaderOverwrite.entrySet()) {
@@ -133,7 +133,7 @@ public class UtilsTest {
         HashMap<String, String> mapChrome = new HashMap<String, String>();
         mapChrome.put("browser", "chrome");
         mapChrome.put("browser.driver.path", "src\\test\\resources\\drivers\\chromedriver.exe");
-        mapChrome.put("profile.preference.browser.download.dir", "src\\test\\resources\\download\\");
+        mapChrome.put("browser.download.dir", "src\\test\\resources\\download\\");
 
         ChromeConfigReader chromeConfigReader = new ChromeConfigReader();
 
@@ -142,7 +142,7 @@ public class UtilsTest {
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
         }
 
-        mapChrome.put("profile.preference.browser.download.dir", "src\\test\\resources\\test\\");
+        mapChrome.put("browser.download.dir", "src\\test\\resources\\test\\");
 
         ChromeConfigReader chromeConfigReader1 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-chrome-test.properties");
         for (Map.Entry<Object, Object> entry : chromeConfigReader1.entrySet()) {
@@ -150,7 +150,7 @@ public class UtilsTest {
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
         }
 
-        mapChrome.put("profile.preference.browser.download.dir", "src\\test\\resources\\download\\");
+        mapChrome.put("browser.download.dir", "src\\test\\resources\\download\\");
         mapChrome.put("browser.driver.path", "src\\test\\resources\\test\\chromedriver.exe");
 
         ChromeConfigReader chromeConfigReader2 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-chrome-overwrite.properties");
