@@ -46,7 +46,7 @@ public class DatePicker extends WebLocator {
      * @return true if is selected date, false when DatePicker doesn't exist
      */
     public boolean select(String date) {
-        return select(date, "dd/MM/yyyy", Locale.CHINESE);
+        return select(date, "dd/MM/yyyy", Locale.ENGLISH);
     }
 
     public boolean select(String date, String format, Locale locale) {
