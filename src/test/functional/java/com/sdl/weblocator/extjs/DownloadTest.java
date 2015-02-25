@@ -2,9 +2,14 @@ package com.sdl.weblocator.extjs;
 
 import com.extjs.selenium.button.DownloadButton;
 import com.extjs.selenium.panel.Panel;
+import com.sdl.selenium.web.utils.FileUtils;
+import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
 
 public class DownloadTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadTest.class);
@@ -14,21 +19,19 @@ public class DownloadTest extends TestBase {
     private DownloadButton downloadWithSpacesButton = new DownloadButton(simpleFormPanel, "Download with spaces");
     private DownloadButton downloadFileButton = new DownloadButton(simpleFormPanel, "Download File");
 
-   /* @Ignores(value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
     @Test
     public void download() {
-        assertTrue(downloadButton.download(InputData.DOWNLOAD_DIRECTORY + "text.docx"));
+        assertTrue(downloadButton.download("text.docx"));
     }
 
-    @Ignores(value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
     @Test
     public void downloadFile() {
-        assertTrue(downloadFileButton.download(InputData.DOWNLOAD_DIRECTORY + "text.docx"));
+        FileUtils.cleanDirectory();
+        assertTrue(downloadFileButton.download("text.docx"));
     }
 
-    @Ignores(value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
     @Test
     public void downloadFileWithSpaces() {
-        assertTrue(downloadWithSpacesButton.download(InputData.DOWNLOAD_DIRECTORY + "text t.docx"));
-    }*/
+        assertTrue(downloadWithSpacesButton.download("text t.docx"));
+    }
 }

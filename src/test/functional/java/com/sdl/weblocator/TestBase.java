@@ -3,6 +3,7 @@ package com.sdl.weblocator;
 import com.extjs.selenium.button.Button;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -84,6 +85,7 @@ public class TestBase {
         try {
             driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
             driver.get(SERVER);
+            FileUtils.cleanDirectory();
         } catch (Exception e) {
             LOGGER.error("Exception when start suite", e);
         }

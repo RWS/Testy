@@ -30,7 +30,7 @@ public class InputData extends PropertiesReader {
     }
 
     // ==============================
-    public static final String DOWNLOAD_DIRECTORY = RESOURCES_DIRECTORY_PATH + "\\temp\\";
+    public static final String DOWNLOAD_DIRECTORY = RESOURCES_DIRECTORY_PATH + "\\download\\";
     public static final String FUNCTIONAL_PATH_ABSOLUTE = "file:///" + new File(FUNCTIONAL_PATH).getAbsolutePath();
 
     public static final String SERVER_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("server.url");

@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.utils;
 
+import com.sdl.weblocator.InputData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -210,6 +211,14 @@ public class FileUtils {
     public static String getFileNameFromPath(String filePath) {
         File file = new File(filePath);
         return file.getName();
+    }
+
+    public static void cleanDirectory() {
+        try {
+            org.apache.commons.io.FileUtils.cleanDirectory(new File(InputData.DOWNLOAD_DIRECTORY));
+        } catch (IOException e) {
+            LOGGER.warn("IOException {}", e);
+        }
     }
 
     public static void main(String args[]) {
