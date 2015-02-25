@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * If you want more information about this datepicker visit this site: http://vitalets.github.io/bootstrap-datepicker/
@@ -45,11 +46,11 @@ public class DatePicker extends WebLocator {
      * @return true if is selected date, false when DatePicker doesn't exist
      */
     public boolean select(String date) {
-        return select(date, "dd/MM/yyyy");
+        return select(date, "dd/MM/yyyy", Locale.CHINESE);
     }
 
-    public boolean select(String date, String format) {
-        SimpleDateFormat inDateFormat = new SimpleDateFormat(format);
+    public boolean select(String date, String format, Locale locale) {
+        SimpleDateFormat inDateFormat = new SimpleDateFormat(format, locale);
         SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy");
         try {
             Date fromDate = inDateFormat.parse(date);
