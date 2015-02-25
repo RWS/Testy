@@ -176,6 +176,7 @@ public class Utils {
         return Arrays.equals(a, b);
     }
 
-    public static void main(String args[]) {
+    public static void deprecated() {
+        LOGGER.warn("= = = = = @Deprecated = = = = =");
     }
 }

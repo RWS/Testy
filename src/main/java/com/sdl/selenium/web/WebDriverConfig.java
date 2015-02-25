@@ -2,6 +2,7 @@ package com.sdl.selenium.web;
 
 import com.opera.core.systems.OperaDesktopDriver;
 import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.utils.Utils;
 import com.sdl.selenium.web.utils.browsers.ChromeConfigReader;
 import com.sdl.selenium.web.utils.browsers.FirefoxConfigReader;
 import com.sdl.selenium.web.utils.browsers.IExplorerConfigReader;
@@ -293,6 +294,18 @@ public class WebDriverConfig {
             if (key.startsWith("profile.preference.")) {
                 String preferenceKey = key.substring(19);
                 String value = (String) entry.getValue();
+
+                // ===========================
+                String deprecatedValue = properties.getProperty(preferenceKey);
+                if(deprecatedValue != null) {
+                    Utils.deprecated();
+                    LOGGER.warn("Property {} is deprecated. Please Use profile.preference.{} instead", preferenceKey, preferenceKey);
+                    LOGGER.warn("Property {} is ignored", key);
+                    Utils.deprecated();
+                    value = deprecatedValue;
+                }
+                // ===========================
+
                 if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
                     myProfile.setPreference(preferenceKey, Boolean.valueOf(value));
                 } else {
