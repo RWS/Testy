@@ -51,38 +51,38 @@ public class DatePicker extends WebLocator {
     public boolean select(String date, String format) {
         SimpleDateFormat inDateFormat = new SimpleDateFormat(format);
         SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy");
-        Date fromDate = null;
         try {
-            fromDate = inDateFormat.parse(date);
+            Date fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);
         } catch (ParseException e) {
             LOGGER.error("ParseException: {}", e);
         }
         String[] dates = date.split("/");
-        String day = Integer.parseInt(dates[0]) + "";
-        String month = dates[1];
-        String year = dates[2];
-        return setDate(day, month, year);
+        return setDate(Integer.parseInt(dates[0]) + "", dates[1], dates[2]);
     }
 
     public boolean setDate(String day, String month, String year) {
         if (icon.click()) {
-            switchDay.click();
-            switchMonth.click();
-
-            WebLocator yearSelect = new WebLocator(dataPickerYear).setClasses("year").setText(year, SearchType.EQUALS);
-            boolean y = yearSelect.click();
-
+            boolean ok = true;
             WebLocator monthSelect = new WebLocator(dataPickerMonths).setClasses("month").setText(month);
-            boolean m = monthSelect.click();
-
+            String fullDate = switchDay.getHtmlText();
+            if (!fullDate.contains(year)) {
+                switchDay.click();
+                switchMonth.click();
+                WebLocator yearSelect = new WebLocator(dataPickerYear).setClasses("year").setText(year, SearchType.EQUALS);
+                ok = ok && yearSelect.click() &&
+                        monthSelect.click();
+            } else if (!fullDate.contains(month)) {
+                switchDay.click();
+                ok = ok && monthSelect.click();
+            }
             WebLocator daySelect = new WebLocator(dataPickerDays).setClasses("day").setText(day, SearchType.EQUALS);
-            return y && m && daySelect.click();
+            return ok && daySelect.click();
         }
         return false;
     }
 
-    public String getDate(){
+    public String getDate() {
         WebLocator webLocator = new WebLocator(this, "//input");
         return webLocator.getAttribute("value");
     }
