@@ -4,18 +4,12 @@ import com.sdl.bootstrap.button.Button;
 import com.sdl.bootstrap.form.CheckBox;
 import com.sdl.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebDriverConfig;
-import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.SimpleTable;
 import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.table.TableRow;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
@@ -24,7 +18,6 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -111,7 +104,7 @@ public class SimpleTableTest extends TestBase {
 
     @Test//(invocationCount = 4)
     public void ThreadTest() throws InterruptedException {
-        ArrayList<List<String>> lists = new ArrayList<>();
+        ArrayList<List<String>> lists = new ArrayList<List<String>>();
         lists.add(Arrays.asList("John", "Carter"));
         lists.add(Arrays.asList("Peter", "Parker"));
         lists.add(Arrays.asList("John", "Rambo"));
