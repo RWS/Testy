@@ -62,29 +62,12 @@ public class SimpleTableTest extends TestBase {
     public void getAllTexts() {
         List<List<String>> listOfList = new ArrayList<List<String>>();
 
-        List<String> list = new ArrayList<String>(); // one inner list
-        list.add("");
-        list.add("John");
-        list.add("Carter");
-        list.add("johncarter@mail.com");
-        list.add("First (1) Second");
-        listOfList.add(list);
-
-        list = new ArrayList<String>(); // and another one
-        list.add("");
-        list.add("Peter");
-        list.add("Parker");
-        list.add("peterparker@mail.com");
-        list.add("First (2) Second");
-        listOfList.add(list);
-
-        list = new ArrayList<String>(); // and another one
-        list.add("");
-        list.add("John");
-        list.add("Rambo");
-        list.add("johnrambo@mail.com");
-        list.add("First (3) Second");
-        listOfList.add(list);
+        listOfList.add(Arrays.asList("", "John", "Carter", "johncarter@mail.com", "First (1) Second"));
+        listOfList.add(Arrays.asList("", "Peter", "Parker", "peterparker@mail.com", "First (2) Second"));
+        listOfList.add(Arrays.asList("", "John", "Rambo", "johnrambo@mail.com", "First (3) Second"));
+        listOfList.add(Arrays.asList("", "John1", "Rambo1", "johnrambo@mail.com", "First (3) Second"));
+        listOfList.add(Arrays.asList("", "John2", "Rambo2", "johnrambo@mail.com", "First (3) Second"));
+        listOfList.add(Arrays.asList("", "John3", "Rambo3", "johnrambo@mail.com", "First (3) Second"));
 
         long startMs = System.currentTimeMillis();
         StringBuffer stringBuffer = new StringBuffer();
