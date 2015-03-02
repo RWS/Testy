@@ -69,23 +69,19 @@ public class SimpleTableTest extends TestBase {
         listOfList.add(Arrays.asList("", "John2", "Rambo2", "johnrambo@mail.com", "First (3) Second"));
         listOfList.add(Arrays.asList("", "John3", "Rambo3", "johnrambo@mail.com", "First (3) Second"));
 
-        long startMs = System.currentTimeMillis();
+        List<List<String>> cellsText = table.getCellsText();
         StringBuffer stringBuffer = new StringBuffer();
-        for (List<String> listEl : table.getCellsText()) {
+        for (List<String> listEl : cellsText) {
             stringBuffer.append("\n| ");
             for (String el : listEl) {
                 stringBuffer.append(el).append(" | ");
             }
         }
         LOGGER.info("test {}", stringBuffer);
-
-        long endMs = System.currentTimeMillis();
-        LOGGER.info(String.format("getAllTexts took %s ms", endMs - startMs));
-
-        assertEquals(table.getCellsText(), listOfList);
+        assertEquals(cellsText, listOfList);
     }
 
-    @Test//(invocationCount = 4)
+    @Test
     public void ThreadTest() throws InterruptedException {
         ArrayList<List<String>> lists = new ArrayList<List<String>>();
         lists.add(Arrays.asList("John", "Carter"));
