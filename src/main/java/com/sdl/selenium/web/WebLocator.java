@@ -281,6 +281,27 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return visible;
     }
 
+    /*public boolean isSelected(){
+        findElement();
+        return currentElement.isSelected();
+    }
+
+    public boolean isDisplayed(){
+        findElement();
+        return currentElement.isDisplayed();
+    }
+
+    public boolean isEnabled(){
+        findElement();
+        return currentElement.isEnabled();
+    }
+
+    public void submit(){
+        findElement();
+        currentElement.submit();
+        currentElement.submit();
+    }*/
+
     // TODO remove from this class, it does not belong to this element
     public boolean isTextPresent(String text) {
         return executor.isTextPresent(this, text);
