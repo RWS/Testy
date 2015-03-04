@@ -20,7 +20,7 @@ public class MessageBox {
 
     private static MessageBoxWindow messageBoxWindow = new MessageBoxWindow();
 
-    private MessageBox(){}
+    protected MessageBox(){}
 
     /**
      * instant get MessageBox text if is present
