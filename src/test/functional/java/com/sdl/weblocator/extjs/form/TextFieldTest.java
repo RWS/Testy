@@ -1,11 +1,11 @@
 package com.sdl.weblocator.extjs.form;
 
-import com.extjs.selenium.form.TextField;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.TestBase;
+import org.junit.AfterClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

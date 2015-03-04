@@ -82,6 +82,21 @@ public class SimpleTableTest extends TestBase {
     }
 
     @Test
+    public void getAllTextsFromRow() {
+        List<String> listOfList = Arrays.asList("", "John", "Carter", "johncarter@mail.com", "First (1) Second");
+
+        TableRow row = table.getRow(new TableCell(2, "John", SearchType.EQUALS), new TableCell(3, "Carter", SearchType.EQUALS));
+        List<String> cellsText = row.getCellsText();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("\n| ");
+        for (String el : cellsText) {
+            stringBuffer.append(el).append(" | ");
+        }
+        LOGGER.info("test {}", stringBuffer);
+        assertEquals(cellsText, listOfList);
+    }
+
+    @Test
     public void ThreadTest() throws InterruptedException {
         ArrayList<List<String>> lists = new ArrayList<List<String>>();
         lists.add(Arrays.asList("John", "Carter"));

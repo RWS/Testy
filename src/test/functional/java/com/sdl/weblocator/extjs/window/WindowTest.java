@@ -1,6 +1,6 @@
 package com.sdl.weblocator.extjs.window;
 
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

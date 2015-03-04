@@ -1,6 +1,6 @@
 package com.sdl.selenium.web.table;
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;

@@ -1,5 +1,6 @@
 package com.extjs.selenium;
 
+import com.sdl.selenium.extjs3.ExtJsComponent;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

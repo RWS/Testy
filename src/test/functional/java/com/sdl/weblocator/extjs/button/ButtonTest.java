@@ -1,9 +1,9 @@
 package com.sdl.weblocator.extjs.button;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.button.SplitButton;
-import com.extjs.selenium.panel.Panel;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.button.SplitButton;
+import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import com.sdl.weblocator.extjs.window.MessageBoxTest;

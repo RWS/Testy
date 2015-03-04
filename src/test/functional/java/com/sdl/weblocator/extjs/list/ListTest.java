@@ -1,16 +1,16 @@
 package com.sdl.weblocator.extjs.list;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.list.List;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.list.List;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.TestBase;
 import org.junit.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
 import static com.sdl.weblocator.Ignores.Driver.CHROME;
+import static org.testng.Assert.assertTrue;
 
 public class ListTest extends TestBase {
 

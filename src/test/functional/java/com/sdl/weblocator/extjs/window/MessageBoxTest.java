@@ -1,8 +1,8 @@
 package com.sdl.weblocator.extjs.window;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.panel.Panel;
-import com.extjs.selenium.window.MessageBox;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.weblocator.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;

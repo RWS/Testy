@@ -1,14 +1,14 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.conditions.MessageBoxSuccessCondition;
-import com.extjs.selenium.form.TextField;
-import com.extjs.selenium.panel.Panel;
-import com.extjs.selenium.window.MessageBox;
-import com.extjs.selenium.window.Window;
 import com.sdl.bootstrap.button.DownloadFile;
 import com.sdl.bootstrap.form.SelectPicker;
 import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
+import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.extjs3.window.MessageBox;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;

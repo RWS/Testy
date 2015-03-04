@@ -1,7 +1,7 @@
 package com.sdl.selenium.web;
 
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.extjs3.ExtJsComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;

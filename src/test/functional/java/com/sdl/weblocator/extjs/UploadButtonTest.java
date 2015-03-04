@@ -1,7 +1,7 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.UploadButton;
-import com.extjs.selenium.panel.Panel;
+import com.sdl.selenium.extjs3.button.UploadButton;
+import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.Test;

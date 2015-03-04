@@ -5,6 +5,9 @@ import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableRow extends Row {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableRow.class);
 
@@ -39,5 +42,17 @@ public class TableRow extends Row {
     public TableRow(WebLocator table, int indexRow, Cell... cells) {
         this(table, indexRow);
         setRowCells(cells);
+    }
+
+    public List<String> getCellsText() {
+        WebLocator columnsEl = new WebLocator(this).setTag("td");
+        int columns = columnsEl.size() + 1;
+
+        List<String> list = new ArrayList<String>();
+        for (int j = 1; j < columns; j++) {
+            TableCell cell = new TableCell(this, j);
+            list.add(cell.getHtmlText());
+        }
+        return list;
     }
 }

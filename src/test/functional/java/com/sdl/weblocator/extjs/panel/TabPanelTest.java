@@ -1,9 +1,9 @@
 package com.sdl.weblocator.extjs.panel;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.panel.Panel;
-import com.extjs.selenium.tab.TabPanel;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.extjs3.tab.TabPanel;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;

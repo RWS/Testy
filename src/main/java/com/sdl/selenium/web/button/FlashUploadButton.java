@@ -1,6 +1,6 @@
 package com.sdl.selenium.web.button;
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

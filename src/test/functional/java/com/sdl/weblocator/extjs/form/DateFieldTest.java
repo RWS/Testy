@@ -1,8 +1,7 @@
 package com.sdl.weblocator.extjs.form;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.form.DateField;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.form.DateField;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

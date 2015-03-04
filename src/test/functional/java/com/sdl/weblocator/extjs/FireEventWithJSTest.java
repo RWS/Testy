@@ -1,7 +1,7 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.panel.Panel;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

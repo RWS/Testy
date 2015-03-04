@@ -1,7 +1,7 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.DownloadButton;
-import com.extjs.selenium.panel.Panel;
+import com.sdl.selenium.extjs3.button.DownloadButton;
+import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.apache.commons.io.FileUtils;

@@ -1,6 +1,6 @@
 package com.sdl.bootstrap.window;
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.extjs3.ExtJsComponent;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
