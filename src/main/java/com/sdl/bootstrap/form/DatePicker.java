@@ -32,6 +32,14 @@ public class DatePicker extends WebLocator {
         return input;
     }
 
+    public WebLocator getSwitchDay() {
+        return switchDay;
+    }
+
+    public WebLocator getSwitchMonth() {
+        return switchMonth;
+    }
+
     public WebLocator getMonthSelect() {
         return monthSelect;
     }
@@ -86,15 +94,15 @@ public class DatePicker extends WebLocator {
         if (getInput().click()) {
             boolean ok = true;
             getMonthSelect().setText(month);
-            String fullDate = switchDay.getHtmlText();
+            String fullDate = getSwitchDay().getHtmlText();
             if (!fullDate.contains(year)) {
-                switchDay.click();
-                switchMonth.click();
+                getSwitchDay().click();
+                getSwitchMonth().click();
                 getYearSelect().setText(year, SearchType.EQUALS);
                 ok = getYearSelect().click() &&
                         getMonthSelect().click();
             } else if (!fullDate.contains(month)) {
-                switchDay.click();
+                getSwitchDay().click();
                 ok = getMonthSelect().click();
             }
             getDaySelect().setText(day, SearchType.EQUALS);
