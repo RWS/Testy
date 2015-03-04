@@ -6,7 +6,20 @@ import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.SimpleTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <label class="checkbox"><input type="checkbox" value="">
+ * Stop the process?
+ * </label>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * CheckBox checkBox = new CheckBox();
+ * checkBox.click();
+ * }</pre>
+ */
 public class CheckBox extends SimpleTextField implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 

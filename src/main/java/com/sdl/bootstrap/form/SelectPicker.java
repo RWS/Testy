@@ -3,6 +3,26 @@ package com.sdl.bootstrap.form;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 
+/**
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <label class="control-label">Tech:</label>
+ *
+ * <div>
+ *  <select class="selectpicker">
+ *      <option>Auto</option>
+ *      <option>Manual</option>
+ *      <option>No ADB</option>
+ *  </select>
+ * </div>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * SelectPicker selectPicker = new SelectPicker().setLabel("Tech:");
+ * selectPicker.select("Manual");
+ * }</pre>
+ */
 public class SelectPicker extends WebLocator implements ICombo {
 
     public SelectPicker() {

@@ -9,6 +9,28 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <label class="control-label">Source:</label>
+ * <p/>
+ * <div class="controls">
+ *  <select id="example" class="multiselect" multiple="multiple">
+ *      <option value="cheese">Cheese</option>
+ *      <option value="tomatoes">Tomatoes</option>
+ *      <option value="mozarella">Mozzarella</option>
+ *      <option value="onions">Onions</option>
+ *      <option value="carrots">Carrots</option>
+ *  </select>
+ * </div>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * MultiSelect multiSelect = new MultiSelect().setLabel("Source:");
+ * multiSelect.select("Cheese", "Tomatoes");
+ * }</pre>
+ */
 public class MultiSelect extends WebLocator {
 
     public MultiSelect() {

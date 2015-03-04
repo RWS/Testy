@@ -11,7 +11,20 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * If you want more information about this datepicker visit this site: http://vitalets.github.io/bootstrap-datepicker/
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>If you want more information about this datepicker visit this site: http://vitalets.github.io/bootstrap-datepicker/</p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <div class="input-append date datepicker" id="dp3">
+ * <input data-bind="dueDate" size="16" type="text" readonly="" class="span2">
+ * <span class="add-on"><i class="icon-calendar"></i></span>
+ * </div>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * DatePicker datePicker = new DatePicker().setId("dp3");
+ * datePicker.select("19/02/2016");
+ * }</pre>
  */
 public class DatePicker extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatePicker.class);
