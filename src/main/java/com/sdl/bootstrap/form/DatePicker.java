@@ -16,13 +16,33 @@ import java.util.Locale;
 public class DatePicker extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatePicker.class);
 
-    private WebLocator icon = new WebLocator(this).setClasses("icon-calendar").setInfoMessage("Open Calendar");
+    private WebLocator input = new WebLocator(this).setClasses("icon-calendar").setInfoMessage("Open Calendar");
     private WebLocator dataPicker = new WebLocator().setClasses("datepicker-dropdown dropdown-menu").setStyle("display: block;");
     private WebLocator dataPickerDays = new WebLocator(dataPicker).setClasses("datepicker-days").setStyle("display: block;");
     private WebLocator dataPickerMonths = new WebLocator(dataPicker).setClasses("datepicker-months").setStyle("display: block;");
     private WebLocator dataPickerYear = new WebLocator(dataPicker).setClasses("datepicker-years").setStyle("display: block;");
     private WebLocator switchDay = new WebLocator(dataPickerDays).setClasses("switch").setInfoMessage("switchMonth");
     private WebLocator switchMonth = new WebLocator(dataPickerMonths).setClasses("switch").setInfoMessage("switchYear");
+
+    private WebLocator monthSelect = new WebLocator(dataPickerMonths).setClasses("month");
+    private WebLocator yearSelect = new WebLocator(dataPickerYear).setClasses("year");
+    private WebLocator daySelect = new WebLocator(dataPickerDays).setClasses("day");
+
+    public WebLocator getInput() {
+        return input;
+    }
+
+    public WebLocator getMonthSelect() {
+        return monthSelect;
+    }
+
+    public WebLocator getYearSelect() {
+        return yearSelect;
+    }
+
+    public WebLocator getDaySelect() {
+        return daySelect;
+    }
 
     public DatePicker() {
         setClassName("DatePicker");
@@ -63,22 +83,22 @@ public class DatePicker extends WebLocator {
     }
 
     public boolean setDate(String day, String month, String year) {
-        if (icon.click()) {
+        if (getInput().click()) {
             boolean ok = true;
-            WebLocator monthSelect = new WebLocator(dataPickerMonths).setClasses("month").setText(month);
+            getMonthSelect().setText(month);
             String fullDate = switchDay.getHtmlText();
             if (!fullDate.contains(year)) {
                 switchDay.click();
                 switchMonth.click();
-                WebLocator yearSelect = new WebLocator(dataPickerYear).setClasses("year").setText(year, SearchType.EQUALS);
-                ok = ok && yearSelect.click() &&
-                        monthSelect.click();
+                getYearSelect().setText(year, SearchType.EQUALS);
+                ok = getYearSelect().click() &&
+                        getMonthSelect().click();
             } else if (!fullDate.contains(month)) {
                 switchDay.click();
-                ok = ok && monthSelect.click();
+                ok = getMonthSelect().click();
             }
-            WebLocator daySelect = new WebLocator(dataPickerDays).setClasses("day").setText(day, SearchType.EQUALS);
-            return ok && daySelect.click();
+            getDaySelect().setText(day, SearchType.EQUALS);
+            return ok && getDaySelect().click();
         }
         return false;
     }
