@@ -1,17 +1,17 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.conditions.MessageBoxSuccessCondition;
-import com.extjs.selenium.form.TextField;
-import com.extjs.selenium.grid.GridPanel;
-import com.extjs.selenium.tab.TabPanel;
-import com.extjs.selenium.window.MessageBox;
-import com.extjs.selenium.window.Window;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
+import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.extjs3.grid.GridPanel;
+import com.sdl.selenium.extjs3.tab.TabPanel;
+import com.sdl.selenium.extjs3.window.MessageBox;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.SimpleTextField;
@@ -35,14 +35,14 @@ public class DeployTesty extends TestBase {
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "vculea";
-    private static final String DOMAIN_PASS = "VCinit*5";
-    
+    private static final String DOMAIN_USER = "domain.user";
+    private static final String DOMAIN_PASS = "***";
+
     private static final String JENKINS_JOB_URL = "http://cluj-jenkins01:8080/job/testy/";
-    
+
     private static final String NEXUS_REPOSITORY_URL = "http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots";
     private static final String NEXUS_ADMIN_USER = "admin";
-    private static final String NEXUS_ADMIN_PASS = "admin123";
+    private static final String NEXUS_ADMIN_PASS = "***";
 
     private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
     private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");
