@@ -1,7 +1,7 @@
 package com.sdl.weblocator.bootstrap.form;
 
-import com.sdl.bootstrap.form.Form;
-import com.sdl.bootstrap.form.InputAppend;
+import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.bootstrap.form.InputAppend;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;

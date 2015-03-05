@@ -4,7 +4,7 @@
     <test name="AllTests">
         <packages>
             <package name="com.extjs.selenium.*"/>
-            <package name="com.sdl.bootstrap.*"/>
+            <package name="com.sdl.selenium.bootstrap.*"/>
         </packages>
     </test>
     <test name="FlashUploadButtonTest">

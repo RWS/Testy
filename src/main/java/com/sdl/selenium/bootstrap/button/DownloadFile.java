@@ -1,33 +1,46 @@
-package com.sdl.selenium.extjs3.button;
+package com.sdl.selenium.bootstrap.button;
 
-import com.sdl.selenium.bootstrap.button.Download;
-import com.sdl.selenium.bootstrap.button.RunExe;
-import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class DownloadButton extends Button implements Download {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadButton.class);
+/**
+ * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p>Example:</p>
+ * <pre>{@code
+ * <div class="controls">
+ *      <button class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+ * </div>
+ * }</pre>
+ * <p>In Java write this:</p>
+ * <pre>{@code
+ * DownloadFile downloadFile = new DownloadFile().setText(" Download");
+ * downloadFile.download("text.docx")
+ * }</pre>
+ */
+public class DownloadFile extends WebLocator implements Download {
 
-    public DownloadButton() {
-        setClassName("DownloadButton");
+    public DownloadFile() {
+        setClassName("DownloadFile");
+        setBaseCls("btn");
+        setTag("button");
     }
 
-    public DownloadButton(WebLocator container) {
+    /**
+     * @param container parent
+     */
+    public DownloadFile(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public DownloadButton(WebLocator container, String text) {
+    public DownloadFile(WebLocator container, String label) {
         this(container);
-        setText(text, SearchType.EQUALS);
+        setLabel(label);
     }
 
     /**
@@ -50,11 +63,16 @@ public class DownloadButton extends Button implements Download {
         }
     }
 
-    private void openBrowse() {
+    public void openBrowse() {
         WebDriver driver = WebDriverConfig.getDriver();
         focus();
         Actions builder = new Actions(driver);
-        builder.moveToElement(currentElement).perform();
+        builder.moveToElement(currentElement).build().perform();
         builder.click().perform();
+    }
+
+    public boolean isDisabled(){
+        String cls = getAttributeClass();
+        return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
 }

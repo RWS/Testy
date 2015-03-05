@@ -1,7 +1,7 @@
 package com.sdl.weblocator.bootstrap.link;
 
-import com.sdl.bootstrap.form.Form;
-import com.sdl.bootstrap.form.SelectPicker;
+import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;

@@ -1,7 +1,7 @@
 package com.sdl.weblocator.bootstrap;
 
-import com.sdl.bootstrap.button.UploadFile;
-import com.sdl.bootstrap.form.Form;
+import com.sdl.selenium.bootstrap.button.UploadFile;
+import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;

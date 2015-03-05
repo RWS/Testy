@@ -1,7 +1,7 @@
 package com.sdl.selenium.extjs3.button;
 
-import com.sdl.bootstrap.button.Download;
-import com.sdl.bootstrap.button.RunExe;
+import com.sdl.selenium.bootstrap.button.Download;
+import com.sdl.selenium.bootstrap.button.RunExe;
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;

@@ -1,8 +1,8 @@
 package com.sdl.weblocator.bootstrap.table;
 
-import com.sdl.bootstrap.button.Button;
-import com.sdl.bootstrap.form.CheckBox;
-import com.sdl.bootstrap.form.Form;
+import com.sdl.selenium.bootstrap.button.Button;
+import com.sdl.selenium.bootstrap.form.CheckBox;
+import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.table.SimpleTable;
 import com.sdl.selenium.web.table.TableCell;

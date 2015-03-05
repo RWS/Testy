@@ -1,7 +1,7 @@
 package com.sdl.weblocator.extjs;
 
-import com.sdl.bootstrap.button.DownloadFile;
-import com.sdl.bootstrap.form.SelectPicker;
+import com.sdl.selenium.bootstrap.button.DownloadFile;
+import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
