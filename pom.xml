@@ -17,10 +17,6 @@
         </license>
     </licenses>
 
-    <properties>
-        <webdriver.version>2.44.0</webdriver.version>
-    </properties>
-
     <developers>
         <developer>
             <name>Culea Viorel</name>
@@ -73,33 +69,13 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <version>${webdriver.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>${webdriver.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-ie-driver</artifactId>
-            <version>${webdriver.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${webdriver.version}</version>
+            <version>2.44.0</version>
         </dependency>
         <dependency>
             <groupId>com.opera</groupId>
             <artifactId>operadriver</artifactId>
             <version>1.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-safari-driver</artifactId>
-            <version>${webdriver.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -119,7 +95,6 @@
             <version>6.8.5</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
