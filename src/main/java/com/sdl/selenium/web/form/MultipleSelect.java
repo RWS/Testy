@@ -3,27 +3,27 @@ package com.sdl.selenium.web.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleMultipleSelect extends SimpleComboBox {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMultipleSelect.class);
+public class MultipleSelect extends ComboBox {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleSelect.class);
 
-    public SimpleMultipleSelect() {
+    public MultipleSelect() {
         setClassName("SimpleMultipleSelect");
     }
 
-    public SimpleMultipleSelect(WebLocator container) {
+    public MultipleSelect(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public SimpleMultipleSelect(WebLocator container, String label) {
+    public MultipleSelect(WebLocator container, String label) {
         this(container);
         setLabel(label);
     }

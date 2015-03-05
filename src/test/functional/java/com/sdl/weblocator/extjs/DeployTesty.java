@@ -7,15 +7,14 @@ import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
-import com.sdl.selenium.extjs3.form.TextField;
 import com.sdl.selenium.extjs3.grid.GridPanel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.SimpleTextField;
-import com.sdl.selenium.web.table.SimpleTable;
+import com.sdl.selenium.web.form.TextField;
+import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
@@ -47,26 +46,26 @@ public class DeployTesty extends TestBase {
     private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
     private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");
     private Form loginForm = new Form().setName("login");
-    private SimpleTextField login = new SimpleTextField(loginForm).setName("j_username");
-    private SimpleTextField pass = new SimpleTextField(loginForm).setName("j_password");
+    private TextField login = new TextField(loginForm).setName("j_username");
+    private TextField pass = new TextField(loginForm).setName("j_password");
     private WebLocator logInButton = new WebLocator(loginForm).setId("yui-gen1-button");
-    private SimpleTable table = new SimpleTable().setId("main-table");
+    private Table table = new Table().setId("main-table");
     private WebLocator buildNow = new WebLocator(table, "//a[@class='task-link' and text()='Build Now']");
-    private SimpleTable buildHistory = new SimpleTable().setId("buildHistory");
+    private Table buildHistory = new Table().setId("buildHistory");
     private WebLocator buildNowEl = new WebLocator(buildHistory).setClasses("build-row", "no-wrap", "transitive").setPosition(1);
 
     private WebLocator logInNexus = new WebLocator().setId("head-link-r");
     private Window nexusLogInWindow = new Window("Nexus Log In");
-    private TextField userName = new TextField(nexusLogInWindow, "Username:");
-    private TextField password = new TextField(nexusLogInWindow, "Password:");
+    private com.sdl.selenium.extjs3.form.TextField userName = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Username:");
+    private com.sdl.selenium.extjs3.form.TextField password = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Password:");
     private Button logIn = new Button(nexusLogInWindow, "Log In");
     private WebLocator viewRepositories = new WebLocator().setId("view-repositories");
     private GridPanel repositoryGridPanel = new GridPanel(viewRepositories);
     private TabPanel browseStorage = new TabPanel(viewRepositories, "Browse Storage");
-    private SimpleTable table1 = new SimpleTable(browseStorage).setCls("x-toolbar-ct");
+    private Table table1 = new Table(browseStorage).setCls("x-toolbar-ct");
     private WebLocator testyDir = new WebLocator().setElPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
     private TableCell tableCell = table1.getTableCell(4, new TableCell(3, "Path Lookup:", SearchType.EQUALS));
-    private TextField searchField = new TextField(tableCell);
+    private com.sdl.selenium.extjs3.form.TextField searchField = new com.sdl.selenium.extjs3.form.TextField(tableCell);
 
     @BeforeClass
     public void startTests() {

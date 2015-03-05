@@ -2,16 +2,16 @@ package com.sdl.selenium.web.window;
 
 import com.sdl.selenium.web.WebLocator;
 
-public class SimpleWindow extends WebLocator {
+public class Window extends WebLocator {
 
-    public SimpleWindow() {
+    public Window() {
         setClassName("SimpleWindow");
         setBaseCls("ui-dialog ui-widget ui-widget-content");
         setStyle("display: block;");
         setTemplate("title", "count(.//*[text()='%s']) > 0");
     }
 
-    public SimpleWindow(String title) {
+    public Window(String title) {
         this();
         setTitle(title);
     }

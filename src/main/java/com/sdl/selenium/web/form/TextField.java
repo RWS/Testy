@@ -7,23 +7,23 @@ import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SimpleTextField extends WebLocator implements ITextField {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTextField.class);
+public class TextField extends WebLocator implements ITextField {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     private String type;
 
-    public SimpleTextField() {
+    public TextField() {
         setClassName("SimpleTextField");
         setTag("input");
         setTemplate("input-type", "@type='%s'");
     }
 
-    public SimpleTextField(WebLocator container) {
+    public TextField(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public SimpleTextField(String id) {
+    public TextField(String id) {
         this();
         setId(id);
     }

@@ -2,19 +2,19 @@ package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.WebLocator;
 
-public class SimpleUploadButton extends WebLocator {
+public class UploadButton extends WebLocator {
 
-    public SimpleUploadButton() {
+    public UploadButton() {
         setClassName("SimpleUploadButton");
         setTag("input");
     }
 
-    public SimpleUploadButton(WebLocator container) {
+    public UploadButton(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public SimpleUploadButton(WebLocator container, String id) {
+    public UploadButton(WebLocator container, String id) {
         this(container);
         setId(id);
     }

@@ -108,7 +108,7 @@
     </test>
     <test name="SimpleTableTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.table.SimpleTableTest"/>
+            <class name="com.sdl.weblocator.bootstrap.table.TableTest"/>
         </classes>
     </test>
     <test name="WebLocator1Test">

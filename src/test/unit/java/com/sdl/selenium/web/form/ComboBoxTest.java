@@ -5,20 +5,20 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SimpleComboBoxTest {
+public class ComboBoxTest {
     private static WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new SimpleComboBox(),             "//select"},
-                {new SimpleComboBox(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
-                {new SimpleComboBox().setId("ID"), "//select[@id='ID']"},
+                {new ComboBox(),             "//select"},
+                {new ComboBox(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
+                {new ComboBox().setId("ID"), "//select[@id='ID']"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
-    public void getPathSelectorCorrectlyFromConstructors(SimpleComboBox combo, String expectedXpath) {
+    public void getPathSelectorCorrectlyFromConstructors(ComboBox combo, String expectedXpath) {
         Assert.assertEquals(combo.getPath(), expectedXpath);
     }
 }

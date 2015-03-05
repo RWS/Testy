@@ -4,21 +4,21 @@ import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SimpleCheckBox extends WebLocator implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleCheckBox.class);
+public class CheckBox extends WebLocator implements ICheck {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
-    public SimpleCheckBox() {
+    public CheckBox() {
         setClassName("SimpleCheckBox");
         setTag("input");
         setElPathSuffix("type", "@type='checkbox'");
     }
 
-    public SimpleCheckBox(WebLocator container) {
+    public CheckBox(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public SimpleCheckBox(String id) {
+    public CheckBox(String id) {
         this();
         setId(id);
     }

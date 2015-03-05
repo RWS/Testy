@@ -2,25 +2,24 @@ package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.SimpleCheckBox;
+import com.sdl.selenium.web.form.CheckBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class SimpleTable extends WebLocator implements ITable<TableRow, TableCell> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTable.class);
+public class Table extends WebLocator implements ITable<TableRow, TableCell> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
 
     private int timeout = 30;
 
-    public SimpleTable() {
+    public Table() {
         setClassName("SimpleTable");
         setTag("table");
     }
 
-    public SimpleTable(WebLocator container) {
+    public Table(WebLocator container) {
         this();
         setContainer(container);
     }
@@ -256,8 +255,8 @@ public class SimpleTable extends WebLocator implements ITable<TableRow, TableCel
     public boolean checkboxColumnSelect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
-            SimpleCheckBox simpleCheckBox = new SimpleCheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
-            selected = simpleCheckBox.isSelected() || simpleCheckBox.click();
+            CheckBox checkBox = new CheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
+            selected = checkBox.isSelected() || checkBox.click();
         }
         return selected;
     }
@@ -269,8 +268,8 @@ public class SimpleTable extends WebLocator implements ITable<TableRow, TableCel
     public boolean checkboxColumnDeselect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
-            SimpleCheckBox simpleCheckBox = new SimpleCheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
-            selected = !simpleCheckBox.isSelected() || simpleCheckBox.click();
+            CheckBox checkBox = new CheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
+            selected = !checkBox.isSelected() || checkBox.click();
         }
         return selected;
     }

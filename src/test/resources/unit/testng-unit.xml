@@ -12,21 +12,21 @@
             <class name="com.sdl.selenium.web.button.FlashUploadButtonTest"/>
             <class name="com.sdl.selenium.web.button.InputButtonTest"/>
             <class name="com.sdl.selenium.web.button.SelectFilesHandlerTest"/>
-            <class name="com.sdl.selenium.web.button.SimpleUploadButtonTest"/>
+            <class name="com.sdl.selenium.web.button.UploadButtonTest"/>
 
             <class name="com.sdl.selenium.web.form.CheckBoxSimpleTest"/>
-            <class name="com.sdl.selenium.web.form.SimpleComboBoxTest"/>
-            <class name="com.sdl.selenium.web.form.SimpleTextFieldTest"/>
+            <class name="com.sdl.selenium.web.form.ComboBoxTest"/>
+            <class name="com.sdl.selenium.web.form.TextFieldTest"/>
             <class name="com.sdl.selenium.web.form.SimpleMultipleSelectTest"/>
 
             <class name="com.sdl.selenium.web.link.WebLinkTest"/>
 
             <class name="com.sdl.selenium.web.table.TableCellTest"/>
             <class name="com.sdl.selenium.web.table.TableRowTest"/>
-            <class name="com.sdl.selenium.web.table.SimpleTableTest"/>
+            <class name="com.sdl.selenium.web.table.TableTest"/>
             <class name="com.sdl.selenium.web.WebLocatorTest"/>
 
-            <class name="com.sdl.selenium.web.window.SimpleWindowTest"/>
+            <class name="com.sdl.selenium.web.window.WindowTest"/>
         </classes>
     </test>
 </suite>

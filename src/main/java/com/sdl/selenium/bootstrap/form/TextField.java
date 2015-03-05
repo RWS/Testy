@@ -1,11 +1,10 @@
 package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.SimpleTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TextField extends SimpleTextField {
+public class TextField extends com.sdl.selenium.web.form.TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {

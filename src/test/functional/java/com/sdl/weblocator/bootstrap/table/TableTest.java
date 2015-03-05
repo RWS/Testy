@@ -4,7 +4,7 @@ import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.table.SimpleTable;
+import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.table.TableRow;
 import com.sdl.selenium.web.utils.Utils;
@@ -22,11 +22,11 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class SimpleTableTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTableTest.class);
+public class TableTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableTest.class);
 
     private Form form = new Form(null, "Form Table");
-    private SimpleTable table = new SimpleTable(form);
+    private Table table = new Table(form);
 
     @BeforeClass
     public void startTests() {

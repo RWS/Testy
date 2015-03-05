@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class TableRowTest {
 
-    private static SimpleTable table = new SimpleTable().setId("ID");
+    private static Table table = new Table().setId("ID");
     private static TableCell tableCell = new TableCell(3, "1234", SearchType.EQUALS).setTag("th");
 
     @DataProvider
