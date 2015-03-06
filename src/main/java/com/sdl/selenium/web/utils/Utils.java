@@ -1,11 +1,11 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.web.WebDriverConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
@@ -14,7 +14,8 @@ import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * TODO Sa fie o metoda de Utils care sa poti seta din WebLocator path-ul unde sa salveze imaginile in dependenta de WebDriver ori Selenium
@@ -147,8 +148,6 @@ public class Utils {
         fileName = FileUtils.getValidFileName(fileName);
         String filePath = screensPath + fileName;
         try {
-//            TestProperties properties = TestProperties.getInstance();
-//            String screensPath = properties.getProjectDir()+ "\\reports\\screens\\";
             File screensDir = new File(screensPath);
             screensDir.mkdirs();
             LOGGER.info("Screenshot: " + filePath);
