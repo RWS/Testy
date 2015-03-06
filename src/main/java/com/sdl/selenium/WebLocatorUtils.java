@@ -68,10 +68,10 @@ public final class WebLocatorUtils extends WebLocator {
         builder.append("var ").append(xpathLocatorVar).append(" = ").append(xpath).append(";\n");
         builder.append("if (").append(xpathLocatorVar).append("[0]) {");
         builder.append("  console.info('").append(locatorName).append("', ").append(xpathLocatorVar).append("[0]);\n");
-        builder.append("if (").append(xpathLocatorVar).append(".length > 1) console.warn('found more elements', ").append(xpathLocatorVar).append(");");
+        builder.append("if (").append(xpathLocatorVar).append(".length > 1) console.warn('  found more elements', ").append(xpathLocatorVar).append(");");
         builder.append("} else {\n");
         builder.append("  console.error('").append(locatorName).append("', ' - not found!');\n");
-        builder.append("  console.warn(\"").append(locator.getPath()).append("\");\n");
+        builder.append("  console.warn(\"  ").append(locator.getPath()).append("\");\n");
         builder.append("}\n\n");
     }
 
