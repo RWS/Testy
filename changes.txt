@@ -84,7 +84,7 @@ version 1.7.1
 7) implemented type attribute for SimpleTextField.java
 8) rename Span in UneditableInput
 9) add WebLink class
-10) improvement com.extjs.selenium.button.Button.click()
+10) improvement com.sdl.selenium.extjs3.button.Button.click()
 11) rename attribute  excludeCls in excludeClasses list
 12) rename attribute deepness in elPathSuffix
 13) move specification Browser in WebDriverConfig

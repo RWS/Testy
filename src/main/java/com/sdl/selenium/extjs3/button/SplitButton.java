@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SplitButton extends Button {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
     public SplitButton() {
         setClassName("SplitButton");
