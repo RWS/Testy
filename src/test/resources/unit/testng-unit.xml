@@ -3,7 +3,7 @@
 <suite name="WebLocator Unit Test Suite" verbose="1">
     <test name="AllTests">
         <packages>
-            <package name="com.extjs.selenium.*"/>
+            <package name="com.sdl.selenium.extjs3.*"/>
             <package name="com.sdl.selenium.bootstrap.*"/>
         </packages>
     </test>
@@ -17,7 +17,7 @@
             <class name="com.sdl.selenium.web.form.CheckBoxSimpleTest"/>
             <class name="com.sdl.selenium.web.form.ComboBoxTest"/>
             <class name="com.sdl.selenium.web.form.TextFieldTest"/>
-            <class name="com.sdl.selenium.web.form.SimpleMultipleSelectTest"/>
+            <class name="com.sdl.selenium.web.form.MultipleSelectTest"/>
 
             <class name="com.sdl.selenium.web.link.WebLinkTest"/>
 
