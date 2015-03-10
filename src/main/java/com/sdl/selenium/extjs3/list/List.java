@@ -47,7 +47,7 @@ public class List extends GridPanel {
     public boolean isSelectedRows(String ...values) {
         boolean select = false;
         for (String value : values) {
-            WebLocator webLocator = new WebLocator(getGridCell(value, false), "/parent::*/parent::dl");
+            WebLocator webLocator = new WebLocator(getCell(value), "/parent::*/parent::dl");
             select = webLocator.getAttributeClass().contains("ux-mselect-selected");
             if (!select) {
                 return false;
@@ -57,10 +57,9 @@ public class List extends GridPanel {
     }
 
     @Override
-    public GridCell getGridCell(String searchElement, SearchType searchType) {
-        String textCondition = searchType.equals(SearchType.STARTS_WITH) ? ("starts-with(text(),'" + searchElement + "')") : ("text()='" + searchElement + "'");
-        String cellPath = "//*[" + textCondition + "]";
-        GridCell cell = new GridCell(this, cellPath);
+    public GridCell getCell(String searchElement, SearchType searchType) {
+        WebLocator textCell = new WebLocator().setText(searchElement, searchType);
+        GridCell cell = new GridCell(this, textCell.getPath());
         cell.setInfoMessage("cell(" + searchElement + ")");
         return cell;
     }
@@ -73,7 +72,7 @@ public class List extends GridPanel {
     @Override
     public boolean rowSelect(String searchElement, SearchType searchType) {
         //TODO When Override ScrollTop method, this method must be removed
-        GridCell cell = getGridCell(searchElement, searchType);
+        GridCell cell = getCell(searchElement, searchType);
         return cell.select();
     }
 

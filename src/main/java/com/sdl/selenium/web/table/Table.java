@@ -32,7 +32,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     @Override
     public boolean rowSelect(String searchText, SearchType searchType) {
         ready(true);
-        TableCell cell = getTableCell(searchText, searchType);
+        TableCell cell = getCell(searchText, searchType);
         return doCellSelect(cell);
     }
 
@@ -72,14 +72,14 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     public boolean isRowPresent(String searchElement) {
         ready();
         boolean found;
-        WebLocator cell = getTableCell(searchElement, SearchType.EQUALS);
+        WebLocator cell = getCell(searchElement);
         found = cell.isElementPresent();
         return found;
     }
 
     public Number getRowCount(String searchElement, SearchType searchType) {
         ready();
-        String rowPath = getTableCell(searchElement, searchType).getPath();
+        String rowPath = getCell(searchElement, searchType).getPath();
         return new WebLocator(null, rowPath).size();
     }
 
@@ -118,14 +118,22 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return new TableCell(row, columnIndex).setInfoMessage("cell - Table");
     }
 
-    /**
-     * @param searchElement searchElement
-     * @param searchType    accepted values are: {"equals", "starts-with", "contains"}
-     * @return TableCell
-     */
-    public TableCell getTableCell(String searchElement, SearchType searchType) {
+    @Override
+    public TableCell getCell(String searchElement) {
+        return getCell(searchElement, SearchType.EQUALS);
+    }
+
+    @Override
+    public TableCell getCell(String searchElement, SearchType searchType) {
         WebLocator row = new WebLocator(this).setTag("tr");
         return new TableCell(row).setText(searchElement, searchType);
+    }
+
+    /**
+     * @deprecated please use getCell(searchElement, SearchType.*);
+     */
+    public TableCell getTableCell(String searchElement, SearchType searchType) {
+        return getCell(searchElement, searchType);
     }
 
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {

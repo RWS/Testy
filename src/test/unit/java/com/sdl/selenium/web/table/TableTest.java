@@ -35,9 +35,9 @@ public class TableTest {
                 {new Table().getTableRow("|SearchElement|text", SearchType.CONTAINS_ANY), "//table//tr[((contains(text(),'SearchElement') or contains(text(),'text')) or count(*//text()[(contains(.,'SearchElement') or contains(.,'text'))]) > 0)]"},
 
                 {new Table().getCell(1, 1), "//table//tr[position() = 1]//td[1]"},
-                {new Table().getTableCell("SearchElement", SearchType.EQUALS), "//table//tr//td[(text()='SearchElement' or count(*//text()[.='SearchElement']) > 0)]"},
-                {new Table().getTableCell("SearchElement", SearchType.CONTAINS), "//table//tr//td[(contains(text(),'SearchElement') or count(*//text()[contains(.,'SearchElement')]) > 0)]"},
-                {new Table().getTableCell("SearchElement", SearchType.STARTS_WITH), "//table//tr//td[(starts-with(text(),'SearchElement') or count(*//text()[starts-with(.,'SearchElement')]) > 0)]"},
+                {new Table().getCell("SearchElement", SearchType.EQUALS), "//table//tr//td[(text()='SearchElement' or count(*//text()[.='SearchElement']) > 0)]"},
+                {new Table().getCell("SearchElement", SearchType.CONTAINS), "//table//tr//td[(contains(text(),'SearchElement') or count(*//text()[contains(.,'SearchElement')]) > 0)]"},
+                {new Table().getCell("SearchElement", SearchType.STARTS_WITH), "//table//tr//td[(starts-with(text(),'SearchElement') or count(*//text()[starts-with(.,'SearchElement')]) > 0)]"},
                 {new Table().getTableCell(1, 1, "SearchElement"), "//table//tr[position() = 1]//td[(text()='SearchElement' or count(*//text()[.='SearchElement']) > 0)][1]"},
 
                 {new Table().getTableCell("SearchElement", "text", SearchType.EQUALS), "//table//tr[(contains(text(),'SearchElement') or count(*//text()[contains(.,'SearchElement')]) > 0)]//td[(text()='text' or count(*//text()[.='text']) > 0)]"},

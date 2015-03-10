@@ -37,4 +37,7 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
 
     C getCell(int rowIndex, int columnIndex);
 
+    C getCell(String searchElement);
+
+    C getCell(String searchElement, SearchType searchType);
 }
