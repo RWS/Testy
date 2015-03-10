@@ -470,7 +470,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     @Override
     public GridCell getCell(int rowIndex, int columnIndex) {
         Row row = getRowLocator(rowIndex);
-        return new GridCell(row, columnIndex);
+        return new GridCell(columnIndex).setContainer(row);
     }
 
     @Override
@@ -482,14 +482,14 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public GridCell getCell(String searchElement, SearchType searchType) {
         WebLocator textCell = new WebLocator().setText(searchElement, searchType);
         String cellPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + textCell.getPath();
-        GridCell cell = new GridCell(this, cellPath);
+        GridCell cell = new GridCell().setContainer(this).setElPath(cellPath);
         cell.setInfoMessage("cell(" + searchElement + ")");
         return cell;
     }
 
     public GridCell getGridCell(int rowIndex) {
         String rowPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[contains(@class, 'x-grid3-cell-inner')]";
-        return new GridCell(getRowLocator(rowIndex), rowPath);
+        return new GridCell().setContainer(getRowLocator(rowIndex)).setElPath(rowPath);
     }
 
     /**
@@ -532,14 +532,17 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridCell(gridColTd, columnText, searchType);
     }
 
+    /**
+     * @deprecated use getCell(...);
+     */
     public GridCell getGridCell(String searchElement, int columnIndex) {
         GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);
-        return new GridCell(gridRow, columnIndex);
+        return new GridCell(columnIndex).setContainer(gridRow);
     }
 
     public GridCell getGridCell(String searchElement, String searchColumnId, int columnIndex) {
         GridRow gridRow = new GridRow(this, searchColumnId, searchElement, SearchType.CONTAINS);
-        return new GridCell(gridRow, columnIndex);
+        return new GridCell(columnIndex).setContainer(gridRow);
     }
 
     @Override
@@ -557,7 +560,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     public GridCell getGridCell(int position, GridCell... byCells) {
-        return new GridCell(getRow(byCells)).setPosition(position);
+        return new GridCell().setPosition(position).setContainer(getRow(byCells));
     }
 
     public String[] getRow(int rowIndex) {
@@ -737,7 +740,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public GridCell getCheckerCell(final String searchText, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//*[contains(@class, 'x-grid3-row-checker')]";
-        return new GridCell(getGridRow(), cellPath).setInfoMessage("row-checker (" + searchText + ")");
+        return new GridCell().setContainer(getGridRow()).setElPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
     }
 
     private GridCell getCheckboxCell(final String searchText, int columnIndex) {
@@ -747,7 +750,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public GridCell getCheckboxCell(final String searchText, int columnIndex, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-check-col')]";
-        return new GridCell(getGridRow(), cellPath).setInfoMessage("row-checker (" + searchText + ")");
+        return new GridCell().setContainer(getGridRow()).setElPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
     }
 
     private String getTableRowSearchPath(String searchText, boolean containsText) {

@@ -41,7 +41,8 @@ public class TableCell extends Cell {
     @Override
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
-            itemPath = "//" + getTag() + "[" + getPosition() + "]" + itemPath.substring(4);
+            int beginIndex = 4; // TODO test with tag that contains more than 2 chars
+            itemPath = "//" + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
         }
         return itemPath;
     }
