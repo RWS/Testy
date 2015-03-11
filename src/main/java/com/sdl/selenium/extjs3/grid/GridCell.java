@@ -62,6 +62,7 @@ public class GridCell extends Cell {
         this();
         setContainer(container);
         setText(text);
+        setClasses("x-grid3-cell-inner");
         setSearchTextType(searchType);
     }
 
