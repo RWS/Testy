@@ -22,6 +22,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String baseCls;
     private String cls;
     private List<String> classes;
+    private List<WebLocator> childNodes;
     private List<String> excludeClasses;
     private String name;
     private String text;
@@ -55,6 +56,7 @@ public abstract class WebLocatorAbstractBuilder {
         setTemplate("id", "@id='%s'");
         setTemplate("name", "@name='%s'");
         setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
+        setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
     }
 
@@ -66,8 +68,8 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setTag(String)}
-     *         <p>tag (type of DOM element)</p>
-     *         <pre>default to "*"</pre>
+     * <p>tag (type of DOM element)</p>
+     * <pre>default to "*"</pre>
      */
     public String getTag() {
         return tag;
@@ -108,7 +110,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setElPath(String)}
-     *         <p>returned value does not include containers path</p>
+     * <p>returned value does not include containers path</p>
      */
     public String getElPath() {
         return elPath;
@@ -193,6 +195,18 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setClasses(final String... classes) {
         if (classes != null) {
             this.classes = Arrays.asList(classes);
+        }
+        return (T) this;
+    }
+
+
+    public List<WebLocator> getChildNodes() {
+        return childNodes;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setChildNotes(final WebLocator... childNotes) {
+        if (childNotes != null) {
+            this.childNodes = Arrays.asList(childNotes);
         }
         return (T) this;
     }
@@ -297,7 +311,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param searchLabelType accepted values are: {@link SearchType}
      * @return this element
      */
-    private  <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
+    private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
         this.searchLabelType = new ArrayList<SearchType>();
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
@@ -379,9 +393,9 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
+     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
         setElPathSuffix("elPathSuffix", elPathSuffix);
@@ -395,7 +409,7 @@ public abstract class WebLocatorAbstractBuilder {
      *     TODO
      * </pre>
      *
-     * @param key suffix key
+     * @param key          suffix key
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
@@ -410,7 +424,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
-     * @param key name template
+     * @param key   name template
      * @param value template
      * @return this element
      */
@@ -425,7 +439,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     public <T extends WebLocatorAbstractBuilder> T addToTemplate(String key, String value) {
         String template = getTemplate(key);
-        if(StringUtils.isNotEmpty(template)) {
+        if (StringUtils.isNotEmpty(template)) {
             template += " and ";
         } else {
             template = "";
@@ -635,6 +649,10 @@ public abstract class WebLocatorAbstractBuilder {
         return classes != null && classes.size() > 0;
     }
 
+    protected boolean hasChildNodes() {
+        return childNodes != null && childNodes.size() > 0;
+    }
+
     protected boolean hasExcludeClasses() {
         return excludeClasses != null && excludeClasses.size() > 0;
     }
@@ -729,8 +747,8 @@ public abstract class WebLocatorAbstractBuilder {
             }
         }
         if (hasExcludeClasses()) {
-            for (String excludeClasses : getExcludeClasses()) {
-                selector.add("not(contains(@class, '" + excludeClasses + "'))");
+            for (String excludeClass : getExcludeClasses()) {
+                selector.add(applyTemplate("excludeClass", excludeClass));
             }
         }
         if (hasTitle()) {
@@ -738,6 +756,11 @@ public abstract class WebLocatorAbstractBuilder {
         }
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
+        }
+        if (hasChildNodes()) {
+            for (WebLocator el : getChildNodes()) {
+                selector.add("count(" + el.setContainer(null).getPath() + ")>0");
+            }
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
@@ -809,9 +832,9 @@ public abstract class WebLocatorAbstractBuilder {
                 selector += "]) > 0";
             }
 
-            if(searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+            if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
                 String selfPath = getTextSearchTypePath(text, hasContainsAll, "text()");
-                selector = "("+ selfPath +" or " + selector + ")";
+                selector = "(" + selfPath + " or " + selector + ")";
             }
 
             if (searchTextType.contains(SearchType.HTML_NODE)) {
@@ -879,7 +902,7 @@ public abstract class WebLocatorAbstractBuilder {
         }
 
         returnPath = afterItemPathCreated(returnPath);
-        if(disabled){
+        if (disabled) {
             returnPath += applyTemplate("disabled", getTemplate("disabled"));
         }
 

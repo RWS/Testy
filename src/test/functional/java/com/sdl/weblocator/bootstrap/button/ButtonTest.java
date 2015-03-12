@@ -2,6 +2,8 @@ package com.sdl.weblocator.bootstrap.button;
 
 import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.bootstrap.form.SelectPicker;
+import com.sdl.selenium.bootstrap.form.UneditableInput;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;
@@ -27,5 +29,15 @@ public class ButtonTest extends TestBase {
     public void verifyIsDisabled() {
         assertTrue(disableBtn.isDisabled());
         assertTrue(disableBtnCls.isDisabled());
+    }
+
+    @Test
+    public void testChildrenNodes() {
+        Form form1 = new Form(null, "Page Object And Page Factory");
+        UneditableInput input = new UneditableInput(form1, "Execute");
+        SelectPicker picker = new SelectPicker(form1).setLabel("Execute");
+        Form form2 = new Form(null, "Page Object And Page Factory").setChildNotes(picker, input);
+        assertTrue(form2.waitToRender(1000L));
+
     }
 }

@@ -1,5 +1,6 @@
 package com.extjs.selenium;
 
+import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.selenium.web.utils.browsers.ChromeConfigReader;
@@ -158,6 +159,15 @@ public class UtilsTest {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
         }
+    }
+
+    @Test
+    public void webLocatorChild() {
+        WebLocator el1 = new WebLocator().setCls("1");
+        WebLocator el2 = new WebLocator().setCls("2");
+        WebLocator el = new WebLocator().setClasses("cls").setChildNotes(el1, el2);
+
+        assertEquals(el.getPath(), "//*[contains(concat(' ', @class, ' '), ' cls ') and count(//*[@class='1'])>0 and count(//*[@class='2'])>0]");
     }
 }
 
