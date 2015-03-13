@@ -36,12 +36,12 @@ public class TableRow extends Row {
 
     public TableRow(WebLocator table, Cell... cells) {
         this(table);
-        setRowCells(cells);
+        setChildNotes(cells);
     }
 
     public TableRow(WebLocator table, int indexRow, Cell... cells) {
         this(table, indexRow);
-        setRowCells(cells);
+        setChildNotes(cells);
     }
 
     public List<String> getCellsText() {

@@ -759,7 +759,7 @@ public abstract class WebLocatorAbstractBuilder {
         }
         if (hasChildNodes()) {
             for (WebLocator el : getChildNodes()) {
-                selector.add("count(" + el.setContainer(null).getPath() + ")>0");
+                selector.add("count(." + el.setContainer(null).getPath() + ") > 0");
             }
         }
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");

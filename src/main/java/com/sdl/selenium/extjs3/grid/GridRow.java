@@ -51,23 +51,11 @@ public class GridRow extends Row {
     public GridRow(GridPanel gridPanel, Cell... cells) {
         this(gridPanel);
         setTag("*");
-        setRowCells(cells);
+        setChildNotes(cells);
     }
 
     private String getSearchPaths(String searchColumnId, WebLocator cellEl) {
         return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + cellEl.getPath() + ") > 0";
-    }
-
-    @Override
-    protected String getSearchPath(int columnIndex, WebLocator cellEl, String tag) {
-        if (tag == null || "".equals(tag) || "*".equals(tag)) {
-            tag = "td";
-        }
-        return "count(*[contains(@class, 'x-grid3-row-table')]//" + tag + "[" + columnIndex + "]" + cellEl.getPath() + ") > 0";
-    }
-
-    private String getSearchPath(int columnIndex, GridCell cell) {
-        return "count(*[contains(@class, 'x-grid3-row-table')]//td[" + columnIndex + "]" + cell.getPath() + ") > 0";
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {
