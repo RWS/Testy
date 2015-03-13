@@ -78,7 +78,7 @@ public class List extends GridPanel {
 
     @Override
     public GridRow getRowLocator(int rowIndex) {
-        return new GridRow(this, "//dl[" + rowIndex + "]");
+        return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
     }
 }
 

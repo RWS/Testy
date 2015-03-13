@@ -16,6 +16,7 @@ public class GridRow extends Row {
         setTag("*");
     }
 
+    @Deprecated
     public GridRow(WebLocator container, String elPath) {
         this();
         setContainer(container);

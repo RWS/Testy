@@ -46,15 +46,22 @@ public final class WebLocatorUtils extends WebLocator {
      */
     public static String getXPathScript(WebLocator view) {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n").append("// Run next lines in firebug to see if all elements are present in your page").append("\n\n");
+        builder.append("\n\n");
         Map<String, WebLocator> map = webLocatorAsMap(view);
 
-        appendLocatorXPath(builder, "current_view", view);
 
-        for (String locatorName : map.keySet()) {
-            WebLocator locator = map.get(locatorName);
-            appendLocatorXPath(builder, locatorName, locator);
+        if(map.size() == 0) {
+            builder.append(getFirebugXPath(view));
+        } else {
+            builder.append("// Run next lines in firebug to see if all elements are present in your page").append("\n\n");
+            appendLocatorXPath(builder, "current_view", view);
+
+            for (String locatorName : map.keySet()) {
+                WebLocator locator = map.get(locatorName);
+                appendLocatorXPath(builder, locatorName, locator);
+            }
         }
+
         builder.append("\n");
         String log = builder.toString();
         LOGGER.info(log);
@@ -124,5 +131,10 @@ public final class WebLocatorUtils extends WebLocator {
             result = (WebLocator) o;
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        WebLocator l = new WebLocator().setText("Matei");
+        getXPathScript(l);
     }
 }

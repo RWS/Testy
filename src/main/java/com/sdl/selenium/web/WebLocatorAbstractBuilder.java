@@ -22,7 +22,6 @@ public abstract class WebLocatorAbstractBuilder {
     private String baseCls;
     private String cls;
     private List<String> classes;
-    private List<WebLocator> childNodes;
     private List<String> excludeClasses;
     private String name;
     private String text;
@@ -50,6 +49,7 @@ public abstract class WebLocatorAbstractBuilder {
     private int activateSeconds = 60;
 
     private WebLocator container;
+    private List<WebLocator> childNodes;
 
     protected WebLocatorAbstractBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
