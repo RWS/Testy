@@ -757,12 +757,29 @@ public abstract class WebLocatorAbstractBuilder {
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
+        addChildNotesToSelector(selector);
+        return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
+    }
+
+    private void addChildNotesToSelector(List<String> selector) {
         if (hasChildNodes()) {
             for (WebLocator el : getChildNodes()) {
-                selector.add("count(." + el.setContainer(null).getPath() + ") > 0");
+                WebLocator breakElement = null;
+                WebLocator elIterator = el;
+                while (elIterator.getContainer() != null && breakElement == null) {
+                    if(elIterator.getContainer() == this) {
+                        elIterator.setContainer(null);
+                        breakElement = elIterator;
+                    } else {
+                        elIterator = elIterator.getContainer();
+                    }
+                }
+                selector.add("count(." + el.getPath() + ") > 0");
+                if(breakElement != null) {
+                    breakElement.setContainer((WebLocator) this);
+                }
             }
         }
-        return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
 
     private void addTemplate(List<String> selector, String key, Object... arguments) {
