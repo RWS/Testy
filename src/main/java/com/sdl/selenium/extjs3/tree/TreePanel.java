@@ -43,7 +43,7 @@ public class TreePanel extends ExtJsComponent {
     public String getStatus(String searchElement) {
         WebLocator node = new WebLocator(getParentNode()).setText(searchElement, SearchType.CONTAINS);
         String path = node.getPath() + "/following::*";
-        WebLocator currentElement = new WebLocator(getContainer(), path);
+        WebLocator currentElement = new WebLocator(getContainer()).setElPath(path);
         if (currentElement.isElementPresent()) {
             return currentElement.getText();
         }

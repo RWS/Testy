@@ -76,14 +76,14 @@ public class TabPanel extends ExtJsComponent {
     public boolean setActive() {
         String baseTabPath = "//*[" + getBasePath() + "]";
         String titlePath = baseTabPath + getTitlePath();
-        WebLocator titleElement = new WebLocator(getContainer(), titlePath).setInfoMessage(getText() + " Tab");
+        WebLocator titleElement = new WebLocator(getContainer()).setElPath(titlePath).setInfoMessage(getText() + " Tab");
         LOGGER.info("setActive : " + toString());
         boolean activated;
         try {
             activated = titleElement.click();
         } catch (ElementNotVisibleException e) {
             LOGGER.error("setActive Exception: " + e.getMessage());
-            WebLocator tabElement = new WebLocator(getContainer(), baseTabPath);
+            WebLocator tabElement = new WebLocator(getContainer()).setElPath(baseTabPath);
             String id = tabElement.getAttributeId();
             String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
             String script = "return Ext.getCmp('" + id + "').setActiveTab(" + getTabCount(getText(), path) + ");";

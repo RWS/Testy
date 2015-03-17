@@ -80,7 +80,8 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     public Number getRowCount(String searchElement, SearchType searchType) {
         ready();
         String rowPath = getCell(searchElement, searchType).getPath();
-        return new WebLocator(null, rowPath).size();
+        WebLocator locator = new WebLocator().setElPath(rowPath);
+        return locator.size();
     }
 
     public Number getRowCount(String searchElement) {

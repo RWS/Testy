@@ -64,7 +64,7 @@ public class EditorGridPanel extends GridPanel {
     public TextField getActiveEditor() {
         TextField editor;
         WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl = new WebLocator(container, "//*[contains(@class, '-focus')]");
+        WebLocator editableEl = new WebLocator(container).setElPath("//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
         LOGGER.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {

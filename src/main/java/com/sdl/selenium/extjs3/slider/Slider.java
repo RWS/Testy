@@ -44,7 +44,7 @@ public class Slider extends ExtJsComponent {
     public boolean move(int thumbIndex, int distance) {
         boolean exists = true;
         String thumbPath = getThumbPath(thumbIndex);
-        WebLocator element = new WebLocator(null, thumbPath);
+        WebLocator element = new WebLocator().setElPath(thumbPath);
         if (thumbPath != null && element.exists()) {
             // to scroll to this element (if element is not visible)
             WebDriver driver = WebDriverConfig.getDriver();

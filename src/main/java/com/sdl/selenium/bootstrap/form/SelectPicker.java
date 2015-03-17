@@ -44,7 +44,7 @@ public class SelectPicker extends WebLocator implements ICombo {
     @Override
     public boolean select(String value) {
         if (click()) {
-            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
+            WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
                     .setInfoMessage("select: '" + value + "'");
             return select.click();
         }
