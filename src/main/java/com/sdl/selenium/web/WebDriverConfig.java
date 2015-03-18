@@ -225,6 +225,8 @@ public class WebDriverConfig {
         if (downloadDir != null && !"".equals(downloadDir)) {
             prefs.put("download.default_directory", downloadDir);
         }
+        prefs.put("profile.default_content_settings.multiple-automatic-downloads", 1);
+        prefs.put("download.prompt_for_download", false);
         options.setExperimentalOption("prefs", prefs);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
