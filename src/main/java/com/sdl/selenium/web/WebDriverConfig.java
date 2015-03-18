@@ -110,7 +110,7 @@ public class WebDriverConfig {
 
     /**
      * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     *             When Selenium will be removed. Change your code as this method will return true
+     * When Selenium will be removed. Change your code as this method will return true
      */
     public static boolean hasWebDriver() {
         return driver != null;
@@ -171,7 +171,7 @@ public class WebDriverConfig {
             LOGGER.error("Browser not supported" + browser);
             driver = null;
         }
-        if(properties != null){
+        if (properties != null) {
             LOGGER.info(properties.toString());
         }
         init(driver);
@@ -300,7 +300,7 @@ public class WebDriverConfig {
 
                 // ===========================
                 String deprecatedValue = properties.getProperty(preferenceKey);
-                if(deprecatedValue != null) {
+                if (deprecatedValue != null) {
                     Utils.deprecated();
                     LOGGER.warn("Property {} is deprecated. Please Use profile.preference.{} instead", preferenceKey, preferenceKey);
                     LOGGER.warn("Property {} is ignored", key);
@@ -326,28 +326,29 @@ public class WebDriverConfig {
     private static void setProfilePreferences(PropertiesReader properties, Map<String, Object> prefs) {
         for (Map.Entry<Object, Object> entry : properties.entrySet()) {
             String key = (String) entry.getKey();
+            String preferenceKey = key;
+            String value = (String) entry.getValue();
             if (key.startsWith("profile.preference.")) {
-                String preferenceKey = key.substring(19);
-                String value = (String) entry.getValue();
-
+                preferenceKey = key.substring(19);
+            } else {
                 String deprecatedValue = properties.getProperty(preferenceKey);
-                if(deprecatedValue != null) {
+                if (deprecatedValue != null) {
                     Utils.deprecated();
                     LOGGER.warn("Property {} is deprecated. Please Use profile.preference.{} instead", preferenceKey, preferenceKey);
                     LOGGER.warn("Property {} is ignored", key);
                     Utils.deprecated();
                     value = deprecatedValue;
                 }
+            }
 
-                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-                    prefs.put(preferenceKey, Boolean.valueOf(value));
-                } else {
-                    try {
-                        int intValue = Integer.parseInt(value);
-                        prefs.put(preferenceKey, intValue);
-                    } catch (NumberFormatException e) {
-                        prefs.put(preferenceKey, value);
-                    }
+            if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                prefs.put(preferenceKey, Boolean.valueOf(value));
+            } else {
+                try {
+                    int intValue = Integer.parseInt(value);
+                    prefs.put(preferenceKey, intValue);
+                } catch (NumberFormatException e) {
+                    prefs.put(preferenceKey, value);
                 }
             }
         }
