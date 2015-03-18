@@ -52,7 +52,7 @@ public class MultiSelect extends WebLocator {
     public boolean select(String... values) {
         boolean selected = false;
         if (click()) {
-            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]");
+            WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
             select.ready();
             for (String val : values) {
                 WebLocator el = new WebLocator(select).setTag("label").setText(val, SearchType.HTML_NODE);
@@ -71,7 +71,7 @@ public class MultiSelect extends WebLocator {
         List<String> list = null;
         if (click()) {
             list = new ArrayList<String>();
-            WebLocator select = new WebLocator(this, "//following-sibling::*[contains(@class, 'dropdown-menu')]");
+            WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
             WebLocator li = new WebLocator(select).setTag("li").setCls("active");
             WebLocator el = new WebLocator(li).setTag("label");
             el.ready();

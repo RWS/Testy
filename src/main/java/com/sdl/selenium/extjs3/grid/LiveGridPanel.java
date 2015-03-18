@@ -95,7 +95,7 @@ public class LiveGridPanel extends GridPanel {
     @Override
     public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        return new WebLocator(this, "//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div");
+        return new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div");
     }
 
     public boolean refresh() {

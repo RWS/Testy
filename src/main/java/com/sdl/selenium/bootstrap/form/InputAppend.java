@@ -24,10 +24,10 @@ public class InputAppend extends TextField {
     }
 
     /**
-     * click pe buttonul bifa
+     * click on checkbox
      */
     public boolean append() {
-        WebLocator appendEl = new WebLocator(this, "//following-sibling::*").setInfoMessage("append");
+        WebLocator appendEl = new WebLocator(this).setElPath("//following-sibling::*").setInfoMessage("append");
         return appendEl.click();
     }
 }

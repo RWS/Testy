@@ -47,7 +47,7 @@ public class List extends GridPanel {
     public boolean isSelectedRows(String ...values) {
         boolean select = false;
         for (String value : values) {
-            WebLocator webLocator = new WebLocator(getCell(value), "/parent::*/parent::dl");
+            WebLocator webLocator = new WebLocator(getCell(value)).setElPath("/parent::*/parent::dl");
             select = webLocator.getAttributeClass().contains("ux-mselect-selected");
             if (!select) {
                 return false;

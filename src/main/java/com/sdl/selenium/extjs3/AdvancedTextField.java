@@ -22,18 +22,18 @@ public class AdvancedTextField extends TextField {
         setClasses(cls);
     }
 
-    public AdvancedTextField(ExtJsComponent container) {
+    public AdvancedTextField(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public AdvancedTextField(ExtJsComponent container, String label) {
+    public AdvancedTextField(WebLocator container, String label) {
         this();
         setContainer(container);
         setLabel(label);
     }
 
-    public AdvancedTextField(String cls, ExtJsComponent container) {
+    public AdvancedTextField(String cls, WebLocator container) {
         this();
         setContainer(container);
         setClasses(cls);
@@ -45,7 +45,7 @@ public class AdvancedTextField extends TextField {
         if(clickIcon("arrow")){
             Utils.sleep(500);
             //TODO move this in a menu class
-            String stylePath ="";
+            String stylePath = "";
             if(!WebDriverConfig.isIE()){
                 stylePath = " and contains(@style,'visible')";
             }

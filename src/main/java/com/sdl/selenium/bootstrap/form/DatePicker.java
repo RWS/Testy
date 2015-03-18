@@ -125,7 +125,7 @@ public class DatePicker extends WebLocator {
     }
 
     public String getDate() {
-        WebLocator webLocator = new WebLocator(this, "//input");
+        WebLocator webLocator = new WebLocator(this).setTag("input");
         return webLocator.getAttribute("value");
     }
 }
