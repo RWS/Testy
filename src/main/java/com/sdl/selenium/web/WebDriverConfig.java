@@ -225,8 +225,9 @@ public class WebDriverConfig {
         if (downloadDir != null && !"".equals(downloadDir)) {
             prefs.put("download.default_directory", downloadDir);
         }
-        prefs.put("profile.default_content_settings.multiple-automatic-downloads", 1);
-        prefs.put("download.prompt_for_download", false);
+//        prefs.put("profile.default_content_settings.multiple-automatic-downloads", 1);
+//        prefs.put("download.prompt_for_download", false);
+        setProfilePreferences(properties, prefs);
         options.setExperimentalOption("prefs", prefs);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -316,6 +317,36 @@ public class WebDriverConfig {
                         myProfile.setPreference(preferenceKey, intValue);
                     } catch (NumberFormatException e) {
                         myProfile.setPreference(preferenceKey, value);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void setProfilePreferences(PropertiesReader properties, Map<String, Object> prefs) {
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            String key = (String) entry.getKey();
+            if (key.startsWith("profile.preference.")) {
+                String preferenceKey = key.substring(19);
+                String value = (String) entry.getValue();
+
+                String deprecatedValue = properties.getProperty(preferenceKey);
+                if(deprecatedValue != null) {
+                    Utils.deprecated();
+                    LOGGER.warn("Property {} is deprecated. Please Use profile.preference.{} instead", preferenceKey, preferenceKey);
+                    LOGGER.warn("Property {} is ignored", key);
+                    Utils.deprecated();
+                    value = deprecatedValue;
+                }
+
+                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                    prefs.put(preferenceKey, Boolean.valueOf(value));
+                } else {
+                    try {
+                        int intValue = Integer.parseInt(value);
+                        prefs.put(preferenceKey, intValue);
+                    } catch (NumberFormatException e) {
+                        prefs.put(preferenceKey, value);
                     }
                 }
             }
