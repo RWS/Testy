@@ -1,8 +1,21 @@
 package com.sdl.selenium.web.utils.browsers;
 
-import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.web.utils.Utils;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class FirefoxConfigReader extends PropertiesReader {
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
+public class FirefoxConfigReader extends AbstractBrowserConfigReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FirefoxConfigReader.class);
 
     private static final String DEFAULT_CONFIG = "" +
             "\n browser=firefox" +
@@ -38,5 +51,98 @@ public class FirefoxConfigReader extends PropertiesReader {
 
     public FirefoxConfigReader(String resourcePath) {
         super(resourcePath, DEFAULT_CONFIG);
+    }
+
+    @Override
+    public WebDriver createDriver() throws IOException {
+        WebDriver driver;
+        String profileName = getProperty("browser.profile.name");
+        FirefoxProfile myProfile;
+        if (!"".equals(profileName) && profileName != null) {
+            ProfilesIni allProfiles = new ProfilesIni();
+            myProfile = allProfiles.getProfile(profileName);
+        } else {
+            myProfile = new FirefoxProfile();
+        }
+        if (myProfile != null) {
+            LOGGER.info("profile not null");
+            setProfilePreferences(myProfile);
+
+            File file = new File(getProperty("browser.download.dir"));
+            String downloadDir = file.getCanonicalPath();
+            if (!"".equals(downloadDir)) {
+                myProfile.setPreference("browser.download.dir", downloadDir);
+            }
+            driver = new FirefoxDriver(myProfile);
+        } else {
+            String profilePath = getProperty("browser.profile.path");
+            if (profilePath != null && !profilePath.equals("")) {
+                FirefoxProfile firefoxProfile = new FirefoxProfile(new File(profilePath));
+                driver = new FirefoxDriver(firefoxProfile);
+            } else {
+                DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
+                String version = getProperty("browser.version");
+                if (version != null) {
+                    firefoxCapabilities.setCapability("version", version);
+                }
+                String homeDir = getProperty("browser.binary.path");
+                if (homeDir != null) {
+                    firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
+                }
+                driver = new FirefoxDriver(firefoxCapabilities);
+            }
+        }
+        return driver;
+    }
+
+    @Override
+    public boolean isSilentDownload() {
+        return !"".equals(getProperty("browser.download.dir")) &&
+                !"".equals(getProperty("profile.preference.browser.helperApps.neverAsk.openFile")) &&
+                !"".equals(getProperty("profile.preference.browser.helperApps.neverAsk.saveToDisk")) &&
+                !(Boolean.valueOf(getProperty("profile.preference.browser.helperApps.alwaysAsk.force"))) &&
+                !(Boolean.valueOf(getProperty("profile.preference.browser.download.panel.shown"))) &&
+                !(Boolean.valueOf(getProperty("profile.preference.browser.download.manager.showAlertOnComplete"))) &&
+                (Boolean.valueOf(getProperty("profile.preference.browser.download.manager.closeWhenDone"))) &&
+                !(Boolean.valueOf(getProperty("profile.preference.browser.download.manager.showWhenStarting"))) &&
+                (Integer.valueOf(getProperty("profile.preference.browser.download.folderList")) == 2);
+    }
+
+    @Override
+    public String getDownloadPath() {
+        File file = new File(getProperty("browser.download.dir"));
+        return file.getAbsolutePath();
+    }
+
+    private void setProfilePreferences(FirefoxProfile myProfile) {
+        for (Map.Entry<Object, Object> entry : entrySet()) {
+            String key = (String) entry.getKey();
+            if (key.startsWith("profile.preference.")) {
+                String preferenceKey = key.substring(19);
+                String value = (String) entry.getValue();
+
+                // ===========================
+                String deprecatedValue = getProperty(preferenceKey);
+                if (deprecatedValue != null) {
+                    Utils.deprecated();
+                    LOGGER.warn("Property {} is deprecated. Please Use profile.preference.{} instead", preferenceKey, preferenceKey);
+                    LOGGER.warn("Property {} is ignored", key);
+                    Utils.deprecated();
+                    value = deprecatedValue;
+                }
+                // ===========================
+
+                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                    myProfile.setPreference(preferenceKey, Boolean.valueOf(value));
+                } else {
+                    try {
+                        int intValue = Integer.parseInt(value);
+                        myProfile.setPreference(preferenceKey, intValue);
+                    } catch (NumberFormatException e) {
+                        myProfile.setPreference(preferenceKey, value);
+                    }
+                }
+            }
+        }
     }
 }
