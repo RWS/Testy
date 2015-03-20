@@ -5,6 +5,7 @@ import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO class this should be in extjs or changed ExtJsComponent dependency
 public class FlashUploadButton extends SelectFilesHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlashUploadButton.class);
 
