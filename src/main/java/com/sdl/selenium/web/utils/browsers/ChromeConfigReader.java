@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +13,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChromeConfigReader extends AbstractBrowserConfigReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChromeConfigReader.class);
 
     private static final String DEFAULT_CONFIG = "" +
             "\n browser=chrome" +
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
-            "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\";
+            "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
+            "\n options.arguments=--lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
+            "\n options.experimental.profile.default_content_settings.multiple-automatic-downloads=1" +
+            "\n options.experimental.download.prompt_for_download=1";
 
     public ChromeConfigReader() {
         this(null);
@@ -32,20 +38,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             System.setProperty("webdriver.chrome.driver", driverPath);
         }
         ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--start-maximized");
-        options.addArguments("--lang=en");
-        options.addArguments("--allow-running-insecure-content");
-        options.addArguments("--enable-logging --v=1");
-        options.addArguments("--test-type");
-        Map<String, Object> prefs = new HashMap<String, Object>();
-        String property = getProperty("browser.download.dir");
-        File file = new File(property);
-        String downloadDir = file.getCanonicalPath();
-        if (!"".equals(downloadDir)) {
-            prefs.put("download.default_directory", downloadDir);
-        }
-        setProfilePreferences(prefs);
-        options.setExperimentalOption("prefs", prefs);
+        setProfilePreferences(options);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         return new ChromeDriver(capabilities);
@@ -62,12 +55,16 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         return file.getAbsolutePath();
     }
 
-    private void setProfilePreferences(Map<String, Object> prefs) {
+    private void setProfilePreferences(ChromeOptions options) throws IOException {
+        Map<String, Object> prefs = new HashMap<String, Object>();
+
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
             String value = (String) entry.getValue();
-            if (key.startsWith("profile.preference.")) {
-                String preferenceKey = key.substring(19);
+            if (key.startsWith("options.arguments")) {
+                options.addArguments(value);
+            } else if (key.startsWith("options.experimental.")) {
+                String preferenceKey = key.substring(21);
 
                 if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
                     prefs.put(preferenceKey, Boolean.valueOf(value));
@@ -81,5 +78,12 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
                 }
             }
         }
+        String property = getProperty("browser.download.dir");
+        File file = new File(property);
+        String downloadDir = file.getCanonicalPath();
+        if (!"".equals(downloadDir)) {
+            prefs.put("download.default_directory", downloadDir);
+        }
+        options.setExperimentalOption("prefs", prefs);
     }
 }
