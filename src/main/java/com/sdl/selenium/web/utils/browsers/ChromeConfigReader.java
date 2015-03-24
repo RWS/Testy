@@ -61,9 +61,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
             String value = (String) entry.getValue();
-            if (key.startsWith("options.arguments")) {
-                options.addArguments(value);
-            } else if (key.startsWith("options.experimental.")) {
+            if (key.startsWith("options.experimental.")) {
                 String preferenceKey = key.substring(21);
 
                 if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
@@ -84,6 +82,8 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         if (!"".equals(downloadDir)) {
             prefs.put("download.default_directory", downloadDir);
         }
+        String arguments = getProperty("options.arguments");
+        options.addArguments(arguments);
         options.setExperimentalOption("prefs", prefs);
     }
 }
