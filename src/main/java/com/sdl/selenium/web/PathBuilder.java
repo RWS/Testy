@@ -56,7 +56,7 @@ public class PathBuilder {
     private String name;
     private String text;
     protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
-    private List<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
+    private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
@@ -289,7 +289,7 @@ public class PathBuilder {
      *
      * @return value that has been set in {@link #setSearchTextType(SearchType...)}
      */
-    public List<SearchType> getSearchTextType() {
+    public Set<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
@@ -303,7 +303,7 @@ public class PathBuilder {
         if(searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new ArrayList<SearchType>();
+            this.searchTextType = new HashSet<SearchType>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
