@@ -216,7 +216,6 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-
     public List<WebLocator> getChildNodes() {
         return childNodes;
     }
@@ -225,6 +224,7 @@ public abstract class WebLocatorAbstractBuilder {
         if (childNotes != null) {
             this.childNodes = Arrays.asList(childNotes);
         }
+        pathBuilder.setChildNotes(childNotes);
         return (T) this;
     }
 
@@ -246,8 +246,8 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String... excludeClasses) {
         if (excludeClasses != null) {
             this.excludeClasses = Arrays.asList(excludeClasses);
-            pathBuilder.setExcludeClasses(excludeClasses);
         }
+        pathBuilder.setExcludeClasses(excludeClasses);
         return (T) this;
     }
 
@@ -445,6 +445,7 @@ public abstract class WebLocatorAbstractBuilder {
         } else {
             this.elPathSuffix.put(key, elPathSuffix);
         }
+        pathBuilder.setElPathSuffix(key, elPathSuffix);
         return (T) this;
     }
 
@@ -460,6 +461,7 @@ public abstract class WebLocatorAbstractBuilder {
         } else {
             templates.put(key, value);
         }
+        pathBuilder.setTemplate(key, value);
         return (T) this;
     }
 
@@ -471,6 +473,7 @@ public abstract class WebLocatorAbstractBuilder {
             template = "";
         }
         setTemplate(key, template + value);
+        pathBuilder.addToTemplate(key, value);
         return (T) this;
     }
 

@@ -220,8 +220,8 @@ public abstract class By<T> {
 
     private static class ByName extends By<String> {
 
-        public ByName(String id) {
-            setValue(id);
+        public ByName(String name) {
+            setValue(name);
         }
 
         public String getPath() {

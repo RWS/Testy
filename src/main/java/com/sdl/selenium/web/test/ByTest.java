@@ -19,6 +19,7 @@ public class ByTest {
 //                {new WebLocator(container, By.id("Id")), CONTAINER_PATH + "//*[@id='Id']"},
 
                 {new TextField(By.id("Id"), By.text("text")).icon("icon"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
+                {new TextField().setId("Id").setText("text"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
 
 //                {new TextField(By.id("Id")), "//*[@id='Id']"},
 //                {new TextField(container), CONTAINER_PATH + "//*"},
