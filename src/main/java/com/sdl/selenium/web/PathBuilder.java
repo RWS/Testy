@@ -9,12 +9,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class PathBuilder {
-
     private static final Logger LOGGER = Logger.getLogger(PathBuilder.class);
-
-    public PathBuilder() {
-
-    }
 
     public static void main(String[] args) {
         PathBuilder pathBuilder = new PathBuilder(By.id("ID"));
@@ -61,13 +56,14 @@ public class PathBuilder {
     private String style;
     private String elCssSelector;
     private String title;
-    private Map<String, String> pathSuffixs = new HashMap<String, String>();
+    private Map<String, String> templates = new LinkedHashMap<String, String>();
+    private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
 
     private String infoMessage;
 
     private String label;
     private String labelTag = "label";
-    private String labelPosition = "//following-sibling::*//";
+    private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
     private int position = -1;
 
@@ -78,6 +74,16 @@ public class PathBuilder {
     private int activateSeconds = 60;
 
     private WebLocator container;
+    private List<WebLocator> childNodes;
+
+    protected PathBuilder() {
+        setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+        setTemplate("id", "@id='%s'");
+        setTemplate("name", "@name='%s'");
+        setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
+        setTemplate("excludeClass", "not(contains(@class, '%s'))");
+        setTemplate("cls", "@class='%s'");
+    }
 
     // =========================================
     // ========== setters & getters ============
@@ -116,6 +122,7 @@ public class PathBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     *use new WebLocator(By.id("ID"))
      *
      * @param id eg. id="buttonSubmit"
      * @return this element
@@ -218,6 +225,17 @@ public class PathBuilder {
         return (T) this;
     }
 
+    public List<WebLocator> getChildNodes() {
+        return childNodes;
+    }
+
+    public <T extends PathBuilder> T setChildNotes(final WebLocator... childNotes) {
+        if (childNotes != null) {
+            this.childNodes = Arrays.asList(childNotes);
+        }
+        return (T) this;
+    }
+
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
@@ -278,8 +296,10 @@ public class PathBuilder {
      */
     public <T extends PathBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
-        if (searchType != null) {
+        if (searchType != null&& searchType.length > 0) {
             setSearchTextType(searchType);
+        } else {
+            this.searchTextType.addAll(defaultSearchTextType);
         }
         return (T) this;
     }
@@ -307,6 +327,9 @@ public class PathBuilder {
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
+        for (SearchType searchType : this.searchLabelType) {
+            this.setSearchTextType(searchType);
+        }
         return (T) this;
     }
 
@@ -368,6 +391,7 @@ public class PathBuilder {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
      *
      * @return value that has been set in {@link #setTitle(String)}
      */
@@ -377,6 +401,7 @@ public class PathBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
      *
      * @param title of element
      * @return this element
@@ -392,7 +417,17 @@ public class PathBuilder {
      * @return value that has been set in {@link #setElPathSuffix(String)}
      */
     public String getElPathSuffix() {
-        return pathSuffixs.get("elPathSuffix");
+        return elPathSuffix.get("elPathSuffix");
+    }
+
+    /**
+     * @param elPathSuffix additional identification xpath element that will be added at the end
+     * @return this element
+     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
+     */
+    public <T extends PathBuilder> T setElPathSuffix(String elPathSuffix) {
+        setElPathSuffix("elPathSuffix", elPathSuffix);
+        return (T) this;
     }
 
     /**
@@ -402,23 +437,47 @@ public class PathBuilder {
      *     TODO
      * </pre>
      *
+     * @param key          suffix key
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
-    public <T extends PathBuilder> T setElPathSuffix(String elPathSuffix) {
-        setElPathSuffix("elPathSuffix", elPathSuffix);
+    public <T extends PathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
+        if(elPathSuffix == null) {
+            this.elPathSuffix.remove(key);
+        } else {
+            this.elPathSuffix.put(key, elPathSuffix);
+        }
         return (T) this;
     }
 
-    public <T extends PathBuilder> T setElPathSuffix(String key, String value, Object ...arguments) {
-        if(value == null) {
-            pathSuffixs.remove(key);
+    /**
+     * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
+     * @param key   name template
+     * @param value template
+     * @return this element
+     */
+    public <T extends PathBuilder> T setTemplate(String key, String value) {
+        if (value == null) {
+            templates.remove(key);
         } else {
-            //value = MessageFormat.format(value, arguments);
-            value = String.format(value, arguments);
-            pathSuffixs.put(key, value);
+            templates.put(key, value);
         }
         return (T) this;
+    }
+
+    public <T extends PathBuilder> T addToTemplate(String key, String value) {
+        String template = getTemplate(key);
+        if (StringUtils.isNotEmpty(template)) {
+            template += " and ";
+        } else {
+            template = "";
+        }
+        setTemplate(key, template + value);
+        return (T) this;
+    }
+
+    public String getTemplate(String key) {
+        return templates.get(key);
     }
 
     /**
@@ -464,6 +523,12 @@ public class PathBuilder {
         return (T) this;
     }
 
+    /**
+     * @param renderSeconds
+     * @param <T>
+     * @return
+     * @deprecated use setRenderMillis
+     */
     public <T extends PathBuilder> T setRenderSeconds(final int renderSeconds) {
         setRenderMillis(renderSeconds * 1000);
         return (T) this;
@@ -511,7 +576,7 @@ public class PathBuilder {
      */
     public <T extends PathBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
-        if (searchType != null) {
+        if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
         }
         return (T) this;
@@ -612,6 +677,10 @@ public class PathBuilder {
         return classes != null && classes.size() > 0;
     }
 
+    protected boolean hasChildNodes() {
+        return childNodes != null && childNodes.size() > 0;
+    }
+
     protected boolean hasExcludeClasses() {
         return excludeClasses != null && excludeClasses.size() > 0;
     }
@@ -679,7 +748,7 @@ public class PathBuilder {
             // TODO make specific for WebLocator
             if (isVisibility()) {
 //               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                selector.add("count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", isVisibility()));
             }
         }
 
@@ -689,33 +758,71 @@ public class PathBuilder {
     protected String getBasePath() {
         List<String> selector = new ArrayList<String>();
         if (hasId()) {
-            selector.add("@id='" + getId() + "'");
+            selector.add(applyTemplate("id", getId()));
         }
         if (hasName()) {
-            selector.add("@name='" + getName() + "'");
+            selector.add(applyTemplate("name", getName()));
         }
         if (hasBaseCls()) {
-            selector.add("contains(concat(' ', @class, ' '), ' " + getBaseCls() + " ')");
+            selector.add(applyTemplate("class", getBaseCls()));
         }
         if (hasCls()) {
-            selector.add("@class='" + getCls() + "'");
+            selector.add(applyTemplate("cls", getCls()));
         }
         if (hasClasses()) {
             for (String cls : getClasses()) {
-//                selector.append(" and contains(@class, '").append(cls).append("')");
-                selector.add("contains(concat(' ', @class, ' '), ' " + cls + " ')");
+                selector.add(applyTemplate("class", cls));
             }
         }
         if (hasExcludeClasses()) {
-            for (String excludeClasses : getExcludeClasses()) {
-                selector.add("not(contains(@class, '" + excludeClasses + "'))");
+            for (String excludeClass : getExcludeClasses()) {
+                selector.add(applyTemplate("excludeClass", excludeClass));
             }
         }
-
-        for (String suffix : pathSuffixs.values()) {
+        if (hasTitle()) {
+            addTemplate(selector, "title", getTitle());
+        }
+        for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
+        addChildNotesToSelector(selector);
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
+    }
+
+    private void addChildNotesToSelector(List<String> selector) {
+        if (hasChildNodes()) {
+            for (WebLocator el : getChildNodes()) {
+                WebLocator breakElement = null;
+                WebLocator elIterator = el;
+                /*while (elIterator.getContainer() != null && breakElement == null) {
+                    if(elIterator.getContainer() == this) {
+                        elIterator.setContainer(null);
+                        breakElement = elIterator;
+                    } else {
+                        elIterator = elIterator.getContainer();
+                    }
+                }*/
+                selector.add("count(." + el.getPath() + ") > 0");
+                if(breakElement != null) {
+                    //breakElement.setContainer((WebLocator) this);
+                }
+            }
+        }
+    }
+
+    private void addTemplate(List<String> selector, String key, Object... arguments) {
+        String tpl = applyTemplate(key, arguments);
+        if (StringUtils.isNotEmpty(tpl)) {
+            selector.add(tpl);
+        }
+    }
+
+    public String applyTemplate(String key, Object... arguments) {
+        String tpl = templates.get(key);
+        if (StringUtils.isNotEmpty(tpl)) {
+            return String.format(tpl, arguments);
+        }
+        return null;
     }
 
     /**
@@ -726,7 +833,13 @@ public class PathBuilder {
      */
     protected String getItemPath(boolean disabled) {
         String selector = getBaseItemPath();
-        selector = "//" + getTag() + (selector != null && (selector.length() > 0) ? ("[" + selector + "]") : "");
+        if (!disabled) {
+            String enabled = applyTemplate("enabled", getTemplate("enabled"));
+            if (enabled != null) {
+                selector += StringUtils.isNotEmpty(selector) ? " and " + enabled : enabled;
+            }
+        }
+        selector = "//" + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
     }
 
@@ -740,41 +853,33 @@ public class PathBuilder {
         if (hasText()) {
             selector = "";
             String text = getText();
+
+            if (templates.get("text") != null) {
+                return String.format(templates.get("text"), text);
+            }
+
             boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
             if (!(hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY))) {
                 text = Utils.getEscapeQuotesText(text);
             }
             String pathText = "text()";
 
-            boolean useChildNodesSearch = searchTextType.contains(SearchType.CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE);
+            boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
+            boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
             if (useChildNodesSearch) {
-                boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE);
                 selector += "count(" + (isDeepSearch ? "*//" : "") + "text()[";
                 pathText = ".";
             }
 
-            if (searchTextType.contains(SearchType.TRIM)) {
-                pathText = "normalize-space(" + pathText + ")";
-            }
+            selector += getTextSearchTypePath(text, hasContainsAll, pathText);
 
-            if (searchTextType.contains(SearchType.EQUALS)) {
-                selector += pathText + "=" + text;
-            } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
-                selector += "starts-with(" + pathText + "," + text + ")";
-            } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
-                String splitChar = String.valueOf(text.charAt(0));
-                Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
-                String[] strings = pattern.split(text.substring(1));
-                for (int i = 0; i < strings.length; i++) {
-                    strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
-                }
-                String operator = hasContainsAll ? " and " : " or ";
-                selector += hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
-            } else {
-                selector += "contains(" + pathText + "," + text + ")";
-            }
             if (useChildNodesSearch) {
                 selector += "]) > 0";
+            }
+
+            if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+                String selfPath = getTextSearchTypePath(text, hasContainsAll, "text()");
+                selector = "(" + selfPath + " or " + selector + ")";
             }
 
             if (searchTextType.contains(SearchType.HTML_NODE)) {
@@ -783,6 +888,31 @@ public class PathBuilder {
 
                 selector = "(" + a + " or " + b + ")";
             }
+        }
+        return selector;
+    }
+
+    private String getTextSearchTypePath(String text, boolean hasContainsAll, String pathText) {
+        String selector;
+        if (searchTextType.contains(SearchType.TRIM)) {
+            pathText = "normalize-space(" + pathText + ")";
+        }
+
+        if (searchTextType.contains(SearchType.EQUALS)) {
+            selector = pathText + "=" + text;
+        } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
+            selector = "starts-with(" + pathText + "," + text + ")";
+        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+            String splitChar = String.valueOf(text.charAt(0));
+            Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
+            String[] strings = pattern.split(text.substring(1));
+            for (int i = 0; i < strings.length; i++) {
+                strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
+            }
+            String operator = hasContainsAll ? " and " : " or ";
+            selector = hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
+        } else {
+            selector = "contains(" + pathText + "," + text + ")";
         }
         return selector;
     }
@@ -817,6 +947,9 @@ public class PathBuilder {
         }
 
         returnPath = afterItemPathCreated(returnPath);
+        if (disabled) {
+            returnPath += applyTemplate("disabled", getTemplate("disabled"));
+        }
 
         // add container path
         if (getContainer() != null) {
