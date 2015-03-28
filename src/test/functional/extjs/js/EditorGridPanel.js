@@ -1,5 +1,3 @@
-Ext.BLANK_IMAGE_URL = 'http://extjs.cachefly.net/ext-3.4.0/resources/images/default/s.gif';
-
 Ext.onReady(function(){
 
     // shorthand alias
@@ -173,9 +171,8 @@ Ext.onReady(function(){
         return grid;
     }
 
-    new Ext.Button({
+    var showComponentButton = new Ext.Button({
         text: 'EditorGridPanel',
-        renderTo: Ext.getBody(),
         handler: function(){
 
             var win = new Ext.Window({
@@ -201,6 +198,8 @@ Ext.onReady(function(){
             win.show();
         }
     });
+    Testy.topToolbar.add(showComponentButton);
+    Testy.topToolbar.doLayout();
 
 //    getNewGrid({
 //        height: 400,

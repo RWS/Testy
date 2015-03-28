@@ -2,10 +2,11 @@ package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TableCell extends Cell {
-    private static final Logger logger = Logger.getLogger(TableCell.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableCell.class);
 
     public TableCell() {
         setRenderMillis(200);
@@ -24,14 +25,14 @@ public class TableCell extends Cell {
         setPosition(columnIndex);
     }
 
-    public TableCell(int columnIndex, String columnText, SearchType ...searchType) {
+    public TableCell(int columnIndex, String columnText, SearchType... searchType) {
         this();
         setPosition(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }
 
-    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType ...searchType) {
+    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
         this(container, columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
@@ -40,8 +41,8 @@ public class TableCell extends Cell {
     @Override
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
-            String itemPathText = getItemPathText();
-            itemPath = "//" + getTag() + "[" + getPosition() + "]" + ("".equals(itemPathText) ? "" : (itemPathText == null ? "" : "[" + itemPathText + "]"));
+            int beginIndex = 2 + getTag().length();
+            itemPath = "//" + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
         }
         return itemPath;
     }

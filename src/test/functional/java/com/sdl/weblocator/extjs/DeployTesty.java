@@ -1,21 +1,20 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.conditions.MessageBoxSuccessCondition;
-import com.extjs.selenium.form.TextField;
-import com.extjs.selenium.grid.GridPanel;
-import com.extjs.selenium.tab.TabPanel;
-import com.extjs.selenium.window.MessageBox;
-import com.extjs.selenium.window.Window;
-import com.sdl.bootstrap.form.Form;
+import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
+import com.sdl.selenium.extjs3.grid.GridPanel;
+import com.sdl.selenium.extjs3.tab.TabPanel;
+import com.sdl.selenium.extjs3.window.MessageBox;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.SimpleTextField;
-import com.sdl.selenium.web.table.SimpleTable;
+import com.sdl.selenium.web.form.TextField;
+import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
@@ -23,6 +22,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -30,40 +31,46 @@ import java.io.File;
 import java.io.IOException;
 
 public class DeployTesty extends TestBase {
-    private static final Logger logger = Logger.getLogger(DeployTesty.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeployTesty.class);
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "user-ul de domeniu";
-    private static final String DOMAIN_PASS = "parola de domeniu";
+    private static final String DOMAIN_USER = "domain.user";
+    private static final String DOMAIN_PASS = "***";
+
+    private static final String JENKINS_JOB_URL = "http://cluj-jenkins01:8080/job/testy/";
+
+    private static final String NEXUS_REPOSITORY_URL = "http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots";
+    private static final String NEXUS_ADMIN_USER = "admin";
+    private static final String NEXUS_ADMIN_PASS = "***";
 
     private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
     private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");
     private Form loginForm = new Form().setName("login");
-    private SimpleTextField login = new SimpleTextField(loginForm).setName("j_username");
-    private SimpleTextField pass = new SimpleTextField(loginForm).setName("j_password");
+    private TextField login = new TextField(loginForm).setName("j_username");
+    private TextField pass = new TextField(loginForm).setName("j_password");
     private WebLocator logInButton = new WebLocator(loginForm).setId("yui-gen1-button");
-    private SimpleTable table = new SimpleTable().setId("main-table");
-    private WebLocator buildNow = new WebLocator(table).setElPath("//a[@class='task-link' and text()='Build Now']");
-    private SimpleTable buildHistory = new SimpleTable().setId("buildHistory");
+    private Table table = new Table().setId("main-table");
+    private WebLocator buildNow = new WebLocator(table, "//a[@class='task-link' and text()='Build Now']");
+    private Table buildHistory = new Table().setId("buildHistory");
     private WebLocator buildNowEl = new WebLocator(buildHistory).setClasses("build-row", "no-wrap", "transitive").setPosition(1);
 
     private WebLocator logInNexus = new WebLocator().setId("head-link-r");
     private Window nexusLogInWindow = new Window("Nexus Log In");
-    private TextField userName = new TextField(nexusLogInWindow, "Username:");
-    private TextField password = new TextField(nexusLogInWindow, "Password:");
+    private com.sdl.selenium.extjs3.form.TextField userName = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Username:");
+    private com.sdl.selenium.extjs3.form.TextField password = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Password:");
     private Button logIn = new Button(nexusLogInWindow, "Log In");
     private WebLocator viewRepositories = new WebLocator().setId("view-repositories");
     private GridPanel repositoryGridPanel = new GridPanel(viewRepositories);
     private TabPanel browseStorage = new TabPanel(viewRepositories, "Browse Storage");
-    private SimpleTable table1 = new SimpleTable(browseStorage).setCls("x-toolbar-ct");
+    private Table table1 = new Table(browseStorage).setCls("x-toolbar-ct");
     private WebLocator testyDir = new WebLocator().setElPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
     private TableCell tableCell = table1.getTableCell(4, new TableCell(3, "Path Lookup:", SearchType.EQUALS));
-    private TextField searchField = new TextField(tableCell);
+    private com.sdl.selenium.extjs3.form.TextField searchField = new com.sdl.selenium.extjs3.form.TextField(tableCell);
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://cluj-jenkins01:8080/job/testy/");
+        driver.get(JENKINS_JOB_URL);
     }
 
     @Test
@@ -87,20 +94,20 @@ public class DeployTesty extends TestBase {
 
     @Test(dependsOnMethods = "deployOnJenkins")
     public void loginAsAdminSDLNexus() {
-        driver.get("http://cfg-mgmt-server:8081/nexus/index.html#view-repositories;oss-sonatype-snapshots");
+        driver.get(NEXUS_REPOSITORY_URL);
         logInNexus.ready();
         Utils.sleep(1000);
         logInNexus.click();
         Utils.sleep(1000);
         userName.ready();
-        userName.setValue("admin");
-        password.setValue("admin123");
+        userName.setValue(NEXUS_ADMIN_USER);
+        password.setValue(NEXUS_ADMIN_PASS);
         logIn.click();
     }
 
     @Test(dependsOnMethods = "loginAsAdminSDLNexus")
     public void removeFormSDLNexus() {
-        repositoryGridPanel.rowSelect("sonatype-nexus-snapshots");
+        repositoryGridPanel.rowSelect("OSS Sonatype Snapshots");
         browseStorage.setActive();
         searchField.setValue("com/sdl/lt/Testy");
         testyDir.ready(10);

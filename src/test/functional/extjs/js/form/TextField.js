@@ -1,5 +1,3 @@
-Ext.BLANK_IMAGE_URL = 'http://extjs.cachefly.net/ext-3.4.0/resources/images/default/s.gif';
-
 Ext.onReady(function(){
     var fm = Ext.form;
 
@@ -41,9 +39,8 @@ Ext.onReady(function(){
        }],
     });
 
-    new Ext.Button({
+    var showComponentButton = new Ext.Button({
         text: 'TextField',
-        renderTo: Ext.getBody(),
         handler: function(){
             var win = new Ext.Window({
                 title: 'TextFieldWindow',
@@ -67,4 +64,7 @@ Ext.onReady(function(){
             win.show();
         }
     });
+
+    Testy.topToolbar.add(showComponentButton);
+    Testy.topToolbar.doLayout();
 });

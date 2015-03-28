@@ -1,83 +1,65 @@
 package com.sdl.selenium.web;
 
-import org.apache.log4j.Logger;
+import com.sdl.selenium.web.utils.WebLocatorConfigReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.net.URL;
 import java.util.*;
 
 public class WebLocatorConfig {
 
-    private static Logger logger = Logger.getLogger(WebLocatorConfig.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(WebLocatorConfig.class);
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
+
     private static ClassLoader loader = WebLocatorConfig.class.getClassLoader();
 
-    private static long defaultRenderMillis = 3000;
-    private static boolean logUseClassName = false;
-    private static boolean logXPathEnabled = false;
-    private static boolean logContainers = true;
-    private static boolean highlight = false;
-    private static List<SearchType> searchTextType = new ArrayList<SearchType>() {{
+    private static long defaultRenderMillis;
+    private static boolean logUseClassName;
+    private static boolean logXPathEnabled;
+    private static boolean logContainers;
+    private static boolean highlight;
+    private static Set<SearchType> searchTextType = new HashSet<SearchType>() {{
         add(SearchType.CONTAINS);
     }};
+    public static String defaultLabelPosition;
 
-    private static Properties properties = null;
+    private static WebLocatorConfigReader properties = null;
 
     static {
-        properties = new Properties();
-        try {
-            String filePath = loader.getResource(CONFIG_FILE_NAME).getFile();
-            logger.debug("reading: " + filePath);
-
-            InputStream inputStream = loader.getSystemResourceAsStream(CONFIG_FILE_NAME);
-            if (inputStream != null) {
-                Reader reader = new InputStreamReader(inputStream, "UTF-8");
-                properties.load(reader);
-                inputStream.close();
-
-                init();
-            }
-        } catch (Exception e) {
-            logger.error("Error loading config file. " + CONFIG_FILE_NAME +
-                            "\n If you want to customize certain settings in Testy," +
-                            "\n must brains " + CONFIG_FILE_NAME + " file in resources folder."+
-                            "\n And it populated with the following data: " +
-                            "\n\t weblocator.log.containers=false" +
-                            "\n\t weblocator.log.useClassName=false" +
-                            "\n\t weblocator.log.logXPathEnabled=false" +
-                            "\n\t weblocator.highlight=true" +
-                            "\n\t weblocator.defaults.renderMillis=3000" +
-                            "\n\t weblocator.defaults.searchType=contains"
-            );
+        URL resource = loader.getResource(CONFIG_FILE_NAME);
+        String filePath = resource != null ? resource.getFile() : null;
+        if (filePath == null) {
+            LOGGER.info("override defaults by adding them in src/main/resources/{}", CONFIG_FILE_NAME);
         }
+        properties = new WebLocatorConfigReader(filePath);
+        LOGGER.info(properties.toString());
+        init();
     }
 
-    public static String getString(String key) {
-        String property = properties.getProperty(key);
-        logger.debug("get key: " + key + " = " + property);
-        return property;
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
     }
 
     public static Boolean getBoolean(String key) {
         Boolean v = null;
-        String vString = getString(key);
+        String vString = getProperty(key);
         if (vString != null) {
             v = Boolean.valueOf(vString);
         } else {
-            logger.debug("key not found:" + key);
+            LOGGER.debug("key not found:" + key);
         }
         return v;
     }
 
     public static Integer getInt(String key) {
         Integer v = null;
-        String vString = getString(key);
+        String vString = getProperty(key);
         if (vString != null) {
             v = Integer.valueOf(vString);
         } else {
-            logger.debug("key not found:" + key);
+            LOGGER.debug("key not found:" + key);
         }
         return v;
     }
@@ -87,6 +69,8 @@ public class WebLocatorConfig {
         if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);
         }
+        String labelPosition = getProperty("weblocator.defaults.labelPosition");
+        setDefaultLabelPosition(labelPosition);
 
         Boolean logUseClassName = getBoolean("weblocator.log.useClassName");
         if (logUseClassName != null) {
@@ -107,16 +91,16 @@ public class WebLocatorConfig {
             setHighlight(highlight);
         }
 
-        String searchTextType = getString("weblocator.defaults.searchType");
+        String searchTextType = getProperty("weblocator.defaults.searchType");
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");
-            List<SearchType> list = new ArrayList<SearchType>();
+            Set<SearchType> list = new HashSet<SearchType>();
             for (String searchType : searchTypes) {
                 try {
                     list.add(SearchType.valueOf(searchType));
                 } catch (IllegalArgumentException e) {
-                    logger.error("SearchType not supported : " + searchType + ". Supported SearchTypes: " + Arrays.asList(SearchType.values()));
+                    LOGGER.error("SearchType not supported : {}. Supported SearchTypes: {}", searchType, Arrays.asList(SearchType.values()));
                 }
             }
             setSearchTextType(list);
@@ -164,14 +148,22 @@ public class WebLocatorConfig {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<SearchType> getSearchTextType() {
-        return (List<SearchType>) ((ArrayList) searchTextType).clone();
+    public static Set<SearchType> getSearchTextType() {
+        return (Set<SearchType>) ((HashSet) searchTextType).clone();
 //        ArrayList<SearchType> copyOfArrayList = new ArrayList<SearchType>();
 //        copyOfArrayList.addAll(searchTextType);
 //        return copyOfArrayList;
     }
 
-    public static void setSearchTextType(List<SearchType> searchTextType) {
+    public static void setSearchTextType(Set<SearchType> searchTextType) {
         WebLocatorConfig.searchTextType = searchTextType;
+    }
+
+    public static String getDefaultLabelPosition() {
+        return defaultLabelPosition;
+    }
+
+    public static void setDefaultLabelPosition(String defaultLabelPosition) {
+        WebLocatorConfig.defaultLabelPosition = defaultLabelPosition;
     }
 }

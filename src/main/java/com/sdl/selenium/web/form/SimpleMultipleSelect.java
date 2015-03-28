@@ -1,62 +1,19 @@
 package com.sdl.selenium.web.form;
 
-import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class SimpleMultipleSelect extends SimpleComboBox {
-    private static final Logger logger = Logger.getLogger(SimpleMultipleSelect.class);
-
+/**
+ * @deprecated class "SimpleMultipleSelect*" is deprecated, please use new package "MultipleSelect"
+ */
+public class SimpleMultipleSelect extends MultipleSelect {
     public SimpleMultipleSelect() {
-        setClassName("SimpleMultipleSelect");
     }
 
     public SimpleMultipleSelect(WebLocator container) {
-        this();
-        setContainer(container);
+        super(container);
     }
 
     public SimpleMultipleSelect(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
-    }
-
-    public boolean selectRows(String... values) {
-        boolean select = false;
-        if (ready()) {
-//            sendKeys(Keys.CONTROL);
-            for (String value : values) {
-                WebLocator el = new WebLocator(this).setText(value, SearchType.EQUALS);
-                select = el.click();
-                if (!select) {
-                    return false;
-                }
-            }
-        }
-        return select;
-    }
-
-    /**
-     *
-     * @return if return null, then component is not ready
-     */
-    public List<String> getValues() {
-        List<String> list = null;
-        if (ready()) {
-            list = new ArrayList<String>();
-            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
-            for (int i = 0; i < elements.size(); i++) {
-                String text = elements.get(i).getText();
-                logger.debug(text);
-                list.add(text);
-            }
-        }
-        return list;
+        super(container, label);
     }
 }

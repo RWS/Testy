@@ -1,8 +1,7 @@
 package com.sdl.weblocator.extjs.form;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.form.ComboBox;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.form.ComboBox;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -18,8 +17,7 @@ public class ComboBoxTest extends TestBase {
 
     @BeforeMethod
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "ComboBox");
-        editorGridPanelButton.click();
+        showComponent("ComboBox");
     }
 
     @AfterMethod

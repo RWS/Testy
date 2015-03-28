@@ -120,6 +120,9 @@
         <button class="btn" type="button" disabled>DisableBtn</button>
         <button class="btn disabled" type="button">DisableBtnCls</button>
     </div>
+    <div class="controls">
+        <a target="_blank" href="index.html">Link</a>
+    </div>
 
 </form>
 <form class="form-horizontal span6">
@@ -174,8 +177,122 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John1</td>
+            <td>Rambo1</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John2</td>
+            <td>Rambo2</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John3</td>
+            <td>Rambo3</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
+</form>
+
+<form class="form-horizontal span3 experiment-tile">
+    <legend>Page Object And Page Factory</legend>
+    <div class="control-group">
+        <label class="control-label">Execute</label>
+        <div class="controls">
+            <select id="execute" data-bind="execute" class="selectpicker">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Execute</label>
+
+        <div class="controls">
+            <span id="execute2" data-bind="span" class="uneditable-input input-block-level"></span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Email:</label>
+
+        <div class="controls">
+            <span id="email2" data-bind="span" class="uneditable-input input-block-level"></span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">User Name:</label>
+
+        <div class="controls">
+            <span id="userName2" data-bind="span" class="uneditable-input input-block-level"></span>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button id="open"  class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label">Email:</label>
+                        <div class="controls">
+                            <input id="email" data-bind="email" type="text" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">User Name:</label>
+                        <div class="controls">
+                            <input id="userName" data-bind="userName" type="text" class="input-block-level">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button id="saveButton" type="button" class="btn tile-btn btn-warning">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 
 <!--<script src="http://code.jquery.com/jquery.js"></script>-->
@@ -209,6 +326,10 @@
             includeSelectAllOption:true,
             enableFiltering:true,
             maxHeight:150
+        });
+        $('#saveButton').on('click', function () {
+            $("#email").val("");
+            $("#userName").val("");
         });
     });
 </script>

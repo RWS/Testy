@@ -1,27 +1,20 @@
 package com.sdl.bootstrap.button;
 
-import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
-public class ButtonLink extends Button {
+/**
+ * @deprecated package "com.sdl.bootstrap.*" is deprecated, please use new package "com.sdl.selenium.bootstrap.*"
+ */
+public class ButtonLink extends com.sdl.selenium.bootstrap.button.ButtonLink {
 
     public ButtonLink() {
-        setClassName("ButtonLink");
-        setBaseCls("btn");
-        setTag("a");
     }
 
-    /**
-     * @param container
-     */
     public ButtonLink(WebLocator container) {
-        this();
-        setContainer(container);
+        super(container);
     }
 
     public ButtonLink(WebLocator container, String text) {
-        this(container);
-        setText(text);
-        setSearchTextType(SearchType.EQUALS);
+        super(container, text);
     }
 }

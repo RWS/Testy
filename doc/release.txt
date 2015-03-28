@@ -1,0 +1,21 @@
+
+http://central.sonatype.org/pages/working-with-pgp-signatures.html
+
+http://central.sonatype.org/pages/apache-maven.html
+
+mvn release:clean release:prepare
+
+mvn release:perform
+
+https://oss.sonatype.org
+user:
+password:
+
+
+
+Run from Intellij IDEA before create any release
+----------------------
+
+When running integration test from Intellij IDEA run :
+
+    src\test\resources\integration\testngIntegration.xml

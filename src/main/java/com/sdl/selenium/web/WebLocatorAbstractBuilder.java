@@ -3,7 +3,8 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  * This class is used to simple construct xpath for WebLocator's
  */
 public abstract class WebLocatorAbstractBuilder {
-    private static final Logger LOGGER = Logger.getLogger(WebLocatorAbstractBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
     private PathBuilder pathBuilder = new PathBuilder();
 
@@ -35,7 +36,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String name;
     private String text;
     protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
-    private List<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
+    private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
@@ -47,7 +48,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     private String label;
     private String labelTag = "label";
-    private String labelPosition = "//following-sibling::*//";
+    private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
     private int position = -1;
 
@@ -58,12 +59,14 @@ public abstract class WebLocatorAbstractBuilder {
     private int activateSeconds = 60;
 
     private WebLocator container;
+    private List<WebLocator> childNodes;
 
     protected WebLocatorAbstractBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
         setTemplate("id", "@id='%s'");
         setTemplate("name", "@name='%s'");
         setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
+        setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
     }
 
@@ -75,8 +78,8 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setTag(String)}
-     *         <p>tag (type of DOM element)</p>
-     *         <pre>default to "*"</pre>
+     * <p>tag (type of DOM element)</p>
+     * <pre>default to "*"</pre>
      */
     public String getTag() {
         return tag;
@@ -120,7 +123,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
      * @return value that has been set in {@link #setElPath(String)}
-     *         <p>returned value does not include containers path</p>
+     * <p>returned value does not include containers path</p>
      */
     public String getElPath() {
         return elPath;
@@ -213,6 +216,18 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+
+    public List<WebLocator> getChildNodes() {
+        return childNodes;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setChildNotes(final WebLocator... childNotes) {
+        if (childNotes != null) {
+            this.childNodes = Arrays.asList(childNotes);
+        }
+        return (T) this;
+    }
+
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
@@ -276,9 +291,11 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
         pathBuilder.setText(text);
-        if (searchType != null) {
+        if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
             pathBuilder.setSearchTextType(searchType);
+        } else {
+            this.searchTextType.addAll(defaultSearchTextType);
         }
         return (T) this;
     }
@@ -288,7 +305,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return value that has been set in {@link #setSearchTextType(SearchType...)}
      */
-    public List<SearchType> getSearchTextType() {
+    public Set<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
@@ -302,7 +319,7 @@ public abstract class WebLocatorAbstractBuilder {
         if (searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new ArrayList<SearchType>();
+            this.searchTextType = new HashSet<SearchType>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
@@ -318,7 +335,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param searchLabelType accepted values are: {@link SearchType}
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
+    private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
         this.searchLabelType = new ArrayList<SearchType>();
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
@@ -371,6 +388,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
      *
      * @return value that has been set in {@link #setTitle(String)}
      */
@@ -380,6 +398,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
      *
      * @param title of element
      * @return this element
@@ -400,9 +419,9 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
+     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
         setElPathSuffix("elPathSuffix", elPathSuffix);
@@ -416,7 +435,7 @@ public abstract class WebLocatorAbstractBuilder {
      *     TODO
      * </pre>
      *
-     * @param key suffix key
+     * @param key          suffix key
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
@@ -431,7 +450,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
-     * @param key name template
+     * @param key   name template
      * @param value template
      * @return this element
      */
@@ -446,7 +465,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     public <T extends WebLocatorAbstractBuilder> T addToTemplate(String key, String value) {
         String template = getTemplate(key);
-        if(StringUtils.isNotEmpty(template)) {
+        if (StringUtils.isNotEmpty(template)) {
             template += " and ";
         } else {
             template = "";
@@ -560,7 +579,7 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
         pathBuilder.setLabel(label);
-        if (searchType != null) {
+        if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
             pathBuilder.setSearchLabelType(searchType);
         }
@@ -666,6 +685,10 @@ public abstract class WebLocatorAbstractBuilder {
         return classes != null && classes.size() > 0;
     }
 
+    protected boolean hasChildNodes() {
+        return childNodes != null && childNodes.size() > 0;
+    }
+
     protected boolean hasExcludeClasses() {
         return excludeClasses != null && excludeClasses.size() > 0;
     }
@@ -754,24 +777,52 @@ public abstract class WebLocatorAbstractBuilder {
         if (hasCls()) {
             selector.add(applyTemplate("cls", getCls()));
         }
-        if (hasTitle()) {
-            selector.add(applyTemplate("title", getTitle()));
-        }
-
         if (hasClasses()) {
             for (String cls : getClasses()) {
                 selector.add(applyTemplate("class", cls));
             }
         }
         if (hasExcludeClasses()) {
-            for (String excludeClasses : getExcludeClasses()) {
-                selector.add("not(contains(@class, '" + excludeClasses + "'))");
+            for (String excludeClass : getExcludeClasses()) {
+                selector.add(applyTemplate("excludeClass", excludeClass));
             }
+        }
+        if (hasTitle()) {
+            addTemplate(selector, "title", getTitle());
         }
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
+        addChildNotesToSelector(selector);
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
+    }
+
+    private void addChildNotesToSelector(List<String> selector) {
+        if (hasChildNodes()) {
+            for (WebLocator el : getChildNodes()) {
+                WebLocator breakElement = null;
+                WebLocator elIterator = el;
+                while (elIterator.getContainer() != null && breakElement == null) {
+                    if(elIterator.getContainer() == this) {
+                        elIterator.setContainer(null);
+                        breakElement = elIterator;
+                    } else {
+                        elIterator = elIterator.getContainer();
+                    }
+                }
+                selector.add("count(." + el.getPath() + ") > 0");
+                if(breakElement != null) {
+                    breakElement.setContainer((WebLocator) this);
+                }
+            }
+        }
+    }
+
+    private void addTemplate(List<String> selector, String key, Object... arguments) {
+        String tpl = applyTemplate(key, arguments);
+        if (StringUtils.isNotEmpty(tpl)) {
+            selector.add(tpl);
+        }
     }
 
     protected String applyTemplate(String key, Object... arguments) {
@@ -834,9 +885,9 @@ public abstract class WebLocatorAbstractBuilder {
                 selector += "]) > 0";
             }
 
-            if(searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+            if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
                 String selfPath = getTextSearchTypePath(text, hasContainsAll, "text()");
-                selector = "("+ selfPath +" or " + selector + ")";
+                selector = "(" + selfPath + " or " + selector + ")";
             }
 
             if (searchTextType.contains(SearchType.HTML_NODE)) {
@@ -904,7 +955,7 @@ public abstract class WebLocatorAbstractBuilder {
         }
 
         returnPath = afterItemPathCreated(returnPath);
-        if(disabled){
+        if (disabled) {
             returnPath += applyTemplate("disabled", getTemplate("disabled"));
         }
 

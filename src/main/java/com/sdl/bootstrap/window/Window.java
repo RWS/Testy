@@ -1,24 +1,13 @@
 package com.sdl.bootstrap.window;
 
-import com.sdl.selenium.web.IWebLocator;
-import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
-
-public class Window extends WebLocator implements IWebLocator {
-    private static final Logger logger = Logger.getLogger(Window.class);
-
+/**
+ * @deprecated package "com.sdl.bootstrap.*" is deprecated, please use new package "com.sdl.selenium.bootstrap.*"
+ */
+public class Window extends com.sdl.selenium.bootstrap.window.Window {
     public Window() {
-        setClassName("Window");
-        setTemplate("title", "count(*[contains(@class,'-header')]//*[text()='%s']) > 0");
-        setElPathSuffix("dialog-visible", "@role='dialog' and @aria-hidden='false'");
     }
 
     public Window(String title) {
-        this();
-        setTitle(title);
-    }
-
-    public String getTitleWindow() {
-        return new WebLocator(this, "//*[contains(@class, '-header')]//h3").getHtmlText();
+        super(title);
     }
 }

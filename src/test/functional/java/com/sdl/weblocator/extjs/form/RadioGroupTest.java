@@ -1,17 +1,15 @@
 package com.sdl.weblocator.extjs.form;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.form.RadioGroup;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.form.RadioGroup;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class RadioGroupTest extends TestBase {
 

@@ -2,7 +2,8 @@ package com.sdl.weblocator.extjs;
 
 import com.sdl.selenium.web.Browser;
 import com.sdl.weblocator.Ignores;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.ITestAnnotation;
 import org.testng.internal.annotations.IAnnotationTransformer;
 
@@ -10,7 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 public class MyTransformer implements IAnnotationTransformer {
-    private static final Logger logger = Logger.getLogger(MyTransformer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyTransformer.class);
 
     @Override
     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
