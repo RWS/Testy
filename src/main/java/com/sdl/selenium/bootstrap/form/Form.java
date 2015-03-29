@@ -1,6 +1,8 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,26 +17,26 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * private Form form = new Form().setTitle("Form Title");
+ * private Form form = new Form(By.title("Form Title"));
  * form.ready();
  * }</pre>
  */
 public class Form extends WebLocator implements IWebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Form.class);
 
-    public Form() {
-        setClassName("Form");
-        setTag("form");
-        setTemplate("title", "count(.//legend[text()='%s']) > 0");
+    private PathBuilder pathBuilder = getPathBuilder();
+    public Form(By ...bys) {
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.className("Form"), By.tag("form"));
+        pathBuilder.setTemplate("title", "count(.//legend[text()='%s']) > 0");
     }
 
-    public Form(WebLocator container) {
-        this();
-        setContainer(container);
+    public Form(WebLocator container, By ...bys) {
+        this(bys);
+        pathBuilder.setContainer(container);
     }
 
     public Form(WebLocator container, String title) {
-        this(container);
-        setTitle(title);
+        this(container, By.title(title));
     }
 }
