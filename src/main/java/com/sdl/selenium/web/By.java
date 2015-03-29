@@ -120,7 +120,7 @@ public abstract class By<T> {
     }
 
     public static By classes(final String... classes) {
-        if (classes == null)
+        if (classes.length == 0)
             throw new IllegalArgumentException(
                     "Cannot find elements when the classes expression is null.");
 
@@ -151,7 +151,7 @@ public abstract class By<T> {
     }
 
     public static By excludeClasses(final String... excludeClasses) {
-        if (excludeClasses == null)
+        if (excludeClasses.length == 0)
             throw new IllegalArgumentException(
                     "Cannot find elements when the excludeClasses expression is null.");
 
@@ -619,7 +619,7 @@ public abstract class By<T> {
     }
 
     public static By searchType(final SearchType... searchType) {
-        if (searchType == null)
+        if (searchType.length == 0)
             throw new IllegalArgumentException(
                     "Cannot find elements when the searchType expression is null.");
 
@@ -641,9 +641,9 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-//            if (builder.getSearchTextType() == null) {
+            if (builder.getSearchTextType().isEmpty()) {
                 init(builder);
-//            }
+            }
         }
     }
 }

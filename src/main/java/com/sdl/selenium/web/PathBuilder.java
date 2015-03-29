@@ -13,8 +13,8 @@ public class PathBuilder {
 
     public static void main(String[] args) {
         PathBuilder pathBuilder = new PathBuilder(By.id("ID"));
-//        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, '%s')]) > 0", "save");
-        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, 'true')]) > 0");
+        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, '%s')]) > 0");
+//        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, 'true')]) > 0");
         LOGGER.debug(pathBuilder.getPath());
     }
 
@@ -24,7 +24,17 @@ public class PathBuilder {
         }
     }*/
 
+    protected PathBuilder() {
+        setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+        setTemplate("id", "@id='%s'");
+        setTemplate("name", "@name='%s'");
+        setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
+        setTemplate("excludeClass", "not(contains(@class, '%s'))");
+        setTemplate("cls", "@class='%s'");
+    }
+
     public PathBuilder(By... bys) {
+        this();
         init(bys);
     }
 
@@ -39,6 +49,10 @@ public class PathBuilder {
             by.initDefault(this);
         }
     }
+
+//    public void setBys(By ...bys){
+//        init(bys);
+//    }
 
     private String className = "WebLocator";
     private String tag = "*";
@@ -75,15 +89,6 @@ public class PathBuilder {
 
     private WebLocator container;
     private List<WebLocator> childNodes;
-
-    protected PathBuilder() {
-        setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
-        setTemplate("id", "@id='%s'");
-        setTemplate("name", "@name='%s'");
-        setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
-        setTemplate("excludeClass", "not(contains(@class, '%s'))");
-        setTemplate("cls", "@class='%s'");
-    }
 
     // =========================================
     // ========== setters & getters ============

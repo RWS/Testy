@@ -560,6 +560,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @deprecated
      */
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
+        this.container = container;
         pathBuilder.setContainer(container);
         return (T) this;
     }

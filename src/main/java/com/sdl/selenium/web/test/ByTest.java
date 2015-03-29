@@ -14,15 +14,15 @@ public class ByTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
 //                {new WebLocator(), "//*"},
-//                {new WebLocator(By.id("Id")), "//*[@id='Id']"},
+//                {new WebLocator(By.classes("cls")), "//*[contains(concat(' ', @class, ' '), ' cls ')]"},
 //                {new WebLocator(container), CONTAINER_PATH + "//*"},
 //                {new WebLocator(container, By.id("Id")), CONTAINER_PATH + "//*[@id='Id']"},
 
-                {new TextField(By.id("Id"), By.text("text")).icon("icon"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
-                {new TextField().setId("Id").setText("text"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
+//                {new TextField(By.id("Id"), By.text("text")).icon("icon"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
+//                {new TextField().setText("text").setId("Id"), "//*[@id='Id' and contains(text(),'text') and count(.//*[contains(@class, 'icon')]) > 0]"},
 
 //                {new TextField(By.id("Id")), "//*[@id='Id']"},
-//                {new TextField(container), CONTAINER_PATH + "//*"},
+                {new TextField(container), CONTAINER_PATH + "//*"},
 //                {new TextField(container, By.id("Id"), By.xpath("")), CONTAINER_PATH + "//*[@id='Id']"},
 //                {new TextField(container, By.id("Id"), By.text("ttt")), CONTAINER_PATH + "//*[@id='Id' and contains(text(),'ttt')]"},
         };
