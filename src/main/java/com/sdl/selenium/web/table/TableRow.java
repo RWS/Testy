@@ -1,5 +1,7 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
@@ -11,37 +13,36 @@ import java.util.List;
 public class TableRow extends Row {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableRow.class);
 
-    public TableRow() {
+    private PathBuilder pathBuilder = getPathBuilder();
+    public TableRow(By ...bys) {
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.className("TableRow"), By.tag("tr"));
         setRenderMillis(200);
-        setClassName("TableRow");
-        setTag("tr");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public TableRow(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
+    }
+
+    public TableRow(WebLocator container, By ...bys) {
+        this(bys);
+        pathBuilder.setContainer(container);
     }
 
     public TableRow(WebLocator container, int indexRow) {
-        this(container);
-        setPosition(indexRow);
+        this(container, By.position(indexRow));
     }
 
     public TableRow(WebLocator table, String searchElement, SearchType searchType) {
-        this(table);
-        setText(searchElement);
-        setSearchTextType(searchType);
+        this(table, By.text(searchElement, searchType, SearchType.DEEP_CHILD_NODE_OR_SELF));
     }
 
     public TableRow(WebLocator table, Cell... cells) {
-        this(table);
-        setChildNotes(cells);
+        this(table, By.childNodes(cells));
     }
 
     public TableRow(WebLocator table, int indexRow, Cell... cells) {
-        this(table, indexRow);
-        setChildNotes(cells);
+        this(table, By.position(indexRow), By.childNodes(cells));
     }
 
     public List<String> getCellsText() {

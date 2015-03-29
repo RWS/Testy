@@ -290,13 +290,12 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
-        pathBuilder.setText(text);
         if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
-            pathBuilder.setSearchTextType(searchType);
         } else {
             this.searchTextType.addAll(defaultSearchTextType);
         }
+        pathBuilder.setText(text, searchType);
         return (T) this;
     }
 

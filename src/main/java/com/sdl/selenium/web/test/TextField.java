@@ -8,15 +8,16 @@ import org.apache.log4j.Logger;
 public class TextField extends WebLocator {
     private static final Logger LOGGER = Logger.getLogger(TextField.class);
 
+    private PathBuilder pathBuilder = getPathBuilder();
     public TextField(By... bys) {
-        setPathBuilder(new PathBuilder(bys));
-        getPathBuilder().defaults(By.baseCls("BaseCls"));
-        getPathBuilder().setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.baseCls("BaseCls"));
+        pathBuilder.setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
     public TextField(WebLocator container, By... bys) {
         this(bys);
-        getPathBuilder().setContainer(container);
+        pathBuilder.setContainer(container);
     }
 
     private String icon;
@@ -28,7 +29,7 @@ public class TextField extends WebLocator {
     public <T extends TextField> T icon(final String icon) {
         this.icon = icon;
         String key = "icon-cls";
-        getPathBuilder().setElPathSuffix(key, getPathBuilder().applyTemplate(key, icon));
+        pathBuilder.setElPathSuffix(key, pathBuilder.applyTemplate(key, icon));
         return (T) this;
     }
 }
