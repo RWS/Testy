@@ -560,6 +560,35 @@ public abstract class By<T> {
         }
     }
 
+    public static By childNodes(final WebLocator... childNodes) {
+        if (childNodes.length == 0)
+            throw new IllegalArgumentException(
+                    "Cannot find elements when the ...childNodes expression is null.");
+
+        return new ByChildNodes(childNodes);
+    }
+
+    private static class ByChildNodes extends By<WebLocator[]> {
+
+        public ByChildNodes(WebLocator... childNodes) {
+            setValue(childNodes);
+        }
+
+        public String getPath() {
+            return getValue().toString();
+        }
+
+        public void init(PathBuilder builder) {
+            builder.setChildNotes(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getChildNodes().isEmpty()) {
+                init(builder);
+            }
+        }
+    }
+
     public static By infoMessage(final String infoMessage) {
         if (infoMessage == null)
             throw new IllegalArgumentException(
