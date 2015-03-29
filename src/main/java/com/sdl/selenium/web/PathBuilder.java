@@ -50,10 +50,6 @@ public class PathBuilder {
         }
     }
 
-//    public void setBys(By ...bys){
-//        init(bys);
-//    }
-
     private String className = "WebLocator";
     private String tag = "*";
     private String id;
@@ -958,7 +954,7 @@ public class PathBuilder {
 
         // add container path
         if (getContainer() != null) {
-            returnPath = getContainer().getPath() + returnPath;
+            returnPath = getContainer().getPathBuilder().getPath() + returnPath;
         }
 
 //        logger.debug(returnPath);

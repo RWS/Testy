@@ -8,13 +8,14 @@ import org.apache.log4j.Logger;
 public class TextField extends WebLocator {
     private static final Logger LOGGER = Logger.getLogger(TextField.class);
 
-    public TextField(By... by) {
-        setPathBuilder(new PathBuilder(by));
+    public TextField(By... bys) {
+        setPathBuilder(new PathBuilder(bys));
+        getPathBuilder().defaults(By.baseCls("BaseCls"));
         getPathBuilder().setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
-    public TextField(WebLocator container, By... by) {
-        this(by);
+    public TextField(WebLocator container, By... bys) {
+        this(bys);
         getPathBuilder().setContainer(container);
     }
 
