@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.*;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -108,13 +109,29 @@ public class TableTest extends TestBase {
 
         table.ready(true);
         long startMs = System.currentTimeMillis();
-        RunExeThread exeThread = null;
+
+        ExecutorService pool = Executors.newFixedThreadPool(25);
+        List<Future<Boolean>> executionList = new ArrayList<>();
         for (List<String> list : lists) {
-            TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
-            CheckBox check = new CheckBox(cell);
-            exeThread = new RunExeThread(check);
-            exeThread.start();
+            RunExeThread exeThread = new RunExeThread(list);
+            Future<Boolean> future = pool.submit(exeThread);
+            executionList.add(future);
         }
+
+        boolean globalClick = true;
+        for (Future<Boolean> future : executionList) {
+            try {
+                globalClick = globalClick && future.get();
+            } catch (ExecutionException e) {
+                globalClick=false;
+                LOGGER.warn("Warning waiting for table click on checkboxes ", e);
+            }
+        }
+
+        pool.shutdown();
+        System.gc();
+
+        assertTrue(globalClick);
 
 //        for (List<String> list : lists) {
 //            TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
@@ -132,25 +149,29 @@ public class TableTest extends TestBase {
             TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
             CheckBox check = new CheckBox(cell);
             check.click();
-            check.isSelected();
+//            check.isSelected();
         }
         long endMs1 = System.currentTimeMillis();
         LOGGER.info(String.format("Click thread1 took %s ms", endMs1 - startMs1));
     }
 
-    public class RunExeThread extends Thread {
-        private CheckBox element;
+    public class RunExeThread implements Callable<Boolean> {
+        private List<String> list;
+        private CheckBox check;
 
-        public RunExeThread(CheckBox webElement) {
-            this.element = webElement;
+        public RunExeThread(List<String> list) {
+            this.list = list;
         }
 
-        public void run() {
-            this.element.click();
+        @Override
+        public Boolean call() throws Exception {
+            TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
+            check = new CheckBox(cell);
+            return check.click();
         }
 
         public Boolean isSelected() {
-            return this.element.isSelected();
+            return check.isSelected();
         }
     }
 }

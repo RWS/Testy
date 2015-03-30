@@ -581,11 +581,10 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
-        pathBuilder.setLabel(label);
         if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
-            pathBuilder.setSearchLabelType(searchType);
         }
+        pathBuilder.setLabel(label, searchType);
         return (T) this;
     }
 
