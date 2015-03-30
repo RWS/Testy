@@ -1,5 +1,3 @@
-Ext.BLANK_IMAGE_URL = 'http://extjs.cachefly.net/ext-3.4.0/resources/images/default/s.gif';
-
 Ext.onReady(function () {
     var fsf = new Ext.FormPanel({
         frame:true,
@@ -30,9 +28,8 @@ Ext.onReady(function () {
         ]
     });
 
-    new Ext.Button({
+    var showComponentButton = new Ext.Button({
         text:'RadioGroups',
-        renderTo:Ext.getBody(),
         handler:function () {
             var win = new Ext.Window({
                 title:'RadioGroupsWindow',
@@ -57,4 +54,7 @@ Ext.onReady(function () {
             win.show();
         }
     });
+
+    Testy.topToolbar.add(showComponentButton);
+    Testy.topToolbar.doLayout();
 });

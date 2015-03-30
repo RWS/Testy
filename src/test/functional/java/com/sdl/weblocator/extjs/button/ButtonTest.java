@@ -1,12 +1,15 @@
 package com.sdl.weblocator.extjs.button;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.panel.Panel;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.button.SplitButton;
+import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import com.sdl.weblocator.extjs.window.MessageBoxTest;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,7 +17,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class ButtonTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(ButtonTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
+    
     Window dateFieldWindow = new Window("DateFieldWindow");
     Button closeButton = new Button(dateFieldWindow, "Close");
     Button dateFieldButton = new Button(null, "DateField");
@@ -26,6 +30,9 @@ public class ButtonTest extends TestBase {
     Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
     Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
     Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
+    
+    Window buttonsWindow = new Window("Buttons Window");
+    SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
 
     @Test
     public void isDisplayed() {
@@ -42,7 +49,7 @@ public class ButtonTest extends TestBase {
             cancelButton.click();
         }
         long endMs = System.currentTimeMillis();
-        logger.info(String.format("performanceTestClick took %s ms", endMs - startMs));
+        LOGGER.info(String.format("performanceTestClick took %s ms", endMs - startMs));
     }
 
     @Test (dependsOnMethods = "performanceTestClick")
@@ -70,9 +77,25 @@ public class ButtonTest extends TestBase {
         boolean clicked = button.click();
         long endMs = System.currentTimeMillis();
 
-        logger.info(String.format("took %s ms", endMs - startMs));
+        LOGGER.info(String.format("took %s ms", endMs - startMs));
         assertFalse(clicked, "Nu trebuia sa faca click");
         assertTrue(endMs - startMs < millis + 500, "Took too long");
         assertTrue(endMs - startMs >= millis, "Did not waited expected time");
+    }
+    
+    @Test
+    void testSplitButton() {
+        showComponent("Buttons");
+        
+        splitButton.assertClick();
+        MessageBoxTest.assertThatMessageBoxExists("You selected Export");
+
+        boolean clicked = splitButton.clickOnMenu("PDF");
+        assertTrue(clicked, "Could not click on button");
+        MessageBoxTest.assertThatMessageBoxExists("You selected PDF");
+
+        clicked = splitButton.clickOnMenu("EXCEL");
+        assertTrue(clicked, "Could not click on button");
+        MessageBoxTest.assertThatMessageBoxExists("You selected EXCEL");
     }
 }

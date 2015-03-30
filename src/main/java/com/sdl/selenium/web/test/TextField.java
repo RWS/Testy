@@ -1,22 +1,23 @@
 package com.sdl.selenium.web.test;
 
 import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
 
 public class TextField extends WebLocator {
     private static final Logger LOGGER = Logger.getLogger(TextField.class);
 
-    private IconPathBuilder iconPathBuilder = new IconPathBuilder();
-
-    public TextField(By... by) {
-        iconPathBuilder = new IconPathBuilder(by);
-        setPathBuilder(iconPathBuilder);
+    private PathBuilder pathBuilder = getPathBuilder();
+    public TextField(By... bys) {
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.baseCls("BaseCls"));
+        pathBuilder.setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
-    public TextField(WebLocator container, By... by) {
-        this(by);
-        iconPathBuilder.setContainer(container);
+    public TextField(WebLocator container, By... bys) {
+        this(bys);
+        pathBuilder.setContainer(container);
     }
 
     private String icon;
@@ -27,7 +28,8 @@ public class TextField extends WebLocator {
 
     public <T extends TextField> T icon(final String icon) {
         this.icon = icon;
-        iconPathBuilder.icon(icon);
+        String key = "icon-cls";
+        pathBuilder.setElPathSuffix(key, pathBuilder.applyTemplate(key, icon));
         return (T) this;
     }
 }

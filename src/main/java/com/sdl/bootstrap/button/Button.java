@@ -1,48 +1,19 @@
 package com.sdl.bootstrap.button;
 
-import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.button.IButton;
-import org.apache.log4j.Logger;
 
-public class Button extends WebLocator implements IButton {
-    private static final Logger logger = Logger.getLogger(Button.class);
-
-    private String iconCls;
-
-    public String getIconCls() {
-        return iconCls;
-    }
-
-    public <T extends Button> T setIconCls(final String iconCls) {
-        this.iconCls = iconCls;
-        String key = "icon-cls";
-        setElPathSuffix(key, applyTemplate(key, iconCls));
-        return (T) this;
-    }
-
+/**
+ * @deprecated package "com.sdl.bootstrap.*" is deprecated, please use new package "com.sdl.selenium.bootstrap.*"
+ */
+public class Button extends com.sdl.selenium.bootstrap.button.Button {
     public Button() {
-        setClassName("Button");
-        setBaseCls("btn");
-        setTag("button");
-        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
-    /**
-     * @param container
-     */
     public Button(WebLocator container) {
-        this();
-        setContainer(container);
+        super(container);
     }
 
     public Button(WebLocator container, String text) {
-        this(container);
-        setText(text);
-        setSearchTextType(SearchType.EQUALS);
-    }
-
-    public boolean isDisabled() {
-        return getAttribute("disabled") != null || getAttributeClass().contains("disabled");
+        super(container, text);
     }
 }

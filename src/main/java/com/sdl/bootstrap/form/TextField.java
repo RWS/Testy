@@ -1,24 +1,18 @@
 package com.sdl.bootstrap.form;
 
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.SimpleTextField;
-import org.apache.log4j.Logger;
-
-public class TextField extends SimpleTextField {
-    private static final Logger logger = Logger.getLogger(TextField.class);
-
+/**
+ * @deprecated package "com.sdl.bootstrap.*" is deprecated, please use new package "com.sdl.selenium.bootstrap.*"
+ */
+public class TextField extends com.sdl.selenium.bootstrap.form.TextField {
     public TextField() {
-        setClassName("TextField");
-            setType("text"); // TODO try to move in SimpleTextField
     }
 
     public TextField(WebLocator container) {
-        this();
-        setContainer(container);
+        super(container);
     }
 
     public TextField(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
+        super(container, label);
     }
 }

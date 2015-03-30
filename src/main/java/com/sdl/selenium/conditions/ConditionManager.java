@@ -1,7 +1,8 @@
 package com.sdl.selenium.conditions;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,8 +30,7 @@ ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
  </pre>
  */
 public class ConditionManager  {
-
-    private static final Logger logger = Logger.getLogger(ConditionManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManager.class);
 
     public static int SLEEP_INTERVAL = 50;
 
@@ -71,13 +71,13 @@ public class ConditionManager  {
     }
 
     public ConditionManager add(Condition condition) {
-        //logger.debug("ConditionManager add condition : " + condition);
+        //LOGGER.debug("ConditionManager add condition : " + condition);
         conditionList.add(condition);
         return this;
     }
 
     public ConditionManager remove(Condition condition) {
-        //logger.debug("ConditionManager remove condition : " + condition);
+        //LOGGER.debug("ConditionManager remove condition : " + condition);
         conditionList.remove(condition);
         return this;
     }
@@ -119,7 +119,7 @@ public class ConditionManager  {
         while (true) {
             Condition condition = findCondition();
             if(condition != null){
-                logger.debug(condition + " - executed");
+                LOGGER.debug(condition + " - executed");
                 return condition;
             }
             Utils.sleep(SLEEP_INTERVAL);
@@ -131,7 +131,7 @@ public class ConditionManager  {
             if (condition.execute()) {
                 return condition;
             }
-            //logger.debug(condition + " is false");
+            //LOGGER.debug(condition + " is false");
         }
         return null;
     }

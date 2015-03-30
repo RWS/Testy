@@ -1,11 +1,15 @@
 package com.sdl.bootstrap.button;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-
+/**
+ * @deprecated package "com.sdl.bootstrap.*" is deprecated, please use new package "com.sdl.selenium.bootstrap.*"
+ */
 public class RunExe {
-    private static final Logger logger = Logger.getLogger(RunExe.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunExe.class);
+    
     private static RunExe instance = new RunExe();
 
     private RunExe() {
@@ -30,7 +34,7 @@ public class RunExe {
     private boolean doRun(String filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath);
-            logger.debug(filePath);
+            LOGGER.debug(filePath);
             if (0 == process.waitFor()) {
                 return true;
             }

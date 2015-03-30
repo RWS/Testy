@@ -21,7 +21,7 @@ public class IconPathBuilder extends PathBuilder {
 
     public <T extends IconPathBuilder> T icon(final String icon) {
         this.icon = icon;
-//        customProperty.put("icon", "count(.//*[contains(@class, '"+icon+"')]) > 0");
+        super.addToTemplate("icon", "count(.//*[contains(@class, '" + icon + "')]) > 0");
 //        customProperty.put("tooltip", "count(.//*[contains(@class, '"+icon+"')]) > 0");
         return (T) this;
     }
@@ -30,12 +30,12 @@ public class IconPathBuilder extends PathBuilder {
         return icon != null && !icon.equals("");
     }
 
-    @Override
-    protected String getItemPathText() {
-        String selector = hasText() ? super.getItemPathText() : "";
-        if (hasIcon()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + icon() + "')]) > 0";
-        }
-        return selector.length() == 0 ? null : selector;
-    }
+//    @Override
+//    protected String getItemPathText() {
+//        String selector = hasText() ? super.getItemPathText() : "";
+//        if (hasIcon()) {
+//            selector += (selector.length() > 0 ? " and " : "") + "count(.//*[contains(@class, '" + icon() + "')]) > 0";
+//        }
+//        return selector.length() == 0 ? null : selector;
+//    }
 }

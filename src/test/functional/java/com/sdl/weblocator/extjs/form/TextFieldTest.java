@@ -1,18 +1,18 @@
 package com.sdl.weblocator.extjs.form;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.form.TextField;
-import com.extjs.selenium.window.Window;
+import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
 import org.junit.AfterClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
 public class TextFieldTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(TextFieldTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextFieldTest.class);
 
     Window textFieldWindow = new Window("TextFieldWindow");
     TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");
@@ -21,8 +21,7 @@ public class TextFieldTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "TextField");
-        editorGridPanelButton.click();
+        showComponent("TextField");
     }
 
     @AfterClass
@@ -52,6 +51,6 @@ public class TextFieldTest extends TestBase {
             lastNameTextField.setValue("Value" + i);
         }
         long endMs = System.currentTimeMillis();
-        logger.info(String.format("performanceTestSetValue took %s ms", endMs - startMs));
+        LOGGER.info(String.format("performanceTestSetValue took %s ms", endMs - startMs));
     }
 }

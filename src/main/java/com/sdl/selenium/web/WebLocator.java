@@ -1,16 +1,14 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
-import com.thoughtworks.selenium.Selenium;
-import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
-    private static final Logger LOGGER = Logger.getLogger(WebLocator.class);
-
-    public static Selenium selenium;
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
 
     private String currentElementPath = "";
     public WebElement currentElement;
@@ -43,6 +41,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         this(By.classes(cls));
     }
 
+    @Deprecated
     public WebLocator(WebLocator container, String elPath) {
         this(container, By.xpath(elPath));
     }
@@ -59,11 +58,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public static void setDriverExecutor(WebDriver driver) {
         executor = new WebLocatorDriverExecutor(driver);
-    }
-
-
-    public static void setSeleniumExecutor(Selenium selenium) {
-        executor = new WebLocatorSeleniumExecutor(selenium);
     }
 
     /**
@@ -116,7 +110,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean clickAt() {
         boolean clickAt = ready() && doClickAt();
         if (clickAt) {
-            LOGGER.info("ClickAt on " + this);
+            LOGGER.info("ClickAt on {}", toString());
         }
         return clickAt;
     }
@@ -145,7 +139,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean click() {
         boolean click = waitToRender() && doClick();
         if (click) {
-            LOGGER.info("Click on " + this);
+            LOGGER.info("Click on {}", toString());
         }
         return click;
     }
@@ -293,6 +287,27 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return visible;
     }
 
+    /*public boolean isSelected(){
+        findElement();
+        return currentElement.isSelected();
+    }
+
+    public boolean isDisplayed(){
+        findElement();
+        return currentElement.isDisplayed();
+    }
+
+    public boolean isEnabled(){
+        findElement();
+        return currentElement.isEnabled();
+    }
+
+    public void submit(){
+        findElement();
+        currentElement.submit();
+        currentElement.submit();
+    }*/
+
     // TODO remove from this class, it does not belong to this element
     public boolean isTextPresent(String text) {
         return executor.isTextPresent(this, text);
@@ -403,7 +418,19 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return waitToRender() && waitToActivate();
     }
 
+    public boolean assertReady() {
+        boolean ready = ready();
+        if (!ready) {
+            Assert.fail("Element is not ready : " + this);
+        }
+        return ready;
+    }
+
     public boolean ready(int seconds) {
         return waitToRender((long) seconds * 1000) && waitToActivate(seconds);
+    }
+
+    public boolean isDisabled() {
+        return ready() && !currentElement.isEnabled();
     }
 }

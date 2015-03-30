@@ -1,21 +1,23 @@
 package com.sdl.weblocator.extjs;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.conditions.MessageBoxFailCondition;
-import com.extjs.selenium.conditions.MessageBoxSuccessCondition;
-import com.extjs.selenium.panel.Panel;
-import com.extjs.selenium.window.MessageBox;
-import com.extjs.selenium.window.Window;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderCondition;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.conditions.MessageBoxFailCondition;
+import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
+import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.selenium.extjs3.window.MessageBox;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.TestBase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ConditionManagerTest extends TestBase {
-    private static final Logger logger = Logger.getLogger(ConditionManagerTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManagerTest.class);
+    
     Panel conditionManagerPanel = new Panel("Condition Manager");
     Button expect1Button = new Button(conditionManagerPanel, "Expect1");
     Button expect2Button = new Button(conditionManagerPanel, "Expect2");
@@ -43,7 +45,7 @@ public class ConditionManagerTest extends TestBase {
         Condition condition = doClick(expect1Button);
 
         if(condition.isFail()){
-            logger.warn(condition.getResultMessage());
+            LOGGER.warn(condition.getResultMessage());
         }
         Assert.assertTrue(condition.isSuccess());
 

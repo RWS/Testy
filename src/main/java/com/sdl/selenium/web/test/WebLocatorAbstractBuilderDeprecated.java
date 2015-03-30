@@ -9,10 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -34,7 +31,7 @@ public abstract class WebLocatorAbstractBuilderDeprecated {
     private String name;
     private String text;
     protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
-    private List<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
+    private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
     private String elCssSelector;
@@ -268,7 +265,7 @@ public abstract class WebLocatorAbstractBuilderDeprecated {
      *
      * @return value that has been set in {@link #setSearchTextType(com.sdl.selenium.web.SearchType...)}
      */
-    public List<SearchType> getSearchTextType() {
+    public Set<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
@@ -282,7 +279,7 @@ public abstract class WebLocatorAbstractBuilderDeprecated {
         if (searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new ArrayList<SearchType>();
+            this.searchTextType = new HashSet<>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);

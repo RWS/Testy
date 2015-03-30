@@ -68,12 +68,12 @@
     </test>
     <test name="DatePickerTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.DatePickerTest"/>
+            <class name="com.sdl.weblocator.bootstrap.form.DatePickerTest"/>
         </classes>
     </test>
     <test name="CheckBoxTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.CheckBoxTest"/>
+            <class name="com.sdl.weblocator.bootstrap.form.CheckBoxTest"/>
         </classes>
     </test>
     <test name="UploadFileTest">
@@ -83,7 +83,7 @@
     </test>
     <test name="SelectPickerTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.SelectPickerTest"/>
+            <class name="com.sdl.weblocator.bootstrap.form.SelectPickerTest"/>
         </classes>
     </test>
     <test name="ButtonTestBootstrap">
@@ -93,22 +93,22 @@
     </test>
     <test name="MultiSelectTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.MultiSelectTest"/>
+            <class name="com.sdl.weblocator.bootstrap.form.MultiSelectTest"/>
         </classes>
     </test>
     <test name="SpanTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.UneditableInputTest"/>
+            <class name="com.sdl.weblocator.bootstrap.form.UneditableInputTest"/>
         </classes>
     </test>
     <test name="DownloadFileTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.DownloadFileTest"/>
+            <class name="com.sdl.weblocator.bootstrap.button.DownloadFileTest"/>
         </classes>
     </test>
     <test name="SimpleTableTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.table.SimpleTableTest"/>
+            <class name="com.sdl.weblocator.bootstrap.table.TableTest"/>
         </classes>
     </test>
     <test name="WebLocator1Test">

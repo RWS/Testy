@@ -55,7 +55,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getClassName() == null) {
                 init(builder);
             }
         }
@@ -113,14 +113,14 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getCls() == null) {
                 init(builder);
             }
         }
     }
 
     public static By classes(final String... classes) {
-        if (classes == null)
+        if (classes.length == 0)
             throw new IllegalArgumentException(
                     "Cannot find elements when the classes expression is null.");
 
@@ -144,14 +144,14 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getClasses() == null) {
                 init(builder);
             }
         }
     }
 
     public static By excludeClasses(final String... excludeClasses) {
-        if (excludeClasses == null)
+        if (excludeClasses.length == 0)
             throw new IllegalArgumentException(
                     "Cannot find elements when the excludeClasses expression is null.");
 
@@ -175,7 +175,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getExcludeClasses() == null) {
                 init(builder);
             }
         }
@@ -204,7 +204,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getId() == null) {
                 init(builder);
             }
         }
@@ -220,8 +220,8 @@ public abstract class By<T> {
 
     private static class ByName extends By<String> {
 
-        public ByName(String id) {
-            setValue(id);
+        public ByName(String name) {
+            setValue(name);
         }
 
         public String getPath() {
@@ -233,7 +233,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getName() == null) {
                 init(builder);
             }
         }
@@ -292,7 +292,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getStyle() == null) {
                 init(builder);
             }
         }
@@ -321,7 +321,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getTitle() == null) {
                 init(builder);
             }
         }
@@ -379,7 +379,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getLabelTag() == null) {
                 init(builder);
             }
         }
@@ -409,7 +409,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getLabel() == null) {
                 init(builder);
             }
         }
@@ -438,7 +438,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getLabelPosition() == null) {
                 init(builder);
             }
         }
@@ -467,7 +467,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getPosition() == -1) {
                 init(builder);
             }
         }
@@ -496,7 +496,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getElPathSuffix() == null) {
                 init(builder);
             }
         }
@@ -525,7 +525,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getElPath() == null) {
                 init(builder);
             }
         }
@@ -554,7 +554,36 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getContainer() == null) {
+                init(builder);
+            }
+        }
+    }
+
+    public static By childNodes(final WebLocator... childNodes) {
+        if (childNodes.length == 0)
+            throw new IllegalArgumentException(
+                    "Cannot find elements when the ...childNodes expression is null.");
+
+        return new ByChildNodes(childNodes);
+    }
+
+    private static class ByChildNodes extends By<WebLocator[]> {
+
+        public ByChildNodes(WebLocator... childNodes) {
+            setValue(childNodes);
+        }
+
+        public String getPath() {
+            return getValue().toString();
+        }
+
+        public void init(PathBuilder builder) {
+            builder.setChildNotes(getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getChildNodes().isEmpty()) {
                 init(builder);
             }
         }
@@ -583,7 +612,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getBaseCls() == null) {
+            if (builder.getInfoMessage() == null) {
                 init(builder);
             }
         }
@@ -619,7 +648,7 @@ public abstract class By<T> {
     }
 
     public static By searchType(final SearchType... searchType) {
-        if (searchType == null)
+        if (searchType.length == 0)
             throw new IllegalArgumentException(
                     "Cannot find elements when the searchType expression is null.");
 
@@ -641,9 +670,9 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-//            if (builder.getSearchTextType() == null) {
+            if (builder.getSearchTextType().isEmpty()) {
                 init(builder);
-//            }
+            }
         }
     }
 }

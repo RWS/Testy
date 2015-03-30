@@ -1,6 +1,6 @@
 package com.sdl.selenium.web.table;
 
-import com.extjs.selenium.ExtJsComponent;
+import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class TableCellTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
 
-    public static SimpleTable table = new SimpleTable().setId("ID");
+    public static Table table = new Table().setId("ID");
     public static TableRow tableRow = new TableRow(table, "Text", SearchType.EQUALS);
 
     @DataProvider

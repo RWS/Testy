@@ -2,29 +2,18 @@ package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.WebLocator;
 
-public class SimpleUploadButton extends WebLocator {
-
+/**
+ * @deprecated class "SimpleUploadButton*" is deprecated, please use new package "UploadButton"
+ */
+public class SimpleUploadButton extends UploadButton {
     public SimpleUploadButton() {
-        setClassName("SimpleUploadButton");
-        setTag("input");
     }
 
     public SimpleUploadButton(WebLocator container) {
-        this();
-        setContainer(container);
+        super(container);
     }
 
     public SimpleUploadButton(WebLocator container, String id) {
-        this(container);
-        setId(id);
+        super(container, id);
     }
-
-    public boolean uploadFile(String path) {
-        return sendKeys(path) != null;
-    }
-
-    /*public void uploadFileWithJS(String path, String id) {
-        executeScript("return (function(id){var d=document.getElementById(id);d.style.visibility='visible';d.style.height='1px'; d.style.width='1px'; d.style.opacity=1;return d.getAttribute('style') != ''}('" + id + "'));");
-        sendKeys(path);
-    }*/
 }

@@ -1,14 +1,14 @@
 package com.sdl.weblocator.extjs.grid;
 
-import com.extjs.selenium.button.Button;
-import com.extjs.selenium.form.ComboBox;
-import com.extjs.selenium.form.TextArea;
-import com.extjs.selenium.form.TextField;
-import com.extjs.selenium.grid.EditorGridPanel;
-import com.extjs.selenium.grid.GridCell;
-import com.extjs.selenium.window.Window;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.form.ComboBox;
+import com.sdl.selenium.extjs3.form.TextArea;
+import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.extjs3.grid.EditorGridPanel;
+import com.sdl.selenium.extjs3.grid.GridCell;
+import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
@@ -24,9 +24,9 @@ import static org.testng.Assert.assertTrue;
 
 public class EditorGridPanelTest extends TestBase {
 
-    Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
-    Button submitButton = new Button(editorGridPanelWindow, "Submit");
+    private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
+    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
+    private Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider
     public Object[][] createTestDP() {
@@ -39,8 +39,7 @@ public class EditorGridPanelTest extends TestBase {
 
     @BeforeMethod
     public void startTests() {
-        Button editorGridPanelButton = new Button(null, "EditorGridPanel");
-        editorGridPanelButton.click();
+        showComponent("EditorGridPanel");
     }
 
     @AfterMethod
