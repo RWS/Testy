@@ -11,7 +11,7 @@ public class TextFieldTest {
         return new Object[][]{
                 {new TextField(), "//input"},
                 {new TextField("ID"), "//input[@id='ID']"},
-                {new TextField("ID").setType("text"), "//input[@id='ID' and @type='text']"},
+                //{new TextField("ID").setType("text"), "//input[@id='ID' and @type='text']"},
         };
     }
 

@@ -1,7 +1,8 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.WebLocatorAbstractBuilder;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
@@ -10,33 +11,19 @@ import org.slf4j.LoggerFactory;
 public class TextField extends WebLocator implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
-    private String type;
-
-    public TextField() {
-        setClassName("SimpleTextField");
-        setTag("input");
-        setTemplate("input-type", "@type='%s'");
+    PathBuilder pathBuilder = getPathBuilder();
+    public TextField(By...bys) {
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.className("SimpleTextField"), By.tag("input"), By.pathSuffix("@type='text'"));
     }
 
     public TextField(WebLocator container) {
         this();
-        setContainer(container);
+        pathBuilder.setContainer(container);
     }
 
     public TextField(String id) {
-        this();
-        setId(id);
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public <T extends WebLocatorAbstractBuilder> T setType(String type) {
-        this.type = type;
-        String key = "input-type";
-        setElPathSuffix(key, applyTemplate(key, type));
-        return (T) this;
+        this(By.id(id));
     }
 
     public boolean pasteInValue(String value) {

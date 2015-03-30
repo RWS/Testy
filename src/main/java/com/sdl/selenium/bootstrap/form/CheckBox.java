@@ -1,5 +1,7 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
@@ -23,25 +25,27 @@ import org.slf4j.LoggerFactory;
 public class CheckBox extends TextField implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
-    public CheckBox() {
-        setClassName("CheckBox");
-        setType("checkbox");
+    PathBuilder pathBuilder = getPathBuilder();
+    public CheckBox(By...bys) {
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.className("CheckBox"), By.pathSuffix("@type='checkbox'"));
+        //setType("checkbox");
     }
 
     public CheckBox(WebLocator container) {
         this();
-        setContainer(container);
+        pathBuilder.setContainer(container);
     }
 
     public CheckBox(WebLocator container, String label) {
-        this(container);
-        setLabel(label, SearchType.CONTAINS);
-        setLabelPosition("//");
+        this(By.container(container), By.label(label, SearchType.CONTAINS), By.labelPosition("//"));
+//        setLabel(label, SearchType.CONTAINS);
+//        setLabelPosition("//");
     }
 
     public CheckBox(String boxLabel, WebLocator container) {
-        this(container);
-        setLabel(boxLabel);
+        this(By.container(container), By.label(boxLabel));
+//        setLabel(boxLabel);
     }
 
     public boolean isSelected() {

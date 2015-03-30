@@ -10,7 +10,7 @@ public class InputAppend extends TextField {
 
     public InputAppend() {
         setClassName("InputAppend");
-        setType("text");
+        //setType("text");
     }
 
     public InputAppend(WebLocator container) {
