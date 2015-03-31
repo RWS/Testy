@@ -1,19 +1,20 @@
 package com.sdl.selenium.web.window;
 
+import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
 
 public class Window extends WebLocator {
 
-    public Window() {
-        setClassName("SimpleWindow");
-        setBaseCls("ui-dialog ui-widget ui-widget-content");
-        setStyle("display: block;");
+    public Window(By...bys) {
+        PathBuilder pathBuilder = getPathBuilder();
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.className("Window"), By.baseCls("ui-dialog ui-widget ui-widget-content"), By.style("display: block;"));
         setTemplate("title", "count(.//*[text()='%s']) > 0");
     }
 
     public Window(String title) {
-        this();
-        setTitle(title);
+        this(By.title(title));
     }
 
     public String getMessageWindow() {
@@ -41,7 +42,7 @@ public class Window extends WebLocator {
 
     public boolean press(String msg, String textButton, boolean containsMsg) {
         if (ready()) {
-            if(containsMsg ? getMessageWindow().contains(msg) : msg.equals(getMessageWindow())) {
+            if (containsMsg ? getMessageWindow().contains(msg) : msg.equals(getMessageWindow())) {
                 return press(textButton);
             }
         }
@@ -49,7 +50,7 @@ public class Window extends WebLocator {
     }
 
     public boolean press(String msg, String textButton) {
-        return press( msg, textButton, false);
+        return press(msg, textButton, false);
     }
 }
 
