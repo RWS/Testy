@@ -61,7 +61,7 @@ public class PathBuilder {
     private List<String> excludeClasses;
     private String name;
     private String text;
-    protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
+    public List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
     private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private List<SearchType> searchLabelType = new ArrayList<SearchType>();
     private String style;
@@ -298,7 +298,7 @@ public class PathBuilder {
      */
     public <T extends PathBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
-        if (searchType != null&& searchType.length > 0) {
+        if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
         } else {
             this.searchTextType.addAll(defaultSearchTextType);
@@ -796,17 +796,17 @@ public class PathBuilder {
             for (WebLocator el : getChildNodes()) {
                 WebLocator breakElement = null;
                 WebLocator elIterator = el;
-                /*while (elIterator.getContainer() != null && breakElement == null) {
-                    if(elIterator.getContainer() == this) {
-                        elIterator.setContainer(null);
+                /*while (elIterator.getPathBuilder().getContainer() != null && breakElement == null) {
+                    if(elIterator.getPathBuilder().getContainer() == this) {
+                        elIterator.getPathBuilder().setContainer(null);
                         breakElement = elIterator;
                     } else {
-                        elIterator = elIterator.getContainer();
+                        elIterator = elIterator.getPathBuilder().getContainer();
                     }
                 }*/
-                selector.add("count(." + el.getPath() + ") > 0");
+                selector.add("count(." + el.getPathBuilder().getPath() + ") > 0");
                 if(breakElement != null) {
-                    //breakElement.setContainer((WebLocator) this);
+                    //breakElement.getPathBuilder().setContainer((WebLocator) this);
                 }
             }
         }

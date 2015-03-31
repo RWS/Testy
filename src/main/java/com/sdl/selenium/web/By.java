@@ -666,13 +666,16 @@ public abstract class By<T> {
         }
 
         public void init(PathBuilder builder) {
-            builder.defaultSearchTextType.addAll(Arrays.asList(getValue()));
+            //searchType(getValue());
+            builder.setSearchTextType(getValue());
+//            builder.defaultSearchTextType.addAll(Arrays.asList(getValue()));
+
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getSearchTextType().isEmpty()) {
+//            if (builder.getSearchTextType().isEmpty()) {
                 init(builder);
-            }
+//            }
         }
     }
 }
