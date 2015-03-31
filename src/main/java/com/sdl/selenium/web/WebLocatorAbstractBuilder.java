@@ -605,7 +605,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setLabelTag(String labelTag) {
         this.labelTag = labelTag;
-        pathBuilder.setLabelTag(tag);
+        pathBuilder.setLabelTag(labelTag);
         return (T) this;
     }
 

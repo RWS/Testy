@@ -10,8 +10,8 @@ public class ExtJsComponent extends WebLocator {
 
     public ExtJsComponent() {
         setClassName("ExtJsComponent");
-        addToTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0");
-        setTemplate("disabled", "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]");
+        getPathBuilder().addToTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0");
+        getPathBuilder().setTemplate("disabled", "/ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]");
     }
 
     /**

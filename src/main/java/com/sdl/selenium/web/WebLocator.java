@@ -31,7 +31,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public WebLocator(WebLocator container, By... bys) {
         this(bys);
-        setContainer(container);
+        getPathBuilder().setContainer(container);
     }
 
     /**

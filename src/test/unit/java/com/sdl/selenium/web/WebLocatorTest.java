@@ -95,7 +95,7 @@ public class WebLocatorTest {
     }
 
     @DataProvider
-    public static Object[][] testConstructorPathDataProviderText() {
+    public static Object[][] testConstructorPathDataProviderText()  {
         String text = "WebLocator text for search type";
         String cls = "searchTextType";
         return new Object[][]{
@@ -132,47 +132,47 @@ public class WebLocatorTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
-        assertEquals(el.getPath(), expectedXpath);
+        assertEquals(el.getPathBuilder().getPath(), expectedXpath);
     }
 
     @Test(dataProvider = "testConstructorPathDataProviderText")
     public void getPathSelectorCorrectlyFromConstructorsByText(WebLocator el, String expectedXpath) {
-        assertEquals(el.getPath(), expectedXpath);
+        assertEquals(el.getPathBuilder().getPath(), expectedXpath);
     }
 
     @Test
     public void getPathSelectorSetTagWhenWebLocatorHasClsAndContainer() {
         WebLocator el = new WebLocator("testcls", container);
         el.setTag("textarea");
-        assertEquals(el.getPath(), CONTAINER_PATH + "//textarea[contains(concat(' ', @class, ' '), ' testcls ')]");
+        assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//textarea[contains(concat(' ', @class, ' '), ' testcls ')]");
     }
 
     @Test
     public void getPathSelectorSetTagWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setTag("textarea");
-        assertEquals(el.getPath(), CONTAINER_PATH + "//textarea[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
+        assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//textarea[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
     }
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasContainerAndPath() {
         WebLocator el = new WebLocator(container, "//*[contains(@class, 'testcls')]");
         el.setId("ID");
-        assertEquals(el.getPath(), CONTAINER_PATH + "//*[contains(@class, 'testcls')]");
+        assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//*[contains(@class, 'testcls')]");
     }
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasClsAndContainer() {
         WebLocator el = new WebLocator("testcls", container);
         el.setId("ID");
-        assertEquals(el.getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ')]");
+        assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ')]");
     }
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setId("ID");
-        assertEquals(el.getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
+        assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
     }
 
     //@Test
@@ -180,7 +180,7 @@ public class WebLocatorTest {
     public void getPathSelectorSetIdWhenWebLocatorHasXPath() {
         WebLocator el = new WebLocator(null, CONTAINER_PATH + "//*[contains(@class, 'testcls') and contains(text(),'text')]");
         el.setId("ID");
-        assertEquals(el.getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]");
+        assertEquals(el.getPathBuilder().getPath(), CONTAINER_PATH + "//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]");
     }
 
     @Test
@@ -206,9 +206,9 @@ public class WebLocatorTest {
     @Test
     public void resetSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.EQUALS);
-        assertEquals(locator.getPath(), "//*[text()='text']");
-        locator.setSearchTextType(null);
-        assertEquals(locator.getPath(), "//*[contains(text(),'text')]");
+        assertEquals(locator.getPathBuilder().getPath(), "//*[text()='text']");
+        locator.getPathBuilder().setSearchTextType(null);
+        assertEquals(locator.getPathBuilder().getPath(), "//*[contains(text(),'text')]");
     }
 
     @Test
