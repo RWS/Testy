@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -16,6 +17,12 @@ public class TextFieldTest {
                 {new TextField(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='text']"},
                 {new TextField(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new TextField(container, "TextFieldText"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='text']"},
+
+                {new TextField(By.id("ID")),                           "//input[@id='ID' and @type='text']"},
+                {new TextField(By.container(container)),               "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='text']"},
+                {new TextField(By.container(container), By.xpath("//*[contains(text(), 'Register')]")), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new TextField(container, By.label("TextFieldText")),  "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='text']"},
+
         };
     }
 

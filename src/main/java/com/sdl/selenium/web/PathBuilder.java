@@ -38,13 +38,14 @@ public class PathBuilder {
         init(bys);
     }
 
-    public void init(By ...bys) {
+    @SafeVarargs
+    public final <B extends By> void init(B... bys) {
         for (By by : bys) {
             by.init(this);
         }
     }
 
-    public void defaults(By ...bys) {
+    public <B extends By> void defaults(B ...bys) {
         for (By by : bys) {
             by.initDefault(this);
         }
@@ -819,7 +820,7 @@ public class PathBuilder {
     }
 
     public String applyTemplate(String key, Object... arguments) {
-        String tpl = templates.get(key);
+        String tpl = this.templates.get(key);
         if (StringUtils.isNotEmpty(tpl)) {
             return String.format(tpl, arguments);
         }

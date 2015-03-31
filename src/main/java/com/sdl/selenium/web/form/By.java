@@ -23,11 +23,11 @@ public abstract class By<T> extends com.sdl.selenium.web.By {
         }
 
         public void init(PathBuilder builder) {
-            builder.setElPathSuffix("input-type", builder.applyTemplate("input-type", (String)getValue()));
+            builder.setElPathSuffix("input-type", builder.applyTemplate("input-type", (String) getValue()));
         }
 
         public void initDefault(PathBuilder builder) {
-            if (builder.getTemplate("input-type") == null) {
+            if (builder.getElPathSuffix() == null) {
                 init(builder);
             }
         }
