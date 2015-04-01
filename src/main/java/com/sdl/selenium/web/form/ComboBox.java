@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 public class ComboBox extends WebLocator implements ICombo {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
 
-    public ComboBox() {
-        setClassName("SimpleComboBox");
-        setTag("select");
+    public ComboBox(By ...bys) {
+        getPathBuilder().init(bys);
+        getPathBuilder().defaults(By.className("SimpleComboBox"), By.tag("select"));
     }
 
     public ComboBox(WebLocator container) {
