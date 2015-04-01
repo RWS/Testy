@@ -1,11 +1,13 @@
 package com.sdl.selenium.web.link;
 
+import com.sdl.selenium.web.By;
+import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +16,20 @@ public class WebLink extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLink.class);
     
     private String oldTab;
+    private PathBuilder pathBuilder = getPathBuilder();
 
-    public WebLink() {
-        setClassName("WebLink");
-        setTag("a");
+    public WebLink(By...bys) {
+        pathBuilder.init(bys);
+        pathBuilder.defaults(By.className("WebLink"), By.tag("a"));
     }
 
-    public WebLink(WebLocator container) {
-        this();
-        setContainer(container);
+    public WebLink(WebLocator container, By ...bys) {
+        this(bys);
+        pathBuilder.setContainer(container);
     }
 
     public WebLink(WebLocator container, String text) {
-        this(container);
-        setText(text);
+        this(container, By.text(text));
     }
 
     public boolean openInNewWindow() {

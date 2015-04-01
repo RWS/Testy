@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.link;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -16,11 +17,13 @@ public class WebLinkTest {
                 {new WebLink(), "//a"},
                 {new WebLink(container), CONTAINER_PATH + "//a"},
                 {new WebLink(container, "text"), CONTAINER_PATH + "//a[contains(text(),'text')]"},
+                {new WebLink(By.container(container)), CONTAINER_PATH + "//a"},
+                {new WebLink(container, By.text("text")), CONTAINER_PATH + "//a[contains(text(),'text')]"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLink webLink, String expectedXpath) {
-        Assert.assertEquals(webLink.getPath(), expectedXpath);
+        Assert.assertEquals(webLink.getPathBuilder().getPath(), expectedXpath);
     }
 }
