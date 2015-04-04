@@ -14,7 +14,7 @@
             <class name="com.sdl.selenium.web.button.SelectFilesHandlerTest"/>
             <class name="com.sdl.selenium.web.button.UploadButtonTest"/>
 
-            <class name="com.sdl.selenium.web.form.CheckBoxSimpleTest"/>
+            <class name="com.sdl.selenium.web.form.CheckBoxTest"/>
             <class name="com.sdl.selenium.web.form.ComboBoxTest"/>
             <class name="com.sdl.selenium.web.form.TextFieldTest"/>
             <class name="com.sdl.selenium.web.form.MultipleSelectTest"/>
