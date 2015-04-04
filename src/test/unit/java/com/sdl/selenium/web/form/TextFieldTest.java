@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.form.by.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

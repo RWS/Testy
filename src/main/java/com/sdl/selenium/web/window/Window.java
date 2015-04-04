@@ -9,7 +9,7 @@ public class Window extends WebLocator {
     public Window(By...bys) {
         PathBuilder pathBuilder = getPathBuilder();
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.className("Window"), By.baseCls("ui-dialog ui-widget ui-widget-content"), By.style("display: block;"));
+        pathBuilder.defaults(By.baseCls("ui-dialog ui-widget ui-widget-content"), By.style("display: block;"));
         setTemplate("title", "count(.//*[text()='%s']) > 0");
     }
 

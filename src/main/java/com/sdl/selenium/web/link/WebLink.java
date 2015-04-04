@@ -20,7 +20,7 @@ public class WebLink extends WebLocator {
 
     public WebLink(By...bys) {
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.className("WebLink"), By.tag("a"));
+        pathBuilder.defaults(By.tag("a"));
     }
 
     public WebLink(WebLocator container, By ...bys) {

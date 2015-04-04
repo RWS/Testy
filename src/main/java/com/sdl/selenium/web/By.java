@@ -32,35 +32,6 @@ public abstract class By<T> {
 
     // =========================
 
-    public static By className(final String className) {
-        if (className == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the className expression is null.");
-
-        return new ByClassName(className);
-    }
-
-    private static class ByClassName extends By<String> {
-
-        public ByClassName(String className) {
-            setValue(className);
-        }
-
-        public String getPath() {
-            return getValue();
-        }
-
-        public void init(PathBuilder builder) {
-            builder.setClassName(getValue());
-        }
-
-        public void initDefault(PathBuilder builder) {
-            if (builder.getClassName() == null) {
-                init(builder);
-            }
-        }
-    }
-
     public static By baseCls(final String baseCls) {
         if (baseCls == null)
             throw new IllegalArgumentException(
