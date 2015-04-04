@@ -51,7 +51,7 @@ public class DeployTesty extends TestBase {
     private TextField pass = new TextField(loginForm).setName("j_password");
     private WebLocator logInButton = new WebLocator(loginForm).setId("yui-gen1-button");
     private Table table = new Table().setId("main-table");
-    private WebLocator buildNow = new WebLocator(table, "//a[@class='task-link' and text()='Build Now']");
+    private WebLocator buildNow = new WebLocator(table).setElPath("//a[@class='task-link' and text()='Build Now']");
     private Table buildHistory = new Table().setId("buildHistory");
     private WebLocator buildNowEl = new WebLocator(buildHistory).setClasses("build-row", "no-wrap", "transitive").setPosition(1);
 

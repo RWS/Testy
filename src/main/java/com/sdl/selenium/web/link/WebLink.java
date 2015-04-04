@@ -19,6 +19,7 @@ public class WebLink extends WebLocator {
     private PathBuilder pathBuilder = getPathBuilder();
 
     public WebLink(By...bys) {
+        pathBuilder.setTemplate("title", "@title='%s'");
         pathBuilder.init(bys);
         pathBuilder.defaults(By.tag("a"));
     }
