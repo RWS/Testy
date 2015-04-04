@@ -19,6 +19,7 @@ public class WebLinkTest {
                 {new WebLink(container, "text"), CONTAINER_PATH + "//a[contains(text(),'text')]"},
                 {new WebLink(By.container(container)), CONTAINER_PATH + "//a"},
                 {new WebLink(container, By.text("text")), CONTAINER_PATH + "//a[contains(text(),'text')]"},
+                {new WebLink(container, By.text("text"), By.title("title")), CONTAINER_PATH + "//a[@title='title' and contains(text(),'text')]"},
         };
     }
 
