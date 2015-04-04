@@ -1,11 +1,11 @@
 package com.sdl.selenium.bootstrap.form;
 
-import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.TextField;
+import com.sdl.selenium.web.form.by.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -26,10 +26,9 @@ public class CheckBox extends TextField implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     PathBuilder pathBuilder = getPathBuilder();
-    public CheckBox(By...bys) {
+    public CheckBox(com.sdl.selenium.web.By...bys) {
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.pathSuffix("elPathSuffix", "@type='checkbox'"));
-        //setType("checkbox");
+        pathBuilder.defaults(By.type("checkbox"));
     }
 
     public CheckBox(WebLocator container) {
@@ -39,13 +38,10 @@ public class CheckBox extends TextField implements ICheck {
 
     public CheckBox(WebLocator container, String label) {
         this(By.container(container), By.label(label, SearchType.CONTAINS), By.labelPosition("//"));
-//        setLabel(label, SearchType.CONTAINS);
-//        setLabelPosition("//");
     }
 
     public CheckBox(String boxLabel, WebLocator container) {
         this(By.container(container), By.label(boxLabel));
-//        setLabel(boxLabel);
     }
 
     public boolean isSelected() {
