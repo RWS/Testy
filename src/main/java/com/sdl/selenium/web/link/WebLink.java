@@ -2,10 +2,10 @@ package com.sdl.selenium.web.link;
 
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ public class WebLink extends WebLocator {
     public WebLink() {
         setClassName("WebLink");
         setTag("a");
+        setTemplate("title", "@title='%s'");
     }
 
     public WebLink(WebLocator container) {
