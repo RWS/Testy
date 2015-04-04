@@ -65,7 +65,7 @@ public class WebLocatorTest {
                 {new WebLocator().setClasses("Cls").setTag("textarea"), "//textarea[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(container, "//*[contains(@class, 'testcls')]").setTag("textarea"), CONTAINER_PATH + "//*[contains(@class, 'testcls')]"},
                 {new WebLocator().setElPathSuffix("has-div", "count(div) > 0"), "//*[count(div) > 0]"},
-                {new WebLocator(By.pathSuffix("count(div) > 0")), "//*[count(div) > 0]"},
+                {new WebLocator(By.pathSuffix("pathSuffix", "count(div) > 0")), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
                 {new WebLocator().setClasses("Cls").setTitle("TITLE"), "//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(By.excludeClasses("cls1", "cls2")), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},

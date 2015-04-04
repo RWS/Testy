@@ -5,6 +5,7 @@ import java.util.Arrays;
 public abstract class By<T> {
 
     private T value;
+    private T key;
     private SearchType[] searchType;
 
     // abstract TODO remove it
@@ -16,6 +17,14 @@ public abstract class By<T> {
 
     public void setValue(T value) {
         this.value = value;
+    }
+
+    public T getKey() {
+        return key;
+    }
+
+    public void setKey(T key) {
+        this.key = key;
     }
 
     public SearchType[] getSearchType() {
@@ -444,17 +453,18 @@ public abstract class By<T> {
         }
     }
 
-    public static By pathSuffix(final String pathSuffix) {
+    public static By pathSuffix(final String key, final String pathSuffix) {
         if (pathSuffix == null)
             throw new IllegalArgumentException(
                     "Cannot find elements when the pathSuffix expression is null.");
 
-        return new ByPathSuffix(pathSuffix);
+        return new ByPathSuffix(key, pathSuffix);
     }
 
     private static class ByPathSuffix extends By<String> {
 
-        public ByPathSuffix(String xpath) {
+        public ByPathSuffix(String key, String xpath) {
+            setKey(key);
             setValue(xpath);
         }
 
@@ -463,11 +473,41 @@ public abstract class By<T> {
         }
 
         public void init(PathBuilder builder) {
-            builder.setElPathSuffix(getValue());
+            builder.setElPathSuffix(getKey(), getValue());
         }
 
         public void initDefault(PathBuilder builder) {
             if (builder.getElPathSuffix() == null) {
+                init(builder);
+            }
+        }
+    }
+
+    public static By template(final String key, final String template) {
+        if (template == null)
+            throw new IllegalArgumentException(
+                    "Cannot find elements when the pathSuffix expression is null.");
+
+        return new ByTemplate(key, template);
+    }
+
+    private static class ByTemplate extends By<String> {
+
+        public ByTemplate(String key, String template) {
+            setKey(key);
+            setValue(template);
+        }
+
+        public String getPath() {
+            return getValue();
+        }
+
+        public void init(PathBuilder builder) {
+            builder.setTemplate(getKey(), getValue());
+        }
+
+        public void initDefault(PathBuilder builder) {
+            if (builder.getTemplate(getKey()) == null) {
                 init(builder);
             }
         }

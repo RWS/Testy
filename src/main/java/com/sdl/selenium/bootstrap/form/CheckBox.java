@@ -28,7 +28,7 @@ public class CheckBox extends TextField implements ICheck {
     PathBuilder pathBuilder = getPathBuilder();
     public CheckBox(By...bys) {
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.pathSuffix("@type='checkbox'"));
+        pathBuilder.defaults(By.pathSuffix("elPathSuffix", "@type='checkbox'"));
         //setType("checkbox");
     }
 
