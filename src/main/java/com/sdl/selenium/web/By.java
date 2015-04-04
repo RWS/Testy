@@ -330,7 +330,7 @@ public abstract class By<T> {
         }
 
         public void initDefault(PathBuilder builder) {
-            if ("*".equals(builder.getTag())) {
+            if ("*".equals(builder.getTag()) || !getValue().equals(builder.getTag())) {
                 init(builder);
             }
         }

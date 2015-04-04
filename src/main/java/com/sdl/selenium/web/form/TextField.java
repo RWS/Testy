@@ -13,7 +13,6 @@ public class TextField extends WebLocator implements ITextField {
     private String type;
 
     public TextField(By ...bys) {
-        super(bys);
         getPathBuilder().setTemplate("input-type", "@type='%s'");
         getPathBuilder().init(bys);
         getPathBuilder().defaults(By.tag("input"));
