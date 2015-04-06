@@ -27,7 +27,7 @@ public class Form extends WebLocator implements IWebLocator {
     private PathBuilder pathBuilder = getPathBuilder();
     public Form(By ...bys) {
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.className("Form"), By.tag("form"));
+        pathBuilder.defaults(By.tag("form"));
         pathBuilder.setTemplate("title", "count(.//legend[text()='%s']) > 0");
     }
 

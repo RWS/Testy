@@ -21,7 +21,7 @@ public class TextFieldTest {
                 {new TextField(By.id("ID")),                           "//input[@id='ID' and @type='text']"},
                 {new TextField(By.container(container)),               "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='text']"},
                 {new TextField(By.container(container), By.xpath("//*[contains(text(), 'Register')]")), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
-                {new TextField(container, By.label("TextFieldText")),  "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='text']"},
+                {new TextField(By.container(container), By.label("TextFieldText")),  "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='text']"},
 
         };
     }

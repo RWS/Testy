@@ -16,7 +16,7 @@ public class TableRow extends Row {
     private PathBuilder pathBuilder = getPathBuilder();
     public TableRow(By ...bys) {
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.className("TableRow"), By.tag("tr"));
+        pathBuilder.defaults(By.tag("tr"));
         setRenderMillis(200);
     }
 

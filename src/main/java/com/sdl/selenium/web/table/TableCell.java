@@ -26,7 +26,7 @@ public class TableCell extends Cell {
         setPathBuilder(pathBuilder);
         pathBuilder.defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF); //TODO Depinde ordinea!!!!
         pathBuilder.init(bys);
-        pathBuilder.defaults(By.className("TableCell"), By.tag("td"));
+        pathBuilder.defaults(By.tag("td"));
         setRenderMillis(200);
     }
 
