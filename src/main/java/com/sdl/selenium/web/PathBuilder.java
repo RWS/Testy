@@ -787,6 +787,10 @@ public class PathBuilder {
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
+        /*for (String suffix : templates.values()) {
+            selector.add(applyTemplate(suffix, "get" + suffix + "()"));
+        }*/
+
         addChildNotesToSelector(selector);
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
