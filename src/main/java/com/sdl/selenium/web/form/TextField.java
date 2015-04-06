@@ -34,7 +34,8 @@ public class TextField extends WebLocator implements ITextField {
     public <T extends TextField> T setType(String type) {
         this.type = type;
         String key = "input-type";
-        getPathBuilder().setElPathSuffix(key, getPathBuilder().applyTemplate(key, type));
+        String pathSuffix = getPathBuilder().applyTemplate(key, type);
+        getPathBuilder().setElPathSuffix(key, pathSuffix);
         return (T) this;
     }
 

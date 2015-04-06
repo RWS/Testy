@@ -19,6 +19,6 @@ public class ComboBoxTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(ComboBox combo, String expectedXpath) {
-        Assert.assertEquals(combo.getPath(), expectedXpath);
+        Assert.assertEquals(combo.getPathBuilder().getPath(), expectedXpath);
     }
 }
