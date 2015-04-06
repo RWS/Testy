@@ -1,16 +1,14 @@
 package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CheckBox extends WebLocator implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
         setClassName("SimpleCheckBox");
         setTag("input");
-        setElPathSuffix("type", "@type='checkbox'");
+        setTemplate("input-type", "@type='%s'");
+        setTemplateValue("input-type", "checkbox");
     }
 
     public CheckBox(WebLocator container) {

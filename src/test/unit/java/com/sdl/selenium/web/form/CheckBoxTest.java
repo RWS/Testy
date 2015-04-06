@@ -1,19 +1,20 @@
 package com.sdl.selenium.web.form;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CheckBoxTest {
-    private static ExtJsComponent container = new ExtJsComponent("container");
+    private static WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new CheckBox(),           "//input[@type='checkbox']"},
                 {new CheckBox(container),  "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
-                {new CheckBox("SelectId"), "//input[@id='SelectId' and @type='checkbox']"}
+                {new CheckBox("Id"), "//input[@id='Id' and @type='checkbox']"},
+                {new CheckBox("Id").setTemplateValue("input-type", "check"), "//input[@id='Id' and @type='check']"}
         };
     }
 

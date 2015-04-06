@@ -6,6 +6,7 @@ import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
  * <p>Example:</p>
@@ -25,7 +26,7 @@ public class CheckBox extends TextField implements ICheck {
 
     public CheckBox() {
         setClassName("CheckBox");
-        setType("checkbox");
+        setTemplateValue("input-type", "checkbox");
     }
 
     public CheckBox(WebLocator container) {
@@ -44,11 +45,13 @@ public class CheckBox extends TextField implements ICheck {
         setLabel(boxLabel);
     }
 
+    @Override
     public boolean isSelected() {
         return isElementPresent() && executor.isSelected(this);
     }
 
-    public boolean isDisabled(){
+    @Override
+    public boolean isDisabled() {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
