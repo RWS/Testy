@@ -15,19 +15,18 @@ import java.util.regex.Pattern;
 public abstract class WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
-    private PathBuilder pathBuilder = new PathBuilder();
+    private XPathBuilder pathBuilder = new XPathBuilder();
 
-    public PathBuilder getPathBuilder() {
+    public XPathBuilder getPathBuilder() {
         return pathBuilder;
     }
 
-    public void setPathBuilder(PathBuilder pathBuilder) {
-        this.pathBuilder = pathBuilder;
-    }
+//    public void setPathBuilder(XPathBuilder pathBuilder) {
+//        this.pathBuilder = pathBuilder;
+//    }
 
     private String className = "WebLocator";
     private String tag = "*";
-    private String id;
     private String elPath;
     private String baseCls;
     private String cls;
@@ -104,7 +103,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setId(String)}
      */
     public String getId() {
-        return id;
+        return pathBuilder.getId();
     }
 
     /**
@@ -115,7 +114,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setId(final String id) {
-        this.id = id;
         pathBuilder.setId(id);
         return (T) this;
     }
@@ -696,10 +694,6 @@ public abstract class WebLocatorAbstractBuilder {
         pathBuilder.setClassName(className);
     }
 
-    protected boolean hasId() {
-        return id != null && !id.equals("");
-    }
-
     protected boolean hasCls() {
         return cls != null && !cls.equals("");
     }
@@ -788,10 +782,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     protected String getBasePath() {
         List<String> selector = new ArrayList<String>();
-        if (hasId()) {
-            selector.add(applyTemplate("id", getId()));
-        }
-        if (hasName()) {
+               if (hasName()) {
             selector.add(applyTemplate("name", getName()));
         }
         if (hasBaseCls()) {
@@ -1014,8 +1005,6 @@ public abstract class WebLocatorAbstractBuilder {
         String info;
         if (hasText()) {
             info = getText();
-        } else if (hasId()) {
-            info = getId();
         } else if (hasName()) {
             info = getName();
         } else if (hasClasses()) {

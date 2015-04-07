@@ -1,9 +1,9 @@
 package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class TableRow extends Row {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableRow.class);
 
-    private PathBuilder pathBuilder = getPathBuilder();
+    private XPathBuilder pathBuilder = getPathBuilder();
     public TableRow(By ...bys) {
         pathBuilder.init(bys);
         pathBuilder.defaults(By.tag("tr"));

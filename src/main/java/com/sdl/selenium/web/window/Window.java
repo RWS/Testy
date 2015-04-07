@@ -1,13 +1,13 @@
 package com.sdl.selenium.web.window;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 
 public class Window extends WebLocator {
 
     public Window(By...bys) {
-        PathBuilder pathBuilder = getPathBuilder();
+        XPathBuilder pathBuilder = getPathBuilder();
         pathBuilder.init(bys);
         pathBuilder.defaults(By.baseCls("ui-dialog ui-widget ui-widget-content"), By.style("display: block;"));
         setTemplate("title", "count(.//*[text()='%s']) > 0");

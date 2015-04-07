@@ -1,6 +1,6 @@
 package com.sdl.selenium.web.form.by;
 
-import com.sdl.selenium.web.PathBuilder;
+import com.sdl.selenium.web.XPathBuilder;
 
 public abstract class By<T> extends com.sdl.selenium.web.By {
 
@@ -22,11 +22,11 @@ public abstract class By<T> extends com.sdl.selenium.web.By {
             return (String) getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setElPathSuffix("input-type", builder.applyTemplate("input-type", (String) getValue()));
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getElPathSuffix() == null) {
                 init(builder);
             }

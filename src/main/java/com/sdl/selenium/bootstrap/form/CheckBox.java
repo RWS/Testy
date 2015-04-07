@@ -1,9 +1,9 @@
 package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.TextField;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import static com.sdl.selenium.web.form.by.By.type;
 public class CheckBox extends TextField implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
-    PathBuilder pathBuilder = getPathBuilder();
+    XPathBuilder pathBuilder = getPathBuilder();
     public CheckBox(By...bys) {
         pathBuilder.init(bys);
         pathBuilder.defaults(type("checkbox"));

@@ -2,8 +2,8 @@ package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.IWebLocator;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class Form extends WebLocator implements IWebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Form.class);
 
-    private PathBuilder pathBuilder = getPathBuilder();
+    private XPathBuilder pathBuilder = getPathBuilder();
     public Form(By ...bys) {
         pathBuilder.init(bys);
         pathBuilder.defaults(By.tag("form"));
