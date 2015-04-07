@@ -35,9 +35,9 @@ public abstract class By<T> {
         this.searchType = searchType;
     }
 
-    public abstract void init(PathBuilder builder);
+    public abstract void init(XPathBuilder builder);
 
-    public abstract void initDefault(PathBuilder builder);
+    public abstract void initDefault(XPathBuilder builder);
 
     // =========================
 
@@ -59,11 +59,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setBaseCls(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getBaseCls() == null) {
                 init(builder);
             }
@@ -88,11 +88,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setCls(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getCls() == null) {
                 init(builder);
             }
@@ -119,11 +119,11 @@ public abstract class By<T> {
             return Arrays.toString(getValue());
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setClasses(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getClasses() == null) {
                 init(builder);
             }
@@ -150,11 +150,11 @@ public abstract class By<T> {
             return Arrays.toString(getValue());
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setExcludeClasses(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getExcludeClasses() == null) {
                 init(builder);
             }
@@ -179,11 +179,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setId(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getId() == null) {
                 init(builder);
             }
@@ -208,11 +208,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setName(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getName() == null) {
                 init(builder);
             }
@@ -238,11 +238,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setText(getValue(), getSearchType());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getText() == null) {
                 init(builder);
             }
@@ -267,11 +267,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setStyle(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getStyle() == null) {
                 init(builder);
             }
@@ -296,11 +296,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setTitle(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getTitle() == null) {
                 init(builder);
             }
@@ -325,11 +325,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setTag(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if ("*".equals(builder.getTag()) || !getValue().equals(builder.getTag())) {
                 init(builder);
             }
@@ -354,11 +354,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setLabelTag(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getLabelTag() == null) {
                 init(builder);
             }
@@ -384,11 +384,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setLabel(getValue(), getSearchType());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getLabel() == null) {
                 init(builder);
             }
@@ -413,11 +413,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setLabelPosition(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getLabelPosition() == null) {
                 init(builder);
             }
@@ -442,11 +442,11 @@ public abstract class By<T> {
             return getValue().toString();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setPosition(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getPosition() == -1) {
                 init(builder);
             }
@@ -472,11 +472,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setElPathSuffix(getKey(), getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getElPathSuffix() == null) {
                 init(builder);
             }
@@ -502,11 +502,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setTemplate(getKey(), getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getTemplate(getKey()) == null) {
                 init(builder);
             }
@@ -531,11 +531,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setElPath(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getElPath() == null) {
                 init(builder);
             }
@@ -560,11 +560,11 @@ public abstract class By<T> {
             return getValue().getPath();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setContainer(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getContainer() == null) {
                 init(builder);
             }
@@ -589,11 +589,11 @@ public abstract class By<T> {
             return getValue().toString();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setChildNotes(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getChildNodes().isEmpty()) {
                 init(builder);
             }
@@ -618,11 +618,11 @@ public abstract class By<T> {
             return getValue();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setInfoMessage(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (builder.getInfoMessage() == null) {
                 init(builder);
             }
@@ -647,11 +647,11 @@ public abstract class By<T> {
             return getValue().toString();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             builder.setVisibility(getValue());
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
             if (!builder.isVisibility()) {
                 init(builder);
             }
@@ -676,14 +676,14 @@ public abstract class By<T> {
             return getValue().toString();
         }
 
-        public void init(PathBuilder builder) {
+        public void init(XPathBuilder builder) {
             //searchType(getValue());
             builder.setSearchTextType(getValue());
 //            builder.defaultSearchTextType.addAll(Arrays.asList(getValue()));
 
         }
 
-        public void initDefault(PathBuilder builder) {
+        public void initDefault(XPathBuilder builder) {
 //            if (builder.getSearchTextType().isEmpty()) {
                 init(builder);
 //            }

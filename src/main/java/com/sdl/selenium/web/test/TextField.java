@@ -1,14 +1,14 @@
 package com.sdl.selenium.web.test;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.apache.log4j.Logger;
 
 public class TextField extends WebLocator {
     private static final Logger LOGGER = Logger.getLogger(TextField.class);
 
-    private PathBuilder pathBuilder = getPathBuilder();
+    private XPathBuilder pathBuilder = getPathBuilder();
     public TextField(By... bys) {
         pathBuilder.init(bys);
         pathBuilder.defaults(By.baseCls("BaseCls"));

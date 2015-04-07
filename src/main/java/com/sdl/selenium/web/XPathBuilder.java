@@ -8,11 +8,11 @@ import org.apache.log4j.Logger;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class PathBuilder {
-    private static final Logger LOGGER = Logger.getLogger(PathBuilder.class);
+public class XPathBuilder {
+    private static final Logger LOGGER = Logger.getLogger(XPathBuilder.class);
 
     public static void main(String[] args) {
-        PathBuilder pathBuilder = new PathBuilder(By.id("ID"));
+        XPathBuilder pathBuilder = new XPathBuilder(By.id("ID"));
         pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, '%s')]) > 0");
 //        pathBuilder.setElPathSuffix("iconCls", "count(.//*[contains(@class, 'true')]) > 0");
         LOGGER.debug(pathBuilder.getPath());
@@ -24,7 +24,7 @@ public class PathBuilder {
         }
     }*/
 
-    protected PathBuilder() {
+    protected XPathBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
         setTemplate("id", "@id='%s'");
         setTemplate("name", "@name='%s'");
@@ -33,7 +33,7 @@ public class PathBuilder {
         setTemplate("cls", "@class='%s'");
     }
 
-    public PathBuilder(By... bys) {
+    public XPathBuilder(By... bys) {
         this();
         init(bys);
     }
@@ -108,7 +108,7 @@ public class PathBuilder {
      * @param tag (type of DOM element) eg. input or h2
      * @return this element
      */
-    public <T extends PathBuilder> T setTag(final String tag) {
+    public <T extends XPathBuilder> T setTag(final String tag) {
         this.tag = tag;
         return (T) this;
     }
@@ -129,7 +129,7 @@ public class PathBuilder {
      * @param id eg. id="buttonSubmit"
      * @return this element
      */
-    public <T extends PathBuilder> T setId(final String id) {
+    public <T extends XPathBuilder> T setId(final String id) {
         this.id = id;
         return (T) this;
     }
@@ -151,7 +151,7 @@ public class PathBuilder {
      * @param elPath absolute way (xpath) to identify element
      * @return this element
      */
-    public <T extends PathBuilder> T setElPath(final String elPath) {
+    public <T extends XPathBuilder> T setElPath(final String elPath) {
         this.elPath = elPath;
         return (T) this;
     }
@@ -171,7 +171,7 @@ public class PathBuilder {
      * @param baseCls base class
      * @return this element
      */
-    public <T extends PathBuilder> T setBaseCls(final String baseCls) {
+    public <T extends XPathBuilder> T setBaseCls(final String baseCls) {
         this.baseCls = baseCls;
         return (T) this;
     }
@@ -192,7 +192,7 @@ public class PathBuilder {
      * @param cls class of element
      * @return this element
      */
-    public <T extends PathBuilder> T setCls(final String cls) {
+    public <T extends XPathBuilder> T setCls(final String cls) {
         this.cls = cls;
         return (T) this;
     }
@@ -220,7 +220,7 @@ public class PathBuilder {
      * @param classes list of classes
      * @return this element
      */
-    public <T extends PathBuilder> T setClasses(final String... classes) {
+    public <T extends XPathBuilder> T setClasses(final String... classes) {
         if (classes != null) {
             this.classes = Arrays.asList(classes);
         }
@@ -231,7 +231,7 @@ public class PathBuilder {
         return childNodes;
     }
 
-    public <T extends PathBuilder> T setChildNotes(final WebLocator... childNotes) {
+    public <T extends XPathBuilder> T setChildNotes(final WebLocator... childNotes) {
         if (childNotes != null) {
             this.childNodes = Arrays.asList(childNotes);
         }
@@ -253,7 +253,7 @@ public class PathBuilder {
      * @param excludeClasses list of class to be excluded
      * @return this element
      */
-    public <T extends PathBuilder> T setExcludeClasses(final String... excludeClasses) {
+    public <T extends XPathBuilder> T setExcludeClasses(final String... excludeClasses) {
         if (excludeClasses != null) {
             this.excludeClasses = Arrays.asList(excludeClasses);
         }
@@ -275,7 +275,7 @@ public class PathBuilder {
      * @param name eg. name="buttonSubmit"
      * @return this element
      */
-    public <T extends PathBuilder> T setName(final String name) {
+    public <T extends XPathBuilder> T setName(final String name) {
         this.name = name;
         return (T) this;
     }
@@ -296,7 +296,7 @@ public class PathBuilder {
      * @param searchType type search text element: see more details see {@link SearchType}
      * @return this element
      */
-    public <T extends PathBuilder> T setText(final String text, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
         if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
@@ -321,7 +321,7 @@ public class PathBuilder {
      * @param searchTextType accepted values are: {@link SearchType#EQUALS}
      * @return this element
      */
-    public <T extends PathBuilder> T setSearchTextType(SearchType... searchTextType) {
+    public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextType) {
         if(searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
@@ -341,7 +341,7 @@ public class PathBuilder {
      * @param searchLabelType accepted values are: {@link SearchType}
      * @return this element
      */
-    public <T extends PathBuilder> T setSearchLabelType(SearchType... searchLabelType) {
+    public <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelType) {
         this.searchLabelType = new ArrayList<SearchType>();
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
@@ -364,7 +364,7 @@ public class PathBuilder {
      * @param style of element
      * @return this element
      */
-    public <T extends PathBuilder> T setStyle(final String style) {
+    public <T extends XPathBuilder> T setStyle(final String style) {
         this.style = style;
         return (T) this;
     }
@@ -386,7 +386,7 @@ public class PathBuilder {
      * @param elCssSelector cssSelector
      * @return this element
      */
-    public <T extends PathBuilder> T setElCssSelector(final String elCssSelector) {
+    public <T extends XPathBuilder> T setElCssSelector(final String elCssSelector) {
         this.elCssSelector = elCssSelector;
         return (T) this;
     }
@@ -408,7 +408,7 @@ public class PathBuilder {
      * @param title of element
      * @return this element
      */
-    public <T extends PathBuilder> T setTitle(String title) {
+    public <T extends XPathBuilder> T setTitle(String title) {
         this.title = title;
         return (T) this;
     }
@@ -427,7 +427,7 @@ public class PathBuilder {
      * @return this element
      * @deprecated use setElPathSuffix(String key, String elPathSuffix)
      */
-    public <T extends PathBuilder> T setElPathSuffix(String elPathSuffix) {
+    public <T extends XPathBuilder> T setElPathSuffix(String elPathSuffix) {
         setElPathSuffix("elPathSuffix", elPathSuffix);
         return (T) this;
     }
@@ -443,7 +443,7 @@ public class PathBuilder {
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
      */
-    public <T extends PathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
+    public <T extends XPathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
         if(elPathSuffix == null) {
             this.elPathSuffix.remove(key);
         } else {
@@ -458,7 +458,7 @@ public class PathBuilder {
      * @param value template
      * @return this element
      */
-    public <T extends PathBuilder> T setTemplate(String key, String value) {
+    public <T extends XPathBuilder> T setTemplate(String key, String value) {
         if (value == null) {
             templates.remove(key);
         } else {
@@ -467,7 +467,7 @@ public class PathBuilder {
         return (T) this;
     }
 
-    public <T extends PathBuilder> T addToTemplate(String key, String value) {
+    public <T extends XPathBuilder> T addToTemplate(String key, String value) {
         String template = getTemplate(key);
         if (StringUtils.isNotEmpty(template)) {
             template += " and ";
@@ -497,7 +497,7 @@ public class PathBuilder {
      * @param infoMessage info Message
      * @return this element
      */
-    public <T extends PathBuilder> T setInfoMessage(final String infoMessage) {
+    public <T extends XPathBuilder> T setInfoMessage(final String infoMessage) {
         this.infoMessage = infoMessage;
         return (T) this;
     }
@@ -511,7 +511,7 @@ public class PathBuilder {
         return visibility;
     }
 
-    public <T extends PathBuilder> T setVisibility(final boolean visibility) {
+    public <T extends XPathBuilder> T setVisibility(final boolean visibility) {
         this.visibility = visibility;
         return (T) this;
     }
@@ -520,7 +520,7 @@ public class PathBuilder {
         return renderMillis;
     }
 
-    public <T extends PathBuilder> T setRenderMillis(final long renderMillis) {
+    public <T extends XPathBuilder> T setRenderMillis(final long renderMillis) {
         this.renderMillis = renderMillis;
         return (T) this;
     }
@@ -531,7 +531,7 @@ public class PathBuilder {
      * @return
      * @deprecated use setRenderMillis
      */
-    public <T extends PathBuilder> T setRenderSeconds(final int renderSeconds) {
+    public <T extends XPathBuilder> T setRenderSeconds(final int renderSeconds) {
         setRenderMillis(renderSeconds * 1000);
         return (T) this;
     }
@@ -540,7 +540,7 @@ public class PathBuilder {
         return activateSeconds;
     }
 
-    public <T extends PathBuilder> T setActivateSeconds(final int activateSeconds) {
+    public <T extends XPathBuilder> T setActivateSeconds(final int activateSeconds) {
         this.activateSeconds = activateSeconds;
         return (T) this;
     }
@@ -556,7 +556,7 @@ public class PathBuilder {
      * @param container parent containing element.
      * @return this element
      */
-    public <T extends PathBuilder> T setContainer(WebLocator container) {
+    public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
         return (T) this;
     }
@@ -576,7 +576,7 @@ public class PathBuilder {
      * @param label text label element
      * @return this element
      */
-    public <T extends PathBuilder> T setLabel(String label, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setLabel(String label, final SearchType... searchType) {
         this.label = label;
         if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
@@ -599,7 +599,7 @@ public class PathBuilder {
      * @param labelTag label tag element
      * @return this element
      */
-    public <T extends PathBuilder> T setLabelTag(String labelTag) {
+    public <T extends XPathBuilder> T setLabelTag(String labelTag) {
         this.labelTag = labelTag;
         return (T) this;
     }
@@ -620,7 +620,7 @@ public class PathBuilder {
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
-    public <T extends PathBuilder> T setLabelPosition(String labelPosition) {
+    public <T extends XPathBuilder> T setLabelPosition(String labelPosition) {
         this.labelPosition = labelPosition;
         return (T) this;
     }
@@ -644,7 +644,7 @@ public class PathBuilder {
      * @param position starting index = 1
      * @return this element
      */
-    public <T extends PathBuilder> T setPosition(int position) {
+    public <T extends XPathBuilder> T setPosition(int position) {
         this.position = position;
         return (T) this;
     }

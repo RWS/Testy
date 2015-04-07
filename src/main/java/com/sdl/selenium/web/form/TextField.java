@@ -2,6 +2,7 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
@@ -13,9 +14,11 @@ public class TextField extends WebLocator implements ITextField {
     private String type;
 
     public TextField(By ...bys) {
-        getPathBuilder().setTemplate("input-type", "@type='%s'");
-        getPathBuilder().init(bys);
-        getPathBuilder().defaults(By.tag("input"));
+        super();
+        new XPathBuilder().setLabel("sss").setCls("ds");
+//        getPathBuilder().setTemplate("input-type", "@type='%s'");
+//        getPathBuilder().init(bys);
+//        getPathBuilder().defaults(By.tag("input"));
     }
 
     public TextField(WebLocator container) {

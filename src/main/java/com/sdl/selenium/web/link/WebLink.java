@@ -1,9 +1,9 @@
 package com.sdl.selenium.web.link;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class WebLink extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLink.class);
     
     private String oldTab;
-    private PathBuilder pathBuilder = getPathBuilder();
+    private XPathBuilder pathBuilder = getPathBuilder();
 
     public WebLink(By...bys) {
         pathBuilder.setTemplate("title", "@title='%s'");

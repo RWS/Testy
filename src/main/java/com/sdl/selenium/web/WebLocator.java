@@ -20,18 +20,32 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     protected static WebLocatorExecutor executor;
+    public WebLocator() {
+        // set defaults
+        getPathBuilder().setTag("div").setLabel("dsd");
+    }
 
-    public WebLocator(PathBuilder pathBuilder) {
-        setPathBuilder(pathBuilder);
+    public WebLocator(XPathBuilder pathBuilder) {
+        this();
+        defaults(pathBuilder);
     }
 
     public WebLocator(By... bys) {
-        this(new PathBuilder(bys));
+        this(new XPathBuilder(bys));
     }
 
     public WebLocator(WebLocator container, By... bys) {
         this(bys);
         getPathBuilder().setContainer(container);
+    }
+
+    public static void main(String[] args) {
+        new WebLocator(new XPathBuilder().setCls("dsd").setLabel("ds"));
+
+    }
+
+    protected void defaults(XPathBuilder xPathBuilder){
+//                      this.getCls()
     }
 
     /**

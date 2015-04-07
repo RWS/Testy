@@ -1,16 +1,16 @@
 package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TableCell extends Cell {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableCell.class);
 
-    PathBuilder pathBuilder = new PathBuilder() {
+    XPathBuilder pathBuilder = new XPathBuilder() {
         @Override
         protected String addPositionToPath(String itemPath) {
             if (hasPosition()) {

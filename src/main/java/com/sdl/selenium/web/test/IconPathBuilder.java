@@ -1,10 +1,10 @@
 package com.sdl.selenium.web.test;
 
 import com.sdl.selenium.web.By;
-import com.sdl.selenium.web.PathBuilder;
+import com.sdl.selenium.web.XPathBuilder;
 
 
-public class IconPathBuilder extends PathBuilder {
+public class IconPathBuilder extends XPathBuilder {
 
     public IconPathBuilder() {
     }
