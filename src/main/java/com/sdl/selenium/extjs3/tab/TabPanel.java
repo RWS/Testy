@@ -20,11 +20,23 @@ public class TabPanel extends ExtJsComponent {
     private TabPanel() {
         setClassName("TabPanel");
         setBaseCls("x-tab-panel");
+        setExcludeClasses("x-masked");
+    }
+
+    public TabPanel(String text, SearchType ...searchType) {
+        this();
+        setText(text, searchType);
+        setElPathSuffix("elPathSuffix", "count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[" + getItemPathText() + "]) > 0]/*/*[contains(@class, 'x-tab-panel-body')]/*[not(contains(@class, 'x-hide-display'))");
+        setText(null);
     }
 
     public TabPanel(String text) {
-        this();
-        setText(text, SearchType.EQUALS);
+        this(text, SearchType.EQUALS);
+    }
+
+    public TabPanel(WebLocator container, String text, SearchType searchType) {
+        this(text, searchType);
+        setContainer(container);
     }
 
     public TabPanel(WebLocator container, String text) {
@@ -38,34 +50,6 @@ public class TabPanel extends ExtJsComponent {
             returnPath = "//*[contains(@class,'x-tab-panel-header')]//*[" + getItemPathText() + "]";
         }
         return returnPath;
-    }
-
-    /**
-     * this method return the path of the main TabPanel (that contains also this Tab/Panel)
-     *
-     * @return the path of the main TabPanel
-     */
-    private String getBaseTabPanelPath() {
-        String selector = getBasePath();
-        if (hasText()) {
-//            selector += " and count(*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']) > 0"; //[viorel]
-            selector += (selector.length() > 0 ? " and " : "") + "not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[" + getItemPathText() + "]) > 0";
-        }
-        return "//*[" + selector + "]";
-    }
-
-    /**
-     * this method return the path of only one visible div from the main TabPanel
-     *
-     * @param disabled disabled
-     * @return the path of only one visible div from the main TabPanel
-     */
-    @Override
-    public String getItemPath(boolean disabled) {
-        String selector = getBaseTabPanelPath();
-        selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO
-                "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
-        return selector;
     }
 
     /**

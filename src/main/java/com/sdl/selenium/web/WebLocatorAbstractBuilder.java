@@ -42,6 +42,7 @@ public abstract class WebLocatorAbstractBuilder {
     private String elCssSelector;
     private String title;
     private Map<String, String> templates = new LinkedHashMap<String, String>();
+    private Map<String, String> templatesValues = new LinkedHashMap<String, String>();
     private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
 
     private String infoMessage;
@@ -449,6 +450,26 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Example:</p>
+     * <pre>
+     *     TODO
+     * </pre>
+     *
+     * @param key          suffix key
+     * @param value
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setTemplateValue(String key, String value) {
+        if (value == null) {
+            this.templatesValues.remove(key);
+        } else {
+            this.templatesValues.put(key, value);
+        }
+        return (T) this;
+    }
+
+    /**
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
      * @param key   name template
      * @param value template
@@ -791,6 +812,9 @@ public abstract class WebLocatorAbstractBuilder {
         }
         if (hasTitle()) {
             addTemplate(selector, "title", getTitle());
+        }
+        for (Map.Entry<String, String> entry : templatesValues.entrySet()) {
+            addTemplate(selector, entry.getKey(), entry.getValue());
         }
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);

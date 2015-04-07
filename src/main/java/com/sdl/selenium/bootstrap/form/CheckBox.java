@@ -47,11 +47,13 @@ public class CheckBox extends TextField implements ICheck {
         this(By.container(container), By.label(boxLabel));
     }
 
+    @Override
     public boolean isSelected() {
         return isElementPresent() && executor.isSelected(this);
     }
 
-    public boolean isDisabled(){
+    @Override
+    public boolean isDisabled() {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
