@@ -28,12 +28,10 @@ public class TextField extends WebLocator implements ITextField {
         setId(id);
     }
 
-    @Deprecated
     public String getType() {
         return type;
     }
 
-    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T setType(String type) {
         this.type = type;
         setTemplateValue("input-type", type);
