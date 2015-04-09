@@ -26,7 +26,7 @@ public class TabPanel extends ExtJsComponent {
     public TabPanel(String text, SearchType ...searchType) {
         this();
         setText(text, searchType);
-        setElPathSuffix("elPathSuffix", "count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[" + getItemPathText() + "]) > 0]/*/*[contains(@class, 'x-tab-panel-body')]/*[not(contains(@class, 'x-hide-display'))");
+        setElPathSuffix("elPathSuffix", "count(*[contains(@class,'x-tab-panel-header')]//*[" + getItemPathText() + "]) > 0]/*/*[contains(@class, 'x-tab-panel-body')]/*[not(contains(@class, 'x-hide-display'))");
         setText(null);
     }
 
