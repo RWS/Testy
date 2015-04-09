@@ -15,19 +15,17 @@ import static org.testng.Assert.assertTrue;
 
 public class TabPanelTest extends TestBase {
 
-    Window tabPanelWindow = new Window("TabPanel Win");
-
-    TabPanel tabPanel1 = new TabPanel(tabPanelWindow, "Tab1");
-    Panel panelWithFrame = new Panel(tabPanel1, "Panel with frame");
-    WebLocator elTab1 = new WebLocator("element", panelWithFrame);
-    TabPanel tabPanel11 = new TabPanel(panelWithFrame, "Tab11");
-    WebLocator elTab11 = new WebLocator("element", tabPanel11);
-    TabPanel tabPanel21 = new TabPanel(panelWithFrame, "Tab21");
-    WebLocator elTab21 = new WebLocator("element", tabPanel21);
-
-    TabPanel tabPanel2 = new TabPanel(tabPanelWindow, "Tab2");
-    Panel panelNoWithFrame = new Panel(tabPanel2, "Panel no frame");
-    WebLocator elTab12 = new WebLocator("element", panelNoWithFrame);
+    private Window tabPanelWindow = new Window("TabPanel Win");
+    private TabPanel tabPanel1 = new TabPanel(tabPanelWindow, "Tab1");
+    private Panel panelWithFrame = new Panel(tabPanel1, "Panel with frame");
+    private WebLocator elTab1 = new WebLocator("element", panelWithFrame);
+    private TabPanel tabPanel11 = new TabPanel(panelWithFrame, "Tab11");
+    private WebLocator elTab11 = new WebLocator("element", tabPanel11);
+    private TabPanel tabPanel21 = new TabPanel(panelWithFrame, "Tab21");
+    private WebLocator elTab21 = new WebLocator("element", tabPanel21);
+    private TabPanel tabPanel2 = new TabPanel(tabPanelWindow, "Tab2");
+    private Panel panelNoWithFrame = new Panel(tabPanel2, "Panel no frame");
+    private WebLocator elTab12 = new WebLocator("element", panelNoWithFrame);
 
     @BeforeMethod
     public void startTests() {
