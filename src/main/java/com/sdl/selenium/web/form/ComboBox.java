@@ -11,7 +11,7 @@ public class ComboBox extends WebLocator implements ICombo {
 
     public ComboBox(By...bys) {
         getPathBuilder().init(bys);
-        getPathBuilder().defaults(By.className("SimpleComboBox"), By.tag("select"));
+        getPathBuilder().defaults(By.tag("select"));
     }
 
     public ComboBox(WebLocator container) {

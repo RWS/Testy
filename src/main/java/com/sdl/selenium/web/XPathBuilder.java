@@ -3,13 +3,14 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class XPathBuilder {
-    private static final Logger LOGGER = Logger.getLogger(XPathBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XPathBuilder.class);
 
     public static void main(String[] args) {
         XPathBuilder pathBuilder = new XPathBuilder(By.id("ID"));
@@ -45,10 +46,10 @@ public class XPathBuilder {
         }
     }
 
-    public <B extends By> void defaults(B ...bys) {
-        for (By by : bys) {
-            by.initDefault(this);
-        }
+    @SafeVarargs
+    public final <B extends By> XPathBuilder defaults(B ...bys) {
+        init(bys);
+        return this;
     }
 
     private String className = "WebLocator";
@@ -68,6 +69,7 @@ public class XPathBuilder {
     private String elCssSelector;
     private String title;
     private Map<String, String> templates = new LinkedHashMap<String, String>();
+    private Map<String, String> templatesValues = new LinkedHashMap<String, String>();
     private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
 
     private String infoMessage;
@@ -329,10 +331,14 @@ public class XPathBuilder {
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
-        for (SearchType searchType : this.searchLabelType) {
+        /*for (SearchType searchType : this.searchLabelType) {
             this.setSearchTextType(searchType);
-        }
+        }*/
         return (T) this;
+    }
+
+    public List<SearchType> getSearchLabelType() {
+        return searchLabelType;
     }
 
     /**
@@ -422,6 +428,10 @@ public class XPathBuilder {
         return elPathSuffix.get("elPathSuffix");
     }
 
+    public Map<String, String> getElPathsSuffix() {
+        return elPathSuffix;
+    }
+
     /**
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @return this element
@@ -448,6 +458,30 @@ public class XPathBuilder {
             this.elPathSuffix.remove(key);
         } else {
             this.elPathSuffix.put(key, elPathSuffix);
+        }
+        return (T) this;
+    }
+
+    public Map<String, String> getTemplatesValues() {
+        return templatesValues;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Example:</p>
+     * <pre>
+     *     TODO
+     * </pre>
+     *
+     * @param key          suffix key
+     * @param value
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setTemplateValue(String key, String value) {
+        if (value == null) {
+            this.templatesValues.remove(key);
+        } else {
+            this.templatesValues.put(key, value);
         }
         return (T) this;
     }
@@ -1040,4 +1074,40 @@ public class XPathBuilder {
         }
         return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getPath();
     }
+
+    /*public void merge(XPathBuilder xPathBuilder) {
+        BeanInfo info = null;
+        try {
+            Class<? extends XPathBuilder> aClass = xPathBuilder.getClass();
+            info = Introspector.getBeanInfo(aClass);
+        } catch (IntrospectionException e) {
+            LOGGER.error("IntrospectionException", e);
+        }
+        if (info != null) {
+            for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
+                Method reader = pd.getReadMethod();
+                Class<?> propertyType = pd.getPropertyType();
+                String name = pd.getName();
+                if (reader != null && !"class".equals(name)) {
+                    try {
+                        Class<?> c = Class.forName(propertyType.getName());
+                        LOGGER.debug("found property: {}, cls: {}", name, propertyType.getName());
+                        Object value = null;
+                        try {
+                            value = reader.invoke(xPathBuilder);
+                        } catch (IllegalAccessException e) {
+                            LOGGER.error("IllegalAccessException", e);
+                        } catch (InvocationTargetException e) {
+                            LOGGER.error("InvocationTargetException", e);
+                        }
+                        if (value != null) {
+                            LOGGER.warn("set {} on this with value {}", name, value);
+                            //result.put(name, value);
+                        }
+                    } catch (ClassNotFoundException x) {
+                    }
+                }
+            }
+        }
+    }*/
 }

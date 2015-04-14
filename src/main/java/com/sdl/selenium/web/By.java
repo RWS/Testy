@@ -37,15 +37,9 @@ public abstract class By<T> {
 
     public abstract void init(XPathBuilder builder);
 
-    public abstract void initDefault(XPathBuilder builder);
-
     // =========================
 
     public static By baseCls(final String baseCls) {
-        if (baseCls == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the baseCls expression is null.");
-
         return new ByBaseCls(baseCls);
     }
 
@@ -62,19 +56,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setBaseCls(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getBaseCls() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By cls(final String cls) {
-        if (cls == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the cls expression is null.");
-
         return new ByCls(cls);
     }
 
@@ -91,19 +75,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setCls(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getCls() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By classes(final String... classes) {
-        if (classes.length == 0)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the classes expression is null.");
-
         return new ByClasses(classes);
     }
 
@@ -122,19 +96,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setClasses(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getClasses() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By excludeClasses(final String... excludeClasses) {
-        if (excludeClasses.length == 0)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the excludeClasses expression is null.");
-
         return new ByExcludeClasses(excludeClasses);
     }
 
@@ -153,19 +117,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setExcludeClasses(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getExcludeClasses() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By id(final String id) {
-        if (id == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the id expression is null.");
-
         return new ById(id);
     }
 
@@ -182,19 +136,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setId(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getId() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By name(final String name) {
-        if (name == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the name expression is null.");
-
         return new ByName(name);
     }
 
@@ -211,19 +155,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setName(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getName() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By text(final String text, final SearchType... searchType) {
-        if (text == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the text expression is null.");
-
         return new ByText(text, searchType);
     }
 
@@ -241,19 +175,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setText(getValue(), getSearchType());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getText() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By style(final String style) {
-        if (style == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the style expression is null.");
-
         return new ByStyle(style);
     }
 
@@ -270,19 +194,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setStyle(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getStyle() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By title(final String title) {
-        if (title == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the title expression is null.");
-
         return new ByTitle(title);
     }
 
@@ -299,19 +213,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setTitle(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getTitle() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By tag(final String tag) {
-        if (tag == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the tag expression is null.");
-
         return new ByTag(tag);
     }
 
@@ -328,19 +232,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setTag(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if ("*".equals(builder.getTag()) || !getValue().equals(builder.getTag())) {
-                init(builder);
-            }
-        }
     }
 
     public static By labelTag(final String labelTag) {
-        if (labelTag == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the labelTag expression is null.");
-
         return new ByLabelTag(labelTag);
     }
 
@@ -357,19 +251,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setLabelTag(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getLabelTag() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By label(final String label, final SearchType... searchType) {
-        if (label == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the label expression is null.");
-
         return new ByLabel(label, searchType);
     }
 
@@ -387,19 +271,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setLabel(getValue(), getSearchType());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getLabel() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By labelPosition(final String labelPosition) {
-        if (labelPosition == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the labelPosition expression is null.");
-
         return new ByLabelPosition(labelPosition);
     }
 
@@ -416,19 +290,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setLabelPosition(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getLabelPosition() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By position(final Integer position) {
-        if (position == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the position expression is null.");
-
         return new ByPosition(position);
     }
 
@@ -445,19 +309,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setPosition(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getPosition() == -1) {
-                init(builder);
-            }
-        }
     }
 
     public static By pathSuffix(final String key, final String pathSuffix) {
-        if (pathSuffix == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the pathSuffix expression is null.");
-
         return new ByPathSuffix(key, pathSuffix);
     }
 
@@ -475,19 +329,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setElPathSuffix(getKey(), getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getElPathSuffix() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By template(final String key, final String template) {
-        if (template == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the pathSuffix expression is null.");
-
         return new ByTemplate(key, template);
     }
 
@@ -505,19 +349,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setTemplate(getKey(), getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getTemplate(getKey()) == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By xpath(final String xpath) {
-        if (xpath == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the xpath expression is null.");
-
         return new ByXpath(xpath);
     }
 
@@ -534,19 +368,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setElPath(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getElPath() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By container(final WebLocator container) {
-        if (container == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the container expression is null.");
-
         return new ByContainer(container);
     }
 
@@ -564,18 +388,9 @@ public abstract class By<T> {
             builder.setContainer(getValue());
         }
 
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getContainer() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By childNodes(final WebLocator... childNodes) {
-        if (childNodes.length == 0)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the ...childNodes expression is null.");
-
         return new ByChildNodes(childNodes);
     }
 
@@ -592,19 +407,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setChildNotes(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getChildNodes().isEmpty()) {
-                init(builder);
-            }
-        }
     }
 
     public static By infoMessage(final String infoMessage) {
-        if (infoMessage == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the infoMessage expression is null.");
-
         return new ByInfoMessage(infoMessage);
     }
 
@@ -621,19 +426,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setInfoMessage(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (builder.getInfoMessage() == null) {
-                init(builder);
-            }
-        }
     }
 
     public static By visibility(final Boolean visibility) {
-        if (visibility == null)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the visibility expression is null.");
-
         return new ByVisibility(visibility);
     }
 
@@ -650,19 +445,9 @@ public abstract class By<T> {
         public void init(XPathBuilder builder) {
             builder.setVisibility(getValue());
         }
-
-        public void initDefault(XPathBuilder builder) {
-            if (!builder.isVisibility()) {
-                init(builder);
-            }
-        }
     }
 
     public static By searchType(final SearchType... searchType) {
-        if (searchType.length == 0)
-            throw new IllegalArgumentException(
-                    "Cannot find elements when the searchType expression is null.");
-
         return new BySearchType(searchType);
     }
 
@@ -681,12 +466,6 @@ public abstract class By<T> {
             builder.setSearchTextType(getValue());
 //            builder.defaultSearchTextType.addAll(Arrays.asList(getValue()));
 
-        }
-
-        public void initDefault(XPathBuilder builder) {
-//            if (builder.getSearchTextType().isEmpty()) {
-                init(builder);
-//            }
         }
     }
 }

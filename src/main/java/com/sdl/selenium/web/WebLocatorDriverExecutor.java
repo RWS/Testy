@@ -1,7 +1,7 @@
 package com.sdl.selenium.web;
 
-import org.openqa.selenium.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -363,7 +363,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public String getAttributeId(WebLocator el) {
         String pathId = getAttribute(el, "id");
-        if (el.hasId()) {
+        if (el.getPathBuilder().hasId()) {
             final String id = el.getId();
             if (!id.equals(pathId)) {
                 LOGGER.warn("id is not same as pathId:" + id + " - " + pathId);

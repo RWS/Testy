@@ -23,7 +23,7 @@ public class TableCell extends Cell {
 
     public TableCell(By... bys) {
 
-        setPathBuilder(pathBuilder);
+//        setPathBuilder(pathBuilder);
         pathBuilder.defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF); //TODO Depinde ordinea!!!!
         pathBuilder.init(bys);
         pathBuilder.defaults(By.tag("td"));

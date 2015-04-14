@@ -22,7 +22,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     protected static WebLocatorExecutor executor;
     public WebLocator() {
         // set defaults
-        getPathBuilder().setTag("div").setLabel("dsd");
+//        getPathBuilder().setTag("div").setLabel("lab");
     }
 
     public WebLocator(XPathBuilder pathBuilder) {
@@ -40,7 +40,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public static void main(String[] args) {
-        new WebLocator(new XPathBuilder().setCls("dsd").setLabel("ds"));
+        WebLocator el  = new WebLocator(new XPathBuilder().setCls("dsd").setLabel("ds"));
+        LOGGER.debug(el.getPathBuilder().getPath());
 
     }
 
