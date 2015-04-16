@@ -311,6 +311,25 @@ public abstract class By<T> {
         }
     }
 
+    public static By type(final String type) {
+        return new ByType(type);
+    }
+
+    private static class ByType extends By<String> {
+
+        public ByType(String type) {
+            setValue(type);
+        }
+
+        public String getPath() {
+            return getValue();
+        }
+
+        public void init(XPathBuilder builder) {
+            builder.setType(getValue());
+        }
+    }
+
     public static By pathSuffix(final String key, final String pathSuffix) {
         return new ByPathSuffix(key, pathSuffix);
     }

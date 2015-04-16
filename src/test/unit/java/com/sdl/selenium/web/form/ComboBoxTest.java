@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -14,6 +15,10 @@ public class ComboBoxTest {
                 {new ComboBox(),             "//select"},
                 {new ComboBox(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
                 {new ComboBox().setId("ID"), "//select[@id='ID']"},
+
+                {new ComboBox(By.container(container)),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
+                {new ComboBox(By.id("ID")), "//select[@id='ID']"},
+                {new ComboBox(By.id("ID"), By.tag("tag")), "//tag[@id='ID']"},
         };
     }
 

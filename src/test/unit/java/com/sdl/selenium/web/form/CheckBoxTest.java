@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -14,12 +15,15 @@ public class CheckBoxTest {
                 {new CheckBox(),           "//input[@type='checkbox']"},
                 {new CheckBox(container),  "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
                 {new CheckBox("Id"), "//input[@id='Id' and @type='checkbox']"},
-                {new CheckBox("Id").setTemplateValue("input-type", "check"), "//input[@id='Id' and @type='check']"}
+
+                {new CheckBox(By.container(container)),  "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
+                {new CheckBox(By.id("Id")), "//input[@id='Id' and @type='checkbox']"},
+                {new CheckBox(By.id("Id"), By.type("check")), "//input[@id='Id' and @type='check']"}
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(CheckBox combo, String expectedXpath) {
-        Assert.assertEquals(combo.getPath(), expectedXpath);
+        Assert.assertEquals(combo.getPathBuilder().getPath(), expectedXpath);
     }
 }

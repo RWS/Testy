@@ -1,7 +1,7 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.by.By;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,13 +10,12 @@ public class ComboBox extends WebLocator implements ICombo {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
 
     public ComboBox(By...bys) {
-        getPathBuilder().init(bys);
-        getPathBuilder().defaults(By.tag("select"));
+        getPathBuilder().defaults(By.tag("select")).init(bys);
     }
 
     public ComboBox(WebLocator container) {
         this();
-        setContainer(container);
+        getPathBuilder().setContainer(container);
     }
 
     @Override

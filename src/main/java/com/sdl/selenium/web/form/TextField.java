@@ -15,9 +15,7 @@ public class TextField extends WebLocator implements ITextField {
 
     public TextField(By ...bys) {
         getPathBuilder().setTemplate("input-type", "@type='%s'");
-        getPathBuilder().init(By.tag("input"), By.baseCls("bss")).init(bys);
-//        getPathBuilder().init(bys);
-//        getPathBuilder().defaults(By.tag("input"));
+        getPathBuilder().defaults(By.tag("input")).init(bys);
     }
 
     public TextField(WebLocator container) {
@@ -35,7 +33,7 @@ public class TextField extends WebLocator implements ITextField {
 
     public <T extends WebLocatorAbstractBuilder> T setType(String type) {
         this.type = type;
-        setTemplateValue("input-type", type);
+        getPathBuilder().setTemplateValue("input-type", type);
         return (T) this;
     }
 
@@ -60,11 +58,5 @@ public class TextField extends WebLocator implements ITextField {
 
     public String getValue() {
         return executor.getValue(this);
-    }
-
-    public static void main(String[] args) {
-        TextField textField = new TextField(By.classes("field"), By.tag("divy"), By.baseCls(""));
-//        textField.getPathBuilder().setBaseCls("dsds");
-        LOGGER.debug(textField.getPathBuilder().getPath());
     }
 }

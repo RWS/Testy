@@ -15,8 +15,7 @@ public class TableRow extends Row {
 
     private XPathBuilder pathBuilder = getPathBuilder();
     public TableRow(By ...bys) {
-        pathBuilder.init(bys);
-        pathBuilder.defaults(By.tag("tr"));
+        pathBuilder.defaults(By.tag("tr")).init(bys);
         setRenderMillis(200);
     }
 

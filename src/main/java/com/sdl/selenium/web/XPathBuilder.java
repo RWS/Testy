@@ -32,6 +32,7 @@ public class XPathBuilder {
         setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
         setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
+        setTemplate("type", "@type='%s'");
     }
 
     public XPathBuilder(By... bys) {
@@ -79,6 +80,7 @@ public class XPathBuilder {
     private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
     private int position = -1;
+    private String type;
 
     //private int elIndex; // TODO try to find how can be used
 
@@ -683,6 +685,30 @@ public class XPathBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     *
+     * @return value that has been set in {@link #setType(String)}
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[@type='type']
+     * </pre>
+     *
+     * @param type
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setType(String type) {
+        this.type = type;
+        return (T) this;
+    }
+
     // =========================================
     // =============== Methods =================
     // =========================================
@@ -761,6 +787,10 @@ public class XPathBuilder {
         return position > 0;
     }
 
+    protected boolean hasType() {
+        return type != null && !type.equals("");
+    }
+
     // =========================================
     // ============ XPath Methods ==============
     // =========================================
@@ -818,13 +848,17 @@ public class XPathBuilder {
         if (hasTitle()) {
             addTemplate(selector, "title", getTitle());
         }
+
+        if (hasType()) {
+            addTemplate(selector, "type", getType());
+        }
+
+        for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
+            addTemplate(selector, entry.getKey(), entry.getValue());
+        }
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
-        /*for (String suffix : templates.values()) {
-            selector.add(applyTemplate(suffix, "get" + suffix + "()"));
-        }*/
-
         addChildNotesToSelector(selector);
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
@@ -1058,8 +1092,12 @@ public class XPathBuilder {
     }
 
     protected String addPositionToPath(String itemPath) {
-        if (hasPosition()) {
-            itemPath += "[position() = " + getPosition() + "]";
+        if(getTemplate("position") == null) {
+            if (hasPosition()) {
+                itemPath += "[position() = " + getPosition() + "]";
+            }
+        } else {
+            itemPath = applyTemplate("position", getTemplate("position"));
         }
         return itemPath;
     }
