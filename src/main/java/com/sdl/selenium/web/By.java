@@ -234,6 +234,25 @@ public abstract class By<T> {
         }
     }
 
+    public static By tagIndex(final int tagIndex) {
+        return new ByTagIndex(tagIndex);
+    }
+
+    private static class ByTagIndex extends By<Integer> {
+
+        public ByTagIndex(int tagIndex) {
+            setValue(tagIndex);
+        }
+
+        public String getPath() {
+            return getValue().toString();
+        }
+
+        public void init(XPathBuilder builder) {
+            builder.setTagIndex(getValue());
+        }
+    }
+
     public static By labelTag(final String labelTag) {
         return new ByLabelTag(labelTag);
     }
@@ -463,28 +482,6 @@ public abstract class By<T> {
 
         public void init(XPathBuilder builder) {
             builder.setVisibility(getValue());
-        }
-    }
-
-    public static By searchType(final SearchType... searchType) {
-        return new BySearchType(searchType);
-    }
-
-    private static class BySearchType extends By<SearchType[]> {
-
-        public BySearchType(SearchType... searchType) {
-            setValue(searchType);
-        }
-
-        public String getPath() {
-            return getValue().toString();
-        }
-
-        public void init(XPathBuilder builder) {
-            //searchType(getValue());
-            builder.setSearchTextType(getValue());
-//            builder.defaultSearchTextType.addAll(Arrays.asList(getValue()));
-
         }
     }
 }

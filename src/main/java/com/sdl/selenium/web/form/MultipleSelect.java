@@ -1,9 +1,9 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +14,13 @@ import java.util.List;
 public class MultipleSelect extends ComboBox {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultipleSelect.class);
 
-    public MultipleSelect() {
-        setClassName("SimpleMultipleSelect");
+    public MultipleSelect(By... bys) {
+        getPathBuilder().init(bys);
     }
 
     public MultipleSelect(WebLocator container) {
         this();
-        setContainer(container);
+        getPathBuilder().setContainer(container);
     }
 
     public MultipleSelect(WebLocator container, String label) {
@@ -44,16 +44,15 @@ public class MultipleSelect extends ComboBox {
     }
 
     /**
-     *
      * @return if return null, then component is not ready
      */
     public List<String> getValues() {
         List<String> list = null;
         if (ready()) {
-            list = new ArrayList<String>();
-            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
-            for (int i = 0; i < elements.size(); i++) {
-                String text = elements.get(i).getText();
+            list = new ArrayList<>();
+            List<WebElement> elements = WebDriverConfig.getDriver().findElements(org.openqa.selenium.By.xpath(new WebLocator(this).getPath()));
+            for (WebElement element : elements) {
+                String text = element.getText();
                 LOGGER.debug(text);
                 list.add(text);
             }

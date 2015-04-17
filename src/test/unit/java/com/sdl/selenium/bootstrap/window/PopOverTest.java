@@ -1,6 +1,7 @@
 package com.sdl.selenium.bootstrap.window;
 
 import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.web.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,6 +16,9 @@ public class PopOverTest {
                 {new PopOver("Title").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title'])> 0]"},
                 {new PopOver("Title", "Message"),  "//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0]"},
                 {new PopOver("Title", "Message").setContainer(container),  "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0]"},
+
+                {new PopOver(By.container(container), By.title("Title")), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title'])> 0]"},
+                {new PopOver("Title", "Message"),  "//*[contains(concat(' ', @class, ' '), ' popover ') and count(.//*[@class='popover-title' and text()='Title']//following-sibling::*[@class='popover-content' and text()='Message'])> 0]"},
         };
     }
 

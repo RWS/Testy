@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.IButton;
@@ -30,26 +31,20 @@ public class Button extends WebLocator implements IButton {
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
         String key = "icon-cls";
-        setElPathSuffix(key, applyTemplate(key, iconCls));
+        setTemplateValue(key, iconCls);
         return (T) this;
     }
 
-    public Button() {
-        setClassName("Button");
-        setBaseCls("btn");
-        setTag("button");
-        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+    public Button(By...bys) {
+        getPathBuilder().defaults(By.baseCls("btn"), By.tag("button"), By.template("icon-cls", "count(.//*[contains(@class, '%s')]) > 0")).init(bys);
     }
 
     public Button(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public Button(WebLocator container, String text) {
-        this(container);
-        setText(text);
-        setSearchTextType(SearchType.EQUALS);
+        this(By.container(container), By.text(text, SearchType.EQUALS));
     }
 
     /**

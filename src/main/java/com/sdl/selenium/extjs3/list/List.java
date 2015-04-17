@@ -66,7 +66,7 @@ public class List extends GridPanel {
 
     /**
      * @param searchElement searchElement
-     * @param searchType searchType
+     * @param searchType searchTextType
      * @return true or fasle
      */
     @Override

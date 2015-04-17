@@ -14,8 +14,7 @@ public class TextField extends WebLocator implements ITextField {
     private String type;
 
     public TextField(By ...bys) {
-        getPathBuilder().setTemplate("input-type", "@type='%s'");
-        getPathBuilder().defaults(By.tag("input")).init(bys);
+        getPathBuilder().defaults(By.tag("input"), By.template("input-type", "@type='%s'")).init(bys);
     }
 
     public TextField(WebLocator container) {

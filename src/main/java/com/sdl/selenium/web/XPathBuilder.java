@@ -55,6 +55,7 @@ public class XPathBuilder {
 
     private String className = "WebLocator";
     private String tag = "*";
+    private int tagIndex;
     private String id;
     private String elPath;
     private String baseCls;
@@ -114,6 +115,27 @@ public class XPathBuilder {
      */
     public <T extends XPathBuilder> T setTag(final String tag) {
         this.tag = tag;
+        return (T) this;
+    }
+
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     *
+     * @return value that has been set in {@link #setTagIndex(int)}
+     *         <p>tag (type of DOM element)</p>
+     */
+    public int getTagIndex() {
+        return tagIndex;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     *
+     * @param tagIndex (type of DOM element) eg. input[1] or h2[3]
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setTagIndex(final int tagIndex) {
+        this.tagIndex = tagIndex;
         return (T) this;
     }
 
@@ -333,8 +355,8 @@ public class XPathBuilder {
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
-        /*for (SearchType searchType : this.searchLabelType) {
-            this.setSearchTextType(searchType);
+        /*for (SearchType searchTextType : this.searchLabelType) {
+            this.setSearchTextType(searchTextType);
         }*/
         return (T) this;
     }
@@ -354,6 +376,15 @@ public class XPathBuilder {
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
         }
+        return (T) this;
+    }
+
+    public List<SearchType> getDefaultSearchTextType() {
+        return defaultSearchTextType;
+    }
+
+    public <T extends XPathBuilder> T setDefaultSearchTextType(SearchType... defaultSearchTextType) {
+        Collections.addAll(this.defaultSearchTextType, defaultSearchTextType);
         return (T) this;
     }
 
@@ -771,6 +802,10 @@ public class XPathBuilder {
         return tag != null && !tag.equals("*");
     }
 
+    private boolean hasTagIndex() {
+        return tagIndex > 0;
+    }
+
     protected boolean hasElCssSelector() {
         return elCssSelector != null && !elCssSelector.equals("");
     }
@@ -913,7 +948,8 @@ public class XPathBuilder {
                 selector += StringUtils.isNotEmpty(selector) ? " and " + enabled : enabled;
             }
         }
-        selector = "//" + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
+        String tagIndex = hasTagIndex() ? "[" + getTagIndex() + "]" : "";
+        selector = "//" + getTag() + tagIndex + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
     }
 
@@ -1091,13 +1127,9 @@ public class XPathBuilder {
         return itemPath;
     }
 
-    protected String addPositionToPath(String itemPath) {
-        if(getTemplate("position") == null) {
-            if (hasPosition()) {
-                itemPath += "[position() = " + getPosition() + "]";
-            }
-        } else {
-            itemPath = applyTemplate("position", getTemplate("position"));
+    private String addPositionToPath(String itemPath) {
+        if (hasPosition()) {
+            itemPath += "[position() = " + getPosition() + "]";
         }
         return itemPath;
     }

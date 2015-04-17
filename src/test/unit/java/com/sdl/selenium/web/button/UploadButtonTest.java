@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -15,6 +16,10 @@ public class UploadButtonTest {
                 {new UploadButton(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//input"},
                 {new UploadButton(container, "ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
                 {new UploadButton().setElPath("//table[contains(@class, 'x-btn') and count(.//*[text()='Browse...']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"), "//table[contains(@class, 'x-btn') and count(.//*[text()='Browse...']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+
+                {new UploadButton(By.container(container)), "//*[contains(concat(' ', @class, ' '), ' container ')]//input"},
+                {new UploadButton(By.container(container), By.id("ID")), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
+                {new UploadButton(By.xpath("//table[contains(@class, 'x-btn') and count(.//*[text()='Browse...']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]")), "//table[contains(@class, 'x-btn') and count(.//*[text()='Browse...']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
         };
     }
 

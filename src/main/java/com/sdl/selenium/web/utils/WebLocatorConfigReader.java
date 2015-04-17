@@ -13,7 +13,7 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.highlight=false" +
             "\n weblocator.defaults.renderMillis=3000" +
             "\n #accepted values for searchType: " + Arrays.asList(SearchType.values()) +
-            "\n weblocator.defaults.searchType=CONTAINS" +
+            "\n weblocator.defaults.searchType=CONTAINS" + //TODO
             "\n weblocator.defaults.labelPosition=//following-sibling::*//" +
             "\n driver.autoClose=true" +
             "\n driver.implicitlyWait=100";

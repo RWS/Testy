@@ -16,7 +16,7 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
 
     /**
      * @param searchText searchText
-     * @param searchType searchType
+     * @param searchType searchTextType
      * @return true or false
      */
     public boolean rowSelect(String searchText, SearchType searchType);

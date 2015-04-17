@@ -1,6 +1,7 @@
 package com.sdl.selenium.bootstrap.window;
 
 import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.web.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,6 +17,10 @@ public class TooltipTest {
                 {new Tooltip("Message"),             "//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
                 {new Tooltip("Message").setId("Id"), "//*[@id='Id' and contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
                 {new Tooltip("Message").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+
+                {new Tooltip(By.title("Message")),             "//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+                {new Tooltip(By.title("Message"), By.id("Id")), "//*[@id='Id' and contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+                {new Tooltip(By.container(container), By.title("Message")), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
         };
     }
 

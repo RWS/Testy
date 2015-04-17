@@ -9,21 +9,9 @@ import org.slf4j.LoggerFactory;
 public class TableCell extends Cell {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableCell.class);
 
-    /*XPathBuilder pathBuilder = new XPathBuilder() {
-        @Override
-        protected String addPositionToPath(String itemPath) {
-            if (hasPosition()) {
-                int beginIndex = 2 + pathBuilder.getTag().length();
-                itemPath = "//" + pathBuilder.getTag() + "[" + pathBuilder.getPosition() + "]" + itemPath.substring(beginIndex);
-            }
-            return itemPath;
-        }
-    };
-*/
     public TableCell(By... bys) {
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF); //TODO Depinde ordinea!!!!
+        getPathBuilder().setDefaultSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
         getPathBuilder().defaults(By.tag("td")).init(bys);
-        getPathBuilder().setTemplate("position", "//" + getPathBuilder().getTag() + "[" + getPathBuilder().getPosition() + "]");
         setRenderMillis(200);
     }
 
@@ -33,15 +21,14 @@ public class TableCell extends Cell {
     }
 
     public TableCell(WebLocator container, int columnIndex) {
-        this(container, By.position(columnIndex));
+        this(container, By.tagIndex(columnIndex));
     }
 
     public TableCell(int columnIndex, String columnText, SearchType... searchType) {
-        this(By.position(columnIndex), By.text(columnText, searchType));
-
+        this(By.tagIndex(columnIndex), By.text(columnText, searchType));
     }
 
     public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
-        this(container, By.position(columnIndex), By.text(columnText, searchType));
+        this(container, By.tagIndex(columnIndex), By.text(columnText, searchType));
     }
 }

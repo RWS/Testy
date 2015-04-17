@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
@@ -16,6 +17,9 @@ public class TableTest {
                 {new Table(), "//table"},
                 {new Table(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//table"},
                 {new Table().setId("ID"), "//table[@id='ID']"},
+
+                {new Table(By.container(container)), "//*[contains(concat(' ', @class, ' '), ' container ')]//table"},
+                {new Table(By.id("ID")), "//table[@id='ID']"},
         };
     }
 

@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.CheckBox;
@@ -14,14 +15,13 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
 
     private int timeout = 30;
 
-    public Table() {
-        setClassName("SimpleTable");
-        setTag("table");
+    public Table(By...bys) {
+        getPathBuilder().defaults(By.tag("table")).init(bys);
     }
 
     public Table(WebLocator container) {
         this();
-        setContainer(container);
+        getPathBuilder().setContainer(container);
     }
 
     @Override
@@ -161,7 +161,6 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return new TableRow(this, indexRow, byCells).setInfoMessage("-TableRow");
     }
 
-
     public TableCell getTableCell(int columnIndex, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex);
     }
@@ -264,7 +263,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     public boolean checkboxColumnSelect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
+            CheckBox checkBox = new CheckBox(By.container(getTableCell(searchText, columnIndex, searchType)));
             selected = checkBox.isSelected() || checkBox.click();
         }
         return selected;
@@ -277,7 +276,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     public boolean checkboxColumnDeselect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
+            CheckBox checkBox = new CheckBox(By.container(getTableCell(searchText, columnIndex, searchType)));
             selected = !checkBox.isSelected() || checkBox.click();
         }
         return selected;
@@ -288,9 +287,8 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     }
 
     public boolean waitToPopulate(int seconds) {
-        Row row = getRowLocator(1).setVisibility(true).setInfoMessage("first row");
         WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
-        row.setContainer(body);
+        Row row = new TableRow(By.container(body),By.visibility(true), By.position(1), By.infoMessage("first row"));
         return row.waitToRender(seconds * 1000L);
     }
 

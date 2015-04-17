@@ -2,15 +2,11 @@ package com.sdl.selenium.web.window;
 
 import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.XPathBuilder;
 
 public class Window extends WebLocator {
 
     public Window(By...bys) {
-        XPathBuilder pathBuilder = getPathBuilder();
-        pathBuilder.init(bys);
-        pathBuilder.defaults(By.baseCls("ui-dialog ui-widget ui-widget-content"), By.style("display: block;"));
-        setTemplate("title", "count(.//*[text()='%s']) > 0");
+        getPathBuilder().defaults(By.baseCls("ui-dialog ui-widget ui-widget-content"), By.style("display: block;"), By.template("title", "count(.//*[text()='%s']) > 0")).init(bys);
     }
 
     public Window(String title) {
@@ -18,7 +14,7 @@ public class Window extends WebLocator {
     }
 
     public String getMessageWindow() {
-        WebLocator webLocator = new WebLocator(this).setClasses("ui-dialog-content ui-widget-content");
+        WebLocator webLocator = new WebLocator(By.container(this), By.classes("ui-dialog-content ui-widget-content"));
         return webLocator.getHtmlText();
     }
 
@@ -27,7 +23,7 @@ public class Window extends WebLocator {
     }
 
     public boolean press(String textButton) {
-        WebLocator webLocator = new WebLocator(this).setElPath("//button[count(.//*[text()='" + textButton + "']) > 0]");
+        WebLocator webLocator = new WebLocator(By.container(this), By.xpath("//button[count(.//*[text()='" + textButton + "']) > 0]"));
         return webLocator.click();
     }
 

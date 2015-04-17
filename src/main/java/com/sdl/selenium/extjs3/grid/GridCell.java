@@ -68,7 +68,7 @@ public class GridCell extends Cell {
 
     public GridCell(int columnIndex, String columnText, SearchType searchType) {
         this();
-        setPosition(columnIndex);
+        getPathBuilder().setTagIndex(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
     }
@@ -79,14 +79,6 @@ public class GridCell extends Cell {
     public GridCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
         this(columnIndex, columnText, searchType);
         setContainer(container);
-    }
-
-    @Override
-    protected String addPositionToPath(String itemPath) {
-        if (hasPosition()) {
-            itemPath = "//td[" + getPosition() + "]" + itemPath;
-        }
-        return itemPath;
     }
 
     public boolean select() {

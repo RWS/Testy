@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,6 +18,11 @@ public class InputButtonTest {
                 {new InputButton(container, "ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
                 {new InputButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
                 {new InputButton().setText("Create Account").setVisibility(true), "//input[@value='Create Account' and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
+
+                {new InputButton(By.container(container)),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input"},
+                {new InputButton(By.container(container), By.text("ButtonText")), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
+                {new InputButton(By.container(container), By.id("ID")), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
+                {new InputButton(By.text("Create Account"), By.visibility(true)), "//input[@value='Create Account' and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
         };
     }
 

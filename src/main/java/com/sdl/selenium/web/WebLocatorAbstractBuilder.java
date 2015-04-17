@@ -888,7 +888,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return final xpath (including containers xpath), used for interacting with browser
      */
     public final String getPath() {
-        return getPath(false);
+        return pathBuilder.getPath(false);
     }
 
     /**
