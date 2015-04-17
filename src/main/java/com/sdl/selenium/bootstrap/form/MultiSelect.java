@@ -1,9 +1,9 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -33,20 +33,16 @@ import java.util.List;
  */
 public class MultiSelect extends WebLocator {
 
-    public MultiSelect() {
-        setClassName("MultiSelect");
-        setBaseCls("multiselect dropdown-toggle btn");
-        setTag("button");
+    public MultiSelect(By ...bys) {
+       getPathBuilder().defaults(By.baseCls("multiselect dropdown-toggle btn"), By.tag("button")).init(bys);
     }
 
     public MultiSelect(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public MultiSelect(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
+        this(By.container(container), By.label(label));
     }
 
     public boolean select(String... values) {
@@ -75,7 +71,7 @@ public class MultiSelect extends WebLocator {
             WebLocator li = new WebLocator(select).setTag("li").setCls("active");
             WebLocator el = new WebLocator(li).setTag("label");
             el.ready();
-            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(el.getPath()));
+            List<WebElement> elements = WebDriverConfig.getDriver().findElements(org.openqa.selenium.By.xpath(el.getPath()));
             for (WebElement element : elements) {
                 String text = element.getText();
                 list.add(text);

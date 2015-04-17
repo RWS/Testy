@@ -3,7 +3,6 @@ package com.sdl.selenium.bootstrap.form;
 import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,19 +23,15 @@ import org.slf4j.LoggerFactory;
 public class Form extends WebLocator implements IWebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Form.class);
 
-    private XPathBuilder pathBuilder = getPathBuilder();
     public Form(By ...bys) {
-        pathBuilder.init(bys);
-        pathBuilder.defaults(By.tag("form"));
-        pathBuilder.setTemplate("title", "count(.//legend[text()='%s']) > 0");
+        getPathBuilder().defaults(By.tag("form"), By.template("title", "count(.//legend[text()='%s']) > 0")).init(bys);
     }
 
-    public Form(WebLocator container, By ...bys) {
-        this(bys);
-        pathBuilder.setContainer(container);
+    public Form(WebLocator container) {
+        this(By.container(container));
     }
 
     public Form(WebLocator container, String title) {
-        this(container, By.title(title));
+        this(By.container(container), By.title(title));
     }
 }

@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,6 +18,12 @@ public class MultiSelectTest {
                 {new MultiSelect(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new MultiSelect(container, "SelectPickerLabel"),         "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='SelectPickerLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' multiselect dropdown-toggle btn ')]"},
                 {new MultiSelect(container).setId("ID"),                         "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@id='ID' and contains(concat(' ', @class, ' '), ' multiselect dropdown-toggle btn ')]"},
+
+                {new MultiSelect(By.id("ID")),                           "//button[@id='ID' and contains(concat(' ', @class, ' '), ' multiselect dropdown-toggle btn ')]"},
+                {new MultiSelect(By.container(container)),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//button[contains(concat(' ', @class, ' '), ' multiselect dropdown-toggle btn ')]"},
+                {new MultiSelect(By.container(container), By.xpath("//*[contains(text(), 'Register')]")), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new MultiSelect(By.container(container), By.label("SelectPickerLabel")),         "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='SelectPickerLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' multiselect dropdown-toggle btn ')]"},
+                {new MultiSelect(By.container(container), By.id("ID")),                         "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@id='ID' and contains(concat(' ', @class, ' '), ' multiselect dropdown-toggle btn ')]"},
         };
     }
 
