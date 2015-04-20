@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
@@ -24,23 +25,19 @@ import java.io.File;
  */
 public class DownloadFile extends WebLocator implements Download {
 
-    public DownloadFile() {
-        setClassName("DownloadFile");
-        setBaseCls("btn");
-        setTag("button");
+    public DownloadFile(By ...bys) {
+        getPathBuilder().defaults(By.baseCls("btn"), By.tag("button")).init(bys);
     }
 
     /**
      * @param container parent
      */
     public DownloadFile(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public DownloadFile(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
+        this(By.container(container), By.label(label));
     }
 
     /**

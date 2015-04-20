@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.WebDriver;
@@ -28,23 +29,19 @@ import org.slf4j.LoggerFactory;
 public class UploadFile extends WebLocator implements Upload {
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadFile.class);
 
-    public UploadFile() {
-        setClassName("UploadFile");
-        setClasses("fileupload");
-        setTag("div");
+    public UploadFile(By... bys) {
+        getPathBuilder().defaults(By.baseCls("fileupload"), By.tag("div")).init(bys);
     }
 
     /**
      * @param container parent
      */
     public UploadFile(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public UploadFile(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
+        this(By.container(container), By.label(label));
     }
 
     /**
@@ -55,7 +52,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
      */
     public boolean upload(String text, String... filePath) {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
+        WebLocator upload = new WebLocator(By.container(this), By.tag("span"), By.classes("fileupload-new"), By.text(text));
         return upload(upload, filePath);
     }
 
@@ -64,7 +61,7 @@ public class UploadFile extends WebLocator implements Upload {
     }
 
     public boolean change(String text, String... filePath) {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setText(text);
+        WebLocator upload = new WebLocator(By.container(this), By.tag("span"), By.classes("fileupload-exists"), By.text(text));
         return upload(upload, filePath);
     }
 
@@ -76,22 +73,22 @@ public class UploadFile extends WebLocator implements Upload {
      */
     @Override
     public boolean upload(String... filePath) {
-        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-new").setElPathSuffix("icon-folder-open", "count(.//i[@class='icon-folder-open']) > 0");
+        WebLocator uploadButton = new WebLocator(By.container(this), By.tag("span"), By.classes("fileupload-new"), By.pathSuffix("icon-folder-open", "count(.//i[@class='icon-folder-open']) > 0"));
         return upload(uploadButton, filePath);
     }
 
     public boolean reUpload(String... filePath) {
-        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setElPathSuffix("icon-refresh", "count(.//i[@class='icon-refresh']) > 0");
+        WebLocator uploadButton = new WebLocator(By.container(this), By.tag("span"), By.classes("fileupload-exists"), By.pathSuffix("icon-refresh", "count(.//i[@class='icon-refresh']) > 0"));
         return upload(uploadButton, filePath);
     }
 
     public boolean removeFile() {
-        WebLocator removeButton = new WebLocator(this).setTag("a").setClasses("fileupload-exists").setElPathSuffix("icon-trash", "count(.//i[@class='icon-trash']) > 0");
+        WebLocator removeButton = new WebLocator(By.container(this), By.tag("a"), By.classes("fileupload-exists"), By.pathSuffix("icon-trash", "count(.//i[@class='icon-trash']) > 0"));
         return removeButton.clickAt();
     }
 
     public String uploadedNameFile() {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-preview");
+        WebLocator upload = new WebLocator(By.container(this), By.tag("span"), By.classes("fileupload-preview"));
         return upload.getHtmlText();
     }
 

@@ -19,7 +19,6 @@ import com.sdl.selenium.web.table.TableCell;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
