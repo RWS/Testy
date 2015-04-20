@@ -7,7 +7,6 @@ import com.sdl.selenium.web.WebLocator;
 public class ButtonLink extends Button {
 
     public ButtonLink(By ...bys) {
-//        getPathBuilder().setDefaultSearchTextType(SearchType.EQUALS);
         getPathBuilder().defaults(By.tag("a")).init(bys);
     }
 
