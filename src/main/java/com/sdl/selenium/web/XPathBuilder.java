@@ -849,7 +849,7 @@ public class XPathBuilder {
             // TODO make specific for WebLocator
             if (isVisibility()) {
 //               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", isVisibility()));
+                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", getTemplate("visibility")));
             }
         }
 
