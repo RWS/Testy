@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.panel;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
@@ -11,33 +12,25 @@ public class Panel extends ExtJsComponent {
 
     private String headerBaseCls;
 
-    public Panel() {
-        setClassName("Panel");
-        setBaseCls("x-panel");
-        setHeaderBaseCls(getBaseCls());
-        setElPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
-        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+    public Panel(By... bys) {
+        getPathBuilder().defaults(By.baseCls("x-panel"), By.pathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))"),
+                By.template("title", "count(*[contains(@class,'x-panel-header') or contains(@class, '-tl')]//*[text()='%s']) > 0")).init(bys);
     }
 
     public Panel(String title) {
-        this();
-        setTitle(title);
+        this(By.title(title));
     }
 
     public Panel(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public Panel(WebLocator container, String title) {
-        this(container);
-        setTitle(title);
+        this(By.container(container), By.title(title));
     }
 
     public Panel(String cls, WebLocator container, String excludeClass) {
-        this(container);
-        setClasses(cls);
-        setExcludeClasses(excludeClass);
+        this(By.container(container), By.classes(cls), By.excludeClasses(excludeClass));
     }
 
     public String getHeaderBaseCls() {
@@ -59,12 +52,12 @@ public class Panel extends ExtJsComponent {
     }
 
     public ExtJsComponent getBodyComponent() {
-        return new ExtJsComponent(this, "//*[contains(@class, '" + getBaseCls() + "-body')]");
+        return new ExtJsComponent(By.container(this), By.xpath("//*[contains(@class, 'x-panel-body')]"));
     }
 
     public boolean clickOnTool(String id) {
-        WebLocator toolElement = new WebLocator(this).setClasses("x-tool-" + id).setVisibility(true);
-        toolElement.setInfoMessage("x-tool-" + id);
+        WebLocator toolElement = new WebLocator(By.container(this), By.classes("x-tool-" + id),
+                By.visibility(true), By.infoMessage("x-tool-" + id));
         return toolElement.click();
     }
 
@@ -86,7 +79,7 @@ public class Panel extends ExtJsComponent {
     }
 
     public boolean isMaximized() {
-        WebLocator maximizeTool = new WebLocator(this).setClasses("x-tool-maximize");
+        WebLocator maximizeTool = new WebLocator(By.container(this), By.classes("x-tool-maximize"));
         return !maximizeTool.isVisible();
     }
 

@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
@@ -9,7 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class ButtonLinkTest {
-    public static WebLocator container = new WebLocator().setId("ID");
+    private static WebLocator container = new WebLocator(By.id("ID"));
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -20,6 +21,12 @@ public class ButtonLinkTest {
                 {new ButtonLink(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'ButtonText')]"},
                 {new ButtonLink(container).setId("ID"), "//*[@id='ID']//a[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
                 {new ButtonLink(new Table().getRow(new TableCell(1, "Test", SearchType.EQUALS)), "ButtonText"), "//table//tr[count(.//td[1][(text()='Test' or count(*//text()[.='Test']) > 0)]) > 0]//a[contains(concat(' ', @class, ' '), ' btn ') and text()='ButtonText']"},
+
+                {new ButtonLink(By.container(container)), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new ButtonLink(By.container(container), By.text("ButtonText", SearchType.EQUALS)), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ') and text()='ButtonText']"},
+                {new ButtonLink(By.container(container), By.text("ButtonText", SearchType.CONTAINS)), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'ButtonText')]"},
+                {new ButtonLink(By.container(container), By.id("ID")), "//*[@id='ID']//a[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new ButtonLink(By.container(new Table().getRow(new TableCell(1, "Test", SearchType.EQUALS))), By.text("ButtonText", SearchType.EQUALS)), "//table//tr[count(.//td[1][(text()='Test' or count(*//text()[.='Test']) > 0)]) > 0]//a[contains(concat(' ', @class, ' '), ' btn ') and text()='ButtonText']"},
         };
     }
 

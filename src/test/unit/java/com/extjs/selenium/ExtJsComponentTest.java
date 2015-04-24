@@ -1,6 +1,7 @@
 package com.extjs.selenium;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,15 @@ public class ExtJsComponentTest {
                 {new ExtJsComponent(container, "path"),            "//*[contains(concat(' ', @class, ' '), ' container ')]path"},
                 {new ExtJsComponent("cls", container),             "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ')]"},
                 {new ExtJsComponent("Text","cls", container),      "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ') and contains(text(),'Text')]"},
-                {new ExtJsComponent(container).setVisibility(true),"//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0]"},
+                {new ExtJsComponent(container).setVisibility(true),"//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0]"},
+
+                {new ExtJsComponent(By.id("ID")),                 "//*[@id='ID']"},
+                {new ExtJsComponent(By.classes("cls")),                        "//*[contains(concat(' ', @class, ' '), ' cls ')]"},
+                {new ExtJsComponent(By.container(container)),                    "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
+                {new ExtJsComponent(By.container(container), By.xpath("//*[contains(text(), 'Register')]")), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new ExtJsComponent(By.classes("cls"), By.container(container)),             "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ')]"},
+                {new ExtJsComponent(By.text("Text"), By.classes("cls"), By.container(container)),      "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ') and contains(text(),'Text')]"},
+                {new ExtJsComponent(By.container(container), By.visibility(true)),"//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0]"},
         };
     }
 
