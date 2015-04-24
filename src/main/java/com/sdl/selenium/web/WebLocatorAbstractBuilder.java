@@ -18,7 +18,11 @@ import java.util.regex.Pattern;
 public abstract class WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
-    private XPathBuilder pathBuilder = new XPathBuilder();
+    private XPathBuilder pathBuilder = createXPathBuilder();
+
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder();
+    }
 
     public XPathBuilder getPathBuilder() {
         return pathBuilder;

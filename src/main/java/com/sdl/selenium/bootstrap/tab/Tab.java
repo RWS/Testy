@@ -4,6 +4,7 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,24 @@ public class Tab extends WebLocator {
         this(By.container(container), By.title(title));
     }
 
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder() {
+            @Override
+            public String getItemPath(boolean disabled) {
+                WebLocator container = new WebLocator().setTag("following-sibling::*").setClasses("tab-content");
+                WebLocator activePanel = new WebLocator(container).setClasses("tab-pane", "active");
+//                return super.getItemPath(disabled) + "//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']";
+                return super.getItemPath(disabled) + activePanel.getPath();
+            }
+        };
+    }
+
+    public WebLocator getActivePanel() {
+        WebLocator container = new WebLocator(this).setTag("following-sibling::*").setClasses("tab-content");
+        return new WebLocator(container).setClasses("tab-pane", "active");
+    }
+
+
     private String getTitlePath(boolean active) {
         String returnPath = "";
         if (hasText()) {
@@ -30,31 +49,6 @@ public class Tab extends WebLocator {
         }
         return returnPath;
     }
-
-    /**
-     * this method return the path of the main Tab (that contains also this Tab/Panel)
-     *
-     * @return the path of the main TabPanel
-     */
-    /*private String getBaseTabPanelPath() {
-        String selector = getBasePath();
-        if (hasText()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']//a[" + getItemPathText() + "]) > 0";
-        }
-        return "//ul[" + selector + "]";
-    }*/
-
-    /**
-     * this method return the path of only one visible div from the main TabPanel
-     *
-     * @param disabled disabled
-     * @return the path of only one visible div from the main TabPanel
-     */
-    /*@Override
-    public String getItemPath(boolean disabled) {
-        return getBaseTabPanelPath() + "//following-sibling::*[@class='tab-content']/*//*[@class='tab-pane active']";
-    }
-*/
 
     /**
      * After the tab is set to active
