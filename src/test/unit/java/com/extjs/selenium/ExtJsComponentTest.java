@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 
 public class ExtJsComponentTest {
-    public static ExtJsComponent container = new ExtJsComponent("container");
+    public static ExtJsComponent container = new ExtJsComponent(By.classes("container"));
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

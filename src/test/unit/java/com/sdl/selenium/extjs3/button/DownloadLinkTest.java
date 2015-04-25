@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,6 +18,12 @@ public class DownloadLinkTest {
                 {new DownloadLink(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//a[@id='ID']"},
                 {new DownloadLink(container).setElPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
                 {new DownloadLink().setElPath("//*[text()='Download']"), "//*[text()='Download']"},
+
+                {new DownloadLink(By.container(container), By.text("Download")), "//*[contains(concat(' ', @class, ' '), ' container ')]//a[text()='Download']"},
+                {new DownloadLink(By.container(container)), "//*[contains(concat(' ', @class, ' '), ' container ')]//a"},
+                {new DownloadLink(By.container(container), By.id("ID")), "//*[contains(concat(' ', @class, ' '), ' container ')]//a[@id='ID']"},
+                {new DownloadLink(By.container(container), By.xpath("//*[text()='Download']")), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
+                {new DownloadLink(By.xpath("//*[text()='Download']")), "//*[text()='Download']"},
         };
     }
 

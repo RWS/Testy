@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
@@ -11,41 +12,32 @@ import org.slf4j.LoggerFactory;
 
 public class ComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
-    
-    private static String listClass = "x-combo-list";
 
-    //TODO change the way comboBox is identified, without using cls
-    // (create baseCls and if there is no cls, label then take first combo by baseCls)
-    public ComboBox() {
-        setClassName("ComboBox");
+    public ComboBox(By... bys) {
+        super(bys);
     }
 
     /**
      * @deprecated
      */
     public ComboBox(String cls) {
-        this();
-        this.setClasses(cls);
+        this(By.classes(cls));
     }
 
     public ComboBox(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public ComboBox(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
+        this(By.container(container), By.label(label));
     }
 
     public ComboBox(String name, WebLocator container) {
-        this(container);
-        setName(name);
+        this(By.container(container), By.name(name));
     }
 
     public ComboBox(WebLocator container, String cls, String name, boolean hasName) {
-        this(name, container);
-        setClasses(cls);
+        this(By.container(container), By.classes(cls), By.name(name));
     }
 
     /**
@@ -63,9 +55,8 @@ public class ComboBox extends TextField implements ICombo {
         String info = toString();
 
         String valueTest = startWith ? ("starts-with(text(),'" + value + "')") : ("text()='" + value + "'");
-        WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage("ComboList");
-        WebLocator option = new WebLocator(comboListElement).setRenderMillis(optionRenderMillis).setElPath("//*[" + valueTest + "]").setInfoMessage(value);
-
+        WebLocator comboListElement = new WebLocator(By.classes("x-combo-list"), By.style("visibility: visible;"), By.infoMessage("ComboList"));
+        WebLocator option = new WebLocator(By.container(comboListElement), By.xpath("//*[" + valueTest + "]"), By.infoMessage(value)).setRenderMillis(optionRenderMillis);
         if (clickIcon("arrow")) {
             try {
                 // TODO temporary try this solution for IE because is too slow
@@ -76,7 +67,7 @@ public class ComboBox extends TextField implements ICombo {
 //                }
                 if (WebDriverConfig.isIE()) {
                     comboListElement.setId(getListId());
-                    option.setContainer(comboListElement);
+                    option.getPathBuilder().setContainer(comboListElement);
                 }
                 selected = option.click();
             } catch (Exception e) {

@@ -29,7 +29,7 @@ public class GridRowTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(GridRow gridRow, String expectedXpath) {
-        gridRow.setContainer(null);
+        gridRow.getPathBuilder().setContainer(null);
         Assert.assertEquals(gridRow.getPath(), expectedXpath);
     }
 }

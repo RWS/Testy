@@ -2,7 +2,7 @@ package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.bootstrap.button.Download;
 import com.sdl.selenium.bootstrap.button.RunExe;
-import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
@@ -16,18 +16,16 @@ import java.io.File;
 public class DownloadButton extends Button implements Download {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadButton.class);
 
-    public DownloadButton() {
-        setClassName("DownloadButton");
+    public DownloadButton(By...bys) {
+        super(bys);
     }
 
     public DownloadButton(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public DownloadButton(WebLocator container, String text) {
-        this(container);
-        setText(text, SearchType.EQUALS);
+        this(By.container(container), By.text(text));
     }
 
     /**

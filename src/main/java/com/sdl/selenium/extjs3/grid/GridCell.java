@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.grid;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
@@ -9,32 +10,28 @@ import org.slf4j.LoggerFactory;
 public class GridCell extends Cell {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridCell.class);
 
-    public GridCell() {
+    public GridCell(By... bys) {
+        getPathBuilder().init(bys);
         setRenderMillis(200);
-        setClassName("GridCell");
     }
 
     /**
      * @deprecated use other constructors
      */
     public GridCell(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     /**
      * @deprecated use other constructors
      */
     public GridCell(WebLocator container, String elPath) {
-        this();
-        setContainer(container);
-        setElPath(elPath);
+        this(By.container(container), By.xpath(elPath));
     }
 
     public GridCell(int columnIndex) {
-        this();
-        setElPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
-        setInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
+        this(By.xpath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]"),
+                By.infoMessage("td[" + columnIndex + "]//x-grid3-cell-inner"));
     }
 
     /**
@@ -42,33 +39,24 @@ public class GridCell extends Cell {
      */
     public GridCell(WebLocator container, int columnIndex) {
         this(columnIndex);
-        setContainer(container);
+        getPathBuilder().setContainer(container);
     }
 
     public GridCell(String text, WebLocator container) {
-        this();
-        setContainer(container);
-        setText(text);
-        setClasses("x-grid3-cell-inner");
+        this(By.container(container), By.text(text), By.classes("x-grid3-cell-inner"));
     }
 
     public GridCell(String text, SearchType searchType) {
-        this();
-        setText(text, searchType);
-        setClasses("x-grid3-cell-inner");
+        this(By.text(text, searchType), By.classes("x-grid3-cell-inner"));
     }
 
     public GridCell(WebLocator container, String text, SearchType searchType) {
-        this();
-        setContainer(container);
-        setText(text);
-        setClasses("x-grid3-cell-inner");
-        setSearchTextType(searchType);
+        this(By.container(container), By.text(text, searchType), By.classes("x-grid3-cell-inner"));
     }
 
     public GridCell(int columnIndex, String columnText, SearchType searchType) {
         this();
-        getPathBuilder().setTagIndex(columnIndex);
+        getPathBuilder().setTag("td[" + columnIndex + "]//*");
         setText(columnText);
         setSearchTextType(searchType);
     }
@@ -78,7 +66,7 @@ public class GridCell extends Cell {
      */
     public GridCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
         this(columnIndex, columnText, searchType);
-        setContainer(container);
+        getPathBuilder().setContainer(container);
     }
 
     public boolean select() {

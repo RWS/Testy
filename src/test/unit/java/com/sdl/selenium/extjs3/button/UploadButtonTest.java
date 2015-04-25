@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.button;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,6 +18,12 @@ public class UploadButtonTest {
                 {new UploadButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new UploadButton(container).setElPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
                 {new UploadButton().setElPath("//*[text()='Download']"), "//*[text()='Download']"},
+
+                {new UploadButton(By.container(container), By.text("Upload")), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[.='Upload']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+                {new UploadButton(By.container(container)), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+                {new UploadButton(By.container(container), By.id("ID")), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+                {new UploadButton(By.container(container), By.xpath("//*[text()='Download']")), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
+                {new UploadButton(By.xpath("//*[text()='Download']")), "//*[text()='Download']"},
         };
     }
 

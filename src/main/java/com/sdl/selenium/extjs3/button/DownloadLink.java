@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.button;
 import com.sdl.selenium.bootstrap.button.Download;
 import com.sdl.selenium.bootstrap.button.RunExe;
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
@@ -14,19 +15,16 @@ import java.io.File;
 
 public class DownloadLink extends ExtJsComponent implements Download {
 
-    public DownloadLink() {
-        setClassName("DownloadLink");
-        setTag("a");
+    public DownloadLink(By ...bys) {
+        getPathBuilder().defaults(By.tag("a"), By.text("", SearchType.EQUALS)).init(bys);
     }
 
     public DownloadLink(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public DownloadLink(WebLocator container, String text) {
-        this(container);
-        setText(text, SearchType.EQUALS);
+        this(By.container(container), By.text(text, SearchType.EQUALS));
     }
 
     /**

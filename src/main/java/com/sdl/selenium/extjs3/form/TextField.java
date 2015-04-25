@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITextField;
 import com.sdl.selenium.web.utils.Utils;
@@ -12,31 +13,25 @@ import org.slf4j.LoggerFactory;
 public class TextField extends ExtJsComponent implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
-    public TextField() {
-        setClassName("TextField");
-        setTag("input");
-        setElPathSuffix("not-hidden", "not(@type='hidden')");
-        setLabelPosition("//following-sibling::*//");
+    public TextField(By...bys) {
+        getPathBuilder().defaults(By.tag("input"), By.pathSuffix("not-hidden", "not(@type='hidden')"),
+                By.labelPosition("//following-sibling::*//")).init(bys);
     }
 
     public TextField(String cls) {
-        this();
-        setClasses(cls);
+        this(By.classes(cls));
     }
 
     public TextField(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public TextField(WebLocator container, String label) {
-        this(container);
-        setLabel(label);
+        this(By.container(container), By.label(label));
     }
 
     public TextField(String name, WebLocator container) {
-        this(container);
-        setName(name);
+        this(By.container(container), By.name(name));
     }
 
     // methods
@@ -94,7 +89,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     public boolean clickIcon(String icon) {
         if (ready()) {
             String triggerPath = getTriggerPath(icon);
-            WebLocator iconLocator = new WebLocator(this).setElPath(triggerPath);
+            WebLocator iconLocator = new WebLocator(By.container(this), By.xpath(triggerPath));
             iconLocator.setRenderMillis(500);
             iconLocator.setInfoMessage("trigger-" + icon);
             try {

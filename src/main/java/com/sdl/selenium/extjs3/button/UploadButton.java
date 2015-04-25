@@ -2,7 +2,7 @@ package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.bootstrap.button.RunExe;
 import com.sdl.selenium.bootstrap.button.Upload;
-import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.WebDriver;
@@ -10,18 +10,16 @@ import org.openqa.selenium.interactions.Actions;
 
 public class UploadButton extends Button implements Upload {
 
-    public UploadButton() {
-        setClassName("UploadButton");
+    public UploadButton(By...bys) {
+        super(bys);
     }
 
     public UploadButton(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public UploadButton(WebLocator container, String text) {
-        this(container);
-        setText(text, SearchType.EQUALS);
+        this(By.container(container), By.text(text));
     }
 
     @Override

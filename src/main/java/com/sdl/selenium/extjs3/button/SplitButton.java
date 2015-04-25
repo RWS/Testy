@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
@@ -10,20 +11,16 @@ import org.slf4j.LoggerFactory;
 public class SplitButton extends Button {
     private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
-    public SplitButton() {
-        setClassName("SplitButton");
-        setBaseCls("x-btn");
-        setVisibility(true);
+    public SplitButton(By... bys) {
+        super(bys);
     }
 
-    public SplitButton(ExtJsComponent container) {
-        this();
-        setContainer(container);
+    public SplitButton(WebLocator container) {
+        this(By.container(container));
     }
 
-    public SplitButton(ExtJsComponent container, String text) {
-        this(container);
-        setText(text);
+    public SplitButton(WebLocator container, String text) {
+        this(By.container(container), By.text(text));
     }
 
     public boolean clickOnMenu(String option) {
@@ -45,7 +42,7 @@ public class SplitButton extends Button {
             // TODO try to use Menu class for implementing select item
 //            click();
             showMenu();
-            WebLocator menu = new WebLocator("x-menu-floating");
+            WebLocator menu = new WebLocator(By.classes("x-menu-floating"));
             if (WebDriverConfig.isIE()) {
                 if (menu.isVisible()) {
                     LOGGER.info("In IE is visible");
@@ -55,8 +52,8 @@ public class SplitButton extends Button {
             }
             menu.setInfoMessage("active menu");
             ExtJsComponent option = new ExtJsComponent(menu);
-            for (int i = 0; i < n; i++) {
-                option.setText(menuOptions[i]);
+            for (String menuOption : menuOptions) {
+                option.setText(menuOption);
                 if (!option.mouseOver()) {
                     return false;
                 }

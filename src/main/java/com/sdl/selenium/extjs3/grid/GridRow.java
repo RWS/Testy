@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.grid;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
@@ -10,32 +11,22 @@ import org.slf4j.LoggerFactory;
 public class GridRow extends Row {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridRow.class);
 
-    public GridRow() {
+    public GridRow(By... bys) {
+        getPathBuilder().defaults(By.tag("*")).init(bys);
         setRenderMillis(200);
-        setClassName("GridRow");
-        setTag("*");
     }
 
     @Deprecated
     public GridRow(WebLocator container, String elPath) {
-        this();
-        setContainer(container);
-        setElPath(elPath);
+        this(By.container(container), By.xpath(elPath));
     }
 
     public GridRow(GridPanel gridPanel) {
-        this();
-        setContainer(gridPanel);
-        setTag("div");
-        setClasses("x-grid3-row");
-        setExcludeClasses("x-grid3-row-checker");
+        this(By.container(gridPanel), By.tag("div"), By.classes("x-grid3-row"), By.excludeClasses("x-grid3-row-checker"));
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex) {
-        setContainer(gridPanel);
-        setTag("div[" + rowIndex + "]");
-        setClasses("x-grid3-row");
-        setExcludeClasses("x-grid3-row-checker");
+        this(By.container(gridPanel), By.tag("div[" + rowIndex + "]"), By.classes("x-grid3-row"), By.excludeClasses("x-grid3-row-checker"));
     }
 
     public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType searchType) {
@@ -50,9 +41,7 @@ public class GridRow extends Row {
     }
 
     public GridRow(GridPanel gridPanel, Cell... cells) {
-        this(gridPanel);
-        setTag("*");
-        setChildNotes(cells);
+        this(By.container(gridPanel), By.classes("x-grid3-row"), By.excludeClasses("x-grid3-row-checker"), By.tag("*"), By.childNodes(cells));
     }
 
     private String getSearchPaths(String searchColumnId, WebLocator cellEl) {
@@ -60,11 +49,8 @@ public class GridRow extends Row {
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {
-        this(gridPanel, rowIndex);
-        if (isSelected) {
-            setTag("div[" + rowIndex + "]");
-            setClasses("x-grid3-row-selected");
-            setExcludeClasses("x-grid3-row-checker");
-        }
+        this(By.container(gridPanel), By.tag("div[" + rowIndex + "]"),
+                (isSelected ? By.classes("x-grid3-row-selected") : By.classes("x-grid3-row")),
+                By.excludeClasses("x-grid3-row-checker"));
     }
 }

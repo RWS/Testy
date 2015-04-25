@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
@@ -14,23 +15,20 @@ import java.util.Locale;
 public class DateField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
-    public DateField() {
-        setClassName("DateField");
+    public DateField(By...bys) {
+        super(bys);
     }
 
     public DateField(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public DateField(WebLocator container, String cls) {
-        this(container);
-        setClasses(cls);
+        this(By.container(container), By.classes(cls));
     }
 
     public DateField(String name, WebLocator container) {
-        this(container);
-        setName(name);
+        this(By.container(container), By.name(name));
     }
 
     /**
@@ -42,20 +40,20 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        WebLocator calendarLayer = new WebLocator("x-layer").setStyle("visibility: visible;");
-        Button monthYearButton = new Button(calendarLayer);
-        WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).setInfoMessage("Ok");
+        WebLocator calendarLayer = new WebLocator(By.classes("x-layer"), By.style("visibility: visible;"));
+        Button monthYearButton = new Button(By.container(calendarLayer));
+        WebLocator selectOkButton = new WebLocator(By.container(calendarLayer), By.classes("x-date-mp-ok"), By.infoMessage("Ok"));
         if (click()) {
             monthYearButton.click();
             Utils.sleep(100);
             // TODO find elements without setElPath
-            WebLocator yearEl = new WebLocator(calendarLayer).setElPath("//*[contains(@class, 'x-date-mp-year')]//*[text() = '" + year + "']").setInfoMessage("year " + year);
+            WebLocator yearEl = new WebLocator(By.container(calendarLayer), By.xpath("//*[contains(@class, 'x-date-mp-year')]//*[text() = '" + year + "']"), By.infoMessage("year " + year));
             yearEl.click();
-            WebLocator monthEl = new WebLocator(calendarLayer).setElPath("//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']").setInfoMessage("month " + month);
+            WebLocator monthEl = new WebLocator(By.container(calendarLayer), By.xpath("//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']"), By.infoMessage("month " + month));
             monthEl.click();
             selectOkButton.click();
             Utils.sleep(60); // wait for Chrome
-            WebLocator dayEl = new WebLocator(calendarLayer).setElPath("//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']").setInfoMessage("day " + day);
+            WebLocator dayEl = new WebLocator(By.container(calendarLayer), By.xpath("//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']"), By.infoMessage("day " + day));
             return dayEl.click();
         } else {
             LOGGER.warn("The selected month doesn't have the " + day + " day.");

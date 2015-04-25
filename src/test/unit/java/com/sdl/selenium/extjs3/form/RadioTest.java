@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,6 +18,12 @@ public class RadioTest {
                 {new Radio(container, "Name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
                 {new Radio(container, "Name").setLabel("label"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='label']/../input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
                 {new Radio("Label", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Label']/../input[contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
+
+                {new Radio(By.text("LabelText")), "//input[contains(concat(' ', @class, ' '), ' x-form-radio ') and @value='LabelText']"},
+                {new Radio(By.container(container)), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
+                {new Radio(By.container(container), By.name("Name")), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
+                {new Radio(By.container(container), By.name("Name"), By.label("label")), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='label']/../input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
+                {new Radio(By.container(container), By.label("Label")), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Label']/../input[contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
         };
     }
 

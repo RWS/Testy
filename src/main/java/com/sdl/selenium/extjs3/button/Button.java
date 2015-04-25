@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
@@ -21,40 +22,36 @@ public class Button extends ExtJsComponent implements IButton {
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
         String key = "icon-cls";
-        setElPathSuffix(key, applyTemplate(key, iconCls));
+        setTemplateValue(key, iconCls);
         return (T) this;
     }
 
     private String iconCls;
 
-    public Button() {
-        setClassName("Button");
-        setBaseCls("x-btn");
-        setTag("table");
-        setVisibility(true);
-        setTemplate("enabled", "not(contains(@class, 'x-item-disabled'))");
-        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+    public Button(By... bys) {
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
+        getPathBuilder().defaults(By.baseCls("x-btn"), By.tag("table"), By.text("", SearchType.EQUALS),
+                By.template("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0"),
+                By.template("icon-cls", "count(.//*[contains(@class, '%s')]) > 0"),
+                By.template("enabled", "not(contains(@class, 'x-item-disabled'))"),
+                By.visibility(true)).init(bys);
     }
 
     /**
      * @param container parent
      */
     public Button(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public Button(WebLocator container, String text) {
-        this(container);
-        setText(text, SearchType.EQUALS);
+        this(By.container(container), By.text(text, SearchType.EQUALS));
     }
 
-    // Methods
     @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
-        WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(this.itemToString() + "//button");
+        WebLocator buttonEl = new WebLocator(By.container(this), By.tag("button"), By.infoMessage(this.itemToString() + "//button"));
         // TODO try to click on button that has mask - with first solution is not saying that has mask
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
         buttonEl.setRenderMillis(getRenderMillis());
@@ -151,7 +148,7 @@ public class Button extends ExtJsComponent implements IButton {
             String info = toString();
 //            LOGGER.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
-            WebLocator menu = new WebLocator("x-menu-floating");
+            WebLocator menu = new WebLocator(By.classes("x-menu-floating"));
             if (WebDriverConfig.isIE()) {
                 // menu.isVisible is not considered but is executed and is just consuming time.
 //                if(menu.isVisible()){
@@ -161,7 +158,7 @@ public class Button extends ExtJsComponent implements IButton {
                 menu.setStyle("visibility: visible;");
             }
             menu.setInfoMessage("active menu");
-            ExtJsComponent option = new ExtJsComponent(menu);
+            ExtJsComponent option = new ExtJsComponent(By.container(menu));
             for (String menuOption : menuOptions) {
                 option.setText(menuOption);
                 if (!option.mouseOver()) {

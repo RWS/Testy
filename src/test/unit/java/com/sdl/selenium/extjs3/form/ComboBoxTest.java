@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,7 +19,14 @@ public class ComboBoxTest {
                 {new ComboBox(container, "ComboBoxText"),              "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='ComboBoxText']//following-sibling::*//input[not(@type='hidden')]"},
                 {new ComboBox("name", container),                      "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and not(@type='hidden')]"},
                 {new ComboBox(container, "ComboBoxCls", "name", true), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' ComboBoxCls ') and not(@type='hidden')]"},
-                {new ComboBox(container, "ComboBoxCls", "name", false),"//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' ComboBoxCls ') and not(@type='hidden')]"}
+                {new ComboBox(container, "ComboBoxCls", "name", false),"//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' ComboBoxCls ') and not(@type='hidden')]"},
+
+                {new ComboBox(By.classes("ComboBoxClass")),            "//input[contains(concat(' ', @class, ' '), ' ComboBoxClass ') and not(@type='hidden')]"},
+                {new ComboBox(By.container(container)),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[not(@type='hidden')]"},
+                {new ComboBox(By.container(container), By.xpath("//table//tr[1]")),  "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
+                {new ComboBox(By.container(container), By.label("ComboBoxText")),              "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='ComboBoxText']//following-sibling::*//input[not(@type='hidden')]"},
+                {new ComboBox(By.container(container), By.name("name")),                      "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and not(@type='hidden')]"},
+                {new ComboBox(By.container(container), By.classes("ComboBoxCls"), By.name("name")), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' ComboBoxCls ') and not(@type='hidden')]"},
         };
     }
 

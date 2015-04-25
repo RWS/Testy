@@ -1,12 +1,13 @@
 package com.sdl.selenium.bootstrap.tab;
 
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TabTest {
-    public static WebLocator container = new WebLocator("container");
+    public static WebLocator container = new WebLocator(By.classes("container"));
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -15,6 +16,10 @@ public class TabTest {
                 {new Tab(container, "Tab"),          "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
                 {new Tab(container, "Tab").setId("IdTab"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[@id='IdTab' and contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
                 {new Tab(container, "Tab").setClasses("Class"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and contains(concat(' ', @class, ' '), ' Class ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+
+                {new Tab(By.container(container), By.title("Tab")),          "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+                {new Tab(By.container(container), By.title("Tab"), By.id("IdTab")),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[@id='IdTab' and contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+                {new Tab(By.container(container), By.title("Tab"), By.classes("Class")),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and contains(concat(' ', @class, ' '), ' Class ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
         };
     }
 
