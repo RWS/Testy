@@ -1,16 +1,17 @@
 package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class GridPanelTest {
-    private static ExtJsComponent container = new ExtJsComponent("container");
+    private static ExtJsComponent container = new ExtJsComponent(By.classes("container"));
     private static GridPanel grid = new GridPanel();
     private static GridPanel gridCls = new GridPanel("GridPanelCls");
-    private static GridPanel gridContainer = new GridPanel(container);
+    private static GridPanel gridContainer = new GridPanel(By.container(container));
     private static GridPanel gridClsAndColumn = new GridPanel("GridPanelCls", "1");
     private static GridPanel gridContainerAndColumn = new GridPanel(container, "1");
     private static GridPanel gridContainerAndClsAndColumn = new GridPanel(container, "GridPanelCls", "1");

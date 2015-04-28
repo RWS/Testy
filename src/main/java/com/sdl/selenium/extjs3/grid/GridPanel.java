@@ -7,6 +7,7 @@ import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.ITable;
@@ -28,35 +29,30 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     private boolean isLoaded = false;
     private int timeout = 60;
 
-    public GridPanel() {
-        setClassName("GridPanel");
-        setBaseCls("x-grid-panel");
-        setHeaderBaseCls("x-panel");
+    public GridPanel(By... bys) {
+        getPathBuilder().defaults(By.baseCls("x-grid-panel")/*, By.classes("x-panel")*/).init(bys);
     }
 
     public GridPanel(String cls) {
-        this();
-        setClasses(cls);
+        this(By.classes(cls));
     }
 
     public GridPanel(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public GridPanel(String cls, String searchColumnId) {
-        this(cls);
-        this.searchColumnId = searchColumnId;
+        this(By.classes(cls));
+        setSearchColumnId(searchColumnId);
     }
 
     public GridPanel(WebLocator container, String searchColumnId) {
-        this(container);
+        this(By.container(container));
         setSearchColumnId(searchColumnId);
     }
 
     public GridPanel(WebLocator container, String cls, String searchColumnId) {
-        this(container);
-        setClasses(cls);
+        this(By.container(container), By.classes(cls));
         setSearchColumnId(searchColumnId);
     }
 
@@ -67,14 +63,14 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     // TODO find better solution for GridPanel that is used in TabPanel
     public static GridPanel getInstanceByTabPanel(TabPanel tabPanel, String searchColumnId) {
         GridPanel gridPanel = new GridPanel();
-        WebLocator container = tabPanel.getContainer();
-        gridPanel.setContainer(container);
+        WebLocator container = tabPanel.getPathBuilder().getContainer();
+        gridPanel.getPathBuilder().setContainer(container);
 
-        tabPanel.setContainer(null); // hack to have path without container
+        tabPanel.getPathBuilder().setContainer(null); // hack to have path without container
         String elPath = tabPanel.getPath();
-        tabPanel.setContainer(container); // set container back
+        tabPanel.getPathBuilder().setContainer(container); // set container back
 
-        gridPanel.setElPath(elPath);
+        gridPanel.getPathBuilder().setElPath(elPath);
         gridPanel.setSearchColumnId(searchColumnId);
         return gridPanel;
     }
@@ -158,6 +154,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttrId();
         return scrollTop(id);
     }
+
     protected boolean scrollTop(String id) {
         String script = "return (function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollTop", script);
@@ -189,6 +186,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttrId();
         return scrollPageDown(id);
     }
+
     protected boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageDown", script);
@@ -216,7 +214,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     /**
      * @param searchElement searchElement
-     * @param columnId 1,2,3...
+     * @param columnId      1,2,3...
      * @param searchType    accepted values are: SearchType.EQUALS
      * @return true or false
      */
@@ -264,8 +262,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      * Scroll Page Down to find the cell. If you found it return true, if not return false.
      *
      * @param searchElement searchElement
-     * @param columnId columnId
-     * @param searchType SearchType.EQUALS
+     * @param columnId      columnId
+     * @param searchType    SearchType.EQUALS
      * @return true or false
      */
     public boolean isCellPresent(String searchElement, int columnId, SearchType searchType) {
@@ -307,28 +305,28 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @deprecated use getHeader(columnId).click();
      * @param columnId - "x-grid3-hd-" + columnId
      *                 example: x-grid3-hd-userName in this case "userName" is the columnId
      * @return true or false
+     * @deprecated use getHeader(columnId).click();
      */
     public boolean clickOnHeader(String columnId) {
         return getHeader(columnId).click();
     }
 
     /**
-     * @deprecated use getHeader(columnId).assertClick();
      * @param columnId
      * @return
+     * @deprecated use getHeader(columnId).assertClick();
      */
     public boolean assertClickOnHeader(String columnId) {
         return getHeader(columnId).assertClick();
     }
 
     /**
-     * @deprecated use getHeader(columnId).click();
      * @param columnId
      * @return
+     * @deprecated use getHeader(columnId).click();
      */
     public boolean doubleClickOnHeader(String columnId) {
         WebLocator header = getHeader(columnId);
@@ -557,11 +555,11 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     public GridCell getGridCell(int position, String text, GridCell... byCells) {
-        return new GridCell().setContainer(getRow(byCells)).setPosition(position).setText(text);
+        return new GridCell(By.container(getRow(byCells)), By.position(position), By.text(text));
     }
 
     public GridCell getGridCell(int position, GridCell... byCells) {
-        return new GridCell().setPosition(position).setContainer(getRow(byCells));
+        return new GridCell(By.container(getRow(byCells)), By.tag("td[" + position + "]//*")); //.setPosition(position);
     }
 
     public String[] getRow(int rowIndex) {

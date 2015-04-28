@@ -4,6 +4,7 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs3.grid.GridCell;
 import com.sdl.selenium.extjs3.grid.GridPanel;
 import com.sdl.selenium.extjs3.grid.GridRow;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.commons.lang3.StringUtils;
@@ -14,18 +15,15 @@ import org.slf4j.LoggerFactory;
 public class List extends GridPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(List.class);
 
-    public List() {
-        setClassName("List");
-        setBaseCls("ux-form-multiselect");
-        setElPathSuffix("exclude-hide-cls", null);
+    public List(By... bys) {
+        getPathBuilder().defaults(By.baseCls("ux-form-multiselect"), By.pathSuffix("exclude-hide-cls", null)).init(bys);
     }
 
     public List(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
-    public boolean selectRows(String ...values) {
+    public boolean selectRows(String... values) {
         boolean select = false;
         sendKeys(Keys.CONTROL, Keys.DOWN);
         for (String value : values) {
@@ -39,15 +37,15 @@ public class List extends GridPanel {
         return select;
     }
 
-    public boolean selectRowsWithJs(String ...values) {
+    public boolean selectRowsWithJs(String... values) {
         String id = getAttributeId();
         return (Boolean) WebLocatorUtils.doExecuteScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + StringUtils.join(values, ",") + "');");
     }
 
-    public boolean isSelectedRows(String ...values) {
+    public boolean isSelectedRows(String... values) {
         boolean select = false;
         for (String value : values) {
-            WebLocator webLocator = new WebLocator(getCell(value)).setElPath("/parent::*/parent::dl");
+            WebLocator webLocator = new WebLocator(By.container(getCell(value)), By.xpath("/parent::*/parent::dl"));
             select = webLocator.getAttributeClass().contains("ux-mselect-selected");
             if (!select) {
                 return false;
@@ -58,15 +56,14 @@ public class List extends GridPanel {
 
     @Override
     public GridCell getCell(String searchElement, SearchType searchType) {
-        WebLocator textCell = new WebLocator().setText(searchElement, searchType);
-        GridCell cell = new GridCell().setContainer(this).setElPath(textCell.getPath());
-        cell.setInfoMessage("cell(" + searchElement + ")");
+        WebLocator textCell = new WebLocator(By.text(searchElement, searchType));
+        GridCell cell = new GridCell(By.container(this), By.xpath(textCell.getPath()), By.infoMessage("cell(" + searchElement + ")"));
         return cell;
     }
 
     /**
      * @param searchElement searchElement
-     * @param searchType searchTextType
+     * @param searchType    searchTextType
      * @return true or fasle
      */
     @Override
@@ -78,7 +75,7 @@ public class List extends GridPanel {
 
     @Override
     public GridRow getRowLocator(int rowIndex) {
-        return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
+        return new GridRow(By.container(this), By.xpath("//dl[" + rowIndex + "]"));
     }
 }
 

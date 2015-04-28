@@ -26,7 +26,7 @@ public class GridRow extends Row {
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex) {
-        this(By.container(gridPanel), By.tag("div[" + rowIndex + "]"), By.classes("x-grid3-row"), By.excludeClasses("x-grid3-row-checker"));
+        this(By.container(gridPanel), By.tag("div"), By.tagIndex(rowIndex), By.classes("x-grid3-row"), By.excludeClasses("x-grid3-row-checker"));
     }
 
     public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType searchType) {
@@ -36,7 +36,7 @@ public class GridRow extends Row {
     public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType searchType) {
         this(gridPanel);
         setTag("*");
-        WebLocator cellEl = new WebLocator().setText(searchElement, searchType);
+        WebLocator cellEl = new WebLocator(By.text(searchElement, searchType));
         setElPath("//" + getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 
@@ -49,7 +49,7 @@ public class GridRow extends Row {
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {
-        this(By.container(gridPanel), By.tag("div[" + rowIndex + "]"),
+        this(By.container(gridPanel), By.tag("div"), By.tagIndex(rowIndex),
                 (isSelected ? By.classes("x-grid3-row-selected") : By.classes("x-grid3-row")),
                 By.excludeClasses("x-grid3-row-checker"));
     }
