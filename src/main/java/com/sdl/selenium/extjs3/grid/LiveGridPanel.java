@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,35 +9,30 @@ import org.slf4j.LoggerFactory;
 public class LiveGridPanel extends GridPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(LiveGridPanel.class);
 
-    public LiveGridPanel() {
-        setClassName("LiveGridPanel");
-        setBaseCls("ext-ux-livegrid");
-        setHeaderBaseCls("x-panel");
+    public LiveGridPanel(By...bys) {
+        getPathBuilder().defaults(By.baseCls("ext-ux-livegrid")/*, By.classes("x-panel")*/).init(bys);
     }
 
     public LiveGridPanel(String cls) {
-        this();
-        setClasses(cls);
+        this(By.classes(cls));
     }
 
     public LiveGridPanel(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public LiveGridPanel(String cls, String searchColumnId) {
-        this(cls);
+        this(By.classes(cls));
         setSearchColumnId(searchColumnId);
     }
 
     public LiveGridPanel(WebLocator container, String searchColumnId) {
-        this(container);
+        this(By.container(container));
         setSearchColumnId(searchColumnId);
     }
 
     public LiveGridPanel(WebLocator container, String cls, String searchColumnId) {
-        this(container);
-        setClasses(cls);
+        this(By.container(container), By.classes(cls));
         setSearchColumnId(searchColumnId);
     }
 
@@ -95,11 +91,11 @@ public class LiveGridPanel extends GridPanel {
     @Override
     public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        return new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div");
+        return new WebLocator(By.container(this), By.xpath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div"));
     }
 
     public boolean refresh() {
-        Button refreshButton = new Button(this).setIconCls("x-tbar-loading").setInfoMessage("Loading...");
+        Button refreshButton = new Button(By.container(this)).setIconCls("x-tbar-loading").setInfoMessage("Loading...");
         return ready(true) && refreshButton.clickAt() && ready(true);
     }
 }

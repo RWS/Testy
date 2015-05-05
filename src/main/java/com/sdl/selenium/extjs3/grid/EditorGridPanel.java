@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.grid;
 import com.sdl.selenium.extjs3.form.ComboBox;
 import com.sdl.selenium.extjs3.form.TextArea;
 import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.web.By;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
@@ -14,27 +15,25 @@ public class EditorGridPanel extends GridPanel {
 
     private int clicksToEdit = 2;
 
-    public EditorGridPanel() {
-        setClassName("EditorGridPanel");
+    public EditorGridPanel(By...bys) {
+        super(bys);
     }
 
     public EditorGridPanel(WebLocator container) {
-        this();
-        setContainer(container);
+        this(By.container(container));
     }
 
     public EditorGridPanel(String cls) {
-        this();
-        setClasses(cls);
+        this(By.classes(cls));
     }
 
     public EditorGridPanel(String cls, String searchColumnId) {
-        this(cls);
+        this(By.classes(cls));
         setSearchColumnId(searchColumnId);
     }
 
     public EditorGridPanel(WebLocator container, String searchColumnId) {
-        this(container);
+        this(By.container(container));
         setSearchColumnId(searchColumnId);
     }
 
@@ -44,7 +43,7 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public EditorGridPanel(WebLocator container, int clicksToEdit) {
-        this(container);
+        this(By.container(container));
         this.clicksToEdit = clicksToEdit;
     }
 
@@ -63,8 +62,8 @@ public class EditorGridPanel extends GridPanel {
      */
     public TextField getActiveEditor() {
         TextField editor;
-        WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl = new WebLocator(container).setElPath("//*[contains(@class, '-focus')]");
+        WebLocator container = new WebLocator(By.container(this), By.classes("x-editor"));
+        WebLocator editableEl = new WebLocator(By.container(container), By.xpath("//*[contains(@class, '-focus')]"));
         String stringClass = editableEl.getAttributeClass();
         LOGGER.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {
@@ -83,7 +82,7 @@ public class EditorGridPanel extends GridPanel {
             LOGGER.debug("active editor is TextField");
             editor = new TextField();
         }
-        editor.setRenderMillis(1000).setContainer(this).setClasses("x-form-focus").setInfoMessage("active editor");
+        editor.getPathBuilder().setRenderMillis(1000).setContainer(this).setClasses("x-form-focus").setInfoMessage("active editor");
         return editor;
     }
 
