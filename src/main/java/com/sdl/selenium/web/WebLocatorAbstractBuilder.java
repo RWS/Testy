@@ -16,6 +16,7 @@ public abstract class WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
     private String className = "WebLocator";
+    private String root = "//";
     private String tag = "*";
     private String id;
     private String elPath;
@@ -64,6 +65,28 @@ public abstract class WebLocatorAbstractBuilder {
     // =========================================
     // ========== setters & getters ============
     // =========================================
+
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     *
+     * @return value that has been set in {@link #setRoot(String)}
+     * <p>root </p>
+     * <pre>default to "//"</pre>
+     */
+    public String getRoot() {
+        return root;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     *
+     * @param root If the path starts with // then all elements in the document which fulfill following criteria are selected. eg. // or /
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setRoot(final String root) {
+        this.root = root;
+        return (T) this;
+    }
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
@@ -835,7 +858,7 @@ public abstract class WebLocatorAbstractBuilder {
                 selector += StringUtils.isNotEmpty(selector) ? " and " + enabled : enabled;
             }
         }
-        selector = "//" + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
+        selector = getRoot() + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
     }
 
