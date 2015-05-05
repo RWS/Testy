@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Login Example</title>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bootstrap/css/experiments.css" rel="stylesheet">
+</head>
+<body>
+
+<form class="form-horizontal experiment-tile" style="height: 300px;">
+    <legend>Login</legend>
+
+    <div class="control-group">
+        <label class="control-label">Email:</label>
+        <div class="controls">
+            <input id="email" type="text" class="input-block-level">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Password:</label>
+        <div class="controls">
+            <input id="password" type="password" class="input-block-level">
+        </div>
+    </div>
+    <div class="error-msg error"></div>
+
+    <div class="control-group">
+        <div class="controls">
+            <button id="loginButton" type="button" class="btn tile-btn btn-warning">Login</button>
+        </div>
+    </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var DB_USERS = {
+            'eu@fast.com': 'eu.pass',
+            'tu@fast.com': 'tu.pass',
+            'el@fast.com': 'el.pass'
+        };
+
+        $('#loginButton').on('click', function () {
+            var email = $("#email").val(),
+                pass = DB_USERS[email];
+
+            if(pass && pass == $("#password").val()) {
+                window.location.href = "./bootstrap/index.html"
+            } else {
+                $("#email").val("");
+                $("#password").val("");
+                $('.error-msg').html('Invalid user or password!');
+            }
+        });
+    });
+</script>
+</body>
+</html>
+
