@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -77,19 +78,19 @@ public class LiveGridPanelTest {
                 {gridContainerAndColumn.getCell(1, 1), CONTAINER_PATH + LIVE_GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
                 {gridContainerAndClsAndColumn.getCell(1, 1), CONTAINER_PATH + LIVE_GRID_PANEL_CLS + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(@class, 'x-grid3-cell-inner')]"},
 
-                {grid.getGridCell("search", false), LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
-                {gridCls.getGridCell("search", false), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
-                {gridContainer.getGridCell("search", false), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
-                {gridClsAndColumn.getGridCell("search", false), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[text()='search']"},
-                {gridContainerAndColumn.getGridCell("search", false), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-1')]//*[text()='search']"},
-                {gridContainerAndClsAndColumn.getGridCell("search", false), CONTAINER_PATH + LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[text()='search']"},
+                {grid.getCell("search", SearchType.EQUALS), LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
+                {gridCls.getCell("search", SearchType.EQUALS), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
+                {gridContainer.getCell("search", SearchType.EQUALS), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[text()='search']"},
+                {gridClsAndColumn.getCell("search", SearchType.EQUALS), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[text()='search']"},
+                {gridContainerAndColumn.getCell("search", SearchType.EQUALS), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-1')]//*[text()='search']"},
+                {gridContainerAndClsAndColumn.getCell("search", SearchType.EQUALS), CONTAINER_PATH + LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[text()='search']"},
 
-                {grid.getGridCell("search", true), LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[starts-with(text(),'search')]"},
-                {gridCls.getGridCell("search", true), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-0')]//*[starts-with(text(),'search')]"},
-                {gridContainer.getGridCell("search", true), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[starts-with(text(),'search')]"},
-                {gridClsAndColumn.getGridCell("search", true), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[starts-with(text(),'search')]"},
-                {gridContainerAndColumn.getGridCell("search", true), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-1')]//*[starts-with(text(),'search')]"},
-                {gridContainerAndClsAndColumn.getGridCell("search", true), CONTAINER_PATH + LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[starts-with(text(),'search')]"},
+                {grid.getCell("search", SearchType.STARTS_WITH), LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[starts-with(text(),'search')]"},
+                {gridCls.getCell("search", SearchType.STARTS_WITH), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-0')]//*[starts-with(text(),'search')]"},
+                {gridContainer.getCell("search", SearchType.STARTS_WITH), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-0')]//*[starts-with(text(),'search')]"},
+                {gridClsAndColumn.getCell("search", SearchType.STARTS_WITH), LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[starts-with(text(),'search')]"},
+                {gridContainerAndColumn.getCell("search", SearchType.STARTS_WITH), CONTAINER_PATH + LIVE_GRID_PATH + "//*[contains(@class, 'x-grid3-td-1')]//*[starts-with(text(),'search')]"},
+                {gridContainerAndClsAndColumn.getCell("search", SearchType.STARTS_WITH), CONTAINER_PATH + LIVE_GRID_PANEL_CLS + "//*[contains(@class, 'x-grid3-td-1')]//*[starts-with(text(),'search')]"},
 
                 {grid.getGridCell(1, 1, "text"), LIVE_GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},
                 {gridCls.getGridCell(1, 1, "text"), LIVE_GRID_PANEL_CLS + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]//td[1]//*[contains(concat(' ', @class, ' '), ' x-grid3-cell-inner ') and contains(text(),'text')]"},
