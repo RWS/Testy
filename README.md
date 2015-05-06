@@ -36,7 +36,7 @@ Getting the maven plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.7.13</version>
+        <version>1.7.15</version>
     </dependency>
 ```
 
@@ -82,7 +82,7 @@ Getting SNAPSHOT versions of the plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.7.14-SNAPSHOT</version>
+        <version>1.7.16-SNAPSHOT</version>
     </dependency>
 ```
 
