@@ -13,7 +13,7 @@ public class TextField extends WebLocator implements ITextField {
     private String type;
 
     public TextField() {
-        setClassName("SimpleTextField");
+        setClassName("TextField");
         setTag("input");
         setTemplate("input-type", "@type='%s'");
     }

@@ -9,7 +9,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public TextField() {
         setClassName("TextField");
-            setType("text"); // TODO try to move in SimpleTextField
+        setType("text"); // TODO try to move in TextField
     }
 
     public TextField(WebLocator container) {
