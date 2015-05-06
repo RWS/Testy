@@ -65,9 +65,11 @@ public class Tab extends WebLocator {
      * @return true or false
      */
     public boolean setActive() {
-        boolean activated = new ConditionManager(200).add(new RenderSuccessCondition(new WebLocator(getContainer(), getTitlePath(true)))).execute().isSuccess();
+        WebLocator locator = new WebLocator(getContainer()).setElPath(getTitlePath(true));
+        boolean activated = new ConditionManager(200).add(new RenderSuccessCondition(locator)).execute().isSuccess();
         if (!activated) {
-            WebLocator titleElement = new WebLocator(getContainer(), getTitlePath(false)).setInfoMessage(getText() + " Tab");
+            WebLocator locator1 = new WebLocator(getContainer()).setElPath(getTitlePath(false));
+            WebLocator titleElement = locator1.setInfoMessage(getText() + " Tab");
             activated = titleElement.click();
         }
         if (activated) {

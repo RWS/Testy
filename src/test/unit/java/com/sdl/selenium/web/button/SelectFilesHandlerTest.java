@@ -3,7 +3,7 @@ package com.sdl.selenium.web.button;
 import com.sdl.selenium.web.WebLocator;
 
 public class SelectFilesHandlerTest {
-    public static WebLocator container = new WebLocator(null, "//*[contains(concat(' ', @class, ' '), ' container ')]");
+    public static WebLocator container = new WebLocator().setElPath("//*[contains(concat(' ', @class, ' '), ' container ')]");
 
 //    @DataProvider
 //    public static Object[][] testConstructorPathDataProvider() {

@@ -83,7 +83,8 @@ public class ExtJsComponent extends WebLocator {
 
     public WebLocator getMaskElement() {
         String maskXPathSelector = "/ancestor-or-self::*[contains(@class, 'x-masked')]";
-        return new WebLocator(this, maskXPathSelector);
+        WebLocator locator = new WebLocator(this).setElPath(maskXPathSelector);
+        return locator;
     }
 
     /**
