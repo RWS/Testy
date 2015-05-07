@@ -36,29 +36,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
+<script src="app-demo/js/libs/jquery.cookie.js"></script>
+<script src="app-demo/js/mock-db.js"></script>
+<script src="app-demo/js/login.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        var DB_USERS = {
-            'eu@fast.com': 'eu.pass',
-            'tu@fast.com': 'tu.pass',
-            'el@fast.com': 'el.pass'
-        };
-
-        $('#loginButton').on('click', function () {
-            var email = $("#email").val(),
-                pass = DB_USERS[email];
-
-            if(pass && pass == $("#password").val()) {
-                window.location.href = "./bootstrap/index.html"
-            } else {
-                $("#email").val("");
-                $("#password").val("");
-                $('.error-msg').html('Invalid user or password!');
-            }
-        });
-    });
-</script>
 </body>
 </html>
 
