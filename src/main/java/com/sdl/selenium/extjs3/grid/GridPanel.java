@@ -223,7 +223,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public boolean rowSelect(String searchElement, int columnId, SearchType searchType) {
         ready();
-        GridCell cell = new GridCell(this, columnId, searchElement, searchType);
+        GridCell cell = new GridCell(columnId, searchElement, searchType).setContainer(this);
         return doCellSelect(cell);
     }
 
@@ -270,7 +270,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     public boolean isCellPresent(String searchElement, int columnId, SearchType searchType) {
         ready();
-        GridCell cell = new GridCell(this, columnId, searchElement, searchType);
+        GridCell cell = new GridCell(columnId, searchElement, searchType).setContainer(this);
         boolean selected;
         do {
             selected = cell.isElementPresent();
@@ -304,35 +304,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         WebLocator headerEl = new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
         headerEl.setInfoMessage(itemToString() + " Header[" + columnId + "]");
         return headerEl;
-    }
-
-    /**
-     * @deprecated use getHeader(columnId).click();
-     * @param columnId - "x-grid3-hd-" + columnId
-     *                 example: x-grid3-hd-userName in this case "userName" is the columnId
-     * @return true or false
-     */
-    public boolean clickOnHeader(String columnId) {
-        return getHeader(columnId).click();
-    }
-
-    /**
-     * @deprecated use getHeader(columnId).assertClick();
-     * @param columnId
-     * @return
-     */
-    public boolean assertClickOnHeader(String columnId) {
-        return getHeader(columnId).assertClick();
-    }
-
-    /**
-     * @deprecated use getHeader(columnId).click();
-     * @param columnId
-     * @return
-     */
-    public boolean doubleClickOnHeader(String columnId) {
-        WebLocator header = getHeader(columnId);
-        return header.click() && header.click();
     }
 
     public boolean assertCheckSelectAll(String columnId) {
@@ -491,27 +462,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public GridCell getGridCell(int rowIndex) {
         String rowPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[contains(@class, 'x-grid3-cell-inner')]";
         return new GridCell().setContainer(getRowLocator(rowIndex)).setElPath(rowPath);
-    }
-
-    /**
-     * @deprecated please use getCell(searchElement, SearchType.*);
-     */
-    public GridCell getGridCell(String searchElement, SearchType searchType) {
-        return getCell(searchElement, searchType);
-    }
-
-    /**
-     * @deprecated please use getCell(searchElement, SearchType.STARTS_WITH | EQUALS);
-     */
-    public GridCell getGridCell(String searchElement, Boolean startWidth) {
-        return getCell(searchElement, startWidth ? SearchType.STARTS_WITH : SearchType.EQUALS);
-    }
-
-    /**
-     * @deprecated please use getCell(searchElement, SearchType.CONTAINS | EQUALS);
-     */
-    public GridCell getGridCell(boolean containsText, String searchElement) {
-        return getCell(searchElement, containsText ? SearchType.CONTAINS : SearchType.EQUALS);
     }
 
     public GridCell getGridCell(int rowIndex, int columnIndex, String text) {
@@ -849,17 +799,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return isSelected;
     }
 
-    @Deprecated
-    public String returnTextFromColumn(int columnId) {
-        String path = "//*[contains(@class,'x-grid3-td-" + columnId + "')]";
-        try {
-            WebLocator locator = new WebLocator(new GridRow(this)).setElPath(path);
-            return locator.getText();
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
     public boolean waitToPopulate() {
         return waitToPopulate(timeout);
     }
@@ -867,7 +806,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public boolean waitToPopulate(int seconds) {
         //LOGGER.debug("waitToPopulate: " + seconds + "; " + toString());
         WebLocator firstRow = getRowLocator(1).setInfoMessage("first row");
-        return firstRow.waitToRender(seconds * 1000L);
+        return firstRow.waitToRender(seconds * 1000);
     }
 
     public boolean ready() {

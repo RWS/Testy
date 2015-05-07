@@ -26,8 +26,6 @@ public interface IWebLocator {
 
     boolean waitToRender();
 
-    boolean waitToRender(int seconds);
-
     boolean waitToRender(final long millis);
 
     boolean ready();

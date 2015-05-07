@@ -317,16 +317,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return waitToRender(getRenderMillis());
     }
 
-    /**
-     * @deprecated use waitToRender(1000L) (with millis)
-     * @param seconds time in seconds
-     * @return true | false
-     */
-    public boolean waitToRender(int seconds) {
-        LOGGER.warn("waitToRender(seconds) is deprecated, please use waitToRender(millis). (eg. waitToRender(1000L).");
-        return waitToRender((long) seconds * 1000);
-    }
-
     public boolean waitToRender(final long millis) {
         executor.waitElement(this, millis);
         return currentElement != null;
@@ -394,7 +384,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean ready(int seconds) {
-        return waitToRender((long) seconds * 1000) && waitToActivate(seconds);
+        return waitToRender(seconds * 1000) && waitToActivate(seconds);
     }
 
     public boolean isDisabled() {
