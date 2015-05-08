@@ -11,6 +11,7 @@
     <link href="css/bootstrap-select.css" rel="stylesheet">
     <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="css/experiments.css" rel="stylesheet">
+    <link href="../app-demo/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -18,8 +19,8 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div style="float: right;">
-                <button class="btn btn-default navbar-btn">Preferences</button>
-                <a href="../login.html" class="btn btn-default navbar-btn">Logout</a>
+                <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#preferences-win">Preferences</button>
+                <a href="#" class="btn btn-default navbar-btn" onclick="Session.invalidate(); window.location.href='../login.html'">Logout</a>
             </div>
             <a class="navbar-brand" href="index.html">
                 App Demo
@@ -311,13 +312,66 @@
     </div>
 </form>
 
+
+<div class="modal fade" id="preferences-win" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label">Current Password</label>
+
+                        <div class="controls">
+                            <input name="password" type="password" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">New Password</label>
+
+                        <div class="controls">
+                            <input name="newPassword" type="password" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Repeat Password</label>
+
+                        <div class="controls">
+                            <input name="newPasswordRepeat" type="password" class="input-block-level">
+                        </div>
+                    </div>
+
+                    <div class="status-msg" style="display: none"></div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="button" class="btn tile-btn btn-warning">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <!--<script src="http://code.jquery.com/jquery.js"></script>-->
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="../app-demo/js/libs/jquery.cookie.js"></script>
+<script src="../app-demo/js/libs/jstorage.js"></script>
+<script src="../app-demo/js/utils.js"></script>
+<script src="../app-demo/js/mock-db.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/bootstrap-fileupload.js"></script>
 <script src="js/bootstrap-select.js"></script>
 <script src="js/bootstrap-multiselect.js"></script>
+<script src="../app-demo/js/preferences.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
