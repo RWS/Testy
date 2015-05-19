@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.panel;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
