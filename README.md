@@ -24,6 +24,18 @@ Java Usage Example
     }
 ```
 
+or
+
+```java
+   Table table = new Table();
+   TableRow row = table.getRow(
+           new TableCell(2, "John"),
+           new TableCell(3, "Rambo")
+   );
+   Button editButton = new Button(row, "Edit");
+   Button removeButton = new Button(row, "Remove", SearchType.CHILD_NODE);
+```
+
 Prerequisites
 -------------
 - Java
