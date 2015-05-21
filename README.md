@@ -110,7 +110,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 [Full example](https://github.com/nmatei/cucumber-testy-tutorial)
 
 
-RELEASE NOTES
+Release Notes
 -------------
 
 **Release Notes for Testy 1.7.16-SNAPSHOT**
