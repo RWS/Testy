@@ -44,13 +44,14 @@ Table and rows examples
     public class SubscribersPage {
         private Table table = new Table();
         
-        public void unsubscribe(String email) {
+        public boolean unsubscribe(String email) {
             // find row that contains specified email in second column
             TableRow row = table.getRow(
                    new TableCell(2, email)
             );
             // find remove button inside specified row
             Button removeButton = new Button(row, "Remove");
+            return removeButton.click();
         }
     }
     
@@ -59,7 +60,8 @@ Table and rows examples
      
         @Test
         public void unsubscribeTest() {
-            subscribersPage.unsubscribe("me@testy.com");
+            boolean removed = subscribersPage.unsubscribe("me@testy.com");
+            //... assert
         }
     }
 ```
@@ -107,6 +109,19 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 [Full example](https://github.com/nmatei/cucumber-testy-tutorial)
 
+
+RELEASE NOTES
+-------------
+
+**Release Notes for Testy 1.7.16-SNAPSHOT**
+
+- remove deprecated classes and methods (before update to this version make sure you update to 1.7.15 first to see what classes/methods need to migrate)
+
+**Release Notes for Testy 1.7.15**
+
+- Organize classes packages (mark package com.sdl.bootstrap.* deprecated, and other classes and methods)
+
+[Detailed Release Notes](./release-notes.txt) 
 
 Getting SNAPSHOT versions of the plugin
 ---------------------------------------
