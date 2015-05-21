@@ -14,26 +14,54 @@ Java Usage Example
 ------------------
 
 ```java
-    @Test
-    public void exampleTest() {
-        TextField f = new TextField().setLabel("User Name:");
-        f.setValue("user@example.com");
-        WebLocator container = new WebLocator().setClasses("content-full-width");
-        WebLink link = new WebLink(container, "Inscrie-te acum!");
-        f.assertClick();
+
+    public class SubscribePage {
+        private WebLocator header = new WebLocator().setClasses("header");
+        private TextField emailField = new TextField().setLabel("Email");
+        private WebLink subscribeLink = new WebLink(header, "Subscribe now");
+     
+        public void subscribe(String email) {
+            emailField.setValue(email);
+            subscribeLink.assertClick();
+        }
+    }
+    
+    public class SubscribeTest extends TestBase {
+        SubscribePage subscribePage = new SubscribePage();
+     
+        @Test
+        public void subscribeTest() {
+            subscribePage.subscribe("me@testy.com");
+        }
     }
 ```
 
-or
+Table and rows examples
+-----------------------
 
 ```java
-   Table table = new Table();
-   TableRow row = table.getRow(
-           new TableCell(2, "John"),
-           new TableCell(3, "Rambo")
-   );
-   Button editButton = new Button(row, "Edit");
-   Button removeButton = new Button(row, "Remove", SearchType.CHILD_NODE);
+
+    public class SubscribersPage {
+        private Table table = new Table();
+        
+        public void unsubscribe(String email) {
+            // find row that contains specified email in second column
+            TableRow row = table.getRow(
+                   new TableCell(2, email)
+            );
+            // find remove button inside specified row
+            Button removeButton = new Button(row, "Remove");
+        }
+    }
+    
+    public class RemoveSubscriberTest extends TestBase {
+        SubscribersPage subscribersPage = new SubscribersPage();
+     
+        @Test
+        public void unsubscribeTest() {
+            subscribersPage.unsubscribe("me@testy.com");
+        }
+    }
 ```
 
 Prerequisites
