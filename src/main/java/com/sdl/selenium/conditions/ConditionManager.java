@@ -113,6 +113,11 @@ public class ConditionManager  {
         this.timeout = timeout;
     }
 
+    /**
+     * <p>Iterates through conditions list until one of the conditions is met or the method times out</p>
+     * <p>in case of timeout a FailCondition("@TimeoutCondition@") will be returned</p>
+     * @return the executed Condition, unless the method times out
+     */
     public Condition execute() {
         startTime = new Date().getTime();
         Collections.sort(conditionList);
