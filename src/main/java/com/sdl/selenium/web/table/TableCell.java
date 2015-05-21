@@ -42,7 +42,7 @@ public class TableCell extends Cell {
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
             int beginIndex = 2 + getTag().length();
-            itemPath = "//" + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
+            itemPath = getRoot() + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
         }
         return itemPath;
     }
