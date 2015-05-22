@@ -228,9 +228,9 @@ public abstract class WebLocatorAbstractBuilder {
         return childNodes;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T setChildNotes(final WebLocator... childNotes) {
-        if (childNotes != null) {
-            this.childNodes = Arrays.asList(childNotes);
+    public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
+        if (childNodes != null) {
+            this.childNodes = Arrays.asList(childNodes);
         }
         return (T) this;
     }

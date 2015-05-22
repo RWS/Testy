@@ -52,7 +52,7 @@ public class GridRow extends Row {
     public GridRow(GridPanel gridPanel, Cell... cells) {
         this(gridPanel);
         setTag("*");
-        setChildNotes(cells);
+        setChildNodes(cells);
     }
 
     private String getSearchPaths(String searchColumnId, WebLocator cellEl) {

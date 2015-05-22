@@ -34,14 +34,14 @@ public class DeployTesty extends TestBase {
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "domain.user";
-    private static final String DOMAIN_PASS = "***";
+    private static final String DOMAIN_USER = "vculea";
+    private static final String DOMAIN_PASS = "VCinit*8";
 
     private static final String JENKINS_JOB_URL = "http://cluj-jenkins01:8080/job/testy/";
 
     private static final String NEXUS_REPOSITORY_URL = "http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots";
     private static final String NEXUS_ADMIN_USER = "admin";
-    private static final String NEXUS_ADMIN_PASS = "***";
+    private static final String NEXUS_ADMIN_PASS = "admin123";
 
     private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
     private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");

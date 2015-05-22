@@ -165,7 +165,7 @@ public class UtilsTest {
     public void webLocatorChild() {
         WebLocator el1 = new WebLocator().setCls("1");
         WebLocator el2 = new WebLocator().setCls("2");
-        WebLocator el = new WebLocator().setClasses("cls").setChildNotes(el1, el2);
+        WebLocator el = new WebLocator().setClasses("cls").setChildNodes(el1, el2);
 
         assertEquals(el.getPath(), "//*[contains(concat(' ', @class, ' '), ' cls ') and count(//*[@class='1'])>0 and count(//*[@class='2'])>0]");
     }

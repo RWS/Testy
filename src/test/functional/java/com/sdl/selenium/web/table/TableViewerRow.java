@@ -33,11 +33,11 @@ public class TableViewerRow extends TableRow {
 
     public TableViewerRow(WebLocator table, Cell... cells) {
         this(table);
-        setChildNotes(cells);
+        setChildNodes(cells);
     }
 
     public TableViewerRow(WebLocator table, int indexRow, Cell... cells) {
         this(table, indexRow);
-        setChildNotes(cells);
+        setChildNodes(cells);
     }
 }
