@@ -23,7 +23,7 @@ public class GridRowTest {
                 {new GridRow(grid, gridCell1, gridCell2), "//*[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker')) and count(.//td[1]//*[text()='CellText1']) > 0 and count(.//td[2]//*[text()='CellText1']) > 0]"},
                 {grid.getRow(new GridCell(1, "text1", SearchType.EQUALS), new GridCell(2, "text2", SearchType.CONTAINS)), "//*[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker')) and count(.//td[1]//*[text()='text1']) > 0 and count(.//td[2]//*[contains(text(),'text2')]) > 0]"},
                 {new GridRow(grid, 3, false), "//div[3][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {new GridRow(grid, 3, true), "//div[3][contains(concat(' ', @class, ' '), ' x-grid3-row-selected ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {new GridRow(grid, 3, true), "//div[3][contains(concat(' ', @class, ' '), ' x-grid3-row-selected ') and not(contains(@class, 'x-grid3-row-checker'))]"}
         };
     }
 
