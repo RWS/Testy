@@ -5,7 +5,7 @@ import com.sdl.selenium.web.WebLocator;
 public class Window extends WebLocator {
 
     public Window() {
-        setClassName("SimpleWindow");
+        setClassName("Window");
         setBaseCls("ui-dialog ui-widget ui-widget-content");
         setStyle("display: block;");
         setTemplate("title", "count(.//*[text()='%s']) > 0");

@@ -1,119 +1,87 @@
-CHANGES:
+RELEASE NOTES
+-------------
 
-version 1.7.16-SNAPSHOT
-1) webdriver version 2.44.0 suported ff 33
-2) remove deprecated classes
-3)
-4)
+Release Notes for Testy 1.7.16-SNAPSHOT
+    - remove deprecated classes and methods (before update to this version make sure you update to Testy 1.7.15 first to see what classes/methods need to migrate)
 
-version 1.7.8-SNAPSHOT
-1) webdriver version 2.44.0 suported ff 33
-2) improvement WebDriverConfig.getWebDriver(...);
+Release Notes for Testy 1.7.15
+    - Organize classes packages (mark package com.sdl.bootstrap.* deprecated, and other classes and methods)
 
-version 1.7.7-SNAPSHOT
-1) webdriver version 2.44.0 suported ff 33
+Release Notes for Testy 1.7.8-SNAPSHOT
+    - improvement WebDriverConfig.getWebDriver(...);
 
-version 1.7.6-SNAPSHOT
-1) webdriver version 2.43.0 suported ff 31, 32
+Release Notes for Testy 1.7.7-SNAPSHOT
+    - webdriver version 2.44.0 suported ff 33
 
-version 1.7.5-SNAPSHOT
-1) webdriver version 2.42.2
-2) fix TableCell accept visibility
-3) add Tooltip class
-4) fix slow bug
-5) improvement upload.exe
+Release Notes for Testy 1.7.6-SNAPSHOT
+    - webdriver version 2.43.0 suported ff 31, 32
 
-version 1.7.3-SNAPSHOT
-1) revert void fireEventWithJS
-2) remove unused Utils.fixPathSelector
-3) improvement Row with tableCell.setTag("th")
-4) improvement TableCell accept array of SearchTypes
+Release Notes for Testy 1.7.5-SNAPSHOT
+    - webdriver version 2.42.2
+    - fix TableCell accept visibility
+    - add Tooltip class
+    - fix slow bug
+    - improvement upload.exe
 
-version 1.7.2-SNAPSHOT
-1) webdriver version 2.41
-2) move getDriver in WebDriverConfig
-3) remove deprecated class and methods
-4) assertDownload works with localhost-firefox.properties
-5) fix SimpleMultipleSelect path
-6) Testy is public repository,
-    - for use internal, should put in pom this:
-        <repositories>
-            <repository>
-                <id>nexus</id>
-                <url>http://cluj-nexus01//nexus/content/groups/public</url>
-                <snapshots>
-                    <updatePolicy>always</updatePolicy>
-                </snapshots>
-                <releases>
-                    <updatePolicy>always</updatePolicy>
-                </releases>
-            </repository>
-        </repositories>
-    - for use external, should put in pom this if you want to use SNAPSHOT:
-        <profiles>
-            <profile>
-                <id>sonatype-nexus-snapshots</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
-                <repositories>
-                    <repository>
-                        <id>sonatype-nexus-snapshots</id>
-                        <name>sonatype-nexus-snapshots</name>
-                        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-                    </repository>
-                </repositories>
-            </profile>
-        </profiles>
-7) sendKeys return null if element doesn't ready;
-8) move assertDownload(String filePath) in download(String filePath)
-9) add Utils.waitFileIfIsEmpty(File file), Wait 5 seconds.
-10) move Utils from com.extjs.selenium.Utils to com.sdl.selenium.web.utils.Utils;
-11) create FileUtils
-12) convert to boolean fireEventWithJS
-13) add weblocator.log.logXPathEnabled=false and weblocator.defaults.searchType=contains
-14) has make protected
-15) add MultiSelect class
+Release Notes for Testy 1.7.3-SNAPSHOT
+    - revert void fireEventWithJS
+    - remove unused Utils.fixPathSelector
+    - improvement Row with tableCell.setTag("th")
+    - improvement TableCell accept array of SearchTypes
 
-version 1.7.1
-1) improvement waitToRender() with WebDriverWait
-2) fixed when Button text or Label of TextField contains quotes.
-3) add constructor with container for all elements
-4) change setName("name") from contains(@name,'name') in @name='name'
-5) improvement Utils.getEscapeQuotesText()
-6) improvement getBasePathSelector()
-7) implemented type attribute for SimpleTextField.java
-8) rename Span in UneditableInput
-9) add WebLink class
-10) improvement com.sdl.selenium.extjs3.button.Button.click()
-11) rename attribute  excludeCls in excludeClasses list
-12) rename attribute deepness in elPathSuffix
-13) move specification Browser in WebDriverConfig
-14) remove methods type(String text) and typeKeys(String text) from WebLocator
-15) add interface ITextField
-16) move copyToClipboard in Utils
-17) mark setCls(final String cls) and getCls() Deprecate
-18) improvement maximize method from Panel
-19) add try in executeScript. findElement should not log "Element not found after" when element is not found.
-20) add tests to WebLocator for toString method : shouldShowClassInToStringWhenHasOneClass and shouldShowClassesInToStringWhenHasManyClass
-21) improvement getItemPathText with normalize-space
-22) add InputButton class
-23) change Boolean in boolean into WebLocatorAbstractBuilder
-24) rename setSearchTextType in setSearchTextTypes witch accept list
-25) improvement getItemPathText() for cases where the item has multiple enters
-26) add SearchType enum TRIM, CHILD_NODE, DEEP_CHILD_NODE
-27) update setText(final String text, final SearchType ...searchType) with SearchType options
+Release Notes for Testy 1.7.2-SNAPSHOT
+    - webdriver version 2.41
+    - move getDriver in WebDriverConfig
+    - remove deprecated class and methods
+    - assertDownload works with localhost-firefox.properties
+    - fix SimpleMultipleSelect path
+    - sendKeys return null if element doesn't ready;
+    - move assertDownload(String filePath) in download(String filePath)
+    - add Utils.waitFileIfIsEmpty(File file), Wait 5 seconds.
+    - move Utils from com.extjs.selenium.Utils to com.sdl.selenium.web.utils.Utils;
+    - create FileUtils
+    - convert to boolean fireEventWithJS
+    - add weblocator.log.logXPathEnabled=false and weblocator.defaults.searchType=contains
+    - has make protected
+    - add MultiSelect class
 
-version 1.6
-1) Improvement setValue for TextField
-2) Add method isSamePath()
-3) Add logger.debug("currentElement already found one time: " + el); in method findElement()
-4) Add setter and getter for currentElementPath
-5) Verifica daca elemenetul exista cand a aparut exceptia StaleElementReferenceException si apoi face din nou click
-6) Add more info about elements into intemToString
-7) remove upload(String[] filePath, String uploadWindowName)
-8) Add doSendKeys method
-9) Improvement update.exe
-10) use setter com.sdl.bootstrap.button.UploadFile
+Release Notes for Testy 1.7.1
+    - improvement waitToRender() with WebDriverWait
+    - fixed when Button text or Label of TextField contains quotes.
+    - add constructor with container for all elements
+    - change setName("name") from contains(@name,'name') in @name='name'
+    - improvement Utils.getEscapeQuotesText()
+    - improvement getBasePathSelector()
+    - implemented type attribute for SimpleTextField.java
+    - rename Span in UneditableInput
+    - add WebLink class
+    - improvement com.sdl.selenium.extjs3.button.Button.click()
+    - rename attribute  excludeCls in excludeClasses list
+    - rename attribute deepness in elPathSuffix
+    - move specification Browser in WebDriverConfig
+    - remove methods type(String text) and typeKeys(String text) from WebLocator
+    - add interface ITextField
+    - move copyToClipboard in Utils
+    - mark setCls(final String cls) and getCls() Deprecate
+    - improvement maximize method from Panel
+    - add try in executeScript. findElement should not log "Element not found after" when element is not found.
+    - add tests to WebLocator for toString method : shouldShowClassInToStringWhenHasOneClass and shouldShowClassesInToStringWhenHasManyClass
+    - improvement getItemPathText with normalize-space
+    - add InputButton class
+    - change Boolean in boolean into WebLocatorAbstractBuilder
+    - rename setSearchTextType in setSearchTextTypes witch accept list
+    - improvement getItemPathText() for cases where the item has multiple enters
+    - add SearchType enum TRIM, CHILD_NODE, DEEP_CHILD_NODE
+    - update setText(final String text, final SearchType ...searchType) with SearchType options
 
-version 1.5-SNAPSHOT
+Release Notes for Testy 1.6
+    - Improvement setValue for TextField
+    - Add method isSamePath()
+    - Add logger.debug("currentElement already found one time: " + el); in method findElement()
+    - Add setter and getter for currentElementPath
+    - Verifica daca elemenetul exista cand a aparut exceptia StaleElementReferenceException si apoi face din nou click
+    - Add more info about elements into intemToString
+    - remove upload(String[] filePath, String uploadWindowName)
+    - Add doSendKeys method
+    - Improvement update.exe
+    - use setter com.sdl.bootstrap.button.UploadFile
