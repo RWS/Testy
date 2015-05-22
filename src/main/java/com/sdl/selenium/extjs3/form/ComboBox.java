@@ -20,14 +20,6 @@ public class ComboBox extends TextField implements ICombo {
         setClassName("ComboBox");
     }
 
-    /**
-     * @deprecated
-     */
-    public ComboBox(String cls) {
-        this();
-        this.setClasses(cls);
-    }
-
     public ComboBox(WebLocator container) {
         this();
         setContainer(container);

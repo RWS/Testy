@@ -19,7 +19,7 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
      * @param searchType searchType
      * @return true or false
      */
-    public boolean rowSelect(String searchText, SearchType searchType);
+    public boolean rowSelect(String searchText, SearchType... searchType);
 
     /**
      * @return row count. -1 if not table not ready to be used or not found
@@ -39,5 +39,5 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
 
     C getCell(String searchElement);
 
-    C getCell(String searchElement, SearchType searchType);
+    C getCell(String searchElement, SearchType... searchType);
 }

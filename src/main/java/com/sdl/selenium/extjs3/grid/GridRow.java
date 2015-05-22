@@ -16,13 +16,7 @@ public class GridRow extends Row {
         setTag("*");
     }
 
-    @Deprecated
-    public GridRow(WebLocator container, String elPath) {
-        this();
-        setContainer(container);
-        setElPath(elPath);
-    }
-
+    //TODO generated standard xpath  independent of constructors
     public GridRow(GridPanel gridPanel) {
         this();
         setContainer(gridPanel);

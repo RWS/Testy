@@ -30,7 +30,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     }
 
     @Override
-    public boolean rowSelect(String searchText, SearchType searchType) {
+    public boolean rowSelect(String searchText, SearchType... searchType) {
         ready(true);
         TableCell cell = getCell(searchText, searchType);
         return doCellSelect(cell);
@@ -125,16 +125,9 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     }
 
     @Override
-    public TableCell getCell(String searchElement, SearchType searchType) {
+    public TableCell getCell(String searchElement, SearchType ...searchType) {
         WebLocator row = new WebLocator(this).setTag("tr");
         return new TableCell(row).setText(searchElement, searchType);
-    }
-
-    /**
-     * @deprecated please use getCell(searchElement, SearchType.*);
-     */
-    public TableCell getTableCell(String searchElement, SearchType searchType) {
-        return getCell(searchElement, searchType);
     }
 
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {

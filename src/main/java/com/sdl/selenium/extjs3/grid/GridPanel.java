@@ -208,7 +208,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     @Override
-    public boolean rowSelect(String searchText, SearchType searchType) {
+    public boolean rowSelect(String searchText, SearchType... searchType) {
         ready(true);
         GridCell cell = getCell(searchText, searchType);
         return doCellSelect(cell);
@@ -451,7 +451,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     @Override
-    public GridCell getCell(String searchElement, SearchType searchType) {
+    public GridCell getCell(String searchElement, SearchType... searchType) {
         WebLocator textCell = new WebLocator().setText(searchElement, searchType);
         String cellPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + textCell.getPath();
         GridCell cell = new GridCell().setContainer(this).setElPath(cellPath);

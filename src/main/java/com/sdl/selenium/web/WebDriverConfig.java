@@ -97,14 +97,6 @@ public class WebDriverConfig {
         LOGGER.debug("===============================================================\n");
     }
 
-    /**
-     * @deprecated The RC interface will be removed in Selenium 3.0. Please migrate to using WebDriver.
-     * When Selenium will be removed. Change your code as this method will return true
-     */
-    public static boolean hasWebDriver() {
-        return driver != null;
-    }
-
     public static boolean isSilentDownload() {
         return isSilentDownload;
     }

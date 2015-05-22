@@ -122,16 +122,6 @@ public class FileUtils {
         return true;
     }
 
-    /**
-     * @param filePath          filePath
-     * @param extractedFilePath extractedFilePath
-     * @return true | false
-     * @deprecated use {@link #unZip(String, String)}
-     */
-    public static boolean unZip2(String filePath, String extractedFilePath) {
-        return unZip(filePath, extractedFilePath);
-    }
-
     public static boolean deleteFile(String filePath) {
         File file = new File(filePath);
         return (file.delete());

@@ -409,21 +409,11 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     *
-     * @return value that has been set in {@link #setElPathSuffix(String)}
+     *  @deprecated
+     * @return value that has been set in {@link #setElPathSuffix(String, String)}
      */
     public String getElPathSuffix() {
         return elPathSuffix.get("elPathSuffix");
-    }
-
-    /**
-     * @param elPathSuffix additional identification xpath element that will be added at the end
-     * @return this element
-     * @deprecated use setElPathSuffix(String key, String elPathSuffix)
-     */
-    public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String elPathSuffix) {
-        setElPathSuffix("elPathSuffix", elPathSuffix);
-        return (T) this;
     }
 
     /**
@@ -536,17 +526,6 @@ public abstract class WebLocatorAbstractBuilder {
 
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
         this.renderMillis = renderMillis;
-        return (T) this;
-    }
-
-    /**
-     * @param renderSeconds
-     * @param <T>
-     * @return
-     * @deprecated use setRenderMillis
-     */
-    public <T extends WebLocatorAbstractBuilder> T setRenderSeconds(final int renderSeconds) {
-        setRenderMillis(renderSeconds * 1000);
         return (T) this;
     }
 

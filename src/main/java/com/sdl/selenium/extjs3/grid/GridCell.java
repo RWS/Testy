@@ -14,35 +14,10 @@ public class GridCell extends Cell {
         setClassName("GridCell");
     }
 
-    /**
-     * @deprecated use other constructors
-     */
-    public GridCell(WebLocator container) {
-        this();
-        setContainer(container);
-    }
-
-    /**
-     * @deprecated use other constructors
-     */
-    public GridCell(WebLocator container, String elPath) {
-        this();
-        setContainer(container);
-        setElPath(elPath);
-    }
-
     public GridCell(int columnIndex) {
         this();
         setElPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
         setInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
-    }
-
-    /**
-     * @deprecated use other constructors
-     */
-    public GridCell(WebLocator container, int columnIndex) {
-        this(columnIndex);
-        setContainer(container);
     }
 
     public GridCell(String text, WebLocator container) {
@@ -71,14 +46,6 @@ public class GridCell extends Cell {
         setPosition(columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
-    }
-
-    /**
-     * @deprecated use other constructors
-     */
-    public GridCell(WebLocator container, int columnIndex, String columnText, SearchType searchType) {
-        this(columnIndex, columnText, searchType);
-        setContainer(container);
     }
 
     @Override

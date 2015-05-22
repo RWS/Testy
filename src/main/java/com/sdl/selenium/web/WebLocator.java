@@ -33,12 +33,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         setContainer(container);
     }
 
-    @Deprecated
-    public WebLocator(WebLocator container, String elPath) {
-        this(container);
-        setElPath(elPath);
-    }
-
     public WebLocator(String cls, WebLocator container) {
         this(container);
         setClasses(cls);

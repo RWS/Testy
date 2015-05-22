@@ -9,15 +9,6 @@ import org.slf4j.LoggerFactory;
 public class MessageBox {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageBox.class);
 
-    @Deprecated
-    public static String BUTTON_OK = "OK";
-    @Deprecated
-    public static String BUTTON_CANCEL = "Cancel";
-    @Deprecated
-    public static String BUTTON_YES = "Yes";
-    @Deprecated
-    public static String BUTTON_NO = "No";
-
     private static MessageBoxWindow messageBoxWindow = new MessageBoxWindow();
 
     protected MessageBox(){}
