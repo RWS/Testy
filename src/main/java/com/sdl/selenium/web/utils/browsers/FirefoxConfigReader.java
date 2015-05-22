@@ -1,7 +1,5 @@
 package com.sdl.selenium.web.utils.browsers;
 
-import com.sdl.selenium.web.WebDriverConfig;
-import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -120,17 +118,6 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             if (key.startsWith("profile.preference.")) {
                 String preferenceKey = key.substring(19);
                 String value = (String) entry.getValue();
-
-                // ===========================
-                String deprecatedValue = getProperty(preferenceKey);
-                if (deprecatedValue != null) {
-                    Utils.deprecated();
-                    LOGGER.warn("Property {} is deprecated. Please Use profile.preference.{} instead", preferenceKey, preferenceKey);
-                    LOGGER.warn("Property {} is ignored", key);
-                    Utils.deprecated();
-                    value = deprecatedValue;
-                }
-                // ===========================
 
                 if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
                     myProfile.setPreference(preferenceKey, Boolean.valueOf(value));
