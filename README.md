@@ -121,7 +121,7 @@ Release Notes
 
 - Organize classes packages (mark package com.sdl.bootstrap.* deprecated, and other classes and methods)
 
-[Detailed Release Notes](./release-notes.txt) 
+[Detailed Release Notes](./release-notes.md) 
 
 Getting SNAPSHOT versions of the plugin
 ---------------------------------------
