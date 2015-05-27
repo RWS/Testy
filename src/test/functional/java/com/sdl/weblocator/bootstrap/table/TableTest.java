@@ -36,7 +36,7 @@ public class TableTest extends TestBase {
 
     @Test
     public void verifyIfCheckBoxIsPresent() {
-        TableCell cell = table.getTableCell(1, new TableCell(2, "John", SearchType.EQUALS), new TableCell(3, "Carter", SearchType.EQUALS));
+        TableCell cell = table.getCell(1, new TableCell(2, "John", SearchType.EQUALS), new TableCell(3, "Carter", SearchType.EQUALS));
         assertTrue(new CheckBox(cell).isElementPresent());
     }
 
@@ -146,7 +146,7 @@ public class TableTest extends TestBase {
         Utils.sleep(1500);
         long startMs1 = System.currentTimeMillis();
         for (List<String> list : lists) {
-            TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
+            TableCell cell = table.getCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
             CheckBox check = new CheckBox(cell);
             check.click();
 //            check.isSelected();
@@ -165,7 +165,7 @@ public class TableTest extends TestBase {
 
         @Override
         public Boolean call() throws Exception {
-            TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
+            TableCell cell = table.getCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
             check = new CheckBox(cell);
             return check.click();
         }

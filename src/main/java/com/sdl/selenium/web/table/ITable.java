@@ -40,4 +40,8 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
     C getCell(String searchElement);
 
     C getCell(String searchElement, SearchType... searchType);
+
+    C getCell(int columnIndex, C... byRowCells);
+
+    C getCell(int columnIndex, String text, C... byRowCells);
 }

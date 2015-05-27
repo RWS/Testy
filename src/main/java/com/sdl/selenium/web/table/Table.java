@@ -154,13 +154,26 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return new TableRow(this, indexRow, byCells).setInfoMessage("-TableRow");
     }
 
-
-    public TableCell getTableCell(int columnIndex, TableCell... byCells) {
+    public TableCell getCell(int columnIndex, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex);
     }
 
-    public TableCell getTableCell(int columnIndex, String text, TableCell... byCells) {
+    /**
+     * @deprecated use getCell(int columnIndex, TableCell... byCells)
+     */
+    public TableCell getTableCell(int columnIndex, TableCell... byCells) {
+        return getCell(columnIndex, byCells);
+    }
+
+    public TableCell getCell(int columnIndex, String text, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
+    }
+
+    /**
+     * @deprecated use getCell(int columnIndex, String text, TableCell... byCells)
+     */
+    public TableCell getTableCell(int columnIndex, String text, TableCell... byCells) {
+        return getCell(columnIndex, text, byCells);
     }
 
     /**

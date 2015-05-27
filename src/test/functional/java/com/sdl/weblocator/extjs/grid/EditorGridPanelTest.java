@@ -52,6 +52,12 @@ public class EditorGridPanelTest extends TestBase {
         assertTrue(editorGridPanel.selectRow(new GridCell(1, "Wake Robin", SearchType.EQUALS), new GridCell(2, "Trillium grandiflorum", SearchType.EQUALS)));
     }
 
+    @Test
+    public void testSelectRow1() {
+        assertTrue(editorGridPanel.getGridCell(1, "Wake Robin").select());
+        assertTrue(editorGridPanel.getGridCell(1, "Wake Robin", new GridCell(1, "Wake Robin", SearchType.EQUALS)).select());
+    }
+
     @Test(dependsOnMethods = "testSelectRow", dataProvider = "createTestDP")
     public void testEditorType(int column, Class<? extends TextField> cls) {
         editorGridPanel.startEdit(1, column);

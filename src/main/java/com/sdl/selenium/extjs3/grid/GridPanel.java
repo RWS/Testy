@@ -486,7 +486,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * @deprecated use getCell(...);
      */
-    public GridCell getGridCell(String searchElement, int columnIndex) {
+    protected GridCell getGridCell(String searchElement, int columnIndex) {
         GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);
         return new GridCell(columnIndex).setContainer(gridRow);
     }
@@ -501,17 +501,31 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridRow(this, byCells).setInfoMessage("-GridRow");
     }
 
-    public boolean selectRow(GridCell... byCells) {
-        GridCell gridCell = getGridCell(1, byCells);
-        return doCellSelect(gridCell);
+    public GridCell getCell(int position, GridCell... byCells) {
+        return new GridCell().setPosition(position).setContainer(getRow(byCells));
     }
 
-    public GridCell getGridCell(int position, String text, GridCell... byCells) {
+    /**
+     * @deprecated use getCell(int position, GridCell... byCells)
+     */
+    public GridCell getGridCell(int position, GridCell... byCells) {
+        return getCell(position, byCells);
+    }
+
+    public GridCell getCell(int position, String text, GridCell... byCells) {
         return new GridCell().setContainer(getRow(byCells)).setPosition(position).setText(text);
     }
 
-    public GridCell getGridCell(int position, GridCell... byCells) {
-        return new GridCell().setPosition(position).setContainer(getRow(byCells));
+    /**
+     * @deprecated use getGridCell(int position, String text, GridCell... byCells)
+     */
+    public GridCell getGridCell(int position, String text, GridCell... byCells) {
+        return getCell(position, text, byCells);
+    }
+
+    public boolean selectRow(GridCell... byCells) {
+        GridCell gridCell = getGridCell(1, byCells);
+        return doCellSelect(gridCell);
     }
 
     public String[] getRow(int rowIndex) {

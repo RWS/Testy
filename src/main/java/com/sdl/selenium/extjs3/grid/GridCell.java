@@ -41,7 +41,7 @@ public class GridCell extends Cell {
         setSearchTextType(searchType);
     }
 
-    public GridCell(int columnIndex, String columnText, SearchType searchType) {
+    public GridCell(int columnIndex, String columnText, SearchType... searchType) {
         this();
         setPosition(columnIndex);
         setText(columnText);
