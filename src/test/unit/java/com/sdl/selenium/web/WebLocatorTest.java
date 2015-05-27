@@ -157,13 +157,13 @@ public class WebLocatorTest {
     @Test
     public void shouldShowClassInToStringWhenHasOneClass() {
         WebLocator locator = new WebLocator().setClasses("cls1");
-        assertEquals(locator.toString(), "cls1");
+        assertEquals(locator.getPathBuilder().toString(), "cls1");
     }
 
     @Test
     public void shouldShowClassesInToStringWhenHasManyClass() {
         WebLocator locator = new WebLocator().setClasses("cls1", "cls2");
-        assertEquals(locator.toString(), "[cls1, cls2]");
+        assertEquals(locator.getPathBuilder().toString(), "[cls1, cls2]");
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -46,7 +47,7 @@ public class TabPanel extends ExtJsComponent {
      * @return the path of the main TabPanel
      */
     private String getBaseTabPanelPath() {
-        String selector = getBasePath();
+        String selector = getPathBuilder().getBasePath();
         if (hasText()) {
 //            selector += " and count(*[contains(@class,'x-tab-panel-header')]//*[text()='" + getText() + "']) > 0"; //[viorel]
             selector += (selector.length() > 0 ? " and " : "") + "not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]//*[" + getItemPathText() + "]) > 0";
@@ -54,18 +55,22 @@ public class TabPanel extends ExtJsComponent {
         return "//*[" + selector + "]";
     }
 
-    /**
-     * this method return the path of only one visible div from the main TabPanel
-     *
-     * @param disabled disabled
-     * @return the path of only one visible div from the main TabPanel
-     */
-    @Override
-    public String getItemPath(boolean disabled) {
-        String selector = getBaseTabPanelPath();
-        selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO
-                "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
-        return selector;
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder() {
+            /**
+             * this method return the path of only one visible div from the main TabPanel
+             *
+             * @param disabled disabled
+             * @return the path of only one visible div from the main TabPanel
+             */
+            @Override
+            public String getItemPath(boolean disabled) {
+                String selector = getBaseTabPanelPath();
+                selector += "/*/*[contains(@class, 'x-tab-panel-body')]" +  //TODO
+                        "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
+                return selector;
+            }
+        };
     }
 
     /**
@@ -74,7 +79,7 @@ public class TabPanel extends ExtJsComponent {
      * @return true or false
      */
     public boolean setActive() {
-        String baseTabPath = "//*[" + getBasePath() + "]";
+        String baseTabPath = "//*[" + getPathBuilder().getBasePath() + "]";
         String titlePath = baseTabPath + getTitlePath();
         WebLocator titleElement = new WebLocator(getContainer()).setElPath(titlePath).setInfoMessage(getText() + " Tab");
         LOGGER.info("setActive : " + toString());

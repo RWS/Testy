@@ -34,7 +34,7 @@ public class Button extends ExtJsComponent implements IButton {
         setVisibility(true);
         setTemplate("enabled", "not(contains(@class, 'x-item-disabled'))");
         setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
+        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
     /**
@@ -54,7 +54,7 @@ public class Button extends ExtJsComponent implements IButton {
     @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
-        WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(this.itemToString() + "//button");
+        WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(getPathBuilder().itemToString() + "//button");
         // TODO try to click on button that has mask - with first solution is not saying that has mask
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
         buttonEl.setRenderMillis(getRenderMillis());

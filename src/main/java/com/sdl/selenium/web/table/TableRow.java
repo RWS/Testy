@@ -15,7 +15,7 @@ public class TableRow extends Row {
         setRenderMillis(200);
         setClassName("TableRow");
         setTag("tr");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public TableRow(WebLocator container) {

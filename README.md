@@ -113,13 +113,12 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 Release Notes
 -------------
 
-**Release Notes for Testy 1.7.16-SNAPSHOT**
+**Release Notes for Testy 1.7.17-SNAPSHOT**
+- create XPathBuilder
 
-- remove deprecated classes and methods (before update to this version make sure you update to 1.7.15 first to see what classes/methods need to migrate)
-
-**Release Notes for Testy 1.7.15**
-
-- Organize classes packages (mark package com.sdl.bootstrap.* deprecated, and other classes and methods)
+**Release Notes for Testy 1.7.16**
+- remove deprecated classes and methods (before update to this version make sure you update to Testy 1.7.15 first to see what classes/methods need to migrate)
+- rename getTableCell(int columnIndex, TableCell... byCells) in getCell(int columnIndex, TableCell... byCells) for table and GridPanel
 
 [Detailed Release Notes](./release-notes.md) 
 

@@ -2,6 +2,7 @@ package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ public class TableCell extends Cell {
         setRenderMillis(200);
         setClassName("TableCell");
         setTag("td");
-        defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public TableCell(WebLocator container) {
@@ -38,12 +39,16 @@ public class TableCell extends Cell {
         setSearchTextType(searchType);
     }
 
-    @Override
-    protected String addPositionToPath(String itemPath) {
-        if (hasPosition()) {
-            int beginIndex = 2 + getTag().length();
-            itemPath = getRoot() + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
-        }
-        return itemPath;
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder() {
+            @Override
+            protected String addPositionToPath(String itemPath) {
+                if (hasPosition()) {
+                    int beginIndex = 2 + getTag().length();
+                    itemPath = getRoot() + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
+                }
+                return itemPath;
+            }
+        };
     }
 }

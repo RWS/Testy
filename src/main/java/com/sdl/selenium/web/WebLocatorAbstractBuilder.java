@@ -1,13 +1,10 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.utils.Utils;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -15,52 +12,17 @@ import java.util.regex.Pattern;
 public abstract class WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
-    private String className = "WebLocator";
-    private String root = "//";
-    private String tag = "*";
-    private String id;
-    private String elPath;
-    private String baseCls;
-    private String cls;
-    private List<String> classes;
-    private List<String> excludeClasses;
-    private String name;
-    private String text;
-    protected List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
-    private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
-    private List<SearchType> searchLabelType = new ArrayList<SearchType>();
-    private String style;
-    private String elCssSelector;
-    private String title;
-    private Map<String, String> templates = new LinkedHashMap<String, String>();
-    private Map<String, String> templatesValues = new LinkedHashMap<String, String>();
-    private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
+    private XPathBuilder pathBuilder = createXPathBuilder();
 
-    private String infoMessage;
-
-    private String label;
-    private String labelTag = "label";
-    private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
-
-    private int position = -1;
-
-    //private int elIndex; // TODO try to find how can be used
-
-    private boolean visibility;
-    private long renderMillis = WebLocatorConfig.getDefaultRenderMillis();
-    private int activateSeconds = 60;
-
-    private WebLocator container;
-    private List<WebLocator> childNodes;
-
-    protected WebLocatorAbstractBuilder() {
-        setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
-        setTemplate("id", "@id='%s'");
-        setTemplate("name", "@name='%s'");
-        setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
-        setTemplate("excludeClass", "not(contains(@class, '%s'))");
-        setTemplate("cls", "@class='%s'");
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder();
     }
+
+    public XPathBuilder getPathBuilder() {
+        return pathBuilder;
+    }
+
+    protected WebLocatorAbstractBuilder() {}
 
     // =========================================
     // ========== setters & getters ============
@@ -74,7 +36,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>default to "//"</pre>
      */
     public String getRoot() {
-        return root;
+        return pathBuilder.getRoot();
     }
 
     /**
@@ -84,7 +46,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setRoot(final String root) {
-        this.root = root;
+        pathBuilder.setRoot(root);
         return (T) this;
     }
 
@@ -96,7 +58,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>default to "*"</pre>
      */
     public String getTag() {
-        return tag;
+        return pathBuilder.getTag();
     }
 
     /**
@@ -106,7 +68,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTag(final String tag) {
-        this.tag = tag;
+        pathBuilder.setTag(tag);
         return (T) this;
     }
 
@@ -116,7 +78,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setId(String)}
      */
     public String getId() {
-        return id;
+        return pathBuilder.getId();
     }
 
     /**
@@ -126,7 +88,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setId(final String id) {
-        this.id = id;
+        pathBuilder.setId(id);
         return (T) this;
     }
 
@@ -137,7 +99,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p>returned value does not include containers path</p>
      */
     public String getElPath() {
-        return elPath;
+        return pathBuilder.getElPath();
     }
 
     /**
@@ -148,7 +110,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
-        this.elPath = elPath;
+        pathBuilder.setElPath(elPath);
         return (T) this;
     }
 
@@ -158,7 +120,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setBaseCls(String)}
      */
     public String getBaseCls() {
-        return baseCls;
+        return pathBuilder.getBaseCls();
     }
 
     /**
@@ -168,7 +130,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setBaseCls(final String baseCls) {
-        this.baseCls = baseCls;
+        pathBuilder.setBaseCls(baseCls);
         return (T) this;
     }
 
@@ -178,7 +140,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setCls(String)}
      */
     public String getCls() {
-        return cls;
+        return pathBuilder.getCls();
     }
 
     /**
@@ -189,7 +151,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
-        this.cls = cls;
+        pathBuilder.setCls(cls);
         return (T) this;
     }
 
@@ -203,7 +165,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setClasses(String...)}
      */
     public List<String> getClasses() {
-        return classes;
+        return pathBuilder.getClasses();
     }
 
     /**
@@ -217,21 +179,17 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setClasses(final String... classes) {
-        if (classes != null) {
-            this.classes = Arrays.asList(classes);
-        }
+        pathBuilder.setClasses(classes);
         return (T) this;
     }
 
 
     public List<WebLocator> getChildNodes() {
-        return childNodes;
+        return pathBuilder.getChildNodes();
     }
 
     public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
-        if (childNodes != null) {
-            this.childNodes = Arrays.asList(childNodes);
-        }
+        pathBuilder.setChildNodes(childNodes);
         return (T) this;
     }
 
@@ -241,7 +199,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setExcludeClasses(String...)}
      */
     public List<String> getExcludeClasses() {
-        return excludeClasses;
+        return pathBuilder.getExcludeClasses();
     }
 
     /**
@@ -251,9 +209,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String... excludeClasses) {
-        if (excludeClasses != null) {
-            this.excludeClasses = Arrays.asList(excludeClasses);
-        }
+        pathBuilder.setExcludeClasses(excludeClasses);
         return (T) this;
     }
 
@@ -263,7 +219,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setName(String)}
      */
     public String getName() {
-        return name;
+        return pathBuilder.getName();
     }
 
     /**
@@ -273,7 +229,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setName(final String name) {
-        this.name = name;
+        pathBuilder.setName(name);
         return (T) this;
     }
 
@@ -283,7 +239,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setText(String, SearchType...)}
      */
     public String getText() {
-        return text;
+        return pathBuilder.getText();
     }
 
     /**
@@ -294,12 +250,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
-        this.text = text;
-        if (searchType != null && searchType.length > 0) {
-            setSearchTextType(searchType);
-        } else {
-            this.searchTextType.addAll(defaultSearchTextType);
-        }
+        pathBuilder.setText(text, searchType);
         return (T) this;
     }
 
@@ -309,7 +260,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setSearchTextType(SearchType...)}
      */
     public Set<SearchType> getSearchTextType() {
-        return searchTextType;
+        return pathBuilder.getSearchTextType();
     }
 
     /**
@@ -319,13 +270,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
-        if (searchTextType == null) {
-            this.searchTextType = WebLocatorConfig.getSearchTextType();
-        } else {
-            this.searchTextType = new HashSet<SearchType>();
-            Collections.addAll(this.searchTextType, searchTextType);
-        }
-        this.searchTextType.addAll(defaultSearchTextType);
+        pathBuilder.setSearchTextType(searchTextType);
         return (T) this;
     }
 
@@ -336,10 +281,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
-        this.searchLabelType = new ArrayList<SearchType>();
-        if (searchLabelType != null) {
-            Collections.addAll(this.searchLabelType, searchLabelType);
-        }
+        pathBuilder.setSearchTextType(searchLabelType);
         return (T) this;
     }
 
@@ -349,7 +291,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setStyle(String)}
      */
     public String getStyle() {
-        return style;
+        return pathBuilder.getStyle();
     }
 
     /**
@@ -359,7 +301,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setStyle(final String style) {
-        this.style = style;
+        pathBuilder.setStyle(style);
         return (T) this;
     }
 
@@ -370,7 +312,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setElCssSelector(String)}
      */
     public String getElCssSelector() {
-        return elCssSelector;
+        return pathBuilder.getElCssSelector();
     }
 
     /**
@@ -381,7 +323,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
-        this.elCssSelector = elCssSelector;
+        pathBuilder.setElCssSelector(elCssSelector);
         return (T) this;
     }
 
@@ -392,7 +334,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setTitle(String)}
      */
     public String getTitle() {
-        return title;
+        return pathBuilder.getTitle();
     }
 
     /**
@@ -403,7 +345,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title) {
-        this.title = title;
+        pathBuilder.setTitle(title);
         return (T) this;
     }
 
@@ -413,7 +355,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setElPathSuffix(String, String)}
      */
     public String getElPathSuffix() {
-        return elPathSuffix.get("elPathSuffix");
+        return pathBuilder.getElPathSuffix();
     }
 
     /**
@@ -428,11 +370,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String key, String elPathSuffix) {
-        if (elPathSuffix == null) {
-            this.elPathSuffix.remove(key);
-        } else {
-            this.elPathSuffix.put(key, elPathSuffix);
-        }
+        pathBuilder.setElPathSuffix(key, elPathSuffix);
         return (T) this;
     }
 
@@ -448,11 +386,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTemplateValue(String key, String value) {
-        if (value == null) {
-            this.templatesValues.remove(key);
-        } else {
-            this.templatesValues.put(key, value);
-        }
+        pathBuilder.setTemplateValue(key, value);
         return (T) this;
     }
 
@@ -463,27 +397,17 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value) {
-        if (value == null) {
-            templates.remove(key);
-        } else {
-            templates.put(key, value);
-        }
+        pathBuilder.setTemplate(key, value);
         return (T) this;
     }
 
     public <T extends WebLocatorAbstractBuilder> T addToTemplate(String key, String value) {
-        String template = getTemplate(key);
-        if (StringUtils.isNotEmpty(template)) {
-            template += " and ";
-        } else {
-            template = "";
-        }
-        setTemplate(key, template + value);
+        pathBuilder.addToTemplate(key, value);
         return (T) this;
     }
 
     public String getTemplate(String key) {
-        return templates.get(key);
+        return pathBuilder.getTemplate(key);
     }
 
     /**
@@ -492,7 +416,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setInfoMessage(String)}
      */
     public String getInfoMessage() {
-        return infoMessage;
+        return pathBuilder.getInfoMessage();
     }
 
     /**
@@ -502,7 +426,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setInfoMessage(final String infoMessage) {
-        this.infoMessage = infoMessage;
+        pathBuilder.setInfoMessage(infoMessage);
         return (T) this;
     }
 
@@ -512,35 +436,35 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setVisibility(boolean)}
      */
     public boolean isVisibility() {
-        return visibility;
+        return pathBuilder.isVisibility();
     }
 
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
-        this.visibility = visibility;
+        pathBuilder.setVisibility(visibility);
         return (T) this;
     }
 
     public long getRenderMillis() {
-        return renderMillis;
+        return pathBuilder.getRenderMillis();
     }
 
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
-        this.renderMillis = renderMillis;
+       pathBuilder.setRenderMillis(renderMillis);
         return (T) this;
     }
 
     public int getActivateSeconds() {
-        return activateSeconds;
+        return pathBuilder.getActivateSeconds();
     }
 
     public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
-        this.activateSeconds = activateSeconds;
+        pathBuilder.setActivateSeconds(activateSeconds);
         return (T) this;
     }
 
     // TODO verify what type must return
     public WebLocator getContainer() {
-        return container;
+        return pathBuilder.getContainer();
     }
 
     /**
@@ -550,7 +474,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
-        this.container = container;
+        pathBuilder.setContainer(container);
         return (T) this;
     }
 
@@ -560,7 +484,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setLabel(String, SearchType...)}
      */
     public String getLabel() {
-        return label;
+        return pathBuilder.getLabel();
     }
 
     /**
@@ -570,10 +494,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
-        this.label = label;
-        if (searchType != null && searchType.length > 0) {
-            setSearchLabelType(searchType);
-        }
+       pathBuilder.setLabel(label, searchType);
         return (T) this;
     }
 
@@ -583,7 +504,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setLabel(String, SearchType...)}
      */
     public String getLabelTag() {
-        return labelTag;
+        return pathBuilder.getLabelTag();
     }
 
     /**
@@ -593,7 +514,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabelTag(String labelTag) {
-        this.labelTag = labelTag;
+        pathBuilder.setLabelTag(labelTag);
         return (T) this;
     }
 
@@ -603,7 +524,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setLabelPosition(String)}
      */
     public String getLabelPosition() {
-        return labelPosition;
+        return pathBuilder.getLabelPosition();
     }
 
     /**
@@ -614,7 +535,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
     public <T extends WebLocatorAbstractBuilder> T setLabelPosition(String labelPosition) {
-        this.labelPosition = labelPosition;
+        pathBuilder.setLabelPosition(labelPosition);
         return (T) this;
     }
 
@@ -624,7 +545,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return value that has been set in {@link #setPosition(int)}
      */
     public int getPosition() {
-        return position;
+        return pathBuilder.getPosition();
     }
 
     /**
@@ -638,7 +559,31 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setPosition(int position) {
-        this.position = position;
+        pathBuilder.setPosition(position);
+        return (T) this;
+    }
+
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     *
+     * @return value that has been set in {@link #setType(String)}
+     */
+    public String getType() {
+        return pathBuilder.getType();
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[@type='type']
+     * </pre>
+     *
+     * @param type
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setType(String type) {
+       pathBuilder.setType(type);
         return (T) this;
     }
 
@@ -653,192 +598,42 @@ public abstract class WebLocatorAbstractBuilder {
      * @return string
      */
     public String getClassName() {
-        return className;
+        return pathBuilder.getClassName();
     }
 
     protected void setClassName(final String className) {
-        this.className = className;
+        pathBuilder.setClassName(className);
     }
 
     protected boolean hasId() {
-        return id != null && !id.equals("");
-    }
-
-    protected boolean hasCls() {
-        return cls != null && !cls.equals("");
-    }
-
-    protected boolean hasClasses() {
-        return classes != null && classes.size() > 0;
-    }
-
-    protected boolean hasChildNodes() {
-        return childNodes != null && childNodes.size() > 0;
-    }
-
-    protected boolean hasExcludeClasses() {
-        return excludeClasses != null && excludeClasses.size() > 0;
-    }
-
-    protected boolean hasBaseCls() {
-        return baseCls != null && !baseCls.equals("");
-    }
-
-    protected boolean hasName() {
-        return name != null && !name.equals("");
+        return pathBuilder.hasId();
     }
 
     protected boolean hasText() {
-        return text != null && !text.equals("");
-    }
-
-    protected boolean hasStyle() {
-        return style != null && !style.equals("");
-    }
-
-    protected boolean hasElPath() {
-        return elPath != null && !elPath.equals("");
-    }
-
-    protected boolean hasTag() {
-        return tag != null && !tag.equals("*");
-    }
-
-    protected boolean hasElCssSelector() {
-        return elCssSelector != null && !elCssSelector.equals("");
+        return pathBuilder.hasText();
     }
 
     protected boolean hasLabel() {
-        return label != null && !label.equals("");
+        return pathBuilder.hasLabel();
     }
 
     protected boolean hasTitle() {
-        return title != null && !title.equals("");
+        return pathBuilder.hasTitle();
     }
 
     protected boolean hasPosition() {
-        return position > 0;
-    }
-
-    // =========================================
-    // ============ XPath Methods ==============
-    // =========================================
-
-    /**
-     * Containing baseCls, class, name and style
-     *
-     * @return baseSelector
-     */
-    protected String getBasePathSelector() {
-        // TODO use disabled
-        // TODO verify what need to be equal OR contains
-        List<String> selector = new ArrayList<String>();
-        CollectionUtils.addIgnoreNull(selector, getBasePath());
-        CollectionUtils.addIgnoreNull(selector, getItemPathText());
-
-        if (!WebDriverConfig.isIE()) {
-            if (hasStyle()) {
-                selector.add("contains(@style ,'" + getStyle() + "')");
-            }
-            // TODO make specific for WebLocator
-            if (isVisibility()) {
-//               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", isVisibility()));
-            }
-        }
-
-        return selector.isEmpty() ? "" : StringUtils.join(selector, " and ");
-    }
-
-    protected String getBasePath() {
-        List<String> selector = new ArrayList<String>();
-        if (hasId()) {
-            selector.add(applyTemplate("id", getId()));
-        }
-        if (hasName()) {
-            selector.add(applyTemplate("name", getName()));
-        }
-        if (hasBaseCls()) {
-            selector.add(applyTemplate("class", getBaseCls()));
-        }
-        if (hasCls()) {
-            selector.add(applyTemplate("cls", getCls()));
-        }
-        if (hasClasses()) {
-            for (String cls : getClasses()) {
-                selector.add(applyTemplate("class", cls));
-            }
-        }
-        if (hasExcludeClasses()) {
-            for (String excludeClass : getExcludeClasses()) {
-                selector.add(applyTemplate("excludeClass", excludeClass));
-            }
-        }
-        if (hasTitle()) {
-            addTemplate(selector, "title", getTitle());
-        }
-        for (Map.Entry<String, String> entry : templatesValues.entrySet()) {
-            addTemplate(selector, entry.getKey(), entry.getValue());
-        }
-        for (String suffix : elPathSuffix.values()) {
-            selector.add(suffix);
-        }
-        addChildNotesToSelector(selector);
-        return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
-    }
-
-    private void addChildNotesToSelector(List<String> selector) {
-        if (hasChildNodes()) {
-            for (WebLocator el : getChildNodes()) {
-                WebLocator breakElement = null;
-                WebLocator elIterator = el;
-                while (elIterator.getContainer() != null && breakElement == null) {
-                    if(elIterator.getContainer() == this) {
-                        elIterator.setContainer(null);
-                        breakElement = elIterator;
-                    } else {
-                        elIterator = elIterator.getContainer();
-                    }
-                }
-                selector.add("count(." + el.getPath() + ") > 0");
-                if(breakElement != null) {
-                    breakElement.setContainer((WebLocator) this);
-                }
-            }
-        }
-    }
-
-    private void addTemplate(List<String> selector, String key, Object... arguments) {
-        String tpl = applyTemplate(key, arguments);
-        if (StringUtils.isNotEmpty(tpl)) {
-            selector.add(tpl);
-        }
-    }
-
-    protected String applyTemplate(String key, Object... arguments) {
-        String tpl = templates.get(key);
-        if (StringUtils.isNotEmpty(tpl)) {
-            return String.format(tpl, arguments);
-        }
-        return null;
+        return pathBuilder.hasPosition();
     }
 
     /**
-     * this method is meant to be overridden by each component
-     *
-     * @param disabled disabled
-     * @return String
+     * @return final xpath (including containers xpath), used for interacting with browser
      */
-    protected String getItemPath(boolean disabled) {
-        String selector = getBaseItemPath();
-        if (!disabled) {
-            String enabled = applyTemplate("enabled", getTemplate("enabled"));
-            if (enabled != null) {
-                selector += StringUtils.isNotEmpty(selector) ? " and " + enabled : enabled;
-            }
-        }
-        selector = getRoot() + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
-        return selector;
+    public final String getPath() {
+        return pathBuilder.getPath();
+    }
+
+    public String getPath(boolean disabled) {
+        return pathBuilder.getPath(disabled);
     }
 
     /**
@@ -846,190 +641,11 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return String
      */
-    protected String getItemPathText() {
-        String selector = null;
-        if (hasText()) {
-            selector = "";
-            String text = getText();
-
-            if (templates.get("text") != null) {
-                return String.format(templates.get("text"), text);
-            }
-
-            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
-            if (!(hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY))) {
-                text = Utils.getEscapeQuotesText(text);
-            }
-            String pathText = "text()";
-
-            boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
-            boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
-            if (useChildNodesSearch) {
-                selector += "count(" + (isDeepSearch ? "*//" : "") + "text()[";
-                pathText = ".";
-            }
-
-            selector += getTextSearchTypePath(text, hasContainsAll, pathText);
-
-            if (useChildNodesSearch) {
-                selector += "]) > 0";
-            }
-
-            if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
-                String selfPath = getTextSearchTypePath(text, hasContainsAll, "text()");
-                selector = "(" + selfPath + " or " + selector + ")";
-            }
-
-            if (searchTextType.contains(SearchType.HTML_NODE)) {
-                String a = "normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=" + text;
-                String b = "normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=" + text;
-
-                selector = "(" + a + " or " + b + ")";
-            }
-        }
-        return selector;
+    public String getItemPathText() {
+        return pathBuilder.getItemPathText();
     }
 
-    private String getTextSearchTypePath(String text, boolean hasContainsAll, String pathText) {
-        String selector;
-        if (searchTextType.contains(SearchType.TRIM)) {
-            pathText = "normalize-space(" + pathText + ")";
-        }
-
-        if (searchTextType.contains(SearchType.EQUALS)) {
-            selector = pathText + "=" + text;
-        } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
-            selector = "starts-with(" + pathText + "," + text + ")";
-        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
-            String splitChar = String.valueOf(text.charAt(0));
-            Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
-            String[] strings = pattern.split(text.substring(1));
-            for (int i = 0; i < strings.length; i++) {
-                strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
-            }
-            String operator = hasContainsAll ? " and " : " or ";
-            selector = hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
-        } else {
-            selector = "contains(" + pathText + "," + text + ")";
-        }
-        return selector;
-    }
-
-    private String getBaseItemPath() {
-        return getBasePathSelector();
-    }
-
-    /**
-     * @return final xpath (including containers xpath), used for interacting with browser
-     */
-    public final String getPath() {
-        return getPath(false);
-    }
-
-    /**
-     * @param disabled disabled
-     * @return String
-     */
-    public String getPath(boolean disabled) {
-        String returnPath;
-        if (hasElPath()) {
-            returnPath = getElPath();
-
-            String baseItemPath = getBaseItemPath();
-            if (baseItemPath != null && !baseItemPath.equals("")) {
-                // TODO "inject" baseItemPath to elPath
-//                logger.warn("TODO must inject: \"" + baseItemPath + "\" in \"" + returnPath + "\"");
-            }
-        } else {
-            returnPath = getItemPath(disabled);
-        }
-
-        returnPath = afterItemPathCreated(returnPath);
-        if (disabled) {
-            returnPath += applyTemplate("disabled", getTemplate("disabled"));
-        }
-
-        // add container path
-        if (getContainer() != null) {
-            returnPath = getContainer().getPath() + returnPath;
-        }
-
-//        logger.debug(returnPath);
-        return returnPath;
-    }
-
-    @Override
-    public String toString() {
-        String info = getInfoMessage();
-        if (info == null || "".equals(info)) {
-            info = itemToString();
-        }
-        if (WebLocatorConfig.isLogUseClassName() && !getClassName().equals(info)) {
-            info += " - " + getClassName();
-        }
-        // add container path
-        if (WebLocatorConfig.isLogContainers() && getContainer() != null) {
-            info = getContainer().toString() + " -> " + info;
-        }
-        return info;
-    }
-
-    public String itemToString() {
-        String info;
-        if (hasText()) {
-            info = getText();
-        } else if (hasId()) {
-            info = getId();
-        } else if (hasName()) {
-            info = getName();
-        } else if (hasClasses()) {
-            info = classes.size() == 1 ? classes.get(0) : classes.toString();
-        } else if (hasCls()) {
-            info = getCls();
-        } else if (hasLabel()) {
-            info = getLabel();
-        } else if (hasTitle()) {
-            info = getTitle();
-        } else if (hasBaseCls()) {
-            info = getBaseCls();
-        } else if (hasElPath()) {
-            info = getElPath();
-        } else if (hasTag()) {
-            info = getTag();
-        } else {
-            info = getClassName();
-        }
-        return info;
-    }
-
-
-    protected String afterItemPathCreated(String itemPath) {
-        if (hasLabel()) {
-            // remove '//' because labelPath already has and include
-            if (itemPath.indexOf("//") == 0) {
-                itemPath = itemPath.substring(2);
-            }
-            itemPath = getLabelPath() + getLabelPosition() + itemPath;
-        }
-        itemPath = addPositionToPath(itemPath);
-        return itemPath;
-    }
-
-    protected String addPositionToPath(String itemPath) {
-        if (hasPosition()) {
-            itemPath += "[position() = " + getPosition() + "]";
-        }
-        return itemPath;
-    }
-
-    protected String getLabelPath() {
-        if (searchLabelType.size() == 0) {
-            searchLabelType.add(SearchType.EQUALS);
-        }
-        SearchType[] st = new SearchType[searchLabelType.size()];
-        for (int i = 0; i < searchLabelType.size(); i++) {
-            st[i] = searchLabelType.get(i);
-        }
-        return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getPath();
+    protected String applyTemplate(String key, Object... arguments) {
+        return pathBuilder.applyTemplate(key, arguments);
     }
 }

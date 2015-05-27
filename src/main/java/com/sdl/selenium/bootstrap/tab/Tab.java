@@ -4,6 +4,7 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,22 +42,25 @@ public class Tab extends WebLocator {
      * @return the path of the main TabPanel
      */
     private String getBaseTabPanelPath() {
-        String selector = getBasePath();
+        String selector = getPathBuilder().getBasePath();
         if (hasText()) {
             selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']//a[" + getItemPathText() + "]) > 0";
         }
         return "//ul[" + selector + "]";
     }
 
-    /**
-     * this method return the path of only one visible div from the main TabPanel
-     *
-     * @param disabled disabled
-     * @return the path of only one visible div from the main TabPanel
-     */
-    @Override
-    public String getItemPath(boolean disabled) {
-        return getBaseTabPanelPath() + "//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']";
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder() {
+            /**
+             * this method return the path of only one visible div from the main TabPanel
+             * @param disabled disabled
+             * @return the path of only one visible div from the main TabPanel
+             */
+            @Override
+            public String getItemPath(boolean disabled) {
+                return getBaseTabPanelPath() + "//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']";
+            }
+        };
     }
 
     /**

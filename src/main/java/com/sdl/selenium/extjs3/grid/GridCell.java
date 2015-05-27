@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.table.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +49,16 @@ public class GridCell extends Cell {
         setSearchTextType(searchType);
     }
 
-    @Override
-    protected String addPositionToPath(String itemPath) {
-        if (hasPosition()) {
-            itemPath = "//td[" + getPosition() + "]" + itemPath;
-        }
-        return itemPath;
+    protected XPathBuilder createXPathBuilder() {
+        return new XPathBuilder() {
+            @Override
+            protected String addPositionToPath(String itemPath) {
+                if (hasPosition()) {
+                    itemPath = "//td[" + getPosition() + "]" + itemPath;
+                }
+                return itemPath;
+            }
+        };
     }
 
     public boolean select() {
