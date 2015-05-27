@@ -154,6 +154,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return new TableRow(this, indexRow, byCells).setInfoMessage("-TableRow");
     }
 
+    @Override
     public TableCell getCell(int columnIndex, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex);
     }
@@ -165,6 +166,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return getCell(columnIndex, byCells);
     }
 
+    @Override
     public TableCell getCell(int columnIndex, String text, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
     }

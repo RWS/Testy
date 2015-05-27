@@ -501,6 +501,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridRow(this, byCells).setInfoMessage("-GridRow");
     }
 
+    @Override
     public GridCell getCell(int position, GridCell... byCells) {
         return new GridCell().setPosition(position).setContainer(getRow(byCells));
     }
@@ -512,6 +513,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return getCell(position, byCells);
     }
 
+    @Override
     public GridCell getCell(int position, String text, GridCell... byCells) {
         return new GridCell().setContainer(getRow(byCells)).setPosition(position).setText(text);
     }
