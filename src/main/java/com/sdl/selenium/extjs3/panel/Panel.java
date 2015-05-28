@@ -14,7 +14,7 @@ public class Panel extends ExtJsComponent {
     public Panel() {
         setClassName("Panel");
         setBaseCls("x-panel");
-        setHeaderBaseCls(getBaseCls());
+        setHeaderBaseCls(getPathBuilder().getBaseCls());
         setElPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
         setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
@@ -51,7 +51,7 @@ public class Panel extends ExtJsComponent {
     public String itemToString() {
         String info;
         if (hasTitle()) {
-            info = getTitle();
+            info = getPathBuilder().getTitle();
         } else {
             info = getPathBuilder().itemToString();
         }
@@ -59,7 +59,7 @@ public class Panel extends ExtJsComponent {
     }
 
     public ExtJsComponent getBodyComponent() {
-        return new ExtJsComponent(this, "//*[contains(@class, '" + getBaseCls() + "-body')]");
+        return new ExtJsComponent(this, "//*[contains(@class, '" + getPathBuilder().getBaseCls() + "-body')]");
     }
 
     public boolean clickOnTool(String id) {

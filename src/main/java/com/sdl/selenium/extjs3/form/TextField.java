@@ -44,7 +44,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     public String itemToString() {
         String info;
         if (hasLabel()) {
-            info = getLabel();
+            info = getPathBuilder().getLabel();
         } else {
             info = getPathBuilder().itemToString();
         }

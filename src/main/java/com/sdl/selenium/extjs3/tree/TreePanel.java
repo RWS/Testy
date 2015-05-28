@@ -43,14 +43,14 @@ public class TreePanel extends ExtJsComponent {
     public String getStatus(String searchElement) {
         WebLocator node = new WebLocator(getParentNode()).setText(searchElement, SearchType.CONTAINS);
         String path = node.getPath() + "/following::*";
-        WebLocator currentElement = new WebLocator(getContainer()).setElPath(path);
+        WebLocator currentElement = new WebLocator(getPathBuilder().getContainer()).setElPath(path);
         if (currentElement.isElementPresent()) {
-            return currentElement.getText();
+            return currentElement.getPathBuilder().getText();
         }
         return "INVALID";
     }
 
     public WebLocator getParentNode() {
-        return new WebLocator(getContainer()).setClasses("x-tree-node-el");
+        return new WebLocator(getPathBuilder().getContainer()).setClasses("x-tree-node-el");
     }
 }

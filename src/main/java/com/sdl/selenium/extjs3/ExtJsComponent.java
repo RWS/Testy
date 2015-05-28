@@ -63,10 +63,10 @@ public class ExtJsComponent extends WebLocator {
 //        String id = getAttributeId();
         String id = getCurrentElementAttribute("id");
         WebLocator mask = getMaskElement();
-        if ((id == null || id.equals("")) && getContainer() != null) {
-            id = getContainer().getAttributeId();
+        if ((id == null || id.equals("")) && getPathBuilder().getContainer() != null) {
+            id = getPathBuilder().getContainer().getAttributeId();
             if(LOGGER.isDebugEnabled()){
-                LOGGER.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getContainer().getClassName());
+                LOGGER.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getPathBuilder().getContainer().getPathBuilder().getClassName());
             }
         }
         if (id != null && !id.equals("")) {

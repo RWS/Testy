@@ -62,10 +62,10 @@ public class SplitButton extends Button {
                 }
             }
             if (option.clickAt()) {
-                LOGGER.info("Button Select menu option : " + option.getText());
+                LOGGER.info("Button Select menu option : " + option.getPathBuilder().getText());
                 return true;
             } else {
-                LOGGER.warn("Could not locate option '" + option.getText() + "'. Performing simple click on button : " + info);
+                LOGGER.warn("Could not locate option '" + option.getPathBuilder().getText() + "'. Performing simple click on button : " + info);
                 clickAt();
             }
         } else {

@@ -149,9 +149,9 @@ public class WebLocatorTest {
     @Test
     public void createInstancesWithBuilders() {
         WebLocator locatorBuilder1 = new WebLocator().setTag("div").setId("ID1");
-        assertEquals(locatorBuilder1.getTag(), "div");
-        assertEquals(locatorBuilder1.getId(), "ID1");
-        assertEquals(locatorBuilder1.getClassName(), "WebLocator");
+        assertEquals(locatorBuilder1.getPathBuilder().getTag(), "div");
+        assertEquals(locatorBuilder1.getPathBuilder().getId(), "ID1");
+        assertEquals(locatorBuilder1.getPathBuilder().getClassName(), "WebLocator");
     }
 
     @Test
@@ -177,6 +177,6 @@ public class WebLocatorTest {
     @Test
     public void setSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.STARTS_WITH);
-        assertEquals(locator.getSearchTextType().size(), 1);
+        assertEquals(locator.getPathBuilder().getSearchTextType().size(), 1);
     }
 }

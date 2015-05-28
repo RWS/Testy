@@ -363,7 +363,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getAttributeId(WebLocator el) {
         String pathId = getAttribute(el, "id");
         if (el.hasId()) {
-            final String id = el.getId();
+            final String id = el.getPathBuilder().getId();
             if (!id.equals(pathId)) {
                 LOGGER.warn("id is not same as pathId:" + id + " - " + pathId);
             }

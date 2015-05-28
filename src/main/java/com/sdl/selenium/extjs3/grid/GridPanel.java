@@ -67,7 +67,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     // TODO find better solution for GridPanel that is used in TabPanel
     public static GridPanel getInstanceByTabPanel(TabPanel tabPanel, String searchColumnId) {
         GridPanel gridPanel = new GridPanel();
-        WebLocator container = tabPanel.getContainer();
+        WebLocator container = tabPanel.getPathBuilder().getContainer();
         gridPanel.setContainer(container);
 
         tabPanel.setContainer(null); // hack to have path without container
@@ -143,7 +143,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttributeId();
         LOGGER.debug("id=" + id);
         if (id == null) {
-            LOGGER.warn("{} id is null. The path is: {}", getClassName(), getPath());
+            LOGGER.warn("{} id is null. The path is: {}", getPathBuilder().getClassName(), getPath());
             Assert.fail("Could not scroll because id of grid is null: " + this);
         }
         return id;

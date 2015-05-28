@@ -31,7 +31,7 @@ public class Tab extends WebLocator {
         String returnPath = "";
         if (hasText()) {
             String isActive = active ? "@class='active'" : "not(@class='active')";
-            returnPath = "//ul[@class='" + getBaseCls() + "' and count(.//li[" + isActive + "]//a[" + getItemPathText() + "]) > 0]";
+            returnPath = "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]//a[" + getItemPathText() + "]) > 0]";
         }
         return returnPath;
     }
@@ -69,11 +69,11 @@ public class Tab extends WebLocator {
      * @return true or false
      */
     public boolean setActive() {
-        WebLocator locator = new WebLocator(getContainer()).setElPath(getTitlePath(true));
+        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(true));
         boolean activated = new ConditionManager(200).add(new RenderSuccessCondition(locator)).execute().isSuccess();
         if (!activated) {
-            WebLocator locator1 = new WebLocator(getContainer()).setElPath(getTitlePath(false));
-            WebLocator titleElement = locator1.setInfoMessage(getText() + " Tab");
+            WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(false));
+            WebLocator titleElement = locator1.setInfoMessage(getPathBuilder().getText() + " Tab");
             activated = titleElement.click();
         }
         if (activated) {

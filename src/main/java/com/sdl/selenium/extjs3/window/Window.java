@@ -37,7 +37,7 @@ public class Window extends Panel {
     public Window() {
         setClassName("Window");
         setBaseCls("x-window");
-        setHeaderBaseCls(getBaseCls());
+        setHeaderBaseCls(getPathBuilder().getBaseCls());
         setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
         setElPathSuffix("exclude-hide-cls", null);
         // test for IE be cause of :

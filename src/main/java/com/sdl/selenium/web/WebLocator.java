@@ -308,7 +308,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public boolean waitToRender() {
-        return waitToRender(getRenderMillis());
+        return waitToRender(getPathBuilder().getRenderMillis());
     }
 
     public boolean waitToRender(final long millis) {
@@ -353,7 +353,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean waitToActivate() {
-        return waitToActivate(getActivateSeconds());
+        return waitToActivate(getPathBuilder().getActivateSeconds());
     }
 
     /**

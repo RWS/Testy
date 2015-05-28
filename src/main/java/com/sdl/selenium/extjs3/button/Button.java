@@ -57,7 +57,7 @@ public class Button extends ExtJsComponent implements IButton {
         WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(getPathBuilder().itemToString() + "//button");
         // TODO try to click on button that has mask - with first solution is not saying that has mask
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
-        buttonEl.setRenderMillis(getRenderMillis());
+        buttonEl.setRenderMillis(getPathBuilder().getRenderMillis());
         boolean buttonExist;
         buttonEl.sendKeys(Keys.TAB);
         buttonExist = buttonEl.currentElement != null;
@@ -171,7 +171,7 @@ public class Button extends ExtJsComponent implements IButton {
             if (option.clickAt()) {
                 return true;
             } else {
-                LOGGER.warn("Could not locate option '" + option.getText() + "'. Performing simple click on button : " + info);
+                LOGGER.warn("Could not locate option '" + option.getPathBuilder().getText() + "'. Performing simple click on button : " + info);
                 doClickAt();
             }
         }
