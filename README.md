@@ -78,7 +78,7 @@ Getting the maven plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.7.15</version>
+        <version>1.7.16</version>
     </dependency>
 ```
 

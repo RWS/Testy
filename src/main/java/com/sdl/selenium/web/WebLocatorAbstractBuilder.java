@@ -18,6 +18,10 @@ public abstract class WebLocatorAbstractBuilder {
         return new XPathBuilder();
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @return {@link XPathBuilder}
+     */
     public XPathBuilder getPathBuilder() {
         return pathBuilder;
     }
