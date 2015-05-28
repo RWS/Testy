@@ -820,26 +820,33 @@ public class XPathBuilder {
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
-        addChildNotesToSelector(selector);
+        addChildNodesToSelector(selector);
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
 
-    private void addChildNotesToSelector(List<String> selector) {
+    private void addChildNodesToSelector(List<String> selector) {
         if (hasChildNodes()) {
-            for (WebLocator el : getChildNodes()) {
+            for (WebLocator child : getChildNodes()) {
                 WebLocator breakElement = null;
-                WebLocator elIterator = el;
-                while (elIterator.getContainer() != null && breakElement == null) {
-                    if(elIterator.getContainer() == this.getContainer()) {
-                        elIterator.setContainer(null);
-                        breakElement = elIterator;
+                WebLocator childIterator = child;
+                WebLocator parentElement = null;
+                // break parent tree if is necessary
+                while (childIterator.getPathBuilder().getContainer() != null && breakElement == null) {
+                    WebLocator parentElementIterator = childIterator.getPathBuilder().getContainer();
+
+                    // child element has myself as parent
+                    if(parentElementIterator.getPathBuilder() == this) {
+                        childIterator.setContainer(null); // break parent tree while generating child address
+                        parentElement = parentElementIterator;
+                        breakElement = childIterator;
                     } else {
-                        elIterator = elIterator.getContainer();
+                        childIterator = parentElementIterator;
                     }
                 }
-                selector.add("count(." + el.getPath() + ") > 0");
+
+                selector.add("count(." + child.getPath() + ") > 0");
                 if(breakElement != null) {
-                    breakElement.setContainer(this.getContainer());
+                    breakElement.setContainer(parentElement);
                 }
             }
         }
