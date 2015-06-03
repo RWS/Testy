@@ -26,7 +26,7 @@ public class CheckBox extends TextField implements ICheck {
 
     public CheckBox() {
         setClassName("CheckBox");
-        setTemplateValue("input-type", "checkbox");
+        setType("checkbox");
     }
 
     public CheckBox(WebLocator container) {

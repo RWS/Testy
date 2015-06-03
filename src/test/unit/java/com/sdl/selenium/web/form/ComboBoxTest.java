@@ -14,6 +14,7 @@ public class ComboBoxTest {
                 {new ComboBox(),             "//select"},
                 {new ComboBox(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
                 {new ComboBox().setId("ID"), "//select[@id='ID']"},
+                {new ComboBox().setType("type"), "//select[@type='type']"},
         };
     }
 
