@@ -1,5 +1,7 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.web.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
@@ -279,9 +281,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             //if (executor.isSamePath(this, this.getPath()) || ready()) {
             if (el.ready()) {
                 try {
-                    el.currentElement.clear();
-                    el.currentElement.sendKeys(value);
-                    executed = true;
+                    executed = doSetValue(el, value);
                 } catch (ElementNotVisibleException exception) {
                     // TODO find what to do
                     LOGGER.error("ElementNotVisibleException in setValue: " + el, exception);
@@ -293,9 +293,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     LOGGER.warn("StaleElementReferenceException in setValue: " + el, exception);
                     LOGGER.warn("Set value(" + el + ") second try:  '" + value + "'");
                     if (el.ready()) {
-                        el.currentElement.clear();
-                        el.currentElement.sendKeys(value);
-                        executed = true;
+                        executed = doSetValue(el, value);
                     }
                 }
                 LOGGER.info("Set value(" + el + "): '" + value + "'");
@@ -304,6 +302,22 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             }
         }
         return executed;
+    }
+
+    private boolean doSetValue(WebLocator el, String value) {
+        int lengthVal = WebLocatorConfig.getInt("weblocator.defaults.value.length");
+        if (lengthVal != -1 && value.length() > lengthVal) {
+            el.currentElement.clear();
+            Utils.copyToClipboard(StringUtils.chop(value));
+            el.currentElement.sendKeys(Keys.CONTROL, "v");
+            el.currentElement.sendKeys(value.substring(value.length() - 1));
+            LOGGER.info("Paste value(" + el + "): " + value + "'");
+        } else {
+            el.currentElement.clear();
+            el.currentElement.sendKeys(value);
+            LOGGER.info("Set value(" + el + "): '" + value + "'");
+        }
+        return true;
     }
 
     @Override
@@ -330,6 +344,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 el.currentElement.clear();
                 clear = true;
             } catch (InvalidElementStateException e) {
+                LOGGER.warn("InvalidElementStateException clear: {}", el);
                 clear = false;
             }
         }

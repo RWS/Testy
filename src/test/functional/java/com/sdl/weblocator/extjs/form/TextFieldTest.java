@@ -40,6 +40,8 @@ public class TextFieldTest extends TestBase {
     public void getValue() {
         assertTrue(lastNameTextField.setValue("testValue"));
         assertEquals(lastNameTextField.getValue(), "testValue");
+        assertTrue(lastNameTextField.setValue("testValue9999990"));
+        assertEquals(lastNameTextField.getValue(), "testValue9999990");
         assertEquals(disableTextField.getValue(), "Disable Name");
         assertEquals(firstNameTextField.getValue(), "First Name");
     }
@@ -47,10 +49,24 @@ public class TextFieldTest extends TestBase {
     @Test
     public void performanceTestSetValue() {
         long startMs = System.currentTimeMillis();
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             lastNameTextField.setValue("Value" + i);
         }
         long endMs = System.currentTimeMillis();
         LOGGER.info(String.format("performanceTestSetValue took %s ms", endMs - startMs));
+    }
+
+    @Test
+    public void performanceTestSetAndPasteValue() {
+        long startMs = System.currentTimeMillis();
+        lastNameTextField.clear();
+        String value = "Value is very long for test, I hope that present is very use full for performance.";
+        lastNameTextField.sendKeys(value);
+        long endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("performanceTestSetValue took %s ms", endMs - startMs));
+        startMs = System.currentTimeMillis();
+        lastNameTextField.setValue(value);
+        endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("performanceTestPasteValue took %s ms", endMs - startMs));
     }
 }
