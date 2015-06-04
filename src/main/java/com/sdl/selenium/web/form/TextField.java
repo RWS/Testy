@@ -24,9 +24,6 @@ public class TextField extends WebLocator implements ITextField {
         setId(id);
     }
 
-    /**
-     * @deprecated use weblocator.defaults.value.length=0 in webLocator.properties
-     */
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {

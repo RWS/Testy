@@ -51,9 +51,6 @@ public class TextField extends ExtJsComponent implements ITextField {
         return info;
     }
 
-    /**
-     * @deprecated use weblocator.defaults.value.length=0 in webLocator.properties
-     */
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {
