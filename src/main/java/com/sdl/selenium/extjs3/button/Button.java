@@ -63,10 +63,10 @@ public class Button extends ExtJsComponent implements IButton {
         buttonExist = buttonEl.currentElement != null;
         boolean clicked = buttonExist && isElementPresent() && super.doClick();
         if (clicked) {
-            LOGGER.info("Click on {} ", toString());
+            LOGGER.info("Click on {} ", getPathBuilder().toString());
             Utils.sleep(50);
         } else {
-            LOGGER.error("({}) doesn't exists or is disabled {}.", toString(), getPath());
+            LOGGER.error("({}) doesn't exists or is disabled {}.", getPathBuilder().toString(), getPathBuilder().getPath());
         }
         return clicked;
     }
@@ -91,7 +91,7 @@ public class Button extends ExtJsComponent implements IButton {
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.onClick({preventDefault:function(){},button:0}); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            LOGGER.info("clickWithExtJS on {}; result: {}", toString(), object);
+            LOGGER.info("clickWithExtJS on {}; result: {}", getPathBuilder().toString(), object);
             return (Boolean) object;
         }
         LOGGER.debug("id is: " + id);
@@ -131,7 +131,7 @@ public class Button extends ExtJsComponent implements IButton {
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.showMenu(); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            LOGGER.info("showMenu for {}; result: {}", toString(), object);
+            LOGGER.info("showMenu for {}; result: {}", getPathBuilder().toString(), object);
             Utils.sleep(200);
             return (Boolean) object;
         }
@@ -148,7 +148,7 @@ public class Button extends ExtJsComponent implements IButton {
     public boolean clickOnMenu(String[] menuOptions) {
         LOGGER.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
         if (click()) {
-            String info = toString();
+            String info = getPathBuilder().toString();
 //            LOGGER.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
             WebLocator menu = new WebLocator("x-menu-floating");

@@ -1013,7 +1013,7 @@ public class XPathBuilder {
         }
         // add container path
         if (WebLocatorConfig.isLogContainers() && getContainer() != null) {
-            info = getContainer().toString() + " -> " + info;
+            info = getContainer().getPathBuilder().toString() + " -> " + info;
         }
         return info;
     }

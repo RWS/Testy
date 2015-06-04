@@ -34,7 +34,7 @@ public class SplitButton extends Button {
         int n = menuOptions.length;
         LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
         ready();
-        String info = toString();
+        String info = getPathBuilder().toString();
         if (isDisabled()) {
             // waiting period for some buttons to become enabled (monitor valid)
             LOGGER.debug("Button is disabled. Waiting ...");
@@ -55,8 +55,8 @@ public class SplitButton extends Button {
             }
             menu.setInfoMessage("active menu");
             ExtJsComponent option = new ExtJsComponent(menu);
-            for (int i = 0; i < n; i++) {
-                option.setText(menuOptions[i]);
+            for (String menuOption : menuOptions) {
+                option.setText(menuOption);
                 if (!option.mouseOver()) {
                     return false;
                 }
@@ -69,7 +69,7 @@ public class SplitButton extends Button {
                 clickAt();
             }
         } else {
-            LOGGER.error("(" + info + ") doesn't exists or is disabled. " + getPath());
+            LOGGER.error("(" + info + ") doesn't exists or is disabled. " + getPathBuilder().getPath());
         }
         return false;
     }
