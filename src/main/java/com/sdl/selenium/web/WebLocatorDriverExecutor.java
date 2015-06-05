@@ -34,22 +34,22 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 el.currentElement.click();
                 clicked = true;
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("StaleElementReferenceException in doClick: {}", el.getPathBuilder().toString());
+                LOGGER.error("StaleElementReferenceException in doClick: " + el);
                 tryAgainDoClick(el);
                 clicked = true;
             } catch (InvalidElementStateException e) {
-                LOGGER.error("InvalidElementStateException in doClick: {}", el.getPathBuilder().toString());
+                LOGGER.error("InvalidElementStateException in doClick: " + el);
                 tryAgainDoClick(el);
                 clicked = true;
             } catch (MoveTargetOutOfBoundsException e) {
-                LOGGER.error("MoveTargetOutOfBoundsException in doClick: {}", el.getPathBuilder().toString());
+                LOGGER.error("MoveTargetOutOfBoundsException in doClick: " + el);
                 tryAgainDoClick(el);
                 clicked = true;
             } catch (Exception e) {
-                LOGGER.error("Exception in doClick: {}", el.getPathBuilder().toString(), e);
+                LOGGER.error("Exception in doClick: " + el, e);
             }
         } else {
-            LOGGER.error("currentElement is null for: {}", el.getPathBuilder().toString());
+            LOGGER.error("currentElement is null for: " + el);
         }
         return clicked;
     }
@@ -60,7 +60,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (el.currentElement != null) {
             el.currentElement.click(); // not sure it will click now
         } else {
-            LOGGER.error("currentElement is null after to try currentElement: {}", el.getPathBuilder().toString());
+            LOGGER.error("currentElement is null after to try currentElement: " + el);
         }
     }
 
@@ -95,7 +95,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public WebElement waitElement(final WebLocator el, final long millis) {
         doWaitElement(el, millis);
         if (el.currentElement == null) {
-            LOGGER.warn("Element not found after {} millis; {}", millis, el.getPathBuilder().toString());
+            LOGGER.warn("Element not found after " + millis + " millis; " + el);
             if (WebLocatorConfig.isLogXPathEnabled()) {
                 LOGGER.debug("\t" + el.getPath());
             }
@@ -145,7 +145,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             attributeValue = getCurrentElementAttribute(el, attribute);
         } else {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Element not found to getAttribute({}): {}", attribute, el.getPathBuilder().toString());
+                LOGGER.debug("Element not found to getAttribute(" + attribute + "): " + el);
             }
         }
         return attributeValue;
@@ -158,20 +158,20 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             boolean exists = el.currentElement != null;
             if (exists || isElementPresent(el)) {
                 if (LOGGER.isDebugEnabled() && !exists) {
-                    LOGGER.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try) {}", el.getPathBuilder().toString());
+                    LOGGER.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try) " + el);
                 }
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (StaleElementReferenceException e) {
-            LOGGER.warn("StaleElementReferenceException in getCurrentElementAttribute({}): {}", attribute, el.getPathBuilder().toString());
+            LOGGER.warn("StaleElementReferenceException in getCurrentElementAttribute(" + attribute + "): " + el);
             el.setCurrentElementPath("");
             if (isElementPresent(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
             } else {
-                LOGGER.error("StaleElementReferenceException in getCurrentElementAttribute (second try): {}: {}" , attribute, el.getPathBuilder().toString(), e);
+                LOGGER.error("StaleElementReferenceException in getCurrentElementAttribute (second try): " + attribute + ": " + el, e);
             }
         } catch (WebDriverException e) {
-            LOGGER.error("WebDriverException in getCurrentElementAttribute({}): {}", attribute, el.getPathBuilder().toString(), e);
+            LOGGER.error("WebDriverException in getCurrentElementAttribute(" + attribute + "): " + el, e);
         }
         return attributeValue;
     }
@@ -183,13 +183,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 text = el.currentElement.getText();
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("getHtmlText (second try): {}", el.getPath(), e);
+                LOGGER.error("getHtmlText (second try): " + el.getPath(), e);
                 el.setCurrentElementPath("");
                 if (isElementPresent(el)) {
                     text = el.currentElement.getText();
                 }
             } catch (WebDriverException e) {
-                LOGGER.error("element has vanished meanwhile: {}", el.getPath(), e);
+                LOGGER.error("element has vanished meanwhile: " + el.getPath(), e);
             }
         }
         return text;
@@ -220,7 +220,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 try {
                     trySecondDoSendKeys(el, charSequences);
                 } catch (ElementNotVisibleException exc) {
-                    LOGGER.error("final ElementNotVisibleException in sendKeys: {}", el.getPathBuilder().toString(), exc);
+                    LOGGER.error("final ElementNotVisibleException in sendKeys: " + el, exc);
                     throw exc;
                 }
             }
@@ -238,7 +238,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (el.currentElement != null) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
         } else {
-            LOGGER.error("currentElement is null after to try currentElement: {}", el.getPathBuilder().toString());
+            LOGGER.error("currentElement is null after to try currentElement: " + el);
         }
     }
 
@@ -249,7 +249,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (el.currentElement != null) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
         } else {
-            LOGGER.error("currentElement is null after to try currentElement: {}", el.getPathBuilder().toString());
+            LOGGER.error("currentElement is null after to try currentElement: " + el);
         }
     }
 
@@ -284,21 +284,21 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     executed = doSetValue(el, value);
                 } catch (ElementNotVisibleException exception) {
                     // TODO find what to do
-                    LOGGER.error("ElementNotVisibleException in setValue: {}", el.getPathBuilder().toString(), exception);
+                    LOGGER.error("ElementNotVisibleException in setValue: " + el, exception);
                     if (WebLocatorConfig.isLogXPathEnabled()) {
                         LOGGER.debug("\t" + el.getPath());
                     }
                     throw exception;
                 } catch (StaleElementReferenceException exception) {
-                    LOGGER.warn("StaleElementReferenceException in setValue: {}", el.getPathBuilder().toString(), exception);
-                    LOGGER.warn("Set value({}) second try:  '{}'", el.getPathBuilder().toString(), value);
+                    LOGGER.warn("StaleElementReferenceException in setValue: " + el, exception);
+                    LOGGER.warn("Set value(" + el + ") second try:  '" + value + "'");
                     if (el.ready()) {
                         executed = doSetValue(el, value);
                     }
                 }
-                LOGGER.info("Set value({}): '{}'", el.getPathBuilder().toString(), value);
+                LOGGER.info("Set value(" + el + "): '" + value + "'");
             } else {
-                LOGGER.warn("setValue : field is not ready for use: {}", el.getPathBuilder().toString());
+                LOGGER.warn("setValue : field is not ready for use: " + el);
             }
         }
         return executed;
@@ -311,11 +311,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             Utils.copyToClipboard(StringUtils.chop(value));
             el.currentElement.sendKeys(Keys.CONTROL, "v");
             el.currentElement.sendKeys(value.substring(value.length() - 1));
-            LOGGER.info("Paste value({}): '{}'", el.getPathBuilder().toString(), value);
+            LOGGER.info("Paste value(" + el + "): " + value + "'");
         } else {
             el.currentElement.clear();
             el.currentElement.sendKeys(value);
-            LOGGER.info("Set value({}): '{}'", el.getPathBuilder().toString(), value);
+            LOGGER.info("Set value(" + el + "): '" + value + "'");
         }
         return true;
     }
@@ -328,10 +328,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             if (attributeValue != null) {
                 value = attributeValue;
             } else {
-                LOGGER.warn("getValue : value attribute is null: {}", el.getPathBuilder().toString());
+                LOGGER.warn("getValue : value attribute is null: " + el);
             }
         } else {
-            LOGGER.warn("getValue : field is not ready for use: {}", el.getPathBuilder().toString());
+            LOGGER.warn("getValue : field is not ready for use: " + el);
         }
         return value;
     }
@@ -344,7 +344,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 el.currentElement.clear();
                 clear = true;
             } catch (InvalidElementStateException e) {
-                LOGGER.warn("InvalidElementStateException clear: {}", el.getPathBuilder().toString());
+                LOGGER.warn("InvalidElementStateException clear: {}", el);
                 clear = false;
             }
         }
@@ -364,7 +364,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             fireEventWithJS(el, "dblclick");
         }
         if (clicked) {
-            LOGGER.info("doubleClickAt {}", el.getPathBuilder().toString());
+            LOGGER.info("doubleClickAt " + el);
         }
         return clicked;
     }
@@ -380,7 +380,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (el.hasId()) {
             final String id = el.getPathBuilder().getId();
             if (!id.equals(pathId)) {
-                LOGGER.warn("id is not same as pathId: {} - {}", id, pathId);
+                LOGGER.warn("id is not same as pathId:" + id + " - " + pathId);
             }
             return id;
         }
@@ -402,14 +402,14 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } else if (!"".equals(cls = getAttribute(el, "class"))) {
             script = "var fireOnThis = document.getElementsByClassName('" + cls + "')[0];\n" + script;
         } else {
-            script = "var fireOnThis = document.evaluate(\"" + el.getPathBuilder().getPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
+            script = "var fireOnThis = document.evaluate(\"" + el.getPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                     "var evObj = document.createEvent('MouseEvents');\n" +
                     "evObj.initEvent( '" + eventName + "', true, true );\n" +
                     "fireOnThis.dispatchEvent(evObj);";
         }
         Object o = executeScript(script);
         if (o != null) {
-            LOGGER.debug("result executeScript: {}", o);
+            LOGGER.debug("result executeScript: " + o);
         }
     }
 
@@ -419,7 +419,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             return javascriptExecutor.executeScript(script, objects);
         } catch (WebDriverException e) {
-            LOGGER.error("WebDriverException in executeScript: {}", script, e);
+            LOGGER.error("WebDriverException in executeScript: " + script, e);
             return null;
         }
     }

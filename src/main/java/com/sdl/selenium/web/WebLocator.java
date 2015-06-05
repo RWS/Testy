@@ -99,7 +99,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean clickAt() {
         boolean clickAt = ready() && doClickAt();
         if (clickAt) {
-            LOGGER.info("ClickAt on {}", getPathBuilder().toString());
+            LOGGER.info("ClickAt on {}", toString());
         }
         return clickAt;
     }
@@ -107,7 +107,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertClickAt() {
         boolean clicked = clickAt();
         if (!clicked) {
-            Assert.fail("Could not clickAt on: " + getPathBuilder().toString());
+            Assert.fail("Could not clickAt on: " + this);
         }
         return clicked;
     }
@@ -115,7 +115,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertExists() {
         boolean exists = exists();
         if (!exists) {
-            Assert.fail("Element does not exists : " + getPathBuilder().toString());
+            Assert.fail("Element does not exists : " + this);
         }
         return exists;
     }
@@ -128,7 +128,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean click() {
         boolean click = waitToRender() && doClick();
         if (click) {
-            LOGGER.info("Click on {}", getPathBuilder().toString());
+            LOGGER.info("Click on {}", toString());
         }
         return click;
     }
@@ -142,7 +142,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertClick() {
         boolean clicked = click();
         if (!clicked) {
-            Assert.fail("Could not click on: " + getPathBuilder().toString());
+            Assert.fail("Could not click on: " + this);
         }
         return clicked;
     }
@@ -179,7 +179,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         if (ready()) {
             executor.doSendKeys(this, charSequences);
         } else {
-            LOGGER.debug("Element is not ready {}", getPathBuilder().toString());
+            LOGGER.debug("Element is not ready " + toString());
             return null;
         }
         return this;
@@ -191,11 +191,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean mouseOver() {
         if (ready()) {
-            LOGGER.info("mouseOver on {}", getPathBuilder().toString());
+            LOGGER.info("mouseOver on " + this);
             doMouseOver();
             return true;
         } else {
-            LOGGER.warn("mouseOver on {} failed", getPathBuilder().toString());
+            LOGGER.warn("mouseOver on " + this + " failed");
             return false;
         }
     }
@@ -206,11 +206,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean blur() {
         if (ready()) {
+            LOGGER.info("blur on " + this);
             executor.blur(this);
-            LOGGER.info("blur on {}", getPathBuilder().toString());
             return true;
         } else {
-            LOGGER.warn("blur on {} failed", getPathBuilder().toString());
+            LOGGER.warn("blur on " + this + " failed");
             return false;
         }
     }
@@ -223,7 +223,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public WebLocator focus() {
         if (ready()) {
             executor.focus(this);
-            LOGGER.info("focus on {}", getPathBuilder().toString());
+            LOGGER.info("focus on " + toString());
         }
         return this;
     }
@@ -348,7 +348,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             }
             Utils.sleep(200);
         }
-        LOGGER.warn("No text was found for Element after {} sec; {}", seconds, getPathBuilder().toString());
+        LOGGER.warn("No text was found for Element after " + seconds + " sec; " + this);
         return excludeText.equals(text) ? null : text;
     }
 
@@ -372,7 +372,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertReady() {
         boolean ready = ready();
         if (!ready) {
-            Assert.fail("Element is not ready : " + getPathBuilder().toString());
+            Assert.fail("Element is not ready : " + this);
         }
         return ready;
     }
