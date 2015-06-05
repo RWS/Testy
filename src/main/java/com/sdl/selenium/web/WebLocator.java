@@ -384,4 +384,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean isDisabled() {
         return ready() && !currentElement.isEnabled();
     }
+
+    @Override
+    public String toString() {
+        return getPathBuilder().toString();
+    }
 }
