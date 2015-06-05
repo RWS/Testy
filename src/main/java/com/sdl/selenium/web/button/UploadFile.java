@@ -26,15 +26,24 @@ public class UploadFile extends WebLocator implements Upload {
 
     @Override
     public boolean upload(String... filePath) {
-        browse(this);
-        return RunExe.getInstance().upload(filePath);
+        return upload(this, filePath);
     }
 
-    private void browse(WebLocator el) {
-        WebDriver driver = WebDriverConfig.getDriver();
-        el.focus();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(el.currentElement).perform();
-        builder.click().perform();
+    public boolean upload(WebLocator el, String... filePath) {
+        return browse(el) && RunExe.getInstance().upload(filePath);
+    }
+
+    private boolean browse(WebLocator el) {
+        try {
+            WebDriver driver = WebDriverConfig.getDriver();
+            el.focus();
+            Actions builder = new Actions(driver);
+            builder.moveToElement(el.currentElement).perform();
+            builder.click().perform();
+            return true;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return false;
+        }
     }
 }

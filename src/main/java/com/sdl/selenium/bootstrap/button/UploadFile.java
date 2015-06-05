@@ -55,7 +55,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
      */
     public boolean upload(String text, String... filePath) {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-new").setText(text);
+        WebLocator upload = new WebLocator(this).setTag("input").setLabel(text).setLabelPosition("//following-sibling::").setLabelTag("span").setType("file");
         return upload(upload, filePath);
     }
 
@@ -64,7 +64,7 @@ public class UploadFile extends WebLocator implements Upload {
     }
 
     public boolean change(String text, String... filePath) {
-        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setText(text);
+        WebLocator upload = new WebLocator(this).setTag("input").setLabel(text).setLabelPosition("//following-sibling::").setLabelTag("span").setType("file");
         return upload(upload, filePath);
     }
 
