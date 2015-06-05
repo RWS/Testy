@@ -55,28 +55,28 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     public WebDriver createDriver() throws IOException {
         WebDriver driver;
         String profileName = getProperty("browser.profile.name");
-        FirefoxProfile myProfile;
+        FirefoxProfile profile;
         if (!"".equals(profileName) && profileName != null) {
             ProfilesIni allProfiles = new ProfilesIni();
-            myProfile = allProfiles.getProfile(profileName);
+            profile = allProfiles.getProfile(profileName);
         } else {
-            myProfile = new FirefoxProfile();
+            profile = new FirefoxProfile();
         }
-        if (myProfile != null) {
+        if (profile != null) {
             LOGGER.info("profile not null");
-            setProfilePreferences(myProfile);
+            setProfilePreferences(profile);
 
             File file = new File(getProperty("browser.download.dir"));
             String downloadDir = file.getCanonicalPath();
             if (!"".equals(downloadDir)) {
-                myProfile.setPreference("browser.download.dir", downloadDir);
+                profile.setPreference("browser.download.dir", downloadDir);
             }
-            driver = new FirefoxDriver(myProfile);
+            driver = new FirefoxDriver(profile);
         } else {
             String profilePath = getProperty("browser.profile.path");
             if (profilePath != null && !profilePath.equals("")) {
-                FirefoxProfile firefoxProfile = new FirefoxProfile(new File(profilePath));
-                driver = new FirefoxDriver(firefoxProfile);
+                profile = new FirefoxProfile(new File(profilePath));
+                driver = new FirefoxDriver(profile);
             } else {
                 DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
                 String version = getProperty("browser.version");
