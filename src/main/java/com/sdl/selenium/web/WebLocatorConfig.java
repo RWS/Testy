@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class WebLocatorConfig {
 
@@ -24,6 +26,7 @@ public class WebLocatorConfig {
         add(SearchType.CONTAINS);
     }};
     public static String defaultLabelPosition;
+    public static int minCharsToType;
 
     private static WebLocatorConfigReader properties = null;
 
@@ -105,6 +108,8 @@ public class WebLocatorConfig {
             }
             setSearchTextType(list);
         }
+
+        setMinCharsToType(getInt("weblocator.min.chars.toType"));
     }
 
     public static long getDefaultRenderMillis() {
@@ -165,5 +170,13 @@ public class WebLocatorConfig {
 
     public static void setDefaultLabelPosition(String defaultLabelPosition) {
         WebLocatorConfig.defaultLabelPosition = defaultLabelPosition;
+    }
+
+    public static int getMinCharsToType() {
+        return minCharsToType;
+    }
+
+    private static void setMinCharsToType(int minCharsToType) {
+        WebLocatorConfig.minCharsToType = minCharsToType;
     }
 }

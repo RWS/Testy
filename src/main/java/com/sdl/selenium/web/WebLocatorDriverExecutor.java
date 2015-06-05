@@ -305,17 +305,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private boolean doSetValue(WebLocator el, String value) {
-        int lengthVal = WebLocatorConfig.getInt("weblocator.defaults.value.length");
-        if (lengthVal != -1 && value.length() > lengthVal) {
+        int lengthVal = WebLocatorConfig.getMinCharsToType();
+        if (lengthVal == -1 || value.length() <= lengthVal) {
+            el.currentElement.clear();
+            el.currentElement.sendKeys(value);
+            LOGGER.info("Set value(" + el + "): '" + value + "'");
+        } else {
             el.currentElement.clear();
             Utils.copyToClipboard(StringUtils.chop(value));
             el.currentElement.sendKeys(Keys.CONTROL, "v");
             el.currentElement.sendKeys(value.substring(value.length() - 1));
             LOGGER.info("Paste value(" + el + "): " + value + "'");
-        } else {
-            el.currentElement.clear();
-            el.currentElement.sendKeys(value);
-            LOGGER.info("Set value(" + el + "): '" + value + "'");
         }
         return true;
     }
