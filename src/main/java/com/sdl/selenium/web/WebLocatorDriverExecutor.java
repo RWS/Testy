@@ -284,21 +284,19 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     executed = doSetValue(el, value);
                 } catch (ElementNotVisibleException exception) {
                     // TODO find what to do
-                    LOGGER.error("ElementNotVisibleException in setValue: " + el, exception);
+                    LOGGER.error("ElementNotVisibleException in setValue: {}", el, exception);
                     if (WebLocatorConfig.isLogXPathEnabled()) {
                         LOGGER.debug("\t" + el.getPath());
                     }
                     throw exception;
                 } catch (StaleElementReferenceException exception) {
-                    LOGGER.warn("StaleElementReferenceException in setValue: " + el, exception);
-                    LOGGER.warn("Set value(" + el + ") second try:  '" + value + "'");
+                    LOGGER.warn("StaleElementReferenceException in setValue: {}", el, exception);
                     if (el.ready()) {
                         executed = doSetValue(el, value);
                     }
                 }
-                LOGGER.info("Set value(" + el + "): '" + value + "'");
             } else {
-                LOGGER.warn("setValue : field is not ready for use: " + el);
+                LOGGER.warn("setValue : field is not ready for use: {}", el);
             }
         }
         return executed;
@@ -309,13 +307,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (lengthVal == -1 || value.length() <= lengthVal) {
             el.currentElement.clear();
             el.currentElement.sendKeys(value);
-            LOGGER.info("Set value(" + el + "): '" + value + "'");
+            LOGGER.info("Set value({}): '{}'", el, value);
         } else {
             el.currentElement.clear();
             Utils.copyToClipboard(StringUtils.chop(value));
             el.currentElement.sendKeys(Keys.CONTROL, "v");
             el.currentElement.sendKeys(value.substring(value.length() - 1));
-            LOGGER.info("Paste value(" + el + "): " + value + "'");
+            LOGGER.info("Paste value({}): '{}'", el, value);
         }
         return true;
     }
