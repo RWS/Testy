@@ -581,6 +581,30 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      * @deprecated use {@link #getPathBuilder()}.get to get path attributes
+     * @return value that has been set in {@link #setPosition(int)}
+     */
+    public int getResultIdx() {
+        return pathBuilder.getResultIdx();
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[contains(@class, 'x-grid-panel')][position() = 1]
+     * </pre>
+     *
+     * @param resultIdx starting index = 1
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setResultIdx(int resultIdx) {
+        pathBuilder.setResultIdx(resultIdx);
+        return (T) this;
+    }
+
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
      * @return value that has been set in {@link #setType(String)}
      */
     public String getType() {
@@ -638,6 +662,10 @@ public abstract class WebLocatorAbstractBuilder {
 
     protected boolean hasPosition() {
         return pathBuilder.hasPosition();
+    }
+
+    protected boolean hasResultIdx() {
+        return pathBuilder.hasResultIdx();
     }
 
     /**

@@ -43,6 +43,7 @@ public class XPathBuilder {
     private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
     private int position = -1;
+    private int resultIdx = -1;
     private String type;
 
     //private int elIndex; // TODO try to find how can be used
@@ -651,6 +652,30 @@ public class XPathBuilder {
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
      *
+     * @return value that has been set in {@link #setPosition(int)}
+     */
+    public int getResultIdx() {
+        return resultIdx;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[contains(@class, 'x-grid-panel')][position() = 1]
+     * </pre>
+     *
+     * @param resultIdx starting index = 1
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setResultIdx(int resultIdx) {
+        this.resultIdx = resultIdx;
+        return (T) this;
+    }
+
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     *
      * @return value that has been set in {@link #setType(String)}
      */
     public String getType() {
@@ -748,6 +773,10 @@ public class XPathBuilder {
 
     protected boolean hasPosition() {
         return position > 0;
+    }
+
+    protected boolean hasResultIdx() {
+        return resultIdx > 0;
     }
 
     protected boolean hasType() {
@@ -997,9 +1026,14 @@ public class XPathBuilder {
         if (getContainer() != null) {
             returnPath = getContainer().getPath() + returnPath;
         }
+        return addResultIndexToPath(returnPath);
+    }
 
-//        logger.debug(returnPath);
-        return returnPath;
+    private String addResultIndexToPath(String finalPath) {
+        if (hasResultIdx()) {
+            finalPath = "(" + finalPath + ")[" + getResultIdx() + "]";
+        }
+        return finalPath;
     }
 
     @Override

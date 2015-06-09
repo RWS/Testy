@@ -179,4 +179,15 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setText("text", SearchType.STARTS_WITH);
         assertEquals(locator.getPathBuilder().getSearchTextType().size(), 1);
     }
+
+    @Test
+    public void setResultIdx() {
+        WebLocator locator = new WebLocator().setText("text").setResultIdx(1);
+        WebLocator locator1 = new WebLocator(locator).setText("text").setResultIdx(2);
+        assertEquals(locator1.getPath(), "((//*[contains(text(),'text')])[1]//*[contains(text(),'text')])[2]");
+        locator1.setResultIdx(-1);
+        assertEquals(locator1.getPath(), "(//*[contains(text(),'text')])[1]//*[contains(text(),'text')]");
+        locator.setResultIdx(-1);
+        assertEquals(locator1.getPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
+    }
 }
