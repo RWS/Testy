@@ -8,10 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.*;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -131,6 +130,24 @@ public class Utils {
     }
 
     public static void copyToClipboard(final String text) {
+        int time = 0;
+        Boolean clipboardHasValue = false;
+        if (text != null) {
+            do {
+                try {
+                    clipboardHasValue = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null).isDataFlavorSupported(DataFlavor.stringFlavor);
+                    if (clipboardHasValue) {
+                        Object clipValue = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+                        clipboardHasValue = (clipValue != null);
+                    }
+                } catch (UnsupportedFlavorException | IOException e) {
+
+                }
+                sleep(20);
+                time++;
+                LOGGER.debug("clipValue is {}", clipboardHasValue);
+            } while (clipboardHasValue && time < 50);
+        }
         final StringSelection stringSelection = new StringSelection(text);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection,
                 new ClipboardOwner() {

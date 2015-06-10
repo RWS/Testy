@@ -317,6 +317,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 Utils.copyToClipboard(StringUtils.chop(value));
             }
             el.currentElement.sendKeys(Keys.CONTROL, "v");
+            Utils.copyToClipboard(null);
             el.currentElement.sendKeys(value.substring(value.length() - 1));
             LOGGER.info("Paste value({}): '{}'", el, value);
         }
