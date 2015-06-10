@@ -662,9 +662,9 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * <p>Result Example:</p>
      * <pre>
-     *     //*[contains(@class, 'x-grid-panel')][position() = 1]
+     *     (//*[contains(@class, 'x-grid-panel')])[1]
      * </pre>
-     *
+     * More details please see: http://stackoverflow.com/questions/4961349/combine-xpath-predicate-with-position
      * @param resultIdx starting index = 1
      * @return this element
      */
