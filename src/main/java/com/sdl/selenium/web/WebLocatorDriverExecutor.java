@@ -310,7 +310,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             LOGGER.info("Set value({}): '{}'", el, value);
         } else {
             el.currentElement.clear();
-            Utils.copyToClipboard(StringUtils.chop(value));
+            try {
+                Utils.copyToClipboard(StringUtils.chop(value));
+            } catch (IllegalStateException e) {
+                LOGGER.debug("IllegalStateException: cannot open system clipboard - try again.");
+                Utils.copyToClipboard(StringUtils.chop(value));
+            }
             el.currentElement.sendKeys(Keys.CONTROL, "v");
             el.currentElement.sendKeys(value.substring(value.length() - 1));
             LOGGER.info("Paste value({}): '{}'", el, value);
