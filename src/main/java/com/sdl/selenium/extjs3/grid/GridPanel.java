@@ -1,5 +1,12 @@
 package com.sdl.selenium.extjs3.grid;
 
+import java.util.*;
+
+import org.junit.Assert;
+import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
@@ -12,12 +19,6 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.ITable;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.utils.Utils;
-import org.junit.Assert;
-import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridPanel.class);
@@ -302,7 +303,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public WebLocator getHeader(String columnId) {
         waitToRender();
         WebLocator headerEl = new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
-        headerEl.setInfoMessage(itemToString() + " Header[" + columnId + "]");
+        headerEl.setInfoMessage(toString() + " Header[" + columnId + "]");
         return headerEl;
     }
 
