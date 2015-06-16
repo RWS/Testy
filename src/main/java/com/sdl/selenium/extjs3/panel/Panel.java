@@ -53,9 +53,13 @@ public class Panel extends ExtJsComponent {
         return new ExtJsComponent(this, "//*[contains(@class, '" + getPathBuilder().getBaseCls() + "-body')]");
     }
 
+    /**
+     * click on element with class "x-tool-" + id
+     * @param id
+     * @return
+     */
     public boolean clickOnTool(String id) {
-        WebLocator toolElement = new WebLocator(this).setClasses("x-tool-" + id).setVisibility(true);
-        toolElement.setInfoMessage("x-tool-" + id);
+        ExtJsComponent toolElement = getToolElement(id).setVisibility(true);
         return toolElement.click();
     }
 
@@ -77,8 +81,12 @@ public class Panel extends ExtJsComponent {
     }
 
     public boolean isMaximized() {
-        WebLocator maximizeTool = new WebLocator(this).setClasses("x-tool-maximize");
+        ExtJsComponent maximizeTool = getToolElement("maximize");
         return !maximizeTool.isVisible();
+    }
+
+    private ExtJsComponent getToolElement(String id) {
+        return new ExtJsComponent(this).setClasses("x-tool-" + id);
     }
 
     public boolean restore() {

@@ -86,7 +86,7 @@ public class TextField extends ExtJsComponent implements ITextField {
             String triggerPath = getTriggerPath(icon);
             WebLocator iconLocator = new WebLocator(this).setElPath(triggerPath);
             iconLocator.setRenderMillis(500);
-            iconLocator.setInfoMessage("trigger-" + icon);
+            iconLocator.setInfoMessage(this + " -> trigger-" + icon);
             try {
                 return iconLocator.click();
             } catch (Exception e) {
