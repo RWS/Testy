@@ -6,6 +6,7 @@ RELEASE NOTES
 - change when use in code deprecated methods
 - add new property weblocator.min.chars.toType=0 in webLocator.properties
 - add resultIdx
+- remove itemToString() from TextField and Panel
 
 **Release Notes for Testy 1.7.16**
 - remove deprecated classes and methods (before update to this version make sure you update to Testy 1.7.15 first to see what classes/methods need to migrate)

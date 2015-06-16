@@ -1,10 +1,11 @@
 package com.sdl.selenium.extjs3.panel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Panel extends ExtJsComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(Panel.class);
@@ -46,16 +47,6 @@ public class Panel extends ExtJsComponent {
 
     public void setHeaderBaseCls(String headerBaseCls) {
         this.headerBaseCls = headerBaseCls;
-    }
-
-    public String itemToString() {
-        String info;
-        if (hasTitle()) {
-            info = getPathBuilder().getTitle();
-        } else {
-            info = getPathBuilder().itemToString();
-        }
-        return info;
     }
 
     public ExtJsComponent getBodyComponent() {

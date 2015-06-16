@@ -1,13 +1,14 @@
 package com.sdl.selenium.extjs3.form;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ITextField;
-import com.sdl.selenium.web.utils.Utils;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ITextField;
+import com.sdl.selenium.web.utils.Utils;
 
 public class TextField extends ExtJsComponent implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
@@ -40,17 +41,6 @@ public class TextField extends ExtJsComponent implements ITextField {
     }
 
     // methods
-
-    public String itemToString() {
-        String info;
-        if (hasLabel()) {
-            info = getPathBuilder().getLabel();
-        } else {
-            info = getPathBuilder().itemToString();
-        }
-        return info;
-    }
-
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {
