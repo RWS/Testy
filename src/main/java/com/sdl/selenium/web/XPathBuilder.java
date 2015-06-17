@@ -1,13 +1,14 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.utils.Utils;
+import java.util.*;
+import java.util.regex.Pattern;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.regex.Pattern;
+import com.sdl.selenium.web.utils.Utils;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -849,36 +850,43 @@ public class XPathBuilder {
         for (String suffix : elPathSuffix.values()) {
             selector.add(suffix);
         }
-        addChildNodesToSelector(selector);
+        selector.addAll(getChildNodesToSelector());
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
 
-    private void addChildNodesToSelector(List<String> selector) {
+    private List<String> getChildNodesToSelector() {
+        List<String> selector = new ArrayList<>();
         if (hasChildNodes()) {
             for (WebLocator child : getChildNodes()) {
-                WebLocator breakElement = null;
-                WebLocator childIterator = child;
-                WebLocator parentElement = null;
-                // break parent tree if is necessary
-                while (childIterator.getPathBuilder().getContainer() != null && breakElement == null) {
-                    WebLocator parentElementIterator = childIterator.getPathBuilder().getContainer();
-
-                    // child element has myself as parent
-                    if(parentElementIterator.getPathBuilder() == this) {
-                        childIterator.setContainer(null); // break parent tree while generating child address
-                        parentElement = parentElementIterator;
-                        breakElement = childIterator;
-                    } else {
-                        childIterator = parentElementIterator;
-                    }
-                }
-
-                selector.add("count(." + child.getPath() + ") > 0");
-                if(breakElement != null) {
-                    breakElement.setContainer(parentElement);
-                }
+                selector.add(getChildNodeSelector(child));
             }
         }
+        return selector;
+    }
+
+    private String getChildNodeSelector(WebLocator child) {
+        WebLocator breakElement = null;
+        WebLocator childIterator = child;
+        WebLocator parentElement = null;
+        // break parent tree if is necessary
+        while (childIterator.getPathBuilder().getContainer() != null && breakElement == null) {
+            WebLocator parentElementIterator = childIterator.getPathBuilder().getContainer();
+
+            // child element has myself as parent
+            if(parentElementIterator.getPathBuilder() == this) {
+                childIterator.setContainer(null); // break parent tree while generating child address
+                parentElement = parentElementIterator;
+                breakElement = childIterator;
+            } else {
+                childIterator = parentElementIterator;
+            }
+        }
+
+        String selector = "count(." + child.getPath() + ") > 0";
+        if(breakElement != null) {
+            breakElement.setContainer(parentElement);
+        }
+        return selector;
     }
 
     private void addTemplate(List<String> selector, String key, Object... arguments) {
