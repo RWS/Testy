@@ -55,7 +55,7 @@ public class ComboBox extends TextField implements ICombo {
         String info = toString();
 
         String valueTest = startWith ? ("starts-with(text(),'" + value + "')") : ("text()='" + value + "'");
-        WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage("ComboList");
+        WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage(this + " -> " + listClass);
         WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(optionRenderMillis).setInfoMessage(value);
 
         if (clickIcon("arrow")) {
