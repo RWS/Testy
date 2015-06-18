@@ -1,5 +1,9 @@
 package com.sdl.selenium.web.utils.browsers;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -7,10 +11,6 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 
 public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(FirefoxConfigReader.class);
@@ -48,7 +48,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     }
 
     public FirefoxConfigReader(String resourcePath) {
-        super(resourcePath, DEFAULT_CONFIG);
+        super(DEFAULT_CONFIG, resourcePath);
     }
 
     @Override

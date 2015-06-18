@@ -1,8 +1,11 @@
 package com.sdl.selenium.web;
 
-import com.opera.core.systems.OperaDesktopDriver;
-import com.sdl.selenium.web.utils.PropertiesReader;
-import com.sdl.selenium.web.utils.browsers.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -11,9 +14,9 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
+import com.opera.core.systems.OperaDesktopDriver;
+import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.utils.browsers.*;
 
 public class WebDriverConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfig.class);
@@ -120,8 +123,15 @@ public class WebDriverConfig {
      * @return WebDriver
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
-        Browser browser = findBrowser(browserProperties);
-        return getDriver(browser, browserProperties);
+        URL resource = Thread.currentThread().getContextClassLoader().getResource(browserProperties);
+
+        LOGGER.debug("File: {} " + (resource != null ? "exists" : "does not exist"), browserProperties);
+
+        InputStream inputStream = resource.openStream();
+
+
+        Browser browser = findBrowser(inputStream);
+        return getDriver(browser, inputStream);
     }
 
     /**
@@ -135,21 +145,23 @@ public class WebDriverConfig {
         return getDriver(browser, null);
     }
 
-    private static WebDriver getDriver(Browser browser, String browserProperties) throws IOException {
+    private static WebDriver getDriver(Browser browser, InputStream inputStream) throws IOException {
         AbstractBrowserConfigReader properties = null;
         if (browser == Browser.FIREFOX) {
-            properties = new FirefoxConfigReader(browserProperties);
+            properties = new FirefoxConfigReader();
         } else if (browser == Browser.IEXPLORE) {
-            properties = new IExplorerConfigReader(browserProperties);
+            properties = new IExplorerConfigReader();
         } else if (browser == Browser.CHROME) {
-            properties = new ChromeConfigReader(browserProperties);
+            properties = new ChromeConfigReader();
         } else if (browser == Browser.HTMLUNIT) {
-            properties = new HtmlUnitConfigReader(browserProperties);
+            properties = new HtmlUnitConfigReader();
         } else {
             LOGGER.error("Browser not supported {}", browser);
             driver = null;
         }
         if (properties != null) {
+            properties.load(inputStream);
+
             LOGGER.info(properties.toString());
 
             driver = properties.createDriver();
@@ -171,8 +183,8 @@ public class WebDriverConfig {
         return browser;
     }
 
-    private static Browser findBrowser(String browserProperties) {
-        PropertiesReader properties = new PropertiesReader(browserProperties);
+    private static Browser findBrowser(InputStream inputStream) {
+        PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
         LOGGER.info("Browser is: {}", browserKey);
         return getBrowser(browserKey);

@@ -1,11 +1,11 @@
 package com.sdl.selenium.web.utils.browsers;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
-import java.io.IOException;
 
 public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 
@@ -18,7 +18,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     }
 
     public IExplorerConfigReader(String resourcePath) {
-        super(resourcePath, DEFAULT_CONFIG);
+        super(DEFAULT_CONFIG, resourcePath);
     }
 
     @Override
