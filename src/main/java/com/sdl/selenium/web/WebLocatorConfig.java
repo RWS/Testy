@@ -1,21 +1,21 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.utils.WebLocatorConfigReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sdl.selenium.web.utils.WebLocatorConfigReader;
 
 public class WebLocatorConfig {
 
     private static Logger LOGGER = LoggerFactory.getLogger(WebLocatorConfig.class);
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
-
-    private static ClassLoader loader = WebLocatorConfig.class.getClassLoader();
 
     private static long defaultRenderMillis;
     private static boolean logUseClassName;
@@ -31,14 +31,24 @@ public class WebLocatorConfig {
     private static WebLocatorConfigReader properties = null;
 
     static {
-        URL resource = loader.getResource(CONFIG_FILE_NAME);
+        URL resource = Thread.currentThread().getContextClassLoader().getResource(CONFIG_FILE_NAME);
         String filePath = resource != null ? resource.getFile() : null;
         if (filePath == null) {
             LOGGER.info("override defaults by adding them in src/main/resources/{}", CONFIG_FILE_NAME);
         }
-        properties = new WebLocatorConfigReader(filePath);
-        LOGGER.info(properties.toString());
-        init();
+        properties = new WebLocatorConfigReader();
+        if (resource != null) {
+            try {
+                //properties = new WebLocatorConfigReader(resource.openStream());
+                properties.load(resource.openStream());
+            } catch (IOException e) {
+                LOGGER.error("IOException: {}", e);
+            }
+        } //else {
+            //properties = new WebLocatorConfigReader();
+        //}
+        
+        init(properties);
     }
 
     public static String getProperty(String key) {
@@ -67,7 +77,10 @@ public class WebLocatorConfig {
         return v;
     }
 
-    private static void init() {
+    public static void init(WebLocatorConfigReader properties) {
+        WebLocatorConfig.properties = properties;
+        LOGGER.info(properties.toString());
+
         Integer renderMillis = getInt("weblocator.defaults.renderMillis");
         if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);

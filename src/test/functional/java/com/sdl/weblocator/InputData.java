@@ -1,12 +1,14 @@
 package com.sdl.weblocator;
 
-import com.sdl.selenium.web.utils.PropertiesReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import com.sdl.selenium.web.utils.PropertiesReader;
 
 public class InputData extends PropertiesReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(InputData.class);
@@ -18,15 +20,23 @@ public class InputData extends PropertiesReader {
     private static InputData properties = new InputData();
 
     public InputData() {
-        try {
-            String testEnvironment = System.getProperty(ENV_PROPERTY, ENV_PROPERTY_DEFAULT);
-            LOGGER.info("test.environment : " + testEnvironment);
+        String testEnvironment = System.getProperty(ENV_PROPERTY, ENV_PROPERTY_DEFAULT);
+        LOGGER.info("test.environment : " + testEnvironment);
 
-            FileInputStream fileInputStream = new FileInputStream(RESOURCES_PATH + testEnvironment + ".properties");
-            load(fileInputStream);
+//        FileInputStream inputStream = getFileAsStream(RESOURCES_PATH + testEnvironment + ".properties");
+        URL resource = Thread.currentThread().getContextClassLoader().getResource(testEnvironment + ".properties");
+        //URL resource = loader.getResource(testEnvironment + ".properties");
+
+        InputStream inputStream = null;
+        try {
+            inputStream = resource != null ? resource.openStream() : null;
         } catch (IOException e) {
             LOGGER.error("IOException: {}", e);
         }
+
+        init(null, inputStream);
+
+        LOGGER.info(toString());
     }
 
     // ==============================
@@ -37,5 +47,5 @@ public class InputData extends PropertiesReader {
     public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("bootstrap.url");
     public static final String WEB_LOCATOR_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("web.locator.url");
 
-    public static final String BROWSER_CONFIG = RESOURCES_PATH + properties.getProperty("browser.config");
+    public static final String BROWSER_CONFIG = properties.getProperty("browser.config");
 }

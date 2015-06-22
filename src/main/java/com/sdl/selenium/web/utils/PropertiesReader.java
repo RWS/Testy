@@ -1,12 +1,12 @@
 package com.sdl.selenium.web.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class will load properties from System properties first, if not found then will load them from loaded file
@@ -24,26 +24,40 @@ public class PropertiesReader extends OrderedProperties {
     }
 
     public PropertiesReader(String resourcePath) {
-        this(resourcePath, null);
+        init(null, getFileAsStream(resourcePath));
     }
 
-    public PropertiesReader(String resourcePath, String defaults) {
+    public PropertiesReader(String defaults, String resourcePath) {
+        init(defaults, getFileAsStream(resourcePath));
+    }
+
+    public PropertiesReader(String defaults, InputStream inputStream) {
+        init(defaults, inputStream);
+    }
+
+    protected void init(String defaults, InputStream inputStream) {
         if (defaults != null) {
             loadDefaults(defaults);
         }
-        if (resourcePath != null) {
-            loadFile(resourcePath);
+        if (inputStream != null) {
+            try {
+                load(inputStream);
+            } catch (IOException e) {
+                LOGGER.error("IOException: {}", e);
+            }
         }
     }
 
-    protected void loadFile(String resourcePath) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(resourcePath);
-            load(fileInputStream);
-            fileInputStream.close();
-        } catch (IOException e) {
-            LOGGER.error("IOException: {}", e);
+    protected FileInputStream getFileAsStream(String resourcePath) {
+        FileInputStream fileInputStream = null;
+        if (resourcePath != null) {
+            try {
+                fileInputStream = new FileInputStream(resourcePath);
+            } catch (IOException e) {
+                LOGGER.error("IOException reading resource {}; {}", resourcePath, e);
+            }
         }
+        return fileInputStream;
     }
 
     protected void loadDefaults(String defaults) {

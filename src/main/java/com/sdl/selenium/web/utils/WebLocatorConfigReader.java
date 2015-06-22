@@ -1,8 +1,8 @@
 package com.sdl.selenium.web.utils;
 
-import com.sdl.selenium.web.SearchType;
-
 import java.util.Arrays;
+
+import com.sdl.selenium.web.SearchType;
 
 public class WebLocatorConfigReader extends PropertiesReader {
 
@@ -24,6 +24,6 @@ public class WebLocatorConfigReader extends PropertiesReader {
     }
 
     public WebLocatorConfigReader(String resourcePath) {
-        super(resourcePath, DEFAULT_CONFIG);
+        super(DEFAULT_CONFIG, resourcePath);
     }
 }
