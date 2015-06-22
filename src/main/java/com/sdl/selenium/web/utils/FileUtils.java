@@ -1,13 +1,15 @@
 package com.sdl.selenium.web.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sdl.selenium.web.WebDriverConfig;
 
 public class FileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
@@ -164,7 +166,6 @@ public class FileUtils {
             }
             return writer.toString();
         } else {
-            LOGGER.debug("is is=" + is);
             return "";
         }
     }
@@ -202,7 +203,12 @@ public class FileUtils {
         return file.getName();
     }
 
-    public static void main(String args[]) {
-
+    public static void cleanDownloadDir() {
+        try {
+            org.apache.commons.io.FileUtils.cleanDirectory(new File(WebDriverConfig.getDownloadPath()));
+            LOGGER.debug("Clean download directory with success.");
+        } catch (IOException e) {
+            LOGGER.debug("Clean Download Dir with error {}", e.getMessage());
+        }
     }
 }
