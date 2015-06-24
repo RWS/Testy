@@ -34,14 +34,10 @@ public class TabPanel extends ExtJsComponent {
     }
 
     private String getTitlePath() {
-        String returnPath = "";
-        if (hasText()) {
-            WebLocator header = new WebLocator().setClasses("x-tab-panel-header");
-            WebLocator locator = new WebLocator().setText(getPathBuilder().getText()).setContainer(header);
-            locator.setSearchTextType(getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size()]));
-            returnPath = locator.getPath();
-        }
-        return returnPath;
+        WebLocator header = new WebLocator().setClasses("x-tab-panel-header");
+        WebLocator locator = new WebLocator().setText(getPathBuilder().getText()).setContainer(header);
+        locator.setSearchTextType(getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size()]));
+        return locator.getPath();
     }
 
     /**
@@ -51,11 +47,9 @@ public class TabPanel extends ExtJsComponent {
      */
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
-        if (hasText()) {
-            WebLocator el = new WebLocator().setText(getPathBuilder().getText(), SearchType.EQUALS);
-            el.setSearchTextType(getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size()]));
-            selector += (selector.length() > 0 ? " and " : "") + "not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]" + el.getPath() + ") > 0";
-        }
+        WebLocator el = new WebLocator().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        el.setSearchTextType(getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size()]));
+        selector += (selector.length() > 0 ? " and " : "") + "not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]" + el.getPath() + ") > 0";
         return "//*[" + selector + "]";
     }
 

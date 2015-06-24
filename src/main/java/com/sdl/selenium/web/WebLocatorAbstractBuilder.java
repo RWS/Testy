@@ -633,13 +633,17 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p>Used only to identify class type of current object</p>
      * <p> Not used for css class!</p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
+     * @deprecated
      * @return string
      */
     public String getClassName() {
         return pathBuilder.getClassName();
     }
 
+    /**
+     * @deprecated remove
+     * @param className
+     */
     protected void setClassName(final String className) {
         pathBuilder.setClassName(className);
     }

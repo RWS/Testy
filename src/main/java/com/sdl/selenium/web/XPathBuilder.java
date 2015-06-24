@@ -706,13 +706,17 @@ public class XPathBuilder {
     /**
      * <p>Used only to identify class type of current object</p>
      * <p> Not used for css class!</p>
-     *
+     * @deprecated remove
      * @return string
      */
     public String getClassName() {
         return className;
     }
 
+    /**
+     * @deprecated remove
+     * @param className
+     */
     protected void setClassName(final String className) {
         this.className = className;
     }

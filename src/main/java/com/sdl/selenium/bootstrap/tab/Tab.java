@@ -29,13 +29,9 @@ public class Tab extends WebLocator {
     }
 
     private String getTitlePath(boolean active) {
-        String returnPath = "";
-        if (hasText()) {
-            WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
-            String isActive = active ? "@class='active'" : "not(@class='active')";
-            returnPath = "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]" + link.getPath() + ") > 0]";
-        }
-        return returnPath;
+        WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        String isActive = active ? "@class='active'" : "not(@class='active')";
+        return  "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]" + link.getPath() + ") > 0]";
     }
 
     /**
@@ -45,10 +41,8 @@ public class Tab extends WebLocator {
      */
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
-        if (hasText()) {
-            WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']" + link.getPath() + ") > 0";
-        }
+        WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']" + link.getPath() + ") > 0";
         return "//ul[" + selector + "]";
     }
 
@@ -84,4 +78,14 @@ public class Tab extends WebLocator {
         }
         return activated;
     }
+
+   /* public static void main(String[] args) {
+        WebLocator webLocator = new WebLocator().setBaseCls("tab-pane active").setLabel("tt").setLabelPosition("//following-sibling::*[@class='tab-content']//").setLabelTag("a");
+         //TODO improvement
+        Tab tab  = new Tab("tt");
+
+        LOGGER.debug(tab.getPath());
+        LOGGER.debug(webLocator.getPath());
+
+    }*/
 }
