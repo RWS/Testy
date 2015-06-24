@@ -1,8 +1,9 @@
 package com.sdl.weblocator;
 
-import java.io.File;
-import java.lang.reflect.Method;
-
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -13,10 +14,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import com.sdl.selenium.extjs3.button.Button;
-import com.sdl.selenium.utils.config.WebDriverConfig;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
+import java.io.File;
+import java.lang.reflect.Method;
 
 public class TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
