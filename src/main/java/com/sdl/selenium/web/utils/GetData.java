@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.Locale;
 
 // The method returns the current date
+
+/**
+ * @deprecated move this logic into your project
+ */
 public class GetData {
     public static String getToday(String format) {
         String ret = "";
@@ -55,9 +59,5 @@ public class GetData {
         now.add(Calendar.MONTH, +months);
         now.add(Calendar.YEAR, +years);
         return formatter.format(now.getTime());
-    }
-
-    public static void main(String[] args) {
-        //System.out.println(getToday());
     }
 }

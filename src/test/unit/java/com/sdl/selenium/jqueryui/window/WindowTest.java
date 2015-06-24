@@ -1,4 +1,4 @@
-package com.sdl.selenium.web.window;
+package com.sdl.selenium.jqueryui.window;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;

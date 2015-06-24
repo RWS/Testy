@@ -5,6 +5,7 @@ import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
+import com.sdl.selenium.web.link.WebLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +31,9 @@ public class Tab extends WebLocator {
     private String getTitlePath(boolean active) {
         String returnPath = "";
         if (hasText()) {
+            WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
             String isActive = active ? "@class='active'" : "not(@class='active')";
-            returnPath = "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]//a[" + getItemPathText() + "]) > 0]";
+            returnPath = "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]" + link.getPath() + ") > 0]";
         }
         return returnPath;
     }
@@ -44,7 +46,8 @@ public class Tab extends WebLocator {
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
         if (hasText()) {
-            selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']//a[" + getItemPathText() + "]) > 0";
+            WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
+            selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']" + link.getPath() + ") > 0";
         }
         return "//ul[" + selector + "]";
     }

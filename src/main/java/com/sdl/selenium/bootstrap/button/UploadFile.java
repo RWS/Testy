@@ -1,6 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
-import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;

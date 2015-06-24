@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.WebElement;
 
 public interface WebLocatorExecutor {

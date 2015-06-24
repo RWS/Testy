@@ -1,10 +1,9 @@
-package com.sdl.selenium.web.utils.browsers;
-
-import java.io.IOException;
-
-import org.openqa.selenium.WebDriver;
+package com.sdl.selenium.utils.browsers;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
+import org.openqa.selenium.WebDriver;
+
+import java.io.IOException;
 
 public abstract class AbstractBrowserConfigReader extends PropertiesReader {
 

@@ -1,11 +1,10 @@
-package com.sdl.selenium.web;
+package com.sdl.selenium.utils.config;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-
+import com.opera.core.systems.OperaDesktopDriver;
+import com.sdl.selenium.utils.browsers.*;
+import com.sdl.selenium.web.Browser;
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.PropertiesReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,9 +13,11 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opera.core.systems.OperaDesktopDriver;
-import com.sdl.selenium.web.utils.PropertiesReader;
-import com.sdl.selenium.web.utils.browsers.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfig.class);

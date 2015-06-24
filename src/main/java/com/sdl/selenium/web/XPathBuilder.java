@@ -1,14 +1,15 @@
 package com.sdl.selenium.web;
 
-import java.util.*;
-import java.util.regex.Pattern;
-
+import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.utils.config.WebLocatorConfig;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sdl.selenium.web.utils.Utils;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * This class is used to simple construct xpath for WebLocator's

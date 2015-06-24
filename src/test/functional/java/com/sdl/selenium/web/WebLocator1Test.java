@@ -1,6 +1,7 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
 import org.slf4j.Logger;

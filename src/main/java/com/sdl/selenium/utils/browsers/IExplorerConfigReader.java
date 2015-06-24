@@ -1,11 +1,11 @@
-package com.sdl.selenium.web.utils.browsers;
-
-import java.io.File;
-import java.io.IOException;
+package com.sdl.selenium.utils.browsers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.io.File;
+import java.io.IOException;
 
 public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 

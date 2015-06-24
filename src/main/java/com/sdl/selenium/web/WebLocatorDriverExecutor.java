@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;

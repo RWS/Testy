@@ -1,6 +1,6 @@
 package com.sdl.selenium.web.utils;
 
-import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -42,7 +42,7 @@ public class Utils {
     }
 
     /**
-     * TODO find better solution
+     * @deprecated TODO find better solution
      *
      * @param milliseconds Try to make more specific method for grids for example (with parameter loadMsg)
      * @return True | False
@@ -61,7 +61,7 @@ public class Utils {
     }
 
     /**
-     * TODO find better solution
+     * @deprecated TODO find better solution
      * Try to make more specific method for grids for example (with parameter loadMsg)
      *
      * @param milliseconds milliseconds
@@ -81,6 +81,7 @@ public class Utils {
     }
 
     /**
+     * @deprecated
      * remove the first " and "
      *
      * @param selector " and"
@@ -116,6 +117,7 @@ public class Utils {
     }
 
     /**
+     * @deprecated
      * add 'css=' at the beginning of the string
      *
      * @param selector "css="

@@ -1,7 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.web.WebDriverConfig;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;

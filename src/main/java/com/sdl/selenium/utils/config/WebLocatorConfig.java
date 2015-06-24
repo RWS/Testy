@@ -1,15 +1,14 @@
-package com.sdl.selenium.web;
+package com.sdl.selenium.utils.config;
+
+import com.sdl.selenium.web.SearchType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.sdl.selenium.web.utils.WebLocatorConfigReader;
 
 public class WebLocatorConfig {
 

@@ -1,4 +1,4 @@
-package com.sdl.selenium.web.utils.browsers;
+package com.sdl.selenium.utils.browsers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;

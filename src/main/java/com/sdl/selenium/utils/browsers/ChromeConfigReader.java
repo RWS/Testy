@@ -1,9 +1,4 @@
-package com.sdl.selenium.web.utils.browsers;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+package com.sdl.selenium.utils.browsers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,6 +6,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChromeConfigReader extends AbstractBrowserConfigReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChromeConfigReader.class);

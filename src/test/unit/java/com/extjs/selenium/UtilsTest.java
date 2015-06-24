@@ -1,10 +1,10 @@
 package com.extjs.selenium;
 
+import com.sdl.selenium.utils.browsers.ChromeConfigReader;
+import com.sdl.selenium.utils.browsers.FirefoxConfigReader;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.Utils;
-import com.sdl.selenium.web.utils.browsers.ChromeConfigReader;
-import com.sdl.selenium.web.utils.browsers.FirefoxConfigReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;

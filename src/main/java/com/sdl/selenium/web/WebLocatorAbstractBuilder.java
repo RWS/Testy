@@ -681,7 +681,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * Construct selector if WebLocator has text
-     *
+     * @deprecated use getPathBuilder().getItemPathText()
      * @return String
      */
     public String getItemPathText() {
