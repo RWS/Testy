@@ -14,8 +14,10 @@ import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
+import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.table.TableCell;
+import com.sdl.selenium.web.table.TableRow;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
 import org.apache.commons.io.FileUtils;
@@ -43,16 +45,17 @@ public class DeployTesty extends TestBase {
     private static final String NEXUS_ADMIN_USER = "admin";
     private static final String NEXUS_ADMIN_PASS = "***";
 
-    private WebLocator loginEl = new WebLocator().setElPath("//span/a[.//*[text()='log in']]");
-    private WebLocator logOutEl = new WebLocator().setElPath("//span/a[.//*[text()='log out']]");
+    private WebLocator loginContainer = new WebLocator().setClasses("login");
+    private WebLink loginEl = new WebLink(loginContainer, "log in").setSearchTextType(SearchType.HTML_NODE);
+    private WebLink logOutEl = new WebLink(loginContainer, "log out").setSearchTextType(SearchType.HTML_NODE);
     private Form loginForm = new Form().setName("login");
     private TextField login = new TextField(loginForm).setName("j_username");
     private TextField pass = new TextField(loginForm).setName("j_password");
-    private WebLocator logInButton = new WebLocator(loginForm).setId("yui-gen1-button");
-    private Table table = new Table().setId("main-table");
-    private WebLocator buildNow = new WebLocator(table).setElPath("//a[@class='task-link' and text()='Build Now']");
-    private Table buildHistory = new Table().setId("buildHistory");
-    private WebLocator buildNowEl = new WebLocator(buildHistory).setClasses("build-row", "no-wrap", "transitive").setPosition(1);
+    private com.sdl.selenium.web.button.Button logInButton = new com.sdl.selenium.web.button.Button(loginForm).setId("yui-gen1-button");
+    private WebLocator table = new WebLocator().setId("tasks");
+    private WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
+    private Table buildHistory = new Table().setClasses("pane","stripped");
+    private TableRow buildNowEl = new TableRow(buildHistory).setClasses("build-row", "transitive");
 
     private WebLocator logInNexus = new WebLocator().setId("head-link-r");
     private Window nexusLogInWindow = new Window("Nexus Log In");
@@ -76,6 +79,7 @@ public class DeployTesty extends TestBase {
     public void loginJenkins() {
         loginEl.click();
         loginForm.ready(10);
+        WebLocator.getExecutor().executeScript("arguments[0].scrollIntoView(true);", loginForm.currentElement);
         login.setValue(DOMAIN_USER);
         pass.setValue(DOMAIN_PASS);
         logInButton.click();
