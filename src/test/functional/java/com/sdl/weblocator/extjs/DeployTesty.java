@@ -37,9 +37,9 @@ public class DeployTesty extends TestBase {
     private static final String DOMAIN_USER = "domain.user";
     private static final String DOMAIN_PASS = "***";
 
-    private static final String JENKINS_JOB_URL = "http://cluj-jenkins01:8080/job/testy/";
+    private static final String JENKINS_JOB_URL = "http://cluj-jenkins02:8080/job/testy/";
 
-    private static final String NEXUS_REPOSITORY_URL = "http://cluj-nexus01:8081/nexus/#view-repositories;oss-sonatype-snapshots";
+    private static final String NEXUS_REPOSITORY_URL = "http://cljeng-nexus02:8081/nexus/#view-repositories;oss-sonatype-snapshots";
     private static final String NEXUS_ADMIN_USER = "admin";
     private static final String NEXUS_ADMIN_PASS = "***";
 
