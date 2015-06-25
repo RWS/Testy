@@ -1,12 +1,5 @@
 package com.sdl.selenium.extjs3.grid;
 
-import java.util.*;
-
-import org.junit.Assert;
-import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
@@ -19,6 +12,12 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.ITable;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.utils.Utils;
+import org.junit.Assert;
+import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridPanel.class);
@@ -507,27 +506,13 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridCell().setPosition(position).setContainer(getRow(byCells));
     }
 
-    /**
-     * @deprecated use getCell(int position, GridCell... byCells)
-     */
-    public GridCell getGridCell(int position, GridCell... byCells) {
-        return getCell(position, byCells);
-    }
-
     @Override
     public GridCell getCell(int position, String text, GridCell... byCells) {
         return new GridCell().setContainer(getRow(byCells)).setPosition(position).setText(text);
     }
 
-    /**
-     * @deprecated use getGridCell(int position, String text, GridCell... byCells)
-     */
-    public GridCell getGridCell(int position, String text, GridCell... byCells) {
-        return getCell(position, text, byCells);
-    }
-
     public boolean selectRow(GridCell... byCells) {
-        GridCell gridCell = getGridCell(1, byCells);
+        GridCell gridCell = getCell(1, byCells);
         return doCellSelect(gridCell);
     }
 

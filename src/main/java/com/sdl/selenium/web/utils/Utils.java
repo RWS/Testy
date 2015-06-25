@@ -80,20 +80,6 @@ public class Utils {
         return true;
     }
 
-    /**
-     * @deprecated
-     * remove the first " and "
-     *
-     * @param selector " and"
-     * @return String
-     */
-    public static String fixPathSelector(String selector) {
-        if (selector.startsWith(" and ")) {
-            selector = selector.substring(5);
-        }
-        return selector;
-    }
-
     public static String getEscapeQuotesText(String text) {
         boolean hasDoubleQuote = text.contains("\"");
         boolean hasSingeQuote = text.contains("'");
@@ -114,22 +100,6 @@ public class Utils {
             return String.format("'%s'", text);
         }
         return String.format("\"%s\"", text);
-    }
-
-    /**
-     * @deprecated
-     * add 'css=' at the beginning of the string
-     *
-     * @param selector "css="
-     * @return String
-     */
-    public static String fixCssSelector(String selector) {
-        selector = selector.replaceAll("css=", "");
-//        selector = "css=" + selector;
-        if (selector.endsWith("*")) {
-            selector = selector.substring(0, selector.length() - 1);
-        }
-        return selector;
     }
 
     public static void copyToClipboard(final String text) {

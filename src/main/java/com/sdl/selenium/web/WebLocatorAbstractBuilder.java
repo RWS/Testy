@@ -357,15 +357,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     * @deprecated
-     * @return value that has been set in {@link #setElPathSuffix(String, String)}
-     */
-    public String getElPathSuffix() {
-        return pathBuilder.getElPathSuffix();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * <p>Example:</p>
      * <pre>
@@ -676,15 +667,6 @@ public abstract class WebLocatorAbstractBuilder {
 
     public String getPath(boolean disabled) {
         return pathBuilder.getPath(disabled);
-    }
-
-    /**
-     * Construct selector if WebLocator has text
-     * @deprecated use getPathBuilder().getItemPathText()
-     * @return String
-     */
-    public String getItemPathText() {
-        return pathBuilder.getItemPathText();
     }
 
     protected String applyTemplate(String key, Object... arguments) {

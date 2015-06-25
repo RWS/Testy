@@ -159,23 +159,9 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         return new TableCell(getRow(byCells), columnIndex);
     }
 
-    /**
-     * @deprecated use getCell(int columnIndex, TableCell... byCells)
-     */
-    public TableCell getTableCell(int columnIndex, TableCell... byCells) {
-        return getCell(columnIndex, byCells);
-    }
-
     @Override
     public TableCell getCell(int columnIndex, String text, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
-    }
-
-    /**
-     * @deprecated use getCell(int columnIndex, String text, TableCell... byCells)
-     */
-    public TableCell getTableCell(int columnIndex, String text, TableCell... byCells) {
-        return getCell(columnIndex, text, byCells);
     }
 
     /**

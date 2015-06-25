@@ -413,15 +413,6 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     *  @deprecated
-     * @return value that has been set in {@link #setElPathSuffix(String, String)}
-     */
-    public String getElPathSuffix() {
-        return elPathSuffix.get("elPathSuffix");
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)<b></p>
      * <p>Example:</p>
      * <pre>
