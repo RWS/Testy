@@ -19,7 +19,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><strong><i>Used for finding element process (to generate xpath address)</i><strong></p>
+     * <p><strong><i>Used for finding element process (to generate xpath address)</i></strong></p>
      * @return {@link XPathBuilder}
      */
     public XPathBuilder getPathBuilder() {
