@@ -122,7 +122,7 @@ public class WebDriverConfig {
      *
      * @param browserProperties path to browser.properties
      * @return WebDriver
-     * @throws IOException
+     * @throws IOException exception
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(browserProperties);
@@ -141,7 +141,7 @@ public class WebDriverConfig {
      *
      * @param browser see details {@link com.sdl.selenium.web.Browser}
      * @return WebDriver
-     * @throws IOException
+     * @throws IOException exception
      */
     public static WebDriver getWebDriver(Browser browser) throws IOException {
         return getDriver(browser, null);

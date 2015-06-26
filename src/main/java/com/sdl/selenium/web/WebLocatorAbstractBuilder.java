@@ -517,6 +517,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param label text label element
+     * @param searchType type search text element: see more details see {@link SearchType}
      * @param <T> the element which calls this method
      * @return this element
      */

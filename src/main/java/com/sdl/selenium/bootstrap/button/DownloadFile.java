@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.io.File;
 
 /**
- * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
  * <p>Example:</p>
  * <pre>{@code
  * <div class="controls">
@@ -47,7 +47,7 @@ public class DownloadFile extends WebLocator implements Download {
      * if WebDriverConfig.isSilentDownload() is true, se face silentDownload, is is false se face download with AutoIT.
      * Download file with AutoIT, works only on FireFox. SilentDownload works FireFox and Chrome
      * Use only this: button.download("C:\\TestSet.tmx");
-     * return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     * @return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
      *
      * @param fileName e.g. "TestSet.tmx"
      */
