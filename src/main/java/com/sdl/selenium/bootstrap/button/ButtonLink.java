@@ -12,7 +12,7 @@ public class ButtonLink extends Button {
     }
 
     /**
-     * @param container
+     * @param container parent's element
      */
     public ButtonLink(WebLocator container) {
         this();

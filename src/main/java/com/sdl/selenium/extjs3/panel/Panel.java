@@ -1,11 +1,10 @@
 package com.sdl.selenium.extjs3.panel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Panel extends ExtJsComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(Panel.class);
@@ -55,8 +54,8 @@ public class Panel extends ExtJsComponent {
 
     /**
      * click on element with class "x-tool-" + id
-     * @param id
-     * @return
+     * @param id element
+     * @return true | false
      */
     public boolean clickOnTool(String id) {
         ExtJsComponent toolElement = getToolElement(id).setVisibility(true);

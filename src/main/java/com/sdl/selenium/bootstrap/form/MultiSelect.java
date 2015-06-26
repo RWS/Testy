@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
  * <p>Example:</p>
  * <pre>{@code
  * <label class="control-label">Source:</label>
@@ -70,7 +70,7 @@ public class MultiSelect extends WebLocator {
     public List<String> getValueSelected() {
         List<String> list = null;
         if (click()) {
-            list = new ArrayList<String>();
+            list = new ArrayList<>();
             WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
             WebLocator li = new WebLocator(select).setTag("li").setCls("active");
             WebLocator el = new WebLocator(li).setTag("label");

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
  * <p>Example:</p>
  * <pre>{@code
  * <form class="form-horizontal span3 experiment-tile">

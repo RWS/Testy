@@ -83,18 +83,16 @@ public class ExtJsComponent extends WebLocator {
 
     public WebLocator getMaskElement() {
         String maskXPathSelector = "/ancestor-or-self::*[contains(@class, 'x-masked')]";
-        WebLocator locator = new WebLocator(this).setElPath(maskXPathSelector);
-        return locator;
+        return new WebLocator(this).setElPath(maskXPathSelector);
     }
 
     /**
      * Wait for the element to be activated when there is deactivation mask on top of it
      *
-     * @param seconds
+     * @param seconds sec
      */
     public boolean waitToActivate(int seconds) {
         String info = toString();
-        //LOGGER.debug("waitToActivate:" + seconds + " sec; " + info);
         int count = 0;
         boolean hasMask;
         while ((hasMask = hasMask()) && (count < seconds)) {

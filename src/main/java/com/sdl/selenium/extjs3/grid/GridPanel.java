@@ -100,6 +100,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * TODO find better solution
      * (for example when grid has been loaded but has no records or when grid is loading for second time)
+     * @return true | false
      */
     public boolean waitToLoad() {
         return waitToLoad(timeout);
@@ -485,6 +486,9 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     /**
      * @deprecated use getCell(...);
+     * @param searchElement element
+     * @param columnIndex element
+     * @return new GridCell
      */
     protected GridCell getGridCell(String searchElement, int columnIndex) {
         GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);

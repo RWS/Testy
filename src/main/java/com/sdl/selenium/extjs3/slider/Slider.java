@@ -18,13 +18,12 @@ public class Slider extends ExtJsComponent {
 
     public Slider() {
         setClassName("Slider");
-        //LOGGER.debug(getClassName() + "() constructor");
     }
 
     /**
      * Constructor basen on ExtJsComponent
      *
-     * @param container
+     * @param container parent
      */
     public Slider(ExtJsComponent container) {
         this();
@@ -35,7 +34,6 @@ public class Slider extends ExtJsComponent {
         this(container);
         setLabel(label);
     }
-
 
     public String getThumbPath(int thumbIndex) {
         return getPath() + "//descendant::*//*[contains(@class,'x-slider-thumb')][" + thumbIndex + "]";

@@ -25,6 +25,7 @@ public class InputAppend extends TextField {
 
     /**
      * click on checkbox
+     * @return true | false
      */
     public boolean append() {
         WebLocator appendEl = new WebLocator(this).setElPath("//following-sibling::*").setInfoMessage("append");

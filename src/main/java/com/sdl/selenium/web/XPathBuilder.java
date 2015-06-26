@@ -419,6 +419,7 @@ public class XPathBuilder {
      * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
      *
      * @param title of element
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTitle(String title) {
@@ -586,6 +587,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param label text label element
+     * @param searchType type search text element: see more details see {@link SearchType}
      * @param <T> the element which calls this method
      * @return this element
      */

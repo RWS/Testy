@@ -43,7 +43,7 @@ public class LiveGridPanel extends GridPanel {
     /**
      * Scroll Top one visible page in LiveGrid
      *
-     * @param id
+     * @param id element
      * @return true if scrolled
      */
     protected boolean scrollTop(String id) {
@@ -78,7 +78,7 @@ public class LiveGridPanel extends GridPanel {
     /**
      * Scroll Down one visible page in LiveGrid
      *
-     * @param id
+     * @param id element
      * @return true if scrolled
      */
     protected boolean scrollPageDown(String id) {

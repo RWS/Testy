@@ -120,8 +120,9 @@ public class WebDriverConfig {
     /**
      * Create and return new WebDriver
      *
-     * @param browserProperties
+     * @param browserProperties path to browser.properties
      * @return WebDriver
+     * @throws IOException
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(browserProperties);

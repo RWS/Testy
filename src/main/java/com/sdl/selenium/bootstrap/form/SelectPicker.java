@@ -4,7 +4,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 
 /**
- * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
  * <p>Example:</p>
  * <pre>{@code
  * <label class="control-label">Tech:</label>

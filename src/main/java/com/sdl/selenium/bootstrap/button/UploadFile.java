@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+ * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
  * <p>Example:</p>
  * <pre>{@code
  * <div>
@@ -53,6 +53,7 @@ public class UploadFile extends WebLocator implements Upload {
      *
      * @param text     button text
      * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
+     * @return true | false
      */
     public boolean upload(String text, String... filePath) {
         WebLocator upload = new WebLocator(this).setTag("input").setLabel(text).setLabelPosition("//following-sibling::").setLabelTag("span").setType("file");
@@ -73,6 +74,7 @@ public class UploadFile extends WebLocator implements Upload {
      * Use only this: button.upload("C:\\upload.exe", "C:\\text.txt");
      *
      * @param filePath new String[] {"C:\\upload.exe", "C:\\text.txt"}
+     * @return true | false
      */
     @Override
     public boolean upload(String... filePath) {

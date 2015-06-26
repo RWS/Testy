@@ -50,10 +50,10 @@ public class MultipleSelect extends ComboBox {
     public List<String> getValues() {
         List<String> list = null;
         if (ready()) {
-            list = new ArrayList<String>();
+            list = new ArrayList<>();
             List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
-            for (int i = 0; i < elements.size(); i++) {
-                String text = elements.get(i).getText();
+            for (WebElement element : elements) {
+                String text = element.getText();
                 LOGGER.debug(text);
                 list.add(text);
             }

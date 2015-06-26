@@ -7,7 +7,7 @@ public interface ITextField extends IWebLocator, Editable {
 
     /**
      * Set value to DOM element
-     * @param value
+     * @param value TextField
      * @return true
      */
     boolean setValue(String value);
