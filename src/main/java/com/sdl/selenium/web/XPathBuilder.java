@@ -72,7 +72,7 @@ public class XPathBuilder {
     // =========================================
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setRoot(String)}
      * <p>root </p>
@@ -83,9 +83,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param root If the path starts with // then all elements in the document which fulfill following criteria are selected. eg. // or /
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setRoot(final String root) {
@@ -94,7 +95,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setTag(String)}
      * <p>tag (type of DOM element)</p>
@@ -105,9 +106,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param tag (type of DOM element) eg. input or h2
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTag(final String tag) {
@@ -116,7 +118,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setId(String)}
      */
@@ -125,9 +127,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param id eg. id="buttonSubmit"
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setId(final String id) {
@@ -136,7 +139,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setElPath(String)}
      * <p>returned value does not include containers path</p>
@@ -146,10 +149,11 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
      * @param elPath absolute way (xpath) to identify element
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setElPath(final String elPath) {
@@ -158,7 +162,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setBaseCls(String)}
      */
@@ -167,9 +171,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param baseCls base class
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setBaseCls(final String baseCls) {
@@ -178,7 +183,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setCls(String)}
      */
@@ -187,10 +192,11 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Find element with <b>exact math</b> of specified class (equals)</p>
      *
      * @param cls class of element
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setCls(final String cls) {
@@ -199,7 +205,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      * <p>Example:</p>
      * <pre>
      *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
@@ -219,6 +225,7 @@ public class XPathBuilder {
      * </ul>
      *
      * @param classes list of classes
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setClasses(final String... classes) {
@@ -241,7 +248,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setExcludeClasses(String...)}
      */
@@ -250,9 +257,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param excludeClasses list of class to be excluded
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setExcludeClasses(final String... excludeClasses) {
@@ -263,7 +271,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setName(String)}
      */
@@ -272,9 +280,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param name eg. name="buttonSubmit"
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setName(final String name) {
@@ -283,7 +292,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setText(String, SearchType...)}
      */
@@ -292,10 +301,11 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param text       with which to identify the item
      * @param searchType type search text element: see more details see {@link SearchType}
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setText(final String text, final SearchType... searchType) {
@@ -309,7 +319,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setSearchTextType(SearchType...)}
      */
@@ -318,9 +328,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextType) {
@@ -335,9 +346,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchLabelType accepted values are: {@link SearchType}
+     * @param <T> the element which calls this method
      * @return this element
      */
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelType) {
@@ -349,7 +361,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setStyle(String)}
      */
@@ -358,9 +370,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param style of element
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setStyle(final String style) {
@@ -370,7 +383,7 @@ public class XPathBuilder {
 
     /**
      * <p><b>not implemented yet</b></p>
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setElCssSelector(String)}
      */
@@ -380,9 +393,10 @@ public class XPathBuilder {
 
     /**
      * <p><b>not implemented yet</b></p>
-     * <p><b>Used for finding element process (to generate css address)<b></p>
+     * <p><b>Used for finding element process (to generate css address)</b></p>
      *
      * @param elCssSelector cssSelector
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setElCssSelector(final String elCssSelector) {
@@ -391,8 +405,8 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
      *
      * @return value that has been set in {@link #setTitle(String)}
      */
@@ -401,8 +415,8 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
      *
      * @param title of element
      * @return this element
@@ -413,7 +427,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Example:</p>
      * <pre>
      *     TODO
@@ -421,6 +435,7 @@ public class XPathBuilder {
      *
      * @param key          suffix key
      * @param elPathSuffix additional identification xpath element that will be added at the end
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
@@ -437,14 +452,15 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Example:</p>
      * <pre>
      *     TODO
      * </pre>
      *
-     * @param key          suffix key
-     * @param value
+     * @param key template
+     * @param value template
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTemplateValue(String key, String value) {
@@ -460,6 +476,7 @@ public class XPathBuilder {
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
      * @param key   name template
      * @param value template
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTemplate(String key, String value) {
@@ -487,7 +504,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used in logging process</i><b></p>
+     * <p><b><i>Used in logging process</i></b></p>
      *
      * @return value that has been set in {@link #setInfoMessage(String)}
      */
@@ -496,9 +513,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used in logging process</i><b></p>
+     * <p><b><i>Used in logging process</i></b></p>
      *
      * @param infoMessage info Message
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setInfoMessage(final String infoMessage) {
@@ -507,7 +525,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setVisibility(boolean)}
      */
@@ -544,9 +562,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param container parent containing element.
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
@@ -555,7 +574,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setLabel(String, SearchType...)}
      */
@@ -564,9 +583,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param label text label element
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setLabel(String label, final SearchType... searchType) {
@@ -578,7 +598,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setLabel(String, SearchType...)}
      */
@@ -587,9 +607,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param labelTag label tag element
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setLabelTag(String labelTag) {
@@ -598,7 +619,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setLabelPosition(String)}
      */
@@ -607,9 +628,10 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param labelPosition position of this element reported to label
+     * @param <T> the element which calls this method
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
@@ -619,7 +641,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setPosition(int)}
      */
@@ -628,13 +650,14 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
      *
      * @param position starting index = 1
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setPosition(int position) {
@@ -643,7 +666,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setPosition(int)}
      */
@@ -652,13 +675,14 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
      *     (//*[contains(@class, 'x-grid-panel')])[1]
      * </pre>
      * More details please see: http://stackoverflow.com/questions/4961349/combine-xpath-predicate-with-position
      * @param resultIdx starting index = 1
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setResultIdx(int resultIdx) {
@@ -667,7 +691,7 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i><b></p>
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
      * @return value that has been set in {@link #setType(String)}
      */
@@ -676,13 +700,14 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>Used for finding element process (to generate xpath address)<b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
      *     //*[@type='type']
      * </pre>
      *
-     * @param type
+     * @param type eg. 'checkbox' or 'button'
+     * @param <T> the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setType(String type) {
