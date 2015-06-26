@@ -74,7 +74,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * Use xPath only
      *
-     * @param attribute
+     * @param attribute eg "id" or "class"
      * @return String attribute, if element not exist return null.
      */
     public String getAttribute(String attribute) {
@@ -360,6 +360,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * Wait for the element to be activated when there is deactivation mask on top of it
      *
      * @param seconds time in seconds
+     * @return true | false
      */
     public boolean waitToActivate(int seconds) {
         return true;
