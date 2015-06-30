@@ -3,9 +3,6 @@ package com.sdl.selenium.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Set;
-
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
@@ -29,19 +26,8 @@ public abstract class WebLocatorAbstractBuilder {
     protected WebLocatorAbstractBuilder() {}
 
     // =========================================
-    // ========== setters & getters ============
+    // ==========       setters     ============
     // =========================================
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setRoot(String)}
-     * <p>root </p>
-     * <pre>default to "//"</pre>
-     */
-    public String getRoot() {
-        return pathBuilder.getRoot();
-    }
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
@@ -53,17 +39,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setRoot(final String root) {
         pathBuilder.setRoot(root);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setTag(String)}
-     * <p>tag (type of DOM element)</p>
-     * <pre>default to "*"</pre>
-     */
-    public String getTag() {
-        return pathBuilder.getTag();
     }
 
     /**
@@ -79,15 +54,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setId(String)}
-     */
-    public String getId() {
-        return pathBuilder.getId();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param id eg. id="buttonSubmit"
@@ -97,16 +63,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setId(final String id) {
         pathBuilder.setId(id);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setElPath(String)}
-     * <p>returned value does not include containers path</p>
-     */
-    public String getElPath() {
-        return pathBuilder.getElPath();
     }
 
     /**
@@ -123,15 +79,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setBaseCls(String)}
-     */
-    public String getBaseCls() {
-        return pathBuilder.getBaseCls();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param baseCls base class
@@ -141,15 +88,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setBaseCls(final String baseCls) {
         pathBuilder.setBaseCls(baseCls);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setCls(String)}
-     */
-    public String getCls() {
-        return pathBuilder.getCls();
     }
 
     /**
@@ -163,19 +101,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
         pathBuilder.setCls(cls);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * <p>Example:</p>
-     * <pre>
-     *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
-     * </pre>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setClasses(String...)}
-     */
-    public List<String> getClasses() {
-        return pathBuilder.getClasses();
     }
 
     /**
@@ -194,26 +119,9 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    /**
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return WebLocators
-     */
-    public List<WebLocator> getChildNodes() {
-        return pathBuilder.getChildNodes();
-    }
-
     public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
         pathBuilder.setChildNodes(childNodes);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setExcludeClasses(String...)}
-     */
-    public List<String> getExcludeClasses() {
-        return pathBuilder.getExcludeClasses();
     }
 
     /**
@@ -229,15 +137,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setName(String)}
-     */
-    public String getName() {
-        return pathBuilder.getName();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param name eg. name="buttonSubmit"
@@ -247,15 +146,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setName(final String name) {
         pathBuilder.setName(name);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setText(String, SearchType...)}
-     */
-    public String getText() {
-        return pathBuilder.getText();
     }
 
     /**
@@ -269,15 +159,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
         pathBuilder.setText(text, searchType);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setSearchTextType(SearchType...)}
-     */
-    public Set<SearchType> getSearchTextType() {
-        return pathBuilder.getSearchTextType();
     }
 
     /**
@@ -305,15 +186,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setStyle(String)}
-     */
-    public String getStyle() {
-        return pathBuilder.getStyle();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param style of element
@@ -327,16 +199,6 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>not implemented yet</b></p>
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setElCssSelector(String)}
-     */
-    public String getElCssSelector() {
-        return pathBuilder.getElCssSelector();
-    }
-
-    /**
-     * <p><b>not implemented yet</b></p>
      * <p><b>Used for finding element process (to generate css address)</b></p>
      *
      * @param elCssSelector cssSelector
@@ -346,16 +208,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
         pathBuilder.setElCssSelector(elCssSelector);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setTitle(String)}
-     */
-    public String getTitle() {
-        return pathBuilder.getTitle();
     }
 
     /**
@@ -423,24 +275,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @param key key template
-     * @return template
-     */
-    public String getTemplate(String key) {
-        return pathBuilder.getTemplate(key);
-    }
-
-    /**
-     * <p><b><i>Used in logging process</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setInfoMessage(String)}
-     */
-    public String getInfoMessage() {
-        return pathBuilder.getInfoMessage();
-    }
-
-    /**
      * <p><b><i>Used in logging process</i></b></p>
      *
      * @param infoMessage info Message
@@ -452,22 +286,9 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setVisibility(boolean)}
-     */
-    public boolean isVisibility() {
-        return pathBuilder.isVisibility();
-    }
-
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
         pathBuilder.setVisibility(visibility);
         return (T) this;
-    }
-
-    public long getRenderMillis() {
-        return pathBuilder.getRenderMillis();
     }
 
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
@@ -475,21 +296,9 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    public int getActivateSeconds() {
-        return pathBuilder.getActivateSeconds();
-    }
-
     public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
         pathBuilder.setActivateSeconds(activateSeconds);
         return (T) this;
-    }
-
-    /**
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return containter
-     */
-    public WebLocator getContainer() {
-        return pathBuilder.getContainer();
     }
 
     /**
@@ -502,15 +311,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
         pathBuilder.setContainer(container);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setLabel(String, SearchType...)}
-     */
-    public String getLabel() {
-        return pathBuilder.getLabel();
     }
 
     /**
@@ -527,15 +327,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setLabel(String, SearchType...)}
-     */
-    public String getLabelTag() {
-        return pathBuilder.getLabelTag();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param labelTag label tag element
@@ -545,15 +336,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setLabelTag(String labelTag) {
         pathBuilder.setLabelTag(labelTag);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setLabelPosition(String)}
-     */
-    public String getLabelPosition() {
-        return pathBuilder.getLabelPosition();
     }
 
     /**
@@ -567,15 +349,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setLabelPosition(String labelPosition) {
         pathBuilder.setLabelPosition(labelPosition);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setPosition(int)}
-     */
-    public int getPosition() {
-        return pathBuilder.getPosition();
     }
 
     /**
@@ -595,15 +368,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setPosition(int)}
-     */
-    public int getResultIdx() {
-        return pathBuilder.getResultIdx();
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
@@ -617,15 +381,6 @@ public abstract class WebLocatorAbstractBuilder {
     public <T extends WebLocatorAbstractBuilder> T setResultIdx(int resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * @deprecated use {@link #getPathBuilder()}.get to get path attributes
-     * @return value that has been set in {@link #setType(String)}
-     */
-    public String getType() {
-        return pathBuilder.getType();
     }
 
     /**
@@ -651,12 +406,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p>Used only to identify class type of current object</p>
      * <p> Not used for css class!</p>
-     * @return string
      */
-    public String getClassName() {
-        return pathBuilder.getClassName();
-    }
-
     protected void setClassName(final String className) {
         pathBuilder.setClassName(className);
     }

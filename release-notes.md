@@ -2,6 +2,7 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 1.8.0-SNAPSHOT**
 - remove deprecated classes and methods
+- remove gets deprecated methods from WebLocatorAbstractBuilder
 
 **Release Notes for Testy 1.7.17**
 - create XPathBuilder
