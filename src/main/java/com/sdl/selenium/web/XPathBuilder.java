@@ -922,6 +922,10 @@ public class XPathBuilder {
         return null;
     }
 
+    private String applyTemplateValue(String key) {
+        return applyTemplate(key, getTemplate(key));
+    }
+
     /**
      * this method is meant to be overridden by each component
      *
@@ -930,11 +934,9 @@ public class XPathBuilder {
      */
     protected String getItemPath(boolean disabled) {
         String selector = getBaseItemPath();
-        if (!disabled) {
-            String enabled = applyTemplate("enabled", getTemplate("enabled"));
-            if (enabled != null) {
-                selector += StringUtils.isNotEmpty(selector) ? " and " + enabled : enabled;
-            }
+        String subPath = applyTemplateValue(disabled ? "disabled" : "enabled");
+        if (subPath != null) {
+            selector += StringUtils.isNotEmpty(selector) ? " and " + subPath : subPath;
         }
         selector = getRoot() + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
@@ -1044,9 +1046,6 @@ public class XPathBuilder {
         }
 
         returnPath = afterItemPathCreated(returnPath);
-        if (disabled) {
-            returnPath += applyTemplate("disabled", getTemplate("disabled"));
-        }
 
         // add container path
         if (getContainer() != null) {
