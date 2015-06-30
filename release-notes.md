@@ -1,6 +1,9 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 1.8.0-SNAPSHOT**
+**Release Notes for Testy 1.8.1-SNAPSHOT**
+- 
+
+**Release Notes for Testy 1.8.0**
 - remove deprecated classes and methods
 - remove gets deprecated methods from WebLocatorAbstractBuilder
 
