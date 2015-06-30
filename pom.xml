@@ -5,7 +5,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>1.8.1-SNAPSHOT</version>
+    <version>1.8.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Automated Acceptance Testing. Selenium and Selenium WebDriver test framework for web applications. (optimized for dynamic html, ExtJS, Bootstrap, complex UI, simple web applications/sites)</description>
     <url>https://github.com/SDLLanguageTechnologies/Testy</url>
