@@ -78,7 +78,7 @@ Getting the maven plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.8.0</version>
+        <version>1.8.1</version>
     </dependency>
 ```
 
@@ -113,12 +113,11 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 Release Notes
 -------------
 
-**Release Notes for Testy 1.8.1-SNAPSHOT**
-- 
+**Release Notes for Testy 1.8.2-SNAPSHOT**
+-
 
-**Release Notes for Testy 1.8.0**
-- remove deprecated classes and methods
-- remove gets deprecated methods from WebLocatorAbstractBuilder
+**Release Notes for Testy 1.8.1**
+- add isDisplayed, isEnabled and submit method in WebLocatorDriverExecutor
 [Detailed Release Notes](./release-notes.md) 
 
 Getting SNAPSHOT versions of the plugin
@@ -135,7 +134,7 @@ Getting SNAPSHOT versions of the plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.8.1-SNAPSHOT</version>
+        <version>1.8.2-SNAPSHOT</version>
     </dependency>
 ```
 
