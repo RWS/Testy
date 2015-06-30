@@ -56,9 +56,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private void tryAgainDoClick(WebLocator el) {
-        el.setCurrentElementPath("");
-        findElement(el);
-        if (el.currentElement != null) {
+        if (findAgain(el)) {
             el.currentElement.click(); // not sure it will click now
         } else {
             LOGGER.error("currentElement is null after to try currentElement: " + el);
@@ -165,8 +163,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             }
         } catch (StaleElementReferenceException e) {
             LOGGER.warn("StaleElementReferenceException in getCurrentElementAttribute(" + attribute + "): " + el);
-            el.setCurrentElementPath("");
-            if (isElementPresent(el)) {
+            if (findAgain(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
             } else {
                 LOGGER.error("StaleElementReferenceException in getCurrentElementAttribute (second try): " + attribute + ": " + el, e);
@@ -185,8 +182,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 text = el.currentElement.getText();
             } catch (StaleElementReferenceException e) {
                 LOGGER.error("getHtmlText (second try): " + el.getPath(), e);
-                el.setCurrentElementPath("");
-                if (isElementPresent(el)) {
+                if (findAgain(el)) {
                     text = el.currentElement.getText();
                 }
             } catch (WebDriverException e) {
@@ -234,9 +230,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private void tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
-        el.setCurrentElementPath("");
-        findElement(el);
-        if (el.currentElement != null) {
+        if (findAgain(el)) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
         } else {
             LOGGER.error("currentElement is null after to try currentElement: " + el);
@@ -244,8 +238,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private void trySecondDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
-        el.setCurrentElementPath("");
-        findElement(el);
+        findAgain(el);
         doMouseOver(el);
         if (el.currentElement != null) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
@@ -389,6 +382,52 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             return id;
         }
         return pathId;
+    }
+
+    public boolean isDisplayed(WebLocator el) {
+        return isElementPresent(el) && el.currentElement.isDisplayed();
+    }
+
+    public boolean isEnabled(WebLocator el) {
+        return isElementPresent(el) && el.currentElement.isEnabled();
+    }
+
+    public boolean submit(WebLocator el) {
+        boolean submit = false;
+        if (isElementPresent(el)) {
+            try {
+                el.currentElement.submit();
+                submit = true;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.error("StaleElementReferenceException in doClick: " + el);
+                tryAgainDoSubmit(el);
+                submit = true;
+            } catch (InvalidElementStateException e) {
+                LOGGER.error("InvalidElementStateException in doClick: " + el);
+                tryAgainDoSubmit(el);
+                submit = true;
+            } catch (MoveTargetOutOfBoundsException e) {
+                LOGGER.error("MoveTargetOutOfBoundsException in doClick: " + el);
+                tryAgainDoSubmit(el);
+                submit = true;
+            } catch (Exception e) {
+                LOGGER.error("Exception in doClick: " + el, e);
+            }
+        }
+        return submit;
+    }
+
+    private void tryAgainDoSubmit(WebLocator el) {
+        if (findAgain(el)) {
+            el.currentElement.submit(); // not sure it will click now
+        } else {
+            LOGGER.error("currentElement is null after to try currentElement: " + el);
+        }
+    }
+
+    private boolean findAgain(WebLocator el) {
+        el.setCurrentElementPath("");
+        return isElementPresent(el);
     }
 
     public void fireEventWithJS(WebLocator el, String eventName) {

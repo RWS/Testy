@@ -1,7 +1,7 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 1.8.1-SNAPSHOT**
-- 
+- add isDisplayed, isEnabled and submit method in WebLocatorDriverExecutor
 
 **Release Notes for Testy 1.8.0**
 - remove deprecated classes and methods
