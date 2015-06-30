@@ -112,13 +112,13 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 Release Notes
 -------------
-
 **Release Notes for Testy 1.8.1-SNAPSHOT**
 - 
 
 **Release Notes for Testy 1.8.0**
 - remove deprecated classes and methods
 - remove gets deprecated methods from WebLocatorAbstractBuilder
+
 [Detailed Release Notes](./release-notes.md) 
 
 Getting SNAPSHOT versions of the plugin
