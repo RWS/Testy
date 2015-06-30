@@ -129,8 +129,10 @@ public class WebDriverConfig {
 
         LOGGER.debug("File: {} " + (resource != null ? "exists" : "does not exist"), browserProperties);
 
-        InputStream inputStream = resource.openStream();
-
+        InputStream inputStream = null;
+        if (resource != null) {
+            inputStream = resource.openStream();
+        }
 
         Browser browser = findBrowser(inputStream);
         return getDriver(browser, inputStream);
@@ -162,7 +164,9 @@ public class WebDriverConfig {
             driver = null;
         }
         if (properties != null) {
-            properties.load(inputStream);
+            if (inputStream != null) {
+                properties.load(inputStream);
+            }
 
             LOGGER.info(properties.toString());
 
