@@ -28,15 +28,15 @@ public class XPathBuilder {
     private List<String> excludeClasses;
     private String name;
     private String text;
-    public List<SearchType> defaultSearchTextType = new ArrayList<SearchType>();
+    public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
-    private List<SearchType> searchLabelType = new ArrayList<SearchType>();
+    private List<SearchType> searchLabelType = new ArrayList<>();
     private String style;
     private String elCssSelector;
     private String title;
-    private Map<String, String> templates = new LinkedHashMap<String, String>();
-    private Map<String, String> templatesValues = new LinkedHashMap<String, String>();
-    private Map<String, String> elPathSuffix = new LinkedHashMap<String, String>();
+    private Map<String, String> templates = new LinkedHashMap<>();
+    private Map<String, String> templatesValues = new LinkedHashMap<>();
+    private Map<String, String> elPathSuffix = new LinkedHashMap<>();
 
     private String infoMessage;
 
@@ -440,7 +440,7 @@ public class XPathBuilder {
      * @return this element
      */
     public <T extends XPathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
-        if (elPathSuffix == null) {
+        if (elPathSuffix == null || "".equals(elPathSuffix)) {
             this.elPathSuffix.remove(key);
         } else {
             this.elPathSuffix.put(key, elPathSuffix);
