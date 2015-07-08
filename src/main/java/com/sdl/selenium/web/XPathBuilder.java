@@ -1023,8 +1023,15 @@ public class XPathBuilder {
     /**
      * @return final xpath (including containers xpath), used for interacting with browser
      */
-    public final String getPath() {
+    public final String getXPath() {
         return getPath(false);
+    }
+
+    /**
+     * @deprecated use getXPath()
+     */
+    public final String getPath() {
+        return getXPath();
     }
 
     /**

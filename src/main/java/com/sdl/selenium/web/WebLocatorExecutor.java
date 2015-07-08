@@ -4,25 +4,23 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.WebElement;
 
 public interface WebLocatorExecutor {
-    boolean highlight = WebLocatorConfig.isHighlight();
-
     boolean doClick(WebLocator el);
 
     boolean doClickAt(WebLocator el);
 
-    boolean isElementPresent(WebLocator el);
+    boolean doubleClickAt(WebLocator el);
 
-    WebElement findElement(WebLocator el);
+    boolean submit(WebLocator el);
 
-    WebElement waitElement(WebLocator el, final long millis);
+    boolean clear(WebLocator el);
 
-    int size(WebLocator el);
+    void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
-    void doHighlight(WebLocator el);
-
-    void focus(WebLocator el);
+    boolean setValue(WebLocator el, String value);
 
     String getAttribute(final WebLocator el, final String attribute);
+
+    String getAttributeId(final WebLocator el);
 
     String getCurrentElementAttribute(final WebLocator el, final String attribute);
 
@@ -32,21 +30,21 @@ public interface WebLocatorExecutor {
 
     String getHtmlSource(WebLocator el);
 
-    boolean setValue(WebLocator el, String value);
-
     String getValue(WebLocator el);
 
-    boolean clear(WebLocator el);
+    boolean isElementPresent(WebLocator el);
 
-    boolean doubleClickAt(WebLocator el);
+    WebElement findElement(WebLocator el);
+
+    WebElement waitElement(WebLocator el, final long millis);
+
+    int size(WebLocator el);
+
+    void focus(WebLocator el);
 
     void doMouseOver(WebLocator el);
 
-    boolean isSamePath(WebLocator el, String path);
-
-    Object executeScript(String script, Object... objects);
-
-    void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
+    void blur(WebLocator el);
 
     boolean isTextPresent(WebLocator el, String text);
 
@@ -58,7 +56,13 @@ public interface WebLocatorExecutor {
 
     boolean isEnabled(WebLocator el);
 
-    void blur(WebLocator el);
+    boolean isSamePath(WebLocator el, String path);
 
-    boolean submit(WebLocator el);
+    Object executeScript(String script, Object... objects);
+
+    void fireEventWithJS(WebLocator el, String eventName);
+
+    void doHighlight(WebLocator el);
+
+    boolean highlight = WebLocatorConfig.isHighlight();
 }
