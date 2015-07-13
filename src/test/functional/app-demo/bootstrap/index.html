@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Bootstrap WebDriver</title>
-    <script src="../js/libs/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <!-- Bootstrap -->
-    <link href="../css/libs/boostrap/bootstrap.css" rel="stylesheet">
-    <link href="../css/libs/boostrap/bootstrap-responsive.css" rel="stylesheet">
-    <link href="../css/libs/boostrap/datepicker.css" rel="stylesheet">
-    <link href="../css/libs/boostrap/bootstrap-fileupload.css" rel="stylesheet">
-    <link href="../css/libs/boostrap/bootstrap-select.css" rel="stylesheet">
-    <link href="../css/libs/boostrap/bootstrap-multiselect.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="css/bootstrap-fileupload.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link href="css/bootstrap-multiselect.css" rel="stylesheet">
     <link href="css/experiments.css" rel="stylesheet">
+    <link href="../app-demo/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -360,17 +360,18 @@
     </form>
 </div>
 
-<script src="../js/libs/jquery/jquery.min.js"></script>
-<script src="../js/libs/bootstrap/bootstrap.js"></script>
-<script src="../js/libs/jquery/jquery.cookie.js"></script>
-<script src="../js/libs/jquery/jstorage.js"></script>
-<script src="../js/utils.js"></script>
-<script src="../js/login/mock-db.js"></script>
-<script src="../js/libs/bootstrap/bootstrap-datepicker.js"></script>
-<script src="../js/libs/bootstrap/bootstrap-fileupload.js"></script>
-<script src="../js/libs/bootstrap/bootstrap-select.js"></script>
-<script src="../js/libs/bootstrap/bootstrap-multiselect.js"></script>
-<script src="../js/preferences.js"></script>
+<!--<script src="http://code.jquery.com/jquery.js"></script>-->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="../app-demo/js/libs/jquery.cookie.js"></script>
+<script src="../app-demo/js/libs/jstorage.js"></script>
+<script src="../app-demo/js/utils.js"></script>
+<script src="../app-demo/js/mock-db.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/bootstrap-fileupload.js"></script>
+<script src="js/bootstrap-select.js"></script>
+<script src="js/bootstrap-multiselect.js"></script>
+<script src="../app-demo/js/preferences.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -385,10 +386,10 @@
         $('#dp3').datepicker('setValue', today);
 
         $('#downloadProjectDataButton').on('click', function () {
-            window.location.href = '../../../resources/upload/text.docx';
+            window.location.href = '../../resources/upload/LanguageCloudAddins.exe';
         });
         $('#downloadApex').on('click', function () {
-            window.location.href = '../../../resources/upload/create_training.apex';
+            window.location.href = '../../resources/upload/create_training.apex';
         });
 
         $('#example').multiselect({
