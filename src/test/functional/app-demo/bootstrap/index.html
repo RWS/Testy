@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Bootstrap WebDriver</title>
+    <script src="../js/libs/html5.js"></script>
+    <!-- Bootstrap -->
+    <link href="../css/libs/boostrap/bootstrap.css" rel="stylesheet">
+    <link href="../css/libs/boostrap/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../css/libs/boostrap/datepicker.css" rel="stylesheet">
+    <link href="../css/libs/boostrap/bootstrap-fileupload.css" rel="stylesheet">
+    <link href="../css/libs/boostrap/bootstrap-select.css" rel="stylesheet">
+    <link href="../css/libs/boostrap/bootstrap-multiselect.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="css/experiments.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-default" style="background-color: #f5f5f5; padding: 5px;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div style="float: right;">
+                <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#preferences-win">Preferences</button>
+                <a href="#" class="btn btn-default navbar-btn" onclick="Session.invalidate(); window.location.href='../login.html'">Logout</a>
+            </div>
+            <a class="navbar-brand" href="index.html">
+                App Demo
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<form class="form-horizontal span3 experiment-tile">
+    <legend>Form Title</legend>
+
+    <div class="input-append date datepicker" id="dp3">
+        <input data-bind="dueDate" size="16" type="text" readonly="" class="span2">
+        <span class="add-on"><i class="icon-calendar"></i></span>
+    </div>
+
+    <div>
+        <label class="control-label">Tech:</label>
+
+        <div>
+            <select class="selectpicker">
+                <option>Auto</option>
+                <option>Manual</option>
+                <option>No ADB</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <label class="checkbox"><input type="checkbox" value="">
+            Stop the process?
+        </label>
+    </div>
+    <div>
+        <label class="checkbox checkbox-enter">
+            <input type="checkbox" value="">
+            Label with Enter.
+        </label>
+    </div>
+
+    <div>
+        <label class="control-label">TPT Test:</label>
+
+        <div>
+            <div class="fileupload fileupload-new" data-provides="fileupload">
+                <span class="btn btn-file"><span class="fileupload-new">Select file</span><span
+                    class="fileupload-exists">Change</span><input type="file"/></span>
+                <span class="fileupload-preview"></span>
+                <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+            </div>
+        </div>
+    </div>
+
+    <label class="control-label">Span:</label>
+
+    <div class="controls">
+        <span data-bind="span" class="uneditable-input input-block-level">test</span>
+    </div>
+
+    <label class="control-label">Budget:</label>
+
+    <div class="controls">
+        <div class="input-prepend input-block-level">
+            <span class="add-on">$</span>
+            <span data-bind="budget" class="uneditable-input input-block-level short-input">123</span>
+        </div>
+    </div>
+
+    <label class="control-label">Project Data:</label>
+
+    <div class="controls">
+        <button id="downloadProjectDataButton" class="btn download-btn" type="button"><i class="icon-download-alt"></i>
+            Download
+        </button>
+    </div>
+
+    <label class="control-label">DownloadNegative:</label>
+
+    <div class="controls">
+        <button id="downloadNegative" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download
+        </button>
+    </div>
+
+    <label class="control-label">DownloadApex:</label>
+
+    <div class="controls">
+        <button id="downloadApex" class="btn download-btn" type="button"><i class="icon-download-alt"></i> Download</button>
+    </div>
+
+    <label class="control-label">LPID for Merge:</label>
+    <div class="controls">
+        <div class="input-append input-block-level">
+            <input data-bind="lpIdMerge" type="text" class="input-block-level short-input integer">
+            <span id="verifyLpIdMergeButton" class="add-on btn"><i class="icon-ok not-clickable"></i></span>
+        </div>
+    </div>
+
+    <label class="control-label">Source:</label>
+
+    <div class="controls">
+        <select id="example" class="multiselect" multiple="multiple">
+            <option value="cheese">Cheese</option>
+            <option value="tomatoes">Tomatoes</option>
+            <option value="mozarella">Mozzarella</option>
+            <option value="mushrooms">Mushrooms</option>
+            <option value="pepperoni">Pepperoni</option>
+            <option value="onions">Onions</option>
+            <option value="carrots">Carrots</option>
+        </select>
+    </div>
+    <div class="controls">
+        <button class="btn" type="button" disabled>DisableBtn</button>
+        <button class="btn disabled" type="button">DisableBtnCls</button>
+    </div>
+    <div class="controls">
+        <a target="_blank" href="index.html">Link</a> |
+        <a href="../login.html">Logout</a>
+    </div>
+
+</form>
+<form class="form-horizontal span6">
+    <legend>Form Table</legend>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Row</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Buttons</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John</td>
+            <td>Carter</td>
+            <td>johncarter@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>1</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>Peter</td>
+            <td>Parker</td>
+            <td>peterparker@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>2</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John</td>
+            <td>Rambo</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John1</td>
+            <td>Rambo1</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John2</td>
+            <td>Rambo2</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" data-bind="checked"></td>
+            <td>John3</td>
+            <td>Rambo3</td>
+            <td>johnrambo@mail.com</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small">First (<b><span>3</span></b>)
+                    </button>
+                    <button class="btn btn-small">Second</button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form class="form-horizontal span3 experiment-tile">
+    <legend>Page Object And Page Factory</legend>
+    <div class="control-group">
+        <label class="control-label">Execute</label>
+        <div class="controls">
+            <select id="execute" data-bind="execute" class="selectpicker">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Execute</label>
+
+        <div class="controls">
+            <span id="execute2" data-bind="span" class="uneditable-input input-block-level"></span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Email:</label>
+
+        <div class="controls">
+            <span id="email2" data-bind="span" class="uneditable-input input-block-level"></span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">User Name:</label>
+
+        <div class="controls">
+            <span id="userName2" data-bind="span" class="uneditable-input input-block-level"></span>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button id="open"  class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="control-group">
+                        <label class="control-label">Email:</label>
+                        <div class="controls">
+                            <input id="email" data-bind="email" type="text" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">User Name:</label>
+                        <div class="controls">
+                            <input id="userName" data-bind="userName" type="text" class="input-block-level">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button id="saveButton" type="button" class="btn tile-btn btn-warning">Save</button>
+                        </div>
+                    </div> </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="modal fade" id="preferences-win" tabindex="-1" role="dialog" aria-hidden="true">
+    <form class="form-horizontal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="control-group">
+                        <label class="control-label">Current Password</label>
+
+                        <div class="controls">
+                            <input name="password" type="password" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">New Password</label>
+
+                        <div class="controls">
+                            <input name="newPassword" type="password" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Repeat Password</label>
+
+                        <div class="controls">
+                            <input name="newPasswordRepeat" type="password" class="input-block-level">
+                        </div>
+                    </div>
+
+                    <div class="status-msg" style="display: none"></div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="button" class="btn tile-btn btn-warning">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="../js/libs/jquery/jquery.min.js"></script>
+<script src="../js/libs/bootstrap/bootstrap.js"></script>
+<script src="../js/libs/jquery/jquery.cookie.js"></script>
+<script src="../js/libs/jquery/jstorage.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/login/mock-db.js"></script>
+<script src="../js/libs/bootstrap/bootstrap-datepicker.js"></script>
+<script src="../js/libs/bootstrap/bootstrap-fileupload.js"></script>
+<script src="../js/libs/bootstrap/bootstrap-select.js"></script>
+<script src="../js/libs/bootstrap/bootstrap-multiselect.js"></script>
+<script src="../js/preferences.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker();
+        var today = new Date();
+
+        $('#dp3').datepicker({
+            format:'dd-mm-yyyy',
+            autoclose:true,
+            keyboardNavigation:true
+        });
+        $('#dp3').datepicker('setValue', today);
+
+        $('#downloadProjectDataButton').on('click', function () {
+            window.location.href = '../../../resources/upload/text.docx';
+        });
+        $('#downloadApex').on('click', function () {
+            window.location.href = '../../../resources/upload/create_training.apex';
+        });
+
+        $('#example').multiselect({
+            includeSelectAllOption:true,
+            enableFiltering:true,
+            maxHeight:150
+        });
+        $('#saveButton').on('click', function () {
+            $("#email").val("");
+            $("#userName").val("");
+        });
+    });
+</script>
+</body>
+</html>
+
