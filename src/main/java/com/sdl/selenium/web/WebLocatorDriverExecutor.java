@@ -184,7 +184,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     // TODO find what to do
                     LOGGER.error("ElementNotVisibleException in setValue: {}", el, exception);
                     if (WebLocatorConfig.isLogXPathEnabled()) {
-                        LOGGER.debug("\t" + el.getPath());
+                        LOGGER.debug("\t" + el.getXPath());
                     }
                     throw exception;
                 } catch (StaleElementReferenceException exception) {
@@ -277,12 +277,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 text = el.currentElement.getText();
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("getHtmlText (second try): " + el.getPath(), e);
+                LOGGER.error("getHtmlText (second try): " + el.getXPath(), e);
                 if (findAgain(el)) {
                     text = el.currentElement.getText();
                 }
             } catch (WebDriverException e) {
-                LOGGER.error("element has vanished meanwhile: " + el.getPath(), e);
+                LOGGER.error("element has vanished meanwhile: " + el.getXPath(), e);
             }
         }
         return text;
@@ -331,7 +331,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public WebElement findElement(WebLocator el) {
-        final String path = el.getPath();
+        final String path = el.getXPath();
 //        if (isSamePath(el, path)) {
 //            LOGGER.debug("currentElement already found one time: " + el);
         //return el.currentElement;
@@ -347,7 +347,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (el.currentElement == null) {
             LOGGER.warn("Element not found after " + millis + " millis; " + el);
             if (WebLocatorConfig.isLogXPathEnabled()) {
-                LOGGER.debug("\t" + el.getPath());
+                LOGGER.debug("\t" + el.getXPath());
             }
         }
         return el.currentElement;
@@ -356,7 +356,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private WebElement doWaitElement(final WebLocator el, final long millis) {
         WebDriverWait wait = new WebDriverWait(driver, 0, 100);
         wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
-        final String xpath = el.getPath();
+        final String xpath = el.getXPath();
         try {
             el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
                 public WebElement apply(WebDriver driver1) {
@@ -371,7 +371,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public int size(WebLocator el) {
-        return driver.findElements(By.xpath(el.getPath())).size();
+        return driver.findElements(By.xpath(el.getXPath())).size();
     }
 
     @Override
@@ -443,7 +443,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } else if (!"".equals(cls = getAttribute(el, "class"))) {
             script = "var fireOnThis = document.getElementsByClassName('" + cls + "')[0];\n" + script;
         } else {
-            script = "var fireOnThis = document.evaluate(\"" + el.getPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
+            script = "var fireOnThis = document.evaluate(\"" + el.getXPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                     "var evObj = document.createEvent('MouseEvents');\n" +
                     "evObj.initEvent( '" + eventName + "', true, true );\n" +
                     "fireOnThis.dispatchEvent(evObj);";
