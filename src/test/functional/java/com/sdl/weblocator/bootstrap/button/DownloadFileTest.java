@@ -28,8 +28,8 @@ public class DownloadFileTest extends TestBase {
 
     @Test
     public void assertDownload() throws IOException {
-//        assertTrue(downloadFile.download("text.docx"));
-        assertTrue(downloadFile.download("LanguageCloudAddins.exe"));
+        assertTrue(downloadFile.download("text.docx"));
+//        assertTrue(downloadFile.download("LanguageCloudAddins.exe"));
         FileUtils.cleanDownloadDir();
     }
 
