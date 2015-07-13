@@ -338,7 +338,7 @@ public class XPathBuilder {
         if (searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new HashSet<SearchType>();
+            this.searchTextType = new HashSet<>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
@@ -353,7 +353,7 @@ public class XPathBuilder {
      * @return this element
      */
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelType) {
-        this.searchLabelType = new ArrayList<SearchType>();
+        this.searchLabelType = new ArrayList<>();
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
         }
@@ -900,7 +900,7 @@ public class XPathBuilder {
             }
         }
 
-        String selector = "count(." + child.getPath() + ") > 0";
+        String selector = "count(." + child.getXPath() + ") > 0";
         if(breakElement != null) {
             breakElement.setContainer(parentElement);
         }
@@ -1056,7 +1056,7 @@ public class XPathBuilder {
 
         // add container path
         if (getContainer() != null) {
-            returnPath = getContainer().getPath() + returnPath;
+            returnPath = getContainer().getXPath() + returnPath;
         }
         return addResultIndexToPath(returnPath);
     }
@@ -1136,10 +1136,7 @@ public class XPathBuilder {
         if (searchLabelType.size() == 0) {
             searchLabelType.add(SearchType.EQUALS);
         }
-        SearchType[] st = new SearchType[searchLabelType.size()];
-        for (int i = 0; i < searchLabelType.size(); i++) {
-            st[i] = searchLabelType.get(i);
-        }
-        return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getPath();
+        SearchType[] st = searchLabelType.toArray(new SearchType[searchLabelType.size()]);
+        return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getXPath();
     }
 }
