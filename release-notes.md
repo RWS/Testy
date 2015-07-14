@@ -2,6 +2,7 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 1.8.2-SNAPSHOT**
 - add isDisplayed method in WebLocator
+- fix properties.load from inputStream correctly
 
 **Release Notes for Testy 1.8.1**
 - add isDisplayed, isEnabled and submit method in WebLocatorDriverExecutor
@@ -28,10 +29,10 @@ RELEASE NOTES
 - improvement WebDriverConfig.getWebDriver(...);
 
 **Release Notes for Testy 1.7.7-SNAPSHOT**
-- webdriver version 2.44.0 suported ff 33
+- webdriver version 2.44.0 supported ff 33
 
 **Release Notes for Testy 1.7.6-SNAPSHOT**
-- webdriver version 2.43.0 suported ff 31, 32
+- webdriver version 2.43.0 supported ff 31, 32
 
 **Release Notes for Testy 1.7.5-SNAPSHOT**
 - webdriver version 2.42.2

@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.File;
 import java.io.IOException;
 
 public class IExplorerConfigReader extends AbstractBrowserConfigReader {
@@ -39,7 +38,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public String getDownloadPath() {
-        File file = new File(getProperty("browser.download.dir"));
-        return file.getAbsolutePath();
+        //http://stackoverflow.com/questions/18510965/how-to-set-internetexplorerdriver-download-directory
+        return "";
     }
 }
