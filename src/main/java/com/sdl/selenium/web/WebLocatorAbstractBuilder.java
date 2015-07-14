@@ -198,19 +198,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * <p><b>not implemented yet</b></p>
-     * <p><b>Used for finding element process (to generate css address)</b></p>
-     *
-     * @param elCssSelector cssSelector
-     * @param <T> the element which calls this method
-     * @return this element
-     */
-    public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
-        pathBuilder.setElCssSelector(elCssSelector);
-        return (T) this;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
      *

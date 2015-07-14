@@ -65,6 +65,7 @@ public class XPathBuilder {
         setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
         setTemplate("type", "@type='%s'");
+        setTemplate("title", "@title='%s'");
     }
 
     // =========================================
@@ -382,31 +383,8 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b>not implemented yet</b></p>
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setElCssSelector(String)}
-     */
-    public String getElCssSelector() {
-        return elCssSelector;
-    }
-
-    /**
-     * <p><b>not implemented yet</b></p>
-     * <p><b>Used for finding element process (to generate css address)</b></p>
-     *
-     * @param elCssSelector cssSelector
-     * @param <T> the element which calls this method
-     * @return this element
-     */
-    public <T extends XPathBuilder> T setElCssSelector(final String elCssSelector) {
-        this.elCssSelector = elCssSelector;
-        return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
      *
      * @return value that has been set in {@link #setTitle(String)}
      */
@@ -416,7 +394,7 @@ public class XPathBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "text()='%s'")" a template.</b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
      *
      * @param title of element
      * @param <T> the element which calls this method

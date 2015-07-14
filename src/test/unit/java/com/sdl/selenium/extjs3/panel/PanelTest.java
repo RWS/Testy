@@ -14,6 +14,7 @@ public class PanelTest {
                 {new Panel(), "//*[contains(concat(' ', @class, ' '), ' x-panel ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
                 {new Panel(new Panel()), "//*[contains(concat(' ', @class, ' '), ' x-panel ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]//*[contains(concat(' ', @class, ' '), ' x-panel ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
                 {new Panel("PanelTest"), "//*[contains(concat(' ', @class, ' '), ' x-panel ') and count(*[contains(@class,'x-panel-header') or contains(@class, '-tl')]//*[text()='PanelTest']) > 0 and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
+                {new Panel("PanelTest").setTitle(null), "//*[contains(concat(' ', @class, ' '), ' x-panel ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
                 {new Panel(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-panel ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
                 {new Panel(container, "PanelTest"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-panel ') and count(*[contains(@class,'x-panel-header') or contains(@class, '-tl')]//*[text()='PanelTest']) > 0 and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
                 {new Panel("testCls", container, "excludeCls"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-panel ') and contains(concat(' ', @class, ' '), ' testCls ') and not(contains(@class, 'excludeCls')) and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]"},
@@ -22,7 +23,7 @@ public class PanelTest {
 
     @Test (dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Panel panel, String expectedXpath) {
-        Assert.assertEquals(panel.getPath(), expectedXpath);
+        Assert.assertEquals(panel.getXPath(), expectedXpath);
     }
 
 }
