@@ -394,7 +394,6 @@ public class XPathBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
      *
      * @param title of element
      * @param <T> the element which calls this method

@@ -18,7 +18,6 @@ public class WebLink extends WebLocator {
     public WebLink() {
         setClassName("WebLink");
         setTag("a");
-        setTemplate("title", "@title='%s'");
     }
 
     public WebLink(WebLocator container) {
