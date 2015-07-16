@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.Matchers.is;
 
 public class MultiSelectTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiSelectTest.class);
@@ -29,14 +29,14 @@ public class MultiSelectTest extends TestBase {
 
     @Test
     public void selectTwo() {
-        assertTrue(multiSelect.select("Cheese", "Tomatoes"));
+        assertThat(multiSelect.select("Cheese", "Tomatoes"), is(true));
         List<String> list = multiSelect.getValueSelected();
         assertThat(list, contains(Arrays.asList("Cheese", "Tomatoes").toArray()));
     }
 
     @Test (dependsOnMethods = "selectTwo")
     public void selectAll() {
-        assertTrue(multiSelect.select("Select all"));
+        assertThat(multiSelect.select("Select all"), is(true));
         List<String> list = multiSelect.getValueSelected();
         assertThat(list, contains(Arrays.asList("Cheese", "Tomatoes", "Mozzarella", "Mushrooms", "Pepperoni", "Onions", "Carrots").toArray()));
     }
