@@ -18,6 +18,8 @@ public interface WebLocatorExecutor {
 
     boolean setValue(WebLocator el, String value);
 
+    String getCssValue(final WebLocator el, final String propertyName);
+
     String getAttribute(final WebLocator el, final String attribute);
 
     String getAttributeId(final WebLocator el);

@@ -229,6 +229,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    public String getCssValue(final WebLocator el, final String propertyName) {
+        String propertyValue = null;
+        if (isElementPresent(el)) {
+            propertyValue = el.currentElement.getCssValue(propertyName);
+        } else if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Element not found to getCssValue(" + propertyName + "): {}", el);
+        }
+        return propertyValue;
+    }
+
+    @Override
     public String getAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         if (isElementPresent(el)) {

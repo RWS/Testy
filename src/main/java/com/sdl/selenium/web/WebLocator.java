@@ -50,6 +50,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
+     * @return Element value of css property
+     */
+    public String getCssValue(String propertyName) {
+        return executor.getCssValue(this, propertyName);
+    }
+
+    /**
      * @return id
      */
     public String getAttributeId() {

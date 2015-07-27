@@ -5,6 +5,7 @@ RELEASE NOTES
 - fix properties.load from inputStream correctly
 - add template for title
 - add try and catch for WebDriverException at doClick and submit
+- add getCssValue(String propertyName) method in WebLocator
 
 **Release Notes for Testy 1.8.1**
 - add isDisplayed, isEnabled and submit method in WebLocatorDriverExecutor

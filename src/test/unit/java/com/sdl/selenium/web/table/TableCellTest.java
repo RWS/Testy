@@ -28,6 +28,6 @@ public class TableCellTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(TableCell tableCell, String expectedXpath) {
-        Assert.assertEquals(tableCell.getPath(), expectedXpath);
+        Assert.assertEquals(tableCell.getXPath(), expectedXpath);
     }
 }
