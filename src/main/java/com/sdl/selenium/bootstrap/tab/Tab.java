@@ -31,7 +31,7 @@ public class Tab extends WebLocator {
     private String getTitlePath(boolean active) {
         WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
         String isActive = active ? "@class='active'" : "not(@class='active')";
-        return  "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]" + link.getPath() + ") > 0]";
+        return  "//ul[@class='" + getPathBuilder().getBaseCls() + "' and count(.//li[" + isActive + "]" + link.getXPath() + ") > 0]";
     }
 
     /**
@@ -42,7 +42,7 @@ public class Tab extends WebLocator {
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
         WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
-        selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']" + link.getPath() + ") > 0";
+        selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']" + link.getXPath() + ") > 0";
         return "//ul[" + selector + "]";
     }
 

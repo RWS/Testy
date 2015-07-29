@@ -17,11 +17,12 @@ public class FormTest {
                 {new Form(container, "TitleForm"),"//*[contains(concat(' ', @class, ' '), ' container ')]//form[count(.//legend[text()='TitleForm']) > 0]"},
                 {new Form(container).setTitle("TitleForm"),"//*[contains(concat(' ', @class, ' '), ' container ')]//form[count(.//legend[text()='TitleForm']) > 0]"},
                 {new Form(container, "TitleForm").setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//form[@id='ID' and count(.//legend[text()='TitleForm']) > 0]"},
+                {new Form(container, "TitleForm").setTemplateTitle(null), "//*[contains(concat(' ', @class, ' '), ' container ')]//form[@title='TitleForm']"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Form form, String expectedXpath) {
-        Assert.assertEquals(form.getPath(), expectedXpath);
+        Assert.assertEquals(form.getXPath(), expectedXpath);
     }
 }

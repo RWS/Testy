@@ -1,6 +1,7 @@
 package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,8 @@ public class Form extends WebLocator implements IWebLocator {
     public Form() {
         setClassName("Form");
         setTag("form");
-        setTemplate("title", "count(.//legend[text()='%s']) > 0");
+        WebLocator e = new WebLocator().setTag("legend").setSearchTextType(SearchType.EQUALS);
+        setTemplateTitle(e);
     }
 
     public Form(WebLocator container) {

@@ -37,7 +37,7 @@ public class TabPanel extends ExtJsComponent {
         WebLocator header = new WebLocator().setClasses("x-tab-panel-header");
         WebLocator locator = new WebLocator().setText(getPathBuilder().getText()).setContainer(header);
         locator.setSearchTextType(getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size()]));
-        return locator.getPath();
+        return locator.getXPath();
     }
 
     /**

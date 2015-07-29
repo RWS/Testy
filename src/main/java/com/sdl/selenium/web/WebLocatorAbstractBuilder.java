@@ -209,6 +209,11 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    public <T extends WebLocatorAbstractBuilder> T setTemplateTitle(WebLocator titleEl) {
+        pathBuilder.setTemplateTitle(titleEl);
+        return (T) this;
+    }
+
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Example:</p>

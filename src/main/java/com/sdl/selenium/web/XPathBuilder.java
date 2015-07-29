@@ -35,6 +35,7 @@ public class XPathBuilder {
     private String elCssSelector;
     private String title;
     private Map<String, String> templates = new LinkedHashMap<>();
+    private Map<String, WebLocator> templateTitle = new LinkedHashMap<>();
     private Map<String, String> templatesValues = new LinkedHashMap<>();
     private Map<String, String> elPathSuffix = new LinkedHashMap<>();
 
@@ -87,7 +88,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param root If the path starts with // then all elements in the document which fulfill following criteria are selected. eg. // or /
-     * @param <T> the element which calls this method
+     * @param <T>  the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setRoot(final String root) {
@@ -130,7 +131,7 @@ public class XPathBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param id eg. id="buttonSubmit"
+     * @param id  eg. id="buttonSubmit"
      * @param <T> the element which calls this method
      * @return this element
      */
@@ -154,7 +155,7 @@ public class XPathBuilder {
      * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
      * @param elPath absolute way (xpath) to identify element
-     * @param <T> the element which calls this method
+     * @param <T>    the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setElPath(final String elPath) {
@@ -175,7 +176,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param baseCls base class
-     * @param <T> the element which calls this method
+     * @param <T>     the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setBaseCls(final String baseCls) {
@@ -226,7 +227,7 @@ public class XPathBuilder {
      * </ul>
      *
      * @param classes list of classes
-     * @param <T> the element which calls this method
+     * @param <T>     the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setClasses(final String... classes) {
@@ -261,7 +262,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param excludeClasses list of class to be excluded
-     * @param <T> the element which calls this method
+     * @param <T>            the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setExcludeClasses(final String... excludeClasses) {
@@ -284,7 +285,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param name eg. name="buttonSubmit"
-     * @param <T> the element which calls this method
+     * @param <T>  the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setName(final String name) {
@@ -306,7 +307,7 @@ public class XPathBuilder {
      *
      * @param text       with which to identify the item
      * @param searchType type search text element: see more details see {@link SearchType}
-     * @param <T> the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setText(final String text, final SearchType... searchType) {
@@ -332,7 +333,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchTextType accepted values are: {@link SearchType#EQUALS}
-     * @param <T> the element which calls this method
+     * @param <T>            the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextType) {
@@ -350,7 +351,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchLabelType accepted values are: {@link SearchType}
-     * @param <T> the element which calls this method
+     * @param <T>             the element which calls this method
      * @return this element
      */
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelType) {
@@ -374,7 +375,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param style of element
-     * @param <T> the element which calls this method
+     * @param <T>   the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setStyle(final String style) {
@@ -396,11 +397,20 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param title of element
-     * @param <T> the element which calls this method
+     * @param <T>   the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTitle(String title) {
         this.title = title;
+        return (T) this;
+    }
+
+    public <T extends XPathBuilder> T setTemplateTitle(WebLocator titleEl) {
+        if (titleEl == null) {
+            templateTitle.remove("title");
+        } else {
+            templateTitle.put("title", titleEl);
+        }
         return (T) this;
     }
 
@@ -413,7 +423,7 @@ public class XPathBuilder {
      *
      * @param key          suffix key
      * @param elPathSuffix additional identification xpath element that will be added at the end
-     * @param <T> the element which calls this method
+     * @param <T>          the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
@@ -436,9 +446,9 @@ public class XPathBuilder {
      *     TODO
      * </pre>
      *
-     * @param key template
+     * @param key   template
      * @param value template
-     * @param <T> the element which calls this method
+     * @param <T>   the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTemplateValue(String key, String value) {
@@ -452,9 +462,10 @@ public class XPathBuilder {
 
     /**
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
+     *
      * @param key   name template
      * @param value template
-     * @param <T> the element which calls this method
+     * @param <T>   the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTemplate(String key, String value) {
@@ -494,7 +505,7 @@ public class XPathBuilder {
      * <p><b><i>Used in logging process</i></b></p>
      *
      * @param infoMessage info Message
-     * @param <T> the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setInfoMessage(final String infoMessage) {
@@ -543,7 +554,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param container parent containing element.
-     * @param <T> the element which calls this method
+     * @param <T>       the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
@@ -563,9 +574,9 @@ public class XPathBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param label text label element
+     * @param label      text label element
      * @param searchType type search text element: see more details see {@link SearchType}
-     * @param <T> the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setLabel(String label, final SearchType... searchType) {
@@ -589,7 +600,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param labelTag label tag element
-     * @param <T> the element which calls this method
+     * @param <T>      the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setLabelTag(String labelTag) {
@@ -610,7 +621,7 @@ public class XPathBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param labelPosition position of this element reported to label
-     * @param <T> the element which calls this method
+     * @param <T>           the element which calls this method
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
@@ -636,7 +647,7 @@ public class XPathBuilder {
      * </pre>
      *
      * @param position starting index = 1
-     * @param <T> the element which calls this method
+     * @param <T>      the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setPosition(int position) {
@@ -660,8 +671,9 @@ public class XPathBuilder {
      *     (//*[contains(@class, 'x-grid-panel')])[1]
      * </pre>
      * More details please see: http://stackoverflow.com/questions/4961349/combine-xpath-predicate-with-position
+     *
      * @param resultIdx starting index = 1
-     * @param <T> the element which calls this method
+     * @param <T>       the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setResultIdx(int resultIdx) {
@@ -686,7 +698,7 @@ public class XPathBuilder {
      * </pre>
      *
      * @param type eg. 'checkbox' or 'button'
-     * @param <T> the element which calls this method
+     * @param <T>  the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setType(String type) {
@@ -701,6 +713,7 @@ public class XPathBuilder {
     /**
      * <p>Used only to identify class type of current object</p>
      * <p> Not used for css class!</p>
+     *
      * @return string
      */
     public String getClassName() {
@@ -834,7 +847,13 @@ public class XPathBuilder {
             }
         }
         if (hasTitle()) {
-            addTemplate(selector, "title", getTitle());
+            if (templateTitle.get("title") != null) {
+                WebLocator title = templateTitle.get("title").setText(getTitle());
+                setTemplate("title", "count(.%s) > 0");
+                addTemplate(selector, "title", title.getXPath());
+            } else {
+                addTemplate(selector, "title", getTitle());
+            }
         }
         if (hasType()) {
             addTemplate(selector, "type", getType());
@@ -868,7 +887,7 @@ public class XPathBuilder {
             WebLocator parentElementIterator = childIterator.getPathBuilder().getContainer();
 
             // child element has myself as parent
-            if(parentElementIterator.getPathBuilder() == this) {
+            if (parentElementIterator.getPathBuilder() == this) {
                 childIterator.setContainer(null); // break parent tree while generating child address
                 parentElement = parentElementIterator;
                 breakElement = childIterator;
@@ -878,7 +897,7 @@ public class XPathBuilder {
         }
 
         String selector = "count(." + child.getXPath() + ") > 0";
-        if(breakElement != null) {
+        if (breakElement != null) {
             breakElement.setContainer(parentElement);
         }
         return selector;
