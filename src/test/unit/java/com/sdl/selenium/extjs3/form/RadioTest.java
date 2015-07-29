@@ -22,6 +22,6 @@ public class RadioTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Radio radio, String expectedXpath) {
-        Assert.assertEquals(radio.getPath(), expectedXpath);
+        Assert.assertEquals(radio.getXPath(), expectedXpath);
     }
 }

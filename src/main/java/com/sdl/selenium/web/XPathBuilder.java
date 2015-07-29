@@ -388,7 +388,7 @@ public class XPathBuilder {
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
      *
-     * @return value that has been set in {@link #setTitle(String)}
+     * @return value that has been set in {@link #setTitle(String, SearchType...)}
      */
     public String getTitle() {
         return title;
@@ -869,6 +869,12 @@ public class XPathBuilder {
                 locator.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 setTemplate("title", "count(.%s) > 0");
                 addTemplate(selector, "title", locator.getXPath());
+            } else if(!searchTitleType.isEmpty() && templateTitle.get("title") == null){
+                boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
+//                if (!(hasContainsAll || searchTitleType.contains(SearchType.CONTAINS_ANY))) {
+//                    text = Utils.getEscapeQuotesText(text);
+//                }
+                selector.add(getTextSearchTypePath(searchTitleType, "'"+getTitle()+"'", hasContainsAll, "@title"));
             } else {
                 addTemplate(selector, "title", getTitle());
             }
@@ -980,18 +986,18 @@ public class XPathBuilder {
             boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
             boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
             if (useChildNodesSearch) {
-                selector += "count(" + (isDeepSearch ? "*//" : "") + "text()[";
+                selector += "count(" + (isDeepSearch ? "*//" : "") + pathText +"[";
                 pathText = ".";
             }
 
-            selector += getTextSearchTypePath(text, hasContainsAll, pathText);
+            selector += getTextSearchTypePath(searchTextType, text, hasContainsAll, pathText);
 
             if (useChildNodesSearch) {
                 selector += "]) > 0";
             }
 
             if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
-                String selfPath = getTextSearchTypePath(text, hasContainsAll, "text()");
+                String selfPath = getTextSearchTypePath(searchTextType, text, hasContainsAll, "text()");
                 selector = "(" + selfPath + " or " + selector + ")";
             }
 
@@ -1005,17 +1011,17 @@ public class XPathBuilder {
         return selector;
     }
 
-    private String getTextSearchTypePath(String text, boolean hasContainsAll, String pathText) {
+    private String getTextSearchTypePath(Set<SearchType> searchType, String text, boolean hasContainsAll, String pathText) {
         String selector;
-        if (searchTextType.contains(SearchType.TRIM)) {
+        if (searchType.contains(SearchType.TRIM)) {
             pathText = "normalize-space(" + pathText + ")";
         }
 
-        if (searchTextType.contains(SearchType.EQUALS)) {
+        if (searchType.contains(SearchType.EQUALS)) {
             selector = pathText + "=" + text;
-        } else if (searchTextType.contains(SearchType.STARTS_WITH)) {
+        } else if (searchType.contains(SearchType.STARTS_WITH)) {
             selector = "starts-with(" + pathText + "," + text + ")";
-        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+        } else if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
             String[] strings = pattern.split(text.substring(1));
