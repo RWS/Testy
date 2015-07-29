@@ -8,6 +8,7 @@ RELEASE NOTES
 - add getCssValue(String propertyName) method in WebLocator
 - add profile.preference.dom.disable_beforeunload = true for Firefox
 - add setTemplateTitle(WebLocator titleEl)
+- setTitle(final String title, SearchType ...searchType) accept SearchType
 
 **Release Notes for Testy 1.8.1**
 - add isDisplayed, isEnabled and submit method in WebLocatorDriverExecutor

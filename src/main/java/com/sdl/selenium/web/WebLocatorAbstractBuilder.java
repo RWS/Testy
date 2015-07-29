@@ -204,8 +204,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setTitle(String title) {
-        pathBuilder.setTitle(title);
+    public <T extends WebLocatorAbstractBuilder> T setTitle(final String title, SearchType ...searchType) {
+        pathBuilder.setTitle(title, searchType);
         return (T) this;
     }
 

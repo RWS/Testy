@@ -30,6 +30,7 @@ public class XPathBuilder {
     private String text;
     public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
+    private Set<SearchType> searchTitleType = new HashSet<>();
     private List<SearchType> searchLabelType = new ArrayList<>();
     private String style;
     private String elCssSelector;
@@ -400,8 +401,24 @@ public class XPathBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setTitle(String title) {
+    public <T extends XPathBuilder> T setTitle(final String title, final SearchType ...searchType) {
         this.title = title;
+        if (searchType != null && searchType.length > 0) {
+            setSearchTitleType(searchType);
+        } else {
+            this.searchTitleType.addAll(defaultSearchTextType);
+        }
+        return (T) this;
+    }
+
+    private  <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleType) {
+        if (searchTitleType == null) {
+            this.searchTitleType = WebLocatorConfig.getSearchTextType();
+        } else {
+            this.searchTitleType = new HashSet<>();
+            Collections.addAll(this.searchTitleType, searchTitleType);
+        }
+        this.searchTitleType.addAll(defaultSearchTextType);
         return (T) this;
     }
 
@@ -848,9 +865,10 @@ public class XPathBuilder {
         }
         if (hasTitle()) {
             if (templateTitle.get("title") != null) {
-                WebLocator title = templateTitle.get("title").setText(getTitle());
+                WebLocator locator = templateTitle.get("title");
+                locator.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 setTemplate("title", "count(.%s) > 0");
-                addTemplate(selector, "title", title.getXPath());
+                addTemplate(selector, "title", locator.getXPath());
             } else {
                 addTemplate(selector, "title", getTitle());
             }

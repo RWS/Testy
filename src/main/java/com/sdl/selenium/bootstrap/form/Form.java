@@ -26,7 +26,7 @@ public class Form extends WebLocator implements IWebLocator {
     public Form() {
         setClassName("Form");
         setTag("form");
-        WebLocator e = new WebLocator().setTag("legend").setSearchTextType(SearchType.EQUALS);
+        WebLocator e = new WebLocator().setTag("legend");
         setTemplateTitle(e);
     }
 
@@ -37,6 +37,6 @@ public class Form extends WebLocator implements IWebLocator {
 
     public Form(WebLocator container, String title) {
         this(container);
-        setTitle(title);
+        setTitle(title, SearchType.EQUALS);
     }
 }
