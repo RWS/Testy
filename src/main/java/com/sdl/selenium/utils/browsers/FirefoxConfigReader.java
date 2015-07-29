@@ -41,7 +41,8 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             "\n profile.preference.security.warn_submit_insecure=false" +
             "\n profile.preference.security.warn_submit_insecure.show_once=false" +
             "\n profile.preference.security.warn_viewing_mixed=false" +
-            "\n profile.preference.security.warn_viewing_mixed.show_once=false";
+            "\n profile.preference.security.warn_viewing_mixed.show_once=false" +
+            "\n profile.preference.dom.disable_beforeunload = true";
 
     public FirefoxConfigReader() {
         this(null);
