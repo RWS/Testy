@@ -38,13 +38,13 @@ public class ConditionManager  {
 
     private long startTime;
 
-    private List<Condition> conditionList = new ArrayList<Condition>();
+    private List<Condition> conditionList = new ArrayList<>();
 
     /**
      * default timeout in milliseconds is 10000.
      */
     public ConditionManager() {
-        this.add(new FailCondition("@TimeoutCondition@") {
+        this.add(new FailCondition("TimeoutCondition@") {
             public boolean execute() {
                 return new Date().getTime() - startTime > timeout;
             }
@@ -53,7 +53,7 @@ public class ConditionManager  {
                 return true;
             }
             public String toString() {
-                return "TimeoutCondition@" + timeout;
+                return getMessage() + timeout;
             }
         });
     }
@@ -71,13 +71,11 @@ public class ConditionManager  {
     }
 
     public ConditionManager add(Condition condition) {
-        //LOGGER.debug("ConditionManager add condition : " + condition);
         conditionList.add(condition);
         return this;
     }
 
     public ConditionManager remove(Condition condition) {
-        //LOGGER.debug("ConditionManager remove condition : " + condition);
         conditionList.remove(condition);
         return this;
     }
@@ -124,7 +122,7 @@ public class ConditionManager  {
         while (true) {
             Condition condition = findCondition();
             if(condition != null){
-                LOGGER.debug(condition + " - executed");
+                LOGGER.debug("{} - executed in ({}ms)", condition, new Date().getTime() - startTime);
                 return condition;
             }
             Utils.sleep(SLEEP_INTERVAL);
@@ -136,7 +134,6 @@ public class ConditionManager  {
             if (condition.execute()) {
                 return condition;
             }
-            //LOGGER.debug(condition + " is false");
         }
         return null;
     }

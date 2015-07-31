@@ -2,7 +2,6 @@ package com.sdl.weblocator.extjs;
 
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
-import com.sdl.selenium.conditions.RenderCondition;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.conditions.MessageBoxFailCondition;
 import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
@@ -35,7 +34,7 @@ public class ConditionManagerTest extends TestBase {
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
 
         Condition condition = conditionManager.execute();
-        RenderCondition renderCondition = (RenderCondition)condition;
+        //RenderCondition renderCondition = (RenderCondition)condition;
 
         return condition;
     }

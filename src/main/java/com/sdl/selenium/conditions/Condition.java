@@ -37,8 +37,8 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
     @Override
     public String toString() {
         String msg = getClass().getSimpleName();
-        if(msg == null || msg.equals("")) {
-            msg = "Condition@" +  message;
+        if(msg == null || "".equals(msg)) {
+            msg = "Condition@" +  getMessage();
         } else {
             msg += "@";
         }
