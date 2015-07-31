@@ -1,6 +1,8 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 1.8.2-SNAPSHOT**
+**Release Notes for Testy 1.8.3-SNAPSHOT**
+
+**Release Notes for Testy 1.8.2**
 - add isDisplayed method in WebLocator
 - fix properties.load from inputStream correctly
 - add template for title
