@@ -113,7 +113,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 Release Notes
 -------------
 
-**Release Notes for Testy 1.8.2-SNAPSHOT**
+**Release Notes for Testy 1.8.3-SNAPSHOT**
 
 
 **Release Notes for Testy 1.8.2**
