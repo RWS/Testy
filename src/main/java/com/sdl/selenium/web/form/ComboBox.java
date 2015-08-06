@@ -37,11 +37,6 @@ public class ComboBox extends WebLocator implements ICombo {
     }
 
     @Override
-    public boolean setValue(String value) {
-        return select(value);
-    }
-
-    @Override
     public String getValue() {
         String value = this.getAttribute("value");
         WebLocator el = new WebLocator(this).setElPath("//option[contains(@value, '" + value + "')]");

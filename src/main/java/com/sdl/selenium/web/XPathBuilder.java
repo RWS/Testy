@@ -49,7 +49,46 @@ public class XPathBuilder {
     private int position = -1;
     private int resultIdx = -1;
     private String type;
-    private Map<String, String> attribute = new LinkedHashMap<>();
+
+    /*private class SearchText {
+        private String text;
+        private Set<SearchType> searchType = new HashSet<>();
+
+        public SearchText(String text, Set<SearchType> searchType) {
+            this.text = text;
+            this.searchType = searchType;
+        }
+
+        public SearchText(String text, SearchType... searchType) {
+            this.text = text;
+            if (searchType != null) {
+                if (searchType.length == 0) {
+                    Collections.addAll(this.searchType, SearchType.EQUALS);
+                } else {
+                    Collections.addAll(this.searchType, searchType);
+                }
+            }
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public Set<SearchType> getSearchType() {
+            return searchType;
+        }
+
+        public void setSearchType(SearchType... searchType) {
+//            this.searchType = searchType;
+            Collections.addAll(this.searchType, searchType);
+        }
+    }*/
+
+    private Map<String, SearchText> attribute = new LinkedHashMap<>();
 
     //private int elIndex; // TODO try to find how can be used
 
@@ -239,18 +278,6 @@ public class XPathBuilder {
         return (T) this;
     }
 
-
-    public List<WebLocator> getChildNodes() {
-        return childNodes;
-    }
-
-    public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
-        if (childNodes != null) {
-            this.childNodes = Arrays.asList(childNodes);
-        }
-        return (T) this;
-    }
-
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
@@ -270,6 +297,17 @@ public class XPathBuilder {
     public <T extends XPathBuilder> T setExcludeClasses(final String... excludeClasses) {
         if (excludeClasses != null) {
             this.excludeClasses = Arrays.asList(excludeClasses);
+        }
+        return (T) this;
+    }
+
+    public List<WebLocator> getChildNodes() {
+        return childNodes;
+    }
+
+    public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
+        if (childNodes != null) {
+            this.childNodes = Arrays.asList(childNodes);
         }
         return (T) this;
     }
@@ -402,7 +440,7 @@ public class XPathBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setTitle(final String title, final SearchType ...searchType) {
+    public <T extends XPathBuilder> T setTitle(final String title, final SearchType... searchType) {
         this.title = title;
         if (searchType != null && searchType.length > 0) {
             setSearchTitleType(searchType);
@@ -412,7 +450,7 @@ public class XPathBuilder {
         return (T) this;
     }
 
-    private  <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleType) {
+    private <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleType) {
         if (searchTitleType == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {
@@ -725,15 +763,6 @@ public class XPathBuilder {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setType(String)}
-     */
-    public String getAttribute(final String key) {
-        return attribute.get(key);
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
@@ -741,16 +770,16 @@ public class XPathBuilder {
      * </pre>
      *
      * @param attribute eg. placeholder
-     * @param value eg. Search
-     * @param <T>  the element which calls this method
+     * @param value     eg. Search
+     * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setAttribute(final String attribute, final String value) {
-        if(attribute != null){
-            if(value == null){
+    public <T extends XPathBuilder> T setAttribute(final String attribute, final String value, final SearchType... searchType) {
+        if (attribute != null) {
+            if (value == null) {
                 this.attribute.remove(attribute);
             } else {
-                this.attribute.put(attribute, value);
+                this.attribute.put(attribute, new SearchText(value, searchType));
             }
         }
         return (T) this;
@@ -902,12 +931,12 @@ public class XPathBuilder {
                 locator.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 setTemplate("title", "count(.%s) > 0");
                 addTemplate(selector, "title", locator.getXPath());
-            } else if(!searchTitleType.isEmpty() && templateTitle.get("title") == null){
+            } else if (!searchTitleType.isEmpty() && templateTitle.get("title") == null) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
 //                if (!(hasContainsAll || searchTitleType.contains(SearchType.CONTAINS_ANY))) {
 //                    text = Utils.getEscapeQuotesText(text);
 //                }
-                selector.add(getTextSearchTypePath(searchTitleType, "'"+getTitle()+"'", hasContainsAll, "@title"));
+                selector.add(getTextSearchTypePath(searchTitleType, Utils.getEscapeQuotesText(getTitle()), hasContainsAll, "@title"));
             } else {
                 addTemplate(selector, "title", getTitle());
             }
@@ -916,8 +945,10 @@ public class XPathBuilder {
             addTemplate(selector, "type", getType());
         }
         if (!attribute.isEmpty()) {
-            for (Map.Entry<String, String> entry : attribute.entrySet()) {
-                selector.add("@" + entry.getKey() + "='" + entry.getValue() + "'");
+//            Set<SearchType> attributeSearchType = new HashSet<>();
+//            attributeSearchType.add(SearchType.EQUALS);
+            for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
+                selector.add(getTextSearchTypePath(entry.getValue().getSearchType(), Utils.getEscapeQuotesText(entry.getValue().getText()), false, "@" + entry.getKey()));
             }
         }
         for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
@@ -1024,7 +1055,7 @@ public class XPathBuilder {
             boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
             boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
             if (useChildNodesSearch) {
-                selector += "count(" + (isDeepSearch ? "*//" : "") + pathText +"[";
+                selector += "count(" + (isDeepSearch ? "*//" : "") + pathText + "[";
                 pathText = ".";
             }
 

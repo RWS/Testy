@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -21,6 +22,8 @@ public class CheckBoxTest {
                 {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute("placeholder", null), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox']"},
                 {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute(null, "Search"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search']"},
                 {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute("role", "SearchRole"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and @role='SearchRole']"},
+                {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute("role", "SearchRole", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and contains(@role,'SearchRole')]"},
+                {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute("role", "SearchRole", null), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and contains(@role,'SearchRole')]"},
         };
     }
 

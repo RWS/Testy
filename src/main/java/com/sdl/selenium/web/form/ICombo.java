@@ -1,7 +1,12 @@
 package com.sdl.selenium.web.form;
 
-public interface ICombo extends ITextField {
+import com.sdl.selenium.web.Editable;
+import com.sdl.selenium.web.IWebLocator;
+
+public interface ICombo extends IWebLocator, Editable {
 
     boolean select(String value);
+
+    String getValue();
 
 }
