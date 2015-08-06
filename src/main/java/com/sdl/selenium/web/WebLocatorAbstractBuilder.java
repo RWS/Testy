@@ -226,7 +226,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(String key, String elPathSuffix) {
+    public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(final String key, final String elPathSuffix) {
         pathBuilder.setElPathSuffix(key, elPathSuffix);
         return (T) this;
     }
@@ -243,7 +243,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setTemplateValue(String key, String value) {
+    public <T extends WebLocatorAbstractBuilder> T setTemplateValue(final String key, final String value) {
         pathBuilder.setTemplateValue(key, value);
         return (T) this;
     }
@@ -255,12 +255,12 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setTemplate(String key, String value) {
+    public <T extends WebLocatorAbstractBuilder> T setTemplate(final String key, final String value) {
         pathBuilder.setTemplate(key, value);
         return (T) this;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T addToTemplate(String key, String value) {
+    public <T extends WebLocatorAbstractBuilder> T addToTemplate(final String key, final String value) {
         pathBuilder.addToTemplate(key, value);
         return (T) this;
     }
@@ -312,7 +312,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchType) {
+    public <T extends WebLocatorAbstractBuilder> T setLabel(final String label, final SearchType... searchType) {
        pathBuilder.setLabel(label, searchType);
         return (T) this;
     }
@@ -324,7 +324,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setLabelTag(String labelTag) {
+    public <T extends WebLocatorAbstractBuilder> T setLabelTag(final String labelTag) {
         pathBuilder.setLabelTag(labelTag);
         return (T) this;
     }
@@ -337,7 +337,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
-    public <T extends WebLocatorAbstractBuilder> T setLabelPosition(String labelPosition) {
+    public <T extends WebLocatorAbstractBuilder> T setLabelPosition(final String labelPosition) {
         pathBuilder.setLabelPosition(labelPosition);
         return (T) this;
     }
@@ -353,7 +353,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setPosition(int position) {
+    public <T extends WebLocatorAbstractBuilder> T setPosition(final int position) {
         pathBuilder.setPosition(position);
         return (T) this;
     }
@@ -369,7 +369,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setResultIdx(int resultIdx) {
+    public <T extends WebLocatorAbstractBuilder> T setResultIdx(final int resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
     }
@@ -385,7 +385,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setType(String type) {
+    public <T extends WebLocatorAbstractBuilder> T setType(final String type) {
        pathBuilder.setType(type);
         return (T) this;
     }
@@ -402,7 +402,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>  the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setAttribute(String attribute, String value) {
+    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value) {
         pathBuilder.setAttribute(attribute, value);
         return (T) this;
     }

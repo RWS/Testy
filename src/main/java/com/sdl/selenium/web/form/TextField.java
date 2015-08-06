@@ -12,6 +12,7 @@ public class TextField extends WebLocator implements ITextField {
     public TextField() {
         setClassName("TextField");
         setTag("input");
+        setTemplate("placeholder", "@placeholder='%s'");
     }
 
     public TextField(WebLocator container) {
@@ -22,6 +23,16 @@ public class TextField extends WebLocator implements ITextField {
     public TextField(String id) {
         this();
         setId(id);
+    }
+
+    public <T extends TextField> T setPlaceholder(final String value) {
+        String key = "placeholder";
+        if(value != null) {
+            setElPathSuffix(key, applyTemplate(key, value));
+        } else {
+            setElPathSuffix(key, null);
+        }
+        return (T) this;
     }
 
     public boolean pasteInValue(String value) {

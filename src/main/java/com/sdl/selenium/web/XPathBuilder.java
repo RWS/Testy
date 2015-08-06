@@ -444,7 +444,7 @@ public class XPathBuilder {
      * @param <T>          the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setElPathSuffix(String key, String elPathSuffix) {
+    public <T extends XPathBuilder> T setElPathSuffix(final String key, final String elPathSuffix) {
         if (elPathSuffix == null || "".equals(elPathSuffix)) {
             this.elPathSuffix.remove(key);
         } else {
@@ -469,7 +469,7 @@ public class XPathBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setTemplateValue(String key, String value) {
+    public <T extends XPathBuilder> T setTemplateValue(final String key, final String value) {
         if (value == null) {
             this.templatesValues.remove(key);
         } else {
@@ -486,7 +486,7 @@ public class XPathBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setTemplate(String key, String value) {
+    public <T extends XPathBuilder> T setTemplate(final String key, final String value) {
         if (value == null) {
             templates.remove(key);
         } else {
@@ -495,7 +495,7 @@ public class XPathBuilder {
         return (T) this;
     }
 
-    public <T extends XPathBuilder> T addToTemplate(String key, String value) {
+    public <T extends XPathBuilder> T addToTemplate(final String key, final String value) {
         String template = getTemplate(key);
         if (StringUtils.isNotEmpty(template)) {
             template += " and ";
@@ -506,7 +506,7 @@ public class XPathBuilder {
         return (T) this;
     }
 
-    public String getTemplate(String key) {
+    public String getTemplate(final String key) {
         return templates.get(key);
     }
 
@@ -597,7 +597,7 @@ public class XPathBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setLabel(String label, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setLabel(final String label, final SearchType... searchType) {
         this.label = label;
         if (searchType != null && searchType.length > 0) {
             setSearchLabelType(searchType);
@@ -621,7 +621,7 @@ public class XPathBuilder {
      * @param <T>      the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setLabelTag(String labelTag) {
+    public <T extends XPathBuilder> T setLabelTag(final String labelTag) {
         this.labelTag = labelTag;
         return (T) this;
     }
@@ -643,7 +643,7 @@ public class XPathBuilder {
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
-    public <T extends XPathBuilder> T setLabelPosition(String labelPosition) {
+    public <T extends XPathBuilder> T setLabelPosition(final String labelPosition) {
         this.labelPosition = labelPosition;
         return (T) this;
     }
@@ -668,7 +668,7 @@ public class XPathBuilder {
      * @param <T>      the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setPosition(int position) {
+    public <T extends XPathBuilder> T setPosition(final int position) {
         this.position = position;
         return (T) this;
     }
@@ -694,7 +694,7 @@ public class XPathBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setResultIdx(int resultIdx) {
+    public <T extends XPathBuilder> T setResultIdx(final int resultIdx) {
         this.resultIdx = resultIdx;
         return (T) this;
     }
@@ -719,7 +719,7 @@ public class XPathBuilder {
      * @param <T>  the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setType(String type) {
+    public <T extends XPathBuilder> T setType(final String type) {
         this.type = type;
         return (T) this;
     }
@@ -729,7 +729,7 @@ public class XPathBuilder {
      *
      * @return value that has been set in {@link #setType(String)}
      */
-    public String getAttribute(String key) {
+    public String getAttribute(final String key) {
         return attribute.get(key);
     }
 
@@ -745,7 +745,7 @@ public class XPathBuilder {
      * @param <T>  the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setAttribute(String attribute, String value) {
+    public <T extends XPathBuilder> T setAttribute(final String attribute, final String value) {
         if(value != null && attribute != null){
             this.attribute.put(attribute, value);
         } else if(attribute != null && !"".equals(attribute)) {

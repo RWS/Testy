@@ -2,6 +2,7 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 1.8.3-SNAPSHOT**
 - add setAttribute(String attribute, String value)
+- add setPlaceholder(final String value) for all components which extend com.sdl.selenium.web.form.TextField
 
 **Release Notes for Testy 1.8.2**
 - add isDisplayed method in WebLocator
