@@ -24,7 +24,7 @@ public class TextField extends WebLocator implements ITextField {
         setId(id);
     }
 
-    public <T extends TextField> T setPlaceholder(final String value) {
+    public <T extends ITextField> T setPlaceholder(final String value) {
         setAttribute("placeholder", value);
         return (T) this;
     }

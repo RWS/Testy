@@ -746,10 +746,12 @@ public class XPathBuilder {
      * @return this element
      */
     public <T extends XPathBuilder> T setAttribute(final String attribute, final String value) {
-        if(value != null && attribute != null){
-            this.attribute.put(attribute, value);
-        } else if(attribute != null && !"".equals(attribute)) {
-            this.attribute.remove(attribute);
+        if(attribute != null){
+            if(value == null){
+                this.attribute.remove(attribute);
+            } else {
+                this.attribute.put(attribute, value);
+            }
         }
         return (T) this;
     }
@@ -840,10 +842,6 @@ public class XPathBuilder {
         return type != null && !type.equals("");
     }
 
-    protected boolean hasAttribute() {
-        return !attribute.isEmpty();
-    }
-
     // =========================================
     // ============ XPath Methods ==============
     // =========================================
@@ -917,7 +915,7 @@ public class XPathBuilder {
         if (hasType()) {
             addTemplate(selector, "type", getType());
         }
-        if (hasAttribute()) {
+        if (!attribute.isEmpty()) {
             for (Map.Entry<String, String> entry : attribute.entrySet()) {
                 selector.add("@" + entry.getKey() + "='" + entry.getValue() + "'");
             }

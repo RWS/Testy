@@ -18,4 +18,6 @@ public interface ITextField extends IWebLocator, Editable {
      */
     String getValue();
 
+    <T extends ITextField> T setPlaceholder(final String value);
+
 }

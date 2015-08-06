@@ -1,14 +1,13 @@
 package com.sdl.selenium.extjs3.form;
 
-import org.junit.Assert;
-import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITextField;
 import com.sdl.selenium.web.utils.Utils;
+import org.junit.Assert;
+import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TextField extends ExtJsComponent implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
@@ -38,6 +37,11 @@ public class TextField extends ExtJsComponent implements ITextField {
     public TextField(String name, WebLocator container) {
         this(container);
         setName(name);
+    }
+
+    public <T extends ITextField> T setPlaceholder(final String value) {
+        setAttribute("placeholder", value);
+        return (T) this;
     }
 
     // methods
