@@ -2,6 +2,7 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.Editable;
 import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.SearchType;
 
 public interface ITextField extends IWebLocator, Editable {
 
@@ -18,6 +19,6 @@ public interface ITextField extends IWebLocator, Editable {
      */
     String getValue();
 
-    <T extends ITextField> T setPlaceholder(final String value);
+    <T extends ITextField> T setPlaceholder(final String value, SearchType...searchType);
 
 }

@@ -49,45 +49,6 @@ public class XPathBuilder {
     private int position = -1;
     private int resultIdx = -1;
     private String type;
-
-    /*private class SearchText {
-        private String text;
-        private Set<SearchType> searchType = new HashSet<>();
-
-        public SearchText(String text, Set<SearchType> searchType) {
-            this.text = text;
-            this.searchType = searchType;
-        }
-
-        public SearchText(String text, SearchType... searchType) {
-            this.text = text;
-            if (searchType != null) {
-                if (searchType.length == 0) {
-                    Collections.addAll(this.searchType, SearchType.EQUALS);
-                } else {
-                    Collections.addAll(this.searchType, searchType);
-                }
-            }
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public Set<SearchType> getSearchType() {
-            return searchType;
-        }
-
-        public void setSearchType(SearchType... searchType) {
-//            this.searchType = searchType;
-            Collections.addAll(this.searchType, searchType);
-        }
-    }*/
-
     private Map<String, SearchText> attribute = new LinkedHashMap<>();
 
     //private int elIndex; // TODO try to find how can be used
@@ -769,17 +730,18 @@ public class XPathBuilder {
      *     //*[@placeholder='Search']
      * </pre>
      *
-     * @param attribute eg. placeholder
-     * @param value     eg. Search
-     * @param <T>       the element which calls this method
+     * @param attribute   eg. placeholder
+     * @param value       eg. Search
+     * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
+     * @param <T>         the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setAttribute(final String attribute, final String value, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setAttribute(final String attribute, final String value, final SearchType... searchTypes) {
         if (attribute != null) {
             if (value == null) {
                 this.attribute.remove(attribute);
             } else {
-                this.attribute.put(attribute, new SearchText(value, searchType));
+                this.attribute.put(attribute, new SearchText(value, searchTypes));
             }
         }
         return (T) this;
@@ -933,10 +895,11 @@ public class XPathBuilder {
                 addTemplate(selector, "title", locator.getXPath());
             } else if (!searchTitleType.isEmpty() && templateTitle.get("title") == null) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
-//                if (!(hasContainsAll || searchTitleType.contains(SearchType.CONTAINS_ANY))) {
-//                    text = Utils.getEscapeQuotesText(text);
-//                }
-                selector.add(getTextSearchTypePath(searchTitleType, Utils.getEscapeQuotesText(getTitle()), hasContainsAll, "@title"));
+                String title = getTitle();
+                if (!(hasContainsAll || searchTitleType.contains(SearchType.CONTAINS_ANY))) {
+                    title = Utils.getEscapeQuotesText(title);
+                }
+                selector.add(getTextSearchTypePath(searchTitleType, title, hasContainsAll, "@title"));
             } else {
                 addTemplate(selector, "title", getTitle());
             }
@@ -945,10 +908,14 @@ public class XPathBuilder {
             addTemplate(selector, "type", getType());
         }
         if (!attribute.isEmpty()) {
-//            Set<SearchType> attributeSearchType = new HashSet<>();
-//            attributeSearchType.add(SearchType.EQUALS);
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                selector.add(getTextSearchTypePath(entry.getValue().getSearchType(), Utils.getEscapeQuotesText(entry.getValue().getText()), false, "@" + entry.getKey()));
+                Set<SearchType> searchType = entry.getValue().getSearchType();
+                boolean hasContainsAll = searchType.contains(SearchType.CONTAINS_ALL);
+                String text = entry.getValue().getText();
+                if (!(hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY))) {
+                    text = Utils.getEscapeQuotesText(text);
+                }
+                selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));
             }
         }
         for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {

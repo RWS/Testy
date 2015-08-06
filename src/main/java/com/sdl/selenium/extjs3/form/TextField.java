@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITextField;
 import com.sdl.selenium.web.utils.Utils;
@@ -39,8 +40,13 @@ public class TextField extends ExtJsComponent implements ITextField {
         setName(name);
     }
 
-    public <T extends ITextField> T setPlaceholder(final String value) {
-        setAttribute("placeholder", value);
+    /**
+     * @param value value
+     * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
+     * @return current element
+     */
+    public <T extends ITextField> T setPlaceholder(final String value, SearchType ...searchTypes) {
+        setAttribute("placeholder", value, searchTypes);
         return (T) this;
     }
 

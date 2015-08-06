@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
@@ -23,9 +24,13 @@ public class TextField extends WebLocator implements ITextField {
         this();
         setId(id);
     }
-
-    public <T extends ITextField> T setPlaceholder(final String value) {
-        setAttribute("placeholder", value);
+    /**
+     * @param value value
+     * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
+     * @return current element
+     */
+    public <T extends ITextField> T setPlaceholder(final String value, SearchType ...searchTypes) {
+        setAttribute("placeholder", value, searchTypes);
         return (T) this;
     }
 
