@@ -390,6 +390,23 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[@placeholder='Search']
+     * </pre>
+     *
+     * @param attribute eg. placeholder
+     * @param value eg. Search
+     * @param <T>  the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setAttribute(String attribute, String value) {
+        pathBuilder.setAttribute(attribute, value);
+        return (T) this;
+    }
+
     // =========================================
     // =============== Methods =================
     // =========================================

@@ -49,6 +49,7 @@ public class XPathBuilder {
     private int position = -1;
     private int resultIdx = -1;
     private String type;
+    private Map<String, String> attribute = new LinkedHashMap<>();
 
     //private int elIndex; // TODO try to find how can be used
 
@@ -723,6 +724,36 @@ public class XPathBuilder {
         return (T) this;
     }
 
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
+     *
+     * @return value that has been set in {@link #setType(String)}
+     */
+    public String getAttribute(String key) {
+        return attribute.get(key);
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[@placeholder='Search']
+     * </pre>
+     *
+     * @param attribute eg. placeholder
+     * @param value eg. Search
+     * @param <T>  the element which calls this method
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setAttribute(String attribute, String value) {
+        if(value != null && attribute != null){
+            this.attribute.put(attribute, value);
+        } else if(attribute != null && !"".equals(attribute)) {
+            this.attribute.remove(attribute);
+        }
+        return (T) this;
+    }
+
     // =========================================
     // =============== Methods =================
     // =========================================
@@ -809,6 +840,10 @@ public class XPathBuilder {
         return type != null && !type.equals("");
     }
 
+    protected boolean hasAttribute() {
+        return !attribute.isEmpty();
+    }
+
     // =========================================
     // ============ XPath Methods ==============
     // =========================================
@@ -881,6 +916,11 @@ public class XPathBuilder {
         }
         if (hasType()) {
             addTemplate(selector, "type", getType());
+        }
+        if (hasAttribute()) {
+            for (Map.Entry<String, String> entry : attribute.entrySet()) {
+                selector.add("@" + entry.getKey() + "='" + entry.getValue() + "'");
+            }
         }
         for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
             addTemplate(selector, entry.getKey(), entry.getValue());

@@ -1,6 +1,7 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 1.8.3-SNAPSHOT**
+- add setAttribute(String attribute, String value)
 
 **Release Notes for Testy 1.8.2**
 - add isDisplayed method in WebLocator

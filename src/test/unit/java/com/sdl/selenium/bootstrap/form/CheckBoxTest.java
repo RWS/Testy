@@ -17,11 +17,15 @@ public class CheckBoxTest {
                 {new CheckBox(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new CheckBox(container, "TextFieldText"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[contains(text(),'TextFieldText')]//input[@type='checkbox']"},
                 {new CheckBox("TextFieldText", container),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox']"},
+                {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search']"},
+                {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute("placeholder", null), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox']"},
+                {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute(null, "Search"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search']"},
+                {new CheckBox("TextFieldText", container).setAttribute("placeholder", "Search").setAttribute("role", "SearchRole"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and @role='SearchRole']"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(CheckBox checkBox, String expectedXpath) {
-        Assert.assertEquals(checkBox.getPath(), expectedXpath);
+        Assert.assertEquals(checkBox.getXPath(), expectedXpath);
     }
 }
