@@ -33,7 +33,6 @@ public class XPathBuilder {
     private Set<SearchType> searchTitleType = new HashSet<>();
     private List<SearchType> searchLabelType = new ArrayList<>();
     private String style;
-    private String elCssSelector;
     private String title;
     private Map<String, String> templates = new LinkedHashMap<>();
     private Map<String, WebLocator> templateTitle = new LinkedHashMap<>();
@@ -809,10 +808,6 @@ public class XPathBuilder {
         return tag != null && !tag.equals("*");
     }
 
-    protected boolean hasElCssSelector() {
-        return elCssSelector != null && !elCssSelector.equals("");
-    }
-
     protected boolean hasLabel() {
         return label != null && !label.equals("");
     }
@@ -895,10 +890,7 @@ public class XPathBuilder {
                 addTemplate(selector, "title", locator.getXPath());
             } else if (!searchTitleType.isEmpty() && templateTitle.get("title") == null) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
-                String title = getTitle();
-                if (!(hasContainsAll || searchTitleType.contains(SearchType.CONTAINS_ANY))) {
-                    title = Utils.getEscapeQuotesText(title);
-                }
+                String title = getTextAfterEscapeQuotes(hasContainsAll, getTitle(), searchTitleType);
                 selector.add(getTextSearchTypePath(searchTitleType, title, hasContainsAll, "@title"));
             } else {
                 addTemplate(selector, "title", getTitle());
@@ -911,10 +903,7 @@ public class XPathBuilder {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
                 Set<SearchType> searchType = entry.getValue().getSearchType();
                 boolean hasContainsAll = searchType.contains(SearchType.CONTAINS_ALL);
-                String text = entry.getValue().getText();
-                if (!(hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY))) {
-                    text = Utils.getEscapeQuotesText(text);
-                }
+                String text = getTextAfterEscapeQuotes(hasContainsAll, entry.getValue().getText(), searchType);
                 selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));
             }
         }
@@ -1012,20 +1001,15 @@ public class XPathBuilder {
             if (templates.get("text") != null) {
                 return String.format(templates.get("text"), text);
             }
-
-            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
-            if (!(hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY))) {
-                text = Utils.getEscapeQuotesText(text);
-            }
-            String pathText = "text()";
-
             boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
             boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
+            String pathText = "text()";
             if (useChildNodesSearch) {
                 selector += "count(" + (isDeepSearch ? "*//" : "") + pathText + "[";
                 pathText = ".";
             }
-
+            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
+            text = getTextAfterEscapeQuotes(hasContainsAll, text, searchTextType);
             selector += getTextSearchTypePath(searchTextType, text, hasContainsAll, pathText);
 
             if (useChildNodesSearch) {
@@ -1070,6 +1054,13 @@ public class XPathBuilder {
             selector = "contains(" + pathText + "," + text + ")";
         }
         return selector;
+    }
+
+    private String getTextAfterEscapeQuotes(boolean hasContainsAll, String text, Set<SearchType> searchType) {
+        if (!(hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY))) {
+            text = Utils.getEscapeQuotesText(text);
+        }
+        return text;
     }
 
     private String getBaseItemPath() {
