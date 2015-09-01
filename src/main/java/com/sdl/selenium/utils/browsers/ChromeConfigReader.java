@@ -85,5 +85,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         String arguments = getProperty("options.arguments");
         options.addArguments(arguments);
         options.setExperimentalOption("prefs", prefs);
+        LOGGER.info("The properties was load with success: {}", toString());
     }
 }

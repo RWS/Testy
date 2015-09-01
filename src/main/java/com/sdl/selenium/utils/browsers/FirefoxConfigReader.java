@@ -77,6 +77,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             String profilePath = getProperty("browser.profile.path");
             if (profilePath != null && !profilePath.equals("")) {
                 profile = new FirefoxProfile(new File(profilePath));
+                setProfilePreferences(profile);
                 driver = new FirefoxDriver(profile);
             } else {
                 DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
@@ -132,5 +133,6 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 }
             }
         }
+        LOGGER.info("The properties was load with success: {}", toString());
     }
 }
