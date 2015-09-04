@@ -4,11 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class RunExe {
     private static final Logger LOGGER = LoggerFactory.getLogger(RunExe.class);
-    
+
     private static RunExe instance = new RunExe();
 
     private RunExe() {
@@ -27,12 +26,7 @@ public class RunExe {
     }
 
     public boolean upload(String... filePath) {
-        if(filePath.length > 1){
-            return doRun(filePath[0] + " \"" + filePath[1] + "\"");
-        } else {
-            URL resource = Thread.currentThread().getContextClassLoader().getResource("upload.exe");
-            return resource != null && doRun(resource.getFile() + " \"" + filePath[0] + "\"");
-        }
+        return doRun(filePath[0] + " \"" + filePath[1] + "\"");
     }
 
     private boolean doRun(String filePath) {

@@ -16,8 +16,8 @@ import static org.testng.Assert.assertTrue;
 public class UploadFileTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadFileTest.class);
 
-    Form form = new Form(null, "Form Title");
-    UploadFile uploadFile = new UploadFile(form, "TPT Test:");
+    private Form form = new Form(null, "Form Title");
+    private UploadFile uploadFile = new UploadFile(form, "TPT Test:");
 
     @BeforeClass
     public void startTests() {
@@ -27,12 +27,6 @@ public class UploadFileTest extends TestBase {
     @Test
     public void upload() {
         uploadFile.upload("Select file", new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt"});
-        assertTrue(new File(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt").getName().equals(uploadFile.uploadedNameFile()));
-    }
-
-    @Test
-    public void uploadWithExeDefault() {
-        uploadFile.upload("Select file", new String[]{InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt"});
         assertTrue(new File(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt").getName().equals(uploadFile.uploadedNameFile()));
     }
 
