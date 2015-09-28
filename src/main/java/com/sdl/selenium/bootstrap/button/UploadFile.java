@@ -30,7 +30,7 @@ public class UploadFile extends WebLocator implements Upload {
 
     public UploadFile() {
         setClassName("UploadFile");
-        setClasses("fileupload");
+        setBaseCls("fileupload");
         setTag("div");
     }
 
