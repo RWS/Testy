@@ -16,6 +16,7 @@ public class WebLink extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLink.class);
 
     private String oldTab;
+    private boolean isNewTab;
 
     public WebLink() {
         setClassName("WebLink");
@@ -37,10 +38,11 @@ public class WebLink extends WebLocator {
             WebDriver driver = WebDriverConfig.getDriver();
             oldTab = driver.getWindowHandle();
             boolean open = this.click();
-            waitForNewTab(driver, 5);
+            isNewTab = waitForNewTab(driver, 6);
             List<String> winList = new ArrayList<>(driver.getWindowHandles());
             String newTab = winList.get(winList.size() - 1);
-            return open && driver.switchTo().window(newTab) != null; // switch to new tab
+            isNewTab = isNewTab && driver.switchTo().window(newTab) != null;
+            return open && isNewTab; // switch to new tab
         } catch (NoSuchWindowException e) {
             LOGGER.debug("NoSuchWindowException {}", e);
             return false;
@@ -50,7 +52,9 @@ public class WebLink extends WebLocator {
     public boolean returnDefaultWindow() {
         try {
             WebDriver driver = WebDriverConfig.getDriver();
-            driver.close();
+            if(isNewTab) {
+                driver.close();
+            }
             return driver.switchTo().window(oldTab) != null;
         } catch (NoSuchWindowException e) {
             return false;
