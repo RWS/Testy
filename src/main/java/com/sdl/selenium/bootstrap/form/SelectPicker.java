@@ -8,7 +8,7 @@ import com.sdl.selenium.web.form.ICombo;
  * <p>Example:</p>
  * <pre>{@code
  * <label class="control-label">Tech:</label>
- *
+ * <p/>
  * <div>
  *  <select class="selectpicker">
  *      <option>Auto</option>
@@ -56,7 +56,7 @@ public class SelectPicker extends WebLocator implements ICombo {
         return getHtmlText().trim();
     }
 
-    public boolean isDisabled(){
+    public boolean isDisabled() {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }

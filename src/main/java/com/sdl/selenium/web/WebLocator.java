@@ -104,11 +104,46 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean clickAt() {
-        boolean clickAt = ready() && doClickAt();
+        boolean clickAt = waitToRender();
         if (clickAt) {
-            LOGGER.info("ClickAt on {}", toString());
+            clickAt = doClickAt();
+            if (!clickAt) {
+                LOGGER.info("Could not clickAt {}", toString());
+            } else {
+                LOGGER.info("clickAt on {}", toString());
+            }
+        } else {
+            LOGGER.info("Could not rendered {}", toString());
         }
         return clickAt;
+    }
+
+    public boolean doClickAt() {
+        boolean doClickAt = waitToRender();
+        if (doClickAt) {
+            doClickAt = doClickAt(true);
+            if (!doClickAt) {
+                LOGGER.info("Could not doClickAt {}", toString());
+            } else {
+                LOGGER.info("doClickAt on {}", toString());
+            }
+        } else {
+            LOGGER.info("Could not rendered {}", toString());
+        }
+        return doClickAt;
+    }
+
+    /**
+     * doClickAt does not make sure element is present, if you are not sure about this, please use click() instead
+     *
+     * @return true | false
+     */
+    protected boolean doClickAt(boolean instant) {
+        boolean doClickAt = instant ? executor.doClickAt(this) : waitToRender() && executor.doClickAt(this);
+        if (doClickAt) {
+            LOGGER.info("doClickAt on {}", toString());
+        }
+        return doClickAt;
     }
 
     public boolean assertClickAt() {
@@ -133,11 +168,46 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public boolean click() {
-        boolean click = waitToRender() && doClick();
+        boolean click = waitToRender();
         if (click) {
-            LOGGER.info("Click on {}", toString());
+            click = doClick(true);
+            if (!click) {
+                LOGGER.info("Could not click {}", toString());
+            } else {
+                LOGGER.info("click on {}", toString());
+            }
+        } else {
+            LOGGER.info("Could not rendered {}", toString());
         }
         return click;
+    }
+
+    public boolean doClick() {
+        boolean doClick = waitToRender();
+        if (doClick) {
+            doClick = doClick(true);
+            if (!doClick) {
+                LOGGER.info("Could not doClick {}", toString());
+            } else {
+                LOGGER.info("doClick on {}", toString());
+            }
+        } else {
+            LOGGER.info("Could not rendered {}", toString());
+        }
+        return doClick;
+    }
+
+    /**
+     * doClick does not make sure element is present, if you are not sure about this, please use click() instead
+     *
+     * @return true | false
+     */
+    protected boolean doClick(boolean instant) {
+        boolean clicked = instant ? executor.doClick(this) : waitToRender() && executor.doClick(this);
+        if (clicked) {
+            LOGGER.info("doClick on {}", toString());
+        }
+        return clicked;
     }
 
     /**
@@ -147,29 +217,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
 
     public boolean assertClick() {
-        boolean clicked = click();
+        boolean clicked = waitToRender() && doClick();
         if (!clicked) {
             Assert.fail("Could not click on: " + this);
         }
         return clicked;
-    }
-
-    /**
-     * doClick does not make sure element is present, if you are not sure about this, please use click() instead
-     *
-     * @return true | false
-     */
-    protected boolean doClick() {
-        return executor.doClick(this);
-    }
-
-    /**
-     * doClickAt does not make sure element is present, if you are not sure about this, please use click() instead
-     *
-     * @return true | false
-     */
-    protected boolean doClickAt() {
-        return executor.doClickAt(this);
     }
 
     public void highlight() {
@@ -193,22 +245,49 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean clear() {
-        return executor.clear(this);
+        return doClear();
+    }
+
+    public boolean doClear() {
+        boolean doClear = waitToRender();
+        if (doClear) {
+            doClear = executor.clear(this);
+            if (!doClear) {
+                LOGGER.info("Could not doClear {}", toString());
+            } else {
+                LOGGER.info("doClear on {}", toString());
+            }
+        } else {
+            LOGGER.info("Could not rendered {}", toString());
+        }
+        return doClear;
     }
 
     public boolean mouseOver() {
-        if (ready()) {
-            LOGGER.info("mouseOver on " + this);
-            doMouseOver();
-            return true;
-        } else {
-            LOGGER.warn("mouseOver on " + this + " failed");
-            return false;
-        }
+        return doMouseOver(false);
     }
 
-    protected void doMouseOver() {
-        executor.doMouseOver(this);
+    public boolean doMouseOver() {
+        return doMouseOver(true);
+    }
+
+    protected boolean doMouseOver(boolean instant) {
+        boolean doMouseOver = false;
+        if (instant) {
+            try {
+                executor.doMouseOver(this);
+                doMouseOver = true;
+            } catch (Exception e) {
+                LOGGER.error("Could not doMouseOver {}, {}", toString(), e);
+            }
+        } else {
+            doMouseOver = waitToRender();
+            executor.doMouseOver(this);
+        }
+        if (doMouseOver) {
+            LOGGER.info("doClick on {}", toString());
+        }
+        return doMouseOver;
     }
 
     public boolean blur() {
@@ -284,6 +363,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     // TODO remove from this class, it does not belong to this element
+    /**
+     * @deprecated please use driver.getPageSource().contains(text);
+     */
     public boolean isTextPresent(String text) {
         return executor.isTextPresent(this, text);
     }

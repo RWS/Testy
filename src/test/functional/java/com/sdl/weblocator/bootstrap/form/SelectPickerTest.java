@@ -14,8 +14,8 @@ import static org.testng.Assert.assertTrue;
 public class SelectPickerTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectPickerTest.class);
 
-    Form form = new Form(null, "Form Title");
-    SelectPicker selectPicker = new SelectPicker(form, "Tech:");
+    private Form form = new Form(null, "Form Title");
+    private SelectPicker selectPicker = new SelectPicker(form, "Tech:");
 
     @BeforeClass
     public void startTests() {

@@ -37,7 +37,7 @@ public class TreePanel extends ExtJsComponent {
     public boolean select(String searchElement, Boolean startWith) {
         WebLocator node = new WebLocator(getParentNode()).setText(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);
         LOGGER.info("Selecting the tree node");
-        return node.click();
+        return node.doClick();
     }
 
     public String getStatus(String searchElement) {
