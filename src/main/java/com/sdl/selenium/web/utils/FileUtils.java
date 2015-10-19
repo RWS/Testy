@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class FileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
     
@@ -136,6 +139,7 @@ public class FileUtils {
             FileUtils.waitFileIfIsEmpty(file2);
             String str1 = convertStreamToString(new FileInputStream(file1));
             String str2 = convertStreamToString(new FileInputStream(file2));
+            assertThat("Strings are not same", formatToSystemLineSeparator(str1), equalTo(formatToSystemLineSeparator(str2)));
             return formatToSystemLineSeparator(str1).equals(formatToSystemLineSeparator(str2));
         } catch (IOException e) {
             e.printStackTrace();
