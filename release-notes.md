@@ -7,6 +7,7 @@ RELEASE NOTES
 - improvement reuse download an upload code
 - make public doClickAt, doClick, doMouseOver
 - add doClear
+- add getTagName, getLocation, getSize
 
 **Release Notes for Testy 1.8.2**
 - add isDisplayed method in WebLocator

@@ -243,6 +243,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    public String getTagName(final WebLocator el) {
+        String tag = null;
+        if (isElementPresent(el)) {
+            tag = el.currentElement.getTagName();
+        } else if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Element not found to getTagName(): {}", el);
+        }
+        return tag;
+    }
+
+    @Override
     public String getAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         if (isElementPresent(el)) {
@@ -393,6 +404,18 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public int size(WebLocator el) {
         return driver.findElements(By.xpath(el.getXPath())).size();
+    }
+
+    @Override
+    public Point getLocation(WebLocator el) {
+        isElementPresent(el);
+        return el.currentElement.getLocation();
+    }
+
+    @Override
+    public Dimension getSize(WebLocator el) {
+        isElementPresent(el);
+        return el.currentElement.getSize();
     }
 
     @Override

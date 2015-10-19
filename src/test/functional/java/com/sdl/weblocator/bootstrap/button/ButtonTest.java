@@ -6,11 +6,14 @@ import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.bootstrap.form.UneditableInput;
 import com.sdl.weblocator.InputData;
 import com.sdl.weblocator.TestBase;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ButtonTest extends TestBase {
@@ -29,6 +32,9 @@ public class ButtonTest extends TestBase {
     public void verifyIsDisabled() {
         assertTrue(disableBtn.isDisabled());
         assertTrue(disableBtnCls.isDisabled());
+        assertEquals(disableBtnCls.currentElement.getTagName(), "button");
+        assertEquals(disableBtnCls.currentElement.getLocation(), new Point(166, 520));
+        assertEquals(disableBtnCls.currentElement.getSize(), new Dimension(114, 30));
     }
 
     @Test

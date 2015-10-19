@@ -1,6 +1,8 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
 public interface WebLocatorExecutor {
@@ -19,6 +21,8 @@ public interface WebLocatorExecutor {
     boolean setValue(WebLocator el, String value);
 
     String getCssValue(final WebLocator el, final String propertyName);
+
+    String getTagName(WebLocator el);
 
     String getAttribute(final WebLocator el, final String attribute);
 
@@ -41,6 +45,10 @@ public interface WebLocatorExecutor {
     WebElement waitElement(WebLocator el, final long millis);
 
     int size(WebLocator el);
+
+    Point getLocation(WebLocator el);
+
+    Dimension getSize(WebLocator el);
 
     void focus(WebLocator el);
 

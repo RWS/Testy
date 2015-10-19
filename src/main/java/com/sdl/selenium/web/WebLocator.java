@@ -2,6 +2,8 @@ package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
 import org.junit.Assert;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -54,6 +56,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public String getCssValue(String propertyName) {
         return executor.getCssValue(this, propertyName);
+    }
+
+    /**
+     * @return tag name
+     */
+    public String getTagName() {
+        return executor.getTagName(this);
     }
 
     /**
@@ -334,6 +343,14 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public int size() {
         return executor.size(this);
+    }
+
+    public Point getLocation() {
+        return executor.getLocation(this);
+    }
+
+    public Dimension getSize() {
+        return executor.getSize(this);
     }
 
     public boolean exists() {
