@@ -1,16 +1,9 @@
 package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.bootstrap.button.Download;
-import com.sdl.selenium.bootstrap.button.RunExe;
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.FileUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
-
-import java.io.File;
 
 public class DownloadLink extends ExtJsComponent implements Download {
 
@@ -36,7 +29,7 @@ public class DownloadLink extends ExtJsComponent implements Download {
      */
     @Override
     public boolean waitToActivate(int seconds) {
-        return getPath().contains("ext-ux-livegrid") || super.waitToActivate(seconds);
+        return getXPath().contains("ext-ux-livegrid") || super.waitToActivate(seconds);
     }
 
     /**
@@ -50,20 +43,10 @@ public class DownloadLink extends ExtJsComponent implements Download {
     @Override
     public boolean download(String fileName) {
         openBrowse();
-        if (WebDriverConfig.isSilentDownload()) {
-            fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
-            File file = new File(fileName);
-            return FileUtils.waitFileIfIsEmpty(file) && fileName.equals(file.getAbsolutePath());
-        } else {
-            return RunExe.getInstance().download(fileName);
-        }
+        return executor.download(fileName);
     }
 
     private void openBrowse() {
-        WebDriver driver = WebDriverConfig.getDriver();
-        focus();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(currentElement).build().perform();
-        builder.click().perform();
+        executor.browse(this);
     }
 }

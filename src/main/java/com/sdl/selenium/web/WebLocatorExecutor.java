@@ -67,4 +67,10 @@ public interface WebLocatorExecutor {
     void doHighlight(WebLocator el);
 
     boolean highlight = WebLocatorConfig.isHighlight();
+
+    boolean download(String fileName);
+
+    public boolean browse(WebLocator el);
+
+    public boolean upload(String... filePath);
 }

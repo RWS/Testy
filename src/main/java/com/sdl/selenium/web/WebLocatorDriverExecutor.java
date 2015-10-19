@@ -1,6 +1,8 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
+import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
@@ -475,6 +478,33 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public void doHighlight(WebLocator el) {
         highlightElementWithDriver(el.currentElement);
+    }
+
+    public boolean download(String fileName) {
+        if (WebDriverConfig.isSilentDownload()) {
+            fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
+            File file = new File(fileName);
+            return FileUtils.waitFileIfIsEmpty(file) && fileName.equals(file.getAbsolutePath());
+        } else {
+            return RunExe.getInstance().download(fileName);
+        }
+    }
+
+    public boolean browse(WebLocator el) {
+        try {
+            el.focus();
+            Actions builder = new Actions(driver);
+            builder.moveToElement(el.currentElement).perform();
+            builder.click().perform();
+            return true;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
+    public boolean upload(String... filePath) {
+        return RunExe.getInstance().upload(filePath);
     }
 
     private void highlightElementWithDriver(WebElement el) {

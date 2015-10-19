@@ -1,12 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.FileUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
-
-import java.io.File;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -54,21 +48,10 @@ public class DownloadFile extends WebLocator implements Download {
     @Override
     public boolean download(String fileName) {
         openBrowse();
-        if (WebDriverConfig.isSilentDownload()) {
-            fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
-            File file = new File(fileName);
-            return FileUtils.waitFileIfIsEmpty(file) && fileName.equals(file.getAbsolutePath());
-        } else {
-            return RunExe.getInstance().download(fileName);
-        }
+        return executor.download(fileName);
     }
-
     public void openBrowse() {
-        WebDriver driver = WebDriverConfig.getDriver();
-        focus();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(currentElement).build().perform();
-        builder.click().perform();
+        executor.browse(this);
     }
 
     public boolean isDisabled(){

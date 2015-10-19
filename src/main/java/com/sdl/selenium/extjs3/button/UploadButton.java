@@ -1,12 +1,8 @@
 package com.sdl.selenium.extjs3.button;
 
-import com.sdl.selenium.bootstrap.button.RunExe;
 import com.sdl.selenium.bootstrap.button.Upload;
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 
 public class UploadButton extends Button implements Upload {
 
@@ -30,15 +26,6 @@ public class UploadButton extends Button implements Upload {
     }
 
     private boolean upload(WebLocator el, String ...filePath) {
-        browse(el);
-        return RunExe.getInstance().upload(filePath);
-    }
-
-    private void browse(WebLocator el) {
-        WebDriver driver = WebDriverConfig.getDriver();
-        el.focus();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(el.currentElement).perform();
-        builder.click().perform();
+        return executor.browse(el) && executor.upload(filePath);
     }
 }

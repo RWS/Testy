@@ -1,17 +1,10 @@
 package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.bootstrap.button.Download;
-import com.sdl.selenium.bootstrap.button.RunExe;
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.FileUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
 
 public class DownloadButton extends Button implements Download {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadButton.class);
@@ -41,20 +34,10 @@ public class DownloadButton extends Button implements Download {
     @Override
     public boolean download(String fileName) {
         openBrowse();
-        if (WebDriverConfig.isSilentDownload()) {
-            fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
-            File file = new File(fileName);
-            return FileUtils.waitFileIfIsEmpty(file) && fileName.equals(file.getAbsolutePath());
-        } else {
-            return RunExe.getInstance().download(fileName);
-        }
+        return executor.download(fileName);
     }
 
     private void openBrowse() {
-        WebDriver driver = WebDriverConfig.getDriver();
-        focus();
-        Actions builder = new Actions(driver);
-        builder.moveToElement(currentElement).perform();
-        builder.click().perform();
+        executor.browse(this);
     }
 }

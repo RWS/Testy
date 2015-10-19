@@ -55,8 +55,8 @@ public class SplitButton extends Button {
             }
             menu.setInfoMessage("active menu");
             ExtJsComponent option = new ExtJsComponent(menu);
-            for (int i = 0; i < n; i++) {
-                option.setText(menuOptions[i]);
+            for (String menuOption : menuOptions) {
+                option.setText(menuOption);
                 if (!option.mouseOver()) {
                     return false;
                 }
