@@ -3,6 +3,10 @@ RELEASE NOTES
 **Release Notes for Testy 1.8.3-SNAPSHOT**
 - add setAttribute(String attribute, String value)
 - add setPlaceholder(final String value) for all components which extend com.sdl.selenium.web.form.TextField
+- update webdriver version 2.48.2
+- improvement reuse download an upload code
+- make public doClickAt, doClick, doMouseOver
+- add doClear
 
 **Release Notes for Testy 1.8.2**
 - add isDisplayed method in WebLocator
