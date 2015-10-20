@@ -13,32 +13,32 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class ButtonTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
     
-    Window dateFieldWindow = new Window("DateFieldWindow");
-    Button closeButton = new Button(dateFieldWindow, "Close");
-    Button dateFieldButton = new Button(null, "DateField");
+    private Window dateFieldWindow = new Window("DateFieldWindow");
+    private Button closeButton = new Button(dateFieldWindow, "Close");
+    private Button dateFieldButton = new Button(null, "DateField");
 
-    Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
-    Panel panel = new Panel("Find Elements when contains quotes");
+    private Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
+    private Panel panel = new Panel("Find Elements when contains quotes");
 
-    Button dontAcceptButton = new Button(panel, "Don't Accept");
-    Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
-    Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
-    Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
-    
-    Window buttonsWindow = new Window("Buttons Window");
-    SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
+    private Button dontAcceptButton = new Button(panel, "Don't Accept");
+    private Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
+    private Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
+    private Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
+
+    private Window buttonsWindow = new Window("Buttons Window");
+    private SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
 
     @Test
     public void isDisplayed() {
         dateFieldButton.click();
-        assertTrue(driver.findElement(By.xpath(closeButton.getXPath())).isDisplayed());
-        assertTrue(driver.findElement(By.id("close")).isDisplayed());
+        assertThat(driver.findElement(By.xpath(closeButton.getXPath())).isDisplayed(), is(true));
+        assertThat(driver.findElement(By.id("close")).isDisplayed(), is(true));
         dateFieldWindow.close();
     }
 
@@ -54,10 +54,10 @@ public class ButtonTest extends TestBase {
 
     @Test (dependsOnMethods = "performanceTestClick")
     public void findButtonWithQuotes() {
-        assertTrue(dontAcceptButton.isElementPresent());
-        assertTrue(dontAcceptButton1.isElementPresent());
-        assertTrue(dontAcceptButton2.isElementPresent());
-        assertTrue(dontAcceptButton3.isElementPresent());
+        assertThat(dontAcceptButton.isElementPresent(), is(true));
+        assertThat(dontAcceptButton1.isElementPresent(), is(true));
+        assertThat(dontAcceptButton2.isElementPresent(), is(true));
+        assertThat(dontAcceptButton3.isElementPresent(), is(true));
     }
 
     @DataProvider
@@ -78,9 +78,9 @@ public class ButtonTest extends TestBase {
         long endMs = System.currentTimeMillis();
 
         LOGGER.info(String.format("took %s ms", endMs - startMs));
-        assertFalse(clicked, "Nu trebuia sa faca click");
-        assertTrue(endMs - startMs < millis + 500, "Took too long");
-        assertTrue(endMs - startMs >= millis, "Did not waited expected time");
+        assertThat("Nu trebuia sa faca click", clicked, is(false));
+        assertThat("Took too long", endMs - startMs < millis + 500);
+        assertThat("Did not waited expected time", endMs - startMs >= millis);
     }
     
     @Test
@@ -91,11 +91,11 @@ public class ButtonTest extends TestBase {
         MessageBoxTest.assertThatMessageBoxExists("You selected Export");
 
         boolean clicked = splitButton.clickOnMenu("PDF");
-        assertTrue(clicked, "Could not click on button");
+        assertThat("Could not click on button", clicked);
         MessageBoxTest.assertThatMessageBoxExists("You selected PDF");
 
         clicked = splitButton.clickOnMenu("EXCEL");
-        assertTrue(clicked, "Could not click on button");
+        assertThat("Could not click on button", clicked);
         MessageBoxTest.assertThatMessageBoxExists("You selected EXCEL");
     }
 }
