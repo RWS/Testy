@@ -22,6 +22,6 @@ public class LabelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Label label, String expectedXpath) {
-        Assert.assertEquals(label.getPath(), expectedXpath);
+        Assert.assertEquals(label.getXPath(), expectedXpath);
     }
 }

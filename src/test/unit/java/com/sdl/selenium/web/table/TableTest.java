@@ -21,7 +21,7 @@ public class TableTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Table table, String expectedXpath) {
-        Assert.assertEquals(table.getPath(), expectedXpath);
+        Assert.assertEquals(table.getXPath(), expectedXpath);
     }
 
     @DataProvider
@@ -53,6 +53,6 @@ public class TableTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider1")
     public void getPathSelectorCorrectlyFromConstructors1(WebLocator simpleTable, String expectedXpath) {
-        Assert.assertEquals(simpleTable.getPath(), expectedXpath);
+        Assert.assertEquals(simpleTable.getXPath(), expectedXpath);
     }
 }

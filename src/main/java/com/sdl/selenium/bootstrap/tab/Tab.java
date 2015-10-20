@@ -85,8 +85,8 @@ public class Tab extends WebLocator {
          //TODO improvement
         Tab tab  = new Tab("tt");
 
-        LOGGER.debug(tab.getPath());
-        LOGGER.debug(webLocator.getPath());
+        LOGGER.debug(tab.getXPath());
+        LOGGER.debug(webLocator.getXPath());
 
     }*/
 }

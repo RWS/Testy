@@ -19,6 +19,6 @@ public class DisplayFieldTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(DisplayField displayField, String expectedXpath) {
-        Assert.assertEquals(displayField.getPath(), expectedXpath);
+        Assert.assertEquals(displayField.getXPath(), expectedXpath);
     }
 }

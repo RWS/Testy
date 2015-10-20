@@ -59,7 +59,7 @@ public class List extends GridPanel {
     @Override
     public GridCell getCell(String searchElement, SearchType... searchType) {
         WebLocator textCell = new WebLocator().setText(searchElement, searchType);
-        GridCell cell = new GridCell().setContainer(this).setElPath(textCell.getPath());
+        GridCell cell = new GridCell().setContainer(this).setElPath(textCell.getXPath());
         cell.setInfoMessage("cell(" + searchElement + ")");
         return cell;
     }

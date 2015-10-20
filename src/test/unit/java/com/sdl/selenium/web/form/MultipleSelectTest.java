@@ -20,6 +20,6 @@ public class MultipleSelectTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(MultipleSelect list, String expectedXpath) {
-        Assert.assertEquals(list.getPath(), expectedXpath);
+        Assert.assertEquals(list.getXPath(), expectedXpath);
     }
 }

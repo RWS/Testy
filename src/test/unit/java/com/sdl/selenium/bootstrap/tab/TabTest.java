@@ -20,6 +20,6 @@ public class TabTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Tab tab, String expectedXpath) {
-        Assert.assertEquals(tab.getPath(), expectedXpath);
+        Assert.assertEquals(tab.getXPath(), expectedXpath);
     }
 }

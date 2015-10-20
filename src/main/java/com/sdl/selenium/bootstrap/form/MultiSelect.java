@@ -75,7 +75,7 @@ public class MultiSelect extends WebLocator {
             WebLocator li = new WebLocator(select).setTag("li").setCls("active");
             WebLocator el = new WebLocator(li).setTag("label");
             el.ready();
-            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(el.getPath()));
+            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(el.getXPath()));
             for (WebElement element : elements) {
                 String text = element.getText();
                 list.add(text);

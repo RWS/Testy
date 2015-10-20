@@ -78,12 +78,12 @@ public final class WebLocatorUtils extends WebLocator {
         builder.append("if (").append(xpathLocatorVar).append(".length > 1) console.warn('  found more elements', ").append(xpathLocatorVar).append(");");
         builder.append("} else {\n");
         builder.append("  console.error('").append(locatorName).append("', ' - not found!');\n");
-        builder.append("  console.warn(\"  ").append(locator.getPath()).append("\");\n");
+        builder.append("  console.warn(\"  ").append(locator.getXPath()).append("\");\n");
         builder.append("}\n\n");
     }
 
     private static String getFirebugXPath(WebLocator locator) {
-        return "$x(\"" + locator.getPath() + "\")";
+        return "$x(\"" + locator.getXPath() + "\")";
     }
 
     private static Map<String, WebLocator> webLocatorAsMap(WebLocator webLocator) {

@@ -22,6 +22,6 @@ public class SelectPickerTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(SelectPicker selectPicker, String expectedXpath) {
-        Assert.assertEquals(selectPicker.getPath(), expectedXpath);
+        Assert.assertEquals(selectPicker.getXPath(), expectedXpath);
     }
 }

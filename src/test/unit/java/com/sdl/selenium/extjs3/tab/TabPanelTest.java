@@ -20,7 +20,7 @@ public class TabPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(TabPanel panel, String expectedXpath) {
-        Assert.assertEquals(panel.getPath(), expectedXpath);
+        Assert.assertEquals(panel.getXPath(), expectedXpath);
     }
 
 }

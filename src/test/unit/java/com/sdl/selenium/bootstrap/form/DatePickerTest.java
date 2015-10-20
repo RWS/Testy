@@ -21,6 +21,6 @@ public class DatePickerTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(DatePicker datePicker, String expectedXpath) {
-        Assert.assertEquals(datePicker.getPath(), expectedXpath);
+        Assert.assertEquals(datePicker.getXPath(), expectedXpath);
     }
 }

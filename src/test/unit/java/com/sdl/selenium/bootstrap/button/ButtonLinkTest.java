@@ -27,6 +27,6 @@ public class ButtonLinkTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(ButtonLink button, String expectedXpath) {
-        Assert.assertEquals(button.getPath(), expectedXpath);
+        Assert.assertEquals(button.getXPath(), expectedXpath);
     }
 }

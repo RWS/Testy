@@ -186,7 +186,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         boolean executed = false;
         if (value != null) {
             // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
-            //if (executor.isSamePath(this, this.getPath()) || ready()) {
+            //if (executor.isSamePath(this, this.getXPath()) || ready()) {
             if (el.ready()) {
                 try {
                     executed = doSetValue(el, value);

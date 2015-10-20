@@ -21,6 +21,6 @@ public class DownloadFileTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(DownloadFile downloadFile, String expectedXpath) {
-        Assert.assertEquals(downloadFile.getPath(), expectedXpath);
+        Assert.assertEquals(downloadFile.getXPath(), expectedXpath);
     }
 }

@@ -51,7 +51,7 @@ public class MultipleSelect extends ComboBox {
         List<String> list = null;
         if (ready()) {
             list = new ArrayList<>();
-            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getPath()));
+            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getXPath()));
             for (WebElement element : elements) {
                 String text = element.getText();
                 LOGGER.debug(text);

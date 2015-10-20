@@ -20,6 +20,6 @@ public class TextAreaTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(TextArea textArea, String expectedXpath) {
-        Assert.assertEquals(textArea.getPath(), expectedXpath);
+        Assert.assertEquals(textArea.getXPath(), expectedXpath);
     }
 }

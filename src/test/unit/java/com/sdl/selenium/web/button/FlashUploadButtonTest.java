@@ -21,7 +21,7 @@ public class FlashUploadButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(FlashUploadButton simpleTextField, String expectedXpath) {
-        Assert.assertEquals(simpleTextField.getButtonElement().getPath(), expectedXpath);
+        Assert.assertEquals(simpleTextField.getButtonElement().getXPath(), expectedXpath);
     }
 
 }

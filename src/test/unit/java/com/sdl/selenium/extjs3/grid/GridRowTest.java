@@ -30,6 +30,6 @@ public class GridRowTest {
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(GridRow gridRow, String expectedXpath) {
         gridRow.setContainer(null);
-        Assert.assertEquals(gridRow.getPath(), expectedXpath);
+        Assert.assertEquals(gridRow.getXPath(), expectedXpath);
     }
 }

@@ -33,18 +33,18 @@ public class LiveGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(LiveGridPanel liveGridPanel, String expectedXpath) {
-        Assert.assertEquals(liveGridPanel.getPath(), expectedXpath);
+        Assert.assertEquals(liveGridPanel.getXPath(), expectedXpath);
     }
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider1() {
         return new Object[][]{
-                {grid.getGridRow(), grid.getPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridCls.getGridRow(), gridCls.getPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridContainer.getGridRow(), gridContainer.getPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridClsAndColumn.getGridRow(), gridClsAndColumn.getPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridContainerAndColumn.getGridRow(), gridContainerAndColumn.getPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
-                {gridContainerAndClsAndColumn.getGridRow(), gridContainerAndClsAndColumn.getPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {grid.getGridRow(), grid.getXPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridCls.getGridRow(), gridCls.getXPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainer.getGridRow(), gridContainer.getXPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridClsAndColumn.getGridRow(), gridClsAndColumn.getXPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndColumn.getGridRow(), gridContainerAndColumn.getXPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
+                {gridContainerAndClsAndColumn.getGridRow(), gridContainerAndClsAndColumn.getXPath() + "//div[contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
 
                 {grid.getRowLocator(1), LIVE_GRID_PATH + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
                 {gridCls.getRowLocator(1), LIVE_GRID_PANEL_CLS + "//div[1][contains(concat(' ', @class, ' '), ' x-grid3-row ') and not(contains(@class, 'x-grid3-row-checker'))]"},
@@ -58,7 +58,7 @@ public class LiveGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider1")
     public void getPathSelectorCorrectlyFromConstructors1(GridRow gridRow, String expectedXpath) {
-        Assert.assertEquals(gridRow.getPath(), expectedXpath);
+        Assert.assertEquals(gridRow.getXPath(), expectedXpath);
     }
 
     @DataProvider
@@ -103,6 +103,6 @@ public class LiveGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider2")
     public void getPathSelectorCorrectlyFromConstructors2(GridCell gridCell, String expectedXpath) {
-        Assert.assertEquals(gridCell.getPath(), expectedXpath);
+        Assert.assertEquals(gridCell.getXPath(), expectedXpath);
     }
 }
