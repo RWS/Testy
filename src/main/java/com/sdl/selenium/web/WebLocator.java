@@ -1,13 +1,14 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.junit.Assert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
@@ -113,33 +114,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean clickAt() {
-        boolean clickAt = waitToRender();
-        if (clickAt) {
-            clickAt = doClickAt();
-            if (!clickAt) {
-                LOGGER.info("Could not clickAt {}", toString());
-            } else {
-                LOGGER.info("clickAt on {}", toString());
-            }
-        } else {
-            LOGGER.info("Could not rendered {}", toString());
-        }
-        return clickAt;
-    }
-
-    public boolean doClickAt() {
-        boolean doClickAt = waitToRender();
-        if (doClickAt) {
-            doClickAt = doClickAt(true);
-            if (!doClickAt) {
-                LOGGER.info("Could not doClickAt {}", toString());
-            } else {
-                LOGGER.info("doClickAt on {}", toString());
-            }
-        } else {
-            LOGGER.info("Could not rendered {}", toString());
-        }
-        return doClickAt;
+        return doClickAt();
     }
 
     /**
@@ -147,27 +122,31 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      *
      * @return true | false
      */
-    protected boolean doClickAt(boolean instant) {
-        boolean doClickAt = instant ? executor.doClickAt(this) : waitToRender() && executor.doClickAt(this);
-        if (doClickAt) {
-            LOGGER.info("doClickAt on {}", toString());
+    public boolean doClickAt() {
+        boolean doClick = waitToRender();
+        if (doClick) {
+            doClick = executor.doClickAt(this);
+            if (doClick) {
+                LOGGER.info("clickAt on {}", toString());
+            } else {
+                LOGGER.info("Could not clickAt {}", toString());
+            }
         }
-        return doClickAt;
+        return doClick;
     }
 
     public boolean assertClickAt() {
-        boolean clicked = clickAt();
-        if (!clicked) {
-            Assert.fail("Could not clickAt on: " + this);
-        }
-        return clicked;
+        boolean clickAt = waitToRender();
+        assertThat("Element was not rendered " + toString(), clickAt);
+        clickAt = executor.doClickAt(this);
+        assertThat("Could not clickAt " + toString(), clickAt);
+        LOGGER.info("clickAt on {}", toString());
+        return clickAt;
     }
 
     public boolean assertExists() {
         boolean exists = exists();
-        if (!exists) {
-            Assert.fail("Element does not exists : " + this);
-        }
+        assertThat("Element does not exists : " + this, exists);
         return exists;
     }
 
@@ -177,33 +156,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public boolean click() {
-        boolean click = waitToRender();
-        if (click) {
-            click = doClick(true);
-            if (!click) {
-                LOGGER.info("Could not click {}", toString());
-            } else {
-                LOGGER.info("click on {}", toString());
-            }
-        } else {
-            LOGGER.info("Could not rendered {}", toString());
-        }
-        return click;
-    }
-
-    public boolean doClick() {
-        boolean doClick = waitToRender();
-        if (doClick) {
-            doClick = doClick(true);
-            if (!doClick) {
-                LOGGER.info("Could not doClick {}", toString());
-            } else {
-                LOGGER.info("doClick on {}", toString());
-            }
-        } else {
-            LOGGER.info("Could not rendered {}", toString());
-        }
-        return doClick;
+        return doClick();
     }
 
     /**
@@ -211,12 +164,17 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      *
      * @return true | false
      */
-    protected boolean doClick(boolean instant) {
-        boolean clicked = instant ? executor.doClick(this) : waitToRender() && executor.doClick(this);
-        if (clicked) {
-            LOGGER.info("doClick on {}", toString());
+    public boolean doClick() {
+        boolean doClick = waitToRender();
+        if (doClick) {
+            doClick = executor.doClick(this);
+            if (doClick) {
+                LOGGER.info("click on {}", toString());
+            } else {
+                LOGGER.info("Could not click {}", toString());
+            }
         }
-        return clicked;
+        return doClick;
     }
 
     /**
@@ -226,11 +184,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
 
     public boolean assertClick() {
-        boolean clicked = waitToRender() && doClick();
-        if (!clicked) {
-            Assert.fail("Could not click on: " + this);
-        }
-        return clicked;
+        boolean click = waitToRender();
+        assertThat("Element was not rendered " + toString(), click);
+        click = executor.doClick(this);
+        assertThat("Could not click " + toString(), click);
+        LOGGER.info("click on {}", toString());
+        return click;
     }
 
     public void highlight() {
@@ -261,40 +220,39 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         boolean doClear = waitToRender();
         if (doClear) {
             doClear = executor.clear(this);
-            if (!doClear) {
-                LOGGER.info("Could not doClear {}", toString());
+            if (doClear) {
+                LOGGER.info("clear on {}", toString());
             } else {
-                LOGGER.info("doClear on {}", toString());
+                LOGGER.info("Could not clear {}", toString());
             }
-        } else {
-            LOGGER.info("Could not rendered {}", toString());
         }
         return doClear;
     }
 
     public boolean mouseOver() {
-        return doMouseOver(false);
+        boolean mouseOver = waitToRender();
+        assertThat("Element was not rendered " + toString(), mouseOver);
+        try {
+            executor.doMouseOver(this);
+            mouseOver = true;
+        } catch (Exception e) {
+            mouseOver = false;
+        }
+        assertThat("Could not mouse over " + toString(), mouseOver);
+        LOGGER.info("Mouse over on {}", toString());
+        return mouseOver;
     }
 
     public boolean doMouseOver() {
-        return doMouseOver(true);
-    }
-
-    protected boolean doMouseOver(boolean instant) {
         boolean doMouseOver = false;
-        if (instant) {
+        if (waitToRender()) {
             try {
                 executor.doMouseOver(this);
                 doMouseOver = true;
+                LOGGER.info("Mouse over on {}", toString());
             } catch (Exception e) {
-                LOGGER.error("Could not doMouseOver {}, {}", toString(), e);
+                LOGGER.error("Could not mouse over {}, {}", toString(), e);
             }
-        } else {
-            doMouseOver = waitToRender();
-            executor.doMouseOver(this);
-        }
-        if (doMouseOver) {
-            LOGGER.info("doClick on {}", toString());
         }
         return doMouseOver;
     }
@@ -380,6 +338,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     // TODO remove from this class, it does not belong to this element
+
     /**
      * @deprecated please use driver.getPageSource().contains(text);
      */
@@ -457,9 +416,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean assertReady() {
         boolean ready = ready();
-        if (!ready) {
-            Assert.fail("Element is not ready : " + this);
-        }
+        assertThat("Element is not ready : " + this, ready);
         return ready;
     }
 
