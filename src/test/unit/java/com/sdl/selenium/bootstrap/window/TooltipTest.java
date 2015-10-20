@@ -21,6 +21,6 @@ public class TooltipTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Tooltip tooltip, String expectedXpath) {
-        Assert.assertEquals(tooltip.getPath(), expectedXpath);
+        Assert.assertEquals(tooltip.getXPath(), expectedXpath);
     }
 }

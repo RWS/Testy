@@ -20,7 +20,7 @@ public class PopOverTest {
 
     @Test (dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(PopOver popOver, String expectedXpath) {
-        Assert.assertEquals(popOver.getPath(), expectedXpath);
+        Assert.assertEquals(popOver.getXPath(), expectedXpath);
     }
 
 }

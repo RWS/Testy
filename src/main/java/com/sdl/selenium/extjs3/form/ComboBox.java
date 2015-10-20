@@ -85,7 +85,7 @@ public class ComboBox extends TextField implements ICombo {
             } else {
                 clickIcon("arrow"); // to close combo
             }
-            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getPath());
+            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
             LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
         }

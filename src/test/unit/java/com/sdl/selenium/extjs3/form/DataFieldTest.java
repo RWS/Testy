@@ -19,6 +19,6 @@ public class DataFieldTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(DateField dateField, String expectedXpath) {
-        Assert.assertEquals(dateField.getPath(), expectedXpath);
+        Assert.assertEquals(dateField.getXPath(), expectedXpath);
     }
 }

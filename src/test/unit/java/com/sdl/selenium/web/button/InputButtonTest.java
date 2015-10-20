@@ -22,6 +22,6 @@ public class InputButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(InputButton inputButton, String expectedXpath) {
-        Assert.assertEquals(inputButton.getPath(), expectedXpath);
+        Assert.assertEquals(inputButton.getXPath(), expectedXpath);
     }
 }

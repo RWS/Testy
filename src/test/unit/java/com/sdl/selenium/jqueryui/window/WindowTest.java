@@ -17,6 +17,6 @@ public class WindowTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Window window, String expectedXpath) {
-        Assert.assertEquals(window.getPath(), expectedXpath);
+        Assert.assertEquals(window.getXPath(), expectedXpath);
     }
 }

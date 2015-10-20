@@ -66,7 +66,7 @@ public class Button extends ExtJsComponent implements IButton {
             LOGGER.info("Click on {} ", toString());
             Utils.sleep(50);
         } else {
-            LOGGER.error("({}) doesn't exists or is disabled {}.", toString(), getPath());
+            LOGGER.error("({}) doesn't exists or is disabled {}.", toString(), getXPath());
         }
         return clicked;
     }
@@ -102,7 +102,7 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean isDisabled() {
-        WebLocator disabledLocator = new WebLocator().setElPath(getPath(true));
+        WebLocator disabledLocator = new WebLocator().setElPath(getXPath(true));
         return disabledLocator.exists();
     }
 

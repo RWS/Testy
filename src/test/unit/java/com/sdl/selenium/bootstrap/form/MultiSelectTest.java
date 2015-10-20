@@ -22,6 +22,6 @@ public class MultiSelectTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(MultiSelect multiSelect, String expectedXpath) {
-        Assert.assertEquals(multiSelect.getPath(), expectedXpath);
+        Assert.assertEquals(multiSelect.getXPath(), expectedXpath);
     }
 }

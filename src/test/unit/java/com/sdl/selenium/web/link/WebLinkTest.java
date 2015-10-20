@@ -21,6 +21,6 @@ public class WebLinkTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLink webLink, String expectedXpath) {
-        Assert.assertEquals(webLink.getPath(), expectedXpath);
+        Assert.assertEquals(webLink.getXPath(), expectedXpath);
     }
 }

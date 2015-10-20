@@ -69,7 +69,7 @@ public class SplitButton extends Button {
                 clickAt();
             }
         } else {
-            LOGGER.error("(" + info + ") doesn't exists or is disabled. " + getPath());
+            LOGGER.error("(" + info + ") doesn't exists or is disabled. " + getXPath());
         }
         return false;
     }

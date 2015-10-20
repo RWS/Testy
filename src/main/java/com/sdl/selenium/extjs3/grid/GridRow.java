@@ -50,7 +50,7 @@ public class GridRow extends Row {
     }
 
     private String getSearchPaths(String searchColumnId, WebLocator cellEl) {
-        return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + cellEl.getPath() + ") > 0";
+        return "count(*[contains(@class, 'x-grid3-row-table')]//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + cellEl.getXPath() + ") > 0";
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {

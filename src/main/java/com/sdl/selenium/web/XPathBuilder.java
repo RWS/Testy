@@ -1071,21 +1071,10 @@ public class XPathBuilder {
      * @return final xpath (including containers xpath), used for interacting with browser
      */
     public final String getXPath() {
-        return getPath(false);
+        return getXPath(false);
     }
 
-    /**
-     * @deprecated use getXPath()
-     */
-    public final String getPath() {
-        return getXPath();
-    }
-
-    /**
-     * @param disabled disabled
-     * @return String
-     */
-    public String getPath(boolean disabled) {
+    public final String getXPath(boolean disabled) {
         String returnPath;
         if (hasElPath()) {
             returnPath = getElPath();
@@ -1093,7 +1082,6 @@ public class XPathBuilder {
             String baseItemPath = getBaseItemPath();
             if (baseItemPath != null && !baseItemPath.equals("")) {
                 // TODO "inject" baseItemPath to elPath
-//                logger.warn("TODO must inject: \"" + baseItemPath + "\" in \"" + returnPath + "\"");
             }
         } else {
             returnPath = getItemPath(disabled);
@@ -1106,6 +1094,22 @@ public class XPathBuilder {
             returnPath = getContainer().getXPath() + returnPath;
         }
         return addResultIndexToPath(returnPath);
+    }
+
+    /**
+     * @deprecated use getXPath()
+     */
+    public final String getPath() {
+        return getXPath();
+    }
+
+    /**
+     * @deprecated use getXPath(boolean disabled)
+     * @param disabled disabled
+     * @return String
+     */
+    public String getPath(boolean disabled) {
+        return getXPath(disabled);
     }
 
     private String addResultIndexToPath(String finalPath) {

@@ -23,6 +23,6 @@ public class TextFieldTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(TextField textField, String expectedXpath) {
-        Assert.assertEquals(textField.getPath(), expectedXpath);
+        Assert.assertEquals(textField.getXPath(), expectedXpath);
     }
 }

@@ -56,7 +56,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         } else {
             LOGGER.warn("The element '" + cell + "' is not present in the list.");
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Path's element is: " + cell.getPath());
+                LOGGER.debug("Path's element is: " + cell.getXPath());
                 LOGGER.debug("Total Rows: " + getCount());
             }
         }
@@ -79,7 +79,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
 
     public Number getRowCount(String searchElement, SearchType searchType) {
         ready();
-        String rowPath = getCell(searchElement, searchType).getPath();
+        String rowPath = getCell(searchElement, searchType).getXPath();
         WebLocator locator = new WebLocator().setElPath(rowPath);
         return locator.size();
     }
@@ -132,7 +132,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
 
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
         Row row = getRowLocator(rowIndex);
-        String selector = new WebLocator().setText(text, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE_OR_SELF).setTag("td").getPath();
+        String selector = new WebLocator().setText(text, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE_OR_SELF).setTag("td").getXPath();
         return new TableCell(row).setElPath(selector + "[" + columnIndex + "]");
     }
 

@@ -86,7 +86,7 @@ public class WebLocator1Test extends TestBase {
     //@Test
     public void webDriverConfig() {
         WebLocator l = new WebLocator().setClasses("x-tool-maximize");
-        LOGGER.debug(l.getPath());
+        LOGGER.debug(l.getXPath());
         LOGGER.debug("//*[contains(@class,'x-tool-maximize')]");
 
         String browserConfig = InputData.BROWSER_CONFIG;
@@ -116,7 +116,7 @@ public class WebLocator1Test extends TestBase {
     @Test(dataProvider = "testConstructorPathDataProviderText")
     public void shouldFindAllCombinationsForTextSearchTypeTest(WebLocator el, String expectedPath) {
 
-        LOGGER.debug(el.getPath());
+        LOGGER.debug(el.getXPath());
         assertTrue(el.click());
 
         boolean useChildNodesSearch = el.getPathBuilder().getSearchTextType().contains(SearchType.DEEP_CHILD_NODE);

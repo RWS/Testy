@@ -20,7 +20,7 @@ public class UploadButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(UploadButton uploadButton, String expectedXpath) {
-        Assert.assertEquals(uploadButton.getPath(), expectedXpath);
+        Assert.assertEquals(uploadButton.getXPath(), expectedXpath);
     }
 
 }

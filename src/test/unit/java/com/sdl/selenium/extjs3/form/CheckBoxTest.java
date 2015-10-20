@@ -19,6 +19,6 @@ public class CheckBoxTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Checkbox combo, String expectedXpath) {
-        Assert.assertEquals(combo.getPath(), expectedXpath);
+        Assert.assertEquals(combo.getXPath(), expectedXpath);
     }
 }

@@ -18,6 +18,6 @@ public class ListTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(List list, String expectedXpath) {
-        Assert.assertEquals(list.getPath(), expectedXpath);
+        Assert.assertEquals(list.getXPath(), expectedXpath);
     }
 }

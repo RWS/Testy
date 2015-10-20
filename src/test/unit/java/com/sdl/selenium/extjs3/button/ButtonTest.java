@@ -31,14 +31,14 @@ public class ButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
-        Assert.assertEquals(button.getPath(), expectedXpath);
+        Assert.assertEquals(button.getXPath(), expectedXpath);
     }
 
     @Test
     public void resetSearchTextType(){
         Button locator = new Button().setText("text", SearchType.STARTS_WITH);
-        assertEquals(locator.getPath(), "//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[starts-with(.,'text')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]");
+        assertEquals(locator.getXPath(), "//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[starts-with(.,'text')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]");
         locator.setSearchTextType(null);
-        assertEquals(locator.getPath(), "//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[contains(.,'text')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]");
+        assertEquals(locator.getXPath(), "//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[contains(.,'text')]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]");
     }
 }

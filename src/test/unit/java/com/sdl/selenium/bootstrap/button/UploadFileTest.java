@@ -20,6 +20,6 @@ public class UploadFileTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(UploadFile uploadFile, String expectedXpath) {
-        Assert.assertEquals(uploadFile.getPath(), expectedXpath);
+        Assert.assertEquals(uploadFile.getXPath(), expectedXpath);
     }
 }

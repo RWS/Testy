@@ -20,6 +20,6 @@ public class FieldSetTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(FieldSet fieldSet, String expectedXpath) {
-        Assert.assertEquals(fieldSet.getPath(), expectedXpath);
+        Assert.assertEquals(fieldSet.getXPath(), expectedXpath);
     }
 }

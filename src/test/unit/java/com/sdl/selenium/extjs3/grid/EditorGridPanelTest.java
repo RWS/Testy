@@ -31,7 +31,7 @@ public class EditorGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(EditorGridPanel gridPanel, String expectedXpath) {
-        Assert.assertEquals(gridPanel.getPath(), expectedXpath);
+        Assert.assertEquals(gridPanel.getXPath(), expectedXpath);
     }
 
     @DataProvider
@@ -54,7 +54,7 @@ public class EditorGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider1")
     public void getPathSelectorCorrectlyFromConstructors1(GridRow gridRow, String expectedXpath) {
-        Assert.assertEquals(gridRow.getPath(), expectedXpath);
+        Assert.assertEquals(gridRow.getXPath(), expectedXpath);
     }
 
     @DataProvider
@@ -94,6 +94,6 @@ public class EditorGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider2")
     public void getPathSelectorCorrectlyFromConstructors2(GridCell gridCell, String expectedXpath) {
-        Assert.assertEquals(gridCell.getPath(), expectedXpath);
+        Assert.assertEquals(gridCell.getXPath(), expectedXpath);
     }
 }

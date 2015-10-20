@@ -21,6 +21,6 @@ public class UneditableInputTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(UneditableInput uneditableInput, String expectedXpath) {
-        Assert.assertEquals(uneditableInput.getPath(), expectedXpath);
+        Assert.assertEquals(uneditableInput.getXPath(), expectedXpath);
     }
 }

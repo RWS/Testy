@@ -25,12 +25,12 @@ public class ExtJsComponentTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(ExtJsComponent extJsComponent, String expectedXpath) {
-        assertEquals(extJsComponent.getPath(), expectedXpath);
+        assertEquals(extJsComponent.getXPath(), expectedXpath);
     }
 
     @Test
     public void getDisabledPathShoutContainDisabledClass(){
         ExtJsComponent locator = new ExtJsComponent(container);
-        assertEquals(locator.getPath(true), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]) > 0]");
+        assertEquals(locator.getXPath(true), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]) > 0]");
     }
 }
