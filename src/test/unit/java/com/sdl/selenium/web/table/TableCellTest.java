@@ -16,13 +16,13 @@ public class TableCellTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new TableCell(),                       "//td"},
-                {new TableCell(tableRow, 1),            "//table[@id='ID']//tr[(text()='Text' or count(*//text()[.='Text']) > 0)]//td[1]"},
-                {new TableCell(3, "Text", SearchType.EQUALS),        "//td[3][(text()='Text' or count(*//text()[.='Text']) > 0)]"},
-                {new TableCell(3, "Text", SearchType.CONTAINS),  "//td[3][(contains(text(),'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
-                {new TableCell(tableRow, 3, "Text", SearchType.EQUALS), "//table[@id='ID']//tr[(text()='Text' or count(*//text()[.='Text']) > 0)]//td[3][(text()='Text' or count(*//text()[.='Text']) > 0)]"},
-                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("th"), "//th[1][(contains(text(),'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
-                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("td"), "//td[1][(contains(text(),'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
-                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS), "//td[1][(text()='Text' or count(*//text()[.='Text']) > 0)]"},
+                {new TableCell(tableRow, 1),            "//table[@id='ID']//tr[(.='Text' or count(*//text()[.='Text']) > 0)]//td[1]"},
+                {new TableCell(3, "Text", SearchType.EQUALS),        "//td[3][(.='Text' or count(*//text()[.='Text']) > 0)]"},
+                {new TableCell(3, "Text", SearchType.CONTAINS),  "//td[3][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
+                {new TableCell(tableRow, 3, "Text", SearchType.EQUALS), "//table[@id='ID']//tr[(.='Text' or count(*//text()[.='Text']) > 0)]//td[3][(.='Text' or count(*//text()[.='Text']) > 0)]"},
+                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("th"), "//th[1][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
+                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("td"), "//td[1][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
+                {new TableCell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS), "//td[1][(.='Text' or count(*//text()[.='Text']) > 0)]"},
         };
     }
 

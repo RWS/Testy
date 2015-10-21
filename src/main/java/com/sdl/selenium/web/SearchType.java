@@ -3,15 +3,25 @@ package com.sdl.selenium.web;
 /**
  * Contains all Search types :
  * see details for all in :
- * <p>{@link SearchType#EQUALS}</p>
- * <p>{@link SearchType#CONTAINS}</p>
- * <p>{@link SearchType#STARTS_WITH}</p>
- * <p>{@link SearchType#TRIM}</p>
- * <p>{@link SearchType#CHILD_NODE}</p>
- * <p>{@link SearchType#DEEP_CHILD_NODE}</p>
- * <p>{@link SearchType#HTML_NODE}</p>
- * <p>{@link SearchType#CONTAINS_ALL}</p>
- * <p>{@link SearchType#CONTAINS_ANY}</p>
+ * <p>text group</p>
+ * <ul>
+ * <li>{@link SearchType#EQUALS}</li>
+ * <li>{@link SearchType#CONTAINS}</li>
+ * <li>{@link SearchType#STARTS_WITH}</li>
+ * </ul>
+ * <p>trim group</p>
+ * <ul>
+ * <li>{@link SearchType#TRIM}</li>
+ * </ul>
+ * <p>child group</p>
+ * <ul>
+ * <li>{@link SearchType#CHILD_NODE}</li>
+ * <li>{@link SearchType#DEEP_CHILD_NODE}</li>
+ * <li>{@link SearchType#HTML_NODE}</li>
+ * <li>{@link SearchType#CONTAINS_ALL}</li>
+ * <li>{@link SearchType#CONTAINS_ALL_CHILD_NODES}</li>
+ * <li>{@link SearchType#CONTAINS_ANY}</li>
+ * </ul>
  */
 public enum SearchType {
 
@@ -23,8 +33,22 @@ public enum SearchType {
 
     /**
      * will use : normalize-spaces on text()
+     * * <pre>{@code
+     * <div class="btn">            Cancel              </div>
+     * }</pre>
+     * <p>so must be used like:</p>
+     * <pre>{@code
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.TRIM);
+     * }</pre>
      */
     TRIM,
+
+    /**
+     * will not use : normalize-spaces on text()
+     */
+//    NO_TRIM,
+
+    //FIRST_CHILD_NODE,
 
     /**
      * For finding elements that contain text (and text is not first node in that element).
@@ -34,6 +58,13 @@ public enum SearchType {
      *   <span class="icon"></span>
      *   Cancel
      * </div>
+     *
+     * <div class="btn">
+     *   Cancel
+     *   <span class="icon"></span>
+     * </div>
+     *
+     * <div class="btn">Cancel</div>
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
@@ -47,8 +78,8 @@ public enum SearchType {
      * eg. next button has the span.icon as first childNode in html, and text is inside span.btn-text childNode:
      * <pre>{@code
      * <div class="btn">
-     *  <span class="icon"></span>
-     *  <span class="btn-text">Cancel</span>
+     *   <span class="icon"></span>
+     *   <span class="btn-text">Cancel</span>
      * </div>
      * }</pre>
      * <p>so must be used like:</p>
@@ -63,8 +94,8 @@ public enum SearchType {
      * eg. next button has the span.icon as first childNode in html, and text is inside span.btn-text childNode or text is direct in that element:
      * <pre>{@code
      * <div class="btn">
-     *  <span class="icon"></span>
-     *  <span class="btn-text">Cancel</span>
+     *   <span class="icon"></span>
+     *   <span class="btn-text">Cancel</span>
      * </div>
      * }</pre>
      *
@@ -72,7 +103,7 @@ public enum SearchType {
      * <div class="btn">Cancel</div>}</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF);
      * }</pre>
      */
     DEEP_CHILD_NODE_OR_SELF,
@@ -83,7 +114,7 @@ public enum SearchType {
      * eg. "Get an instant Quote" button contains text containing html node <span>instant </span>
      * <pre>{@code
      * <div class="btn">
-     * Get an <span class="bold">instant</span> Quote
+     *   Get an <span class="bold">instant</span> Quote
      * </div>
      * }</pre>
      * <p>so must be used like:</p>
@@ -98,7 +129,7 @@ public enum SearchType {
      * <p>Segments will be made by splitting text into elements with first char of input text</p>
      * <pre>{@code
      * <div class="btn">
-     * <span class="btn-text">Cancel is a Button</span>
+     *   <span class="btn-text">Cancel is a Button</span>
      * </div>}</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
@@ -109,11 +140,27 @@ public enum SearchType {
     CONTAINS_ALL,
 
     /**
+     * <p>For finding elements that contain all text segments.</p>
+     * <p>Segments will be made by splitting text into elements with first char of input text</p>
+     * <pre>{@code
+     * <div class="btn">
+     *   <span class="btn-text">Cancel is</span>
+     *   <span class="btn-text">a Button</span>
+     * </div>}</pre>
+     * <p>so must be used like:</p>
+     * <pre>{@code
+     *     WebLocator cancelBtn = new WebLocator().setClasses("btn")
+     *          .setText("&Cancel&Button", SearchType.CONTAINS_ALL_CHILD_NODES);
+     * }</pre>
+     */
+    CONTAINS_ALL_CHILD_NODES,
+
+    /**
      * <p>For finding elements that contain any text segments.</p>
      * <p>Segments will be made by splitting text into elements with first char of input text</p>
      * <pre>{@code
      * <div class="btn">
-     *  <span class="btn-text">Cancel is a Button</span>
+     *   <span class="btn-text">Cancel is a Button</span>
      * </div>
      * }</pre>
      * <p>so must be used like:</p>

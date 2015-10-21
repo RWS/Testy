@@ -1008,7 +1008,7 @@ public class XPathBuilder {
                 selector += "count(" + (isDeepSearch ? "*//" : "") + pathText + "[";
                 pathText = ".";
             }
-            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL);
+            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
             text = getTextAfterEscapeQuotes(hasContainsAll, text, searchTextType);
             selector += getTextSearchTypePath(searchTextType, text, hasContainsAll, pathText);
 
@@ -1017,7 +1017,7 @@ public class XPathBuilder {
             }
 
             if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
-                String selfPath = getTextSearchTypePath(searchTextType, text, hasContainsAll, "text()");
+                String selfPath = getTextSearchTypePath(searchTextType, text, hasContainsAll, ".");
                 selector = "(" + selfPath + " or " + selector + ")";
             }
 
@@ -1046,7 +1046,11 @@ public class XPathBuilder {
             Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
             String[] strings = pattern.split(text.substring(1));
             for (int i = 0; i < strings.length; i++) {
-                strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
+                if(searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)){
+                    strings[i] = "count(*//text()[contains(.,'" + strings[i] + "')]) > 0";
+                } else {
+                    strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
+                }
             }
             String operator = hasContainsAll ? " and " : " or ";
             selector = hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
@@ -1057,10 +1061,10 @@ public class XPathBuilder {
     }
 
     private String getTextAfterEscapeQuotes(boolean hasContainsAll, String text, Set<SearchType> searchType) {
-        if (!(hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY))) {
-            text = Utils.getEscapeQuotesText(text);
+        if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
+            return text;
         }
-        return text;
+        return Utils.getEscapeQuotesText(text);
     }
 
     private String getBaseItemPath() {
