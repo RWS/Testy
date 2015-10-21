@@ -5,10 +5,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITextField;
 import com.sdl.selenium.web.utils.Utils;
-import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TextField extends ExtJsComponent implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
@@ -41,11 +42,11 @@ public class TextField extends ExtJsComponent implements ITextField {
     }
 
     /**
-     * @param value value
+     * @param value       value
      * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
      * @return current element
      */
-    public <T extends ITextField> T setPlaceholder(final String value, SearchType ...searchTypes) {
+    public <T extends ITextField> T setPlaceholder(final String value, SearchType... searchTypes) {
         setAttribute("placeholder", value, searchTypes);
         return (T) this;
     }
@@ -54,9 +55,9 @@ public class TextField extends ExtJsComponent implements ITextField {
     public boolean pasteInValue(String value) {
         if (ready()) {
             if (value != null) {
-                currentElement.clear();
+                doClear();
                 Utils.copyToClipboard(value);
-                currentElement.sendKeys(Keys.CONTROL, "v");
+                executor.doSendKeys(this, Keys.CONTROL, "v");
                 LOGGER.info("Set value(" + this + "): " + value + "'");
                 return true;
             }
@@ -67,15 +68,26 @@ public class TextField extends ExtJsComponent implements ITextField {
     }
 
     public boolean setValue(String value) {
-        return executor.setValue(this, value);
+        return doSetValue(value);
+    }
+
+    public boolean doSetValue(String value) {
+        boolean setted = ready();
+        if (setted) {
+            setted = executor.setValue(this, value);
+            if (setted) {
+                LOGGER.info("setValue on {}", this);
+            } else {
+                LOGGER.info("Could not setValue on {}", this);
+            }
+        }
+        return setted;
     }
 
     public boolean assertSetValue(String value) {
         boolean setted = setValue(value);
-        if (!setted) {
-            Assert.fail("Could not setValue on : " + this);
-        }
-        return true;
+        assertThat("Could not setValue on : " + this, setted);
+        return setted;
     }
 
     /**
@@ -84,7 +96,12 @@ public class TextField extends ExtJsComponent implements ITextField {
      * @return string
      */
     public String getValue() {
-        return executor.getValue(this);
+        boolean setted = ready();
+        String value = null;
+        if (setted) {
+            value = executor.getValue(this);
+        }
+        return value;
     }
 
     public String getTriggerPath(String icon) {

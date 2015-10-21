@@ -70,7 +70,7 @@ public interface WebLocatorExecutor {
 
     Object executeScript(String script, Object... objects);
 
-    void fireEventWithJS(WebLocator el, String eventName);
+    Object fireEventWithJS(WebLocator el, String eventName);
 
     void doHighlight(WebLocator el);
 

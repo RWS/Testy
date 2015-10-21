@@ -258,12 +258,16 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean blur() {
+        return doBlur();
+    }
+
+    public boolean doBlur() {
         if (ready()) {
-            LOGGER.info("blur on " + this);
+            LOGGER.info("blur on {}", this);
             executor.blur(this);
             return true;
         } else {
-            LOGGER.warn("blur on " + this + " failed");
+            LOGGER.warn("blur on {} failed", this);
             return false;
         }
     }
@@ -274,9 +278,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public WebLocator focus() {
+        return doFocus();
+    }
+
+    public WebLocator doFocus() {
         if (ready()) {
             executor.focus(this);
-            LOGGER.info("focus on " + toString());
+            LOGGER.info("focus on {}", this);
         }
         return this;
     }
@@ -285,11 +293,20 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public boolean doubleClickAt() {
-        boolean clicked = false;
-        if (ready()) {
-            clicked = executor.doubleClickAt(this);
+        return doDoubleClickAt();
+    }
+
+    public boolean doDoubleClickAt() {
+        boolean doClick = waitToRender();
+        if (doClick) {
+            doClick = executor.doubleClickAt(this);
+            if (doClick) {
+                LOGGER.info("Double click on {}", toString());
+            } else {
+                LOGGER.info("Could not double click {}", toString());
+            }
         }
-        return clicked;
+        return doClick;
     }
 
     /**

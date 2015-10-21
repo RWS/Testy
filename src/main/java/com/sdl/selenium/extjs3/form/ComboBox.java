@@ -5,13 +5,14 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class ComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
-    
+
     private static String listClass = "x-combo-list";
 
     //TODO change the way comboBox is identified, without using cls
@@ -131,9 +132,7 @@ public class ComboBox extends TextField implements ICombo {
 
     public boolean assertSelect(String value) {
         boolean selected = select(value);
-        if (!selected) {
-            Assert.fail("Could not selected value on : " + this);
-        }
-        return true;
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
     }
 }

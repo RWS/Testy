@@ -12,12 +12,15 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.ITable;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.utils.Utils;
-import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.MessageFormat;
 import java.util.*;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridPanel.class);
@@ -100,6 +103,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * TODO find better solution
      * (for example when grid has been loaded but has no records or when grid is loading for second time)
+     *
      * @return true | false
      */
     public boolean waitToLoad() {
@@ -142,11 +146,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     protected String getAttrId() {
         String id = getAttributeId();
-        LOGGER.debug("id=" + id);
-        if (id == null) {
-            LOGGER.warn("{} id is null. The path is: {}", getPathBuilder().getClassName(), getXPath());
-            Assert.fail("Could not scroll because id of grid is null: " + this);
-        }
+        assertThat(MessageFormat.format("{0} id is null. The path is: {1}", getPathBuilder().getClassName(), getXPath()), id, notNullValue());
         return id;
     }
 
@@ -159,6 +159,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttrId();
         return scrollTop(id);
     }
+
     protected boolean scrollTop(String id) {
         String script = "return (function(g){var a=g.view.scroller;if(a.dom.scrollTop!=0){a.dom.scrollTop=0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollTop", script);
@@ -190,6 +191,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String id = getAttrId();
         return scrollPageDown(id);
     }
+
     protected boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.scroller;if(b.dom.scrollTop<(a.mainBody.getHeight()-b.getHeight())){b.dom.scrollTop+=b.getHeight()-10;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return executeScrollScript("scrollPageDown", script);
@@ -202,9 +204,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public boolean assertRowSelect(String searchElement) {
         boolean selected = rowSelect(searchElement);
-        if (!selected) {
-            Assert.fail("Could not select row with text: " + searchElement);
-        }
+        assertThat("Could not select row with text: " + searchElement, selected);
         return selected;
     }
 
@@ -217,7 +217,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     /**
      * @param searchElement searchElement
-     * @param columnId 1,2,3...
+     * @param columnId      1,2,3...
      * @param searchType    accepted values are: SearchType.EQUALS
      * @return true or false
      */
@@ -265,8 +265,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      * Scroll Page Down to find the cell. If you found it return true, if not return false.
      *
      * @param searchElement searchElement
-     * @param columnId columnId
-     * @param searchType SearchType.EQUALS
+     * @param columnId      columnId
+     * @param searchType    SearchType.EQUALS
      * @return true or false
      */
     public boolean isCellPresent(String searchElement, int columnId, SearchType searchType) {
@@ -485,10 +485,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     /**
-     * @deprecated use getCell(...);
      * @param searchElement element
-     * @param columnIndex element
+     * @param columnIndex   element
      * @return new GridCell
+     * @deprecated use getCell(...);
      */
     protected GridCell getGridCell(String searchElement, int columnIndex) {
         GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);

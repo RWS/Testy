@@ -5,7 +5,7 @@ import com.sdl.selenium.extjs3.list.List;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.weblocator.Ignores;
 import com.sdl.weblocator.TestBase;
-import org.junit.AfterClass;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
