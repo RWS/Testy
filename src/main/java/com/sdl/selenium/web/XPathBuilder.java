@@ -1046,10 +1046,11 @@ public class XPathBuilder {
             Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
             String[] strings = pattern.split(text.substring(1));
             for (int i = 0; i < strings.length; i++) {
+                String escapeQuotesText = Utils.getEscapeQuotesText(strings[i]);
                 if(searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)){
-                    strings[i] = "count(*//text()[contains(.,'" + strings[i] + "')]) > 0";
+                    strings[i] = "count(*//text()[contains(.,'" + escapeQuotesText + "')]) > 0";
                 } else {
-                    strings[i] = "contains(" + pathText + ",'" + strings[i] + "')";
+                    strings[i] = "contains(" + pathText + ",'" + escapeQuotesText + "')";
                 }
             }
             String operator = hasContainsAll ? " and " : " or ";

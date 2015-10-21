@@ -18,9 +18,9 @@ public class TextsTest extends WebLocator {
     private WebLocator deep_child = new WebLocator().setBaseCls("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE, C1, C2);
     private WebLocator deep_child_self = new WebLocator().setBaseCls("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF, C1, C2);
     private WebLocator child_node = new WebLocator().setBaseCls("btn").setText("Cancel", SearchType.CHILD_NODE, C1, C2);
-    private WebLocator containsAllChildNodes = new WebLocator().setBaseCls("btn").setText("|This|was|good", SearchType.CONTAINS_ALL_CHILD_NODES);
-    private WebLocator containsAll = new WebLocator().setBaseCls("btn").setText("|This|was|good", SearchType.CONTAINS_ALL);
-    private WebLocator containsAny = new WebLocator().setBaseCls("btn").setText("|This|was|good", SearchType.CONTAINS_ANY);
+    private WebLocator containsAllChildNodes = new WebLocator().setBaseCls("btn").setText("|This's|was|good", SearchType.CONTAINS_ALL_CHILD_NODES);
+    private WebLocator containsAll = new WebLocator().setBaseCls("btn").setText("|This's|was|good", SearchType.CONTAINS_ALL);
+    private WebLocator containsAny = new WebLocator().setBaseCls("btn").setText("|This's|was|good", SearchType.CONTAINS_ANY);
 
     public WebLocator getDefault_el() {
         return default_el;
@@ -56,9 +56,9 @@ public class TextsTest extends WebLocator {
         assertThat(test.getDeep_child().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and count(*//text()[normalize-space(.)='Cancel']) > 0]"));
         assertThat(test.getDeep_child_self().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and (normalize-space(.)='Cancel' or count(*//text()[normalize-space(.)='Cancel']) > 0)]"));
         assertThat(test.getChild_node().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and count(text()[normalize-space(.)='Cancel']) > 0]"));
-        assertThat(test.getContainsAny().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and (contains(text(),'This') or contains(text(),'was') or contains(text(),'good'))]"));
-        assertThat(test.getContainsAll().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'This') and contains(text(),'was') and contains(text(),'good')]"));
-        assertThat(test.getContainsAllChildNodes().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and count(*//text()[contains(.,'This')]) > 0 and count(*//text()[contains(.,'was')]) > 0 and count(*//text()[contains(.,'good')]) > 0]"));
+        assertThat(test.getContainsAny().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and (contains(text(),'\"This's\"') or contains(text(),''was'') or contains(text(),''good''))]"));
+        assertThat(test.getContainsAll().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'\"This's\"') and contains(text(),''was'') and contains(text(),''good'')]"));
+        assertThat(test.getContainsAllChildNodes().getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' btn ') and count(*//text()[contains(.,'\"This's\"')]) > 0 and count(*//text()[contains(.,''was'')]) > 0 and count(*//text()[contains(.,''good'')]) > 0]"));
         WebLocatorUtils.getXPathScript(test);
     }
 }
