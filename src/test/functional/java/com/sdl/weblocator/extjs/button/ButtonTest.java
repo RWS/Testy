@@ -18,7 +18,7 @@ import static org.hamcrest.core.Is.is;
 
 public class ButtonTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
-    
+
     private Window dateFieldWindow = new Window("DateFieldWindow");
     private Button closeButton = new Button(dateFieldWindow, "Close");
     private Button dateFieldButton = new Button(null, "DateField");
@@ -52,7 +52,7 @@ public class ButtonTest extends TestBase {
         LOGGER.info(String.format("performanceTestClick took %s ms", endMs - startMs));
     }
 
-    @Test (dependsOnMethods = "performanceTestClick")
+    @Test(dependsOnMethods = "performanceTestClick")
     public void findButtonWithQuotes() {
         assertThat(dontAcceptButton.isElementPresent(), is(true));
         assertThat(dontAcceptButton1.isElementPresent(), is(true));
@@ -82,11 +82,11 @@ public class ButtonTest extends TestBase {
         assertThat("Took too long", endMs - startMs < millis + 500);
         assertThat("Did not waited expected time", endMs - startMs >= millis);
     }
-    
+
     @Test
     void testSplitButton() {
         showComponent("Buttons");
-        
+
         splitButton.assertClick();
         MessageBoxTest.assertThatMessageBoxExists("You selected Export");
 
