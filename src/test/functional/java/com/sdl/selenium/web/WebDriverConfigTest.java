@@ -35,7 +35,7 @@ public class WebDriverConfigTest extends TestBase {
         textExamplesLink.assertClick();
         WebDriverConfig.switchToLastTab();
         header.assertExists();
-        WebDriverConfig.switchToFirstTab();
+        WebDriverConfig.switchToFirstTab(); // Tab is not visible but we can interact with it, TODO see how to make it active
         textExamplesLink.assertExists();
     }
 }
