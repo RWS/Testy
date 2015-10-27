@@ -5,6 +5,8 @@ import com.sdl.selenium.utils.browsers.*;
 import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.utils.Utils;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,7 +18,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
@@ -191,5 +195,39 @@ public class WebDriverConfig {
         String browserKey = properties.getProperty("browser");
         LOGGER.info("Browser is: {}", browserKey);
         return getBrowser(browserKey);
+    }
+
+    /**
+     * Switch driver to last browser tab
+     * @return oldTabName
+     */
+    public static String switchToLastTab() {
+        int totalTabs = driver.getWindowHandles().size();
+        return switchToTab(totalTabs - 1);
+    }
+
+    public static String switchToFirstTab() {
+        return switchToTab(0);
+    }
+
+    public static String switchToTab(int index) {
+        String oldTabName = null;
+        try {
+            Utils.sleep(100); // to make sure tab has been created
+            oldTabName = driver.getWindowHandle();
+
+            LOGGER.debug("Preview tab id: {}", oldTabName);
+            LOGGER.info("Preview tab title : {}", driver.getTitle());
+
+            List<String> winList = new ArrayList<>(driver.getWindowHandles());
+            String tabID = winList.get(index);
+            LOGGER.debug("Switch to tab id: {}", tabID);
+
+            driver.switchTo().window(tabID);
+            LOGGER.info("Current tab title : {}", driver.getTitle());
+        } catch (NoSuchWindowException e) {
+            LOGGER.error("NoSuchWindowException {}", e);
+        }
+        return oldTabName;
     }
 }
