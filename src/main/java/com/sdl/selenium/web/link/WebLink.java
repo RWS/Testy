@@ -34,54 +34,20 @@ public class WebLink extends WebLocator {
     }
 
     public boolean openInNewWindow() {
-//        boolean open = click();
-//        oldTab = WebDriverConfig.switchToLastTab();
-//        isNewTab = oldTab != null;
-//        return open && isNewTab;
-        try {
-            WebDriver driver = WebDriverConfig.getDriver();
-            oldTab = driver.getWindowHandle();
-            boolean open = this.click();
-            isNewTab = waitForNewTab(driver, 6);
-            List<String> winList = new ArrayList<>(driver.getWindowHandles());
-            String newTab = winList.get(winList.size() - 1);
-            isNewTab = isNewTab && driver.switchTo().window(newTab) != null;
-            return open && isNewTab; // switch to new tab
-        } catch (NoSuchWindowException e) {
-            LOGGER.debug("NoSuchWindowException {}", e);
-            return false;
+        assertClick();
+        oldTab = null;
+        if(WebDriverConfig.waitForNewTab(2, 1000)) {
+            oldTab = WebDriverConfig.switchToLastTab();
         }
+        return oldTab != null;
     }
 
     public boolean returnDefaultWindow() {
-        try {
-            WebDriver driver = WebDriverConfig.getDriver();
-            if(isNewTab) {
-                driver.close();
-            }
-            return driver.switchTo().window(oldTab) != null;
-        } catch (NoSuchWindowException e) {
-            return false;
+        WebDriver driver = WebDriverConfig.getDriver();
+        if(oldTab != null) {
+            driver.close();
         }
-    }
-
-    /**
-     * @param driver  : this is webdriver
-     * @param timeout : time you define to wait the tab open
-     * @return true if tab open in the time, false if tab not open in the time.
-     */
-    private boolean waitForNewTab(WebDriver driver, int timeout) {
-        boolean check = false;
-        int count = 0;
-        while (!check && count < timeout) {
-            LOGGER.debug("Waiting... " + count);
-            Utils.sleep(100);
-            Set<String> winHandle = driver.getWindowHandles();
-            if (winHandle.size() > 1) {
-                check = true;
-            }
-            count++;
-        }
-        return check;
+        WebDriverConfig.switchToFirstTab();
+        return true;
     }
 }

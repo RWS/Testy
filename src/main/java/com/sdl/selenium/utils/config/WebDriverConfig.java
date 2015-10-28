@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
@@ -206,6 +207,11 @@ public class WebDriverConfig {
         return switchToTab(totalTabs - 1);
     }
 
+    /**
+     * Switch driver to first browser tab
+     * Tab is not visible but we can interact with it, TODO see how to make it active
+     * @return oldTabName
+     */
     public static String switchToFirstTab() {
         return switchToTab(0);
     }
@@ -214,10 +220,13 @@ public class WebDriverConfig {
         String oldTabName = null;
         try {
             Utils.sleep(100); // to make sure tab has been created
-            oldTabName = driver.getWindowHandle();
-
-            LOGGER.debug("Preview tab id: {}", oldTabName);
-            LOGGER.info("Preview tab title : {}", driver.getTitle());
+            try {
+                oldTabName = driver.getWindowHandle();
+                LOGGER.debug("Preview tab id: {}", oldTabName);
+                LOGGER.info("Preview tab title : {}", driver.getTitle());
+            } catch (NoSuchWindowException e) {
+                LOGGER.info("Preview tab already closed");
+            }
 
             List<String> winList = new ArrayList<>(driver.getWindowHandles());
             String tabID = winList.get(index);
@@ -226,8 +235,27 @@ public class WebDriverConfig {
             driver.switchTo().window(tabID);
             LOGGER.info("Current tab title : {}", driver.getTitle());
         } catch (NoSuchWindowException e) {
-            LOGGER.error("NoSuchWindowException {}", e);
+            LOGGER.error("NoSuchWindowException", e);
         }
         return oldTabName;
+    }
+
+    /**
+     * @param tabCount  : this is webdriver
+     * @param millis : time you define to wait the tab open
+     * @return true if tab open in the time, false if tab not open in the time.
+     */
+    public static boolean waitForNewTab(int tabCount, long millis) {
+        boolean hasExpectedTabs = false;
+        while (!hasExpectedTabs && millis > 0) {
+            if (driver.getWindowHandles().size() >= tabCount) {
+                hasExpectedTabs = true;
+            } else {
+                LOGGER.info("Waiting {} ms for new tab...", millis);
+                Utils.sleep(100);
+            }
+            millis -= 100;
+        }
+        return hasExpectedTabs;
     }
 }

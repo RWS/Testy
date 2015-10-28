@@ -12,10 +12,15 @@ import org.testng.annotations.Test;
 public class WebDriverConfigTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfigTest.class);
 
-    private WebLink textExamplesLink = new WebLink().setText("open text examples");
+    private class FirstTab {
+        public WebLink textExamplesLink = new WebLink().setText("open text examples");
+    }
+    private class SecondTab {
+        public WebLocator header = new WebLocator().setText("Text with different SearchTypes examples");
+    }
 
-    private WebLocator header = new WebLocator().setText("Text with different SearchTypes examples");
-
+    private FirstTab firstTab = new FirstTab();
+    private SecondTab secondTab = new SecondTab();
 
     @BeforeClass
     public void startTests() {
@@ -24,18 +29,19 @@ public class WebDriverConfigTest extends TestBase {
 
     @Test
     public void shouldInteractWithElementsOpenedInNewWindowThenReturnToPreviewTab() {
-        textExamplesLink.openInNewWindow();
-        header.assertExists();
-        textExamplesLink.returnDefaultWindow();
-        textExamplesLink.assertExists();
+        firstTab.textExamplesLink.openInNewWindow();
+        secondTab.header.assertExists();
+        firstTab.textExamplesLink.returnDefaultWindow();
+        firstTab.textExamplesLink.assertExists();
     }
 
     @Test
     public void shouldSwitchToFirstTab() {
-        textExamplesLink.assertClick();
+        firstTab.textExamplesLink.assertClick();
         WebDriverConfig.switchToLastTab();
-        header.assertExists();
-        WebDriverConfig.switchToFirstTab(); // Tab is not visible but we can interact with it, TODO see how to make it active
-        textExamplesLink.assertExists();
+        secondTab.header.assertExists();
+        WebDriverConfig.getDriver().close();
+        WebDriverConfig.switchToFirstTab();
+        firstTab.textExamplesLink.assertExists();
     }
 }
