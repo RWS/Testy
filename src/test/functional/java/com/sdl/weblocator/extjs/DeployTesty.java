@@ -21,7 +21,6 @@ import com.sdl.selenium.web.table.TableRow;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.weblocator.TestBase;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +53,7 @@ public class DeployTesty extends TestBase {
     private com.sdl.selenium.web.button.Button logInButton = new com.sdl.selenium.web.button.Button(loginForm).setId("yui-gen1-button");
     private WebLocator table = new WebLocator().setId("tasks");
     private WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
-    private Table buildHistory = new Table().setClasses("pane","stripped");
+    private Table buildHistory = new Table().setClasses("pane", "stripped");
     private TableRow buildNowEl = new TableRow(buildHistory).setClasses("build-row", "transitive");
 
     private WebLocator logInNexus = new WebLocator().setId("head-link-r");
@@ -69,6 +68,8 @@ public class DeployTesty extends TestBase {
     private WebLocator testyDir = new WebLocator().setElPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
     private TableCell tableCell = table1.getCell(4, new TableCell(3, "Path Lookup:", SearchType.EQUALS));
     private com.sdl.selenium.extjs3.form.TextField searchField = new com.sdl.selenium.extjs3.form.TextField(tableCell);
+    private WebLocator menuList = new WebLocator().setClasses("x-menu").setExcludeClasses("x-hide-offsets");
+    private WebLocator deleteEl = new WebLocator(menuList).setClasses("x-menu-item-text").setText("Delete");
 
     @BeforeClass
     public void startTests() {
@@ -116,7 +117,8 @@ public class DeployTesty extends TestBase {
         testyDir.ready(10);
         Utils.sleep(1000);
         Actions action = new Actions(driver);
-        action.contextClick(testyDir.currentElement).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.RETURN).build().perform();
+        action.contextClick(testyDir.currentElement).perform();
+        deleteEl.assertClick();
         confirmYesMSG("Delete the selected \"/com/sdl/lt/Testy/\" folder?");
         Utils.sleep(1000);
     }
