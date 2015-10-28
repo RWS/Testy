@@ -96,12 +96,8 @@ public class TextField extends ExtJsComponent implements ITextField {
      * @return string
      */
     public String getValue() {
-        boolean setted = ready();
-        String value = null;
-        if (setted) {
-            value = executor.getValue(this);
-        }
-        return value;
+        assertReady();
+        return executor.getValue(this);
     }
 
     public String getTriggerPath(String icon) {
