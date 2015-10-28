@@ -2,21 +2,14 @@ package com.sdl.selenium.web.link;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class WebLink extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLink.class);
 
     private String oldTab;
-    private boolean isNewTab;
 
     public WebLink() {
         setClassName("WebLink");

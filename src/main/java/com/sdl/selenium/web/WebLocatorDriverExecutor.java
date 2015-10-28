@@ -487,7 +487,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (WebDriverConfig.isSilentDownload()) {
             fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
             File file = new File(fileName);
-            return FileUtils.waitFileIfIsEmpty(file) && fileName.equals(file.getAbsolutePath());
+            return FileUtils.waitFileIfIsEmpty(file, 10000) && fileName.equals(file.getAbsolutePath());
         } else {
             return RunExe.getInstance().download(fileName);
         }

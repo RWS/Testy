@@ -10,16 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class DownloadFileTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadFileTest.class);
 
-    Form form = new Form(null, "Form Title");
-    DownloadFile downloadFile = new DownloadFile(form).setText("Download");
+    private Form form = new Form(null, "Form Title");
+    private DownloadFile downloadFile = new DownloadFile(form).setText("Download");
 
     @BeforeClass
     public void startTests() {
@@ -27,15 +25,15 @@ public class DownloadFileTest extends TestBase {
     }
 
     @Test
-    public void assertDownload() throws IOException {
-        assertTrue(downloadFile.download("text.docx"));
+    public void assertDownload() {
+        assertThat(downloadFile.download("text.docx"), is(true));
 //        assertTrue(downloadFile.download("LanguageCloudAddins.exe"));
         FileUtils.cleanDownloadDir();
     }
 
     @Test
-    public void assertDownloadIsNotFile() throws IOException {
-        assertFalse(downloadFile.download(InputData.DOWNLOAD_DIRECTORY));
+    public void assertDownloadIsNotFile() {
+        assertThat(downloadFile.download(InputData.DOWNLOAD_DIRECTORY), is(false));
         FileUtils.cleanDownloadDir();
     }
 }

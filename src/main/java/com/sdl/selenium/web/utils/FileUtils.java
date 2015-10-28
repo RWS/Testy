@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
-    
+
     private static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\r\\n|\\r|\\n");
 
     public static String getValidFileName(String fileName) {
@@ -25,17 +25,17 @@ public class FileUtils {
         return fileName;
     }
 
-
-    public static boolean waitFileIfIsEmpty(File file) {
-        boolean empty;
-        int time = 0;
+    public static boolean waitFileIfIsEmpty(File file, long millis) {
+        boolean isNotEmpty;
         do {
-            LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + time);
-            time++;
-            Utils.sleep(100);
-            empty = file.length() > 0;
-        } while (!empty && time < 100);
-        return empty;
+            isNotEmpty = file.length() > 0;
+            if (!isNotEmpty) {
+                LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + millis);
+                Utils.sleep(100);
+            }
+            millis -= 100;
+        } while (!isNotEmpty && millis > 0);
+        return isNotEmpty;
     }
 
     public static String getTextFromFile(String pathFile) {
@@ -136,7 +136,8 @@ public class FileUtils {
         try {
             File file1 = new File(file1Path);
             File file2 = new File(file2Path);
-            FileUtils.waitFileIfIsEmpty(file2);
+            FileUtils.waitFileIfIsEmpty(file1, 10000);
+            FileUtils.waitFileIfIsEmpty(file2, 10000);
             String str1 = convertStreamToString(new FileInputStream(file1));
             String str2 = convertStreamToString(new FileInputStream(file2));
             assertThat("Strings are not same", formatToSystemLineSeparator(str1), equalTo(formatToSystemLineSeparator(str2)));
