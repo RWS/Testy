@@ -109,21 +109,13 @@ public class TextField extends ExtJsComponent implements ITextField {
     }
 
     public boolean clickIcon(String icon) {
-        if (ready()) {
-            String triggerPath = getTriggerPath(icon);
-            WebLocator iconLocator = new WebLocator(this).setElPath(triggerPath);
-            iconLocator.setRenderMillis(500);
-            iconLocator.setInfoMessage(this + " -> trigger-" + icon);
-            try {
-                return iconLocator.click();
-            } catch (Exception e) {
-                LOGGER.error("Exception on clickIcon: " + e.getMessage());
-                return false;
-            }
-        } else {
-            LOGGER.warn("clickIcon : field is not ready for use: " + this);
-        }
-        return false;
+        assertReady();
+        String triggerPath = getTriggerPath(icon);
+        WebLocator iconLocator = new WebLocator(this).setElPath(triggerPath);
+        iconLocator.setRenderMillis(500);
+        iconLocator.setInfoMessage(this + " -> trigger-" + icon);
+        iconLocator.assertClick();
+        return true;
     }
 
     /**
