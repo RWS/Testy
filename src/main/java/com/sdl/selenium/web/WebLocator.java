@@ -316,6 +316,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.isElementPresent(this);
     }
 
+    /**
+     * driver.findElements(xpath).size()
+     * @return the number of elements in this list
+     */
     public int size() {
         return executor.size(this);
     }
