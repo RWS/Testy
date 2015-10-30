@@ -59,12 +59,12 @@
     </test>
     <test name="DownloadTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.DownloadTest"/>
+            <class name="com.sdl.weblocator.extjs.button.DownloadTest"/>
         </classes>
     </test>
     <test name="UploadButtonTest">
         <classes>
-            <class name="com.sdl.weblocator.extjs.UploadButtonTest"/>
+            <class name="com.sdl.weblocator.extjs.button.UploadButtonTest"/>
         </classes>
     </test>
     <test name="DatePickerTest">
