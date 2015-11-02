@@ -79,7 +79,7 @@
     </test>
     <test name="UploadFileTest">
         <classes>
-            <class name="com.sdl.weblocator.bootstrap.UploadFileTest"/>
+            <class name="com.sdl.weblocator.bootstrap.button.UploadFileTest"/>
         </classes>
     </test>
     <test name="SelectPickerTest">

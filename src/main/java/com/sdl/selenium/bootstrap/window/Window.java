@@ -11,9 +11,11 @@ public class Window extends WebLocator implements IWebLocator {
 
     public Window() {
         setClassName("Window");
-        WebLocator header = new WebLocator().setClasses("-header").setRoot("/");
+//        setTemplate("title", "count(*[contains(@class,'-header')]//*[text()='%s']) > 0"); //TODO make sure setTemplate Title is working
+        WebLocator header = new WebLocator().setClasses("modal-header");
         setTemplateTitle(new WebLocator(header));
-        setElPathSuffix("dialog-visible", "@role='dialog' and @aria-hidden='false'");
+        setAttribute("role", "dialog");
+        setAttribute("aria-hidden", "false");
     }
 
     public Window(String title) {

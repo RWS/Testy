@@ -53,41 +53,48 @@ public class TextField extends ExtJsComponent implements ITextField {
 
     // methods
     public boolean pasteInValue(String value) {
-        if (ready()) {
-            if (value != null) {
-                doClear();
-                Utils.copyToClipboard(value);
-                executor.doSendKeys(this, Keys.CONTROL, "v");
-                LOGGER.info("Set value(" + this + "): " + value + "'");
-                return true;
-            }
-        } else {
-            LOGGER.warn("setValue : field is not ready for use: " + toString());
+        assertReady();
+        if (value != null) {
+            doClear();
+            Utils.copyToClipboard(value);
+            executor.doSendKeys(this, Keys.CONTROL, "v");
+            LOGGER.info("Set value(" + this + "): " + value + "'");
+            return true;
         }
         return false;
     }
 
     public boolean setValue(String value) {
-        return doSetValue(value);
+        assertReady();
+        boolean setted = executor.setValue(this, value);
+        assertThat("Could not setValue on : " + this, setted);
+        LOGGER.info("setValue on {}", this);
+        return true;
     }
 
     public boolean doSetValue(String value) {
-        boolean setted = ready();
-        if (setted) {
+        boolean setted = false;
+        if (ready()) {
             setted = executor.setValue(this, value);
             if (setted) {
                 LOGGER.info("setValue on {}", this);
             } else {
                 LOGGER.info("Could not setValue on {}", this);
             }
+        } else {
+            LOGGER.info("Element was not rendered {}", toString());
         }
         return setted;
     }
 
+    /**
+     * @deprecated use {@link #setValue(String)}
+     * @param value
+     * @return
+     */
     public boolean assertSetValue(String value) {
-        boolean setted = setValue(value);
-        assertThat("Could not setValue on : " + this, setted);
-        return setted;
+        setValue(value);
+        return true;
     }
 
     /**

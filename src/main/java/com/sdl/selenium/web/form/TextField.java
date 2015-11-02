@@ -35,16 +35,13 @@ public class TextField extends WebLocator implements ITextField {
     }
 
     public boolean pasteInValue(String value) {
-        if (ready()) {
-            if (value != null) {
-                currentElement.clear();
-                Utils.copyToClipboard(value);
-                currentElement.sendKeys(Keys.CONTROL, "v");
-                LOGGER.info("Set value(" + this + "): " + value + "'");
-                return true;
-            }
-        } else {
-            LOGGER.warn("setValue : field is not ready for use: " + toString());
+        assertReady();
+        if (value != null) {
+            currentElement.clear();
+            Utils.copyToClipboard(value);
+            currentElement.sendKeys(Keys.CONTROL, "v");
+            LOGGER.info("Set value(" + this + "): " + value + "'");
+            return true;
         }
         return false;
     }

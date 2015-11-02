@@ -883,12 +883,12 @@ public class XPathBuilder {
             }
         }
         if (hasTitle()) {
-            if (templateTitle.get("title") != null) {
-                WebLocator locator = templateTitle.get("title");
-                locator.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
+            WebLocator titleTplEl = templateTitle.get("title");
+            if (titleTplEl != null) {
+                titleTplEl.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 setTemplate("title", "count(.%s) > 0");
-                addTemplate(selector, "title", locator.getXPath());
-            } else if (!searchTitleType.isEmpty() && templateTitle.get("title") == null) {
+                addTemplate(selector, "title", titleTplEl.getXPath());
+            } else if (!searchTitleType.isEmpty()) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
                 String title = getTextAfterEscapeQuotes(hasContainsAll, getTitle(), searchTitleType);
                 selector.add(getTextSearchTypePath(searchTitleType, title, hasContainsAll, "@title"));
