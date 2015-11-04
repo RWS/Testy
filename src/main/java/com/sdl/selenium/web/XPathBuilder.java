@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class XPathBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(XPathBuilder.class);
-
+    public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private String className = "WebLocator";
     private String root = "//";
     private String tag = "*";
@@ -28,7 +28,6 @@ public class XPathBuilder {
     private List<String> excludeClasses;
     private String name;
     private String text;
-    public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
     private Set<SearchType> searchTitleType = new HashSet<>();
     private List<SearchType> searchLabelType = new ArrayList<>();
@@ -345,6 +344,15 @@ public class XPathBuilder {
         }
         this.searchTextType.addAll(defaultSearchTextType);
         return (T) this;
+    }
+
+    /**
+     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
+     *
+     * @return value that has been set in {@link #setSearchLabelType(SearchType...)}
+     */
+    public List<SearchType> getSearchLabelType() {
+        return searchLabelType;
     }
 
     /**
@@ -883,12 +891,12 @@ public class XPathBuilder {
             }
         }
         if (hasTitle()) {
-            WebLocator titleTplEl = templateTitle.get("title");
-            if (titleTplEl != null) {
-                titleTplEl.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
+            if (templateTitle.get("title") != null) {
+                WebLocator locator = templateTitle.get("title");
+                locator.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 setTemplate("title", "count(.%s) > 0");
-                addTemplate(selector, "title", titleTplEl.getXPath());
-            } else if (!searchTitleType.isEmpty()) {
+                addTemplate(selector, "title", locator.getXPath());
+            } else if (!searchTitleType.isEmpty() && templateTitle.get("title") == null) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
                 String title = getTextAfterEscapeQuotes(hasContainsAll, getTitle(), searchTitleType);
                 selector.add(getTextSearchTypePath(searchTitleType, title, hasContainsAll, "@title"));
