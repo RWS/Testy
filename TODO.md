@@ -1,5 +1,5 @@
-RELEASE NOTES
--------------
+# RELEASE NOTES
+
 **Release Notes for Testy 1.8.2-SNAPSHOT**
 - sa discutam next version of Testy
 - Cand sa foloseim //table//td[2][text()='test'] vs //table//td[text()='test'][1]?
@@ -8,4 +8,15 @@ RELEASE NOTES
 
 **Release Notes for Testy 2.0.0-SNAPSHOT**
 
+## Improvements in suggestions
+
+    - show parents elements tree (outerHTML - innerHTML)
+
+        ERROR: WebLocatorDriverExecutor - InvalidElementStateException in doClick: Selectaţi tot
+        org.openqa.selenium.ElementNotVisibleException: element not visible
+        ...
+          at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:84)
+          at com.sdl.selenium.web.WebLocatorDriverExecutor.tryAgainDoClick(WebLocatorDriverExecutor.java:64)
+          at com.sdl.selenium.web.WebLocatorDriverExecutor.doClick(WebLocatorDriverExecutor.java:45)
+          at com.sdl.selenium.web.WebLocator.assertClick(WebLocator.java:189)
 
