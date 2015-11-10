@@ -1,9 +1,11 @@
 package com.sdl.selenium;
 
+import com.google.common.collect.Lists;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,40 @@ public class WebLocatorSuggestions {
         return result.trim();
     }
 
+    private static String getHtmlTree(WebLocator webLocator) {
+
+        String result = "";
+
+        if(webLocator.isElementPresent()) {
+
+
+            WebElement parent = webLocator.currentElement;
+
+            List<String> elements = new LinkedList<>();
+
+            while (!parent.getTagName().equals("html")){
+
+                String outerHtml = parent.getAttribute("outerHTML");
+                String innerHtml = parent.getAttribute("innerHTML");
+
+                String html = outerHtml.substring(0, outerHtml.indexOf(innerHtml));
+
+                elements.add(html);
+
+                parent = parent.findElement(By.xpath(".."));
+            }
+
+            elements = Lists.reverse(elements);
+            String indent = "\n";
+            for(String elem : elements) {
+                result = result.concat(indent).concat(elem);
+                indent = indent.concat("\t");
+            }
+        }
+
+        return result;
+    }
+
     public static void getSuggestions(WebLocator webLocator) {
 
         Map<String, WebLocator> webLocatorMap = WebLocatorUtils.webLocatorAsMap(webLocator);
@@ -81,7 +117,14 @@ public class WebLocatorSuggestions {
     private static void getElementSuggestions(WebLocator webLocator) {
 
         if (webLocator.isElementPresent()) {
-            LOGGER.info("The element already exists.");
+            if(webLocator.currentElement.isDisplayed()) {
+
+                LOGGER.info("The element already exists: {}", getHtmlTree(webLocator));
+
+            } else {
+
+                LOGGER.info("The element already exists but it is not visible: {}", getHtmlTree(webLocator));
+            }
             return;
         }
 
