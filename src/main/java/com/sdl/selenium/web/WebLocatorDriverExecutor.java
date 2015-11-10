@@ -14,18 +14,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorDriverExecutor.class);
 
     private WebDriver driver;
+    private String currentElementPath = "";
 
     public WebLocatorDriverExecutor(WebDriver driver) {
         this.driver = driver;
     }
-
-    private String currentElementPath = "";
 
     @Override
     public boolean doClick(WebLocator el) {
@@ -508,6 +508,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public boolean upload(String... filePath) {
         return RunExe.getInstance().upload(filePath);
+    }
+
+    public List<WebElement> getMatchedElements(WebLocator webLocator) {
+        return driver.findElements(By.xpath(webLocator.getXPath()));
     }
 
     private void highlightElementWithDriver(WebElement el) {

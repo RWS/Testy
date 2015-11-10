@@ -5,7 +5,11 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public interface WebLocatorExecutor {
+    boolean highlight = WebLocatorConfig.isHighlight();
+
     boolean doClick(WebLocator el);
 
     boolean doClickAt(WebLocator el);
@@ -74,11 +78,11 @@ public interface WebLocatorExecutor {
 
     void doHighlight(WebLocator el);
 
-    boolean highlight = WebLocatorConfig.isHighlight();
-
     boolean download(String fileName);
 
     public boolean browse(WebLocator el);
 
     public boolean upload(String... filePath);
+
+    List<WebElement> getMatchedElements(WebLocator webLocator);
 }

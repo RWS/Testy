@@ -86,7 +86,7 @@ public final class WebLocatorUtils extends WebLocator {
         return "$x(\"" + locator.getXPath() + "\")";
     }
 
-    private static Map<String, WebLocator> webLocatorAsMap(WebLocator webLocator) {
+    public static Map<String, WebLocator> webLocatorAsMap(WebLocator webLocator) {
         Map<String, WebLocator> result = new HashMap<>();
         BeanInfo info = null;
         try {

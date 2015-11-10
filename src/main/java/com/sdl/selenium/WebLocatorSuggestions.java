@@ -4,6 +4,7 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,29 +17,68 @@ import java.util.*;
 public class WebLocatorSuggestions {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorSuggestions.class);
+    private static SearchType[] textGroup = {
+            SearchType.EQUALS,
+            SearchType.CONTAINS,
+            SearchType.STARTS_WITH
+    };
+    private static SearchType[] childGroup = {
+            SearchType.CHILD_NODE,
+            SearchType.DEEP_CHILD_NODE_OR_SELF,
+            SearchType.DEEP_CHILD_NODE,
+            SearchType.CONTAINS_ALL,
+            SearchType.CONTAINS_ALL_CHILD_NODES,
+            SearchType.CONTAINS_ANY,
+            SearchType.HTML_NODE
+    };
 
-    private static Long countXPathMatches(XPathBuilder builder) {
+    private static String getMatchedElementsHtml(WebLocator webLocator) {
+        String result = "";
 
-        String script = "return (function(t){for(var e=document.evaluate(t,document,null,XPathResult.ORDERED_NODE_ITERATOR_TYPE,null),u=e.iterateNext(),n=0;u;)n++,u=e.iterateNext();return n})(\"" + builder.getXPath() + "\")";
+        for (WebElement element : webLocator.getMatchedElements()) {
 
-        return (Long) WebLocatorUtils.doExecuteScript(script);
-    }
-
-    public static String getXPathMatches(WebLocator view) {
-
-        return getXPathMatches(view.getPathBuilder());
-    }
-
-    private static String getXPathMatches(XPathBuilder builder) {
-
-        String script = "return (function(e){for(var n=document.evaluate(e,document,null,XPathResult.ORDERED_NODE_ITERATOR_TYPE,null),t=\"\",l=n.iterateNext();l;)t+=l.outerHTML+\"\\n\",l=n.iterateNext();return t})(\"" + builder.getXPath() + "\")";
-
-        String result = (String) WebLocatorUtils.doExecuteScript(script);
+            String outerHtml = element.getAttribute("outerHTML");
+            String innerHtml = element.getAttribute("innerHTML");
+            if (innerHtml.length() < 50) {
+                result = result.concat(outerHtml).concat("\n");
+            } else {
+                result = result.concat(outerHtml.replace(innerHtml, "...")).concat("\n");
+            }
+        }
 
         return result.trim();
     }
 
     public static void getSuggestions(WebLocator webLocator) {
+
+        Map<String, WebLocator> webLocatorMap = WebLocatorUtils.webLocatorAsMap(webLocator);
+
+        if (webLocatorMap.size() == 0) {
+            getElementSuggestions(webLocator);
+        } else {
+            getPageSuggestions(webLocatorMap);
+        }
+    }
+
+    private static void getPageSuggestions(Map<String, WebLocator> webLocatorMap) {
+        boolean allElementsExist = true;
+
+        for (String key : webLocatorMap.keySet()) {
+
+            WebLocator webLocator = webLocatorMap.get(key);
+            if (!webLocator.isElementPresent()) {
+                allElementsExist = false;
+                LOGGER.info("{} not found in page.", key);
+                getSuggestions(webLocator);
+            }
+        }
+
+        if (allElementsExist) {
+            LOGGER.info("All elements are present in the page.");
+        }
+    }
+
+    private static void getElementSuggestions(WebLocator webLocator) {
 
         if (webLocator.isElementPresent()) {
             LOGGER.info("The element already exists.");
@@ -53,18 +93,33 @@ public class WebLocatorSuggestions {
 
         //if the WebLocator should have a label check that it actually exists and try to offer suggestions if it doesn't.
         if (webLocator.getPathBuilder().getLabel() != null) {
-            suggestLabelCorrections(webLocator);
+            boolean labelIsCorrect = suggestLabelCorrections(webLocator);
+            if (!labelIsCorrect) {
+                return;
+            }
         }
 
         SearchType[] solution = suggestTextSearchType(webLocator);
         if (solution != null) {
-            LOGGER.info("Found the element using search type {}", Arrays.toString(solution));
-        } else {
-            suggestAttributeSubsets(webLocator);
+            LOGGER.info("Found the element using text search type {}", Arrays.toString(solution));
+            return;
         }
+
+        solution = suggestTitleSearchType(webLocator);
+        if (solution != null) {
+            LOGGER.info("Found the element using title search type {}", Arrays.toString(solution));
+            return;
+        }
+
+        suggestAttributeSubsets(webLocator);
     }
 
-    private static void suggestLabelCorrections(WebLocator webLocator) {
+    /**
+     * @return True if everything is ok and the desired element was found, false otherwise.
+     */
+    private static boolean suggestLabelCorrections(WebLocator webLocator) {
+
+        boolean labelIsCorrect = false;
 
         XPathBuilder xPathBuilder = webLocator.getPathBuilder();
 
@@ -84,7 +139,7 @@ public class WebLocatorSuggestions {
 
         if (textLocator.exists()) {
 
-            LOGGER.info("Found the label: {}", getXPathMatches(textLocator));
+            LOGGER.info("Found the label: {}", getMatchedElementsHtml(textLocator));
 
             String tag = webLocator.getPathBuilder().getTag();
 
@@ -92,13 +147,14 @@ public class WebLocatorSuggestions {
                     .setElPath(xPathBuilder.getLabelPosition() + tag);
 
             if (labelPosition.isElementPresent()) {
-                LOGGER.info("'{}' elements found at the specified label position: {}", tag, getXPathMatches(labelPosition));
+                LOGGER.info("'{}' elements found at the specified label position: {}", tag, getMatchedElementsHtml(labelPosition));
             } else {
                 LOGGER.info("No '{}' elements found at the specified label position: {}", tag, xPathBuilder.getLabelPosition());
 
                 labelPosition.setElPath(xPathBuilder.getLabelPosition() + "*");
                 if (labelPosition.isElementPresent()) {
-                    LOGGER.info("All elements found at the specified label position: {}", getXPathMatches(labelPosition));
+                    LOGGER.info("All elements found at the specified label position: {}", getMatchedElementsHtml(labelPosition));
+                    labelIsCorrect = true;
                 }
             }
 
@@ -112,25 +168,11 @@ public class WebLocatorSuggestions {
             }
 
         }
+
+        return labelIsCorrect;
     }
 
     public static SearchType[] suggestTextSearchType(WebLocator webLocator) {
-
-        SearchType[] textGroup = {
-                SearchType.EQUALS,
-                SearchType.CONTAINS,
-                SearchType.STARTS_WITH
-        };
-
-        SearchType[] childGroup = {
-                SearchType.CHILD_NODE,
-                SearchType.DEEP_CHILD_NODE_OR_SELF,
-                SearchType.DEEP_CHILD_NODE,
-                SearchType.CONTAINS_ALL,
-                SearchType.CONTAINS_ALL_CHILD_NODES,
-                SearchType.CONTAINS_ANY,
-                SearchType.HTML_NODE
-        };
 
         for (SearchType textSearchType : textGroup) {
 
@@ -155,10 +197,34 @@ public class WebLocatorSuggestions {
         return null;
     }
 
-    private static void suggestAttributeSubsets(WebLocator view) {
-        XPathBuilder builder = view.getPathBuilder();
+    public static SearchType[] suggestTitleSearchType(WebLocator webLocator) {
 
-        List<String> nonNullFields = getNonNullFields(builder);
+        for (SearchType textSearchType : textGroup) {
+
+            SearchType[] solution1 = {textSearchType, SearchType.TRIM};
+            webLocator.setSearchTitleType(solution1);
+
+            if (webLocator.isElementPresent()) {
+                return solution1;
+            }
+
+            for (SearchType childSearchType : childGroup) {
+
+                SearchType[] solution2 = {textSearchType, childSearchType, SearchType.TRIM};
+                webLocator.setSearchTitleType(solution2);
+
+                if (webLocator.isElementPresent()) {
+                    return solution2;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private static void suggestAttributeSubsets(WebLocator view) {
+
+        List<String> nonNullFields = getNonNullFields(view.getPathBuilder());
 
         String[] originalFields = new String[nonNullFields.size()];
         nonNullFields.toArray(originalFields);
@@ -168,7 +234,7 @@ public class WebLocatorSuggestions {
         StringBuilder suggestions = new StringBuilder();
 
         while (suggestions.length() == 0 && k > 0) {
-            proposeSolutions(originalFields, k, 0, new String[k], builder, suggestions);
+            proposeSolutions(originalFields, k, 0, new String[k], view, suggestions);
             k--;
         }
 
@@ -224,29 +290,31 @@ public class WebLocatorSuggestions {
      * Generates combinations of all objects from the dataSet taken k at a time.
      * Each combination is a possible solution that must be validated.
      */
-    private static void proposeSolutions(String[] dataSet, int k, int startPosition, String[] result, XPathBuilder builder, StringBuilder suggestions) {
+    private static void proposeSolutions(String[] dataSet, int k, int startPosition, String[] result, WebLocator webLocator, StringBuilder suggestions) {
 
         if (k == 0) {
-            validateSolution(builder, differences(dataSet, result), suggestions);
+            validateSolution(webLocator, differences(dataSet, result), suggestions);
             return;
         }
 
         for (int i = startPosition; i <= dataSet.length - k; i++) {
             result[result.length - k] = dataSet[i];
-            proposeSolutions(dataSet, k - 1, i + 1, result, builder, suggestions);
+            proposeSolutions(dataSet, k - 1, i + 1, result, webLocator, suggestions);
         }
     }
 
     /**
      * Nullifies all fields of the builder that are not part of the proposed solution and validates the new xPath.
      */
-    private static void validateSolution(XPathBuilder builder, String[] differences, StringBuilder suggestions) {
+    private static void validateSolution(WebLocator webLocator, String[] differences, StringBuilder suggestions) {
 
         //all changes will be recorded here in a human readable form
         StringBuilder sb = new StringBuilder();
 
         //all changes will be kept here and restored after the xPath is generated.
         Map<String, Object> backup = new HashMap<>();
+
+        XPathBuilder builder = webLocator.getPathBuilder();
 
         for (String fieldName : differences) {
             try {
@@ -291,9 +359,9 @@ public class WebLocatorSuggestions {
             }
         }
 
-        Long foundMatches = countXPathMatches(builder);
+        int matches = webLocator.getMatchedElements().size();
 
-        if (foundMatches > 0) {
+        if (matches > 0) {
 
             //remove last 'and' from the message
             if (sb.lastIndexOf("and") > 0) {
@@ -301,10 +369,10 @@ public class WebLocatorSuggestions {
             }
 
             suggestions.append(String.format("Found %s matches by removing %s: ",
-                    foundMatches,
+                    matches,
                     sb));
 
-            suggestions.append(getXPathMatches(builder));
+            suggestions.append(getMatchedElementsHtml(webLocator));
         }
 
         //restore the original builder from the backup

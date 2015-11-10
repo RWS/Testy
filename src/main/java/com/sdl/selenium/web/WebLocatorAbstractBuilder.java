@@ -11,6 +11,9 @@ public abstract class WebLocatorAbstractBuilder {
 
     private XPathBuilder pathBuilder = createXPathBuilder();
 
+    protected WebLocatorAbstractBuilder() {
+    }
+
     protected XPathBuilder createXPathBuilder() {
         return new XPathBuilder();
     }
@@ -22,9 +25,6 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public XPathBuilder getPathBuilder() {
         return pathBuilder;
-    }
-
-    protected WebLocatorAbstractBuilder() {
     }
 
     // =========================================
@@ -184,6 +184,18 @@ public abstract class WebLocatorAbstractBuilder {
      */
     private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
         pathBuilder.setSearchTextType(searchLabelType);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
+     * @param searchTitleType accepted values are: {@link SearchType}
+     * @param <T>             the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setSearchTitleType(SearchType... searchTitleType) {
+        pathBuilder.setSearchTitleType(searchTitleType);
         return (T) this;
     }
 

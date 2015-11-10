@@ -8,19 +8,15 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
-
-    private String currentElementPath = "";
-    public WebElement currentElement;
-
-    public static WebLocatorExecutor getExecutor() {
-        return executor;
-    }
-
     protected static WebLocatorExecutor executor;
+    public WebElement currentElement;
+    private String currentElementPath = "";
 
     public WebLocator() {
     }
@@ -44,6 +40,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public WebLocator(String text, String cls, WebLocator container) {
         this(cls, container);
         setText(text);
+    }
+
+    public static WebLocatorExecutor getExecutor() {
+        return executor;
     }
 
     // getters and setters
@@ -451,6 +451,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean isDisplayed() {
         return executor.isDisplayed(this);
+    }
+
+    public List<WebElement> getMatchedElements() {
+        return executor.getMatchedElements(this);
     }
 
     @Override
