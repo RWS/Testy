@@ -14,14 +14,14 @@ var _classGen = {
         if(classCode.indexOf('TextField') != -1){
             imports.push('import com.sdl.bootstrap.form.TextField;')
         }
-        if(classCode.indexOf('SimpleCheckbox') != -1){
-            imports.push('import com.sdl.selenium.form.SimpleCheckbox;')
+        if(classCode.indexOf('Checkbox') != -1){
+            imports.push('import com.sdl.selenium.form.Checkbox;')
         }
         if(classCode.indexOf('TextArea') != -1){
             imports.push('import com.sdl.bootstrap.form.TextArea;')
         }
-        if(classCode.indexOf('SimpleTable') != -1){
-            imports.push('import com.sdl.selenium.web.table.SimpleTable;')
+        if(classCode.indexOf('Table') != -1){
+            imports.push('import com.sdl.selenium.web.table.Table;')
         }
         if(classCode.indexOf('Form') != -1){
             imports.push('import com.sdl.bootstrap.form.Form;')
@@ -112,7 +112,7 @@ var _classGen = {
             if(type == 'text' || type == 'email'){
                 className = 'TextField';
             } else if(type == 'checkbox'){
-                className = 'SimpleCheckbox';
+                className = 'Checkbox';
             }
             if(className){
                 name = item.prop("id"); // create order for variable name
@@ -140,7 +140,7 @@ var _classGen = {
                 code = '';
             }
         } else if(tag == 'table'){
-            className = 'SimpleTable';
+            className = 'Table';
             if(className){
                 name = item.prop("id"); // create order for variable name
                 name = _classGen.getVarName(name) + className;

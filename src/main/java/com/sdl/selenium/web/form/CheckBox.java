@@ -5,10 +5,9 @@ import com.sdl.selenium.web.WebLocator;
 public class CheckBox extends WebLocator implements ICheck {
 
     public CheckBox() {
-        setClassName("SimpleCheckBox");
+        setClassName("CheckBox");
         setTag("input");
-        setTemplate("input-type", "@type='%s'");
-        setTemplateValue("input-type", "checkbox");
+        setType("checkbox");
     }
 
     public CheckBox(WebLocator container) {
