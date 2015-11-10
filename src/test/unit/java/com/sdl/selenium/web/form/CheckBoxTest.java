@@ -14,7 +14,7 @@ public class CheckBoxTest {
                 {new CheckBox(),           "//input[@type='checkbox']"},
                 {new CheckBox(container),  "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
                 {new CheckBox("Id"), "//input[@id='Id' and @type='checkbox']"},
-                {new CheckBox("Id").setTemplateValue("input-type", "check"), "//input[@id='Id' and @type='check']"}
+                {new CheckBox("Id").setType("check"), "//input[@id='Id' and @type='check']"}
         };
     }
 
