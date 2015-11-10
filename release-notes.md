@@ -68,7 +68,7 @@ RELEASE NOTES
 - move getDriver in WebDriverConfig
 - remove deprecated class and methods
 - assertDownload works with localhost-firefox.properties
-- fix SimpleMultipleSelect path
+- fix MultipleSelect path
 - sendKeys return null if element doesn't ready;
 - move assertDownload(String filePath) in download(String filePath)
 - add Utils.waitFileIfIsEmpty(File file), Wait 5 seconds.

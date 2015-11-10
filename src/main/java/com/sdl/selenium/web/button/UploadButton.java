@@ -5,7 +5,7 @@ import com.sdl.selenium.web.WebLocator;
 public class UploadButton extends WebLocator {
 
     public UploadButton() {
-        setClassName("SimpleUploadButton");
+        setClassName("UploadButton");
         setTag("input");
     }
 

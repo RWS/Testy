@@ -15,7 +15,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     private int timeout = 30;
 
     public Table() {
-        setClassName("SimpleTable");
+        setClassName("Table");
         setTag("table");
     }
 

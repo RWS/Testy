@@ -15,7 +15,7 @@ public class MultipleSelect extends ComboBox {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultipleSelect.class);
 
     public MultipleSelect() {
-        setClassName("SimpleMultipleSelect");
+        setClassName("MultipleSelect");
     }
 
     public MultipleSelect(WebLocator container) {

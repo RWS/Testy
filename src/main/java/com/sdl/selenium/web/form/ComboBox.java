@@ -9,7 +9,7 @@ public class ComboBox extends WebLocator implements ICombo {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
 
     public ComboBox() {
-        setClassName("SimpleComboBox");
+        setClassName("ComboBox");
         setTag("select");
     }
 

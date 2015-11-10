@@ -107,7 +107,7 @@
             <class name="com.sdl.weblocator.bootstrap.button.DownloadFileTest"/>
         </classes>
     </test>
-    <test name="SimpleTableTest">
+    <test name="TableTest">
         <classes>
             <class name="com.sdl.weblocator.bootstrap.table.TableTest"/>
         </classes>
