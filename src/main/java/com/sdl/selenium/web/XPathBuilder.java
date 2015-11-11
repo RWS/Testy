@@ -418,7 +418,7 @@ public class XPathBuilder {
         return (T) this;
     }
 
-    private <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleType) {
+    public <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleType) {
         if (searchTitleType == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {

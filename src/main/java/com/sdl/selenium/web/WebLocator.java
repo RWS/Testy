@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
@@ -339,6 +341,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     // TODO see where is used and if is necessary to be public
     public WebElement findElement() {
         return executor.findElement(this);
+    }
+
+    public List<WebElement> findElements() {
+        return executor.findElements(this);
     }
 
     public boolean isVisible() {

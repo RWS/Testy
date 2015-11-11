@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
@@ -356,6 +357,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return el.currentElement;
     }
 
+    public List<WebElement> findElements(WebLocator webLocator) {
+        return driver.findElements(By.xpath(webLocator.getXPath()));
+    }
+
     @Override
     public WebElement waitElement(final WebLocator el, final long millis) {
         doWaitElement(el, millis);
@@ -386,7 +391,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public int size(WebLocator el) {
-        return driver.findElements(By.xpath(el.getXPath())).size();
+        return findElements(el).size();
     }
 
     @Override

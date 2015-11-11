@@ -1,6 +1,9 @@
 package com.sdl.selenium;
 
+import com.google.common.collect.Lists;
 import com.sdl.selenium.web.WebLocator;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,9 +11,12 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,42 +92,22 @@ public final class WebLocatorUtils extends WebLocator {
         return "$x(\"" + locator.getXPath() + "\")";
     }
 
-    private static Map<String, WebLocator> webLocatorAsMap(WebLocator webLocator) {
+    public static Map<String, WebLocator> webLocatorAsMap(WebLocator webLocator) {
         Map<String, WebLocator> result = new HashMap<>();
-        BeanInfo info = null;
-        try {
-            Class<? extends WebLocator> aClass = webLocator.getClass();
-            info = Introspector.getBeanInfo(aClass);
-        } catch (IntrospectionException e) {
-            LOGGER.error("IntrospectionException", e);
-        }
-        if (info != null) {
-            for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
-                Method reader = pd.getReadMethod();
-                Class<?> propertyType = pd.getPropertyType();
-                String name = pd.getName();
-                if (reader != null && !"class".equals(name) && !"container".equals(name)) {
-                    try {
-                        Class<?> c = Class.forName(propertyType.getName());
-                        if(WebLocator.class.isAssignableFrom(c)){
-                            //LOGGER.debug("found locator: {}, cls: {}", name, propertyType.getName());
-                            WebLocator locator = null;
-                            try {
-                                locator = processWebLocator(reader.invoke(webLocator));
-                            } catch (IllegalAccessException e) {
-                                LOGGER.error("IllegalAccessException", e);
-                            } catch (InvocationTargetException e) {
-                                LOGGER.error("InvocationTargetException", e);
-                            }
-                            if (locator != null) {
-                                result.put(name, locator);
-                            }
-                        }
-                    } catch (ClassNotFoundException x) {
-                    }
+
+        for(Field field : webLocator.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            Object fieldInstance = null;
+            try {
+                fieldInstance = field.get(webLocator);
+                if(fieldInstance instanceof WebLocator) {
+                    result.put(field.getName(), (WebLocator) fieldInstance);
                 }
+            } catch (IllegalAccessException e) {
+                //should not get here because of field.setAccessible(true);
             }
         }
+
         return result;
     }
 
@@ -130,6 +116,39 @@ public final class WebLocatorUtils extends WebLocator {
         if (o instanceof WebLocator) {
             result = (WebLocator) o;
         }
+        return result;
+    }
+
+    public static String getHtmlTree(WebLocator webLocator) {
+
+        String result = "";
+
+        if(webLocator.isElementPresent()) {
+
+            WebElement parent = webLocator.currentElement;
+
+            List<String> elements = new LinkedList<>();
+
+            while (!parent.getTagName().equals("html")){
+
+                String outerHtml = parent.getAttribute("outerHTML");
+                String innerHtml = parent.getAttribute("innerHTML");
+
+                String html = outerHtml.substring(0, outerHtml.indexOf(innerHtml));
+
+                elements.add(html);
+
+                parent = parent.findElement(By.xpath(".."));
+            }
+
+            elements = Lists.reverse(elements);
+            String indent = "\n";
+            for(String elem : elements) {
+                result = result.concat(indent).concat(elem);
+                indent = indent.concat("\t");
+            }
+        }
+
         return result;
     }
 

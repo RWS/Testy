@@ -5,6 +5,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public interface WebLocatorExecutor {
     boolean doClick(WebLocator el);
 
@@ -41,6 +43,8 @@ public interface WebLocatorExecutor {
     boolean isElementPresent(WebLocator el);
 
     WebElement findElement(WebLocator el);
+
+    List<WebElement> findElements(WebLocator webLocator);
 
     WebElement waitElement(WebLocator el, final long millis);
 

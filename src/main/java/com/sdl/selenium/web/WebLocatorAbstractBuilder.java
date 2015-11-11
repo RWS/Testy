@@ -190,6 +190,18 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
+     * @param searchTitleType accepted values are: {@link SearchType}
+     * @param <T>             the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setSearchTitleType(SearchType... searchTitleType) {
+        pathBuilder.setSearchTitleType(searchTitleType);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
      * @param style of element
      * @param <T>   the element which calls this method
      * @return this element
