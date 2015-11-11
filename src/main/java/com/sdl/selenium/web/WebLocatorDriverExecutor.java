@@ -21,11 +21,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorDriverExecutor.class);
 
     private WebDriver driver;
-    private String currentElementPath = "";
 
     public WebLocatorDriverExecutor(WebDriver driver) {
         this.driver = driver;
     }
+
+    private String currentElementPath = "";
 
     @Override
     public boolean doClick(WebLocator el) {
@@ -356,6 +357,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return el.currentElement;
     }
 
+    public List<WebElement> findElements(WebLocator webLocator) {
+        return driver.findElements(By.xpath(webLocator.getXPath()));
+    }
+
     @Override
     public WebElement waitElement(final WebLocator el, final long millis) {
         doWaitElement(el, millis);
@@ -386,7 +391,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public int size(WebLocator el) {
-        return driver.findElements(By.xpath(el.getXPath())).size();
+        return findElements(el).size();
     }
 
     @Override
@@ -508,10 +513,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public boolean upload(String... filePath) {
         return RunExe.getInstance().upload(filePath);
-    }
-
-    public List<WebElement> getMatchedElements(WebLocator webLocator) {
-        return driver.findElements(By.xpath(webLocator.getXPath()));
     }
 
     private void highlightElementWithDriver(WebElement el) {

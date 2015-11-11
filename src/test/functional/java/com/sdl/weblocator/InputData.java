@@ -46,6 +46,7 @@ public class InputData extends PropertiesReader {
     public static final String SERVER_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("server.url");
     public static final String BOOTSTRAP_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("bootstrap.url");
     public static final String WEB_LOCATOR_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("web.locator.url");
+    public static final String SUGGESTIONS_URL = FUNCTIONAL_PATH_ABSOLUTE + properties.getProperty("suggestions.url");
 
     public static final String BROWSER_CONFIG = properties.getProperty("browser.config");
 }

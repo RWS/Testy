@@ -8,8 +8,6 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public interface WebLocatorExecutor {
-    boolean highlight = WebLocatorConfig.isHighlight();
-
     boolean doClick(WebLocator el);
 
     boolean doClickAt(WebLocator el);
@@ -46,6 +44,8 @@ public interface WebLocatorExecutor {
 
     WebElement findElement(WebLocator el);
 
+    List<WebElement> findElements(WebLocator webLocator);
+
     WebElement waitElement(WebLocator el, final long millis);
 
     int size(WebLocator el);
@@ -78,11 +78,11 @@ public interface WebLocatorExecutor {
 
     void doHighlight(WebLocator el);
 
+    boolean highlight = WebLocatorConfig.isHighlight();
+
     boolean download(String fileName);
 
     public boolean browse(WebLocator el);
 
     public boolean upload(String... filePath);
-
-    List<WebElement> getMatchedElements(WebLocator webLocator);
 }

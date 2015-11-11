@@ -14,9 +14,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class WebLocator extends WebLocatorAbstractBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
-    protected static WebLocatorExecutor executor;
-    public WebElement currentElement;
+
     private String currentElementPath = "";
+    public WebElement currentElement;
+
+    public static WebLocatorExecutor getExecutor() {
+        return executor;
+    }
+
+    protected static WebLocatorExecutor executor;
 
     public WebLocator() {
     }
@@ -40,10 +46,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public WebLocator(String text, String cls, WebLocator container) {
         this(cls, container);
         setText(text);
-    }
-
-    public static WebLocatorExecutor getExecutor() {
-        return executor;
     }
 
     // getters and setters
@@ -341,6 +343,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.findElement(this);
     }
 
+    public List<WebElement> findElements() {
+        return executor.findElements(this);
+    }
+
     public boolean isVisible() {
         boolean visible = isElementPresent();
         if (visible) {
@@ -451,10 +457,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean isDisplayed() {
         return executor.isDisplayed(this);
-    }
-
-    public List<WebElement> getMatchedElements() {
-        return executor.getMatchedElements(this);
     }
 
     @Override

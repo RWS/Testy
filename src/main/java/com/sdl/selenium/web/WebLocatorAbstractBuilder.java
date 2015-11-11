@@ -11,9 +11,6 @@ public abstract class WebLocatorAbstractBuilder {
 
     private XPathBuilder pathBuilder = createXPathBuilder();
 
-    protected WebLocatorAbstractBuilder() {
-    }
-
     protected XPathBuilder createXPathBuilder() {
         return new XPathBuilder();
     }
@@ -25,6 +22,9 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public XPathBuilder getPathBuilder() {
         return pathBuilder;
+    }
+
+    protected WebLocatorAbstractBuilder() {
     }
 
     // =========================================
