@@ -1,12 +1,10 @@
 package com.sdl.weblocator;
 
 import com.sdl.selenium.WebLocatorSuggestions;
-import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
-import com.sdl.weblocator.pageObject.BootstrapPage;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

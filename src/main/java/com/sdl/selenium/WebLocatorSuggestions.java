@@ -178,8 +178,8 @@ public class WebLocatorSuggestions {
             SearchType[] solution = suggestTextSearchType(labelLocator);
             if (solution != null) {
                 LOGGER.warn("But found it using search types {}", Arrays.toString(solution));
-                webLocator.setLabel(label, solution);
-                return webLocator;
+                labelLocator.setLabel(label, solution);
+                return labelLocator;
             } else {
                 labelLocator.setTag("*");
                 if(labelLocator.isElementPresent()) {

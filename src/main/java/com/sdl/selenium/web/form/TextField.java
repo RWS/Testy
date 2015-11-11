@@ -47,10 +47,12 @@ public class TextField extends WebLocator implements ITextField {
     }
 
     public boolean setValue(String value) {
+        assertReady();
         return executor.setValue(this, value);
     }
 
     public String getValue() {
+        assertReady();
         return executor.getValue(this);
     }
 }

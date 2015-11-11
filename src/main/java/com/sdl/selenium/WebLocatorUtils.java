@@ -88,7 +88,7 @@ public final class WebLocatorUtils extends WebLocator {
         builder.append("}\n\n");
     }
 
-    private static String getFirebugXPath(WebLocator locator) {
+    public static String getFirebugXPath(WebLocator locator) {
         return "$x(\"" + locator.getXPath() + "\")";
     }
 

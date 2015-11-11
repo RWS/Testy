@@ -1,6 +1,7 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 1.8.3-SNAPSHOT**
+- add weblocator.log.suggestions=true
 - add setAttribute(String attribute, String value)
 - add setPlaceholder(final String value) for all components which extend com.sdl.selenium.web.form.TextField
 - update webdriver version 2.48.2
@@ -75,7 +76,7 @@ RELEASE NOTES
 - move Utils from com.extjs.selenium.Utils to com.sdl.selenium.web.utils.Utils;
 - create FileUtils
 - convert to boolean fireEventWithJS
-- add weblocator.log.logXPathEnabled=false and weblocator.defaults.searchType=contains
+- add weblocator.log.logXPath=false and weblocator.defaults.searchType=contains
 - has make protected
 - add MultiSelect class
 

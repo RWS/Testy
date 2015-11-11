@@ -18,7 +18,8 @@ public class WebLocatorConfig {
 
     private static long defaultRenderMillis;
     private static boolean logUseClassName;
-    private static boolean logXPathEnabled;
+    private static boolean logXPath;
+    private static boolean logSuggestions;
     private static boolean logContainers;
     private static boolean highlight;
     private static Set<SearchType> searchTextType = new HashSet<SearchType>() {{
@@ -44,9 +45,9 @@ public class WebLocatorConfig {
                 LOGGER.error("IOException: {}", e);
             }
         } //else {
-            //properties = new WebLocatorConfigReader();
+        //properties = new WebLocatorConfigReader();
         //}
-        
+
         init(properties);
     }
 
@@ -92,9 +93,14 @@ public class WebLocatorConfig {
             setLogUseClassName(logUseClassName);
         }
 
-        Boolean isLogXPathEnabled = getBoolean("weblocator.log.logXPathEnabled");
+        Boolean isLogXPathEnabled = getBoolean("weblocator.log.xPath");
         if (isLogXPathEnabled != null) {
-            setLogXPathEnabled(isLogXPathEnabled);
+            setLogXPath(isLogXPathEnabled);
+        }
+
+        Boolean suggestionEnabled = getBoolean("weblocator.log.suggestions");
+        if (suggestionEnabled != null) {
+            setLogSuggestions(suggestionEnabled);
         }
 
         Boolean logContainers = getBoolean("weblocator.log.containers");
@@ -140,12 +146,20 @@ public class WebLocatorConfig {
         WebLocatorConfig.logUseClassName = logUseClassName;
     }
 
-    public static boolean isLogXPathEnabled() {
-        return logXPathEnabled;
+    public static boolean isLogXPath() {
+        return logXPath;
     }
 
-    public static void setLogXPathEnabled(boolean logXPathEnabled) {
-        WebLocatorConfig.logXPathEnabled = logXPathEnabled;
+    public static void setLogXPath(boolean logXPath) {
+        WebLocatorConfig.logXPath = logXPath;
+    }
+
+    public static boolean isLogSuggestions() {
+        return logSuggestions;
+    }
+
+    public static void setLogSuggestions(boolean logSuggestions) {
+        WebLocatorConfig.logSuggestions = logSuggestions;
     }
 
     public static boolean isLogContainers() {

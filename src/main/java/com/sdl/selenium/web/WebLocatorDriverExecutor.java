@@ -1,5 +1,7 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.WebLocatorSuggestions;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
@@ -366,11 +368,18 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         doWaitElement(el, millis);
         if (el.currentElement == null) {
             LOGGER.warn("Element not found after " + millis + " millis; {}", el);
-            if (WebLocatorConfig.isLogXPathEnabled()) {
-                LOGGER.debug("\t" + el.getXPath());
-            }
+            logDetails(el);
         }
         return el.currentElement;
+    }
+
+    private void logDetails(WebLocator el) {
+        if (WebLocatorConfig.isLogXPath()) {
+            LOGGER.debug("\t" + WebLocatorUtils.getFirebugXPath(el));
+        }
+        if (WebLocatorConfig.isLogSuggestions()) {
+            WebLocatorSuggestions.getElementSuggestion(el);
+        }
     }
 
     private WebElement doWaitElement(final WebLocator el, final long millis) {
