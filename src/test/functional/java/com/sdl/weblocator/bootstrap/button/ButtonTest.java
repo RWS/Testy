@@ -38,7 +38,7 @@ public class ButtonTest extends TestBase {
     }
 
     @Test
-    public void shouldFindElementWithChildNode(){
+    public void shouldFindElementWithChildNode() {
         UneditableInput input = new UneditableInput().setLabel("Execute");
 
         Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
@@ -47,7 +47,7 @@ public class ButtonTest extends TestBase {
     }
 
     @Test
-    public void shouldFindElementWithChildNodes(){
+    public void shouldFindElementWithChildNodes() {
         UneditableInput input = new UneditableInput().setLabel("Execute");
         SelectPicker picker = new SelectPicker().setLabel("Execute");
 
@@ -57,7 +57,7 @@ public class ButtonTest extends TestBase {
     }
 
     @Test
-    public void shouldFindElementWithChildNodeThatHasContainerSelf(){
+    public void shouldFindElementWithChildNodeThatHasContainerSelf() {
         UneditableInput input = new UneditableInput().setLabel("Execute");
 
         Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
