@@ -11,7 +11,7 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.log.containers=true" +
             "\n weblocator.log.useClassName=false" +
             "\n weblocator.log.xPath=true" +
-            "\n weblocator.log.suggestions=true" +
+            "\n weblocator.log.suggestions=false" +
             "\n weblocator.highlight=false" +
             "\n weblocator.defaults.renderMillis=3000" +
             "\n #accepted values for searchType: " + Arrays.asList(SearchType.values()) +
