@@ -19,6 +19,7 @@ public class WebLocatorConfig {
     private static long defaultRenderMillis;
     private static boolean logUseClassName;
     private static boolean logXPath;
+    private static boolean logRetryException;
     private static boolean logSuggestions;
     private static boolean logContainers;
     private static boolean highlight;
@@ -98,6 +99,10 @@ public class WebLocatorConfig {
             setLogXPath(isLogXPathEnabled);
         }
 
+        Boolean retryException = getBoolean("weblocator.log.retryException");
+        if (retryException != null) {
+            setLogRetryException(retryException);
+        }
         Boolean suggestionEnabled = getBoolean("weblocator.log.suggestions");
         if (suggestionEnabled != null) {
             setLogSuggestions(suggestionEnabled);
@@ -152,6 +157,14 @@ public class WebLocatorConfig {
 
     public static void setLogXPath(boolean logXPath) {
         WebLocatorConfig.logXPath = logXPath;
+    }
+
+    public static boolean isLogRetryException() {
+        return logRetryException;
+    }
+
+    public static void setLogRetryException(boolean logRetryException) {
+        WebLocatorConfig.logRetryException = logRetryException;
     }
 
     public static boolean isLogSuggestions() {

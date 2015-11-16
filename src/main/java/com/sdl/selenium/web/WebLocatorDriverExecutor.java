@@ -30,6 +30,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private String currentElementPath = "";
 
+    // animations or other Exception
+    private static long RETRY_MS = 500;
+
     @Override
     public boolean doClick(WebLocator el) {
         boolean clicked = false;
@@ -187,10 +190,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         }
     }
 
-    @Override
-    public boolean setValue(WebLocator el, String value) {
+    private boolean setValue(WebLocator el, String value, int retries) {
         boolean executed = false;
-        if (value != null) {
+        if (retries >= 0 && value != null) {
+            retries--;
             // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
             //if (executor.isSamePath(this, this.getXPath()) || ready()) {
             if (isElementPresent(el)) {
@@ -199,17 +202,26 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 } catch (ElementNotVisibleException exception) {
                     LOGGER.error("ElementNotVisibleException in setValue: {}", el, exception);
                     throw exception;
-                } catch (StaleElementReferenceException exception) {
-                    LOGGER.warn("StaleElementReferenceException in setValue: {}", el, exception);
-                    if (el.ready()) {
-                        executed = doSetValue(el, value);
+                } catch (InvalidElementStateException | StaleElementReferenceException ex) {
+                    if (WebLocatorConfig.isLogRetryException()) {
+                        LOGGER.debug("Exception in setValue: {}. {}", el, ex);
                     }
+                    if(retries >= 0) {
+                        LOGGER.debug("Exception in setValue: {}. Wait {} ms before retry", el, RETRY_MS);
+                        Utils.sleep(RETRY_MS);
+                    }
+                    executed = setValue(el, value, retries);
                 }
             } else {
                 LOGGER.warn("Element not found to setValue({}): {}", value, el);
             }
         }
         return executed;
+    }
+
+    @Override
+    public boolean setValue(WebLocator el, String value) {
+        return setValue(el, value, 1);
     }
 
     private boolean doSetValue(WebLocator el, String value) {
@@ -318,8 +330,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private boolean findAgain(WebLocator el) {
-        el.setCurrentElementPath("");
+        invalidateCache(el);
         return isElementPresent(el);
+    }
+
+    private void invalidateCache(WebLocator el) {
+        el.setCurrentElementPath("");
     }
 
     @Override
@@ -456,6 +472,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public boolean isSamePath(WebLocator el, String path) {
         return el.currentElement != null && (el.getCurrentElementPath().equals(path));
+    }
+
+    private boolean isCached(WebLocator el) {
+        boolean cached = false; // TODO config
+        return cached;
     }
 
     @Override
