@@ -114,7 +114,7 @@ Release Notes
 -------------
 **Release Notes for Testy 2.0.0-SNAPSHOT**
 
-**Release Notes for Testy 1.8.3-SNAPSHOT**
+**Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true
 - add setAttribute(String attribute, String value)
 - add setPlaceholder(final String value) for all components which extend com.sdl.selenium.web.form.TextField
