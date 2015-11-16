@@ -79,14 +79,10 @@ public class WebLocatorSuggestions {
     }
 
     public static WebLocator getElementSuggestion(WebLocator webLocator) {
-
-        if (webLocator.isElementPresent()) {
-            if(webLocator.currentElement.isDisplayed()) {
-
+        if (webLocator.currentElement != null || webLocator.isElementPresent()) {
+            if (webLocator.currentElement.isDisplayed()) {
                 LOGGER.debug("The element already exists: {}", WebLocatorUtils.getHtmlTree(webLocator));
-
             } else {
-
                 LOGGER.info("The element already exists but it is not visible: {}", WebLocatorUtils.getHtmlTree(webLocator));
             }
             return webLocator;
@@ -94,13 +90,8 @@ public class WebLocatorSuggestions {
 
         WebLocator parent = webLocator.getPathBuilder().getContainer();
         if (parent != null && !parent.isElementPresent()) {
-            LOGGER.warn("The parent ({}) of this webLocator ({}) was not found.", parent.getXPath(), webLocator.getXPath());
-            webLocator.setContainer(null);
-            if(webLocator.isElementPresent()) {
-                return webLocator;
-            } else {
-                return null;
-            }
+            LOGGER.warn("The container ({}) of this webLocator ({}) was not found.", parent.getXPath(), webLocator.getXPath());
+            return null;
         }
 
         //if the WebLocator should have a label check that it actually exists and try to offer suggestions if it doesn't.
@@ -146,6 +137,7 @@ public class WebLocatorSuggestions {
         searchTypes.toArray(labelSearchTypes);
 
         WebLocator labelLocator = new WebLocator(xPathBuilder.getContainer())
+                .setRenderMillis(0)
                 .setText(label, labelSearchTypes)
                 .setTag(xPathBuilder.getLabelTag());
 

@@ -120,10 +120,9 @@ public final class WebLocatorUtils extends WebLocator {
     }
 
     public static String getHtmlTree(WebLocator webLocator) {
-
         String result = "";
 
-        if(webLocator.isElementPresent()) {
+        if(webLocator.currentElement != null || webLocator.isElementPresent()) {
 
             WebElement parent = webLocator.currentElement;
 
