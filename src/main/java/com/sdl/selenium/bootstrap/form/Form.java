@@ -35,6 +35,10 @@ public class Form extends WebLocator implements IWebLocator {
         setContainer(container);
     }
 
+    public Form(String title) {
+        this(null, title);
+    }
+
     public Form(WebLocator container, String title) {
         this(container);
         setTitle(title, SearchType.EQUALS);
