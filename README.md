@@ -78,7 +78,7 @@ Getting the maven plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.8.2</version>
+        <version>1.8.3</version>
     </dependency>
 ```
 
@@ -112,20 +112,17 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 Release Notes
 -------------
+**Release Notes for Testy 2.0.0-SNAPSHOT**
 
 **Release Notes for Testy 1.8.3-SNAPSHOT**
-
-
-**Release Notes for Testy 1.8.2**
-- add isDisplayed method in WebLocator
-- fix properties.load from inputStream correctly
-- add template for title
-- add try and catch for WebDriverException at doClick and submit
-- add getCssValue(String propertyName) method in WebLocator
-- add profile.preference.dom.disable_beforeunload = true for Firefox
-- add setTemplateTitle(WebLocator titleEl)
-- setTitle(final String title, SearchType ...searchType) accept SearchType
-- update webdriver version 2.47.0
+- add weblocator.log.suggestions=true
+- add setAttribute(String attribute, String value)
+- add setPlaceholder(final String value) for all components which extend com.sdl.selenium.web.form.TextField
+- update webdriver version 2.48.2
+- improvement reuse download an upload code
+- make public doClickAt, doClick, doMouseOver
+- add doClear
+- add getTagName, getLocation, getSize
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -143,7 +140,7 @@ Getting SNAPSHOT versions of the plugin
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.8.3-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </dependency>
 ```
 
