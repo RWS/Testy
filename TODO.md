@@ -5,6 +5,7 @@
 - [ ] When to use //table//td[2][text()='test'] vs //table//td[text()='test'][1]?
 - [ ] Use OR statements in path Builder (eg. //button[contains(concat(' ', @class, ' '), ' btn-icon ') and @data-original-title='[review]Activate' or @title='[review]Activate']
   LOGGER.debug(MessageFormat.format("{0} is {0} years old, er, young", "e45"));
+- [ ] Generate cssSelector instead of xpath when possible
 
 
 ## Examples and Documentation
