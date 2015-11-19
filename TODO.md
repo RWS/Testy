@@ -10,6 +10,7 @@
 ## Examples and Documentation
 
 - [ ] use images for examples (half image with html and half with java code that represent each element)
+- [ ] Comparison of Automation frameworks (including Testy)
 
 ## Release Notes
 
