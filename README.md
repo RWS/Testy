@@ -1,17 +1,41 @@
-Testy
-=====
+# Testy
 
 Automated Acceptance Testing.
 Selenium and Selenium WebDriver test framework for web applications.
-This project is optimized for:
-- dynamic html
-- ExtJS
-- Bootstrap
-- complex UI
-- simple web applications/sites
+You don't have to worry anymore about complex xpath because we are taking care for you about that.
+You can simply set each property on the element and we will generate the necessary xpath.
+You can even combine more properties/attributes on the same selector very easy. 
 
-Java Usage Example
-------------------
+This project is optimized for:
+
+- [x] Dynamic html
+- [x] ExtJS
+- [x] Bootstrap
+- [x] Complex UI
+- [x] Simple web applications/sites
+
+## Java Usage Example
+
+```html
+
+    <button>Save</button>
+    <button>Cancel</button>
+    
+    <div class="close" title="Close">x</div>
+    <span class="minimize" title="Minimize">_</span>
+    
+```
+
+```java
+    
+    Button saveButton   = new Button().setText("Save");
+    Button cancelButton = new Button().setText("Cancel");
+    
+    // more properties for selecting/testing specific element with wanted attributes
+    WebLocator closeIcon = new WebLocator().setClasses("close").setTitle("Close");
+    WebLocator minimIcon = new WebLocator().setClasses("minimize").setTitle("Minimize");
+
+```
 
 ```java
 
@@ -36,8 +60,7 @@ Java Usage Example
     }
 ```
 
-Table and rows examples
------------------------
+## Table and rows examples
 
 ```java
 
@@ -66,13 +89,12 @@ Table and rows examples
     }
 ```
 
-Prerequisites
--------------
+## Prerequisites
+
 - Java
 - Maven
 
-Getting the maven plugin
-------------------------
+## Getting the maven plugin
 
 ```xml
     <dependency>
@@ -102,16 +124,15 @@ And you need to instantiate the WebDriver with Testy as follows:
 
 [Here is how these lines appear in a project](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/src/test/java/org/fasttrackit/util/TestBase.java)
 
-Example project
----------------
+## Example project
 
 Here is a sample project with cucumber and Testy on Chrome browser:
 
 [Full example](https://github.com/nmatei/cucumber-testy-tutorial)
 
 
-Release Notes
--------------
+## Release Notes
+
 **Release Notes for Testy 2.0.0-SNAPSHOT**
 
 **Release Notes for Testy 1.8.3**
