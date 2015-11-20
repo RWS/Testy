@@ -108,12 +108,6 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 (Integer.valueOf(getProperty("profile.preference.browser.download.folderList")) == 2);
     }
 
-    @Override
-    public String getDownloadPath() {
-        File file = new File(applyPid());
-        return file.getAbsolutePath();
-    }
-
     private void setProfilePreferences(FirefoxProfile myProfile) {
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();

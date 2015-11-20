@@ -28,10 +28,4 @@ public class HtmlUnitConfigReader extends AbstractBrowserConfigReader {
     public boolean isSilentDownload() {
         return !"".equals(getProperty("browser.download.dir"));
     }
-
-    @Override
-    public String getDownloadPath() {
-        File file = new File(applyPid());
-        return file.getAbsolutePath();
-    }
 }

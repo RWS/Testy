@@ -49,12 +49,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         return !"".equals(getProperty("browser.download.dir"));
     }
 
-    @Override
-    public String getDownloadPath() {
-        File file = new File(applyPid());
-        return file.getAbsolutePath();
-    }
-
     private void setProfilePreferences(ChromeOptions options) throws IOException {
         Map<String, Object> prefs = new HashMap<String, Object>();
 
