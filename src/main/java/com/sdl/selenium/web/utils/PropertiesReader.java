@@ -72,8 +72,7 @@ public class PropertiesReader extends OrderedProperties {
 
     @Override
     public String getProperty(String key) {
-        String property = System.getProperty(key, super.getProperty(key));
-        return property;
+        return System.getProperty(key, super.getProperty(key));
     }
 
     public synchronized String toString() {

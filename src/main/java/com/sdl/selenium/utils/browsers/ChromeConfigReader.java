@@ -51,7 +51,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public String getDownloadPath() {
-        File file = new File(getProperty("browser.download.dir"));
+        File file = new File(applyPid());
         return file.getAbsolutePath();
     }
 
@@ -76,7 +76,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
                 }
             }
         }
-        String property = getProperty("browser.download.dir");
+        String property = getDownloadPath();
         File file = new File(property);
         String downloadDir = file.getCanonicalPath();
         if (!"".equals(downloadDir)) {

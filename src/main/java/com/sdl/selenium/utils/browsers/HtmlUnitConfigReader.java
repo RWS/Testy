@@ -31,7 +31,7 @@ public class HtmlUnitConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public String getDownloadPath() {
-        File file = new File(getProperty("browser.download.dir"));
+        File file = new File(applyPid());
         return file.getAbsolutePath();
     }
 }

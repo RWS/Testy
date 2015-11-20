@@ -67,7 +67,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             LOGGER.info("profile not null");
             setProfilePreferences(profile);
 
-            File file = new File(getProperty("browser.download.dir"));
+            File file = new File(getDownloadPath());
             String downloadDir = file.getCanonicalPath();
             if (!"".equals(downloadDir)) {
                 profile.setPreference("browser.download.dir", downloadDir);
@@ -110,7 +110,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public String getDownloadPath() {
-        File file = new File(getProperty("browser.download.dir"));
+        File file = new File(applyPid());
         return file.getAbsolutePath();
     }
 
