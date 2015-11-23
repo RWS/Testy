@@ -25,12 +25,6 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         setLabel(label, SearchType.DEEP_CHILD_NODE);
     }
 
-    public static void main(String[] args) {
-        TextField textField = new TextField(null, "[review]Choose Source");
-        WebLocator iconLocator = new WebLocator(textField).setElPath(textField.getTriggerPath("arrow"));
-        LOGGER.debug(iconLocator.getXPath());
-    }
-
     // methods
      public boolean assertSetValue(String value) {
         boolean setted = setValue(value);
@@ -73,4 +67,9 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         return "true".equals(getAttribute("disabled"));
     }
 
+    /*public static void main(String[] args) {
+        TextField textField = new TextField(null, "[review]Choose Source");
+        WebLocator iconLocator = new WebLocator(textField).setElPath(textField.getTriggerPath("arrow"));
+        LOGGER.debug(iconLocator.getXPath());
+    }*/
 }
