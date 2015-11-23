@@ -20,7 +20,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
             "\n options.arguments=--lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
-            "\n options.experimental.profile.default_content_settings.multiple-automatic-downloads=1" +
+            "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
             "\n options.experimental.download.prompt_for_download=1";
 
     public ChromeConfigReader() {
