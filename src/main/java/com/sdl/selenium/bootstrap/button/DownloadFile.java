@@ -47,9 +47,14 @@ public class DownloadFile extends WebLocator implements Download {
      */
     @Override
     public boolean download(String fileName) {
-        openBrowse();
-        return executor.download(fileName);
+        return download(fileName, 10000L);
     }
+
+    public boolean download(String fileName, long timeoutMillis) {
+        openBrowse();
+        return executor.download(fileName, timeoutMillis);
+    }
+
     public void openBrowse() {
         executor.browse(this);
     }

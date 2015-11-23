@@ -34,7 +34,7 @@ public class DownloadButton extends Button implements Download {
     @Override
     public boolean download(String fileName) {
         openBrowse();
-        return executor.download(fileName);
+        return executor.download(fileName, 10000L);
     }
 
     private void openBrowse() {

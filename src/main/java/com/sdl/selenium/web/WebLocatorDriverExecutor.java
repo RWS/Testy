@@ -518,11 +518,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         highlightElementWithDriver(el.currentElement);
     }
 
-    public boolean download(String fileName) {
+    public boolean download(String fileName, long timeoutMillis) {
         if (WebDriverConfig.isSilentDownload()) {
             fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
             File file = new File(fileName);
-            return FileUtils.waitFileIfIsEmpty(file, 10000) && fileName.equals(file.getAbsolutePath());
+            return FileUtils.waitFileIfIsEmpty(file, timeoutMillis) && fileName.equals(file.getAbsolutePath());
         } else {
             return RunExe.getInstance().download(fileName);
         }

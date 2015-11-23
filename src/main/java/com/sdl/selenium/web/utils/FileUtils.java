@@ -25,16 +25,16 @@ public class FileUtils {
         return fileName;
     }
 
-    public static boolean waitFileIfIsEmpty(File file, long millis) {
+    public static boolean waitFileIfIsEmpty(File file, long timeoutMillis) {
         boolean isNotEmpty;
         do {
             isNotEmpty = file.length() > 0;
             if (!isNotEmpty) {
-                LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + millis);
-                Utils.sleep(100);
+                LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + timeoutMillis);
+                Utils.sleep(99);
             }
-            millis -= 100;
-        } while (!isNotEmpty && millis > 0);
+            timeoutMillis -= 100;
+        } while (!isNotEmpty && timeoutMillis > 0);
         return isNotEmpty;
     }
 

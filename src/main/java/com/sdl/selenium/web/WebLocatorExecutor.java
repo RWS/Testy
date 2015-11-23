@@ -80,7 +80,7 @@ public interface WebLocatorExecutor {
 
     boolean highlight = WebLocatorConfig.isHighlight();
 
-    boolean download(String fileName);
+    boolean download(String fileName, long timeoutMillis);
 
     public boolean browse(WebLocator el);
 
