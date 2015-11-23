@@ -31,9 +31,9 @@ public class FileUtils {
             isNotEmpty = file.length() > 0;
             if (!isNotEmpty) {
                 LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + timeoutMillis);
-                Utils.sleep(99);
+                Utils.sleep(300);
             }
-            timeoutMillis -= 100;
+            timeoutMillis -= 300;
         } while (!isNotEmpty && timeoutMillis > 0);
         return isNotEmpty;
     }
