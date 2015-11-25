@@ -12,8 +12,8 @@ import static org.testng.Assert.assertTrue;
 
 public class ComboBoxTest extends TestBase {
 
-    Window comboBoxWindow = new Window("ComboBoxWindow");
-    ComboBox comboBox = new ComboBox("comboBox", comboBoxWindow);
+    private Window comboBoxWindow = new Window("ComboBoxWindow");
+    private ComboBox comboBox = new ComboBox("comboBox", comboBoxWindow);
 
     @BeforeMethod
     public void startTests() {

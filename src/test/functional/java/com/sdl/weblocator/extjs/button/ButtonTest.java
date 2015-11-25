@@ -5,9 +5,9 @@ import com.sdl.selenium.extjs3.button.SplitButton;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocator;
 import com.sdl.weblocator.TestBase;
 import com.sdl.weblocator.extjs.window.MessageBoxTest;
-import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
@@ -21,6 +21,7 @@ public class ButtonTest extends TestBase {
 
     private Window dateFieldWindow = new Window("DateFieldWindow");
     private Button closeButton = new Button(dateFieldWindow, "Close");
+    private WebLocator close = new WebLocator().setId("close");
     private Button dateFieldButton = new Button(null, "DateField");
 
     private Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
@@ -37,8 +38,8 @@ public class ButtonTest extends TestBase {
     @Test
     public void isDisplayed() {
         dateFieldButton.click();
-        assertThat(driver.findElement(By.xpath(closeButton.getXPath())).isDisplayed(), is(true));
-        assertThat(driver.findElement(By.id("close")).isDisplayed(), is(true));
+        assertThat(closeButton.isDisplayed(), is(true));
+        assertThat(close.isDisplayed(), is(true));
         dateFieldWindow.close();
     }
 
