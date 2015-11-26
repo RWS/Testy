@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class DateFieldTest extends TestBase {
+public class DateFieldIntegrationTest extends TestBase {
 
     Window dateFieldWindow = new Window("DateFieldWindow");
     DateField dateField = new DateField("dateField", dateFieldWindow);

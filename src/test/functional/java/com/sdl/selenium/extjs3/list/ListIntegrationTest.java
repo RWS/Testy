@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import static com.sdl.selenium.Ignores.Driver.CHROME;
 import static org.testng.Assert.assertTrue;
 
-public class ListTest extends TestBase {
+public class ListIntegrationTest extends TestBase {
 
     Window multiSelectWindow = new Window("MultiSelectWindow");
     List multiSelectList = new List(multiSelectWindow);

@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-public class RadioGroupTest extends TestBase {
+public class RadioGroupIntegrationTest extends TestBase {
 
     private Window radioGroupWindow = new Window("RadioGroupsWindow");
     private RadioGroup enabledRadioGroup = new RadioGroup(radioGroupWindow, "enabledRadio");

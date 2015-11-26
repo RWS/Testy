@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ComboBoxTest extends TestBase {
+public class ComboBoxIntegrationTest extends TestBase {
 
     private Window comboBoxWindow = new Window("ComboBoxWindow");
     private ComboBox comboBox = new ComboBox("comboBox", comboBoxWindow);

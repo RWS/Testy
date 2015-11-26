@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
-public class EditorGridPanelTest extends TestBase {
+public class EditorGridPanelIntegrationTest extends TestBase {
 
     private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
     private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");

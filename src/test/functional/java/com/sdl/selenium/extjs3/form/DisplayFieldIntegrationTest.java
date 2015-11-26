@@ -9,25 +9,25 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
-public class TextAreaTest extends TestBase {
+public class DisplayFieldIntegrationTest extends TestBase {
 
-    Window textAreaWindow = new Window("TextAreaWindow");
-    TextArea textArea = new TextArea("textArea", textAreaWindow);
+    Window displayFieldWindow = new Window("DisplayFieldWindow");
+    DisplayField displayField = new DisplayField("displayField", displayFieldWindow);
 
     @BeforeMethod
     public void startTests() {
-        Button textAreaButton = new Button(null, "TextArea");
-        textAreaButton.click();
+        Button displayFieldButton = new Button(null, "DisplayField");
+        displayFieldButton.click();
     }
 
     @AfterMethod
     public void endTests() {
-        textAreaWindow.close();
+        displayFieldWindow.close();
     }
 
     @Test
     public void displayFieldGetValue() {
-        assertEquals(textArea.getValue(), "Value TextArea");
+        assertEquals(displayField.getValue(), "DisplayFieldValue");
     }
 
 }

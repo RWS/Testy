@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class WebLinkTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLinkTest.class);
+public class WebLinkIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLinkIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private WebLink link = new WebLink(form, "Link");

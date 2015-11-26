@@ -5,7 +5,7 @@ import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.extjs3.window.MessageBoxTest;
+import com.sdl.selenium.extjs3.window.MessageBoxIntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
@@ -14,8 +14,8 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class ButtonTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
+public class ButtonIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonIntegrationTest.class);
 
     private Window dateFieldWindow = new Window("DateFieldWindow");
     private Button closeButton = new Button(dateFieldWindow, "Close");
@@ -87,14 +87,14 @@ public class ButtonTest extends TestBase {
         showComponent("Buttons");
 
         splitButton.assertClick();
-        MessageBoxTest.assertThatMessageBoxExists("You selected Export");
+        MessageBoxIntegrationTest.assertThatMessageBoxExists("You selected Export");
 
         boolean clicked = splitButton.clickOnMenu("PDF");
         assertThat("Could not click on button", clicked);
-        MessageBoxTest.assertThatMessageBoxExists("You selected PDF");
+        MessageBoxIntegrationTest.assertThatMessageBoxExists("You selected PDF");
 
         clicked = splitButton.clickOnMenu("EXCEL");
         assertThat("Could not click on button", clicked);
-        MessageBoxTest.assertThatMessageBoxExists("You selected EXCEL");
+        MessageBoxIntegrationTest.assertThatMessageBoxExists("You selected EXCEL");
     }
 }

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class UploadButtonTest extends TestBase {
+public class UploadButtonIntegrationTest extends TestBase {
 
     private Panel simpleFormPanel = new Panel(null, "Simple Form");
     private UploadButton uploadButton = new UploadButton(simpleFormPanel, "Browse");

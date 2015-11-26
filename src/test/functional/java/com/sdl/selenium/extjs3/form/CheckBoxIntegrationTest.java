@@ -4,8 +4,8 @@ import com.sdl.selenium.TestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CheckBoxTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxTest.class);
+public class CheckBoxIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxIntegrationTest.class);
 
     /*Panel simpleFormPanel = new Panel(null, "Simple Form");
     Checkbox rightCheckBox = new Checkbox("CatRight", simpleFormPanel);

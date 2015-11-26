@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class WindowTest extends TestBase {
+public class WindowIntegrationTest extends TestBase {
 
     private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
 

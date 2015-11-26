@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class TabPanelTest extends TestBase {
+public class TabPanelIntegrationTest extends TestBase {
 
     private Window tabPanelWindow = new Window("TabPanel Win");
     private TabPanel tabPanel1 = new TabPanel(tabPanelWindow, "Tab1");

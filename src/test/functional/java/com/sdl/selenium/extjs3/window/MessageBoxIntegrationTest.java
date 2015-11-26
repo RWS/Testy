@@ -6,7 +6,7 @@ import com.sdl.selenium.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class MessageBoxTest extends TestBase {
+public class MessageBoxIntegrationTest extends TestBase {
 
     Panel conditionManagerPanel = new Panel("Condition Manager");
     Button expect1Button = new Button(conditionManagerPanel, "Expect1");
@@ -32,7 +32,7 @@ public class MessageBoxTest extends TestBase {
     public void getMessageIn1SecTest() {
         expect1Button.click();
         String expected = "Expect1 button was pressed";
-        MessageBoxTest.assertThatMessageBoxExists(expected, 5);
+        MessageBoxIntegrationTest.assertThatMessageBoxExists(expected, 5);
     }
 
     @Test

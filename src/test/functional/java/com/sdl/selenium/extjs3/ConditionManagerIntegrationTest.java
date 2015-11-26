@@ -14,16 +14,16 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ConditionManagerTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManagerTest.class);
+public class ConditionManagerIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManagerIntegrationTest.class);
     
-    Panel conditionManagerPanel = new Panel("Condition Manager");
-    Button expect1Button = new Button(conditionManagerPanel, "Expect1");
-    Button expect2Button = new Button(conditionManagerPanel, "Expect2");
-    Button expect3Button = new Button(conditionManagerPanel, "Expect3");
+    private Panel conditionManagerPanel = new Panel("Condition Manager");
+    private Button expect1Button = new Button(conditionManagerPanel, "Expect1");
+    private Button expect2Button = new Button(conditionManagerPanel, "Expect2");
+    private Button expect3Button = new Button(conditionManagerPanel, "Expect3");
 
     private Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
-    Button button = new Button(messageBoxWindow, "Nossss");
+    private Button button = new Button(messageBoxWindow, "Nossss");
 
     private Condition doClick(Button button){
         button.click();

@@ -10,7 +10,7 @@ import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.TestBase;
 
-public class DownloadTest extends TestBase {
+public class DownloadIntegrationTest extends TestBase {
 
     private Panel simpleFormPanel = new Panel(null, "Simple Form");
     private DownloadButton downloadButton = new DownloadButton(simpleFormPanel, "Download");

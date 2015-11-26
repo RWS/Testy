@@ -23,8 +23,8 @@ import java.util.concurrent.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class TableTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TableTest.class);
+public class TableIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableIntegrationTest.class);
 
     private Form form = new Form(null, "Form Table");
     private Table table = new Table(form);

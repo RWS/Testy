@@ -10,7 +10,7 @@ import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class TableDemoTest extends TestBase {
+public class TableDemoIntegrationTest extends TestBase {
 
     private Form form = new Form("Form Table");
     private Table table = new Table(form);

@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-public class TextFieldTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TextFieldTest.class);
+public class TextFieldIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextFieldIntegrationTest.class);
 
     Window textFieldWindow = new Window("TextFieldWindow");
     TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");
