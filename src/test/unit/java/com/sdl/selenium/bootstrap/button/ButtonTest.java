@@ -2,9 +2,11 @@ package com.sdl.selenium.bootstrap.button;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 public class ButtonTest {
     public static WebLocator container = new WebLocator().setId("ID");
@@ -25,6 +27,25 @@ public class ButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
-        Assert.assertEquals(button.getXPath(), expectedXpath);
+        assertThat(button.getXPath(), equalTo(expectedXpath));
+    }
+
+    @DataProvider
+    public static Object[][] testConstructorCssSelectorDataProvider() {
+        return new Object[][]{
+                {new Button(),                  null},
+                {new Button(container),         null},
+                {new Button(container, "ButtonText"), null},
+                {new Button(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), null},
+                {new Button(container).setId("ID"), null},
+                {new Button(container).setIconCls("IconCls"), null},
+                {new Button(container, "ButtonText").setIconCls("IconCls"), null},
+                {new Button(container, "ButtonText").setIconCls("IconCls").setVisibility(true), null},
+        };
+    }
+
+    @Test(dataProvider = "testConstructorCssSelectorDataProvider")
+    public void getCssSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
+        assertThat(button.getCssSelector(), equalTo(expectedXpath));
     }
 }
