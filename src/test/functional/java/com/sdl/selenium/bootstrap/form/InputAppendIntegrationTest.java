@@ -9,8 +9,8 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class InputAppendTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InputAppendTest.class);
+public class InputAppendIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InputAppendIntegrationTest.class);
 
     Form form = new Form(null, "Form Title");
     InputAppend inputAppend = new InputAppend(form, "LPID for Merge:");

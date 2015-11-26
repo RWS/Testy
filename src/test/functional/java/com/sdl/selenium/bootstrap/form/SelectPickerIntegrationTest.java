@@ -9,8 +9,8 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class SelectPickerTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SelectPickerTest.class);
+public class SelectPickerIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SelectPickerIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private SelectPicker selectPicker = new SelectPicker(form, "Tech:");

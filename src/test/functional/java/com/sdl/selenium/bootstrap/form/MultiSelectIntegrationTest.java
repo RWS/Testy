@@ -14,8 +14,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class MultiSelectTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultiSelectTest.class);
+public class MultiSelectIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiSelectIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private MultiSelect multiSelect = new MultiSelect(form, "Source:");

@@ -69,12 +69,12 @@
     </test>
     <test name="DatePickerTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.form.DatePickerTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.DatePickerIntegrationTest"/>
         </classes>
     </test>
     <test name="CheckBoxTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.form.CheckBoxTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.CheckBoxIntegrationTest"/>
         </classes>
     </test>
     <test name="UploadFileTest">
@@ -84,7 +84,7 @@
     </test>
     <test name="SelectPickerTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.form.SelectPickerTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.SelectPickerIntegrationTest"/>
         </classes>
     </test>
     <test name="ButtonTestBootstrap">
@@ -94,12 +94,12 @@
     </test>
     <test name="MultiSelectTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.form.MultiSelectTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.MultiSelectIntegrationTest"/>
         </classes>
     </test>
     <test name="SpanTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.form.UneditableInputTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.UneditableInputIntegrationTest"/>
         </classes>
     </test>
     <test name="DownloadFileTest">

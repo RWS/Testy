@@ -9,8 +9,8 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class UneditableInputTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UneditableInputTest.class);
+public class UneditableInputIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UneditableInputIntegrationTest.class);
 
     Form form = new Form(null, "Form Title");
     UneditableInput uneditableInput = new UneditableInput(form, "Span:");

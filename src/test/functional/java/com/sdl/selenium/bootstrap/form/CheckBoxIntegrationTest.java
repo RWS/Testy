@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class CheckBoxTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxTest.class);
+public class CheckBoxIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxIntegrationTest.class);
 
     Form form = new Form(null, "Form Title");
     CheckBox checkBox = new CheckBox(form);
