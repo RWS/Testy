@@ -22,6 +22,7 @@ public class XPathBuilder {
     private String tag = "*";
     private String id;
     private String elPath;
+    private String elCssSelector;
     private String baseCls;
     private String cls;
     private List<String> classes;
@@ -160,6 +161,29 @@ public class XPathBuilder {
      */
     public <T extends XPathBuilder> T setElPath(final String elPath) {
         this.elPath = elPath;
+        return (T) this;
+    }
+
+    /**
+     * <p><b><i>Used for finding element process (to generate css selectors address)</i></b></p>
+     *
+     * @return value that has been set in {@link #setElCssSelector(String)}
+     * <p>returned value does not include containers path</p>
+     */
+    public String getElCssSelector() {
+        return elCssSelector;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate css selectors address)</b></p>
+     * Once used all other attributes will be ignored. Try using this class to a minimum!
+     *
+     * @param elCssSelector absolute way (css selectors) to identify element
+     * @param <T>    the element which calls this method
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setElCssSelector(final String elCssSelector) {
+        this.elCssSelector = elCssSelector;
         return (T) this;
     }
 
@@ -1078,6 +1102,14 @@ public class XPathBuilder {
 
     private String getBaseItemPath() {
         return getBasePathSelector();
+    }
+
+    public final String getCssSelector() {
+        String cssSelector = null;
+
+        cssSelector = getElCssSelector();
+
+        return cssSelector;
     }
 
     /**

@@ -2,8 +2,8 @@ package com.sdl.selenium.web;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.link.WebLink;
-import com.sdl.weblocator.InputData;
-import com.sdl.weblocator.TestBase;
+import com.sdl.selenium.InputData;
+import com.sdl.selenium.TestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;

@@ -318,15 +318,20 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 text = el.currentElement.getText();
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("getHtmlText (second try): " + el.getXPath(), e);
+                LOGGER.error("getHtmlText (second try): " + getSelector(el), e);
                 if (findAgain(el)) {
                     text = el.currentElement.getText();
                 }
             } catch (WebDriverException e) {
-                LOGGER.error("element has vanished meanwhile: " + el.getXPath(), e);
+                LOGGER.error("element has vanished meanwhile: " + getSelector(el), e);
             }
         }
         return text;
+    }
+
+    private String getSelector(WebLocator el) {
+        String css = el.getCssSelector();
+        return StringUtils.isEmpty(css) ? el.getXPath() : css;
     }
 
     private boolean findAgain(WebLocator el) {
@@ -365,7 +370,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public WebElement findElement(WebLocator el) {
-        final String path = el.getXPath();
+        final String path = getSelector(el);
 //        if (isSamePath(el, path)) {
 //            LOGGER.debug("currentElement already found one time: " + el);
         //return el.currentElement;
@@ -401,11 +406,14 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private WebElement doWaitElement(final WebLocator el, final long millis) {
         WebDriverWait wait = new WebDriverWait(driver, 0, 100);
         wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
-        final String xpath = el.getXPath();
+        final String cssSelector = el.getCssSelector();
+        final boolean hasCssSelector = StringUtils.isNotEmpty(cssSelector);
+        final String xpath = hasCssSelector ? null : el.getXPath();
         try {
             el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
                 public WebElement apply(WebDriver driver1) {
-                    return driver.findElement(By.xpath(xpath)); //TODO sa incerc sa pun id
+                    By by = hasCssSelector ? By.cssSelector(cssSelector) : By.xpath(xpath);
+                    return driver.findElement(by);
                 }
             });
         } catch (TimeoutException e) {

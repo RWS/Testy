@@ -81,6 +81,19 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
+     * <p><b>Used for finding element process (to generate css selectors address)</b></p>
+     * Once used all other attributes will be ignored. Try using this class to a minimum!
+     *
+     * @param elCssSelector absolute way (css selectors) to identify element
+     * @param <T>    the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
+        pathBuilder.setElCssSelector(elCssSelector);
+        return (T) this;
+    }
+
+    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param baseCls base class
@@ -456,6 +469,10 @@ public abstract class WebLocatorAbstractBuilder {
 
     protected boolean hasResultIdx() {
         return pathBuilder.hasResultIdx();
+    }
+
+    public final String getCssSelector() {
+        return pathBuilder.getCssSelector();
     }
 
     /**
