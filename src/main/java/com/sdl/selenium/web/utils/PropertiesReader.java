@@ -11,8 +11,6 @@ import java.util.Map;
 /**
  * This class will load properties from System properties first, if not found then will load them from loaded file
  *
- * @author nmatei
- * @since 4/7/2014
  */
 public class PropertiesReader extends OrderedProperties {
     public static String RESOURCES_PATH = "src/test/resources/";

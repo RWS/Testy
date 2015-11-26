@@ -1,17 +1,17 @@
 # Testy
 
 Automated Acceptance Testing.
+
 Selenium and Selenium WebDriver test framework for web applications.
-You don't have to worry anymore about complex xpath because we are taking care for you about that.
-You can simply set each property on the element and we will generate the necessary xpath.
-You can even combine more properties/attributes on the same selector very easy. 
+You don't have to worry anymore about complex XPATH or CSS selector because we are taking care for you about that.
+Simply set each property on the element and we will generate the necessary selector.
+You can combine more properties/attributes on the same selector very easy. 
 
 This project is optimized for:
 
-- [x] Dynamic html
+- [x] Dynamic html & Complex UI
 - [x] ExtJS
 - [x] Bootstrap
-- [x] Complex UI
 - [x] Simple web applications/sites
 
 ## Java Usage Example

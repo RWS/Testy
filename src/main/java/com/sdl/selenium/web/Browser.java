@@ -1,9 +1,5 @@
 package com.sdl.selenium.web;
 
-/**
- * @author nmatei
- * @since 3/7/14
- */
 public enum Browser {
     IEXPLORE("ie"),
 

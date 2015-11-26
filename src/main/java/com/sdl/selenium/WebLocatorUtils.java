@@ -19,10 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author nmatei
- * @since 2/25/14
- */
 public final class WebLocatorUtils extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
 
@@ -152,7 +148,7 @@ public final class WebLocatorUtils extends WebLocator {
     }
 
     public static void main(String[] args) {
-        WebLocator l = new WebLocator().setText("Matei");
+        WebLocator l = new WebLocator().setText("Save");
         getXPathScript(l);
     }
 }

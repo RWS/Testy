@@ -23,7 +23,7 @@ public class ModalWindowIntegrationTest extends TestBase {
     public void openAndInteractWithModalWindow() {
         button.assertClick();
 
-        window.setValues("nick@example.com", "Matei");
+        window.setValues("selenium@example.com", "Testy");
 
         //window.save();
     }
