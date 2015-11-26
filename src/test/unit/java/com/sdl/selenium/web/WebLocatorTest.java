@@ -1,17 +1,14 @@
 package com.sdl.selenium.web;
 
-
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.testng.Assert.assertEquals;
 
 public class WebLocatorTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorTest.class);
-
     private static WebLocator container = new WebLocator("container");
 
     @DataProvider
@@ -45,14 +42,7 @@ public class WebLocatorTest {
                 {new WebLocator("testcls", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
                 {new WebLocator("text", "testcls", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]"},
                 {new WebLocator().setId("ID"), "//*[@id='ID']"},
-                {new WebLocator().setId("ID").setText("Text"), "//*[@id='ID' and contains(text(),'Text')]"},
-                {new WebLocator().setId("ID").setClasses("Cls"), "//*[@id='ID' and contains(concat(' ', @class, ' '), ' Cls ')]"},
-                {new WebLocator().setClasses("Cls").setText("Text"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and contains(text(),'Text')]"},
-                {new WebLocator().setClasses("Cls").setText("Text").setElPath("//a//div//input"), "//a//div//input"},
-                {new WebLocator().setClasses("Cls").setElPathSuffix("has-test", "count(.//[text()='Texts']) > 0"), "//*[contains(concat(' ', @class, ' '), ' Cls ') and count(.//[text()='Texts']) > 0]"},
-                {new WebLocator().setTag("textarea"), "//textarea"},
                 {new WebLocator(container).setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
-                {new WebLocator().setClasses("Cls").setTag("textarea"), "//textarea[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
                 {new WebLocator().setElPathSuffix("has-div", "count(div) > 0"), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
@@ -97,12 +87,12 @@ public class WebLocatorTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
-        assertEquals(el.getXPath(), expectedXpath);
+        assertThat(el.getXPath(), equalTo(expectedXpath));
     }
 
     @Test(dataProvider = "testConstructorPathDataProviderText")
     public void getPathSelectorCorrectlyFromConstructorsByText(WebLocator el, String expectedXpath) {
-        assertEquals(el.getXPath(), expectedXpath);
+        assertThat(el.getXPath(), equalTo(expectedXpath));
     }
 
     @Test

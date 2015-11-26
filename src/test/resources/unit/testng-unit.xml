@@ -1,14 +1,50 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="WebLocator Unit Test Suite" verbose="1">
-    <test name="AllTests">
-        <packages>
-            <package name="com.sdl.selenium.extjs3.*"/>
-            <package name="com.sdl.selenium.bootstrap.*"/>
-        </packages>
-    </test>
     <test name="FlashUploadButtonTest">
         <classes>
+            <class name="com.sdl.selenium.extjs3.ExtJsComponentTest"/>
+            <class name="com.sdl.selenium.extjs3.button.ButtonTest"/>
+            <class name="com.sdl.selenium.extjs3.button.DownloadButtonTest"/>
+            <class name="com.sdl.selenium.extjs3.button.DownloadLinkTest"/>
+            <class name="com.sdl.selenium.extjs3.button.UploadButtonTest"/>
+            <class name="com.sdl.selenium.extjs3.form.CheckBoxTest"/>
+            <class name="com.sdl.selenium.extjs3.form.ComboBoxTest"/>
+            <class name="com.sdl.selenium.extjs3.form.DataFieldTest"/>
+            <class name="com.sdl.selenium.extjs3.form.DisplayFieldTest"/>
+            <class name="com.sdl.selenium.extjs3.form.FieldSetTest"/>
+            <class name="com.sdl.selenium.extjs3.form.LabelTest"/>
+            <class name="com.sdl.selenium.extjs3.form.RadioTest"/>
+            <class name="com.sdl.selenium.extjs3.form.RadioGroupTest"/>
+            <class name="com.sdl.selenium.extjs3.form.TextFieldTest"/>
+            <class name="com.sdl.selenium.extjs3.form.TextAreaTest"/>
+            <class name="com.sdl.selenium.extjs3.grid.EditorGridPanelTest"/>
+            <class name="com.sdl.selenium.extjs3.grid.GridPanelTest"/>
+            <class name="com.sdl.selenium.extjs3.grid.GridCellTest"/>
+            <class name="com.sdl.selenium.extjs3.grid.GridRowTest"/>
+            <class name="com.sdl.selenium.extjs3.grid.LiveGridPanelTest"/>
+            <class name="com.sdl.selenium.extjs3.list.ListTest"/>
+            <class name="com.sdl.selenium.extjs3.panel.PanelTest"/>
+            <class name="com.sdl.selenium.extjs3.tab.TabPanelTest"/>
+            <class name="com.sdl.selenium.extjs3.window.WindowTest"/>
+
+            <class name="com.sdl.selenium.bootstrap.window.PopOverTest"/>
+            <class name="com.sdl.selenium.bootstrap.window.TooltipTest"/>
+            <class name="com.sdl.selenium.bootstrap.window.WindowTest"/>
+            <class name="com.sdl.selenium.bootstrap.tab.TabTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.ButtonTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.ButtonLinkTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.DownloadFileTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.UploadFileTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.CheckBoxTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.DatePickerTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.FormTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.MultiSelectTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.TextFieldTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.TextAreaTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.UneditableInputTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.SelectPickerTest"/>
+
             <class name="com.sdl.selenium.web.button.FlashUploadButtonTest"/>
             <class name="com.sdl.selenium.web.button.InputButtonTest"/>
             <class name="com.sdl.selenium.web.button.SelectFilesHandlerTest"/>
@@ -25,6 +61,7 @@
             <class name="com.sdl.selenium.web.table.TableRowTest"/>
             <class name="com.sdl.selenium.web.table.TableTest"/>
             <class name="com.sdl.selenium.web.WebLocatorTest"/>
+            <class name="com.sdl.selenium.web.WebLocatorCssTest"/>
 
             <class name="com.sdl.selenium.jqueryui.window.WindowTest"/>
         </classes>

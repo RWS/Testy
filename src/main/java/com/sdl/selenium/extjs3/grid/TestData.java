@@ -36,5 +36,4 @@ public class TestData {
         setColumnIndex(columnIndex);
         setSearchType(searchType);
     }
-
 }
