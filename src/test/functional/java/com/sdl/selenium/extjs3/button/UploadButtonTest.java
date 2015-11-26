@@ -5,7 +5,8 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class UploadButtonTest extends TestBase {
 
@@ -14,11 +15,11 @@ public class UploadButtonTest extends TestBase {
 
     @Test
     public void uploadFile() {
-        assertTrue(uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"));
+        assertThat(uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"), is(true));
     }
 
     @Test
     public void uploadFileWithSpaces() {
-        assertTrue(uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\upload.exe", InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"));
+        assertThat(uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"), is(true));
     }
 }

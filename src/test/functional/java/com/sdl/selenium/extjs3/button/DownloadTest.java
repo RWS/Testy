@@ -1,11 +1,9 @@
 package com.sdl.selenium.extjs3.button;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import com.sdl.selenium.extjs3.panel.Panel;
@@ -13,7 +11,6 @@ import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.TestBase;
 
 public class DownloadTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadTest.class);
 
     private Panel simpleFormPanel = new Panel(null, "Simple Form");
     private DownloadButton downloadButton = new DownloadButton(simpleFormPanel, "Download");
@@ -28,11 +25,11 @@ public class DownloadTest extends TestBase {
     @Test
     public void downloadFile() throws IOException {
         FileUtils.cleanDownloadDir();
-        assertTrue(downloadFileButton.download("text.docx"));
+        assertThat(downloadFileButton.download("text.docx"), is(true));
     }
 
     @Test
     public void downloadFileWithSpaces() {
-        assertTrue(downloadWithSpacesButton.download("text t.docx"));
+        assertThat(downloadWithSpacesButton.download("text t.docx"), is(true));
     }
 }
