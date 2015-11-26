@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.util.*;
 
-/**
- * Created by Beni Lar on 10/29/2015.
- */
 public class WebLocatorSuggestions {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorSuggestions.class);
+
+    private static boolean suggestAttributes = false;
+
     private static SearchType[] textGroup = {
             SearchType.EQUALS,
-            SearchType.CONTAINS,
-            SearchType.STARTS_WITH
+            SearchType.STARTS_WITH,
+            SearchType.CONTAINS
     };
     private static SearchType[] childGroup = {
             SearchType.CHILD_NODE,
@@ -31,6 +31,14 @@ public class WebLocatorSuggestions {
             SearchType.CONTAINS_ANY,
             SearchType.HTML_NODE
     };
+
+    public static boolean isSuggestAttributes() {
+        return suggestAttributes;
+    }
+
+    public static void setSuggestAttributes(boolean suggestAttributes) {
+        WebLocatorSuggestions.suggestAttributes = suggestAttributes;
+    }
 
     private static String getMatchedElementsHtml(WebLocator webLocator) {
         String result = "";
@@ -98,7 +106,8 @@ public class WebLocatorSuggestions {
         if (webLocator.getPathBuilder().getLabel() != null) {
             WebLocator result = suggestLabelCorrections(webLocator);
             if (result != null) {
-                return getElementSuggestion(result);
+//                return getElementSuggestion(result);
+                return result;
             }
         }
 
@@ -116,7 +125,11 @@ public class WebLocatorSuggestions {
             return webLocator;
         }
 
-        return suggestAttributeSubsets(webLocator);
+        if(isSuggestAttributes()) {
+            return suggestAttributeSubsets(webLocator);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -171,6 +184,7 @@ public class WebLocatorSuggestions {
             if (solution != null) {
                 LOGGER.warn("But found it using search types {}", Arrays.toString(solution));
                 labelLocator.setLabel(label, solution);
+//                labelLocator.setSearchTextType(solution);
                 return labelLocator;
             } else {
                 labelLocator.setTag("*");

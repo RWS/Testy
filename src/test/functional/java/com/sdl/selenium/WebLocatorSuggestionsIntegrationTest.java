@@ -4,20 +4,34 @@ import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-/**
- * Created by Beni Lar on 10/27/2015.
- */
 public class WebLocatorSuggestionsIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorSuggestionsIntegrationTest.class);
 
     @BeforeClass
     public void startTests() {
         driver.get(InputData.SUGGESTIONS_URL);
+    }
+
+    @BeforeClass(alwaysRun = true)
+    public void startTest() throws Exception {
+        WebLocatorSuggestions.setSuggestAttributes(true);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void stopTest() {
+        WebLocatorSuggestions.setSuggestAttributes(false);
     }
 
     /**
@@ -42,13 +56,20 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
     @Test
     public void labelSearchTypeCorrection() {
         WebLocator inputWithLabel = new WebLocator().setLabel("User Name").setLabelPosition("//following-sibling::*//");
+        String originalXpath = inputWithLabel.getXPath();
 
         assertFalse(inputWithLabel.isElementPresent());
 
+        LOGGER.debug("searching for suggestions:");
         WebLocator suggestedElement = WebLocatorSuggestions.getElementSuggestion(inputWithLabel);
 
-        assertTrue(suggestedElement != null && suggestedElement.isElementPresent());
+        assertThat("original element should not be changed", inputWithLabel.getXPath(), is(originalXpath));
 
+        assertThat(suggestedElement, is(notNullValue()));
+        LOGGER.debug("found suggestion: {}", suggestedElement.getXPath());
+        suggestedElement.assertExists();
+
+        // TODO we can assert final element xpath
         assertTrue("userName".equals(suggestedElement.getAttribute("id")));
     }
 
