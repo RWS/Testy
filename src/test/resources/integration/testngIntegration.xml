@@ -89,7 +89,7 @@
     </test>
     <test name="ButtonTestBootstrap">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.button.ButtonTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.ButtonIntegrationTest"/>
         </classes>
     </test>
     <test name="MultiSelectTest">
