@@ -1,3 +1,5 @@
+package com.sdl.selenium.bootstrap.button;
+
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.button.Button;
@@ -12,7 +14,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ButtonTest extends TestBase {
+public class ButtonIntegrationTest extends TestBase {
 
     private Form form = new Form(null, "Form Title");
     private Button disableBtn = new Button(form, "DisableBtn");

@@ -12,8 +12,8 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class DownloadFileTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadFileTest.class);
+public class DownloadFileIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadFileIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private DownloadFile downloadFile = new DownloadFile(form).setText("Download");

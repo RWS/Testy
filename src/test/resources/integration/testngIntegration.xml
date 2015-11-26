@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="com.sdl.selenium.extjs3.MyTransformer"></listener>
     </listeners>
-    <test name="ButtonTest">
+    <test name="ButtonIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs3.button.ButtonTest"/>
         </classes>
@@ -79,7 +79,7 @@
     </test>
     <test name="UploadFileTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.button.UploadFileTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.UploadFileIntegrationTest"/>
         </classes>
     </test>
     <test name="SelectPickerTest">
@@ -104,7 +104,7 @@
     </test>
     <test name="DownloadFileTest">
         <classes>
-            <class name="com.sdl.selenium.bootstrap.button.DownloadFileTest"/>
+            <class name="com.sdl.selenium.bootstrap.button.DownloadFileIntegrationTest"/>
         </classes>
     </test>
     <test name="TableTest">
@@ -117,7 +117,7 @@
             <class name="com.sdl.selenium.web.WebLocator1Test"/>
         </classes>
     </test>
-    <test name="web.ButtonTest">
+    <test name="web.ButtonIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.web.button.ButtonTest"/>
         </classes>

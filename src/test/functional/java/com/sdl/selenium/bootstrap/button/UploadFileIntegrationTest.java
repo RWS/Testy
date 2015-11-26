@@ -13,8 +13,8 @@ import java.io.File;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class UploadFileTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFileTest.class);
+public class UploadFileIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFileIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private UploadFile uploadFile = new UploadFile(form, "TPT Test:");
