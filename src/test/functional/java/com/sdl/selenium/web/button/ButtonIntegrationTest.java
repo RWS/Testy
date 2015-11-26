@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class ButtonTest extends TestBase {
+public class ButtonIntegrationTest extends TestBase {
 
     private Button loginWithCss = new Button().setElCssSelector("#loginButton");
     private Button loginWithXPath = new Button().setElPath("//*[@id='loginButton']");

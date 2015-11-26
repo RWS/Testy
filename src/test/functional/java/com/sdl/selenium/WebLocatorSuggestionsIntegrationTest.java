@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by Beni Lar on 10/27/2015.
  */
-public class WebLocatorSuggestionsTest extends TestBase {
+public class WebLocatorSuggestionsIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {

@@ -27,7 +27,7 @@
     <test name="DisplayFieldTest">
         <classes>
             <class name="com.sdl.selenium.extjs3.form.DisplayFieldIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs3.FireEventWithJSTest"/>
+            <class name="com.sdl.selenium.extjs3.FireEventWithJSIntegrationTest"/>
         </classes>
     </test>
     <test name="ListTest">
@@ -114,12 +114,12 @@
     </test>
     <test name="WebLocator1Test">
         <classes>
-            <class name="com.sdl.selenium.web.WebLocator1Test"/>
+            <class name="com.sdl.selenium.web.WebLocator1IntegrationTest"/>
         </classes>
     </test>
     <test name="web.ButtonIntegrationTest">
         <classes>
-            <class name="com.sdl.selenium.web.button.ButtonTest"/>
+            <class name="com.sdl.selenium.web.button.ButtonIntegrationTest"/>
         </classes>
     </test>
 </suite>

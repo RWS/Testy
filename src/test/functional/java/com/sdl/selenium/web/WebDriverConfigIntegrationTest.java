@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class WebDriverConfigTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfigTest.class);
+public class WebDriverConfigIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfigIntegrationTest.class);
 
     private class FirstTab {
         public WebLink textExamplesLink = new WebLink().setText("open text examples");
