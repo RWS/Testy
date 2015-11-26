@@ -7,7 +7,7 @@ import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class ModalWindowTest extends TestBase {
+public class ModalWindowIntegrationTest extends TestBase {
 
     private Form form = new Form("Page Object And Page Factory");
     private Button button = new Button().setContainer(form).setText("Launch demo modal");

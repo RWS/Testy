@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class WindowTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowTest.class);
+public class WindowIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowIntegrationTest.class);
 
     private Form form = new Form(null, "Page Object And Page Factory");
     private Button button = new Button(form, "Launch demo modal");
