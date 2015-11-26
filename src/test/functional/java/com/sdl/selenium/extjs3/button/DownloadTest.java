@@ -1,4 +1,4 @@
-package com.sdl.selenium.extjs.button;
+package com.sdl.selenium.extjs3.button;
 
 import static org.testng.Assert.assertTrue;
 
@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import com.sdl.selenium.extjs3.button.DownloadButton;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.TestBase;

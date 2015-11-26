@@ -1,7 +1,6 @@
-package com.sdl.selenium.extjs.list;
+package com.sdl.selenium.extjs3.list;
 
 import com.sdl.selenium.extjs3.button.Button;
-import com.sdl.selenium.extjs3.list.List;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.Ignores;
 import com.sdl.selenium.TestBase;

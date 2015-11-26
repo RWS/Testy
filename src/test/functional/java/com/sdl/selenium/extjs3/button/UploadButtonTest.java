@@ -1,6 +1,5 @@
-package com.sdl.selenium.extjs.button;
+package com.sdl.selenium.extjs3.button;
 
-import com.sdl.selenium.extjs3.button.UploadButton;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;

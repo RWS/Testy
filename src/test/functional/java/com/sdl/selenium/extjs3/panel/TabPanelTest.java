@@ -1,7 +1,6 @@
-package com.sdl.selenium.extjs.panel;
+package com.sdl.selenium.extjs3.panel;
 
 import com.sdl.selenium.extjs3.button.Button;
-import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.WebLocator;

@@ -8,37 +8,37 @@ var _classGen = {
                 'package com.sdl;\n'
             ];
             if(classCode.contains('Button')){
-                imports.push('import com.extjs.selenium.button.Button;')
+                imports.push('import com.extjs3.selenium.button.Button;')
             }
             if(classCode.contains('TextField')){
-                imports.push('import com.extjs.selenium.form.TextField;')
+                imports.push('import com.extjs3.selenium.form.TextField;')
             }
             if(classCode.contains('Checkbox')){
-                imports.push('import com.extjs.selenium.form.Checkbox;')
+                imports.push('import com.extjs3.selenium.form.Checkbox;')
             }
             if(classCode.contains('TextArea')){
-                imports.push('import com.extjs.selenium.form.TextArea;')
+                imports.push('import com.extjs3.selenium.form.TextArea;')
             }
             if(classCode.contains('Window')){
-                imports.push('import com.extjs.selenium.window.Window;')
+                imports.push('import com.extjs3.selenium.window.Window;')
             }
             if(classCode.contains('ComboBox')){
-                imports.push('import com.extjs.selenium.form.ComboBox;')
+                imports.push('import com.extjs3.selenium.form.ComboBox;')
             }
             if(classCode.contains('DisplayField')){
-                imports.push('import com.extjs.selenium.form.DisplayField;')
+                imports.push('import com.extjs3.selenium.form.DisplayField;')
             }
             if(classCode.contains('EditorGridPanel')){
-                imports.push('import com.extjs.selenium.grid.EditorGridPanel;')
+                imports.push('import com.extjs3.selenium.grid.EditorGridPanel;')
             }
             if(classCode.contains('GridPanel')){
-                imports.push('import com.extjs.selenium.grid.GridPanel;')
+                imports.push('import com.extjs3.selenium.grid.GridPanel;')
             }
             if(classCode.contains('Panel')){
-                imports.push('import com.extjs.selenium.panel.Panel;')
+                imports.push('import com.extjs3.selenium.panel.Panel;')
             }
             if(classCode.contains('TabPanel')){
-                imports.push('import com.extjs.selenium.tab.TabPanel;')
+                imports.push('import com.extjs3.selenium.tab.TabPanel;')
             }
         return imports.join('\n') + '\n\n';
     },

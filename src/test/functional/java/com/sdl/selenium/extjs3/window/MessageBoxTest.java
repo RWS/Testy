@@ -1,8 +1,7 @@
-package com.sdl.selenium.extjs.window;
+package com.sdl.selenium.extjs3.window;
 
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.panel.Panel;
-import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -1,4 +1,4 @@
-package com.sdl.selenium.extjs;
+package com.sdl.selenium.extjs3;
 
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.panel.Panel;

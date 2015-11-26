@@ -1,6 +1,5 @@
-package com.sdl.selenium.extjs.window;
+package com.sdl.selenium.extjs3.window;
 
-import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

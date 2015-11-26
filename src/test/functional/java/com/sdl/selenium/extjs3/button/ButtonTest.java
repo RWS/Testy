@@ -1,13 +1,11 @@
-package com.sdl.selenium.extjs.button;
+package com.sdl.selenium.extjs3.button;
 
-import com.sdl.selenium.extjs3.button.Button;
-import com.sdl.selenium.extjs3.button.SplitButton;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.extjs.window.MessageBoxTest;
+import com.sdl.selenium.extjs3.window.MessageBoxTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;

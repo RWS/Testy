@@ -1,7 +1,6 @@
-package com.sdl.selenium.extjs.form;
+package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.button.Button;
-import com.sdl.selenium.extjs3.form.TextArea;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.AfterMethod;

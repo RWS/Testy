@@ -2,69 +2,69 @@
 
 <suite name="Testy Functional Test Suite" verbose="1">
     <listeners>
-        <listener class-name="com.sdl.selenium.extjs.MyTransformer"></listener>
+        <listener class-name="com.sdl.selenium.extjs3.MyTransformer"></listener>
     </listeners>
     <test name="ButtonTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.button.ButtonTest"/>
+            <class name="com.sdl.selenium.extjs3.button.ButtonTest"/>
         </classes>
     </test>
     <test name="EditorGridPanelTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.grid.EditorGridPanelTest"/>
+            <class name="com.sdl.selenium.extjs3.grid.EditorGridPanelTest"/>
         </classes>
     </test>
     <test name="ComboBoxTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.form.ComboBoxTest"/>
+            <class name="com.sdl.selenium.extjs3.form.ComboBoxTest"/>
         </classes>
     </test>
     <test name="DateFieldTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.form.DateFieldTest"/>
+            <class name="com.sdl.selenium.extjs3.form.DateFieldTest"/>
         </classes>
     </test>
     <test name="DisplayFieldTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.form.DisplayFieldTest"/>
-            <class name="com.sdl.selenium.extjs.FireEventWithJSTest"/>
+            <class name="com.sdl.selenium.extjs3.form.DisplayFieldTest"/>
+            <class name="com.sdl.selenium.extjs3.FireEventWithJSTest"/>
         </classes>
     </test>
     <test name="ListTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.list.ListTest"/>
+            <class name="com.sdl.selenium.extjs3.list.ListTest"/>
         </classes>
     </test>
     <test name="RadioGroupTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.form.RadioGroupTest"/>
+            <class name="com.sdl.selenium.extjs3.form.RadioGroupTest"/>
         </classes>
     </test>
     <test name="TextAreaTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.form.TextAreaTest"/>
+            <class name="com.sdl.selenium.extjs3.form.TextAreaTest"/>
         </classes>
     </test>
     <test name="TextFieldTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.form.TextFieldTest"/>
+            <class name="com.sdl.selenium.extjs3.form.TextFieldTest"/>
         </classes>
     </test>
     <test name="WindowTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.window.WindowTest"/>
-            <class name="com.sdl.selenium.extjs.window.MessageBoxTest"/>
-            <class name="com.sdl.selenium.extjs.panel.TabPanelTest"/>
+            <class name="com.sdl.selenium.extjs3.window.WindowTest"/>
+            <class name="com.sdl.selenium.extjs3.window.MessageBoxTest"/>
+            <class name="com.sdl.selenium.extjs3.panel.TabPanelTest"/>
         </classes>
     </test>
     <test name="DownloadTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.button.DownloadTest"/>
+            <class name="com.sdl.selenium.extjs3.button.DownloadTest"/>
         </classes>
     </test>
     <test name="UploadButtonTest">
         <classes>
-            <class name="com.sdl.selenium.extjs.button.UploadButtonTest"/>
+            <class name="com.sdl.selenium.extjs3.button.UploadButtonTest"/>
         </classes>
     </test>
     <test name="DatePickerTest">
@@ -115,6 +115,11 @@
     <test name="WebLocator1Test">
         <classes>
             <class name="com.sdl.selenium.web.WebLocator1Test"/>
+        </classes>
+    </test>
+    <test name="web.ButtonTest">
+        <classes>
+            <class name="com.sdl.selenium.web.button.ButtonTest"/>
         </classes>
     </test>
 </suite>

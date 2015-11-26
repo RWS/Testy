@@ -1,4 +1,4 @@
-package com.sdl.selenium.extjs;
+package com.sdl.selenium.extjs3;
 
 import com.sdl.selenium.bootstrap.button.DownloadFile;
 import com.sdl.selenium.bootstrap.form.SelectPicker;

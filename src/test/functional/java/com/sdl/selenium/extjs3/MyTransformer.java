@@ -1,4 +1,4 @@
-package com.sdl.selenium.extjs;
+package com.sdl.selenium.extjs3;
 
 import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.Ignores;

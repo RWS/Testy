@@ -111,7 +111,7 @@ public class UtilsTest {
 
         map.put("browser.profile.name", "");
 
-        FirefoxConfigReader firefoxConfigReaderMod = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-firefox-test.properties");
+        FirefoxConfigReader firefoxConfigReaderMod = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-firefox-test.properties");
         for (Map.Entry<Object, Object> entry : firefoxConfigReaderMod.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
             assertEquals(entry.getValue(), map.get(entry.getKey()));
@@ -122,7 +122,7 @@ public class UtilsTest {
         map.put("profile.preference.browser.download.manager.showAlertOnComplete", "true");
         map.put("browser.download.dir", "src\\test\\resources\\test\\");
 
-        FirefoxConfigReader firefoxConfigReaderOverwrite = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-firefox-overwrite.properties");
+        FirefoxConfigReader firefoxConfigReaderOverwrite = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-firefox-overwrite.properties");
         for (Map.Entry<Object, Object> entry : firefoxConfigReaderOverwrite.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
             assertEquals(entry.getValue(), map.get(entry.getKey()));
@@ -145,7 +145,7 @@ public class UtilsTest {
 
         mapChrome.put("browser.download.dir", "src\\test\\resources\\test\\");
 
-        ChromeConfigReader chromeConfigReader1 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-chrome-test.properties");
+        ChromeConfigReader chromeConfigReader1 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-chrome-test.properties");
         for (Map.Entry<Object, Object> entry : chromeConfigReader1.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
@@ -154,7 +154,7 @@ public class UtilsTest {
         mapChrome.put("browser.download.dir", "src\\test\\resources\\download\\");
         mapChrome.put("browser.driver.path", "src\\test\\resources\\test\\chromedriver.exe");
 
-        ChromeConfigReader chromeConfigReader2 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs\\selenium\\localhost-chrome-overwrite.properties");
+        ChromeConfigReader chromeConfigReader2 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-chrome-overwrite.properties");
         for (Map.Entry<Object, Object> entry : chromeConfigReader2.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
             assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
