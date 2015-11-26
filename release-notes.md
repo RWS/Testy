@@ -2,6 +2,7 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.0.0-SNAPSHOT**
 - add weblocator.log.suggestions=false default
+- add elCssSelector
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true
