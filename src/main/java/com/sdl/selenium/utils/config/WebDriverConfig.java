@@ -6,7 +6,6 @@ import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,7 +15,6 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -91,11 +89,6 @@ public class WebDriverConfig {
                 public void run() {
                     if (WebLocatorConfig.getBoolean("driver.autoClose")) {
                         initSeleniumEnd();
-                        try {
-                            FileUtils.forceDelete(new File(getDownloadPath()));
-                        } catch (IOException e) {
-                           LOGGER.warn("Cannot delete Download dir!");
-                        }
                     }
                 }
             });
