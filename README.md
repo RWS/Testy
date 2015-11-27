@@ -166,6 +166,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 ## Demo application links
 
-[Login](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html)
-[Bootstrap](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/bootstrap/index.html)
-[Sencha ExtJs](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/extjs/index.html)
+- [Login](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html)
+- [Bootstrap](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/bootstrap/index.html)
+- [Sencha ExtJs](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/extjs/index.html)
+
