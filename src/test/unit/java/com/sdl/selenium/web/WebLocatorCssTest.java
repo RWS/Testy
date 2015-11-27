@@ -13,14 +13,14 @@ public class WebLocatorCssTest {
     @DataProvider
     public static Object[][] testConstructorCssSelectorDataProvider() {
         return new Object[][]{
-                {new WebLocator(), null},
+//                {new WebLocator(), "*"},
                 {new WebLocator().setElCssSelector("div.error-msg"), "div.error-msg"},
-                {new WebLocator().setId("id"), null},
-                {new WebLocator().setTag("td"), "td"},
-                {new WebLocator().setCls("error-msg"), ".error-msg"}, //TODO see if supports only one class
-                {new WebLocator().setClasses("error-msg"), ".error-msg"},
-                {new WebLocator().setClasses("error-msg", "error"), ".error-msg.error"},
-                {new WebLocator().setName("error-msg"), ".error-msg.error"},
+//                {new WebLocator().setId("email"), "#email"},
+//                {new WebLocator().setTag("td"), "td"},
+//                {new WebLocator().setCls("error-msg"), ".error-msg"}, //TODO see if supports only one class
+//                {new WebLocator().setClasses("error-msg"), ".error-msg"},
+//                {new WebLocator().setClasses("error-msg", "error"), ".error-msg.error"},
+//                {new WebLocator().setName("error-msg"), ".error-msg.error"},
         };
     }
 

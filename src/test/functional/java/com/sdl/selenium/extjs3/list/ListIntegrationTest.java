@@ -13,8 +13,8 @@ import static org.testng.Assert.assertTrue;
 
 public class ListIntegrationTest extends TestBase {
 
-    Window multiSelectWindow = new Window("MultiSelectWindow");
-    List multiSelectList = new List(multiSelectWindow);
+    private Window multiSelectWindow = new Window("MultiSelectWindow");
+    private List multiSelectList = new List(multiSelectWindow);
 
     @BeforeClass
     public void startTests() {
@@ -27,7 +27,7 @@ public class ListIntegrationTest extends TestBase {
         multiSelectWindow.close();
     }
 
-    @Ignores (value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
+    @Ignores(value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
     @Test
     public void select() {
         assertTrue(multiSelectList.selectRows("English", "French", "Spanish"));

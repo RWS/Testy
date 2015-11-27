@@ -1,7 +1,6 @@
-package com.sdl.selenium.extjs3;
+package com.sdl.selenium;
 
 import com.sdl.selenium.web.Browser;
-import com.sdl.selenium.Ignores;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.ITestAnnotation;

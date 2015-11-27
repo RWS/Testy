@@ -2,7 +2,7 @@
 
 <suite name="Testy Functional Test Suite" verbose="1">
     <listeners>
-        <listener class-name="com.sdl.selenium.extjs3.MyTransformer"></listener>
+        <listener class-name="com.sdl.selenium.MyTransformer"></listener>
     </listeners>
     <test name="ButtonIntegrationTest">
         <classes>
