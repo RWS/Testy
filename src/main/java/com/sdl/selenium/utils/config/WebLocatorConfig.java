@@ -23,6 +23,7 @@ public class WebLocatorConfig {
     private static boolean logSuggestions;
     private static boolean logContainers;
     private static boolean highlight;
+    private static boolean generateCssSelector;
     private static Set<SearchType> searchTextType = new HashSet<SearchType>() {{
         add(SearchType.CONTAINS);
     }};
@@ -117,6 +118,11 @@ public class WebLocatorConfig {
             setHighlight(highlight);
         }
 
+        Boolean generateCssSelector = getBoolean("weblocator.generateCssSelector");
+        if (generateCssSelector != null) {
+            setGenerateCssSelector(generateCssSelector);
+        }
+
         String searchTextType = getProperty("weblocator.defaults.searchType");
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
@@ -185,6 +191,14 @@ public class WebLocatorConfig {
 
     public static boolean isHighlight() {
         return highlight;
+    }
+
+    public static void setGenerateCssSelector(boolean generateCssSelector) {
+        WebLocatorConfig.generateCssSelector = generateCssSelector;
+    }
+
+    public static boolean isGenerateCssSelector() {
+        return generateCssSelector;
     }
 
     public static void setHighlight(boolean highlight) {

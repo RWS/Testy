@@ -29,23 +29,4 @@ public class ButtonTest {
     public void getPathSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
         assertThat(button.getXPath(), equalTo(expectedXpath));
     }
-
-    @DataProvider
-    public static Object[][] testConstructorCssSelectorDataProvider() {
-        return new Object[][]{
-                {new Button(),                  null},
-                {new Button(container),         null},
-                {new Button(container, "ButtonText"), null},
-                {new Button(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), null},
-                {new Button(container).setId("ID"), null},
-                {new Button(container).setIconCls("IconCls"), null},
-                {new Button(container, "ButtonText").setIconCls("IconCls"), null},
-                {new Button(container, "ButtonText").setIconCls("IconCls").setVisibility(true), null},
-        };
-    }
-
-    @Test(dataProvider = "testConstructorCssSelectorDataProvider")
-    public void getCssSelectorCorrectlyFromConstructors(Button button, String expectedXpath) {
-        assertThat(button.getCssSelector(), equalTo(expectedXpath));
-    }
 }

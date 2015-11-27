@@ -406,14 +406,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private WebElement doWaitElement(final WebLocator el, final long millis) {
         WebDriverWait wait = new WebDriverWait(driver, 0, 100);
         wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
-        final String cssSelector = el.getCssSelector();
-        final boolean hasCssSelector = StringUtils.isNotEmpty(cssSelector);
-        final String xpath = hasCssSelector ? null : el.getXPath();
         try {
             el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
                 public WebElement apply(WebDriver driver1) {
-                    By by = hasCssSelector ? By.cssSelector(cssSelector) : By.xpath(xpath);
-                    return driver.findElement(by);
+                    return driver.findElement(el.getSelector());
                 }
             });
         } catch (TimeoutException e) {

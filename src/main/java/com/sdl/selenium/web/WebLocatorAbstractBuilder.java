@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -469,6 +470,10 @@ public abstract class WebLocatorAbstractBuilder {
 
     protected boolean hasResultIdx() {
         return pathBuilder.hasResultIdx();
+    }
+
+    public final By getSelector() {
+        return pathBuilder.getSelector();
     }
 
     public final String getCssSelector() {

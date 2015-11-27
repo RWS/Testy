@@ -5,6 +5,7 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -179,7 +180,7 @@ public class XPathBuilder {
      * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
      * @param elCssSelector absolute way (css selectors) to identify element
-     * @param <T>    the element which calls this method
+     * @param <T>           the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setElCssSelector(final String elCssSelector) {
@@ -335,6 +336,12 @@ public class XPathBuilder {
      */
     public <T extends XPathBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
+//        notSuportedForCss(text, "text");
+//        if(text == null) {
+//            xpath.remove("text");
+//        } else {
+//            xpath.add("text");
+//        }
         if (searchType != null && searchType.length > 0) {
             setSearchTextType(searchType);
         } else {
@@ -949,6 +956,7 @@ public class XPathBuilder {
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
 
+
     private List<String> getChildNodesToSelector() {
         List<String> selector = new ArrayList<>();
         if (hasChildNodes()) {
@@ -1079,7 +1087,7 @@ public class XPathBuilder {
             String[] strings = pattern.split(text.substring(1));
             for (int i = 0; i < strings.length; i++) {
                 String escapeQuotesText = Utils.getEscapeQuotesText(strings[i]);
-                if(searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)){
+                if (searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
                     strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
                 } else {
                     strings[i] = "contains(" + pathText + "," + escapeQuotesText + ")";
@@ -1104,10 +1112,97 @@ public class XPathBuilder {
         return getBasePathSelector();
     }
 
+    private String getItemCssSelector() {
+        List<String> selector = new ArrayList<String>();
+        if (hasTag()) {
+            selector.add(getTag());
+        }
+        if (hasId()) {
+            selector.add("#" + getId());
+        }
+        if (hasBaseCls()) {
+            selector.add("." + getBaseCls());
+        }
+        if (hasCls()) {
+            selector.add("." + getCls()); //TODO
+        }
+        if (hasClasses()) {
+            for (String cls : getClasses()) {
+                selector.add("." + cls);
+            }
+        }
+        if (hasExcludeClasses()) {
+            LOGGER.warn("excludeClasses is not supported yet");
+//            for (String excludeClass : getExcludeClasses()) {
+//                selector.add(applyTemplate("excludeClass", excludeClass));
+//            }
+        }
+        if (hasName()) {
+            selector.add("[name='" + getName() + "']");
+        }
+        if (hasType()) {
+            selector.add("[type='" + getType() + "']");
+        }
+        if (!attribute.isEmpty()) {
+            for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
+                selector.add("[" + entry.getKey() + "='" + entry.getValue().getText() + "']");
+            }
+        }
+//        for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
+//            addTemplate(selector, entry.getKey(), entry.getValue());
+//        }
+//        for (String suffix : elPathSuffix.values()) {
+//            selector.add(suffix);
+//        }
+        return selector.isEmpty() ? "*" : StringUtils.join(selector, "");
+    }
+
+    public final By getSelector() {
+        String cssSelector = getCssSelector();
+        return StringUtils.isNotEmpty(cssSelector) ? By.cssSelector(cssSelector) : By.xpath(getXPath());
+    }
+
+    private boolean isCssSelectorSupported() {
+        return !(hasText() || hasElPath() || hasChildNodes() || hasExcludeClasses() || hasStyle() || hasLabel() || hasTitle() || hasPosition() || hasResultIdx());
+    }
+
     public final String getCssSelector() {
         String cssSelector = null;
 
         cssSelector = getElCssSelector();
+        if (WebLocatorConfig.isGenerateCssSelector()) {
+            if (StringUtils.isEmpty(cssSelector)) {
+                if (isCssSelectorSupported()) {
+                    cssSelector = getItemCssSelector();
+                }
+            } else {
+//            String baseCssSelector = getItemCssSelector();
+//            if (StringUtils.isNotEmpty(baseCssSelector)) {
+//                 TODO "inject" baseItemPath to elPath
+//            }
+            }
+        }
+        // add container path
+        if (cssSelector != null && getContainer() != null) {
+            String parentCssSelector = getContainer().getCssSelector();
+            if (StringUtils.isEmpty(parentCssSelector)) {
+                LOGGER.warn("Can't generate css selector for parent: {}", getContainer());
+                cssSelector = null;
+            } else {
+                String root = getRoot();
+                String deep = "";
+                if (StringUtils.isNotEmpty(root)) {
+                    if (root.equals("/")) {
+                        deep = " > ";
+                    } else if (root.equals("//")) {
+                        deep = " ";
+                    } else {
+                        LOGGER.warn("this root ({}) is no implemented in css selector: ", root);
+                    }
+                }
+                cssSelector = parentCssSelector + deep + cssSelector;
+            }
+        }
 
         return cssSelector;
     }
@@ -1149,9 +1244,9 @@ public class XPathBuilder {
     }
 
     /**
-     * @deprecated use getXPath(boolean disabled)
      * @param disabled disabled
      * @return String
+     * @deprecated use getXPath(boolean disabled)
      */
     public String getPath(boolean disabled) {
         return getXPath(disabled);
