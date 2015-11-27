@@ -290,8 +290,8 @@ public class WebLocatorSuggestions {
                 "style",
                 "title",
                 "type",
-                "infoMessage",
-                "container",
+                "infoMessage", // TODO not used for xpath
+                "container", // TODO don't use it for suggestions
                 "visibility",
                 "root",
                 "tag",
