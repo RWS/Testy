@@ -10,7 +10,7 @@ You can combine more properties/attributes on the same selector very easy.
 This project is optimized for:
 
 - [x] Dynamic html & Complex UI
-- [x] ExtJS
+- [x] Sencha ExtJS
 - [x] Bootstrap
 - [x] Simple web applications/sites
 
@@ -147,8 +147,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 [Detailed Release Notes](./release-notes.md) 
 
-Getting SNAPSHOT versions of the plugin
----------------------------------------
+### Getting SNAPSHOT versions of the plugin
 
 ```xml
     <repositories>
@@ -165,3 +164,8 @@ Getting SNAPSHOT versions of the plugin
     </dependency>
 ```
 
+## Demo application links
+
+[Login](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html)
+[Bootstrap](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/bootstrap/index.html)
+[Sencha ExtJs](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/extjs/index.html)
