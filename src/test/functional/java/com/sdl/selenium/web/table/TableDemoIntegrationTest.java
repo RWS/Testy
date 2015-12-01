@@ -1,12 +1,9 @@
-package com.sdl.selenium.bootstrap.table;
+package com.sdl.selenium.web.table;
 
-import com.sdl.selenium.bootstrap.form.CheckBox;
-import com.sdl.selenium.bootstrap.form.Form;
-import com.sdl.selenium.web.table.Table;
-import com.sdl.selenium.web.table.TableCell;
-import com.sdl.selenium.web.table.TableRow;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.bootstrap.form.CheckBox;
+import com.sdl.selenium.bootstrap.form.Form;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

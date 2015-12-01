@@ -25,8 +25,6 @@ public class TestBase {
     public static int TEST_RUNS = 0;
     public static int TEST_FAILED = 0;
 
-    public static final String SERVER = InputData.SERVER_URL;
-
     static {
         startSuite();
     }
@@ -83,12 +81,12 @@ public class TestBase {
     private static void startSuite() {
         LOGGER.info("===============================================================");
         LOGGER.info("|          Browser: " + InputData.BROWSER_CONFIG);
-        LOGGER.info("|          AUT URL: " + SERVER);
+        LOGGER.info("|          AUT URL: " + InputData.LOGIN_URL);
         LOGGER.info("===============================================================\n");
         
         try {
             driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
-            driver.get(SERVER);
+            driver.get(InputData.LOGIN_URL);
             FileUtils.forceMkdir(new File(WebDriverConfig.getDownloadPath()));
         } catch (Exception e) {
             LOGGER.error("Exception when start suite", e);

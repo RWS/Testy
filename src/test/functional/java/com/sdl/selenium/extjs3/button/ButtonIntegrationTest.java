@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.button;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
@@ -8,6 +9,7 @@ import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.window.MessageBoxIntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -32,6 +34,11 @@ public class ButtonIntegrationTest extends TestBase {
 
     private Window buttonsWindow = new Window("Buttons Window");
     private SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
+
+    @BeforeClass
+    public void startTests() {
+        driver.get(InputData.EXTJS_URL);
+    }
 
     @Test
     public void isDisplayed() {
