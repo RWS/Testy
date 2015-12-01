@@ -7,13 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,16 +45,15 @@ public final class WebLocatorUtils extends WebLocator {
         builder.append("\n\n");
         Map<String, WebLocator> map = webLocatorAsMap(view);
 
-
         if(map.size() == 0) {
             builder.append(getFirebugXPath(view));
         } else {
             builder.append("// Run next lines in firebug to see if all elements are present in your page").append("\n\n");
-            appendLocatorXPath(builder, "current_view", view);
+            appendLocatorXPath(builder, "current_view", view, true);
 
             for (String locatorName : map.keySet()) {
                 WebLocator locator = map.get(locatorName);
-                appendLocatorXPath(builder, locatorName, locator);
+                appendLocatorXPath(builder, locatorName, locator, true);
             }
         }
 
@@ -70,18 +63,19 @@ public final class WebLocatorUtils extends WebLocator {
         return log;
     }
 
-    private static void appendLocatorXPath(StringBuilder builder, String locatorName, WebLocator locator) {
-        //builder.append("// ").append(locatorName).append(" : ").append(locator.toString()).append("\n");
-        String xpath = getFirebugXPath(locator);
+    private static void appendLocatorXPath(StringBuilder builder, String locatorName, WebLocator locator, boolean compact) {
+        String path = locator.getXPath();
         String xpathLocatorVar = "xpath_" + locatorName;
-        builder.append("var ").append(xpathLocatorVar).append(" = ").append(xpath).append(";\n");
-        builder.append("if (").append(xpathLocatorVar).append("[0]) {");
-        builder.append("  console.info('").append(locatorName).append("', ").append(xpathLocatorVar).append("[0]);\n");
-        builder.append("if (").append(xpathLocatorVar).append(".length > 1) console.warn('  found more elements', ").append(xpathLocatorVar).append(");");
-        builder.append("} else {\n");
-        builder.append("  console.error('").append(locatorName).append("', ' - not found!');\n");
-        builder.append("  console.warn(\"  ").append(locator.getXPath()).append("\");\n");
-        builder.append("}\n\n");
+        String newLine = compact ? "" : "\n";
+        builder.append("var ").append(xpathLocatorVar).append("Path = \"").append(path).append("\";").append(newLine);
+        builder.append("var ").append(xpathLocatorVar).append(" = $x(").append(xpathLocatorVar).append("Path);").append(newLine);
+        builder.append("if (").append(xpathLocatorVar).append("[0]) {").append(newLine);
+        builder.append("  console.info('").append(locatorName).append("', ").append(xpathLocatorVar).append("[0]);").append(newLine);
+        builder.append("  if (").append(xpathLocatorVar).append(".length > 1) console.warn('  found more elements', ").append(xpathLocatorVar).append(");").append(newLine);
+        builder.append("} else {").append(newLine);
+        builder.append("  console.error('").append(locatorName).append("', ' - not found!');").append(newLine);
+        builder.append("  console.warn(\"  \"+").append(xpathLocatorVar).append("Path);").append(newLine);
+        builder.append("}").append(newLine).append(newLine);
     }
 
     public static String getFirebugXPath(WebLocator locator) {

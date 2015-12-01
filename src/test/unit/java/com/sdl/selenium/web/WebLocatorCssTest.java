@@ -8,7 +8,8 @@ public class WebLocatorCssTest {
 
     private static WebLocator cssContainer = new WebLocator().setElCssSelector(".experiment-tile");
     private static WebLocator xpathContainer = new WebLocator().setElPath("//*[@class='error-msg']");
-    SoftAssert softAssert;
+
+    private SoftAssert softAssert;
     private boolean generateCssSelector = false;
 
     @BeforeMethod
@@ -40,7 +41,7 @@ public class WebLocatorCssTest {
     }
 
     @Test(dataProvider = "testConstructorCssSelectorDataProvider")
-    public void whenHaveSupportedCssAtributesICanGenerateCssSelectorsAndXpath(WebLocator el, String expectedCss, String expectedXpath) {
+    public void whenHaveSupportedCssAttributesICanGenerateCssSelectorsAndXpath(WebLocator el, String expectedCss, String expectedXpath) {
         softAssert.assertEquals(el.getCssSelector(), expectedCss);
         softAssert.assertEquals(el.getXPath(), expectedXpath);
 
