@@ -460,6 +460,10 @@ public class XPathBuilder {
         return (T) this;
     }
 
+    public Set<SearchType> getSearchTitleType() {
+        return searchTitleType;
+    }
+
     public <T extends XPathBuilder> T setTemplateTitle(WebLocator titleEl) {
         if (titleEl == null) {
             templateTitle.remove("title");
