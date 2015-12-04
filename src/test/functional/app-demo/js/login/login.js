@@ -20,4 +20,17 @@ $(document).ready(function () {
             }
         }
     });
+
+    var users = DB_MOCKS.list(),
+        userTable = ['<table border="1" style="border: 1px solid #e5e5e5;">'];
+
+    $.each(users, function(i, user){
+        console.debug(user.join('</td><td>'));
+        userTable.push('<tr><td>');
+        userTable.push(user.join('</td><td>'));
+        userTable.push('</td></tr>');
+    });
+    userTable.push('</table>');
+
+    $('body').append('<div id="logging">' + userTable.join('') + '</div>');
 });

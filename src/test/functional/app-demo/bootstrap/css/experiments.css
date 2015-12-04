@@ -1,3 +1,16 @@
+#logging {
+    padding: 10px;
+}
+#logging table {
+    float: right;
+    border-collapse: collapse;
+}
+#logging td {
+    border: 1px solid #e5e5e5;
+    padding: 5px;
+    color: #e5e5e5;
+}
+
 #experimentsTable{
     margin-top: 92px;
 }

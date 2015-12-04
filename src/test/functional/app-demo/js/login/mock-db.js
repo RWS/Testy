@@ -40,6 +40,13 @@ var DB_MOCKS = (function(){
                 user.pass = pass;
                 savePass(user.id, pass);
             }
+        },
+
+        // private : used for logging
+        list: function() {
+            return Object.keys(DB_USERS).map(function (key) {
+                return [key, DB_USERS[key].pass];
+            })
         }
     };
 })();
