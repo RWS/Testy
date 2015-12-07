@@ -20,6 +20,8 @@ import static org.testng.Assert.assertTrue;
 public class WebLocatorSuggestionsIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorSuggestionsIntegrationTest.class);
 
+    private boolean suggestAttributes = false;
+
     @BeforeClass
     public void startTests() {
         driver.get(InputData.SUGGESTIONS_URL);
@@ -27,12 +29,13 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
 
     @BeforeClass(alwaysRun = true)
     public void startTest() throws Exception {
+        suggestAttributes = WebLocatorSuggestions.isSuggestAttributes();
         WebLocatorSuggestions.setSuggestAttributes(true);
     }
 
     @AfterClass(alwaysRun = true)
     public void stopTest() {
-        WebLocatorSuggestions.setSuggestAttributes(false);
+        WebLocatorSuggestions.setSuggestAttributes(suggestAttributes);
     }
 
     /**

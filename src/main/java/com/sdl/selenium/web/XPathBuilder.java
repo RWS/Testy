@@ -1345,9 +1345,16 @@ public class XPathBuilder implements Cloneable {
         LinkedHashMap<String, String> elPathSuffix = (LinkedHashMap<String, String>) builder.elPathSuffix;
 
         builder.templates = (Map<String, String>) templates.clone();
-        builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
         builder.templatesValues = (Map<String, String>) templatesValues.clone();
         builder.elPathSuffix = (Map<String, String>) elPathSuffix.clone();
+
+        builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
+        WebLocator titleTplEl = templateTitle.get("title");
+        if (titleTplEl != null) {
+            XPathBuilder titleTplElBuilder = (XPathBuilder)titleTplEl.getPathBuilder().clone();
+            WebLocator titleTplElCloned = new WebLocator().setPathBuilder(titleTplElBuilder);
+            builder.templateTitle.put("title", titleTplElCloned);
+        }
 
         return builder;
     }
