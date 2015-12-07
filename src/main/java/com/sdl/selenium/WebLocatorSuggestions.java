@@ -88,11 +88,8 @@ public class WebLocatorSuggestions {
 
     public static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
 
-        WebLocator webLocator;
-        try {
-            webLocator = cloneWebLocator(originalWebLocator);
-        } catch (IllegalAccessException | InstantiationException e) {
-            LOGGER.error("Error while cloning the WebLocator: " + e.getMessage());
+        WebLocator webLocator = getClone(originalWebLocator);
+        if(webLocator == null) {
             return null;
         }
 
@@ -141,76 +138,16 @@ public class WebLocatorSuggestions {
         }
     }
 
-    private static WebLocator cloneWebLocator(WebLocator source) throws IllegalAccessException, InstantiationException {
-
-        WebLocator clone = source.getClass().newInstance();
-
-        for (String fieldName : getNonNullFields(source.getPathBuilder(), "label", "labelPosition", "labelTag", "container")) {
-            switch (fieldName) {
-                case "id":
-                    clone.setId(source.getPathBuilder().getId());
-                    break;
-                case "elPath":
-                    clone.setElPath(source.getPathBuilder().getElPath());
-                    break;
-                case "baseCls":
-                    clone.setBaseCls(source.getPathBuilder().getBaseCls());
-                    break;
-                case "cls":
-                    clone.setCls(source.getPathBuilder().getCls());
-                    break;
-                case "name":
-                    clone.setName(source.getPathBuilder().getName());
-                    break;
-                case "text":
-                    SearchType[] textSearchTypes = new SearchType[source.getPathBuilder().getSearchTextType().size()];
-                    source.getPathBuilder().getSearchTextType().toArray(textSearchTypes);
-                    clone.setText(source.getPathBuilder().getText(), textSearchTypes);
-                    break;
-                case "style":
-                    clone.setStyle(source.getPathBuilder().getStyle());
-                    break;
-                case "title":
-                    SearchType[] titleSearchTypes = new SearchType[source.getPathBuilder().getSearchTitleType().size()];
-                    source.getPathBuilder().getSearchTextType().toArray(titleSearchTypes);
-                    clone.setTitle(source.getPathBuilder().getTitle(), titleSearchTypes);
-                    break;
-                case "type":
-                    clone.setType(source.getPathBuilder().getType());
-                    break;
-                case "visibility":
-                    clone.setVisibility(source.isVisible());
-                    break;
-                case "root":
-                    clone.setRoot(source.getPathBuilder().getRoot());
-                    break;
-                case "tag":
-                    clone.setTag(source.getPathBuilder().getTag());
-                    break;
-                case "position":
-                    clone.setPosition(source.getPathBuilder().getPosition());
-                    break;
-                case "resultIdx":
-                    clone.setResultIdx(source.getPathBuilder().getResultIdx());
-                    break;
-                case "label":
-                    SearchType[] labelSearchTypes = new SearchType[source.getPathBuilder().getSearchLabelType().size()];
-                    source.getPathBuilder().getSearchTextType().toArray(labelSearchTypes);
-                    clone.setLabel(source.getPathBuilder().getLabel(), labelSearchTypes);
-                    break;
-                case "labelPosition":
-                    clone.setLabelPosition(source.getPathBuilder().getLabelPosition());
-                    break;
-                case "labelTag":
-                    clone.setLabelTag(source.getPathBuilder().getLabelTag());
-                    break;
-                case "container":
-                    clone.setContainer(source.getPathBuilder().getContainer());
-                    break;
-            }
+    private static WebLocator getClone(WebLocator originalWebLocator) {
+        try {
+            WebLocator webLocator = originalWebLocator.getClass().newInstance();
+            XPathBuilder builder = (XPathBuilder) originalWebLocator.getPathBuilder().clone();
+            webLocator.setPathBuilder(builder);
+            return webLocator;
+        } catch (IllegalAccessException | InstantiationException | CloneNotSupportedException e) {
+            LOGGER.error("Error while cloning the WebLocator: " + e.getMessage());
         }
-
-        return clone;
+        return null;
     }
 
     /**
@@ -358,7 +295,7 @@ public class WebLocatorSuggestions {
         return null;
     }
 
-    private static List<String> getNonNullFields(XPathBuilder builder, String... additionalFields) {
+    private static List<String> getNonNullFields(XPathBuilder builder) {
 
         String[] availableFieldsArray = {
                 "id",
@@ -377,9 +314,7 @@ public class WebLocatorSuggestions {
                 "resultIdx"
         };
 
-        List<String> availableFields = new ArrayList<>();
-        Collections.addAll(availableFields, availableFieldsArray);
-        Collections.addAll(availableFields, additionalFields);
+        List<String> availableFields = Arrays.asList(availableFieldsArray);
 
         //create a list of non null fields
         List<String> nonNullFields = new LinkedList<>();

@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
-public class XPathBuilder {
+public class XPathBuilder implements Cloneable {
     private static final Logger LOGGER = LoggerFactory.getLogger(XPathBuilder.class);
     public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private String className = "WebLocator";
@@ -1333,5 +1333,22 @@ public class XPathBuilder {
         }
         SearchType[] st = searchLabelType.toArray(new SearchType[searchLabelType.size()]);
         return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getXPath();
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        XPathBuilder builder = (XPathBuilder) super.clone();
+
+        LinkedHashMap<String, String> templates = (LinkedHashMap<String, String>) builder.templates;
+        LinkedHashMap<String, WebLocator> templateTitle = (LinkedHashMap<String, WebLocator>) builder.templateTitle;
+        LinkedHashMap<String, String> templatesValues = (LinkedHashMap<String, String>) builder.templatesValues;
+        LinkedHashMap<String, String> elPathSuffix = (LinkedHashMap<String, String>) builder.elPathSuffix;
+
+        builder.templates = (Map<String, String>) templates.clone();
+        builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
+        builder.templatesValues = (Map<String, String>) templatesValues.clone();
+        builder.elPathSuffix = (Map<String, String>) elPathSuffix.clone();
+
+        return builder;
     }
 }
