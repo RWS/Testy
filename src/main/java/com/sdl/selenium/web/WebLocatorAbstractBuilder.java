@@ -25,6 +25,11 @@ public abstract class WebLocatorAbstractBuilder {
         return pathBuilder;
     }
 
+    public <T extends WebLocatorAbstractBuilder> T  setPathBuilder(XPathBuilder pathBuilder) {
+        this.pathBuilder = pathBuilder;
+        return (T) this;
+    }
+
     protected WebLocatorAbstractBuilder() {
     }
 

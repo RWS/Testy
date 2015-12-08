@@ -86,7 +86,13 @@ public class WebLocatorSuggestions {
         }
     }
 
-    public static WebLocator getElementSuggestion(WebLocator webLocator) {
+    public static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
+
+        WebLocator webLocator = getClone(originalWebLocator);
+        if(webLocator == null) {
+            return null;
+        }
+
         if (webLocator.currentElement != null || webLocator.isElementPresent()) {
             if (webLocator.currentElement.isDisplayed()) {
                 LOGGER.debug("The element already exists: {}", WebLocatorUtils.getHtmlTree(webLocator));
@@ -130,6 +136,18 @@ public class WebLocatorSuggestions {
         } else {
             return null;
         }
+    }
+
+    private static WebLocator getClone(WebLocator originalWebLocator) {
+        try {
+            WebLocator webLocator = originalWebLocator.getClass().newInstance();
+            XPathBuilder builder = (XPathBuilder) originalWebLocator.getPathBuilder().clone();
+            webLocator.setPathBuilder(builder);
+            return webLocator;
+        } catch (IllegalAccessException | InstantiationException | CloneNotSupportedException e) {
+            LOGGER.error("Error while cloning the WebLocator: " + e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -183,9 +201,8 @@ public class WebLocatorSuggestions {
             SearchType[] solution = suggestTextSearchType(labelLocator);
             if (solution != null) {
                 LOGGER.warn("But found it using search types {}", Arrays.toString(solution));
-                labelLocator.setLabel(label, solution);
-//                labelLocator.setSearchTextType(solution);
-                return labelLocator;
+                webLocator.setLabel(label, solution);
+                return webLocator;
             } else {
                 labelLocator.setTag("*");
                 if(labelLocator.isElementPresent()) {
@@ -290,8 +307,6 @@ public class WebLocatorSuggestions {
                 "style",
                 "title",
                 "type",
-                "infoMessage", // TODO not used for xpath
-                "container", // TODO don't use it for suggestions
                 "visibility",
                 "root",
                 "tag",
