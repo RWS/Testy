@@ -62,7 +62,7 @@ public class WebLocatorSuggestions {
         Map<String, WebLocator> webLocatorMap = WebLocatorUtils.webLocatorAsMap(view);
 
         if (webLocatorMap.size() == 0) {
-            getElementSuggestion(view);
+            getSuggestion(view);
         } else {
             getPageSuggestions(webLocatorMap);
         }
@@ -86,7 +86,14 @@ public class WebLocatorSuggestions {
         }
     }
 
-    public static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
+    public static WebLocator getSuggestion(WebLocator webLocator) {
+        LOGGER.debug("getSuggestion >> enter");
+        WebLocator suggestion = getElementSuggestion(webLocator);
+        LOGGER.debug("getSuggestion << exit");
+        return suggestion;
+    }
+
+    private static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
 
         WebLocator webLocator = getClone(originalWebLocator);
         if(webLocator == null) {
