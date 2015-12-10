@@ -1,6 +1,5 @@
 package com.sdl.selenium.web.table;
 
-import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
