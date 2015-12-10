@@ -1,10 +1,11 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 2.0.0-SNAPSHOT**
-- add weblocator.log.suggestions=false default
-- add elCssSelector
-- if setVisibility on WebLocator, wait visibilityOfElementLocated
-- TableCell and TableRow make deprecated
+- Change config default value for weblocator.log.suggestions=false
+- Generate cssSelector instead of xpath when possible. Use config weblocator.generateCssSelector=false
+- Add locator.setElCssSelector("#selector.element-css")
+- Improve ElementNotVisibleException when use locator.setVisibility(true) - wait.until(visibilityOfElementLocated).
+- Classes TableCell and TableRow made deprecated - use Cell & Row instead
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true
