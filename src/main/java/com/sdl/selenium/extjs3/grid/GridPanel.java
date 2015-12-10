@@ -9,8 +9,9 @@ import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.IRow;
 import com.sdl.selenium.web.table.ITable;
-import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.table.AbstractRow;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
@@ -427,8 +428,16 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridRow(this);
     }
 
-    @Override
+
+    /**
+     * @deprecated use {@link #getRow(int)}
+     */
     public GridRow getRowLocator(int rowIndex) {
+        return new GridRow(this, rowIndex);
+    }
+
+    @Override
+    public GridRow getRow(int rowIndex) {
         return new GridRow(this, rowIndex);
     }
 
@@ -442,7 +451,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     @Override
     public GridCell getCell(int rowIndex, int columnIndex) {
-        Row row = getRowLocator(rowIndex);
+        AbstractRow row = getRowLocator(rowIndex);
         return new GridCell(columnIndex).setContainer(row);
     }
 
@@ -520,10 +529,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return doCellSelect(gridCell);
     }
 
-    public String[] getRow(int rowIndex) {
+    public String[] getRowText(int rowIndex) {
         String[] rowElements = null;
         if (rowIndex != -1) {
-            Row row = getRowLocator(rowIndex);
+            IRow row = getRowLocator(rowIndex);
             String text = row.getHtmlText();
             if (text != null) {
                 rowElements = text.split("\n");
@@ -728,7 +737,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             String cls = gridCell.getAttributeClass();
             boolean isSelected = cls != null && cls.contains("x-grid3-check-col-on");
             if (isSelected) {
-                selected = isSelected;
+                selected = true;
             } else {
                 selected = gridCell.clickAt();
                 if (!selected) {
@@ -753,7 +762,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 LOGGER.debug("path: " + gridCell.getXPath());
                 selected = gridCell.clickAt();
             } else {
-                selected = isSelected;
+                selected = false;
             }
         }
         return selected;

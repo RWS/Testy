@@ -2,13 +2,14 @@ package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.XPathBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+/**
+ * @deprecated use {@link Cell()}
+ */
 public class TableCell extends Cell {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TableCell.class);
 
+    /**
+     * @deprecated use {@link Cell#Cell()}
+     */
     public TableCell() {
         setRenderMillis(200);
         setClassName("TableCell");
@@ -16,16 +17,25 @@ public class TableCell extends Cell {
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
+    /**
+     * @deprecated use {@link Cell#Cell(WebLocator)}
+     */
     public TableCell(WebLocator container) {
         this();
         setContainer(container);
     }
 
+    /**
+     * @deprecated use {@link Cell#Cell(WebLocator, int)}
+     */
     public TableCell(WebLocator container, int columnIndex) {
         this(container);
         setPosition(columnIndex);
     }
 
+    /**
+     * @deprecated use {@link Cell#Cell(int, String, SearchType[])}
+     */
     public TableCell(int columnIndex, String columnText, SearchType... searchType) {
         this();
         setPosition(columnIndex);
@@ -33,22 +43,12 @@ public class TableCell extends Cell {
         setSearchTextType(searchType);
     }
 
+    /**
+     * @deprecated use {@link Cell#Cell(WebLocator, int, String, SearchType[])}
+     */
     public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
         this(container, columnIndex);
         setText(columnText);
         setSearchTextType(searchType);
-    }
-
-    protected XPathBuilder createXPathBuilder() {
-        return new XPathBuilder() {
-            @Override
-            protected String addPositionToPath(String itemPath) {
-                if (hasPosition()) {
-                    int beginIndex = 2 + getTag().length();
-                    itemPath = getRoot() + getTag() + "[" + getPosition() + "]" + itemPath.substring(beginIndex);
-                }
-                return itemPath;
-            }
-        };
     }
 }

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table extends WebLocator implements ITable<TableRow, TableCell> {
+public class Table extends WebLocator implements ITable<Row, Cell> {
     private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
 
     private int timeout = 30;
@@ -32,19 +32,19 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     @Override
     public boolean rowSelect(String searchText, SearchType... searchType) {
         ready(true);
-        TableCell cell = getCell(searchText, searchType);
+        Cell cell = getCell(searchText, searchType);
         return doCellSelect(cell);
     }
 
-    private boolean doCellSelect(TableCell tableCell) {
-        return doCellAction(tableCell, null);
+    private boolean doCellSelect(Cell cell) {
+        return doCellAction(cell, null);
     }
 
-    private boolean doCellDoubleClickAt(TableCell tableCell) {
-        return doCellAction(tableCell, "doubleClickAt");
+    private boolean doCellDoubleClickAt(Cell cell) {
+        return doCellAction(cell, "doubleClickAt");
     }
 
-    private boolean doCellAction(WebLocator cell, String action) {
+    private boolean doCellAction(Cell cell, String action) {
         boolean selected;
         if ("doubleClickAt".equals(action)) {
             selected = cell.doubleClickAt();
@@ -71,17 +71,14 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
      */
     public boolean isRowPresent(String searchElement) {
         ready();
-        boolean found;
-        WebLocator cell = getCell(searchElement);
-        found = cell.isElementPresent();
-        return found;
+        Cell cell = getCell(searchElement);
+        return cell.isElementPresent();
     }
 
     public Number getRowCount(String searchElement, SearchType searchType) {
         ready();
-        String rowPath = getCell(searchElement, searchType).getXPath();
-        WebLocator locator = new WebLocator().setElPath(rowPath);
-        return locator.size();
+        Cell cell = getCell(searchElement, searchType);
+        return cell.size();
     }
 
     public Number getRowCount(String searchElement) {
@@ -92,7 +89,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     public int getCount() {
         if (ready()) {
             WebLocator body = new WebLocator(this).setTag("tbody");
-            return new TableRow(body).size();
+            return new Row(body).size();
         } else {
             LOGGER.warn("table is not ready to be used");
             // TODO could try to verify row count with mask on table or when is disabled also.
@@ -100,17 +97,38 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
         }
     }
 
+    /**
+     * @deprecated use {@link #getRow(int)}
+     */
     @Override
     public TableRow getRowLocator(int rowIndex) {
         return new TableRow(this, rowIndex).setInfoMessage("row - Table");
     }
 
+    public Row getRow(int rowIndex) {
+        return new Row(this, rowIndex).setInfoMessage("row - Table");
+    }
+
+    /**
+     * @deprecated use {@link #getRow(String)}
+     */
     public TableRow getTableRow(String searchElement) {
         return new TableRow(this, searchElement, SearchType.EQUALS);
     }
 
+    public Row getRow(String searchElement) {
+        return new Row(this, searchElement, SearchType.EQUALS);
+    }
+
+    /**
+     * @deprecated use {@link #getRow(String, SearchType)}
+     */
     public TableRow getTableRow(String searchElement, SearchType searchType) {
         return new TableRow(this, searchElement, searchType);
+    }
+
+    public Row getRow(String searchElement, SearchType searchType) {
+        return new Row(this, searchElement, searchType);
     }
 
     @Override
@@ -126,42 +144,94 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
 
     @Override
     public TableCell getCell(String searchElement, SearchType ...searchType) {
-        WebLocator row = new WebLocator(this).setTag("tr");
+        Row row = new Row(this);
         return new TableCell(row).setText(searchElement, searchType);
     }
 
+    /**
+     * @deprecated use {@link #getCell(int, int, String)}
+     */
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
         Row row = getRowLocator(rowIndex);
-        String selector = new WebLocator().setText(text, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE_OR_SELF).setTag("td").getXPath();
+        String selector = new Cell().setText(text, SearchType.EQUALS).getXPath();
         return new TableCell(row).setElPath(selector + "[" + columnIndex + "]");
     }
 
+    public Cell getCell(int rowIndex, int columnIndex, String text) {
+        Row row = getRowLocator(rowIndex);
+        String selector = new Cell().setText(text, SearchType.EQUALS).getXPath();
+        return new Cell(row).setElPath(selector + "[" + columnIndex + "]");
+    }
+
+    /**
+     * @deprecated use {@link #getCell(String, String, SearchType)}
+     */
     public TableCell getTableCell(String searchElement, String columnText, SearchType searchType) {
-        TableRow tableRow = getTableRow(searchElement, SearchType.CONTAINS);
-        return new TableCell(tableRow).setText(columnText, searchType);
+        Row row = getTableRow(searchElement, SearchType.CONTAINS);
+        return new TableCell(row).setText(columnText, searchType);
     }
 
+    public Cell getCell(String searchElement, String columnText, SearchType searchType) {
+        Row row = getTableRow(searchElement, SearchType.CONTAINS);
+        return new Cell(row).setText(columnText, searchType);
+    }
+
+    /**
+     * @deprecated use {@link #getCell(String, int, SearchType)}
+     */
     public TableCell getTableCell(String searchElement, int columnIndex, SearchType searchType) {
-        return new TableCell(new TableRow(this, searchElement, searchType), columnIndex);
+        return new TableCell(new Row(this, searchElement, searchType), columnIndex);
     }
 
-    @Override
+    public Cell getCell(String searchElement, int columnIndex, SearchType searchType) {
+        return new Cell(new Row(this, searchElement, searchType), columnIndex);
+    }
+
+    /**
+     * @deprecated use {@link #getRow(Cell...)}
+     */
     public TableRow getRow(TableCell... byCells) {
         return new TableRow(this, byCells).setInfoMessage("-TableRow");
     }
 
+    @Override
+    public Row getRow(Cell... byCells) {
+        return new Row(this, byCells).setInfoMessage("-Row");
+    }
+
+    /**
+     * @deprecated use {@link #getRow(int, Cell...)}
+     */
     public TableRow getRow(int indexRow, TableCell... byCells) {
         return new TableRow(this, indexRow, byCells).setInfoMessage("-TableRow");
     }
 
-    @Override
+    public Row getRow(int indexRow, Cell... byCells) {
+        return new Row(this, indexRow, byCells).setInfoMessage("-Row");
+    }
+
+    /**
+     * @deprecated use {@link #getCell(int, Cell...)}
+     */
     public TableCell getCell(int columnIndex, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex);
     }
 
     @Override
+    public Cell getCell(int columnIndex, Cell... byCells) {
+        return new Cell(getRow(byCells), columnIndex);
+    }
+
+    /**
+     * @deprecated use {@link #getCell(int, String, Cell...)}
+     */
     public TableCell getCell(int columnIndex, String text, TableCell... byCells) {
         return new TableCell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
+    }
+
+    @Override
+    public Cell getCell(int columnIndex, String text, Cell... byCells) {
+        return new Cell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
     }
 
     /**
@@ -172,9 +242,9 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
      * @deprecated //TODO fix it
      */
 
-    public String[] getRow(String searchText) {
+    public String[] getRowText(String searchText) {
         String[] rowElements = null;
-        String text = getTableRow(searchText).getHtmlText();
+        String text = getRow(searchText).getHtmlText();
         if (text != null) {
             rowElements = text.split("\n");
         }
@@ -202,16 +272,16 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
 
     public List<List<String>> getCellsText() {
         WebLocator parentEl = new WebLocator(this).setTag("tbody");
-        WebLocator rowsEl = new WebLocator(parentEl).setTag("tr");
-        WebLocator rowEl = new WebLocator(parentEl).setTag("tr").setPosition(1);
-        WebLocator columnsEl = new WebLocator(rowEl).setTag("td");
+        Row rowsEl = new Row(parentEl);
+        Row rowEl = new Row(parentEl, 1);
+        Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size() + 1;
         int columns = columnsEl.size() + 1;
 
         if (rows > 0) {
-            List<List<String>> listOfList = new ArrayList<List<String>>();
+            List<List<String>> listOfList = new ArrayList<>();
             for (int i = 1; i < rows; i++) {
-                List<String> list = new ArrayList<String>();
+                List<String> list = new ArrayList<>();
                 for (int j = 1; j < columns; j++) {
                     list.add(getCell(i, j).getHtmlText());
                 }
@@ -225,9 +295,9 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
 
     public String getText(String searchText, int columnId) {
         String text = null;
-        TableRow tableRow = new TableRow(this, searchText, SearchType.EQUALS);
-        if (tableRow.ready()) {
-            text = new TableCell(tableRow, columnId).getHtmlText();
+        Row row = new Row(this, searchText, SearchType.EQUALS);
+        if (row.ready()) {
+            text = new Cell(row, columnId).getHtmlText();
         } else {
             LOGGER.warn("searchText was not found in table: " + searchText);
         }
@@ -282,7 +352,7 @@ public class Table extends WebLocator implements ITable<TableRow, TableCell> {
     }
 
     public boolean waitToPopulate(int seconds) {
-        Row row = getRowLocator(1).setVisibility(true).setInfoMessage("first row");
+        Row row = getRow(1).setVisibility(true).setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
         row.setContainer(body);
         return row.waitToRender(seconds * 1000L);

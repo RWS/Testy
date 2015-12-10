@@ -2,12 +2,12 @@ package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.Cell;
-import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.table.AbstractCell;
+import com.sdl.selenium.web.table.AbstractRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GridRow extends Row {
+public class GridRow extends AbstractRow {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridRow.class);
 
     public GridRow() {
@@ -43,7 +43,7 @@ public class GridRow extends Row {
         setElPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 
-    public GridRow(GridPanel gridPanel, Cell... cells) {
+    public GridRow(GridPanel gridPanel, AbstractCell... cells) {
         this(gridPanel);
         setTag("*");
         setChildNodes(cells);

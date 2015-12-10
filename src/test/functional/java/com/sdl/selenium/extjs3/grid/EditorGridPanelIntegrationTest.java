@@ -62,7 +62,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
         editorGridPanel.setRowValue(1, 1, "WebLocator Company");
         editorGridPanel.setRowValue(1, 2, "TestTest");
         editorGridPanel.setRowValue(1, 3, "Sun or Shade");
-        String[] texRow = editorGridPanel.getRow(1);
+        String[] texRow = editorGridPanel.getRowText(1);
         List<String> optionList = Arrays.asList(texRow);
         assertTrue(optionList.containsAll(Arrays.asList("WebLocator Company", "TestTest", "Sun or Shade")));
     }

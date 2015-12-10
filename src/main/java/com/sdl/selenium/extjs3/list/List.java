@@ -76,8 +76,15 @@ public class List extends GridPanel {
         return cell.select();
     }
 
-    @Override
+    /**
+     * @deprecated use {@link #getRow(int)}
+     */
     public GridRow getRowLocator(int rowIndex) {
+        return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
+    }
+
+    @Override
+    public GridRow getRow(int rowIndex) {
         return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
     }
 }

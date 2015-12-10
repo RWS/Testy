@@ -3,7 +3,7 @@ package com.sdl.selenium.web.table;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.SearchType;
 
-public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
+public interface ITable <R extends AbstractRow, C extends AbstractCell> extends IWebLocator {
 
     /**
      * selects (clicks) on a table which contains a certain element
@@ -29,9 +29,12 @@ public interface ITable <R extends Row, C extends Cell> extends IWebLocator {
     /**
      * TODO rename in getRow
      * @param rowIndex rowIndex
+     * @deprecated use {@link #getRow(int)}
      * @return R
      */
     R getRowLocator(int rowIndex);
+
+    R getRow(int rowIndex);
 
     R getRow(C... byCells);
 

@@ -57,8 +57,8 @@
 
             <class name="com.sdl.selenium.web.link.WebLinkTest"/>
 
-            <class name="com.sdl.selenium.web.table.TableCellTest"/>
-            <class name="com.sdl.selenium.web.table.TableRowTest"/>
+            <class name="com.sdl.selenium.web.table.CellTest"/>
+            <class name="com.sdl.selenium.web.table.RowTest"/>
             <class name="com.sdl.selenium.web.table.TableTest"/>
             <class name="com.sdl.selenium.web.WebLocatorTest"/>
             <class name="com.sdl.selenium.web.WebLocatorCssTest"/>

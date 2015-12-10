@@ -30,6 +30,8 @@ public interface IWebLocator {
 
     boolean ready(int seconds);
 
+    String getXPath();
+
     <T extends WebLocatorAbstractBuilder> T setRoot(final String root);
 
     <T extends WebLocatorAbstractBuilder> T setTag(final String tag);

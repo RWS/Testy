@@ -3,11 +3,11 @@ package com.sdl.selenium.extjs3.grid;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
-import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.AbstractCell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GridCell extends Cell {
+public class GridCell extends AbstractCell {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridCell.class);
 
     public GridCell() {
