@@ -3,7 +3,7 @@ package com.sdl.selenium.web.table;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 /**
- * @deprecated use {@link Row()}
+ * @deprecated use {@link Row}
  */
 public class TableRow extends Row {
 
