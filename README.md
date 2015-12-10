@@ -137,6 +137,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - add weblocator.log.suggestions=false default
 - add elCssSelector
 - if setVisibility on WebLocator, wait visibilityOfElementLocated
+- TableCell and TableRow make deprecated
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true
