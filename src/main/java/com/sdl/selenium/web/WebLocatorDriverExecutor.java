@@ -400,7 +400,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             LOGGER.debug("\t" + WebLocatorUtils.getFirebugXPath(el));
         }
         if (WebLocatorConfig.isLogSuggestions()) {
-            WebLocatorSuggestions.getElementSuggestion(el);
+            WebLocatorSuggestions.getSuggestion(el);
         }
     }
 

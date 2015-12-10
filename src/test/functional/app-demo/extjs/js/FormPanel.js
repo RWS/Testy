@@ -74,11 +74,12 @@ Ext.onReady(function(){
 
     simple.render(document.body);
 
+    // TODO find what is the reason for this test
     setInterval( function (){
         var stressButton = Ext.get('stress');
         if(stressButton){
             stressButton.hide();
-            console.log("test");
+            console.debug("test");
         } else {
              stressButton.show();
         }

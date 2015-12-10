@@ -33,6 +33,7 @@ public class Utils {
         }
     }
 
+    @Deprecated
     public static void conditionalSleep(int maxSeconds, boolean condition) {
         int count = 0;
         while ((count < maxSeconds) && !condition) {
