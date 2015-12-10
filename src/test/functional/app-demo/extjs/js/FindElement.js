@@ -31,28 +31,43 @@ Ext.onReady(function(){
 
     var timeOutField;
     var simple = new Ext.form.FormPanel({
-           frame: true,
-           title: 'Find Elements after Timeout',
-           bodyStyle:'padding:5px 5px 0',
-           width: 350,
-           items: [
-                timeOutField = new Ext.form.NumberField({
-                    fieldLabel : 'Timeout',
-                    value: 3000
-                })
-           ],
-           buttons: [
-               {
-                   text: 'Show',
-                   handler: function(){
-                        setTimeout(function(){
-                             Ext.MessageBox.alert('Message', 'Timeout element in ' + timeOutField.getValue());
-                         },  timeOutField.getValue());
-                   }
-               }
-           ]
-       });
-       simple.render(document.body);
+        frame: true,
+        title: 'Find Elements after Timeout',
+        bodyStyle: 'padding:5px 5px 0',
+        width: 350,
+        items: [
+            timeOutField = new Ext.form.NumberField({
+                fieldLabel: 'Timeout',
+                value: 3000
+            })
+        ],
+        buttons: [
+            {
+                text: 'Show',
+                handler: function () {
+                    setTimeout(function () {
+                        Ext.MessageBox.alert('Message', 'Timeout element in ' + timeOutField.getValue());
+                    }, timeOutField.getValue());
+                }
+            }, {
+                text: 'Show Hidden Button',
+                handler: function () {
+                    setTimeout(function () {
+                        Ext.getCmp('hiddenButton').show();
+                    }, timeOutField.getValue());
+                }
+            },
+            {
+                text: 'Hidden Button',
+                id: 'hiddenButton',
+                hidden: true,
+                handler: function() {
+                    Ext.MessageBox.alert('Message', 'Hidden Button was clicked');
+                }
+            }
+        ]
+    });
+    simple.render(document.body);
 
        var simple1 = new Ext.form.FormPanel({
            frame: true,

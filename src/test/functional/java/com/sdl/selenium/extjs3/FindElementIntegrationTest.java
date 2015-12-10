@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.bootstrap.button.DownloadFile;
 import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.conditions.ConditionManager;
@@ -11,9 +12,11 @@ import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.TestBase;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;
@@ -22,15 +25,23 @@ import static org.testng.Assert.assertTrue;
 public class FindElementIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(FindElementIntegrationTest.class);
     
-    Window elementWindow = new Window("Element");
-    Button alertButton = new Button(elementWindow, "Alert");
-    Button closeButton = new Button(elementWindow, "Close");
-    Button findElementButton = new Button(null, "FindElement");
-    Panel findElementsAfterTimeoutFormPanel = new Panel("Find Elements after Timeout");
-    TextField timeOutTextField = new TextField(findElementsAfterTimeoutFormPanel, "Timeout:");
-    Button showButton = new Button(findElementsAfterTimeoutFormPanel, "Show");
-    Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").setRenderMillis(200);
-    
+    private Window elementWindow = new Window("Element");
+    private Button alertButton = new Button(elementWindow, "Alert");
+    private Button closeButton = new Button(elementWindow, "Close");
+    private Button findElementButton = new Button(null, "FindElement");
+    private Panel findElementsAfterTimeoutFormPanel = new Panel("Find Elements after Timeout");
+    private TextField timeOutTextField = new TextField(findElementsAfterTimeoutFormPanel, "Timeout:");
+    private Button showButton = new Button(findElementsAfterTimeoutFormPanel, "Show");
+    private Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").setRenderMillis(200);
+    private Button showHiddenButton = new Button(findElementsAfterTimeoutFormPanel, "Show Hidden Button");
+    private WebLocator hiddenElVisible = new WebLocator().setId("hiddenButton").setVisibility(true);
+    private WebLocator hiddenElNotVisible = new WebLocator().setId("hiddenButton");
+
+    @BeforeClass
+    public void startTests() {
+        driver.get(InputData.EXTJS_URL);
+    }
+
     @Test
     public void clickExtreme() {
         findElementButton.click();
@@ -95,5 +106,21 @@ public class FindElementIntegrationTest extends TestBase {
 //        assertFalse(hasStatus("disabled", el));
 //        assertTrue(hasStatus("enabled", el));
 //        assertFalse(hasStatus("test", el));
+    }
+
+    @Test (expectedExceptions = ElementNotVisibleException.class)
+    public void whenClickOnNotVisibleElIGetError() {
+        showHiddenButton.click();
+        hiddenElNotVisible.click();
+    }
+
+    @Test (dependsOnMethods = "whenClickOnNotVisibleElIGetError")
+    public void whenClickLocatorWithVisibleAttributeIWaitUntilDisplayed() {
+        showHiddenButton.click();
+        hiddenElVisible.click();
+        ConditionManager conditionManager = new ConditionManager();
+        conditionManager.add(new MessageBoxSuccessCondition("Hidden Button was clicked"));
+        assertTrue(conditionManager.execute().isSuccess());
+        MessageBox.pressOK();
     }
 }

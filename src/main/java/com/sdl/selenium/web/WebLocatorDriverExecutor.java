@@ -11,6 +11,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -407,11 +408,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         WebDriverWait wait = new WebDriverWait(driver, 0, 100);
         wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
         try {
-            el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
-                public WebElement apply(WebDriver driver1) {
-                    return driver.findElement(el.getSelector());
-                }
-            });
+            if(el.getPathBuilder().isVisibility()) {
+                el.currentElement = wait.until(ExpectedConditions.visibilityOfElementLocated(el.getSelector()));
+            } else {
+                el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
+                    public WebElement apply(WebDriver driver1) {
+                        return driver.findElement(el.getSelector());
+                    }
+                });
+            }
         } catch (TimeoutException e) {
             el.currentElement = null;
         }
