@@ -134,6 +134,9 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 ## Release Notes
 
 **Release Notes for Testy 2.0.0-SNAPSHOT**
+- add weblocator.log.suggestions=false default
+- add elCssSelector
+- if setVisibility on WebLocator, wait visibilityOfElementLocated
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true
