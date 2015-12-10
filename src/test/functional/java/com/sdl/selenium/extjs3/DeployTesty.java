@@ -15,9 +15,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
 import com.sdl.selenium.web.link.WebLink;
-import com.sdl.selenium.web.table.Table;
-import com.sdl.selenium.web.table.TableCell;
-import com.sdl.selenium.web.table.TableRow;
+import com.sdl.selenium.web.table.*;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.selenium.TestBase;
 import org.apache.commons.io.FileUtils;
@@ -54,7 +52,7 @@ public class DeployTesty extends TestBase {
     private WebLocator table = new WebLocator().setId("tasks");
     private WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
     private Table buildHistory = new Table().setClasses("pane", "stripped");
-    private TableRow buildNowEl = new TableRow(buildHistory).setClasses("build-row", "transitive");
+    private Row buildNowEl = new Row(buildHistory).setClasses("build-row", "transitive");
 
     private WebLocator logInNexus = new WebLocator().setId("head-link-r");
     private Window nexusLogInWindow = new Window("Nexus Log In");
@@ -66,7 +64,7 @@ public class DeployTesty extends TestBase {
     private TabPanel browseStorage = new TabPanel(viewRepositories, "Browse Storage");
     private Table table1 = new Table(browseStorage).setCls("x-toolbar-ct");
     private WebLocator testyDir = new WebLocator().setElPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
-    private TableCell tableCell = table1.getCell(4, new TableCell(3, "Path Lookup:", SearchType.EQUALS));
+    private Cell tableCell = table1.getCell(4, new Cell(3, "Path Lookup:", SearchType.EQUALS));
     private com.sdl.selenium.extjs3.form.TextField searchField = new com.sdl.selenium.extjs3.form.TextField(tableCell);
     private WebLocator menuList = new WebLocator().setClasses("x-menu").setExcludeClasses("x-hide-offsets");
     private WebLocator deleteEl = new WebLocator(menuList).setClasses("x-menu-item-text").setText("Delete");
