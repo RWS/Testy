@@ -32,6 +32,22 @@ public class ButtonIntegrationTest extends TestBase {
     private Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
     private Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
 
+    private Button dontAcceptButton4 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton5 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton6 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+
+    private Button dontAcceptButton7 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton8 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton9 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+
+    private Button dontAcceptButton10 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton11 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton12 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+
+    private Button dontAcceptButton13 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton14 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton15 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+
     private Window buttonsWindow = new Window("Buttons Window");
     private SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
 
@@ -64,6 +80,18 @@ public class ButtonIntegrationTest extends TestBase {
         assertThat(dontAcceptButton1.isElementPresent(), is(true));
         assertThat(dontAcceptButton2.isElementPresent(), is(true));
         assertThat(dontAcceptButton3.isElementPresent(), is(true));
+        assertThat(dontAcceptButton4.isElementPresent(), is(true));
+        assertThat(dontAcceptButton5.isElementPresent(), is(true));
+        assertThat(dontAcceptButton6.isElementPresent(), is(true));
+        assertThat(dontAcceptButton7.isElementPresent(), is(true));
+        assertThat(dontAcceptButton8.isElementPresent(), is(true));
+        assertThat(dontAcceptButton9.isElementPresent(), is(true));
+        assertThat(dontAcceptButton10.isElementPresent(), is(true));
+        assertThat(dontAcceptButton11.isElementPresent(), is(true));
+        assertThat(dontAcceptButton12.isElementPresent(), is(true));
+        assertThat(dontAcceptButton13.isElementPresent(), is(true));
+        assertThat(dontAcceptButton14.isElementPresent(), is(true));
+        assertThat(dontAcceptButton15.isElementPresent(), is(true));
     }
 
     @DataProvider

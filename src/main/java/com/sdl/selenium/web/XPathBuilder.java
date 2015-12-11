@@ -1080,6 +1080,10 @@ public class XPathBuilder implements Cloneable {
         if (searchType.contains(SearchType.TRIM)) {
             pathText = "normalize-space(" + pathText + ")";
         }
+        if (searchType.contains(SearchType.CASE_INSENSITIVE)) {
+            pathText = "translate(" + pathText + "," + text.toUpperCase().replaceAll("CONCAT", "concat") + "," + text.toLowerCase() + ")";
+            text = text.toLowerCase();
+        }
 
         if (searchType.contains(SearchType.EQUALS)) {
             selector = pathText + "=" + text;
@@ -1351,7 +1355,7 @@ public class XPathBuilder implements Cloneable {
         builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
         WebLocator titleTplEl = templateTitle.get("title");
         if (titleTplEl != null) {
-            XPathBuilder titleTplElBuilder = (XPathBuilder)titleTplEl.getPathBuilder().clone();
+            XPathBuilder titleTplElBuilder = (XPathBuilder) titleTplEl.getPathBuilder().clone();
             WebLocator titleTplElCloned = new WebLocator().setPathBuilder(titleTplElBuilder);
             builder.templateTitle.put("title", titleTplElCloned);
         }

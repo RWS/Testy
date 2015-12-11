@@ -44,6 +44,20 @@ public enum SearchType {
     TRIM,
 
     /**
+     * will use : translate on text()
+     * * <pre>{@code
+     * <div class="btn">CANCEL</div>
+     * }</pre>
+     * <p>so must be used like:</p>
+     * <pre>{@code
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("cancel", SearchType.CASE_INSENSITIVE);
+     * }</pre>
+     */
+    CASE_INSENSITIVE,
+
+//    CASE_SENSITIVE,
+
+    /**
      * will not use : normalize-spaces on text()
      */
 //    NO_TRIM,
