@@ -167,12 +167,12 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
      * @deprecated use {@link #getCell(String, String, SearchType)}
      */
     public TableCell getTableCell(String searchElement, String columnText, SearchType searchType) {
-        Row row = getTableRow(searchElement, SearchType.CONTAINS);
+        Row row = getRow(searchElement, SearchType.CONTAINS);
         return new TableCell(row).setText(columnText, searchType);
     }
 
     public Cell getCell(String searchElement, String columnText, SearchType searchType) {
-        Row row = getTableRow(searchElement, SearchType.CONTAINS);
+        Row row = getRow(searchElement, SearchType.CONTAINS);
         return new Cell(row).setText(columnText, searchType);
     }
 
@@ -328,7 +328,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     public boolean checkboxColumnSelect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
+            CheckBox checkBox = new CheckBox().setContainer(getCell(searchText, columnIndex, searchType));
             selected = checkBox.isSelected() || checkBox.click();
         }
         return selected;
@@ -341,7 +341,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     public boolean checkboxColumnDeselect(String searchText, int columnIndex, SearchType searchType) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().setContainer(getTableCell(searchText, columnIndex, searchType));
+            CheckBox checkBox = new CheckBox().setContainer(getCell(searchText, columnIndex, searchType));
             selected = !checkBox.isSelected() || checkBox.click();
         }
         return selected;
