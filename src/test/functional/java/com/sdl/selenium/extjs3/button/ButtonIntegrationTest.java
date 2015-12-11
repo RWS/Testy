@@ -48,6 +48,11 @@ public class ButtonIntegrationTest extends TestBase {
     private Button dontAcceptButton14 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
     private Button dontAcceptButton15 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
 
+    private Button dontAcceptButton16 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton17 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton18 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton19 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.TRIM);
+
     private Window buttonsWindow = new Window("Buttons Window");
     private SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
 
@@ -92,6 +97,10 @@ public class ButtonIntegrationTest extends TestBase {
         assertThat(dontAcceptButton13.isElementPresent(), is(true));
         assertThat(dontAcceptButton14.isElementPresent(), is(true));
         assertThat(dontAcceptButton15.isElementPresent(), is(true));
+        assertThat(dontAcceptButton16.isElementPresent(), is(true));
+        assertThat(dontAcceptButton17.isElementPresent(), is(true));
+        assertThat(dontAcceptButton18.isElementPresent(), is(true));
+        assertThat(dontAcceptButton19.isElementPresent(), is(true));
     }
 
     @DataProvider
