@@ -368,7 +368,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
             //TODO Try better search mecanism
             while (rowIndex <= rowCount) {
-                GridRow row = getRowLocator(rowIndex);
+                GridRow row = getRow(rowIndex);
                 String cls = row.getAttributeClass();
                 if (cls != null && cls.contains("x-grid3-row-selected")) {
                     index = rowIndex;
@@ -451,7 +451,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     @Override
     public GridCell getCell(int rowIndex, int columnIndex) {
-        AbstractRow row = getRowLocator(rowIndex);
+        AbstractRow row = getRow(rowIndex);
         return new GridCell(columnIndex).setContainer(row);
     }
 
@@ -471,11 +471,11 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public GridCell getGridCell(int rowIndex) {
         String rowPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[contains(@class, 'x-grid3-cell-inner')]";
-        return new GridCell().setContainer(getRowLocator(rowIndex)).setElPath(rowPath);
+        return new GridCell().setContainer(getRow(rowIndex)).setElPath(rowPath);
     }
 
     public GridCell getGridCell(int rowIndex, int columnIndex, String text) {
-        GridRow gridRow = getRowLocator(rowIndex);
+        GridRow gridRow = getRow(rowIndex);
         return getGridCellWithText(gridRow, columnIndex, text, SearchType.CONTAINS);
     }
 
@@ -532,7 +532,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public String[] getRowText(int rowIndex) {
         String[] rowElements = null;
         if (rowIndex != -1) {
-            IRow row = getRowLocator(rowIndex);
+            IRow row = getRow(rowIndex);
             String text = row.getHtmlText();
             if (text != null) {
                 rowElements = text.split("\n");
@@ -625,7 +625,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (ready(true)) {
             String path;
             if (rowIndex != -1) {
-                GridRow gridRow = getRowLocator(rowIndex);
+                GridRow gridRow = getRow(rowIndex);
                 String cls = gridRow.getAttributeClass();
                 boolean isSelected = cls != null && cls.contains("x-grid3-row-selected");
                 path = "//*[contains(@class, 'x-grid3-row-checker')]";
@@ -781,7 +781,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             String path;
             int rowIndex = getRowIndex(searchText);
             if (rowIndex != -1) {
-                path = getRowLocator(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col')]";
+                path = getRow(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col')]";
                 WebLocator element = new WebLocator().setElPath(path);
                 if (element.exists()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
@@ -806,7 +806,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (ready(true)) {
             int rowIndex = getRowIndex(searchText);
             if (rowIndex != -1) {
-                String path = getRowLocator(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
+                String path = getRow(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
                 WebLocator locator = new WebLocator().setElPath(path);
                 isSelected = locator.exists();
             }
@@ -820,7 +820,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public boolean waitToPopulate(int seconds) {
         //LOGGER.debug("waitToPopulate: " + seconds + "; " + toString());
-        WebLocator firstRow = getRowLocator(1).setInfoMessage("first row");
+        WebLocator firstRow = getRow(1).setInfoMessage("first row");
         return firstRow.waitToRender(seconds * 1000);
     }
 

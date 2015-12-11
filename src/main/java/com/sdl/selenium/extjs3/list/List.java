@@ -80,7 +80,7 @@ public class List extends GridPanel {
      * @deprecated use {@link #getRow(int)}
      */
     public GridRow getRowLocator(int rowIndex) {
-        return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
+        return getRow(rowIndex);
     }
 
     @Override

@@ -133,7 +133,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     @Override
     public TableCell getCell(int rowIndex, int columnIndex) {
-        Row row = getRowLocator(rowIndex);
+        Row row = getRow(rowIndex);
         return new TableCell(row, columnIndex).setInfoMessage("cell - Table");
     }
 
@@ -152,13 +152,13 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
      * @deprecated use {@link #getCell(int, int, String)}
      */
     public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
-        Row row = getRowLocator(rowIndex);
+        Row row = getRow(rowIndex);
         String selector = new Cell().setText(text, SearchType.EQUALS).getXPath();
         return new TableCell(row).setElPath(selector + "[" + columnIndex + "]");
     }
 
     public Cell getCell(int rowIndex, int columnIndex, String text) {
-        Row row = getRowLocator(rowIndex);
+        Row row = getRow(rowIndex);
         String selector = new Cell().setText(text, SearchType.EQUALS).getXPath();
         return new Cell(row).setElPath(selector + "[" + columnIndex + "]");
     }
