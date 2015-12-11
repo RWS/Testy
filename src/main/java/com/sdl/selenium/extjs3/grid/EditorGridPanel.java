@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.grid;
 import com.sdl.selenium.extjs3.form.ComboBox;
 import com.sdl.selenium.extjs3.form.TextArea;
 import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
@@ -102,7 +103,7 @@ public class EditorGridPanel extends GridPanel {
 
     public boolean startEdit(String searchElement, int colIndex) {
         LOGGER.debug("startEdit(" + searchElement + ", " + colIndex + ")");
-        GridCell cell = getGridCell(searchElement, colIndex);
+        GridCell cell = getCell(colIndex, new GridCell(searchElement, SearchType.EQUALS));
         return prepareEdit(cell);
     }
 

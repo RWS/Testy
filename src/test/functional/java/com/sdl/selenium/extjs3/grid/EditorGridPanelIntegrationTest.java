@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.grid;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs3.button.Button;
@@ -10,10 +11,7 @@ import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.selenium.TestBase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +31,11 @@ public class EditorGridPanelIntegrationTest extends TestBase {
                 {2, TextArea.class},
                 {3, ComboBox.class}
         };
+    }
+
+    @BeforeClass
+    public void startTest() {
+        driver.get(InputData.EXTJS_URL);
     }
 
     @BeforeMethod

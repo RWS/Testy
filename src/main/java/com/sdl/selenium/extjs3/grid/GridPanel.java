@@ -493,16 +493,16 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridCell(gridColTd, columnText, searchType);
     }
 
-    /**
-     * @param searchElement element
-     * @param columnIndex   element
-     * @return new GridCell
-     * @deprecated use getCell(...);
-     */
-    protected GridCell getGridCell(String searchElement, int columnIndex) {
-        GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);
-        return new GridCell(columnIndex).setContainer(gridRow);
-    }
+//    /**
+//     * @param searchElement element
+//     * @param columnIndex   element
+//     * @return new GridCell
+//     * @deprecated use getCell(...);
+//     */
+//    protected GridCell getGridCell(String searchElement, int columnIndex) {
+//        GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);
+//        return new GridCell(columnIndex).setContainer(gridRow);
+//    }
 
     public GridCell getGridCell(String searchElement, String searchColumnId, int columnIndex) {
         GridRow gridRow = new GridRow(this, searchColumnId, searchElement, SearchType.CONTAINS);
@@ -583,7 +583,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public String getText(String searchText, int columnId) {
         String text = null;
-        GridCell cell = getGridCell(searchText, columnId);
+        GridCell cell = getCell(columnId, new GridCell(searchText, SearchType.EQUALS));
         if (this.ready(true) && cell.ready()) {
             text = cell.getHtmlText();
         } else {
