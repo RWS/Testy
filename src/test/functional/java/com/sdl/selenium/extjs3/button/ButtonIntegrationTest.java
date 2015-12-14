@@ -31,6 +31,7 @@ public class ButtonIntegrationTest extends TestBase {
     private Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
     private Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
     private Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
+    private Button dontAcceptItButton = new Button(panel, "Don't do \"it\" :)");
 
     private Button dontAcceptButton4 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE);
     private Button dontAcceptButton5 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
@@ -85,6 +86,7 @@ public class ButtonIntegrationTest extends TestBase {
         assertThat(dontAcceptButton1.isElementPresent(), is(true));
         assertThat(dontAcceptButton2.isElementPresent(), is(true));
         assertThat(dontAcceptButton3.isElementPresent(), is(true));
+        assertThat(dontAcceptItButton.isElementPresent(), is(true));
         assertThat(dontAcceptButton4.isElementPresent(), is(true));
         assertThat(dontAcceptButton5.isElementPresent(), is(true));
         assertThat(dontAcceptButton6.isElementPresent(), is(true));

@@ -73,7 +73,7 @@ Ext.onReady(function(){
            frame: true,
            title: 'Find Elements when contains quotes',
            bodyStyle:'padding:5px 5px 0',
-           width: 450,
+           width: 500,
            buttons: [
                {
                    text: 'Don\'t Accept'
@@ -83,6 +83,8 @@ Ext.onReady(function(){
                    text: 'Don\'t do it "now" ok!'
                },{
                    text: 'Don\'"t Accept'
+               },{
+                   text: 'Don\'t do "it" :)'
                }
            ]
        });
