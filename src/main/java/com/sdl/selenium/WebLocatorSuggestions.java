@@ -139,8 +139,13 @@ public class WebLocatorSuggestions {
         }
 
         if(isSuggestAttributes()) {
-            return suggestAttributeSubsets(webLocator);
+            WebLocator locator = suggestAttributeSubsets(webLocator);
+            if(locator == null) {
+                LOGGER.debug("No suggestions found for {}", originalWebLocator);
+            }
+            return locator;
         } else {
+            LOGGER.debug("No suggestions found for {}", originalWebLocator);
             return null;
         }
     }

@@ -6,6 +6,9 @@ RELEASE NOTES
 - Add locator.setElCssSelector("#selector.element-css")
 - Improve ElementNotVisibleException when use locator.setVisibility(true) - wait.until(visibilityOfElementLocated).
 - Classes TableCell and TableRow made deprecated - use Cell & Row instead
+- public String[] gridPanel.getRow have been removed 
+- locator.isTextPresent made deprecated
+- locator.getPath made deprecated
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true

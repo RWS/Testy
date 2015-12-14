@@ -68,7 +68,6 @@ public class TextField extends ExtJsComponent implements ITextField {
         assertReady();
         boolean setted = executor.setValue(this, value);
         assertThat("Could not setValue on : " + this, setted);
-        LOGGER.info("setValue on {}", this);
         return true;
     }
 
@@ -76,10 +75,8 @@ public class TextField extends ExtJsComponent implements ITextField {
         boolean setted = false;
         if (ready()) {
             setted = executor.setValue(this, value);
-            if (setted) {
-                LOGGER.info("setValue on {}", this);
-            } else {
-                LOGGER.info("Could not setValue on {}", this);
+            if (!setted) {
+                LOGGER.warn("Could not setValue on {}", this);
             }
         } else {
             LOGGER.info("Element was not rendered {}", toString());
