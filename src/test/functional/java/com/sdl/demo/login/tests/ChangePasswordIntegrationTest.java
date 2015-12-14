@@ -29,9 +29,9 @@ public class ChangePasswordIntegrationTest extends TestBase {
 
         String message = changePasswordWindow.getStatusMessage();
 
-        assertThat(message, is("Your preview password is incorrect!"));
-
         changePasswordWindow.close();
+
+        assertThat(message, is("Your preview password is incorrect!"));
         //assertThat(message, is("Your password has been successfully changed."));
     }
 
