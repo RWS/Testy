@@ -139,6 +139,12 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - Add locator.setElCssSelector("#selector.element-css")
 - Improve ElementNotVisibleException when use locator.setVisibility(true) - wait.until(visibilityOfElementLocated).
 - Classes TableCell and TableRow made deprecated - use Cell & Row instead
+- public String[] gridPanel.getRow have been removed
+- locator.isTextPresent made deprecated
+- locator.getPath made deprecated
+- add addSearchTextType(SearchType... searchTextType)
+- add SearchType.CASE_INSENSITIVE and SearchType.CASE_SENSITIVE
+- add SearchType.NO_TRIM
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true

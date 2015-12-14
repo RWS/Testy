@@ -25,11 +25,11 @@ package com.sdl.selenium.web;
  */
 public enum SearchType {
 
-    EQUALS,
+    EQUALS("text"),
 
-    CONTAINS,
+    CONTAINS("text"),
 
-    STARTS_WITH,
+    STARTS_WITH("text"),
 
     /**
      * will use : normalize-spaces on text()
@@ -41,7 +41,12 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.TRIM);
      * }</pre>
      */
-    TRIM,
+    TRIM("trim"),
+
+    /**
+     * will not use : normalize-spaces on text()
+     */
+    NO_TRIM("trim"),
 
     /**
      * will use : translate on text()
@@ -53,14 +58,14 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("cancel", SearchType.CASE_INSENSITIVE);
      * }</pre>
      */
-    CASE_INSENSITIVE,
-
-//    CASE_SENSITIVE,
+    CASE_INSENSITIVE("sensitive"),
 
     /**
-     * will not use : normalize-spaces on text()
+     * will not use : translate on text()
      */
-//    NO_TRIM,
+    CASE_SENSITIVE("sensitive"),
+
+
 
     //FIRST_CHILD_NODE,
 
@@ -85,7 +90,7 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.CHILD_NODE);
      * }</pre>
      */
-    CHILD_NODE,
+    CHILD_NODE("child"),
 
     /**
      * For finding elements that contain text (and text is not in any of direct childNodes in that element, but inside of them).
@@ -101,7 +106,7 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE);
      * }</pre>
      */
-    DEEP_CHILD_NODE,
+    DEEP_CHILD_NODE("child"),
 
     /**
      * For finding elements that contain text (and text is not in any of direct childNodes in that element, but inside of them or text is direct in that element).
@@ -120,7 +125,7 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF);
      * }</pre>
      */
-    DEEP_CHILD_NODE_OR_SELF,
+    DEEP_CHILD_NODE_OR_SELF("child"),
 
     /**
      * TODO add better documentation and working example
@@ -136,7 +141,7 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Get an instant Quote", SearchType.HTML_NODE);
      * }</pre>
      */
-    HTML_NODE,
+    HTML_NODE("child"),
 
     /**
      * <p>For finding elements that contain all text segments.</p>
@@ -151,7 +156,7 @@ public enum SearchType {
      *          .setText("&Cancel&Button", SearchType.CONTAINS_ALL);
      * }</pre>
      */
-    CONTAINS_ALL,
+    CONTAINS_ALL("advance"),
 
     /**
      * <p>For finding elements that contain all text segments.</p>
@@ -167,7 +172,7 @@ public enum SearchType {
      *          .setText("&Cancel&Button", SearchType.CONTAINS_ALL_CHILD_NODES);
      * }</pre>
      */
-    CONTAINS_ALL_CHILD_NODES,
+    CONTAINS_ALL_CHILD_NODES("advance"),
 
     /**
      * <p>For finding elements that contain any text segments.</p>
@@ -183,6 +188,15 @@ public enum SearchType {
      *      .setText("|Cancel|Button", SearchType.CONTAINS_ANY);
      * }</pre>
      */
-    CONTAINS_ANY
+    CONTAINS_ANY("advance");
 
+    private final String group;
+
+    SearchType(String category) {
+        this.group = category;
+    }
+
+    public String getGroup() {
+        return group;
+    }
 }

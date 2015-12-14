@@ -1,15 +1,13 @@
 package com.sdl.selenium.web;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SearchText {
 
     private String text;
-    private Set<SearchType> searchType = new HashSet<>();
+    private List<SearchType> searchType = new ArrayList<>();
 
-    public SearchText(String text, Set<SearchType> searchType) {
+    public SearchText(String text, List<SearchType> searchType) {
         this.text = text;
         this.searchType = searchType;
     }
@@ -27,7 +25,7 @@ public class SearchText {
         this.text = text;
     }
 
-    public Set<SearchType> getSearchType() {
+    public List<SearchType> getSearchType() {
         return searchType;
     }
 
@@ -41,5 +39,6 @@ public class SearchText {
         } else {
             this.searchType.addAll(new XPathBuilder().defaultSearchTextType);
         }
+        new XPathBuilder().cleanUpSearchType(this.searchType);
     }
 }

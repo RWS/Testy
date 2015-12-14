@@ -58,6 +58,10 @@ public class WebLocatorTest {
                 {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
 
+                {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(text(),'" + text + "')]"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
+
                 {new WebLocator().setClasses(cls).setText(text, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type')='weblocator text for search type']"},

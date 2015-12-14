@@ -6,9 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class WebLocatorConfig {
 
@@ -24,7 +22,7 @@ public class WebLocatorConfig {
     private static boolean logContainers;
     private static boolean highlight;
     private static boolean generateCssSelector;
-    private static Set<SearchType> searchTextType = new HashSet<SearchType>() {{
+    private static ArrayList<SearchType> searchTextType = new ArrayList<SearchType>() {{
         add(SearchType.CONTAINS);
     }};
     public static String defaultLabelPosition;
@@ -127,7 +125,7 @@ public class WebLocatorConfig {
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");
-            Set<SearchType> list = new HashSet<SearchType>();
+            ArrayList<SearchType> list = new ArrayList<>();
             for (String searchType : searchTypes) {
                 try {
                     list.add(SearchType.valueOf(searchType));
@@ -206,14 +204,14 @@ public class WebLocatorConfig {
     }
 
     @SuppressWarnings("unchecked")
-    public static Set<SearchType> getSearchTextType() {
-        return (Set<SearchType>) ((HashSet) searchTextType).clone();
+    public static List<SearchType> getSearchTextType() {
+        return (List<SearchType>) ((ArrayList) searchTextType).clone();
 //        ArrayList<SearchType> copyOfArrayList = new ArrayList<SearchType>();
 //        copyOfArrayList.addAll(searchTextType);
 //        return copyOfArrayList;
     }
 
-    public static void setSearchTextType(Set<SearchType> searchTextType) {
+    public static void setSearchTextType(ArrayList<SearchType> searchTextType) {
         WebLocatorConfig.searchTextType = searchTextType;
     }
 

@@ -9,6 +9,9 @@ RELEASE NOTES
 - public String[] gridPanel.getRow have been removed 
 - locator.isTextPresent made deprecated
 - locator.getPath made deprecated
+- add addSearchTextType(SearchType... searchTextType)
+- add SearchType.CASE_INSENSITIVE and SearchType.CASE_SENSITIVE
+- add SearchType.NO_TRIM
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true

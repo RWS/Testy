@@ -30,8 +30,8 @@ public class XPathBuilder implements Cloneable {
     private List<String> excludeClasses;
     private String name;
     private String text;
-    private Set<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
-    private Set<SearchType> searchTitleType = new HashSet<>();
+    private List<SearchType> searchTextType = WebLocatorConfig.getSearchTextType();
+    private List<SearchType> searchTitleType = new ArrayList<>();
     private List<SearchType> searchLabelType = new ArrayList<>();
     private String style;
     private String title;
@@ -336,7 +336,7 @@ public class XPathBuilder implements Cloneable {
      */
     public <T extends XPathBuilder> T setText(final String text, final SearchType... searchType) {
         this.text = text;
-//        notSuportedForCss(text, "text");
+//        notSupportedForCss(text, "text");
 //        if(text == null) {
 //            xpath.remove("text");
 //        } else {
@@ -346,6 +346,7 @@ public class XPathBuilder implements Cloneable {
             setSearchTextType(searchType);
         } else {
             this.searchTextType.addAll(defaultSearchTextType);
+            this.searchTextType = cleanUpSearchType(this.searchTextType);
         }
         return (T) this;
     }
@@ -355,12 +356,13 @@ public class XPathBuilder implements Cloneable {
      *
      * @return value that has been set in {@link #setSearchTextType(SearchType...)}
      */
-    public Set<SearchType> getSearchTextType() {
+    public List<SearchType> getSearchTextType() {
         return searchTextType;
     }
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * This method reset searchTextType and set to new searchTextType.
      *
      * @param searchTextType accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
@@ -370,12 +372,75 @@ public class XPathBuilder implements Cloneable {
         if (searchTextType == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new HashSet<>();
+            this.searchTextType = new ArrayList<>();
             Collections.addAll(this.searchTextType, searchTextType);
         }
         this.searchTextType.addAll(defaultSearchTextType);
+        this.searchTextType = cleanUpSearchType(this.searchTextType);
         return (T) this;
     }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * This method add new searchTextType to existing searchTextType.
+     *
+     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param <T>            the element which calls this method
+     * @return this element
+     */
+    public <T extends XPathBuilder> T addSearchTextType(SearchType... searchTextType) {
+        if (searchTextType != null) {
+            Collections.addAll(this.searchTextType, searchTextType);
+        }
+        this.searchTextType = cleanUpSearchType(this.searchTextType);
+        return (T) this;
+    }
+
+    protected List<SearchType> cleanUpSearchType(List<SearchType> searchTextTypes) {
+        Map<String, List<SearchType>> categories = getSearchTypesByGroups(searchTextTypes);
+
+        List<SearchType> result = new ArrayList<>();
+        for(Map.Entry<String, List<SearchType>> entry: categories.entrySet()) {
+            List<SearchType> searchTypes = entry.getValue();
+            if (searchTypes != null && !searchTypes.isEmpty()) {
+                SearchType searchType = searchTypes.get(searchTypes.size() - 1);
+                result.add(searchType);
+            }
+        }
+        return result;
+    }
+
+    private Map<String, List<SearchType>> getSearchTypesByGroups(List<SearchType> searchTextTypes) {
+        Map<String, List<SearchType>> groups = new HashMap<>();
+
+        for(SearchType searchType : searchTextTypes) {
+            if(groups.get(searchType.getGroup()) == null) {
+                groups.put(searchType.getGroup(), new ArrayList<SearchType>());
+            }
+            List<SearchType> group = groups.get(searchType.getGroup());
+            group.add(searchType);
+            groups.put(searchType.getGroup(), group);
+        }
+        return groups;
+    }
+
+    /*public static void main(String[] args) {
+        List<SearchType> searchTextType = new ArrayList<>();
+        searchTextType.add(SearchType.CASE_SENSITIVE);
+        searchTextType.add(SearchType.TRIM);
+        searchTextType.add(SearchType.CASE_INSENSITIVE);
+        searchTextType.remove(SearchType.CASE_INSENSITIVE);
+        searchTextType.remove(SearchType.TRIM);
+        searchTextType.add(SearchType.TRIM);
+        searchTextType.add(SearchType.CASE_INSENSITIVE);
+        searchTextType.add(SearchType.NO_TRIM);
+        searchTextType.add(SearchType.TRIM);
+        searchTextType.add(SearchType.EQUALS);
+        searchTextType.remove(SearchType.EQUALS);
+        searchTextType.add(SearchType.STARTS_WITH);
+        searchTextType.add(SearchType.CONTAINS);
+        LOGGER.debug(new XPathBuilder().cleanUpSearchType(searchTextType).toString());
+    }*/
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -398,6 +463,7 @@ public class XPathBuilder implements Cloneable {
         if (searchLabelType != null) {
             Collections.addAll(this.searchLabelType, searchLabelType);
         }
+        this.searchLabelType = cleanUpSearchType(this.searchLabelType);
         return (T) this;
     }
 
@@ -453,14 +519,15 @@ public class XPathBuilder implements Cloneable {
         if (searchTitleType == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTitleType = new HashSet<>();
+            this.searchTitleType = new ArrayList<>();
             Collections.addAll(this.searchTitleType, searchTitleType);
         }
         this.searchTitleType.addAll(defaultSearchTextType);
+        this.searchTitleType = cleanUpSearchType(this.searchTitleType);
         return (T) this;
     }
 
-    public Set<SearchType> getSearchTitleType() {
+    public List<SearchType> getSearchTitleType() {
         return searchTitleType;
     }
 
@@ -944,7 +1011,7 @@ public class XPathBuilder implements Cloneable {
         }
         if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                Set<SearchType> searchType = entry.getValue().getSearchType();
+                List<SearchType> searchType = entry.getValue().getSearchType();
                 boolean hasContainsAll = searchType.contains(SearchType.CONTAINS_ALL);
                 String text = getTextAfterEscapeQuotes(hasContainsAll, entry.getValue().getText(), searchType);
                 selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));
@@ -1075,13 +1142,13 @@ public class XPathBuilder implements Cloneable {
         return selector;
     }
 
-    private String getTextSearchTypePath(Set<SearchType> searchType, String text, boolean hasContainsAll, String pathText) {
+    private String getTextSearchTypePath(List<SearchType> searchType, String text, boolean hasContainsAll, String pathText) {
         String selector;
         if (searchType.contains(SearchType.TRIM)) {
             pathText = "normalize-space(" + pathText + ")";
         }
         if (searchType.contains(SearchType.CASE_INSENSITIVE)) {
-            pathText = "translate(" + pathText + "," + text.toUpperCase().replaceAll("CONCAT", "concat") + "," + text.toLowerCase() + ")";
+            pathText = "translate(" + pathText + "," + text.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + text.toLowerCase() + ")";
             text = text.toLowerCase();
         }
 
@@ -1109,7 +1176,7 @@ public class XPathBuilder implements Cloneable {
         return selector;
     }
 
-    private String getTextAfterEscapeQuotes(boolean hasContainsAll, String text, Set<SearchType> searchType) {
+    private String getTextAfterEscapeQuotes(boolean hasContainsAll, String text, List<SearchType> searchType) {
         if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
             return text;
         }

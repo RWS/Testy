@@ -184,6 +184,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * This method reset searchTextType and set to new searchTextType.
      *
      * @param searchTextType accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
@@ -191,6 +192,19 @@ public abstract class WebLocatorAbstractBuilder {
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
         pathBuilder.setSearchTextType(searchTextType);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * This method add new searchTextType to existing searchTextType.
+     *
+     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param <T>            the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T addSearchTextType(SearchType... searchTextType) {
+        pathBuilder.addSearchTextType(searchTextType);
         return (T) this;
     }
 
