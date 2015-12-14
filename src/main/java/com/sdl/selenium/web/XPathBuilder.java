@@ -397,10 +397,10 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected List<SearchType> cleanUpSearchType(List<SearchType> searchTextTypes) {
-        Map<String, List<SearchType>> categories = getSearchTypesByGroups(searchTextTypes);
+        Map<String, List<SearchType>> groups = getSearchTypesByGroups(searchTextTypes);
 
         List<SearchType> result = new ArrayList<>();
-        for(Map.Entry<String, List<SearchType>> entry: categories.entrySet()) {
+        for(Map.Entry<String, List<SearchType>> entry: groups.entrySet()) {
             List<SearchType> searchTypes = entry.getValue();
             if (searchTypes != null && !searchTypes.isEmpty()) {
                 SearchType searchType = searchTypes.get(searchTypes.size() - 1);
