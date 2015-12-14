@@ -207,7 +207,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                     if (WebLocatorConfig.isLogRetryException()) {
                         LOGGER.debug("Exception in setValue: {}. {}", el, ex);
                     }
-                    if(retries >= 0) {
+                    if (retries >= 0) {
                         LOGGER.debug("Exception in setValue: {}. Wait {} ms before retry", el, RETRY_MS);
                         Utils.sleep(RETRY_MS);
                     }
@@ -295,8 +295,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         try {
-            if (isElementPresent(el)) {
-                LOGGER.debug("getCurrentElementAttribute: (isElementPresent(el) was not found, after second try) {}", el);
+            boolean exists = el.currentElement != null;
+            if (exists || isElementPresent(el)) {
+                if (!exists) {
+                    LOGGER.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try) {}", el);
+                }
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (StaleElementReferenceException e) {
@@ -408,7 +411,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         WebDriverWait wait = new WebDriverWait(driver, 0, 100);
         wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
         try {
-            if(el.getPathBuilder().isVisibility()) {
+            if (el.getPathBuilder().isVisibility()) {
                 el.currentElement = wait.until(ExpectedConditions.visibilityOfElementLocated(el.getSelector()));
             } else {
                 el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
