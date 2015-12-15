@@ -34,12 +34,11 @@ public class TableRow extends Row {
     }
 
     /**
-     * @deprecated use {@link Row#Row(WebLocator, String, SearchType)}
+     * @deprecated use {@link Row#Row(WebLocator, String, SearchType[])}
      */
-    public TableRow(WebLocator table, String searchElement, SearchType searchType) {
+    public TableRow(WebLocator table, String searchElement, SearchType... searchTypes) {
         this(table);
-        setText(searchElement);
-        setSearchTextType(searchType);
+        setText(searchElement, searchTypes);
     }
 
     /**

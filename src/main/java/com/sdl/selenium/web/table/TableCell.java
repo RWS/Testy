@@ -36,19 +36,17 @@ public class TableCell extends Cell {
     /**
      * @deprecated use {@link Cell#Cell(int, String, SearchType[])}
      */
-    public TableCell(int columnIndex, String columnText, SearchType... searchType) {
+    public TableCell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
         setPosition(columnIndex);
-        setText(columnText);
-        setSearchTextType(searchType);
+        setText(columnText, searchTypes);
     }
 
     /**
      * @deprecated use {@link Cell#Cell(WebLocator, int, String, SearchType[])}
      */
-    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
+    public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
-        setText(columnText);
-        setSearchTextType(searchType);
+        setText(columnText, searchTypes);
     }
 }

@@ -439,6 +439,7 @@ public class XPathBuilder implements Cloneable {
         searchTextType.remove(SearchType.EQUALS);
         searchTextType.add(SearchType.STARTS_WITH);
         searchTextType.add(SearchType.CONTAINS);
+        searchTextType.remove(SearchType.CONTAINS);
         LOGGER.debug(new XPathBuilder().cleanUpSearchType(searchTextType).toString());
     }*/
 

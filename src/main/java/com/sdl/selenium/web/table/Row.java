@@ -28,10 +28,9 @@ public class Row extends AbstractRow {
         setPosition(indexRow);
     }
 
-    public Row(WebLocator table, String searchElement, SearchType searchType) {
+    public Row(WebLocator table, String searchElement, SearchType... searchTypes) {
         this(table);
-        setText(searchElement);
-        setSearchTextType(searchType);
+        setText(searchElement, searchTypes);
     }
 
     public Row(WebLocator table, AbstractCell... cells) {

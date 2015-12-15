@@ -26,17 +26,15 @@ public class Cell extends AbstractCell {
         setPosition(columnIndex);
     }
 
-    public Cell(int columnIndex, String columnText, SearchType... searchType) {
+    public Cell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
         setPosition(columnIndex);
-        setText(columnText);
-        setSearchTextType(searchType);
+        setText(columnText, searchTypes);
     }
 
-    public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchType) {
+    public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
-        setText(columnText);
-        setSearchTextType(searchType);
+        setText(columnText, searchTypes);
     }
 
     protected XPathBuilder createXPathBuilder() {
