@@ -57,8 +57,8 @@ public class List extends GridPanel {
     }
 
     @Override
-    public GridCell getCell(String searchElement, SearchType... searchType) {
-        WebLocator textCell = new WebLocator().setText(searchElement, searchType);
+    public GridCell getCell(String searchElement, SearchType... searchTypes) {
+        WebLocator textCell = new WebLocator().setText(searchElement, searchTypes);
         GridCell cell = new GridCell().setContainer(this).setElPath(textCell.getXPath());
         cell.setInfoMessage("cell(" + searchElement + ")");
         return cell;
@@ -66,13 +66,13 @@ public class List extends GridPanel {
 
     /**
      * @param searchElement searchElement
-     * @param searchType searchType
+     * @param searchTypes searchType
      * @return true or fasle
      */
     @Override
-    public boolean rowSelect(String searchElement, SearchType... searchType) {
+    public boolean rowSelect(String searchElement, SearchType... searchTypes) {
         //TODO When Override ScrollTop method, this method must be removed
-        GridCell cell = getCell(searchElement, searchType);
+        GridCell cell = getCell(searchElement, searchTypes);
         return cell.select();
     }
 

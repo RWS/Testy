@@ -32,14 +32,14 @@ public class GridRow extends AbstractRow {
         setExcludeClasses("x-grid3-row-checker");
     }
 
-    public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType searchType) {
-        this(gridPanel, new GridCell(searchColumnIndex, searchElement, searchType));
+    public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType... searchTypes) {
+        this(gridPanel, new GridCell(searchColumnIndex, searchElement, searchTypes));
     }
 
-    public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType searchType) {
+    public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType... searchTypes) {
         this(gridPanel);
         setTag("*");
-        WebLocator cellEl = new WebLocator().setText(searchElement, searchType);
+        WebLocator cellEl = new WebLocator().setText(searchElement, searchTypes);
         setElPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 

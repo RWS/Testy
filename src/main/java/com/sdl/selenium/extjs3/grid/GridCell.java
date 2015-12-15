@@ -28,25 +28,23 @@ public class GridCell extends AbstractCell {
         setClasses("x-grid3-cell-inner");
     }
 
-    public GridCell(String text, SearchType searchType) {
+    public GridCell(String text, SearchType... searchTypes) {
         this();
-        setText(text, searchType);
+        setText(text, searchTypes);
         setClasses("x-grid3-cell-inner");
     }
 
-    public GridCell(WebLocator container, String text, SearchType searchType) {
+    public GridCell(WebLocator container, String text, SearchType... searchTypes) {
         this();
         setContainer(container);
-        setText(text);
+        setText(text, searchTypes);
         setClasses("x-grid3-cell-inner");
-        setSearchTextType(searchType);
     }
 
-    public GridCell(int columnIndex, String columnText, SearchType... searchType) {
+    public GridCell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
         setPosition(columnIndex);
-        setText(columnText);
-        setSearchTextType(searchType);
+        setText(columnText, searchTypes);
     }
 
     protected XPathBuilder createXPathBuilder() {
