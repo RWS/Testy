@@ -397,17 +397,20 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected List<SearchType> cleanUpSearchType(List<SearchType> searchTextTypes) {
-        Map<String, List<SearchType>> groups = getSearchTypesByGroups(searchTextTypes);
+        if(searchTextTypes.size() > 1){
+            Map<String, List<SearchType>> groups = getSearchTypesByGroups(searchTextTypes);
 
-        List<SearchType> result = new ArrayList<>();
-        for(Map.Entry<String, List<SearchType>> entry: groups.entrySet()) {
-            List<SearchType> searchTypes = entry.getValue();
-            if (searchTypes != null && !searchTypes.isEmpty()) {
-                SearchType searchType = searchTypes.get(searchTypes.size() - 1);
-                result.add(searchType);
+            List<SearchType> result = new ArrayList<>();
+            for(Map.Entry<String, List<SearchType>> entry: groups.entrySet()) {
+                List<SearchType> searchTypes = entry.getValue();
+                if (searchTypes != null && !searchTypes.isEmpty()) {
+                    SearchType searchType = searchTypes.get(searchTypes.size() - 1);
+                    result.add(searchType);
+                }
             }
+            return result;
         }
-        return result;
+        return searchTextTypes;
     }
 
     private Map<String, List<SearchType>> getSearchTypesByGroups(List<SearchType> searchTextTypes) {
@@ -438,6 +441,7 @@ public class XPathBuilder implements Cloneable {
         searchTextType.add(SearchType.EQUALS);
         searchTextType.remove(SearchType.EQUALS);
         searchTextType.add(SearchType.STARTS_WITH);
+        searchTextType.add(SearchType.CONTAINS_ALL_CHILD_NODES);
         searchTextType.add(SearchType.CONTAINS);
         searchTextType.remove(SearchType.CONTAINS);
         LOGGER.debug(new XPathBuilder().cleanUpSearchType(searchTextType).toString());
@@ -1164,7 +1168,11 @@ public class XPathBuilder implements Cloneable {
             for (int i = 0; i < strings.length; i++) {
                 String escapeQuotesText = Utils.getEscapeQuotesText(strings[i]);
                 if (searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
-                    strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
+                    if (searchType.contains(SearchType.CASE_INSENSITIVE)) {
+                        strings[i] = "count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0";
+                    } else {
+                        strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
+                    }
                 } else {
                     strings[i] = "contains(" + pathText + "," + escapeQuotesText + ")";
                 }

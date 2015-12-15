@@ -21,11 +21,12 @@ public class CellTest {
                 {new Cell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("th"), "//th[1][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
                 {new Cell(1, "Text", SearchType.DEEP_CHILD_NODE).setTag("td"), "//td[1][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
                 {new Cell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS), "//td[1][(.='Text' or count(*//text()[.='Text']) > 0)]"},
+                {new Cell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS, SearchType.CASE_INSENSITIVE), "//td[1][(translate(.,'TEXT','text')='text' or count(*//text()[translate(.,'TEXT','text')='text']) > 0)]"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
-    public void getPathSelectorCorrectlyFromConstructors(Cell tableCell, String expectedXpath) {
-        Assert.assertEquals(tableCell.getXPath(), expectedXpath);
+    public void getPathSelectorCorrectlyFromConstructors(Cell cell, String expectedXpath) {
+        Assert.assertEquals(cell.getXPath(), expectedXpath);
     }
 }
