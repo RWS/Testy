@@ -173,12 +173,12 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param text       with which to identify the item
-     * @param searchType type search text element: see more details see {@link SearchType}
+     * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType) {
-        pathBuilder.setText(text, searchType);
+    public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchTypes) {
+        pathBuilder.setText(text, searchTypes);
         return (T) this;
     }
 
@@ -186,12 +186,12 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method reset searchTextType and set to new searchTextType.
      *
-     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType) {
-        pathBuilder.setSearchTextType(searchTextType);
+    public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextTypes) {
+        pathBuilder.setSearchTextType(searchTextTypes);
         return (T) this;
     }
 
@@ -199,36 +199,36 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method add new searchTextType to existing searchTextType.
      *
-     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T addSearchTextType(SearchType... searchTextType) {
-        pathBuilder.addSearchTextType(searchTextType);
+    public <T extends WebLocatorAbstractBuilder> T addSearchTextType(SearchType... searchTextTypes) {
+        pathBuilder.addSearchTextType(searchTextTypes);
         return (T) this;
     }
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param searchLabelType accepted values are: {@link SearchType}
+     * @param searchLabelTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
      */
-    private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType) {
-        pathBuilder.setSearchTextType(searchLabelType);
+    private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
+        pathBuilder.setSearchTextType(searchLabelTypes);
         return (T) this;
     }
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param searchTitleType accepted values are: {@link SearchType}
+     * @param searchTitleTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setSearchTitleType(SearchType... searchTitleType) {
-        pathBuilder.setSearchTitleType(searchTitleType);
+    public <T extends WebLocatorAbstractBuilder> T setSearchTitleType(SearchType... searchTitleTypes) {
+        pathBuilder.setSearchTitleType(searchTitleTypes);
         return (T) this;
     }
 
@@ -251,8 +251,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setTitle(final String title, SearchType... searchType) {
-        pathBuilder.setTitle(title, searchType);
+    public <T extends WebLocatorAbstractBuilder> T setTitle(final String title, SearchType... searchTypes) {
+        pathBuilder.setTitle(title, searchTypes);
         return (T) this;
     }
 
@@ -356,12 +356,12 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param label      text label element
-     * @param searchType type search text element: see more details see {@link SearchType}
+     * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setLabel(final String label, final SearchType... searchType) {
-        pathBuilder.setLabel(label, searchType);
+    public <T extends WebLocatorAbstractBuilder> T setLabel(final String label, final SearchType... searchTypes) {
+        pathBuilder.setLabel(label, searchTypes);
         return (T) this;
     }
 
@@ -450,8 +450,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType ...searchType) {
-        pathBuilder.setAttribute(attribute, value, searchType);
+    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType ... searchTypes) {
+        pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
     }
 

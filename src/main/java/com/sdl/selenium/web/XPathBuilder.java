@@ -330,11 +330,11 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param text       with which to identify the item
-     * @param searchType type search text element: see more details see {@link SearchType}
+     * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setText(final String text, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setText(final String text, final SearchType... searchTypes) {
         this.text = text;
 //        notSupportedForCss(text, "text");
 //        if(text == null) {
@@ -342,8 +342,8 @@ public class XPathBuilder implements Cloneable {
 //        } else {
 //            xpath.add("text");
 //        }
-        if (searchType != null && searchType.length > 0) {
-            setSearchTextType(searchType);
+        if (searchTypes != null && searchTypes.length > 0) {
+            setSearchTextType(searchTypes);
         } else {
             this.searchTextType.addAll(defaultSearchTextType);
             this.searchTextType = cleanUpSearchType(this.searchTextType);
@@ -362,18 +362,18 @@ public class XPathBuilder implements Cloneable {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * This method reset searchTextType and set to new searchTextType.
+     * This method reset searchTextTypes and set to new searchTextTypes.
      *
-     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextType) {
-        if (searchTextType == null) {
+    public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextTypes) {
+        if (searchTextTypes == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
             this.searchTextType = new ArrayList<>();
-            Collections.addAll(this.searchTextType, searchTextType);
+            Collections.addAll(this.searchTextType, searchTextTypes);
         }
         this.searchTextType.addAll(defaultSearchTextType);
         this.searchTextType = cleanUpSearchType(this.searchTextType);
@@ -382,15 +382,15 @@ public class XPathBuilder implements Cloneable {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * This method add new searchTextType to existing searchTextType.
+     * This method add new searchTextTypes to existing searchTextTypes.
      *
-     * @param searchTextType accepted values are: {@link SearchType#EQUALS}
+     * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T addSearchTextType(SearchType... searchTextType) {
-        if (searchTextType != null) {
-            Collections.addAll(this.searchTextType, searchTextType);
+    public <T extends XPathBuilder> T addSearchTextType(SearchType... searchTextTypes) {
+        if (searchTextTypes != null) {
+            Collections.addAll(this.searchTextType, searchTextTypes);
         }
         this.searchTextType = cleanUpSearchType(this.searchTextType);
         return (T) this;
@@ -455,14 +455,14 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param searchLabelType accepted values are: {@link SearchType}
+     * @param searchLabelTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
      */
-    private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelType) {
+    private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
         this.searchLabelType = new ArrayList<>();
-        if (searchLabelType != null) {
-            Collections.addAll(this.searchLabelType, searchLabelType);
+        if (searchLabelTypes != null) {
+            Collections.addAll(this.searchLabelType, searchLabelTypes);
         }
         this.searchLabelType = cleanUpSearchType(this.searchLabelType);
         return (T) this;
@@ -506,22 +506,22 @@ public class XPathBuilder implements Cloneable {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setTitle(final String title, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setTitle(final String title, final SearchType... searchTypes) {
         this.title = title;
-        if (searchType != null && searchType.length > 0) {
-            setSearchTitleType(searchType);
+        if (searchTypes != null && searchTypes.length > 0) {
+            setSearchTitleType(searchTypes);
         } else {
             this.searchTitleType.addAll(defaultSearchTextType);
         }
         return (T) this;
     }
 
-    public <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleType) {
-        if (searchTitleType == null) {
+    public <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleTypes) {
+        if (searchTitleTypes == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {
             this.searchTitleType = new ArrayList<>();
-            Collections.addAll(this.searchTitleType, searchTitleType);
+            Collections.addAll(this.searchTitleType, searchTitleTypes);
         }
         this.searchTitleType.addAll(defaultSearchTextType);
         this.searchTitleType = cleanUpSearchType(this.searchTitleType);
@@ -702,14 +702,14 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param label      text label element
-     * @param searchType type search text element: see more details see {@link SearchType}
+     * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setLabel(final String label, final SearchType... searchType) {
+    public <T extends XPathBuilder> T setLabel(final String label, final SearchType... searchTypes) {
         this.label = label;
-        if (searchType != null && searchType.length > 0) {
-            setSearchLabelType(searchType);
+        if (searchTypes != null && searchTypes.length > 0) {
+            setSearchLabelType(searchTypes);
         }
         return (T) this;
     }
@@ -1012,7 +1012,7 @@ public class XPathBuilder implements Cloneable {
         }
         if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                List<SearchType> searchType = entry.getValue().getSearchType();
+                List<SearchType> searchType = entry.getValue().getSearchTypes();
                 boolean hasContainsAll = searchType.contains(SearchType.CONTAINS_ALL);
                 String text = getTextAfterEscapeQuotes(hasContainsAll, entry.getValue().getText(), searchType);
                 selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));

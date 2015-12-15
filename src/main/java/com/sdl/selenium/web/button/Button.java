@@ -18,8 +18,8 @@ public class Button extends WebLocator implements IButton {
         setContainer(container);
     }
 
-    public Button(WebLocator container, String text, final SearchType... searchType) {
+    public Button(WebLocator container, String text, final SearchType... searchTypes) {
         this(container);
-        setText(text, searchType);
+        setText(text, searchTypes);
     }
 }

@@ -52,15 +52,17 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setName(final String name);
 
-    <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchType);
+    <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchTypes);
 
-    <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextType);
+    <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextTypes);
+
+    <T extends WebLocatorAbstractBuilder> T addSearchTextType(SearchType... searchTextTypes);
 
 //    <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelType);
 
     <T extends WebLocatorAbstractBuilder> T setStyle(final String style);
 
-    <T extends WebLocatorAbstractBuilder> T setTitle(final String title, SearchType... searchType);
+    <T extends WebLocatorAbstractBuilder> T setTitle(final String title, SearchType... searchTypes);
 
     <T extends WebLocatorAbstractBuilder> T setTemplateTitle(WebLocator titleEl);
 
@@ -82,7 +84,7 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container);
 
-    <T extends WebLocatorAbstractBuilder> T setLabel(final String label, final SearchType... searchType);
+    <T extends WebLocatorAbstractBuilder> T setLabel(final String label, final SearchType... searchTypes);
 
     <T extends WebLocatorAbstractBuilder> T setLabelTag(final String labelTag);
 
@@ -94,6 +96,6 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setType(final String type);
 
-    <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType ...searchType);
+    <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType ...searchTypes);
 
 }

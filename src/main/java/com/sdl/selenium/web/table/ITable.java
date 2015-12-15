@@ -16,10 +16,10 @@ public interface ITable <R extends AbstractRow, C extends AbstractCell> extends 
 
     /**
      * @param searchText searchText
-     * @param searchType searchType
+     * @param searchTypes searchTypes
      * @return true or false
      */
-    public boolean rowSelect(String searchText, SearchType... searchType);
+    public boolean rowSelect(String searchText, SearchType... searchTypes);
 
     /**
      * @return row count. -1 if not table not ready to be used or not found
@@ -42,7 +42,7 @@ public interface ITable <R extends AbstractRow, C extends AbstractCell> extends 
 
     C getCell(String searchElement);
 
-    C getCell(String searchElement, SearchType... searchType);
+    C getCell(String searchElement, SearchType... searchTypes);
 
     C getCell(int columnIndex, C... byRowCells);
 

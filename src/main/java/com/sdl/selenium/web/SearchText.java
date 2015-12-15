@@ -5,16 +5,16 @@ import java.util.*;
 public class SearchText {
 
     private String text;
-    private List<SearchType> searchType = new ArrayList<>();
+    private List<SearchType> searchTypes = new ArrayList<>();
 
-    public SearchText(String text, List<SearchType> searchType) {
+    public SearchText(String text, List<SearchType> searchTypes) {
         this.text = text;
-        this.searchType = searchType;
+        this.searchTypes = searchTypes;
     }
 
-    public SearchText(String text, SearchType... searchType) {
+    public SearchText(String text, SearchType... searchTypes) {
         this.text = text;
-        setSearchType(searchType);
+        setSearchTypes(searchTypes);
     }
 
     public String getText() {
@@ -25,20 +25,20 @@ public class SearchText {
         this.text = text;
     }
 
-    public List<SearchType> getSearchType() {
-        return searchType;
+    public List<SearchType> getSearchTypes() {
+        return searchTypes;
     }
 
-    public void setSearchType(SearchType... searchType) {
-        if (searchType != null) {
-            if (searchType.length == 0) {
-                Collections.addAll(this.searchType, SearchType.EQUALS);
+    public void setSearchTypes(SearchType... searchTypes) {
+        if (searchTypes != null) {
+            if (searchTypes.length == 0) {
+                Collections.addAll(this.searchTypes, SearchType.EQUALS);
             } else {
-                Collections.addAll(this.searchType, searchType);
+                Collections.addAll(this.searchTypes, searchTypes);
             }
         } else {
-            this.searchType.addAll(new XPathBuilder().defaultSearchTextType);
+            this.searchTypes.addAll(new XPathBuilder().defaultSearchTextType);
         }
-        new XPathBuilder().cleanUpSearchType(this.searchType);
+        new XPathBuilder().cleanUpSearchType(this.searchTypes);
     }
 }

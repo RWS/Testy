@@ -31,7 +31,7 @@ RELEASE NOTES
 - add getCssValue(String propertyName) method in WebLocator
 - add profile.preference.dom.disable_beforeunload = true for Firefox
 - add setTemplateTitle(WebLocator titleEl)
-- setTitle(final String title, SearchType ...searchType) accept SearchType
+- setTitle(final String title, SearchType ...searchTypes) accept SearchType
 - update webdriver version 2.47.0
 
 **Release Notes for Testy 1.8.1**
@@ -120,7 +120,7 @@ RELEASE NOTES
 - rename setSearchTextType in setSearchTextTypes witch accept list
 - improvement getItemPathText() for cases where the item has multiple enters
 - add SearchType enum TRIM, CHILD_NODE, DEEP_CHILD_NODE
-- update setText(final String text, final SearchType ...searchType) with SearchType options
+- update setText(final String text, final SearchType ...searchTypes) with SearchType options
 
 **Release Notes for Testy 1.6**
 - Improvement setValue for TextField
