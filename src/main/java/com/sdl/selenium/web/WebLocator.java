@@ -55,6 +55,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
+     * @param propertyName property name
      * @return Element value of css property
      */
     public String getCssValue(String propertyName) {
