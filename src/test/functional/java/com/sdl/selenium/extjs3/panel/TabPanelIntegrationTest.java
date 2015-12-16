@@ -1,11 +1,13 @@
 package com.sdl.selenium.extjs3.panel;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,8 +28,13 @@ public class TabPanelIntegrationTest extends TestBase {
     private Panel panelNoWithFrame = new Panel(tabPanel2, "Panel no frame");
     private WebLocator elTab12 = new WebLocator("element", panelNoWithFrame);
 
-    @BeforeMethod
+    @BeforeClass
     public void startTests() {
+        driver.get(InputData.EXTJS_URL);
+    }
+
+    @BeforeMethod
+    public void startMethod() {
         Button tabPanelButton = new Button(null, "TabPanel");
         tabPanelButton.click();
     }
