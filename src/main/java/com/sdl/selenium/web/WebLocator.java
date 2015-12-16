@@ -369,6 +369,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * @deprecated please use driver.getPageSource().contains(text);
+     * @return true
      */
     public boolean isTextPresent(String text) {
         return executor.isTextPresent(this, text);
