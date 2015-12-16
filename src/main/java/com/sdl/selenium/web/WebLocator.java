@@ -127,7 +127,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean doClickAt() {
         boolean doClick = waitToRender();
         if (doClick) {
-            doClick = executor.doClickAt(this);
+            doClick = executor.clickAt(this);
             if (doClick) {
                 LOGGER.info("clickAt on {}", toString());
             } else {
@@ -140,7 +140,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertClickAt() {
         boolean clickAt = waitToRender();
         assertThat("Element was not rendered " + toString(), clickAt);
-        clickAt = executor.doClickAt(this);
+        clickAt = executor.clickAt(this);
         assertThat("Could not clickAt " + toString(), clickAt);
         LOGGER.info("clickAt on {}", toString());
         return clickAt;
@@ -169,7 +169,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean doClick() {
         boolean doClick = waitToRender();
         if (doClick) {
-            doClick = executor.doClick(this);
+            doClick = executor.click(this);
             if (doClick) {
                 LOGGER.info("click on {}", toString());
             } else {
@@ -188,7 +188,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertClick() {
         boolean click = waitToRender();
         assertThat("Element was not rendered " + toString(), click);
-        click = executor.doClick(this);
+        click = executor.click(this);
         assertThat("Could not click " + toString(), click);
         LOGGER.info("click on {}", toString());
         return click;
@@ -206,7 +206,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
         if (ready()) {
-            executor.doSendKeys(this, charSequences);
+            executor.sendKeys(this, charSequences);
         } else {
             LOGGER.debug("Element is not ready " + toString());
             return null;
@@ -235,7 +235,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         boolean mouseOver = waitToRender();
         assertThat("Element was not rendered " + toString(), mouseOver);
         try {
-            executor.doMouseOver(this);
+            executor.mouseOver(this);
             mouseOver = true;
         } catch (Exception e) {
             mouseOver = false;
@@ -249,7 +249,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         boolean doMouseOver = false;
         if (waitToRender()) {
             try {
-                executor.doMouseOver(this);
+                executor.mouseOver(this);
                 doMouseOver = true;
                 LOGGER.info("Mouse over on {}", toString());
             } catch (Exception e) {

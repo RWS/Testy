@@ -26,10 +26,11 @@ Do
 	Sleep(100)
     $count = $count + 1
 Until ControlShow($activeWindowTitle, "", "Edit1") = 1
+
 _FileWriteLog($hFile, "filePath='" & $CmdLine[1] & "'")
 Local $edit = ControlSetText($activeWindowTitle, "", "Edit1", $CmdLine[1])
 ;Local $edit = ControlSetText($activeWindowTitle, "", "Edit1", "D:\Mill\src\test\resources\file\export.xml")
-_FileWriteLog($hFile, "$edit='" & $edit & "'")
+_FileWriteLog($hFile, "(Nu am putut edita daca $edit=0)$edit='" & $edit & "'")
 
 $count = 0
 Do

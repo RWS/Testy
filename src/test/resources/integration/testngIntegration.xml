@@ -120,6 +120,7 @@
     <test name="web.ButtonIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.web.button.ButtonIntegrationTest"/>
+            <class name="com.sdl.selenium.web.WebLocatorActionsIntegrationTest"/>
         </classes>
     </test>
 </suite>

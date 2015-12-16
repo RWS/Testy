@@ -8,8 +8,23 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public interface WebLocatorExecutor {
+
+    boolean click(WebLocator el);
+
+    /**
+     * @deprecated use {@link #click(WebLocator)}
+     * @param el currentEl
+     * @return true
+     */
     boolean doClick(WebLocator el);
 
+    boolean clickAt(WebLocator el);
+
+    /**
+     * @deprecated use {@link #clickAt(WebLocator)}
+     * @param el currentEl
+     * @return true
+     */
     boolean doClickAt(WebLocator el);
 
     boolean doubleClickAt(WebLocator el);
@@ -18,6 +33,12 @@ public interface WebLocatorExecutor {
 
     boolean clear(WebLocator el);
 
+    void sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
+
+    /**
+     * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
+     * @param el currentEl
+     */
     void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
     boolean setValue(WebLocator el, String value);
@@ -34,8 +55,10 @@ public interface WebLocatorExecutor {
 
     String getHtmlText(WebLocator el);
 
+    @Deprecated
     String getHtmlSource();
 
+    @Deprecated
     String getHtmlSource(WebLocator el);
 
     String getValue(WebLocator el);
@@ -56,7 +79,13 @@ public interface WebLocatorExecutor {
 
     void focus(WebLocator el);
 
+    /**
+     * @deprecated use {@link #mouseOver(WebLocator)}
+     * @param el currentEl
+     */
     void doMouseOver(WebLocator el);
+
+    void mouseOver(WebLocator el);
 
     void blur(WebLocator el);
 
@@ -76,6 +105,13 @@ public interface WebLocatorExecutor {
 
     Object fireEventWithJS(WebLocator el, String eventName);
 
+    void highlight(WebLocator el);
+
+    /**
+     * @deprecated use {@link #highlight(WebLocator)}
+     * @param el currentEl
+     * @return true
+     */
     void doHighlight(WebLocator el);
 
     boolean highlight = WebLocatorConfig.isHighlight();

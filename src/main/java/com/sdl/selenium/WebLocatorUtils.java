@@ -1,6 +1,7 @@
 package com.sdl.selenium;
 
 import com.google.common.collect.Lists;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -20,8 +21,13 @@ public final class WebLocatorUtils extends WebLocator {
 
     }
 
+    @Deprecated
     public static String getPageHtmlSource() {
-        return executor.getHtmlSource();
+        return getPageSource();
+    }
+
+    public static String getPageSource() {
+        return WebDriverConfig.getDriver().getPageSource();
     }
 
     public static Object doExecuteScript(String script, Object... objects) {

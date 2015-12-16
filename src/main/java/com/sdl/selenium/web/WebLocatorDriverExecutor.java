@@ -35,17 +35,16 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private static long RETRY_MS = 500;
 
     @Override
-    public boolean doClick(WebLocator el) {
+    public boolean click(WebLocator el) {
         boolean clicked = false;
 //        if (highlight) {
 //            doHighlight();
 //        }
-        if (el.currentElement != null) {
+        if (ensureExists(el)) {
             try {
                 el.currentElement.click();
                 clicked = true;
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("StaleElementReferenceException in doClick: {}", el);
                 clicked = tryAgainDoClick(el);
             } catch (InvalidElementStateException e) {
                 LOGGER.error("InvalidElementStateException in doClick: {}", el);
@@ -59,10 +58,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             } catch (Exception e) {
                 LOGGER.error("Exception in doClick: {} - {}", el, e);
             }
-        } else {
-            LOGGER.error("currentElement is null for: {}", el);
         }
         return clicked;
+    }
+
+    @Override
+    public boolean doClick(WebLocator el) {
+        return click(el);
     }
 
     private boolean tryAgainDoClick(WebLocator el) {
@@ -78,37 +80,43 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public boolean doClickAt(WebLocator el) {
-        if (highlight) {
-            doHighlight(el);
-        }
+    public boolean clickAt(WebLocator el) {
+//        if (highlight) {
+//            doHighlight(el);
+//        }
         focus(el);
         return doClick(el);
     }
 
     @Override
+    public boolean doClickAt(WebLocator el) {
+        return click(el);
+    }
+
+    @Override
     public boolean doubleClickAt(WebLocator el) {
-        boolean clicked;
-        try {
-            Actions builder = new Actions(driver);
-            builder.doubleClick(el.currentElement).perform();
-            clicked = true;
-        } catch (Exception e) {
-            // http://code.google.com/p/selenium/issues/detail?id=244
-            LOGGER.info("Exception in doubleClickAt {}", e);
-            clicked = fireEventWithJS(el, "dblclick") != null;
+        boolean clicked = false;
+        if(ensureExists(el)) {
+            try {
+                Actions builder = new Actions(driver);
+                builder.doubleClick(el.currentElement).perform();
+                clicked = true;
+            } catch (Exception e) {
+                // http://code.google.com/p/selenium/issues/detail?id=244
+                LOGGER.info("Exception in doubleClickAt {}", e);
+                clicked = fireEventWithJS(el, "dblclick") != null;
+            }
         }
         return clicked;
     }
 
     public boolean submit(WebLocator el) {
         boolean submit = false;
-        if (isElementPresent(el)) {
+        if (ensureExists(el)) {
             try {
                 el.currentElement.submit();
                 submit = true;
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("StaleElementReferenceException in doClick: {}", el);
                 submit = tryAgainDoSubmit(el);
             } catch (InvalidElementStateException e) {
                 LOGGER.error("InvalidElementStateException in doClick: {}", el);
@@ -140,8 +148,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean clear(WebLocator el) {
-        boolean clear;
-        if (isElementPresent(el)) {
+        boolean clear = false;
+        if (ensureExists(el)) {
             try {
                 el.currentElement.clear();
                 clear = true;
@@ -149,15 +157,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 LOGGER.warn("InvalidElementStateException clear: {}", el);
                 clear = false;
             }
-        } else {
-            clear = false;
         }
         return clear;
     }
 
     @Override
-    public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
-        if (isElementPresent(el)) {
+    public void sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        if (ensureExists(el)) {
             try {
                 el.currentElement.sendKeys(charSequences);
             } catch (ElementNotVisibleException e) {
@@ -178,9 +184,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 builder.click(el.currentElement);
                 builder.sendKeys(charSequences);
             }
-        } else {
-            LOGGER.warn("sendKeys : field is not element present: {}", el);
         }
+    }
+
+    @Override
+    public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        sendKeys(el, charSequences);
     }
 
     private void tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
@@ -197,13 +206,14 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             retries--;
             // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
             //if (executor.isSamePath(this, this.getXPath()) || ready()) {
-            if (isElementPresent(el)) {
+            if (ensureExists(el)) {
                 try {
                     executed = doSetValue(el, value);
                 } catch (ElementNotVisibleException exception) {
                     LOGGER.error("ElementNotVisibleException in setValue: {}", el, exception);
                     throw exception;
-                } catch (InvalidElementStateException | StaleElementReferenceException ex) {
+                } catch (InvalidElementStateException ex) {
+                    invalidateCache(el);
                     if (WebLocatorConfig.isLogRetryException()) {
                         LOGGER.debug("Exception in setValue: {}. {}", el, ex);
                     }
@@ -212,9 +222,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                         Utils.sleep(RETRY_MS);
                     }
                     executed = setValue(el, value, retries);
+                } catch (StaleElementReferenceException ex){
+                    invalidateCache(el);
+                    if (retries >= 0) {
+                        Utils.sleep(RETRY_MS);
+                    }
+                    executed = setValue(el, value, retries);
                 }
-            } else {
-                LOGGER.warn("Element not found to setValue({}): {}", value, el);
             }
         }
         return executed;
@@ -248,35 +262,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getCssValue(final WebLocator el, final String propertyName) {
-        String propertyValue = null;
-        if (isElementPresent(el)) {
-            propertyValue = el.currentElement.getCssValue(propertyName);
-        } else {
-            LOGGER.debug("Element not found to getCssValue({}): {}", propertyName, el);
-        }
-        return propertyValue;
+        return ensureExists(el) ? el.currentElement.getCssValue(propertyName) : null;
     }
 
     @Override
     public String getTagName(final WebLocator el) {
-        String tag = null;
-        if (isElementPresent(el)) {
-            tag = el.currentElement.getTagName();
-        } else if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Element not found to getTagName(): {}", el);
-        }
-        return tag;
+        return ensureExists(el) ? el.currentElement.getTagName() : null;
     }
 
     @Override
     public String getAttribute(final WebLocator el, final String attribute) {
-        String attributeValue = null;
-        if (isElementPresent(el)) {
-            attributeValue = getCurrentElementAttribute(el, attribute);
-        } else {
-            LOGGER.debug("Element not found to getAttribute({}): {}", attribute, el);
-        }
-        return attributeValue;
+        return ensureExists(el) ? getCurrentElementAttribute(el, attribute) : null;
     }
 
     public String getAttributeId(WebLocator el) {
@@ -291,19 +287,22 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return pathId;
     }
 
+    private boolean ensureExists(final WebLocator el){
+        boolean present = el.currentElement != null || isElementPresent(el);
+        if(!present){
+            LOGGER.debug("Element not found: {}", el);
+        }
+        return present;
+    }
+
     @Override
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         try {
-            boolean exists = el.currentElement != null;
-            if (exists || isElementPresent(el)) {
-                if (!exists) {
-                    LOGGER.debug("getCurrentElementAttribute: (el.currentElement was null and found after second try) {}", el);
-                }
+            if (ensureExists(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
             }
         } catch (StaleElementReferenceException e) {
-            LOGGER.warn("StaleElementReferenceException in getCurrentElementAttribute({}): {}", attribute, el);
             if (findAgain(el)) {
                 attributeValue = el.currentElement.getAttribute(attribute);
             } else {
@@ -318,13 +317,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public String getHtmlText(WebLocator el) {
         String text = null;
-        if (isElementPresent(el)) {
+        if (ensureExists(el)) {
             try {
                 text = el.currentElement.getText();
             } catch (StaleElementReferenceException e) {
-                LOGGER.error("getHtmlText (second try): " + getSelector(el), e);
                 if (findAgain(el)) {
                     text = el.currentElement.getText();
+
                 }
             } catch (WebDriverException e) {
                 LOGGER.error("element has vanished meanwhile: " + getSelector(el), e);
@@ -344,6 +343,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private void invalidateCache(WebLocator el) {
+        el.currentElement = null;
         el.setCurrentElementPath("");
     }
 
@@ -353,9 +353,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    @Deprecated
     public String getHtmlSource(WebLocator el) {
         String text = null;
-        if (isElementPresent(el)) {
+        if (ensureExists(el)) {
             text = driver.getPageSource();
         }
         return text;
@@ -433,14 +434,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public Point getLocation(WebLocator el) {
-        isElementPresent(el);
-        return el.currentElement.getLocation();
+        return ensureExists(el) ? el.currentElement.getLocation() : null;
     }
 
     @Override
     public Dimension getSize(WebLocator el) {
-        isElementPresent(el);
-        return el.currentElement.getSize();
+        return ensureExists(el) ? el.currentElement.getSize() : null;
     }
 
     @Override
@@ -449,9 +448,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void doMouseOver(WebLocator el) {
+    public void mouseOver(WebLocator el) {
+        ensureExists(el);
         Actions builder = new Actions(driver);
         builder.moveToElement(el.currentElement).perform();
+    }
+
+    @Override
+    public void doMouseOver(WebLocator el) {
+        mouseOver(el);
     }
 
     @Override
@@ -471,15 +476,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean isSelected(WebLocator el) {
-        return el.currentElement.isSelected();
+        return ensureExists(el) && el.currentElement.isSelected();
     }
 
     public boolean isDisplayed(WebLocator el) {
-        return isElementPresent(el) && el.currentElement.isDisplayed();
+        return ensureExists(el) && el.currentElement.isDisplayed();
     }
 
     public boolean isEnabled(WebLocator el) {
-        return isElementPresent(el) && el.currentElement.isEnabled();
+        return ensureExists(el) && el.currentElement.isEnabled();
     }
 
     public boolean isSamePath(WebLocator el, String path) {
@@ -526,8 +531,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void doHighlight(WebLocator el) {
+    public void highlight(WebLocator el) {
         highlightElementWithDriver(el.currentElement);
+    }
+
+    @Override
+    public void doHighlight(WebLocator el) {
+        highlight(el);
     }
 
     public boolean download(String fileName, long timeoutMillis) {

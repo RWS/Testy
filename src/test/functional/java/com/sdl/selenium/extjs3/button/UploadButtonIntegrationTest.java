@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.button;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,6 +13,11 @@ public class UploadButtonIntegrationTest extends TestBase {
 
     private Panel simpleFormPanel = new Panel(null, "Simple Form");
     private UploadButton uploadButton = new UploadButton(simpleFormPanel, "Browse");
+
+    @BeforeClass
+    public void startTests() {
+        driver.get(InputData.EXTJS_URL);
+    }
 
     @Test
     public void uploadFile() {

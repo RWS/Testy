@@ -145,6 +145,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - add addSearchTextType(SearchType... searchTextType)
 - add SearchType.CASE_INSENSITIVE and SearchType.CASE_SENSITIVE
 - add SearchType.NO_TRIM
+- made deprecated doClick, doClickAt, doSendKeys, getHtmlSource, getHtmlSource(el), doMouseOver and doHighlight from WebLocatorExecutor
 
 **Release Notes for Testy 1.8.3**
 - add weblocator.log.suggestions=true
