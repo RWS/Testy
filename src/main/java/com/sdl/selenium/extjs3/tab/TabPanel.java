@@ -72,7 +72,7 @@ public class TabPanel extends ExtJsComponent {
     }
 
     /**
-     * After the tab is set to active will wait 50ms to make sure tab is rendered
+     * After the tab is set to active will wait 300ms to make sure tab is rendered
      *
      * @return true or false
      */
@@ -83,13 +83,14 @@ public class TabPanel extends ExtJsComponent {
         LOGGER.info("setActive : " + toString());
         boolean activated;
         try {
-            activated = titleElement.click();
+            activated = titleElement.assertClick();
         } catch (ElementNotVisibleException e) {
             LOGGER.error("setActive Exception: " + e.getMessage());
             WebLocator tabElement = new WebLocator(getPathBuilder().getContainer()).setElPath(baseTabPath);
             String id = tabElement.getAttributeId();
             String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
-            String script = "return Ext.getCmp('" + id + "').setActiveTab(" + getTabCount(getPathBuilder().getText(), path) + ");";
+            int tabIndex = getTabIndex(getPathBuilder().getText(), path);
+            String script = "return Ext.getCmp('" + id + "').setActiveTab(" + tabIndex + ");";
             LOGGER.warn("force TabPanel setActive with js: " + script);
             WebLocatorUtils.doExecuteScript(script);
             activated = true; // TODO verify when is not executed
@@ -100,16 +101,27 @@ public class TabPanel extends ExtJsComponent {
         return activated;
     }
 
-    public int getTabCount(String nameTab, String path) {
-        List<WebElement> element = WebDriverConfig.getDriver().findElements(By.xpath(path));
-        int count = 0;
+    public int getTabIndex(String title, String path) {
+        WebLocator titles = new WebLocator().setElPath(path);
+        List<WebElement> element = titles.findElements();
+        int index = 0;
         for (WebElement el : element) {
-            if (nameTab.equals(el.getText())) {
-                LOGGER.debug(count + " : " + el.getText());
-                return count;
+            if (title.equals(el.getText())) {
+                LOGGER.debug(index + " : " + el.getText());
+                return index;
             }
-            count++;
+            index++;
         }
         return -1;
+    }
+
+    /**
+     * @deprecated use {@link #getTabIndex(String, String)}
+     * @param nameTab
+     * @param path
+     * @return
+     */
+    public int getTabCount(String nameTab, String path) {
+        return getTabIndex(nameTab, path);
     }
 }
