@@ -3,6 +3,8 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.form.TextField;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -68,6 +70,61 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void mouseOverTest() {
-        assertThat(email.mouseOver(), is(true));
+        assertThat(locator.mouseOver(), is(true));
+    }
+
+    @Test
+    public void blurTest() {
+        assertThat(locator.blur(), is(true));
+    }
+
+    @Test
+    public void focusTest() {
+        assertThat(locator.focus(), is(locator));
+    }
+
+    @Test
+    public void doubleClickAtTest() {
+        assertThat(locator.doubleClickAt(), is(true));
+    }
+
+    @Test
+    public void sizeTest() {
+        assertThat(locator.size(), is(1));
+    }
+
+    @Test
+    public void getLocationTest() {
+        assertThat(locator.getLocation(), is(new Point(136, 177)));
+    }
+
+    @Test
+    public void getSizeTest() {
+        assertThat(locator.getSize(), is(new Dimension(61, 30)));
+    }
+
+    @Test
+    public void existsTest() {
+        assertThat(locator.exists(), is(true));
+    }
+
+    @Test
+    public void isVisibleTest() {
+        assertThat(locator.isVisible(), is(true));
+    }
+
+    @Test
+    public void readyTest() {
+        assertThat(locator.ready(), is(true));
+    }
+
+    @Test
+    public void isDisabledTest() {
+        assertThat(locator.isDisabled(), is(false));
+    }
+
+    @Test
+    public void isDisplayedTest() {
+        assertThat(locator.isDisplayed(), is(true));
     }
 }
