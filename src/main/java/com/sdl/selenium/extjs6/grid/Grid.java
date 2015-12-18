@@ -1,9 +1,7 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.Table;
-import com.sdl.selenium.web.table.TableCell;
-import com.sdl.selenium.web.table.TableRow;
+import com.sdl.selenium.web.table.*;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +26,18 @@ public class Grid extends Table {
         setContainer(container);
     }
 
+    /**
+     * @deprecated use {@link #getRow(int, AbstractCell...)}
+     * @param indexRow eg. 1
+     * @param byCells TableCell
+     * @return TableRow
+     */
     public TableRow getRow(int indexRow, TableCell... byCells) {
         return new TableRow(this, indexRow, byCells).setTag("table").setInfoMessage("-Row");
+    }
+
+    public Row getRow(int indexRow, AbstractCell... byCells) {
+        return new Row(this, indexRow, byCells).setTag("table").setInfoMessage("-Row");
     }
 
     public boolean waitToActivate(int seconds) {
