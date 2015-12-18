@@ -202,7 +202,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     private void doHighlight() {
-        executor.doHighlight(this);
+        executor.highlight(this);
     }
 
     public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
