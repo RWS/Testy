@@ -84,19 +84,29 @@ public class TabPanel extends ExtJsComponent {
             activated = titleElement.assertClick();
         } catch (ElementNotVisibleException e) {
             LOGGER.error("setActive Exception: " + e.getMessage());
-            WebLocator tabElement = new WebLocator(getPathBuilder().getContainer()).setElPath(baseTabPath);
-            String id = tabElement.getAttributeId();
-            String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
-            int tabIndex = getTabIndex(getPathBuilder().getText(), path);
-            String script = "return Ext.getCmp('" + id + "').setActiveTab(" + tabIndex + ");";
-            LOGGER.warn("force TabPanel setActive with js: " + script);
-            WebLocatorUtils.doExecuteScript(script);
-            activated = true; // TODO verify when is not executed
+            activated = setActiveWithExtJS();
         }
         if (activated) {
             Utils.sleep(300); // need to make sure this tab is rendered
         }
         return activated;
+    }
+
+    /**
+     * TO Be used in extreme cases when simple {@link #setActive()} is not working
+     *
+     * @return true or false
+     */
+    public boolean setActiveWithExtJS() {
+        String baseTabPath = "//*[" + getPathBuilder().getBasePath() + "]";
+        WebLocator tabElement = new WebLocator(getPathBuilder().getContainer()).setElPath(baseTabPath);
+        String id = tabElement.getAttributeId();
+        String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
+        int tabIndex = getTabIndex(getPathBuilder().getText(), path);
+        String script = "return Ext.getCmp('" + id + "').setActiveTab(" + tabIndex + ");";
+        LOGGER.warn("force TabPanel setActive with js: " + script);
+        WebLocatorUtils.doExecuteScript(script);
+        return true;
     }
 
     public int getTabIndex(String title, String path) {
