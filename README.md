@@ -100,7 +100,7 @@ This project is optimized for:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>1.8.3</version>
+        <version>2.0.0</version>
     </dependency>
 ```
 
@@ -132,8 +132,9 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
+**Release Notes for Testy 2.1.0-SNAPSHOT**
 
-**Release Notes for Testy 2.0.0-SNAPSHOT**
+**Release Notes for Testy 2.0.0**
 - Change config default value for weblocator.log.suggestions=false
 - Generate cssSelector instead of xpath when possible. Use config weblocator.generateCssSelector=false
 - Add locator.setElCssSelector("#selector.element-css")
@@ -146,16 +147,6 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - add SearchType.CASE_INSENSITIVE and SearchType.CASE_SENSITIVE
 - add SearchType.NO_TRIM
 - made deprecated doClick, doClickAt, doSendKeys, getHtmlSource, getHtmlSource(el), doMouseOver and doHighlight from WebLocatorExecutor
-
-**Release Notes for Testy 1.8.3**
-- add weblocator.log.suggestions=true
-- add setAttribute(String attribute, String value)
-- add setPlaceholder(final String value) for all components which extend com.sdl.selenium.web.form.TextField
-- update webdriver version 2.48.2
-- improvement reuse download an upload code
-- make public doClickAt, doClick, doMouseOver
-- add doClear
-- add getTagName, getLocation, getSize
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -172,7 +163,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.1.0-SNAPSHOT</version>
     </dependency>
 ```
 

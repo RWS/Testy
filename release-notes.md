@@ -1,6 +1,8 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.0.0-SNAPSHOT**
+**Release Notes for Testy 2.1.0-SNAPSHOT**
+
+**Release Notes for Testy 2.0.0**
 - Change config default value for weblocator.log.suggestions=false
 - Generate cssSelector instead of xpath when possible. Use config weblocator.generateCssSelector=false
 - Add locator.setElCssSelector("#selector.element-css")
