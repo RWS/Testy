@@ -507,6 +507,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param title of element
+     * @param searchTypes see {@link SearchType}
      * @param <T>   the element which calls this method
      * @return this element
      */
@@ -1322,6 +1323,7 @@ public class XPathBuilder implements Cloneable {
 
     /**
      * @deprecated use getXPath()
+     * @return xpath
      */
     public final String getPath() {
         return getXPath();

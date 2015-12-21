@@ -125,9 +125,9 @@ public class TabPanel extends ExtJsComponent {
 
     /**
      * @deprecated use {@link #getTabIndex(String, String)}
-     * @param nameTab
-     * @param path
-     * @return
+     * @param nameTab nameTab
+     * @param path xPath
+     * @return int
      */
     public int getTabCount(String nameTab, String path) {
         return getTabIndex(nameTab, path);

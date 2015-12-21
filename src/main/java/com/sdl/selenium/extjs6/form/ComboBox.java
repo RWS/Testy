@@ -27,10 +27,12 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     /**
+     *
      * @param value value
+     * @param startWith true or false
+     * @param optionRenderMillis eg. 300ms
      * @return true if value was selected
      */
-
     public boolean select(String value, boolean startWith, long optionRenderMillis) {
         boolean selected;
         String info = toString();

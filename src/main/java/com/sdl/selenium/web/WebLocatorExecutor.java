@@ -38,6 +38,7 @@ public interface WebLocatorExecutor {
     /**
      * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
      * @param el currentEl
+     * @param charSequences chars
      */
     void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
@@ -110,7 +111,6 @@ public interface WebLocatorExecutor {
     /**
      * @deprecated use {@link #highlight(WebLocator)}
      * @param el currentEl
-     * @return true
      */
     void doHighlight(WebLocator el);
 

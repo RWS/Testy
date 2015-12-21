@@ -19,6 +19,7 @@ public class TableCell extends Cell {
 
     /**
      * @deprecated use {@link Cell#Cell(WebLocator)}
+     * @param container WebLocator
      */
     public TableCell(WebLocator container) {
         this();
@@ -27,6 +28,8 @@ public class TableCell extends Cell {
 
     /**
      * @deprecated use {@link Cell#Cell(WebLocator, int)}
+     * @param container WebLocator
+     * @param columnIndex int
      */
     public TableCell(WebLocator container, int columnIndex) {
         this(container);
@@ -35,6 +38,9 @@ public class TableCell extends Cell {
 
     /**
      * @deprecated use {@link Cell#Cell(int, String, SearchType[])}
+     * @param columnIndex int
+     * @param columnText String
+     * @param searchTypes SearchType
      */
     public TableCell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
@@ -44,6 +50,10 @@ public class TableCell extends Cell {
 
     /**
      * @deprecated use {@link Cell#Cell(WebLocator, int, String, SearchType[])}
+     * @param container WebLocator
+     * @param columnIndex int
+     * @param columnText String
+     * @param searchTypes SearchType
      */
     public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);

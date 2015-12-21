@@ -248,6 +248,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param title of element
+     * @param searchTypes see {@link SearchType}
      * @param <T>   the element which calls this method
      * @return this element
      */
@@ -447,6 +448,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @param attribute eg. placeholder
      * @param value     eg. Search
+     * @param searchTypes see {@link SearchType}
      * @param <T>       the element which calls this method
      * @return this element
      */
@@ -462,6 +464,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p>Used only to identify class type of current object</p>
      * <p> Not used for css class!</p>
+     * @param className className
      */
     protected void setClassName(final String className) {
         pathBuilder.setClassName(className);
@@ -507,8 +510,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @param disabled
-     * @return
+     * @param disabled true or false
+     * @return xPath
      */
     public final String getXPath(boolean disabled) {
         return pathBuilder.getXPath(disabled);
@@ -516,6 +519,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * @deprecated use getXPath()
+     * @return xPath
      */
     public final String getPath() {
         return getXPath();
@@ -523,6 +527,8 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * @deprecated use getXPath(boolean disabled)
+     * @param disabled true or false
+     * @return xPath
      */
     public String getPath(boolean disabled) {
         return getXPath(disabled);

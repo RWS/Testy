@@ -19,6 +19,7 @@ public class TableRow extends Row {
 
     /**
      * @deprecated use {@link Row#Row(WebLocator)}
+     * @param container WebLocator
      */
     public TableRow(WebLocator container) {
         this();
@@ -27,6 +28,8 @@ public class TableRow extends Row {
 
     /**
      * @deprecated use {@link Row#Row(WebLocator, int)}
+     * @param container WebLocator
+     * @param indexRow int
      */
     public TableRow(WebLocator container, int indexRow) {
         this(container);
@@ -35,6 +38,9 @@ public class TableRow extends Row {
 
     /**
      * @deprecated use {@link Row#Row(WebLocator, String, SearchType[])}
+     * @param table WebLocator
+     * @param searchElement int
+     * @param searchTypes SearchType
      */
     public TableRow(WebLocator table, String searchElement, SearchType... searchTypes) {
         this(table);
@@ -43,6 +49,8 @@ public class TableRow extends Row {
 
     /**
      * @deprecated use {@link Row#Row(WebLocator, AbstractCell[])}
+     * @param table WebLocator
+     * @param cells AbstractCell
      */
     public TableRow(WebLocator table, AbstractCell... cells) {
         this(table);
@@ -51,6 +59,9 @@ public class TableRow extends Row {
 
     /**
      * @deprecated use {@link Row#Row(WebLocator, int, AbstractCell[])}
+     * @param table WebLocator
+     * @param indexRow int
+     * @param cells AbstractCell
      */
     public TableRow(WebLocator table, int indexRow, AbstractCell... cells) {
         this(table, indexRow);
