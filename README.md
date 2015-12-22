@@ -173,3 +173,6 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - [Bootstrap](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/bootstrap/index.html)
 - [Sencha ExtJs](https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/extjs/index.html)
 
+## Setting up Testy project
+
+[Setting UP](./setup.md) 
