@@ -69,9 +69,7 @@ This project is optimized for:
         
         public boolean unsubscribe(String email) {
             // find row that contains specified email in second column
-            TableRow row = table.getRow(
-                   new TableCell(2, email)
-            );
+            Row row = table.getRow(new Cell(2, email));
             // find remove button inside specified row
             Button removeButton = new Button(row, "Remove");
             return removeButton.click();

@@ -96,6 +96,42 @@ public class WebLocatorTest {
         };
     }
 
+    @DataProvider
+    public static Object[][] testConstructorPathDataProviderAttributes() {
+        return new Object[][]{
+                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS), "//*[contains(@data,'value')]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS), "//*[@data='value']"},
+                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH), "//*[starts-with(@data,'value')]"},
+
+                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(translate(@data,'VALUE','value'),'value')]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[translate(@data,'VALUE','value')='value']"},
+                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[starts-with(translate(@data,'VALUE','value'),'value')]"},
+
+                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.TRIM), "//*[contains(normalize-space(@data),'value')]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.TRIM), "//*[normalize-space(@data)='value']"},
+                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.TRIM), "//*[starts-with(normalize-space(@data),'value')]"},
+
+//                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.CHILD_NODE), "//*[contains(@data,'value')]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.CHILD_NODE), "//*[@data='value']"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.CHILD_NODE), "//*[starts-with(@data,'value')]"},
+
+//                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.DEEP_CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(*//text()[contains(.,'')]) > 0]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.DEEP_CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(*//text()[.='']) > 0]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.DEEP_CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(*//text()[starts-with(.,'')]) > 0]"},
+
+
+//                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.TRIM, SearchType.CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(text()[contains(normalize-space(.),'')]) > 0]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.TRIM, SearchType.CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(text()[normalize-space(.)='']) > 0]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.TRIM, SearchType.CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(text()[starts-with(normalize-space(.),'')]) > 0]"},
+
+//                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.TRIM, SearchType.DEEP_CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(*//text()[contains(normalize-space(.),'')]) > 0]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.TRIM, SearchType.DEEP_CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(*//text()[normalize-space(.)='']) > 0]"},
+//                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.TRIM, SearchType.DEEP_CHILD_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and count(*//text()[starts-with(normalize-space(.),'')]) > 0]"},
+
+//                {new WebLocator().setAttribute("data", "value", SearchType.HTML_NODE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and (normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))='WebLocator text for search type' or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))='WebLocator text for search type')]"},
+        };
+    }
+
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
         assertThat(el.getXPath(), equalTo(expectedXpath));
@@ -103,6 +139,11 @@ public class WebLocatorTest {
 
     @Test(dataProvider = "testConstructorPathDataProviderText")
     public void getPathSelectorCorrectlyFromConstructorsByText(WebLocator el, String expectedXpath) {
+        assertThat(el.getXPath(), equalTo(expectedXpath));
+    }
+
+    @Test(dataProvider = "testConstructorPathDataProviderAttributes")
+    public void getPathSelectorCorrectlyFromConstructorsByAttributes(WebLocator el, String expectedXpath) {
         assertThat(el.getXPath(), equalTo(expectedXpath));
     }
 
