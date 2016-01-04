@@ -140,7 +140,6 @@ public class FileUtils {
             FileUtils.waitFileIfIsEmpty(file2, 10000);
             String str1 = convertStreamToString(new FileInputStream(file1));
             String str2 = convertStreamToString(new FileInputStream(file2));
-            assertThat("Strings are not same", formatToSystemLineSeparator(str1), equalTo(formatToSystemLineSeparator(str2)));
             return formatToSystemLineSeparator(str1).equals(formatToSystemLineSeparator(str2));
         } catch (IOException e) {
             e.printStackTrace();
