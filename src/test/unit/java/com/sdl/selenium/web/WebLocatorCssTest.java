@@ -31,9 +31,12 @@ public class WebLocatorCssTest {
                 {new WebLocator(), "*", "//*"},
                 {new WebLocator().setElCssSelector("div.error-msg"), "div.error-msg", "//*"},
                 {new WebLocator().setId("email"), "#email", "//*[@id='email']"},
+                {new WebLocator().setId("email").setClasses("input-block-level"), "#email.input-block-level", "//*[@id='email' and contains(concat(' ', @class, ' '), ' input-block-level ')]"},
                 {new WebLocator().setTag("td"), "td", "//td"},
                 {new WebLocator().setCls("error-msg"), ".error-msg", "//*[@class='error-msg']"}, //TODO see if supports only one class
                 {new WebLocator().setClasses("error-msg"), ".error-msg", "//*[contains(concat(' ', @class, ' '), ' error-msg ')]"},
+                {new WebLocator().setTag("button").setExcludeClasses("error-msg"), "button:not(.error-msg)", "//button[not(contains(@class, 'error-msg'))]"},
+                {new WebLocator().setExcludeClasses("error-msg", "msg"), ":not(.error-msg):not(.msg)", "//*[not(contains(@class, 'error-msg')) and not(contains(@class, 'msg'))]"},
                 {new WebLocator().setClasses("error-msg", "error"), ".error-msg.error", "//*[contains(concat(' ', @class, ' '), ' error-msg ') and contains(concat(' ', @class, ' '), ' error ')]"},
                 {new WebLocator().setName("newPassword"), "[name='newPassword']", "//*[@name='newPassword']"},
                 {new WebLocator().setAttribute("data-toggle", "modal"), "[data-toggle='modal']", "//*[@data-toggle='modal']"},

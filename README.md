@@ -131,6 +131,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 ## Release Notes
 **Release Notes for Testy 2.1.0-SNAPSHOT**
+- add support for css selector when setExcludeClasses
 
 **Release Notes for Testy 2.0.0**
 - Change config default value for weblocator.log.suggestions=false

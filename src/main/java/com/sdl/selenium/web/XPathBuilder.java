@@ -1217,10 +1217,10 @@ public class XPathBuilder implements Cloneable {
             }
         }
         if (hasExcludeClasses()) {
-            LOGGER.warn("excludeClasses is not supported yet");
-//            for (String excludeClass : getExcludeClasses()) {
-//                selector.add(applyTemplate("excludeClass", excludeClass));
-//            }
+//            LOGGER.warn("excludeClasses is not supported yet");
+            for (String excludeClass : getExcludeClasses()) {
+                selector.add(":not(." + excludeClass + ")");
+            }
         }
         if (hasName()) {
             selector.add("[name='" + getName() + "']");
@@ -1248,7 +1248,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     private boolean isCssSelectorSupported() {
-        return !(hasText() || hasElPath() || hasChildNodes() || hasExcludeClasses() || hasStyle() || hasLabel() || hasTitle() || hasPosition() || hasResultIdx());
+        return !(hasText() || hasElPath() || hasChildNodes() || hasStyle() || hasLabel() || hasTitle() || hasPosition() || hasResultIdx());
     }
 
     public final String getCssSelector() {
