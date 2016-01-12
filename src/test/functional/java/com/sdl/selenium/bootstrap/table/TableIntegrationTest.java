@@ -5,8 +5,8 @@ import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.table.Table;
-import com.sdl.selenium.web.table.TableCell;
-import com.sdl.selenium.web.table.TableRow;
+import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
@@ -36,13 +36,13 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void verifyIfCheckBoxIsPresent() {
-        TableCell cell = table.getCell(1, new TableCell(2, "John", SearchType.EQUALS), new TableCell(3, "Carter", SearchType.EQUALS));
+        Cell cell = table.getCell(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         assertTrue(new CheckBox(cell).isElementPresent());
     }
 
     @Test
     public void verifyIfButtonsIsPresent() {
-        TableRow row = table.getRow(1, new TableCell(2, "John", SearchType.EQUALS), new TableCell(3, "Carter", SearchType.EQUALS));
+        Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         Button first = new Button(row).setText("First", SearchType.CONTAINS);
         Button second = new Button(row, "Second");
         assertTrue(first.isElementPresent());
@@ -51,17 +51,17 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void verifyHeaderName() {
-        TableCell row = new TableCell(1, "Row", SearchType.EQUALS).setTag("th");
-        TableCell firstName = new TableCell(2, "First Name", SearchType.EQUALS).setTag("th");
-        TableCell lastName = new TableCell(3, "Last Name", SearchType.EQUALS).setTag("th");
-        TableCell email = new TableCell(4, "Email", SearchType.EQUALS).setTag("th");
-        TableCell buttons = new TableCell(5, "Buttons", SearchType.EQUALS).setTag("th");
+        Cell row = new Cell(1, "Row", SearchType.EQUALS).setTag("th");
+        Cell firstName = new Cell(2, "First Name", SearchType.EQUALS).setTag("th");
+        Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).setTag("th");
+        Cell email = new Cell(4, "Email", SearchType.EQUALS).setTag("th");
+        Cell buttons = new Cell(5, "Buttons", SearchType.EQUALS).setTag("th");
         assertTrue(table.getRow(row, firstName, lastName, email, buttons).ready());
     }
 
     @Test
     public void getAllTexts() {
-        List<List<String>> listOfList = new ArrayList<List<String>>();
+        List<List<String>> listOfList = new ArrayList<>();
 
         listOfList.add(Arrays.asList("", "John", "Carter", "johncarter@mail.com", "First (1) Second"));
         listOfList.add(Arrays.asList("", "Peter", "Parker", "peterparker@mail.com", "First (2) Second"));
@@ -86,7 +86,7 @@ public class TableIntegrationTest extends TestBase {
     public void getAllTextsFromRow() {
         List<String> listOfList = Arrays.asList("", "John", "Carter", "johncarter@mail.com", "First (1) Second");
 
-        TableRow row = table.getRow(new TableCell(2, "John", SearchType.EQUALS), new TableCell(3, "Carter", SearchType.EQUALS));
+        Row row = table.getRow(new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         List<String> cellsText = row.getCellsText();
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("\n| ");
@@ -99,7 +99,7 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void ThreadTest() throws InterruptedException {
-        ArrayList<List<String>> lists = new ArrayList<List<String>>();
+        ArrayList<List<String>> lists = new ArrayList<>();
         lists.add(Arrays.asList("John", "Carter"));
         lists.add(Arrays.asList("Peter", "Parker"));
         lists.add(Arrays.asList("John", "Rambo"));
@@ -134,7 +134,7 @@ public class TableIntegrationTest extends TestBase {
         assertTrue(globalClick);
 
 //        for (List<String> list : lists) {
-//            TableCell cell = table.getTableCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
+//            Cell cell = table.getCell(1, new Cell(2, list.get(0), SearchType.EQUALS), new Cell(3, list.get(1), SearchType.EQUALS));
 //            CheckBox check = new CheckBox(cell);
 //            exeThread = new RunExeThread(check);
 //            assertTrue(exeThread.isSelected());
@@ -146,7 +146,7 @@ public class TableIntegrationTest extends TestBase {
         Utils.sleep(1500);
         long startMs1 = System.currentTimeMillis();
         for (List<String> list : lists) {
-            TableCell cell = table.getCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
+            Cell cell = table.getCell(1, new Cell(2, list.get(0), SearchType.EQUALS), new Cell(3, list.get(1), SearchType.EQUALS));
             CheckBox check = new CheckBox(cell);
             check.click();
 //            check.isSelected();
@@ -165,7 +165,7 @@ public class TableIntegrationTest extends TestBase {
 
         @Override
         public Boolean call() throws Exception {
-            TableCell cell = table.getCell(1, new TableCell(2, list.get(0), SearchType.EQUALS), new TableCell(3, list.get(1), SearchType.EQUALS));
+            Cell cell = table.getCell(1, new Cell(2, list.get(0), SearchType.EQUALS), new Cell(3, list.get(1), SearchType.EQUALS));
             check = new CheckBox(cell);
             return check.click();
         }
