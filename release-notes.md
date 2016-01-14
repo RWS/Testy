@@ -2,6 +2,7 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.1.0-SNAPSHOT**
 - add support for css selector when setExcludeClasses
+- update webdriver version 2.49.0
 
 **Release Notes for Testy 2.0.0**
 - Change config default value for weblocator.log.suggestions=false

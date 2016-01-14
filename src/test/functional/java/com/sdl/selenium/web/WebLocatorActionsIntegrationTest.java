@@ -3,6 +3,8 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.form.TextField;
+import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.testng.annotations.BeforeClass;
@@ -14,7 +16,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class WebLocatorActionsIntegrationTest extends TestBase {
 
-    private WebLocator locator = new WebLocator().setId("loginButton");
+    private WebLocator locator = new WebLocator().setId("loginButton").setVisibility(true);
     private TextField email = new TextField().setLabel("Email:");
 
     @BeforeClass
@@ -95,7 +97,7 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void getLocationTest() {
-        assertThat(locator.getLocation(), is(new Point(136, 177)));
+        assertThat(locator.getLocation(), WebDriverConfig.isChrome() ? is(new Point(136, 177)) : is(new Point(136, 162)));
     }
 
     @Test
