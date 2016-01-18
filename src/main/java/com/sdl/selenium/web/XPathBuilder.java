@@ -1362,7 +1362,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     public String itemToString() {
-        String info;
+        String info = "";
         if (hasText()) {
             info = getText();
         } else if (hasId()) {
@@ -1381,6 +1381,10 @@ public class XPathBuilder implements Cloneable {
             info = getBaseCls();
         } else if (hasElPath()) {
             info = getElPath();
+        } else if (!attribute.isEmpty()) {
+            for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
+                info += "@" + entry.getKey() + "=" + entry.getValue().getText();
+            }
         } else if (hasTag()) {
             info = getTag();
         } else {

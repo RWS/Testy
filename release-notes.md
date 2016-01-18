@@ -1,6 +1,7 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 2.1.0-SNAPSHOT**
+- use attributes when generate toString, in case no other important string is present
 - add support for css selector when setExcludeClasses
 - update webdriver version 2.49.0
 
