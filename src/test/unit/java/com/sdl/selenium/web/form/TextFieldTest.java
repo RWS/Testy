@@ -20,7 +20,15 @@ public class TextFieldTest {
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
-    public void getPathSelectorCorrectlyFromConstructors(TextField TextField, String expectedXpath) {
-        Assert.assertEquals(TextField.getXPath(), expectedXpath);
+    public void getPathSelectorCorrectlyFromConstructors(TextField field, String expectedXpath) {
+        Assert.assertEquals(field.getXPath(), expectedXpath);
     }
+
+    @Test
+    public void whenUsePlaceholderGenerateCorrectToString() {
+        TextField field = new TextField().setPlaceholder("Password");
+        Assert.assertEquals(field.toString(), "@placeholder=Password");
+    }
+
+
 }
