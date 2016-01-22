@@ -132,15 +132,19 @@ public class FileUtils {
 
     }
 
-    public static boolean compareFiles(String file1Path, String file2Path) {
+    public static boolean compareFiles(String currentFilePath, String expectedFilePath) {
         try {
-            File file1 = new File(file1Path);
-            File file2 = new File(file2Path);
-            FileUtils.waitFileIfIsEmpty(file1, 10000);
-            FileUtils.waitFileIfIsEmpty(file2, 10000);
-            String str1 = convertStreamToString(new FileInputStream(file1));
-            String str2 = convertStreamToString(new FileInputStream(file2));
-            return formatToSystemLineSeparator(str1).equals(formatToSystemLineSeparator(str2));
+            File currentFile = new File(currentFilePath);
+            File expectedFile = new File(expectedFilePath);
+            FileUtils.waitFileIfIsEmpty(currentFile, 10000);
+            FileUtils.waitFileIfIsEmpty(expectedFile, 10000);
+            String currentFileContent = formatToSystemLineSeparator(convertStreamToString(new FileInputStream(currentFile)));
+            String expectedFileContent = formatToSystemLineSeparator(convertStreamToString(new FileInputStream(expectedFile)));
+            boolean equals = currentFileContent.equals(expectedFileContent);
+            if (!equals) {
+                LOGGER.debug("Expected: \"{}\" \n But was \"{}\" ", currentFileContent, expectedFileContent);
+            }
+            return equals;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
