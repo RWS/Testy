@@ -166,6 +166,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (ensureExists(el)) {
             try {
                 el.currentElement.sendKeys(charSequences);
+                LOGGER.info("SendKeys value({}): '{}'", el, getKeysName(charSequences));
             } catch (ElementNotVisibleException e) {
                 try {
                     tryAgainDoSendKeys(el, charSequences);
@@ -187,6 +188,19 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         }
     }
 
+    private String getKeysName(java.lang.CharSequence... charSequences) {
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+            for (CharSequence ch: charSequences){
+                if(i > 0){
+                    builder.append(",");
+                }
+                builder.append(ch instanceof Keys ? ((Keys) ch).name() : ch);
+                i++;
+            }
+        return builder.toString();
+    }
+
     @Override
     public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         sendKeys(el, charSequences);
@@ -195,6 +209,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private void tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         if (findAgain(el)) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
+            LOGGER.info("again SendKeys value({}): '{}'", el, getKeysName(charSequences));
         } else {
             LOGGER.error("currentElement is null after to try currentElement: {}", el);
         }
