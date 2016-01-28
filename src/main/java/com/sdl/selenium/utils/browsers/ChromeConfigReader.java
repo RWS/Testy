@@ -21,6 +21,8 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
             "\n options.arguments=--lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
             "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
+            "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
+            "\n options.experimental.profile.default_content_settings.popups=0" +
             "\n options.experimental.download.prompt_for_download=1";
 
     public ChromeConfigReader() {
@@ -68,7 +70,9 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
                         prefs.put(preferenceKey, value);
                     }
                 }
-            }
+            } /*else {
+                overWriteWebLocatorConfig(key, value);
+            }*/
         }
         String property = getDownloadPath();
         File file = new File(property);
