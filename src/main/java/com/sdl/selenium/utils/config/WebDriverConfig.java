@@ -193,6 +193,9 @@ public class WebDriverConfig {
     private static Browser findBrowser(InputStream inputStream) {
         PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
+
+        WebLocatorConfig.setBrowserProperties(properties);
+
         LOGGER.info("Browser is: {}", browserKey);
         return getBrowser(browserKey);
     }

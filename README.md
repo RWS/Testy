@@ -134,6 +134,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - add support for css selector when setExcludeClasses
 - update webdriver version 2.49.0
 - add log at sendKeys method
+- add possibility to overwritten value from webLocator.properties in browser.properties
 
 **Release Notes for Testy 2.0.0**
 - Change config default value for weblocator.log.suggestions=false

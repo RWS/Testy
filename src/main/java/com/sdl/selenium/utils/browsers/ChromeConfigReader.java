@@ -53,7 +53,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     private void setProfilePreferences(ChromeOptions options) throws IOException {
         Map<String, Object> prefs = new HashMap<String, Object>();
-
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
             String value = (String) entry.getValue();
@@ -70,9 +69,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
                         prefs.put(preferenceKey, value);
                     }
                 }
-            } /*else {
-                overWriteWebLocatorConfig(key, value);
-            }*/
+            }
         }
         String property = getDownloadPath();
         File file = new File(property);

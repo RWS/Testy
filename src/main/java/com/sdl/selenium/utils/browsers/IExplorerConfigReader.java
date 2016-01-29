@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(IExplorerConfigReader.class);
@@ -34,7 +33,6 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.ie.driver", driverPath);
         }
-//        setExtraProperty();
         return new InternetExplorerDriver(ieCapabilities);
     }
 
@@ -48,13 +46,4 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
         //http://stackoverflow.com/questions/18510965/how-to-set-internetexplorerdriver-download-directory
         return "";
     }
-
-//    private void setExtraProperty() {
-//        for (Map.Entry<Object, Object> entry : entrySet()) {
-//            String key = (String) entry.getKey();
-//            String value = (String) entry.getValue();
-//            overWriteWebLocatorConfig(key, value);
-//        }
-//        LOGGER.info("The properties was load with success: {}", toString());
-//    }
 }

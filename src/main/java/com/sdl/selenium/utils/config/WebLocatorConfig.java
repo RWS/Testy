@@ -1,6 +1,7 @@
 package com.sdl.selenium.utils.config;
 
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.utils.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +82,10 @@ public class WebLocatorConfig {
         WebLocatorConfig.properties = properties;
         LOGGER.info(properties.toString());
 
+        init();
+    }
+
+    private static void init() {
         Integer renderMillis = getInt("weblocator.defaults.renderMillis");
         if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);
@@ -122,6 +127,12 @@ public class WebLocatorConfig {
         }
 
         String searchTextType = getProperty("weblocator.defaults.searchType");
+        convertAndSetSearchTextType(searchTextType);
+
+        setMinCharsToType(getInt("weblocator.min.chars.toType"));
+    }
+
+    public static void convertAndSetSearchTextType(String searchTextType) {
         if (searchTextType != null && !"".equals(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");
@@ -135,8 +146,6 @@ public class WebLocatorConfig {
             }
             setSearchTextType(list);
         }
-
-        setMinCharsToType(getInt("weblocator.min.chars.toType"));
     }
 
     public static long getDefaultRenderMillis() {
@@ -227,7 +236,16 @@ public class WebLocatorConfig {
         return minCharsToType;
     }
 
-    private static void setMinCharsToType(int minCharsToType) {
+    public static void setMinCharsToType(int minCharsToType) {
         WebLocatorConfig.minCharsToType = minCharsToType;
+    }
+
+    public static void setBrowserProperties(PropertiesReader properties) {
+        properties.keySet().retainAll(WebLocatorConfig.properties.keySet());
+        if(properties.size() > 0){
+            WebLocatorConfig.properties.putAll(properties);
+            LOGGER.info("The webLocator.properties were overwriten with value from browser properties: {}", properties.toString());
+            init();
+        }
     }
 }

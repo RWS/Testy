@@ -108,7 +108,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 (Integer.valueOf(getProperty("profile.preference.browser.download.folderList")) == 2);
     }
 
-    private void setProfilePreferences(FirefoxProfile myProfile) {
+    private void setProfilePreferences(FirefoxProfile profile) {
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
             if (key.startsWith("profile.preference.")) {
@@ -116,13 +116,13 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 String value = (String) entry.getValue();
 
                 if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-                    myProfile.setPreference(preferenceKey, Boolean.valueOf(value));
+                    profile.setPreference(preferenceKey, Boolean.valueOf(value));
                 } else {
                     try {
                         int intValue = Integer.parseInt(value);
-                        myProfile.setPreference(preferenceKey, intValue);
+                        profile.setPreference(preferenceKey, intValue);
                     } catch (NumberFormatException e) {
-                        myProfile.setPreference(preferenceKey, value);
+                        profile.setPreference(preferenceKey, value);
                     }
                 }
             }
