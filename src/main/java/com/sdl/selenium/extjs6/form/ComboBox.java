@@ -6,6 +6,9 @@ import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ComboBox extends TextField implements ICombo {
@@ -79,6 +82,14 @@ public class ComboBox extends TextField implements ICombo {
             LOGGER.debug("(" + this + ") The combo or arrow could not be located.");
         }
         return value;
+    }
+
+    public List<String> getAllComboValues() {
+        clickIcon("arrow");
+        WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).setClasses(listClass);
+        String[] comboValues = comboList.getHtmlText().split("\\n");
+        clickIcon("arrow");
+        return Arrays.asList(comboValues);
     }
 
     public boolean assertSelect(String value) {
