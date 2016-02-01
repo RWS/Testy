@@ -73,15 +73,8 @@ public class ComboBox extends TextField implements ICombo {
 
     @Override
     public String getValue() {
-        String value = null;
-        if (clickIcon("arrow")) {
-            WebLocator option = getComboEl(null, false, 300).setClasses("x-boundlist-selected");
-            value = option.getHtmlText();
-            clickIcon("arrow"); // to close combo
-        } else {
-            LOGGER.debug("(" + this + ") The combo or arrow could not be located.");
-        }
-        return value;
+        ready();
+        return executor.getValue(this);
     }
 
     public List<String> getAllComboValues() {
