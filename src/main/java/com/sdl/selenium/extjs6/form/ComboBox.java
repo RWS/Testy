@@ -79,7 +79,7 @@ public class ComboBox extends TextField implements ICombo {
 
     public List<String> getAllComboValues() {
         clickIcon("arrow");
-        WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).setClasses(listClass);
+        WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).setClasses(listClass).setVisibility(true);
         String[] comboValues = comboList.getHtmlText().split("\\n");
         clickIcon("arrow");
         return Arrays.asList(comboValues);
