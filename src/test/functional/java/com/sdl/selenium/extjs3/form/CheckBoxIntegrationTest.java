@@ -1,25 +1,36 @@
 package com.sdl.selenium.extjs3.form;
 
+import com.sdl.demo.extjs3.form.SimpleForm;
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertTrue;
 
 public class CheckBoxIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxIntegrationTest.class);
+    private SimpleForm form = new SimpleForm();
 
-    /*Panel simpleFormPanel = new Panel(null, "Simple Form");
-    Checkbox rightCheckBox = new Checkbox("CatRight", simpleFormPanel);
-    Checkbox leftCheckBox = new Checkbox("CatLeft:", simpleFormPanel);
+    @BeforeClass
+    public void startTest() {
+        driver.get(InputData.EXTJS_URL);
+    }
 
     @Test
     public void rightCheckBox() {
-        rightCheckBox.click();
-        assertTrue(rightCheckBox.isSelected());
+        form.rightCheckBox.click();
+        assertTrue(form.rightCheckBox.isSelected());
     }
 
     @Test
     public void leftCheckBox() {
-        leftCheckBox.click();
-        assertTrue(leftCheckBox.isSelected());
+        form.leftCheckBox.click();
+        assertTrue(form.leftCheckBox.isSelected());
+    }
+
+    /*public static void main(String[] args) {
+        CheckBoxIntegrationTest test = new CheckBoxIntegrationTest();
+        WebLocatorUtils.getXPathScript(test.form);
     }*/
+
 }
