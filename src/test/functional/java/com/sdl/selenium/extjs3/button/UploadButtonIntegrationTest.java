@@ -1,6 +1,6 @@
 package com.sdl.selenium.extjs3.button;
 
-import com.sdl.selenium.extjs3.panel.Panel;
+import com.sdl.demo.extjs3.form.SimpleForm;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
@@ -11,8 +11,7 @@ import static org.hamcrest.core.Is.is;
 
 public class UploadButtonIntegrationTest extends TestBase {
 
-    private Panel simpleFormPanel = new Panel(null, "Simple Form");
-    private UploadButton uploadButton = new UploadButton(simpleFormPanel, "Browse");
+    private SimpleForm simpleForm = new SimpleForm();
 
     @BeforeClass
     public void startTests() {
@@ -21,11 +20,11 @@ public class UploadButtonIntegrationTest extends TestBase {
 
     @Test
     public void uploadFile() {
-        assertThat(uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"), is(true));
+        assertThat(simpleForm.uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"), is(true));
     }
 
     @Test
     public void uploadFileWithSpaces() {
-        assertThat(uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"), is(true));
+        assertThat(simpleForm.uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"), is(true));
     }
 }

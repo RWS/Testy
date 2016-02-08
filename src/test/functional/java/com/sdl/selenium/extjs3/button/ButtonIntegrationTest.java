@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.button;
 
+import com.sdl.demo.extjs3.form.SimpleForm;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.window.Window;
@@ -24,7 +25,7 @@ public class ButtonIntegrationTest extends TestBase {
     private WebLocator close = new WebLocator().setId("close");
     private Button dateFieldButton = new Button(null, "DateField");
 
-    private Button cancelButton = new Button(new Panel("Simple Form"), "Cancel");
+    private SimpleForm simpleForm = new SimpleForm();
     private Panel panel = new Panel("Find Elements when contains quotes");
 
     private Button dontAcceptButton = new Button(panel, "Don't Accept");
@@ -74,7 +75,7 @@ public class ButtonIntegrationTest extends TestBase {
     public void performanceTestClick() {
         long startMs = System.currentTimeMillis();
         for (int i = 0; i < 10; i++) {
-            cancelButton.click();
+            simpleForm.cancelButton.click();
         }
         long endMs = System.currentTimeMillis();
         LOGGER.info(String.format("performanceTestClick took %s ms", endMs - startMs));
