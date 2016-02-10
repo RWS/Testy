@@ -2,16 +2,16 @@
 
 Automated Acceptance Testing.
 
-Selenium and Selenium WebDriver test framework for web applications.
-You don't have to worry anymore about complex XPATH or CSS selector because we are taking care for you about that.
+[`Selenium WebDriver`](http://www.seleniumhq.org/projects/webdriver/) test framework for web applications.
+You don't have to worry anymore about complex [`XPATH`](http://zvon.org/xxl/XPathTutorial/Output/example1.html) or CSS selector because we are taking care for you about that.
 Simply set each property on the element and we will generate the necessary selector.
 You can combine more properties/attributes on the same selector very easy. 
 
 This project is optimized for:
 
 - [x] Dynamic html & Complex UI
-- [x] Sencha ExtJS
-- [x] Bootstrap
+- [x] [`Sencha ExtJS`](https://www.sencha.com/products/extjs/#overview)
+- [x] [`Bootstrap`](http://getbootstrap.com/javascript/)
 - [x] Simple web applications/sites
 
 ## Java Usage Example
