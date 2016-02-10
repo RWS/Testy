@@ -3,7 +3,7 @@
 Automated Acceptance Testing.
 
 [`Selenium WebDriver`](http://www.seleniumhq.org/projects/webdriver/) test framework for web applications.
-You don't have to worry anymore about complex [`XPATH`](http://zvon.org/xxl/XPathTutorial/Output/example1.html) or CSS selector because we are taking care for you about that.
+You don't have to worry anymore about complex [`XPATH`](http://zvon.org/xxl/XPathTutorial/Output/example1.html) or [`CSS selector`](https://saucelabs.com/selenium/css-selectors) because we are taking care for you about that.
 Simply set each property on the element and we will generate the necessary selector.
 You can combine more properties/attributes on the same selector very easy. 
 
