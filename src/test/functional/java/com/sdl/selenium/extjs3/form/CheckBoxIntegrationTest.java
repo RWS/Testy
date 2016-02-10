@@ -3,13 +3,14 @@ package com.sdl.selenium.extjs3.form;
 import com.sdl.demo.extjs3.form.SimpleForm;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.WebLocatorUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class CheckBoxIntegrationTest extends TestBase {
-    private SimpleForm form = new SimpleForm();
+    private SimpleForm simpleForm = new SimpleForm();
 
     @BeforeClass
     public void startTest() {
@@ -18,19 +19,18 @@ public class CheckBoxIntegrationTest extends TestBase {
 
     @Test
     public void rightCheckBox() {
-        form.rightCheckBox.click();
-        assertTrue(form.rightCheckBox.isSelected());
+        simpleForm.rightCheckBox.click();
+        assertTrue(simpleForm.rightCheckBox.isSelected());
     }
 
     @Test
     public void leftCheckBox() {
-        form.leftCheckBox.click();
-        assertTrue(form.leftCheckBox.isSelected());
+        simpleForm.leftCheckBox.click();
+        assertTrue(simpleForm.leftCheckBox.isSelected());
     }
 
-    /*public static void main(String[] args) {
-        CheckBoxIntegrationTest test = new CheckBoxIntegrationTest();
-        WebLocatorUtils.getXPathScript(test.form);
-    }*/
+    public static void main(String[] args) {
+        WebLocatorUtils.getXPathScript(new SimpleForm());
+    }
 
 }
