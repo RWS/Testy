@@ -4,25 +4,25 @@ import java.util.*;
 
 public class SearchText {
 
-    private String text;
+    private String value;
     private List<SearchType> searchTypes = new ArrayList<>();
 
-    public SearchText(String text, List<SearchType> searchTypes) {
-        this.text = text;
+    public SearchText(String value, List<SearchType> searchTypes) {
+        this.value = value;
         this.searchTypes = searchTypes;
     }
 
-    public SearchText(String text, SearchType... searchTypes) {
-        this.text = text;
+    public SearchText(String value, SearchType... searchTypes) {
+        this.value = value;
         setSearchTypes(searchTypes);
     }
 
-    public String getText() {
-        return text;
+    public String getValue() {
+        return value;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public List<SearchType> getSearchTypes() {

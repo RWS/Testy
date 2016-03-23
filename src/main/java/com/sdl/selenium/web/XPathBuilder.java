@@ -546,6 +546,10 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
+    public Map<String, WebLocator> getTemplatesTitle(){
+        return templateTitle;
+    }
+
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Example:</p>
@@ -565,6 +569,10 @@ public class XPathBuilder implements Cloneable {
             this.elPathSuffix.put(key, elPathSuffix);
         }
         return (T) this;
+    }
+
+    public Map<String, String> getElsPathSuffix() {
+        return elPathSuffix;
     }
 
     public Map<String, String> getTemplatesValues() {
@@ -862,6 +870,10 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
+    public Map<String, SearchText> getAttributes() {
+        return attribute;
+    }
+
     // =========================================
     // =============== Methods =================
     // =========================================
@@ -1019,7 +1031,7 @@ public class XPathBuilder implements Cloneable {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
                 List<SearchType> searchType = entry.getValue().getSearchTypes();
                 boolean hasContainsAll = searchType.contains(SearchType.CONTAINS_ALL);
-                String text = getTextAfterEscapeQuotes(hasContainsAll, entry.getValue().getText(), searchType);
+                String text = getTextAfterEscapeQuotes(hasContainsAll, entry.getValue().getValue(), searchType);
                 selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));
             }
         }
@@ -1230,7 +1242,7 @@ public class XPathBuilder implements Cloneable {
         }
         if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                selector.add("[" + entry.getKey() + "='" + entry.getValue().getText() + "']");
+                selector.add("[" + entry.getKey() + "='" + entry.getValue().getValue() + "']");
             }
         }
 //        for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
@@ -1383,7 +1395,7 @@ public class XPathBuilder implements Cloneable {
             info = getElPath();
         } else if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                info += "@" + entry.getKey() + "=" + entry.getValue().getText();
+                info += "@" + entry.getKey() + "=" + entry.getValue().getValue();
             }
         } else if (hasTag()) {
             info = getTag();
