@@ -10,14 +10,16 @@ $(document).ready(function () {
             Session.createSession(email);
             window.location.href = "./bootstrap/index.html";
         } else {
+            var msg;
             if(email == '') {
-                $('.error-msg').html('Please enter your email!');
+                msg = 'Please enter your email!';
             } else if(pass == '') {
-                $('.error-msg').html('Please enter your password!');
+                msg = 'Please enter your password!';
             } else {
                 $pass.val("");
-                $('.error-msg').html('Invalid user or password!');
+                msg = 'Invalid user or password!';
             }
+            $('.error-msg').html(msg);
         }
     });
 
@@ -25,7 +27,7 @@ $(document).ready(function () {
         userTable = ['<table border="1" style="border: 1px solid #e5e5e5;">'];
 
     $.each(users, function(i, user){
-        console.debug(user.join('</td><td>'));
+        console && console.debug(user.join('</td><td>'));
         userTable.push('<tr><td>');
         userTable.push(user.join('</td><td>'));
         userTable.push('</td></tr>');
