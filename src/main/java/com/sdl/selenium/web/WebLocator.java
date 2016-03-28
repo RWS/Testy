@@ -105,13 +105,33 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getCurrentElementAttribute(this, attribute);
     }
 
-    public String getHtmlText() {
-        return getHtmlText(false);
+    public String getText() {
+        return getText(false);
     }
 
+    public String getText(boolean instant) {
+        if (instant || ready()) {
+            return executor.getText(this);
+        }
+        return null;
+    }
+
+    /**
+     * @deprecated use {@link #getText()}}
+     * @return text's element
+     */
+    public String getHtmlText() {
+        return getText(false);
+    }
+
+    /**
+     * @deprecated use {@link #getText(boolean)}}
+     * @param instant true or false
+     * @return text's element
+     */
     public String getHtmlText(boolean instant) {
         if (instant || ready()) {
-            return executor.getHtmlText(this);
+            return executor.getText(this);
         }
         return null;
     }

@@ -330,7 +330,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public String getHtmlText(WebLocator el) {
+    public String getText(WebLocator el) {
         String text = null;
         if (ensureExists(el)) {
             try {
@@ -345,6 +345,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             }
         }
         return text;
+    }
+
+    @Override
+    @Deprecated
+    public String getHtmlText(WebLocator el) {
+        return getText(el);
     }
 
     private String getSelector(WebLocator el) {

@@ -54,6 +54,13 @@ public interface WebLocatorExecutor {
 
     String getCurrentElementAttribute(final WebLocator el, final String attribute);
 
+    String getText(WebLocator el);
+
+    /**
+     * @deprecated use {@link #getText(WebLocator)}}
+     * @param el currentEl
+     * @return text's element
+     */
     String getHtmlText(WebLocator el);
 
     @Deprecated

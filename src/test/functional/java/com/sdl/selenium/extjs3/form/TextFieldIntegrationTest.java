@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.TestBase;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class TextFieldIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
+        driver.get(InputData.EXTJS_URL);
         showComponent("TextField");
     }
 
