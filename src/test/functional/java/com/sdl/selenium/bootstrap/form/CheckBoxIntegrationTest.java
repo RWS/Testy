@@ -15,7 +15,7 @@ public class CheckBoxIntegrationTest extends TestBase {
 
     private Form form = new Form(null, "Form Title");
     private CheckBox checkBox = new CheckBox(form);
-    private CheckBox withEnterWebLocator = new CheckBox(form).setLabel("Label with Enter.", SearchType.CHILD_NODE).setLabelPosition("//");
+    private CheckBox withEnterWebLocator = new CheckBox(form).withLabel("Label with Enter.", SearchType.CHILD_NODE).withLabelPosition("//");
 
     @BeforeClass
     public void startTests() {

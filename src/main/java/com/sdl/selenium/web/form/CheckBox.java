@@ -5,19 +5,19 @@ import com.sdl.selenium.web.WebLocator;
 public class CheckBox extends WebLocator implements ICheck {
 
     public CheckBox() {
-        setClassName("CheckBox");
-        setTag("input");
-        setType("checkbox");
+        withClassName("CheckBox");
+        withTag("input");
+        withType("checkbox");
     }
 
     public CheckBox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public CheckBox(String id) {
         this();
-        setId(id);
+        withId(id);
     }
 
     @Override

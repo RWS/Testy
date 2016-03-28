@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3;
 
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.extjs3.button.Button;
@@ -8,7 +9,6 @@ import com.sdl.selenium.extjs3.conditions.MessageBoxSuccessCondition;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.extjs3.window.Window;
-import com.sdl.selenium.TestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -22,7 +22,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
     private Button expect2Button = new Button(conditionManagerPanel, "Expect2");
     private Button expect3Button = new Button(conditionManagerPanel, "Expect3");
 
-    private Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
+    private Window messageBoxWindow = new Window(true).withClasses("x-window-dlg").withInfoMessage("MessageBox");
     private Button button = new Button(messageBoxWindow, "Nossss");
 
     private Condition doClick(Button button){

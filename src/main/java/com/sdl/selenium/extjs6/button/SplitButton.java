@@ -9,17 +9,17 @@ public class SplitButton extends Button {
     private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
     public SplitButton() {
-        setClassName("SplitButton");
+        withClassName("SplitButton");
     }
 
     public SplitButton(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public SplitButton(WebLocator container, String text) {
         this(container);
-        setText(text);
+        withText(text);
     }
 
     public boolean clickOnMenu(String option) {
@@ -44,7 +44,7 @@ public class SplitButton extends Button {
     }
 
     private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
-        WebLocator comboListElement = new WebLocator("x-menu").setAttribute("aria-hidden", "false").setInfoMessage(this + " -> x-menu");
-        return new WebLocator(comboListElement).setText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).setRenderMillis(optionRenderMillis).setInfoMessage(value);
+        WebLocator comboListElement = new WebLocator("x-menu").withAttribute("aria-hidden", "false").withInfoMessage(this + " -> x-menu");
+        return new WebLocator(comboListElement).withText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).withRenderMillis(optionRenderMillis).withInfoMessage(value);
     }
 }

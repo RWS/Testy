@@ -6,8 +6,8 @@ import com.sdl.selenium.web.form.TextField;
 
 public class ModalWindow extends Window {
 
-    private TextField emailField = new TextField(this).setLabel("Email:");
-    private TextField nameField = new TextField(this).setLabel("User Name:");
+    private TextField emailField = new TextField(this).withLabel("Email:");
+    private TextField nameField = new TextField(this).withLabel("User Name:");
     private Button saveButton = new Button(this, "Save");
     private Button closeButton = new Button(this, "Close");
 

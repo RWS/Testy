@@ -14,7 +14,7 @@ public class GridPanelTest {
     private static GridPanel gridClsAndColumn = new GridPanel("GridPanelCls", "1");
     private static GridPanel gridContainerAndColumn = new GridPanel(container, "1");
     private static GridPanel gridContainerAndClsAndColumn = new GridPanel(container, "GridPanelCls", "1");
-    private static GridPanel gridClsPos = new GridPanel("GridPanelCls").setPosition(2);
+    private static GridPanel gridClsPos = new GridPanel("GridPanelCls").withPosition(2);
 
     private static final String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
     private static final String GRID_PATH = "//*[contains(concat(' ', @class, ' '), ' x-grid-panel ') and not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))]";

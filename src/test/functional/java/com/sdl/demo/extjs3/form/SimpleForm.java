@@ -22,8 +22,8 @@ public class SimpleForm extends Panel {
     public DownloadButton downloadWithSpacesButton = new DownloadButton(this, "Download with spaces");
     public DownloadButton downloadFileButton = new DownloadButton(this, "Download File");
 
-    public Checkbox rightCheckBox = new Checkbox(this).setLabel("CatRight").setLabelPosition("//preceding-sibling::");
-    public Checkbox leftCheckBox = new Checkbox(this).setLabel("CatLeft:");
+    public Checkbox rightCheckBox = new Checkbox(this).withLabel("CatRight").withLabelPosition("//preceding-sibling::");
+    public Checkbox leftCheckBox = new Checkbox(this).withLabel("CatLeft:");
 
     public Button cancelButton = new Button(this, "Cancel");
 }

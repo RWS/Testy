@@ -235,7 +235,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      * <p>Example:</p>
      * <pre>
-     *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
+     *     WebLocator element = new WebLocator().withClasses("bg-btn", "new-btn");
      * </pre>
      *
      * @return value that has been set in {@link #setClasses(String...)}
@@ -495,7 +495,7 @@ public class XPathBuilder implements Cloneable {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "withTemplate("title", "@title='%s'")" a template.</b></p>
      *
      * @return value that has been set in {@link #setTitle(String, SearchType...)}
      */
@@ -1013,7 +1013,7 @@ public class XPathBuilder implements Cloneable {
         if (hasTitle()) {
             WebLocator titleTplEl = templateTitle.get("title");
             if (titleTplEl != null) {
-                titleTplEl.setText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
+                titleTplEl.withText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 setTemplate("title", "count(.%s) > 0");
                 addTemplate(selector, "title", titleTplEl.getXPath());
             } else if (!searchTitleType.isEmpty()) {
@@ -1066,7 +1066,7 @@ public class XPathBuilder implements Cloneable {
 
             // child element has myself as parent
             if (parentElementIterator.getPathBuilder() == this) {
-                childIterator.setContainer(null); // break parent tree while generating child address
+                childIterator.withContainer(null); // break parent tree while generating child address
                 parentElement = parentElementIterator;
                 breakElement = childIterator;
             } else {
@@ -1076,7 +1076,7 @@ public class XPathBuilder implements Cloneable {
 
         String selector = "count(." + child.getXPath() + ") > 0";
         if (breakElement != null) {
-            breakElement.setContainer(parentElement);
+            breakElement.withContainer(parentElement);
         }
         return selector;
     }
@@ -1430,7 +1430,7 @@ public class XPathBuilder implements Cloneable {
             searchLabelType.add(SearchType.EQUALS);
         }
         SearchType[] st = searchLabelType.toArray(new SearchType[searchLabelType.size()]);
-        return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getXPath();
+        return new WebLocator().withText(getLabel(), st).withTag(getLabelTag()).getXPath();
     }
 
     @Override

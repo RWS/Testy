@@ -10,9 +10,9 @@ public class Grid extends Table {
     private static final Logger LOGGER = LoggerFactory.getLogger(Grid.class);
 
     public Grid() {
-        setClassName("Grid");
-        setBaseCls("x-grid");
-        setTag("*");
+        withClassName("Grid");
+        withBaseCls("x-grid");
+        withTag("*");
     }
 
 //    public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class Grid extends Table {
 
     public Grid(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     /**
@@ -33,11 +33,11 @@ public class Grid extends Table {
      * @return TableRow
      */
     public TableRow getRow(int indexRow, TableCell... byCells) {
-        return new TableRow(this, indexRow, byCells).setTag("table").setInfoMessage("-Row");
+        return new TableRow(this, indexRow, byCells).withTag("table").withInfoMessage("-Row");
     }
 
     public Row getRow(int indexRow, AbstractCell... byCells) {
-        return new Row(this, indexRow, byCells).setTag("table").setInfoMessage("-Row");
+        return new Row(this, indexRow, byCells).withTag("table").withInfoMessage("-Row");
     }
 
     public boolean waitToActivate(int seconds) {
@@ -53,7 +53,7 @@ public class Grid extends Table {
     }
 
     private boolean hasMask(){
-        WebLocator mask = new WebLocator(this).setClasses("x-mask").setElPathSuffix("style", "not(contains(@style, 'display: none'))");
+        WebLocator mask = new WebLocator(this).withClasses("x-mask").withElxPathSuffix("style", "not(contains(@style, 'display: none'))");
         return mask.waitToRender(500);
     }
 }

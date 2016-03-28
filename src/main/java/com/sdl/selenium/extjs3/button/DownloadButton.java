@@ -10,17 +10,17 @@ public class DownloadButton extends Button implements Download {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadButton.class);
 
     public DownloadButton() {
-        setClassName("DownloadButton");
+        withClassName("DownloadButton");
     }
 
     public DownloadButton(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public DownloadButton(WebLocator container, String text) {
         this(container);
-        setText(text, SearchType.EQUALS);
+        withText(text, SearchType.EQUALS);
     }
 
     /**

@@ -17,14 +17,14 @@ public class ChangePasswordWindow extends Window {
         super(title);
     }
 
-    private TextField currentPassField = new TextField(this).setLabel("Current Password");
-    private TextField newPassField = new TextField(this).setLabel("New Password");
-    private TextField confirmPassField = new TextField(this).setLabel("Repeat Password");
+    private TextField currentPassField = new TextField(this).withLabel("Current Password");
+    private TextField newPassField = new TextField(this).withLabel("New Password");
+    private TextField confirmPassField = new TextField(this).withLabel("Repeat Password");
 
-    private Button saveButton = new Button(this).setText("Save");
-    private Button closeButton = new Button(this).setText("Close");
+    private Button saveButton = new Button(this).withText("Save");
+    private Button closeButton = new Button(this).withText("Close");
 
-    private WebLocator statusMsgElement = new WebLocator(this).setClasses("status-msg");
+    private WebLocator statusMsgElement = new WebLocator(this).withClasses("status-msg");
 
     public void changePassword(String currentPass, String newPass, String confirmPass) {
         currentPassField.setValue(currentPass);

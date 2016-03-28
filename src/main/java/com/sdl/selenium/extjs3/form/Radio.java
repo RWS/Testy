@@ -9,31 +9,31 @@ public class Radio extends ExtJsComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(Radio.class);
 
     public Radio() {
-        setClassName("Radio");
-        setTag("input");
-        setBaseCls("x-form-radio");
-        setLabelPosition("/../");
-        setTemplate("text", "@value='%s'");
+        withClassName("Radio");
+        withTag("input");
+        withBaseCls("x-form-radio");
+        withLabelPosition("/../");
+        withTemplate("text", "@value='%s'");
     }
 
     public Radio(String value) {
         this();
-        setText(value);
+        withText(value);
     }
 
     public Radio(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public Radio(WebLocator container, String name) {
         this(container);
-        setName(name);
+        withName(name);
     }
 
     public Radio(String label, WebLocator container) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public boolean isSelected() {

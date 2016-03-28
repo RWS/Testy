@@ -12,7 +12,7 @@ public class WindowTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Window(),                     "//*[contains(concat(' ', @class, ' '), ' x-window ') and contains(@style ,'visibility: visible;')]"},
-                {new Window().setClasses("Cls"),   "//*[contains(concat(' ', @class, ' '), ' x-window ') and contains(concat(' ', @class, ' '), ' Cls ') and contains(@style ,'visibility: visible;')]"},
+                {new Window().withClasses("Cls"),   "//*[contains(concat(' ', @class, ' '), ' x-window ') and contains(concat(' ', @class, ' '), ' Cls ') and contains(@style ,'visibility: visible;')]"},
                 {new Window(true),                 "//*[contains(concat(' ', @class, ' '), ' x-window ') and preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')] and contains(@style ,'visibility: visible;')]"},
                 {new Window(false),                "//*[contains(concat(' ', @class, ' '), ' x-window ') and contains(@style ,'visibility: visible;')]"},
                 {new Window("WindowTitle"),        "//*[contains(concat(' ', @class, ' '), ' x-window ') and count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='WindowTitle']) > 0 and contains(@style ,'visibility: visible;')]"},

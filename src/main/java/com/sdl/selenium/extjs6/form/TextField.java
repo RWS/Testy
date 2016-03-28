@@ -12,17 +12,17 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
-        setLabelPosition("//following-sibling::*//");
+        withLabelPosition("//following-sibling::*//");
     }
 
     public TextField(WebLocator container){
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public TextField(WebLocator container, String label) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE);
+        withLabel(label, SearchType.DEEP_CHILD_NODE);
     }
 
     // methods
@@ -38,9 +38,9 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public boolean clickIcon(String icon) {
         if (ready()) {
-            WebLocator iconLocator = new WebLocator(this).setElPath(getTriggerPath(icon));
-            iconLocator.setRenderMillis(500);
-            iconLocator.setInfoMessage(this + " -> trigger-" + icon);
+            WebLocator iconLocator = new WebLocator(this).withElxPath(getTriggerPath(icon));
+            iconLocator.withRenderMillis(500);
+            iconLocator.withInfoMessage(this + " -> trigger-" + icon);
             try {
                 return iconLocator.click();
             } catch (Exception e) {
@@ -69,7 +69,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     /*public static void main(String[] args) {
         TextField textField = new TextField(null, "[review]Choose Source");
-        WebLocator iconLocator = new WebLocator(textField).setElPath(textField.getTriggerPath("arrow"));
+        WebLocator iconLocator = new WebLocator(textField).withElxPath(textField.getTriggerPath("arrow"));
         LOGGER.debug(iconLocator.getXPath());
     }*/
 }

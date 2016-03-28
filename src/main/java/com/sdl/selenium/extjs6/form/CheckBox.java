@@ -10,29 +10,29 @@ public class CheckBox extends WebLocator implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
-        setClassName("CheckBox");
-        setBaseCls("x-form-checkbox");
+        withClassName("CheckBox");
+        withBaseCls("x-form-checkbox");
     }
 
     public CheckBox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public CheckBox(WebLocator container, String label) {
         this(container);
-        setLabel(label, SearchType.CONTAINS);
+        withLabel(label, SearchType.CONTAINS);
     }
 
     public CheckBox(String boxLabel, WebLocator container) {
         this(container);
-        setLabel(boxLabel);
-        setLabelPosition("/../");
+        withLabel(boxLabel);
+        withLabelPosition("/../");
     }
 
     @Override
     public boolean isSelected() {
-        WebLocator el = new WebLocator(this).setElPath("/../input");
+        WebLocator el = new WebLocator(this).withElxPath("/../input");
         String select = el.getAttribute("aria-checked");
         return select != null && select.contains("true");
     }

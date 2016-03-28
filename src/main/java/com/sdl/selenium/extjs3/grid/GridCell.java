@@ -11,40 +11,40 @@ public class GridCell extends AbstractCell {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridCell.class);
 
     public GridCell() {
-        setRenderMillis(200);
-        setClassName("GridCell");
+        withRenderMillis(200);
+        withClassName("GridCell");
     }
 
     public GridCell(int columnIndex) {
         this();
-        setElPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
-        setInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
+        withElxPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
+        withInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
     }
 
     public GridCell(String text, WebLocator container) {
         this();
-        setContainer(container);
-        setText(text);
-        setClasses("x-grid3-cell-inner");
+        withContainer(container);
+        withText(text);
+        withClasses("x-grid3-cell-inner");
     }
 
     public GridCell(String text, SearchType... searchTypes) {
         this();
-        setText(text, searchTypes);
-        setClasses("x-grid3-cell-inner");
+        withText(text, searchTypes);
+        withClasses("x-grid3-cell-inner");
     }
 
     public GridCell(WebLocator container, String text, SearchType... searchTypes) {
         this();
-        setContainer(container);
-        setText(text, searchTypes);
-        setClasses("x-grid3-cell-inner");
+        withContainer(container);
+        withText(text, searchTypes);
+        withClasses("x-grid3-cell-inner");
     }
 
     public GridCell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
-        setPosition(columnIndex);
-        setText(columnText, searchTypes);
+        withPosition(columnIndex);
+        withText(columnText, searchTypes);
     }
 
     protected XPathBuilder createXPathBuilder() {

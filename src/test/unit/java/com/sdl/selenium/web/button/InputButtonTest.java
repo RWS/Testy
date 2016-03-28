@@ -13,10 +13,10 @@ public class InputButtonTest {
         return new Object[][]{
                 {new InputButton(),                  "//input"},
                 {new InputButton(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input"},
-                {new InputButton(container).setText("ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
+                {new InputButton(container).withText("ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
                 {new InputButton(container, "ButtonText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@value='ButtonText']"},
-                {new InputButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
-                {new InputButton().setText("Create Account").setVisibility(true), "//input[@value='Create Account' and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
+                {new InputButton(container).withId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@id='ID']"},
+                {new InputButton().withText("Create Account").withVisibility(true), "//input[@value='Create Account' and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
         };
     }
 

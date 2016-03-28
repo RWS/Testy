@@ -596,15 +596,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
 //        String script = "(function(element){" +
 //            "var original_style = element.getAttribute('style') || '';" +
-//            "element.setAttribute('style', original_style + '; " + highlightStyle + "'); " +
-//            "setTimeout(function(){element.setAttribute('style', original_style);}, 200);})(arguments[0]);";
+//            "element.withAttribute('style', original_style + '; " + highlightStyle + "'); " +
+//            "setTimeout(function(){element.withAttribute('style', original_style);}, 200);})(arguments[0]);";
 
 //        executeScript(script, element);
 
 //        for (int i = 0; i < 2; i++) {
 //            JavascriptExecutor js = (JavascriptExecutor) driver;
-//            js.executeScript("arguments[0].setAttribute('style', arguments[1]);", element, highlightStyle);
-//            js.executeScript("arguments[0].setAttribute('style', arguments[1]);", element, "");
+//            js.executeScript("arguments[0].withAttribute('style', arguments[1]);", element, highlightStyle);
+//            js.executeScript("arguments[0].withAttribute('style', arguments[1]);", element, "");
 //        }
     }
 }

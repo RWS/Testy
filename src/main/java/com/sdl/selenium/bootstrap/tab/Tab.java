@@ -13,25 +13,25 @@ public class Tab extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     private Tab() {
-        setClassName("Tab");
-        setBaseCls("nav nav-tabs");
+        withClassName("Tab");
+        withBaseCls("nav nav-tabs");
     }
 
     public Tab(String text) {
         this();
-        setText(text);
-        setSearchTextType(SearchType.EQUALS);
+        withText(text);
+        withSearchTextType(SearchType.EQUALS);
     }
 
     public Tab(WebLocator container, String text) {
         this(text);
-        setContainer(container);
+        withContainer(container);
     }
 
     private String getTitlePath(boolean active) {
-        WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        WebLink link = new WebLink().withText(getPathBuilder().getText(), SearchType.EQUALS);
         String isActive = active ? "@class='active'" : "not(@class='active')";
-        WebLocator el = new WebLocator().setTag("ul").setClasses(getPathBuilder().getBaseCls());
+        WebLocator el = new WebLocator().withTag("ul").withClasses(getPathBuilder().getBaseCls());
         return  el.getXPath() + "//li[" + isActive + "]" + link.getXPath();
     }
 
@@ -42,7 +42,7 @@ public class Tab extends WebLocator {
      */
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
-        WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        WebLink link = new WebLink().withText(getPathBuilder().getText(), SearchType.EQUALS);
         selector += (selector.length() > 0 ? " and " : "") + "count(.//li[@class='active']" + link.getXPath() + ") > 0";
         return "//ul[" + selector + "]";
     }
@@ -67,11 +67,11 @@ public class Tab extends WebLocator {
      * @return true or false
      */
     public boolean setActive() {
-        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(true));
+        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).withElxPath(getTitlePath(true));
         boolean activated = new ConditionManager(200).add(new RenderSuccessCondition(locator)).execute().isSuccess();
         if (!activated) {
-            WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(false));
-            WebLocator titleElement = locator1.setInfoMessage(getPathBuilder().getText() + " Tab");
+            WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).withElxPath(getTitlePath(false));
+            WebLocator titleElement = locator1.withInfoMessage(getPathBuilder().getText() + " Tab");
             activated = titleElement.click();
         }
         if (activated) {
@@ -81,7 +81,7 @@ public class Tab extends WebLocator {
     }
 
    /* public static void main(String[] args) {
-        WebLocator webLocator = new WebLocator().setBaseCls("tab-pane active").setLabel("tt").setLabelPosition("//following-sibling::*[@class='tab-content']//").setLabelTag("a");
+        WebLocator webLocator = new WebLocator().withBaseCls("tab-pane active").withLabel("tt").withLabelPosition("//following-sibling::*[@class='tab-content']//").withLabelTag("a");
          //TODO improvement
         Tab tab  = new Tab("tt");
 

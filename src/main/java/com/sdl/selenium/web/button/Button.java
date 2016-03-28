@@ -9,17 +9,17 @@ public class Button extends WebLocator implements IButton {
     private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     public Button() {
-        setClassName("Button");
-        setTag("button");
+        withClassName("Button");
+        withTag("button");
     }
 
     public Button(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public Button(WebLocator container, String text, final SearchType... searchTypes) {
         this(container);
-        setText(text, searchTypes);
+        withText(text, searchTypes);
     }
 }

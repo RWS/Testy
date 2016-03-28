@@ -2,7 +2,6 @@ package com.sdl.selenium.bootstrap.button;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.bootstrap.form.UneditableInput;
@@ -36,29 +35,29 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test
     public void shouldFindElementWithChildNode() {
-        UneditableInput input = new UneditableInput().setLabel("Execute");
+        UneditableInput input = new UneditableInput().withLabel("Execute");
 
-        Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
+        Form form = new Form().withTitle("Page Object And Page Factory").withChildNodes(input);
 
         assertTrue(form.ready());
     }
 
     @Test
     public void shouldFindElementWithChildNodes() {
-        UneditableInput input = new UneditableInput().setLabel("Execute");
-        SelectPicker picker = new SelectPicker().setLabel("Execute");
+        UneditableInput input = new UneditableInput().withLabel("Execute");
+        SelectPicker picker = new SelectPicker().withLabel("Execute");
 
-        Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input, picker);
+        Form form = new Form().withTitle("Page Object And Page Factory").withChildNodes(input, picker);
 
         assertTrue(form.ready());
     }
 
     @Test
     public void shouldFindElementWithChildNodeThatHasContainerSelf() {
-        UneditableInput input = new UneditableInput().setLabel("Execute");
+        UneditableInput input = new UneditableInput().withLabel("Execute");
 
-        Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
-        input.setContainer(form);
+        Form form = new Form().withTitle("Page Object And Page Factory").withChildNodes(input);
+        input.withContainer(form);
 
         assertTrue(form.ready());
     }

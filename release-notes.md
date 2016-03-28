@@ -1,6 +1,10 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.1.0-SNAPSHOT**
+**Release Notes for Testy 2.2.0-SNAPSHOT**
+- change set***() in with***()
+- make deprecated all methods set***()
+
+**Release Notes for Testy 2.1.0**
 - use attributes when generate toString, in case no other important string is present
 - add support for css selector when setExcludeClasses
 - update webdriver version 2.52.0

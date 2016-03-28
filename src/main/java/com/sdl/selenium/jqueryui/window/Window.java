@@ -5,19 +5,19 @@ import com.sdl.selenium.web.WebLocator;
 public class Window extends WebLocator {
 
     public Window() {
-        setClassName("Window");
-        setBaseCls("ui-dialog ui-widget ui-widget-content");
-        setStyle("display: block;");
-        setTemplate("title", "count(.//*[text()='%s']) > 0");
+        withClassName("Window");
+        withBaseCls("ui-dialog ui-widget ui-widget-content");
+        withStyle("display: block;");
+        withTemplate("title", "count(.//*[text()='%s']) > 0");
     }
 
     public Window(String title) {
         this();
-        setTitle(title);
+        withTitle(title);
     }
 
     public String getMessageWindow() {
-        WebLocator webLocator = new WebLocator(this).setClasses("ui-dialog-content ui-widget-content");
+        WebLocator webLocator = new WebLocator(this).withClasses("ui-dialog-content ui-widget-content");
         return webLocator.getText();
     }
 
@@ -26,7 +26,7 @@ public class Window extends WebLocator {
     }
 
     public boolean press(String textButton) {
-        WebLocator webLocator = new WebLocator(this).setElPath("//button[count(.//*[text()='" + textButton + "']) > 0]");
+        WebLocator webLocator = new WebLocator(this).withElxPath("//button[count(.//*[text()='" + textButton + "']) > 0]");
         return webLocator.click();
     }
 

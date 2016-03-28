@@ -31,21 +31,21 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @param cls css class
      */
     public WebLocator(String cls) {
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public WebLocator(WebLocator container) {
-        setContainer(container);
+        withContainer(container);
     }
 
     public WebLocator(String cls, WebLocator container) {
         this(container);
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public WebLocator(String text, String cls, WebLocator container) {
         this(cls, container);
-        setText(text);
+        withText(text);
     }
 
     // getters and setters

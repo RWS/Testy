@@ -27,36 +27,36 @@ import java.util.List;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * MultiSelect multiSelect = new MultiSelect().setLabel("Source:");
+ * MultiSelect multiSelect = new MultiSelect().withLabel("Source:");
  * multiSelect.select("Cheese", "Tomatoes");
  * }</pre>
  */
 public class MultiSelect extends WebLocator {
 
     public MultiSelect() {
-        setClassName("MultiSelect");
-        setBaseCls("multiselect dropdown-toggle btn");
-        setTag("button");
+        withClassName("MultiSelect");
+        withBaseCls("multiselect dropdown-toggle btn");
+        withTag("button");
     }
 
     public MultiSelect(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public MultiSelect(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public boolean select(String... values) {
         boolean selected = false;
         if (click()) {
-            WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
+            WebLocator select = new WebLocator(this).withElxPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
             select.ready();
             for (String val : values) {
-                WebLocator el = new WebLocator(select).setTag("label").setText(val, SearchType.HTML_NODE);
-                CheckBox checkBox = new CheckBox(el).setInfoMessage("check: '" + val + "'");
+                WebLocator el = new WebLocator(select).withTag("label").withText(val, SearchType.HTML_NODE);
+                CheckBox checkBox = new CheckBox(el).withInfoMessage("check: '" + val + "'");
                 selected = checkBox.click();
                 if (!selected) {
                     return false;
@@ -71,9 +71,9 @@ public class MultiSelect extends WebLocator {
         List<String> list = null;
         if (click()) {
             list = new ArrayList<>();
-            WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
-            WebLocator li = new WebLocator(select).setTag("li").setCls("active");
-            WebLocator el = new WebLocator(li).setTag("label");
+            WebLocator select = new WebLocator(this).withElxPath("//following-sibling::*[contains(@class, 'dropdown-menu')]");
+            WebLocator li = new WebLocator(select).withTag("li").withCls("active");
+            WebLocator el = new WebLocator(li).withTag("label");
             el.ready();
             List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(el.getXPath()));
             for (WebElement element : elements) {

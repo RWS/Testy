@@ -16,17 +16,17 @@ public class ComboBox extends TextField implements ICombo {
     private static String listClass = "x-list-plain";
 
     public ComboBox() {
-        setClassName("ComboBox");
+        withClassName("ComboBox");
     }
 
     public ComboBox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public ComboBox(WebLocator container, String label) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     /**
@@ -58,8 +58,8 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
-        WebLocator comboListElement = new WebLocator(listClass).setAttribute("aria-hidden", "false").setInfoMessage(this + " -> " + listClass);
-        return new WebLocator(comboListElement).setText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).setRenderMillis(optionRenderMillis).setInfoMessage(value);
+        WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
+        return new WebLocator(comboListElement).withText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).withRenderMillis(optionRenderMillis).withInfoMessage(value);
     }
 
     public boolean select(String value, boolean startWith) {
@@ -79,7 +79,7 @@ public class ComboBox extends TextField implements ICombo {
 
     public List<String> getAllComboValues() {
         clickIcon("arrow");
-        WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).setClasses(listClass).setVisibility(true);
+        WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).withClasses(listClass).withVisibility(true);
         String[] comboValues = comboList.getText().split("\\n");
         clickIcon("arrow");
         return Arrays.asList(comboValues);

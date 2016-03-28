@@ -11,12 +11,12 @@ public class Pagination extends ToolBar {
     private static final Logger LOGGER = LoggerFactory.getLogger(Pagination.class);
 
     public Pagination() {
-        setClassName("Pagination");
+        withClassName("Pagination");
     }
 
     public Pagination(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     private WebLocator currentPageContainer = new WebLocator("x-tbar-page-number");
@@ -72,15 +72,15 @@ public class Pagination extends ToolBar {
     }
 
     public final String itemTotalsLabel = "Displaying items ";
-    private WebLocator itemTotals = new WebLocator(this).setBaseCls("x-toolbar-text").setText(itemTotalsLabel, SearchType.STARTS_WITH);
+    private WebLocator itemTotals = new WebLocator(this).withBaseCls("x-toolbar-text").withText(itemTotalsLabel, SearchType.STARTS_WITH);
 
     public WebLocator getItemTotals() {
         return itemTotals;
     }
 
     private Button getButton(String cls) {
-        WebLocator el = new WebLocator().setTag("span").setClasses(cls);
-        return new Button(this).setChildNodes(el);
+        WebLocator el = new WebLocator().withTag("span").withClasses(cls);
+        return new Button(this).withChildNodes(el);
     }
 
 //    public static void main(String[] args) {

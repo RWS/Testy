@@ -9,13 +9,13 @@ public class ComboBox extends WebLocator implements ICombo {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
 
     public ComboBox() {
-        setClassName("ComboBox");
-        setTag("select");
+        withClassName("ComboBox");
+        withTag("select");
     }
 
     public ComboBox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ComboBox extends WebLocator implements ICombo {
     @Override
     public String getValue() {
         String value = this.getAttribute("value");
-        WebLocator el = new WebLocator(this).setElPath("//option[contains(@value, '" + value + "')]");
+        WebLocator el = new WebLocator(this).withElxPath("//option[contains(@value, '" + value + "')]");
         return el.getText();
     }
 }
