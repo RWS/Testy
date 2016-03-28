@@ -43,11 +43,11 @@ public class RenderFailCondition extends FailCondition implements RenderConditio
 
     /**
      *
-     * @return component.getHtmlText()
+     * @return component.getText()
      */
     @Override
     public String getResultMessage() {
-        return component.getHtmlText();
+        return component.getText();
     }
 
 }

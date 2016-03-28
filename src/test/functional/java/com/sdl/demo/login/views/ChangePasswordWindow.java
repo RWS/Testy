@@ -39,7 +39,7 @@ public class ChangePasswordWindow extends Window {
 
     public String getStatusMessage() {
         Utils.sleep(200);
-        return statusMsgElement.getHtmlText();
+        return statusMsgElement.getText();
     }
 
     public static void main(String[] args) {

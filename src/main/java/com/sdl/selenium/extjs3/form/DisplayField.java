@@ -38,7 +38,7 @@ public class DisplayField extends TextField {
     public String getValue() {
         String value = "";
         if(ready()){
-            value = getHtmlText();
+            value = getText();
         } else {
             LOGGER.warn("getValue : field is not ready for use: " + toString());
         }

@@ -73,7 +73,7 @@ public class MessageBoxWindow extends Window {
         mbTextElement.setInfoMessage("MessageBox ext-mb-text");
         String msg;
         if (waitSeconds == 0) {
-            msg = mbTextElement.getHtmlText(true);
+            msg = mbTextElement.getText(true);
         } else {
             msg = mbTextElement.waitTextToRender(waitSeconds);
         }

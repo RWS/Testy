@@ -26,9 +26,9 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
     @Test
     public void actionsTest() {
         assertThat(locator.isElementPresent(), is(true));
-        assertThat(locator.getHtmlText(true), equalTo("Login"));
+        assertThat(locator.getText(true), equalTo("Login"));
         startTests();
-        assertThat(locator.getHtmlText(true), equalTo("Login"));
+        assertThat(locator.getText(true), equalTo("Login"));
     }
 
     @Test

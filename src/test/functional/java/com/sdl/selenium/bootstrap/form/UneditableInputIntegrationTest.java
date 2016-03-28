@@ -23,11 +23,11 @@ public class UneditableInputIntegrationTest extends TestBase {
 
     @Test
     public void getSpanText() {
-        assertTrue("test".equals(uneditableInput.getHtmlText()));
+        assertTrue("test".equals(uneditableInput.getText()));
     }
 
     @Test
     public void getBudgetText() {
-        assertTrue("123".equals(budgetUneditableInput.getHtmlText()));
+        assertTrue("123".equals(budgetUneditableInput.getText()));
     }
 }

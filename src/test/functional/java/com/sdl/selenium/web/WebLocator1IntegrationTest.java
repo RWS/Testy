@@ -1,9 +1,9 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.utils.PropertiesReader;
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.utils.PropertiesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
@@ -104,7 +104,7 @@ public class WebLocator1IntegrationTest extends TestBase {
     }
 
     @Test
-    public void getHtmlTextFromDiv() {
+    public void getTextFromDiv() {
         assertEquals(webLocatorWithMoreEnter.getAttributeClass(), "more-elements-inside no-enter element4");
         assertEquals(webLocatorWithMoreEnterMoreElements.getAttributeClass(), "more-elements-inside with-enter element1");
         assertEquals(webLocatorNoWithMoreEnterMoreElements.getAttributeClass(), "more-elements-inside no-enter element3");
@@ -122,7 +122,7 @@ public class WebLocator1IntegrationTest extends TestBase {
         boolean useChildNodesSearch = el.getPathBuilder().getSearchTextType().contains(SearchType.DEEP_CHILD_NODE);
 
         String expected = "WebLocator text for search type-searchTextType" + (useChildNodesSearch ? " deep" : "");
-        assertEquals(webLocatorLogger.getHtmlText(), expected);
+        assertEquals(webLocatorLogger.getText(), expected);
 
         webLocatorWithMoreEnter.click();
     }

@@ -1,8 +1,8 @@
 package com.sdl.selenium.web.button;
 
-import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.bootstrap.button.Button;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,7 +21,7 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test
     public void findElement() {
-        assertThat(loginWithCss.getHtmlText(), equalTo("Login"));
-        assertThat(loginWithXPath.getHtmlText(), equalTo("Login"));
+        assertThat(loginWithCss.getText(), equalTo("Login"));
+        assertThat(loginWithXPath.getText(), equalTo("Login"));
     }
 }

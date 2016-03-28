@@ -107,7 +107,7 @@ public class DatePicker extends WebLocator {
         if (getInput().click()) {
             boolean ok = true;
             getMonthSelect().setText(month);
-            String fullDate = getSwitchDay().getHtmlText();
+            String fullDate = getSwitchDay().getText();
             if (!fullDate.contains(year)) {
                 getSwitchDay().click();
                 getSwitchMonth().click();

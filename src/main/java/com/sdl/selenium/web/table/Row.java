@@ -50,7 +50,7 @@ public class Row extends AbstractRow {
         List<String> list = new ArrayList<String>();
         for (int j = 1; j < columns; j++) {
             Cell cell = new Cell(this, j);
-            list.add(cell.getHtmlText());
+            list.add(cell.getText());
         }
         return list;
     }

@@ -1,11 +1,11 @@
 package com.sdl.selenium.extjs3.panel;
 
 import com.sdl.selenium.InputData;
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.TestBase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -48,16 +48,16 @@ public class TabPanelIntegrationTest extends TestBase {
     public void activeTab1() {
         tabPanel1.setActive();
         assertTrue(panelWithFrame.isElementPresent());
-        assertEquals(elTab1.getHtmlText(), "element 1");
-        assertEquals(elTab11.getHtmlText(), "element 00");
+        assertEquals(elTab1.getText(), "element 1");
+        assertEquals(elTab11.getText(), "element 00");
         tabPanel21.setActive();
-        assertEquals(elTab21.getHtmlText(), "element 01");
+        assertEquals(elTab21.getText(), "element 01");
     }
 
     @Test
     public void activeTab2() {
         tabPanel2.setActive();
         assertTrue(panelNoWithFrame.isElementPresent());
-        assertEquals(elTab12.getHtmlText(), "element 2");
+        assertEquals(elTab12.getText(), "element 2");
     }
 }

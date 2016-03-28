@@ -273,7 +273,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     public String[] getRowText(String searchText) {
         String[] rowElements = null;
-        String text = getRow(searchText).getHtmlText();
+        String text = getRow(searchText).getText();
         if (text != null) {
             rowElements = text.split("\n");
         }
@@ -312,7 +312,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
             for (int i = 1; i < rows; i++) {
                 List<String> list = new ArrayList<>();
                 for (int j = 1; j < columns; j++) {
-                    list.add(getCell(i, j).getHtmlText());
+                    list.add(getCell(i, j).getText());
                 }
                 listOfList.add(list);
             }
@@ -326,7 +326,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         String text = null;
         Row row = new Row(this, searchText, SearchType.EQUALS);
         if (row.ready()) {
-            text = new Cell(row, columnId).getHtmlText();
+            text = new Cell(row, columnId).getText();
         } else {
             LOGGER.warn("searchText was not found in table: " + searchText);
         }
@@ -334,7 +334,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     public String getText(int rowIndex, int columnIndex) {
-        return getCell(rowIndex, columnIndex).getHtmlText();
+        return getCell(rowIndex, columnIndex).getText();
     }
 
     /**

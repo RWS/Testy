@@ -53,7 +53,7 @@ public class SelectPicker extends WebLocator implements ICombo {
 
     @Override
     public String getValue() {
-        return getHtmlText().trim();
+        return getText().trim();
     }
 
     public boolean isDisabled() {

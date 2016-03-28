@@ -18,7 +18,7 @@ public class Window extends WebLocator {
 
     public String getMessageWindow() {
         WebLocator webLocator = new WebLocator(this).setClasses("ui-dialog-content ui-widget-content");
-        return webLocator.getHtmlText();
+        return webLocator.getText();
     }
 
     public boolean pressOK() {

@@ -9,9 +9,9 @@ import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.AbstractRow;
 import com.sdl.selenium.web.table.IRow;
 import com.sdl.selenium.web.table.ITable;
-import com.sdl.selenium.web.table.AbstractRow;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
@@ -404,7 +404,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             String path = getGridCell(startRowIndex).getXPath();
             WebLocator currentElement = new WebLocator().setElPath(path);
             while (currentElement.isElementPresent()) {
-                String option = currentElement.getHtmlText();
+                String option = currentElement.getText();
                 //LOGGER.debug("row[" + i + "]" + option);
                 if (option != null && option.contains(searchElement)) {
                     LOGGER.debug("The '" + searchElement + "' element index is " + startRowIndex);
@@ -533,7 +533,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String[] rowElements = null;
         if (rowIndex != -1) {
             IRow row = getRow(rowIndex);
-            String text = row.getHtmlText();
+            String text = row.getText();
             if (text != null) {
                 rowElements = text.split("\n");
             }
@@ -550,7 +550,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public String[] getRow(String searchText) {
         String[] rowElements = null;
         GridRow row = new GridRow(this, searchText, getSearchColumnId(), SearchType.CONTAINS);
-        String text = row.getHtmlText();
+        String text = row.getText();
         if (text != null) {
             rowElements = text.split("\n");
         }
@@ -585,7 +585,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String text = null;
         GridCell cell = getCell(columnId, new GridCell(searchText, SearchType.EQUALS));
         if (this.ready(true) && cell.ready()) {
-            text = cell.getHtmlText();
+            text = cell.getText();
         } else {
             LOGGER.warn("searchText was not found in grid: " + searchText);
         }
@@ -596,7 +596,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String text = null;
         GridCell cell = getGridCell(searchText, searchColumnId, columnId);
         if (this.ready(true) && cell.ready()) {
-            text = cell.getHtmlText();
+            text = cell.getText();
         } else {
             LOGGER.warn("searchText was not found in grid: " + searchText);
         }
@@ -605,7 +605,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public String getText(int rowIndex, int columnIndex) {
         GridCell cell = getCell(rowIndex, columnIndex);
-        return cell.getHtmlText();
+        return cell.getText();
     }
 
     /**

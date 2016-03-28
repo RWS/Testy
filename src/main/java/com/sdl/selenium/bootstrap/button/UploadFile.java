@@ -91,7 +91,7 @@ public class UploadFile extends WebLocator implements Upload {
 
     public String uploadedNameFile() {
         WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-preview");
-        return upload.getHtmlText();
+        return upload.getText();
     }
 
     public boolean upload(WebLocator el, String... filePath) {

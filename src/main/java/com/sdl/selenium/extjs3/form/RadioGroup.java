@@ -46,7 +46,7 @@ public class RadioGroup extends ExtJsComponent {
 
     public String getLabelName(String label) {
         WebLocator locator = new WebLocator(radio).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
-        return locator.getHtmlText();
+        return locator.getText();
     }
 
     public boolean isDisabled() {

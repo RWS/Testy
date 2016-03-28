@@ -428,11 +428,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public String waitTextToRender(int seconds, String excludeText) {
         String text = null;
-        if (seconds == 0 && ((text = getHtmlText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
+        if (seconds == 0 && ((text = getText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
             return text;
         }
         for (int i = 0, count = 5 * seconds; i < count; i++) {
-            text = getHtmlText(true);
+            text = getText(true);
             if (text != null && text.length() > 0 && !text.equals(excludeText)) {
                 return text;
             }

@@ -22,7 +22,7 @@ public class Window extends WebLocator {
     public String getTitleWindow() {
         ready();
         WebLocator locator = new WebLocator(this).setClasses("x-window-header-text");
-        return locator.getHtmlText();
+        return locator.getText();
     }
 
     /**

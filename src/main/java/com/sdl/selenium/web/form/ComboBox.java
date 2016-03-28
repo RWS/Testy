@@ -40,6 +40,6 @@ public class ComboBox extends WebLocator implements ICombo {
     public String getValue() {
         String value = this.getAttribute("value");
         WebLocator el = new WebLocator(this).setElPath("//option[contains(@value, '" + value + "')]");
-        return el.getHtmlText();
+        return el.getText();
     }
 }

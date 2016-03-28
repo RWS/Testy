@@ -61,7 +61,7 @@ public class MessageBox extends WebLocator {
 
     public String getMessage() {
         WebLocator mbTextElement = new WebLocator(this).setClasses("x-window-text");
-        return mbTextElement.getHtmlText();
+        return mbTextElement.getText();
     }
 
     public boolean press(String buttonText) {

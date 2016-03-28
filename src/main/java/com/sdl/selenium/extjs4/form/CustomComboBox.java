@@ -80,7 +80,7 @@ public class CustomComboBox extends TextField implements ICombo {
         String value = null;
         if (click()) {
             WebLocator option = getComboEl(null, true, 300).setClasses("x-boundlist-selected");
-            value = option.getHtmlText();
+            value = option.getText();
             sendKeys(Keys.ESCAPE); // to close combo
         } else {
             LOGGER.debug("(" + this + ") The combo or arrow could not be located.");
