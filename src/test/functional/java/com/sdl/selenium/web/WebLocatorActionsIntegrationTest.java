@@ -4,7 +4,6 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.form.TextField;
 import com.sdl.selenium.utils.config.WebDriverConfig;
-import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.testng.annotations.BeforeClass;
@@ -44,7 +43,7 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void getAttributeClassTest() {
-        assertThat(locator.getAttributeClass(), equalTo("btn tile-btn btn-warning"));
+        assertThat(locator.getAttributeClass(), equalTo("btn tile-btn btn-warning login-btn"));
     }
 
     @Test

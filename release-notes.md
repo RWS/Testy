@@ -7,6 +7,7 @@ RELEASE NOTES
 - add log at sendKeys method
 - add possibility to overwritten value from webLocator.properties in browser.properties
 - change getHtmlText() in getText()
+- update webdriver version 2.53.0
 
 **Release Notes for Testy 2.0.0**
 - Change config default value for weblocator.log.suggestions=false
