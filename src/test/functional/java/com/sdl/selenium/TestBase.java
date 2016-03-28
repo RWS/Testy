@@ -43,7 +43,6 @@ public class TestBase {
         LOGGER.debug("==============================================================\n");
     }
 
-
     @BeforeMethod
     public void bm(Method method) throws Exception {
         LOGGER.info("===============================================================");
@@ -86,7 +85,9 @@ public class TestBase {
         
         try {
             driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
-            driver.get(InputData.LOGIN_URL);
+            if (driver != null) {
+                driver.get(InputData.LOGIN_URL);
+            }
             FileUtils.forceMkdir(new File(WebDriverConfig.getDownloadPath()));
         } catch (Exception e) {
             LOGGER.error("Exception when start suite", e);
