@@ -12,8 +12,8 @@ import static org.testng.Assert.assertTrue;
 public class DatePickerIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatePickerIntegrationTest.class);
 
-    Form form = new Form(null, "Form Title");
-    DatePicker datePicker = new DatePicker(form, "dp3");
+    private Form form = new Form(null, "Form Title");
+    private DatePicker datePicker = new DatePicker(form, "dp3");
 
     @BeforeClass
     public void startTests() {

@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.InputData;
-import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.extjs3.window.Window;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -13,9 +13,8 @@ import static org.testng.Assert.assertTrue;
 
 public class DateFieldIntegrationTest extends TestBase {
 
-    Window dateFieldWindow = new Window("DateFieldWindow");
-    DateField dateField = new DateField("dateField", dateFieldWindow);
-
+    private Window dateFieldWindow = new Window("DateFieldWindow");
+    private DateField dateField = new DateField("dateField", dateFieldWindow);
 
     @BeforeClass
     public void startTest() {

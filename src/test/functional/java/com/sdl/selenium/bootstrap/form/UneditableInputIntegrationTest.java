@@ -12,9 +12,9 @@ import static org.testng.Assert.assertTrue;
 public class UneditableInputIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(UneditableInputIntegrationTest.class);
 
-    Form form = new Form(null, "Form Title");
-    UneditableInput uneditableInput = new UneditableInput(form, "Span:");
-    UneditableInput budgetUneditableInput = new UneditableInput(form, "Budget:");
+    private Form form = new Form(null, "Form Title");
+    private UneditableInput uneditableInput = new UneditableInput(form, "Span:");
+    private UneditableInput budgetUneditableInput = new UneditableInput(form, "Budget:");
 
     @BeforeClass
     public void startTests() {

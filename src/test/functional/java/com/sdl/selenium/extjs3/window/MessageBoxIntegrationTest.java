@@ -1,16 +1,16 @@
 package com.sdl.selenium.extjs3.window;
 
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.panel.Panel;
-import com.sdl.selenium.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class MessageBoxIntegrationTest extends TestBase {
 
-    Panel conditionManagerPanel = new Panel("Condition Manager");
-    Button expect1Button = new Button(conditionManagerPanel, "Expect1");
-    Button instantMessageButton = new Button(conditionManagerPanel, "Instant Message");
+    private Panel conditionManagerPanel = new Panel("Condition Manager");
+    private Button expect1Button = new Button(conditionManagerPanel, "Expect1");
+    private Button instantMessageButton = new Button(conditionManagerPanel, "Instant Message");
 
     public static void assertThatMessageBoxExists(String expected, int waitSeconds) {
         String message = MessageBox.getMessage(waitSeconds);
