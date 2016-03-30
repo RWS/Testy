@@ -1,6 +1,7 @@
 .idea/
 *.iml
 *.class
+DeployTesty.java
 
 # Package Files #
 *.jar
