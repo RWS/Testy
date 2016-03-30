@@ -15,17 +15,17 @@ public class MultipleSelect extends ComboBox {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultipleSelect.class);
 
     public MultipleSelect() {
-        setClassName("MultipleSelect");
+        withClassName("MultipleSelect");
     }
 
     public MultipleSelect(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public MultipleSelect(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public boolean selectRows(String... values) {
@@ -33,7 +33,7 @@ public class MultipleSelect extends ComboBox {
         if (ready()) {
 //            sendKeys(Keys.CONTROL);
             for (String value : values) {
-                WebLocator el = new WebLocator(this).setText(value, SearchType.EQUALS);
+                WebLocator el = new WebLocator(this).withText(value, SearchType.EQUALS);
                 select = el.click();
                 if (!select) {
                     return false;

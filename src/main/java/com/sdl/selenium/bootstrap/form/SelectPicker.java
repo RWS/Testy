@@ -19,33 +19,33 @@ import com.sdl.selenium.web.form.ICombo;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * SelectPicker selectPicker = new SelectPicker().setLabel("Tech:");
+ * SelectPicker selectPicker = new SelectPicker().withLabel("Tech:");
  * selectPicker.select("Manual");
  * }</pre>
  */
 public class SelectPicker extends WebLocator implements ICombo {
 
     public SelectPicker() {
-        setClassName("SelectPicker");
-        setBaseCls("btn dropdown-toggle");
-        setTag("button");
+        withClassName("SelectPicker");
+        withBaseCls("btn dropdown-toggle");
+        withTag("button");
     }
 
     public SelectPicker(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public SelectPicker(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     @Override
     public boolean select(String value) {
         if (click()) {
-            WebLocator select = new WebLocator(this).setElPath("//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
-                    .setInfoMessage("select: '" + value + "'");
+            WebLocator select = new WebLocator(this).withElxPath("//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
+                    .withInfoMessage("select: '" + value + "'");
             return select.click();
         }
         return false;
@@ -53,7 +53,7 @@ public class SelectPicker extends WebLocator implements ICombo {
 
     @Override
     public String getValue() {
-        return getHtmlText().trim();
+        return getText().trim();
     }
 
     public boolean isDisabled() {

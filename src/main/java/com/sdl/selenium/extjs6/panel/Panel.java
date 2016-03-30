@@ -9,23 +9,23 @@ public class Panel extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Panel.class);
 
     public Panel() {
-        setClassName("Panel");
-        setBaseCls("x-panel");
-        WebLocator header = new WebLocator().setClasses("x-header").setRoot("/");
-        setTemplateTitle(new WebLocator(header));
+        withClassName("Panel");
+        withBaseCls("x-panel");
+        WebLocator header = new WebLocator().withClasses("x-header").withRoot("/");
+        withTemplateTitle(new WebLocator(header));
     }
 
     public Panel(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public Panel(WebLocator container, String title) {
         this(container);
-        setTitle(title, SearchType.EQUALS);
+        withTitle(title, SearchType.EQUALS);
     }
 
-    private WebLocator collapseButton = new WebLocator(this).setClasses("x-tool-collapse-right");
+    private WebLocator collapseButton = new WebLocator(this).withClasses("x-tool-collapse-right");
 
     public WebLocator getCollapseButton() {
         return collapseButton;
@@ -36,18 +36,18 @@ public class Panel extends WebLocator {
     }
 
     @Override
-    public Panel setVisibility(boolean visible) {
+    public Panel withVisibility(boolean visible) {
         if (visible) {
-            this.setExcludeClasses("x-collapsed ", "x-panel-collapsed");
+            this.withExcludeClasses("x-collapsed ", "x-panel-collapsed");
         } else {
-            this.setClasses("x-collapsed ", "x-panel-collapsed");
+            this.withClasses("x-collapsed ", "x-panel-collapsed");
         }
         return this;
     }
 
 //    public static void main(String[] args) {
 ////        Panel panel = new Panel(null, "API Key Details");
-//        Panel panel = new Panel().setTitle("API Key Details");
+//        Panel panel = new Panel().withTitle("API Key Details");
 //        LOGGER.debug(panel.getXPath());
 //    }
 }

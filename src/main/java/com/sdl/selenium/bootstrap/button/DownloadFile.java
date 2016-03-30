@@ -12,16 +12,16 @@ import com.sdl.selenium.web.WebLocator;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * DownloadFile downloadFile = new DownloadFile().setText(" Download");
+ * DownloadFile downloadFile = new DownloadFile().withText(" Download");
  * downloadFile.download("text.docx")
  * }</pre>
  */
 public class DownloadFile extends WebLocator implements Download {
 
     public DownloadFile() {
-        setClassName("DownloadFile");
-        setBaseCls("btn");
-        setTag("button");
+        withClassName("DownloadFile");
+        withBaseCls("btn");
+        withTag("button");
     }
 
     /**
@@ -29,12 +29,12 @@ public class DownloadFile extends WebLocator implements Download {
      */
     public DownloadFile(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public DownloadFile(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     /**

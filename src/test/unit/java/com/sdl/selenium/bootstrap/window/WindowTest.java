@@ -13,9 +13,9 @@ public class WindowTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Window(),             "//*[@role='dialog' and @aria-hidden='false']"},
-                {new Window().setId("myModal"), "//*[@id='myModal' and @role='dialog' and @aria-hidden='false']"},
+                {new Window().withId("myModal"), "//*[@id='myModal' and @role='dialog' and @aria-hidden='false']"},
                 {new Window("Modal title"),"//*[count(.//*[contains(concat(' ', @class, ' '), ' modal-header ')]//*[text()='Modal title']) > 0 and @role='dialog' and @aria-hidden='false']"},
-                {new Window().setTitle("Modal title", SearchType.STARTS_WITH),"//*[count(.//*[contains(concat(' ', @class, ' '), ' modal-header ')]//*[starts-with(text(),'Modal title')]) > 0 and @role='dialog' and @aria-hidden='false']"},
+                {new Window().withTitle("Modal title", SearchType.STARTS_WITH),"//*[count(.//*[contains(concat(' ', @class, ' '), ' modal-header ')]//*[starts-with(text(),'Modal title')]) > 0 and @role='dialog' and @aria-hidden='false']"},
         };
     }
 

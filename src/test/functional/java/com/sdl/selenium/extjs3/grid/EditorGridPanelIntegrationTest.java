@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.InputData;
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs3.button.Button;
@@ -10,7 +11,6 @@ import com.sdl.selenium.extjs3.form.TextField;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
-import com.sdl.selenium.TestBase;
 import org.testng.annotations.*;
 
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import static org.testng.Assert.assertTrue;
 public class EditorGridPanelIntegrationTest extends TestBase {
 
     private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
+    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").withTitle("EditableGrid");
     private Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider

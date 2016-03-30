@@ -12,8 +12,8 @@ import static org.testng.Assert.assertTrue;
 public class InputAppendIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(InputAppendIntegrationTest.class);
 
-    Form form = new Form(null, "Form Title");
-    InputAppend inputAppend = new InputAppend(form, "LPID for Merge:");
+    private Form form = new Form(null, "Form Title");
+    private InputAppend inputAppend = new InputAppend(form, "LPID for Merge:");
 
     @BeforeClass
     public void startTests() {

@@ -11,9 +11,9 @@ public class TableCell extends Cell {
      * @deprecated use {@link Cell#Cell()}
      */
     public TableCell() {
-        setRenderMillis(200);
-        setClassName("TableCell");
-        setTag("td");
+        withRenderMillis(200);
+        withClassName("TableCell");
+        withTag("td");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
@@ -23,7 +23,7 @@ public class TableCell extends Cell {
      */
     public TableCell(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     /**
@@ -33,7 +33,7 @@ public class TableCell extends Cell {
      */
     public TableCell(WebLocator container, int columnIndex) {
         this(container);
-        setPosition(columnIndex);
+        withPosition(columnIndex);
     }
 
     /**
@@ -44,8 +44,8 @@ public class TableCell extends Cell {
      */
     public TableCell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
-        setPosition(columnIndex);
-        setText(columnText, searchTypes);
+        withPosition(columnIndex);
+        withText(columnText, searchTypes);
     }
 
     /**
@@ -57,6 +57,6 @@ public class TableCell extends Cell {
      */
     public TableCell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
-        setText(columnText, searchTypes);
+        withText(columnText, searchTypes);
     }
 }

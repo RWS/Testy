@@ -13,13 +13,13 @@ public class TextsTest extends WebLocator {
     private SearchType C1 = SearchType.EQUALS;
     private SearchType C2 = SearchType.TRIM;
 
-    private WebLocator default_el = new WebLocator().setBaseCls("btn").setText("Cancel", C1, C2);
-    private WebLocator deep_child = new WebLocator().setBaseCls("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE, C1, C2);
-    private WebLocator deep_child_self = new WebLocator().setBaseCls("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF, C1, C2);
-    private WebLocator child_node = new WebLocator().setBaseCls("btn").setText("Cancel", SearchType.CHILD_NODE, C1, C2);
-    private WebLocator containsAllChildNodes = new WebLocator().setBaseCls("btn").setText("|This's|was|good", SearchType.CONTAINS_ALL_CHILD_NODES);
-    private WebLocator containsAll = new WebLocator().setBaseCls("btn").setText("|This's|was|good", SearchType.CONTAINS_ALL);
-    private WebLocator containsAny = new WebLocator().setBaseCls("btn").setText("|This's|was|good", SearchType.CONTAINS_ANY);
+    private WebLocator default_el = new WebLocator().withBaseCls("btn").withText("Cancel", C1, C2);
+    private WebLocator deep_child = new WebLocator().withBaseCls("btn").withText("Cancel", SearchType.DEEP_CHILD_NODE, C1, C2);
+    private WebLocator deep_child_self = new WebLocator().withBaseCls("btn").withText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF, C1, C2);
+    private WebLocator child_node = new WebLocator().withBaseCls("btn").withText("Cancel", SearchType.CHILD_NODE, C1, C2);
+    private WebLocator containsAllChildNodes = new WebLocator().withBaseCls("btn").withText("|This's|was|good", SearchType.CONTAINS_ALL_CHILD_NODES);
+    private WebLocator containsAll = new WebLocator().withBaseCls("btn").withText("|This's|was|good", SearchType.CONTAINS_ALL);
+    private WebLocator containsAny = new WebLocator().withBaseCls("btn").withText("|This's|was|good", SearchType.CONTAINS_ANY);
 
     public WebLocator getDefault_el() {
         return default_el;

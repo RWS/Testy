@@ -19,7 +19,7 @@ public class TableDemoIntegrationTest extends TestBase {
 
     @Test
     public void selectUser() {
-        TableRow row = table.getRow(new TableCell(2, "Peter"), new TableCell(3, "Parker"));
+        Row row = table.getRow(new Cell(2, "Peter"), new Cell(3, "Parker"));
         CheckBox checkBox = new CheckBox(row);
 
         checkBox.click();

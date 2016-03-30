@@ -9,9 +9,9 @@ public class ExtJsComponent extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtJsComponent.class);
 
     public ExtJsComponent() {
-        setClassName("ExtJsComponent");
+        withClassName("ExtJsComponent");
         addToTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0");
-        setTemplate("disabled", "count(ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]) > 0");
+        withTemplate("disabled", "count(ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]) > 0");
     }
 
     /**
@@ -19,27 +19,27 @@ public class ExtJsComponent extends WebLocator {
      */
     public ExtJsComponent(String cls) {
         this();
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public ExtJsComponent(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public ExtJsComponent(WebLocator container, String elPath) {
         this(container);
-        setElPath(elPath);
+        withElxPath(elPath);
     }
 
     public ExtJsComponent(String cls, WebLocator container) {
         this(container);
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public ExtJsComponent(String text, String cls, WebLocator container) {
         this(cls, container);
-        setText(text);
+        withText(text);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class ExtJsComponent extends WebLocator {
             }
         }
         if (id != null && !id.equals("")) {
-            WebLocator thisEl = new WebLocator().setId(id);
-            mask.setContainer(thisEl);
+            WebLocator thisEl = new WebLocator().withId(id);
+            mask.withContainer(thisEl);
         }
         boolean hasMask = mask.isElementPresent();
         if (LOGGER.isDebugEnabled() && hasMask) {
@@ -83,7 +83,7 @@ public class ExtJsComponent extends WebLocator {
 
     public WebLocator getMaskElement() {
         String maskXPathSelector = "/ancestor-or-self::*[contains(@class, 'x-masked')]";
-        return new WebLocator(this).setElPath(maskXPathSelector);
+        return new WebLocator(this).withElxPath(maskXPathSelector);
     }
 
     /**

@@ -20,12 +20,12 @@ public class MessageBox extends WebLocator {
     private Button noButton = new Button(this, NO_TEXT);
 
     private MessageBox() {
-        setClassName("MessageBox");
-        setBaseCls("x-message-box");
-        setExcludeClasses("x-hidden-offsets");
-        WebLocator header = new WebLocator().setClasses("x-header");
-        setTemplateTitle(new WebLocator(header));
-        setTemplate("msg", "count(*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
+        withClassName("MessageBox");
+        withBaseCls("x-message-box");
+        withExcludeClasses("x-hidden-offsets");
+        WebLocator header = new WebLocator().withClasses("x-header");
+        withTemplateTitle(new WebLocator(header));
+        withTemplate("msg", "count(*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
     }
 
     public static void main(String[] args) {
@@ -35,12 +35,12 @@ public class MessageBox extends WebLocator {
 
     public MessageBox(String title) {
         this();
-        setTitle(title, SearchType.EQUALS);
+        withTitle(title, SearchType.EQUALS);
     }
 
     public MessageBox(String title, String msg) {
         this(title);
-        setTemplateValue("msg", msg);
+        withTemplateValue("msg", msg);
     }
 
     public Button getOkButton() {
@@ -60,8 +60,8 @@ public class MessageBox extends WebLocator {
     }
 
     public String getMessage() {
-        WebLocator mbTextElement = new WebLocator(this).setClasses("x-window-text");
-        return mbTextElement.getHtmlText();
+        WebLocator mbTextElement = new WebLocator(this).withClasses("x-window-text");
+        return mbTextElement.getText();
     }
 
     public boolean press(String buttonText) {
@@ -97,7 +97,7 @@ public class MessageBox extends WebLocator {
     }
 
     public boolean close() {
-        WebLocator close = new WebLocator(this).setClasses("x-tool-close");
+        WebLocator close = new WebLocator(this).withClasses("x-tool-close");
         return close.click();
     }
 

@@ -18,27 +18,27 @@ public class ComboBox extends TextField implements ICombo {
     //TODO change the way comboBox is identified, without using cls
     // (create baseCls and if there is no cls, label then take first combo by baseCls)
     public ComboBox() {
-        setClassName("ComboBox");
+        withClassName("ComboBox");
     }
 
     public ComboBox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public ComboBox(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public ComboBox(String name, WebLocator container) {
         this(container);
-        setName(name);
+        withName(name);
     }
 
     public ComboBox(WebLocator container, String cls, String name, boolean hasName) {
         this(name, container);
-        setClasses(cls);
+        withClasses(cls);
     }
 
     /**
@@ -56,8 +56,8 @@ public class ComboBox extends TextField implements ICombo {
         String info = toString();
 
         String valueTest = startWith ? ("starts-with(text(),'" + value + "')") : ("text()='" + value + "'");
-        WebLocator comboListElement = new WebLocator(listClass).setStyle("visibility: visible;").setInfoMessage(this + " -> " + listClass);
-        WebLocator option = new WebLocator(comboListElement).setElPath("//*[" + valueTest + "]").setRenderMillis(optionRenderMillis).setInfoMessage(value);
+        WebLocator comboListElement = new WebLocator(listClass).withStyle("visibility: visible;").withInfoMessage(this + " -> " + listClass);
+        WebLocator option = new WebLocator(comboListElement).withElxPath("//*[" + valueTest + "]").withRenderMillis(optionRenderMillis).withInfoMessage(value);
 
         if (clickIcon("arrow")) {
             try {
@@ -68,8 +68,8 @@ public class ComboBox extends TextField implements ICombo {
 //                    return selected;
 //                }
                 if (WebDriverConfig.isIE()) {
-                    comboListElement.setId(getListId());
-                    option.setContainer(comboListElement);
+                    comboListElement.withId(getListId());
+                    option.withContainer(comboListElement);
                 }
                 selected = option.click();
             } catch (Exception e) {

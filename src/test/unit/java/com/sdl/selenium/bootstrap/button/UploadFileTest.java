@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class UploadFileTest {
-    public static WebLocator container = new WebLocator().setId("ID");
+    public static WebLocator container = new WebLocator().withId("ID");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -14,7 +14,7 @@ public class UploadFileTest {
                 {new UploadFile(),                          "//div[contains(concat(' ', @class, ' '), ' fileupload ')]"},
                 {new UploadFile(container),                 "//*[@id='ID']//div[contains(concat(' ', @class, ' '), ' fileupload ')]"},
                 {new UploadFile(container, "ButtonLabel"),  "//*[@id='ID']//label[text()='ButtonLabel']//following-sibling::*//div[contains(concat(' ', @class, ' '), ' fileupload ')]"},
-                {new UploadFile(container).setId("ID"),     "//*[@id='ID']//div[@id='ID' and contains(concat(' ', @class, ' '), ' fileupload ')]"},
+                {new UploadFile(container).withId("ID"),     "//*[@id='ID']//div[@id='ID' and contains(concat(' ', @class, ' '), ' fileupload ')]"},
         };
     }
 

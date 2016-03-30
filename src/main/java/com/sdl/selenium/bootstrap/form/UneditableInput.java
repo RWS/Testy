@@ -9,18 +9,18 @@ public class UneditableInput extends WebLocator implements IText {
     private static final Logger LOGGER = LoggerFactory.getLogger(UneditableInput.class);
 
     public UneditableInput() {
-        setClassName("UneditableInput");
-        setBaseCls("uneditable-input");
-        setTag("span");
+        withClassName("UneditableInput");
+        withBaseCls("uneditable-input");
+        withTag("span");
     }
 
     public UneditableInput(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public UneditableInput(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 }

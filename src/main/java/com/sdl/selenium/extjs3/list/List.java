@@ -15,14 +15,14 @@ public class List extends GridPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(List.class);
 
     public List() {
-        setClassName("List");
-        setBaseCls("ux-form-multiselect");
-        setElPathSuffix("exclude-hide-cls", null);
+        withClassName("List");
+        withBaseCls("ux-form-multiselect");
+        withElxPathSuffix("exclude-hide-cls", null);
     }
 
     public List(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public boolean selectRows(String ...values) {
@@ -47,7 +47,7 @@ public class List extends GridPanel {
     public boolean isSelectedRows(String ...values) {
         boolean select = false;
         for (String value : values) {
-            WebLocator webLocator = new WebLocator(getCell(value)).setElPath("/parent::*/parent::dl");
+            WebLocator webLocator = new WebLocator(getCell(value)).withElxPath("/parent::*/parent::dl");
             select = webLocator.getAttributeClass().contains("ux-mselect-selected");
             if (!select) {
                 return false;
@@ -58,9 +58,9 @@ public class List extends GridPanel {
 
     @Override
     public GridCell getCell(String searchElement, SearchType... searchTypes) {
-        WebLocator textCell = new WebLocator().setText(searchElement, searchTypes);
-        GridCell cell = new GridCell().setContainer(this).setElPath(textCell.getXPath());
-        cell.setInfoMessage("cell(" + searchElement + ")");
+        WebLocator textCell = new WebLocator().withText(searchElement, searchTypes);
+        GridCell cell = new GridCell().withContainer(this).withElxPath(textCell.getXPath());
+        cell.withInfoMessage("cell(" + searchElement + ")");
         return cell;
     }
 
@@ -85,7 +85,7 @@ public class List extends GridPanel {
 
     @Override
     public GridRow getRow(int rowIndex) {
-        return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
+        return new GridRow(this).withElxPath("//dl[" + rowIndex + "]");
     }
 }
 

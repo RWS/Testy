@@ -14,19 +14,19 @@ public class CheckBox extends WebLocator implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
-        setClassName("CheckBox");
-        setTag("input");
-        setBaseCls("x-form-checkbox");
+        withClassName("CheckBox");
+        withTag("input");
+        withBaseCls("x-form-checkbox");
     }
 
     public CheckBox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public CheckBox(WebLocator container, String name) {
         this(container);
-        setName(name);
+        withName(name);
     }
 
     @Override

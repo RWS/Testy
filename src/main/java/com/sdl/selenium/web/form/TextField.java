@@ -11,18 +11,18 @@ public class TextField extends WebLocator implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
-        setClassName("TextField");
-        setTag("input");
+        withClassName("TextField");
+        withTag("input");
     }
 
     public TextField(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public TextField(String id) {
         this();
-        setId(id);
+        withId(id);
     }
     /**
      * @param value value
@@ -30,7 +30,7 @@ public class TextField extends WebLocator implements ITextField {
      * @return current element
      */
     public <T extends ITextField> T setPlaceholder(final String value, SearchType ...searchTypes) {
-        setAttribute("placeholder", value, searchTypes);
+        withAttribute("placeholder", value, searchTypes);
         return (T) this;
     }
 

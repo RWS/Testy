@@ -6,9 +6,9 @@ import com.sdl.selenium.web.WebLocator;
 public class ButtonLink extends Button {
 
     public ButtonLink() {
-        setClassName("ButtonLink");
-        setBaseCls("btn");
-        setTag("a");
+        withClassName("ButtonLink");
+        withBaseCls("btn");
+        withTag("a");
     }
 
     /**
@@ -16,12 +16,12 @@ public class ButtonLink extends Button {
      */
     public ButtonLink(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public ButtonLink(WebLocator container, String text) {
         this(container);
-        setText(text);
-        setSearchTextType(SearchType.EQUALS);
+        withText(text);
+        withSearchTextType(SearchType.EQUALS);
     }
 }

@@ -14,29 +14,29 @@ public class AdvancedTextField extends TextField {
     private static String menuClass = "x-menu-floating";
 
     public AdvancedTextField() {
-        setClassName("Menu");
+        withClassName("Menu");
     }
 
     public AdvancedTextField(String cls) {
         this();
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public AdvancedTextField(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public AdvancedTextField(WebLocator container, String label) {
         this();
-        setContainer(container);
-        setLabel(label);
+        withContainer(container);
+        withLabel(label);
     }
 
     public AdvancedTextField(String cls, WebLocator container) {
         this();
-        setContainer(container);
-        setClasses(cls);
+        withContainer(container);
+        withClasses(cls);
     }
 
     public boolean select(String value) {
@@ -51,7 +51,7 @@ public class AdvancedTextField extends TextField {
             }
             String valuePath = "//*[contains(@class, '" + menuClass + "')" + stylePath + "]//*[text()='" + value + "']";
             WebLocator iconLocator = new WebLocator();
-            iconLocator.setElPath(valuePath);
+            iconLocator.withElxPath(valuePath);
             found = iconLocator.clickAt();
             if (!found) {
                 LOGGER.error("The option " + value + " could not be located.");

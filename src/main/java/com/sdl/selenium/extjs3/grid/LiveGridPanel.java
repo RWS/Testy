@@ -9,19 +9,19 @@ public class LiveGridPanel extends GridPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(LiveGridPanel.class);
 
     public LiveGridPanel() {
-        setClassName("LiveGridPanel");
-        setBaseCls("ext-ux-livegrid");
+        withClassName("LiveGridPanel");
+        withBaseCls("ext-ux-livegrid");
         setHeaderBaseCls("x-panel");
     }
 
     public LiveGridPanel(String cls) {
         this();
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public LiveGridPanel(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public LiveGridPanel(String cls, String searchColumnId) {
@@ -36,7 +36,7 @@ public class LiveGridPanel extends GridPanel {
 
     public LiveGridPanel(WebLocator container, String cls, String searchColumnId) {
         this(container);
-        setClasses(cls);
+        withClasses(cls);
         setSearchColumnId(searchColumnId);
     }
 
@@ -95,11 +95,11 @@ public class LiveGridPanel extends GridPanel {
     @Override
     public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        return new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div");
+        return new WebLocator(this).withElxPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]//div");
     }
 
     public boolean refresh() {
-        Button refreshButton = new Button(this).setIconCls("x-tbar-loading").setInfoMessage("Loading...");
+        Button refreshButton = new Button(this).setIconCls("x-tbar-loading").withInfoMessage("Loading...");
         return ready(true) && refreshButton.clickAt() && ready(true);
     }
 }

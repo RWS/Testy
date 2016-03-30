@@ -14,8 +14,8 @@ public class TooltipTest {
         return new Object[][]{
                 {new Tooltip(),                      "//*[contains(concat(' ', @class, ' '), ' tooltip ')]"},
                 {new Tooltip("Message"),             "//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
-                {new Tooltip("Message").setId("Id"), "//*[@id='Id' and contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
-                {new Tooltip("Message").setContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+                {new Tooltip("Message").withId("Id"), "//*[@id='Id' and contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
+                {new Tooltip("Message").withContainer(container), "//form[count(.//legend[text()='Form']) > 0]//*[contains(concat(' ', @class, ' '), ' tooltip ') and count(//*[@class='tooltip-inner' and text()='Message']) > 0]"},
         };
     }
 

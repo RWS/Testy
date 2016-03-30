@@ -8,22 +8,22 @@ public class TextArea extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextArea.class);
 
     public TextArea() {
-        setClassName("TextArea");
-        setTag("textarea");
+        withClassName("TextArea");
+        withTag("textarea");
     }
 
     public TextArea(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public TextArea(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public TextArea(String name, WebLocator container) {
         this(container);
-        setName(name);
+        withName(name);
     }
 }

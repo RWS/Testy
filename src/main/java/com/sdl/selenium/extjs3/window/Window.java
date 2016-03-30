@@ -28,23 +28,23 @@ public class Window extends Panel {
                 selector = "preceding-sibling::*[contains(@class, 'ext-el-mask') and contains(@style, 'display: block')]";
             }
         }
-        setElPathSuffix("modal-window", selector);
+        withElxPathSuffix("modal-window", selector);
     }
 
     /**
      * Windows have default style="visibility: visible;"
      */
     public Window() {
-        setClassName("Window");
-        setBaseCls("x-window");
+        withClassName("Window");
+        withBaseCls("x-window");
         setHeaderBaseCls(getPathBuilder().getBaseCls());
-        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
-        setElPathSuffix("exclude-hide-cls", null);
+        withTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+        withElxPathSuffix("exclude-hide-cls", null);
         // test for IE be cause of :
         // http://jira.openqa.org/browse/SEL-545
         // and http://code.google.com/p/selenium/issues/detail?id=1716
         if (!WebDriverConfig.isIE()) {
-            setStyle("visibility: visible;");
+            withStyle("visibility: visible;");
         }
     }
 
@@ -55,17 +55,17 @@ public class Window extends Panel {
 
     public Window(String title) {
         this();
-        setTitle(title);
+        withTitle(title);
     }
 
     public Window(String title, Boolean modal) {
         this(modal);
-        setTitle(title);
+        withTitle(title);
     }
 
     public String getTitleWindow() {
         ready();
-        WebLocator locator = new WebLocator(this).setClasses("x-window-header-text");
-        return locator.getHtmlText();
+        WebLocator locator = new WebLocator(this).withClasses("x-window-header-text");
+        return locator.getText();
     }
 }

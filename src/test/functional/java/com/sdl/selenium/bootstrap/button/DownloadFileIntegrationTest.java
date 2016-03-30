@@ -1,9 +1,9 @@
 package com.sdl.selenium.bootstrap.button;
 
-import com.sdl.selenium.bootstrap.form.Form;
-import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.web.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
@@ -16,7 +16,7 @@ public class DownloadFileIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadFileIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
-    private DownloadFile downloadFile = new DownloadFile(form).setText("Download");
+    private DownloadFile downloadFile = new DownloadFile(form).withText("Download");
 
     @BeforeClass
     public void startTests() {

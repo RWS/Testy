@@ -148,7 +148,7 @@ public final class WebLocatorUtils extends WebLocator {
     }
 
     public static void main(String[] args) {
-        WebLocator l = new WebLocator().setText("Save");
+        WebLocator l = new WebLocator().withText("Save");
         getXPathScript(l);
     }
 }

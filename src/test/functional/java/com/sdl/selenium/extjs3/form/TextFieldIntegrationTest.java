@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.InputData;
-import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.extjs3.window.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
@@ -14,10 +14,10 @@ import static org.testng.Assert.*;
 public class TextFieldIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextFieldIntegrationTest.class);
 
-    Window textFieldWindow = new Window("TextFieldWindow");
-    TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");
-    TextField lastNameTextField = new TextField(textFieldWindow, "Las't Name:");
-    TextField disableTextField = new TextField(textFieldWindow, "Disable TextField:");
+    private Window textFieldWindow = new Window("TextFieldWindow");
+    private TextField firstNameTextField = new TextField(textFieldWindow, "First Name:");
+    private TextField lastNameTextField = new TextField(textFieldWindow, "Las't Name:");
+    private TextField disableTextField = new TextField(textFieldWindow, "Disable TextField:");
 
     @BeforeClass
     public void startTests() {

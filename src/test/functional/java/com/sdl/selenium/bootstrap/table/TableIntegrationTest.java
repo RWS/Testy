@@ -1,15 +1,15 @@
 package com.sdl.selenium.bootstrap.table;
 
+import com.sdl.selenium.InputData;
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
-import com.sdl.selenium.InputData;
-import com.sdl.selenium.TestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
@@ -43,7 +43,7 @@ public class TableIntegrationTest extends TestBase {
     @Test
     public void verifyIfButtonsIsPresent() {
         Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
-        Button first = new Button(row).setText("First", SearchType.CONTAINS);
+        Button first = new Button(row).withText("First", SearchType.CONTAINS);
         Button second = new Button(row, "Second");
         assertTrue(first.isElementPresent());
         assertTrue(second.isElementPresent());
@@ -51,11 +51,11 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void verifyHeaderName() {
-        Cell row = new Cell(1, "Row", SearchType.EQUALS).setTag("th");
-        Cell firstName = new Cell(2, "First Name", SearchType.EQUALS).setTag("th");
-        Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).setTag("th");
-        Cell email = new Cell(4, "Email", SearchType.EQUALS).setTag("th");
-        Cell buttons = new Cell(5, "Buttons", SearchType.EQUALS).setTag("th");
+        Cell row = new Cell(1, "Row", SearchType.EQUALS).withTag("th");
+        Cell firstName = new Cell(2, "First Name", SearchType.EQUALS).withTag("th");
+        Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).withTag("th");
+        Cell email = new Cell(4, "Email", SearchType.EQUALS).withTag("th");
+        Cell buttons = new Cell(5, "Buttons", SearchType.EQUALS).withTag("th");
         assertTrue(table.getRow(row, firstName, lastName, email, buttons).ready());
     }
 

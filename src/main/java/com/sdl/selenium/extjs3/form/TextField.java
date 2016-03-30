@@ -15,30 +15,30 @@ public class TextField extends ExtJsComponent implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
-        setClassName("TextField");
-        setTag("input");
-        setElPathSuffix("not-hidden", "not(@type='hidden')");
-        setLabelPosition("//following-sibling::*//");
+        withClassName("TextField");
+        withTag("input");
+        withElxPathSuffix("not-hidden", "not(@type='hidden')");
+        withLabelPosition("//following-sibling::*//");
     }
 
     public TextField(String cls) {
         this();
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public TextField(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public TextField(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public TextField(String name, WebLocator container) {
         this(container);
-        setName(name);
+        withName(name);
     }
 
     /**
@@ -47,7 +47,7 @@ public class TextField extends ExtJsComponent implements ITextField {
      * @return current element
      */
     public <T extends ITextField> T setPlaceholder(final String value, SearchType... searchTypes) {
-        setAttribute("placeholder", value, searchTypes);
+        withAttribute("placeholder", value, searchTypes);
         return (T) this;
     }
 
@@ -111,9 +111,9 @@ public class TextField extends ExtJsComponent implements ITextField {
     public boolean clickIcon(String icon) {
         assertReady();
         String triggerPath = getTriggerPath(icon);
-        WebLocator iconLocator = new WebLocator(this).setElPath(triggerPath);
-        iconLocator.setRenderMillis(500);
-        iconLocator.setInfoMessage(this + " -> trigger-" + icon);
+        WebLocator iconLocator = new WebLocator(this).withElxPath(triggerPath);
+        iconLocator.withRenderMillis(500);
+        iconLocator.withInfoMessage(this + " -> trigger-" + icon);
         iconLocator.assertClick();
         return true;
     }

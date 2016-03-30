@@ -21,14 +21,14 @@ public class MessageBoxWindow extends Window {
     
     public MessageBoxWindow() {
         super(true);
-        setClassName("MessageBoxWindow");
-        setInfoMessage("MessageBoxWindow");
-        setClasses("x-window-dlg");
+        withClassName("MessageBoxWindow");
+        withInfoMessage("MessageBoxWindow");
+        withClasses("x-window-dlg");
     }
 
     public MessageBoxWindow(String title) {
         this();
-        setTitle(title);
+        withTitle(title);
     }
 
     public static String OK_TEXT = "OK";
@@ -70,10 +70,10 @@ public class MessageBoxWindow extends Window {
     public String getMessage(int waitSeconds) {
         // TODO verify if can be be simplified using WebLocator instead of ExtJsComponent
         ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", this);
-        mbTextElement.setInfoMessage("MessageBox ext-mb-text");
+        mbTextElement.withInfoMessage("MessageBox ext-mb-text");
         String msg;
         if (waitSeconds == 0) {
-            msg = mbTextElement.getHtmlText(true);
+            msg = mbTextElement.getText(true);
         } else {
             msg = mbTextElement.waitTextToRender(waitSeconds);
         }

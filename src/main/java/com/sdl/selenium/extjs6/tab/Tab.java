@@ -13,32 +13,32 @@ public class Tab extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     public Tab() {
-        setClassName("TabPanel");
-        setBaseCls("x-tabpanel-child");
-        WebLink activeTab = new WebLink().setClasses("x-tab-active");
-        setTemplateTitle(new WebLocator(activeTab));
+        withClassName("TabPanel");
+        withBaseCls("x-tabpanel-child");
+        WebLink activeTab = new WebLink().withClasses("x-tab-active");
+        withTemplateTitle(new WebLocator(activeTab));
     }
 
     public Tab(String title) {
         this();
-        setTitle(title, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
+        withTitle(title, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
     }
 
     public Tab(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public Tab(WebLocator container, String text) {
         this(text);
-        setContainer(container);
+        withContainer(container);
     }
 
     private WebLocator getTitleInactiveEl() {
-        WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls());
+        WebLocator container = new WebLocator(getPathBuilder().getContainer()).withClasses(getPathBuilder().getBaseCls());
 //        SearchType[] st = getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size() + 1]);
-        return new WebLink(container).setText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS).setExcludeClasses("x-tab-active")
-                .setInfoMessage(getPathBuilder().getTitle() + " Tab");
+        return new WebLink(container).withText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS).withExcludeClasses("x-tab-active")
+                .withInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
     /**
@@ -60,8 +60,8 @@ public class Tab extends WebLocator {
              */
             @Override
             public String getItemPath(boolean disabled) {
-                WebLocator body = new WebLocator().setTag("following-sibling::*").setClasses("x-panel-body");
-                WebLocator tab = new WebLocator(body).setRoot("/").setExcludeClasses("x-hidden-offsets").setClasses("x-tabpanel-child");
+                WebLocator body = new WebLocator().withTag("following-sibling::*").withClasses("x-panel-body");
+                WebLocator tab = new WebLocator(body).withRoot("/").withExcludeClasses("x-hidden-offsets").withClasses("x-tabpanel-child");
                 return  getBaseTabPanelPath() + tab.getXPath();
             }
         };

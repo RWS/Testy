@@ -8,9 +8,9 @@ public class InputButton extends WebLocator implements IButton {
     private static final Logger LOGGER = LoggerFactory.getLogger(InputButton.class);
 
     public InputButton() {
-        setClassName("InputButton");
-        setTag("input");
-        setTemplate("text", "@value='%s'");
+        withClassName("InputButton");
+        withTag("input");
+        withTemplate("text", "@value='%s'");
     }
 
     /**
@@ -18,7 +18,7 @@ public class InputButton extends WebLocator implements IButton {
      */
     public InputButton(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     /**
@@ -27,6 +27,6 @@ public class InputButton extends WebLocator implements IButton {
      */
     public InputButton(WebLocator container, String text) {
         this(container);
-        setText(text);
+        withText(text);
     }
 }

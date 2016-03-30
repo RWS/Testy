@@ -15,19 +15,19 @@ public class Checkbox extends ExtJsComponent implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(Checkbox.class);
 
     public Checkbox() {
-        setClassName("Checkbox");
-        setTag("input");
-        setBaseCls("x-form-checkbox");
+        withClassName("Checkbox");
+        withTag("input");
+        withBaseCls("x-form-checkbox");
     }
 
     public Checkbox(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public Checkbox(WebLocator container, String name) {
         this(container);
-        setName(name);
+        withName(name);
     }
 
     @Override

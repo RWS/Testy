@@ -11,14 +11,14 @@ public class FlashUploadButton extends SelectFilesHandler {
 
     public FlashUploadButton() {
         WebLocator buttonElement = new WebLocator();
-        buttonElement.setTag("object");
+        buttonElement.withTag("object");
         setButtonElement(buttonElement);
     }
 
     public FlashUploadButton(WebLocator container, String cls) {
         this();
-        getButtonElement().setClasses(cls);
-        getButtonElement().setContainer(container);
+        getButtonElement().withClasses(cls);
+        getButtonElement().withContainer(container);
     }
 
     public FlashUploadButton(WebLocator container) {
@@ -27,13 +27,13 @@ public class FlashUploadButton extends SelectFilesHandler {
 
     public FlashUploadButton(String label, WebLocator container) {
         this();
-        getButtonElement().setClasses("swfupload");
+        getButtonElement().withClasses("swfupload");
         ExtJsComponent button = new ExtJsComponent(container);
-        button.setLabel(label);
-        getButtonElement().setContainer(button);
+        button.withLabel(label);
+        getButtonElement().withContainer(button);
     }
 
     public void setElPath(String elPath){
-        getButtonElement().setElPath(elPath);
+        getButtonElement().withElxPath(elPath);
     }
 }

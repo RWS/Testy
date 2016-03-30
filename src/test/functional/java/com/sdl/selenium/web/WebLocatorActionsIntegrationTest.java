@@ -4,7 +4,6 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.form.TextField;
 import com.sdl.selenium.utils.config.WebDriverConfig;
-import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.testng.annotations.BeforeClass;
@@ -16,8 +15,8 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class WebLocatorActionsIntegrationTest extends TestBase {
 
-    private WebLocator locator = new WebLocator().setId("loginButton").setVisibility(true);
-    private TextField email = new TextField().setLabel("Email:");
+    private WebLocator locator = new WebLocator().withId("loginButton").withVisibility(true);
+    private TextField email = new TextField().withLabel("Email:");
 
     @BeforeClass
     public void startTests() {
@@ -27,9 +26,9 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
     @Test
     public void actionsTest() {
         assertThat(locator.isElementPresent(), is(true));
-        assertThat(locator.getHtmlText(true), equalTo("Login"));
+        assertThat(locator.getText(true), equalTo("Login"));
         startTests();
-        assertThat(locator.getHtmlText(true), equalTo("Login"));
+        assertThat(locator.getText(true), equalTo("Login"));
     }
 
     @Test
@@ -44,7 +43,7 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void getAttributeClassTest() {
-        assertThat(locator.getAttributeClass(), equalTo("btn tile-btn btn-warning"));
+        assertThat(locator.getAttributeClass(), equalTo("btn tile-btn btn-warning login-btn"));
     }
 
     @Test

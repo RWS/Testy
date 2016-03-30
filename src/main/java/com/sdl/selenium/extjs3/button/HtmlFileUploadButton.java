@@ -9,13 +9,13 @@ public class HtmlFileUploadButton extends SelectFilesHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlFileUploadButton.class);
 
     public HtmlFileUploadButton() {
-//        setClassName("HtmlFileUploadButton");
+//        withClassName("HtmlFileUploadButton");
         //logger.debug(getClassName() + "() constructor");
     }
 
     public HtmlFileUploadButton(WebLocator container, String text) {
         this();
-        //setContainer(container);
+        //withContainer(container);
         WebLocator button = new Button(container, text);
         setButtonElement(button);
     }

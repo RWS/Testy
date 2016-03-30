@@ -8,12 +8,12 @@ public class ToolBar extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ToolBar.class);
 
     public ToolBar() {
-        setClassName("ToolBar");
-        setBaseCls("x-toolbar");
+        withClassName("ToolBar");
+        withBaseCls("x-toolbar");
     }
 
     public ToolBar(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 }

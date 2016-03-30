@@ -98,7 +98,7 @@ This project is optimized for:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
     </dependency>
 ```
 
@@ -130,26 +130,17 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.1.0-SNAPSHOT**
+**Release Notes for Testy 2.2.0-SNAPSHOT**
+- change set***() in with***()
+- make deprecated all methods set***()
+
+**Release Notes for Testy 2.1.0**
 - add support for css selector when setExcludeClasses
 - update webdriver version 2.52.0
 - add log at sendKeys method
 - add possibility to overwritten value from webLocator.properties in browser.properties
 - change getHtmlText() in getText()
-
-**Release Notes for Testy 2.0.0**
-- Change config default value for weblocator.log.suggestions=false
-- Generate cssSelector instead of xpath when possible. Use config weblocator.generateCssSelector=false
-- Add locator.setElCssSelector("#selector.element-css")
-- Improve ElementNotVisibleException when use locator.setVisibility(true) - wait.until(visibilityOfElementLocated).
-- Classes TableCell and TableRow made deprecated - use Cell & Row instead
-- public String[] gridPanel.getRow have been removed
-- locator.isTextPresent made deprecated
-- locator.getPath made deprecated
-- add addSearchTextType(SearchType... searchTextType)
-- add SearchType.CASE_INSENSITIVE and SearchType.CASE_SENSITIVE
-- add SearchType.NO_TRIM
-- made deprecated doClick, doClickAt, doSendKeys, getHtmlSource, getHtmlSource(el), doMouseOver and doHighlight from WebLocatorExecutor
+- update webdriver version 2.53.0
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -166,7 +157,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.1.0-SNAPSHOT</version>
+        <version>2.2.0-SNAPSHOT</version>
     </dependency>
 ```
 

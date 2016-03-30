@@ -11,25 +11,25 @@ public class GridRow extends AbstractRow {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridRow.class);
 
     public GridRow() {
-        setRenderMillis(200);
-        setClassName("GridRow");
-        setTag("*");
+        withRenderMillis(200);
+        withClassName("GridRow");
+        withTag("*");
     }
 
     //TODO generated standard xpath  independent of constructors
     public GridRow(GridPanel gridPanel) {
         this();
-        setContainer(gridPanel);
-        setTag("div");
-        setClasses("x-grid3-row");
-        setExcludeClasses("x-grid3-row-checker");
+        withContainer(gridPanel);
+        withTag("div");
+        withClasses("x-grid3-row");
+        withExcludeClasses("x-grid3-row-checker");
     }
 
     public GridRow(GridPanel gridPanel, int rowIndex) {
-        setContainer(gridPanel);
-        setTag("div[" + rowIndex + "]");
-        setClasses("x-grid3-row");
-        setExcludeClasses("x-grid3-row-checker");
+        withContainer(gridPanel);
+        withTag("div[" + rowIndex + "]");
+        withClasses("x-grid3-row");
+        withExcludeClasses("x-grid3-row-checker");
     }
 
     public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, SearchType... searchTypes) {
@@ -38,15 +38,15 @@ public class GridRow extends AbstractRow {
 
     public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType... searchTypes) {
         this(gridPanel);
-        setTag("*");
-        WebLocator cellEl = new WebLocator().setText(searchElement, searchTypes);
-        setElPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
+        withTag("*");
+        WebLocator cellEl = new WebLocator().withText(searchElement, searchTypes);
+        withElxPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 
     public GridRow(GridPanel gridPanel, AbstractCell... cells) {
         this(gridPanel);
-        setTag("*");
-        setChildNodes(cells);
+        withTag("*");
+        withChildNodes(cells);
     }
 
     private String getSearchPaths(String searchColumnId, WebLocator cellEl) {
@@ -56,9 +56,9 @@ public class GridRow extends AbstractRow {
     public GridRow(GridPanel gridPanel, int rowIndex, boolean isSelected) {
         this(gridPanel, rowIndex);
         if (isSelected) {
-            setTag("div[" + rowIndex + "]");
-            setClasses("x-grid3-row-selected");
-            setExcludeClasses("x-grid3-row-checker");
+            withTag("div[" + rowIndex + "]");
+            withClasses("x-grid3-row-selected");
+            withExcludeClasses("x-grid3-row-checker");
         }
     }
 }

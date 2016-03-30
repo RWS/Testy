@@ -14,7 +14,7 @@ public class TextAreaTest {
                 {new TextArea(), "//textarea[not(@type='hidden')]"},
                 {new TextArea(container, "TextAreaText"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextAreaText']//following-sibling::*//textarea[not(@type='hidden')]"},
                 {new TextArea("name", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[@name='name' and not(@type='hidden')]"},
-                {new TextArea().setId("IdTextArea"), "//textarea[@id='IdTextArea' and not(@type='hidden')]"},
+                {new TextArea().withId("IdTextArea"), "//textarea[@id='IdTextArea' and not(@type='hidden')]"},
         };
     }
 

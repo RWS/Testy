@@ -9,6 +9,6 @@ public abstract class AbstractRow extends WebLocator implements IRow, IText {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRow.class);
 
     public AbstractRow() {
-        setClassName("AbstractRow");
+        withClassName("AbstractRow");
     }
 }

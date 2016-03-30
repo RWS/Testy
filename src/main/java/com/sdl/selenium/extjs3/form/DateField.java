@@ -15,22 +15,22 @@ public class DateField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
     public DateField() {
-        setClassName("DateField");
+        withClassName("DateField");
     }
 
     public DateField(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public DateField(WebLocator container, String cls) {
         this(container);
-        setClasses(cls);
+        withClasses(cls);
     }
 
     public DateField(String name, WebLocator container) {
         this(container);
-        setName(name);
+        withName(name);
     }
 
     /**
@@ -42,20 +42,20 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        WebLocator calendarLayer = new WebLocator("x-layer").setStyle("visibility: visible;");
+        WebLocator calendarLayer = new WebLocator("x-layer").withStyle("visibility: visible;");
         Button monthYearButton = new Button(calendarLayer);
-        WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).setInfoMessage("Ok");
+        WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).withInfoMessage("Ok");
         if (click()) {
             monthYearButton.click();
             Utils.sleep(100);
-            // TODO find elements without setElPath
-            WebLocator yearEl = new WebLocator(calendarLayer).setElPath("//*[contains(@class, 'x-date-mp-year')]//*[text() = '" + year + "']").setInfoMessage("year " + year);
+            // TODO find elements without withElxPath
+            WebLocator yearEl = new WebLocator(calendarLayer).withElxPath("//*[contains(@class, 'x-date-mp-year')]//*[text() = '" + year + "']").withInfoMessage("year " + year);
             yearEl.click();
-            WebLocator monthEl = new WebLocator(calendarLayer).setElPath("//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']").setInfoMessage("month " + month);
+            WebLocator monthEl = new WebLocator(calendarLayer).withElxPath("//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']").withInfoMessage("month " + month);
             monthEl.click();
             selectOkButton.click();
             Utils.sleep(60); // wait for Chrome
-            WebLocator dayEl = new WebLocator(calendarLayer).setElPath("//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']").setInfoMessage("day " + day);
+            WebLocator dayEl = new WebLocator(calendarLayer).withElxPath("//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']").withInfoMessage("day " + day);
             return dayEl.click();
         } else {
             LOGGER.warn("The selected month doesn't have the " + day + " day.");

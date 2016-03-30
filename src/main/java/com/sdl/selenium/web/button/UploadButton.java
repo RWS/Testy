@@ -5,18 +5,18 @@ import com.sdl.selenium.web.WebLocator;
 public class UploadButton extends WebLocator {
 
     public UploadButton() {
-        setClassName("UploadButton");
-        setTag("input");
+        withClassName("UploadButton");
+        withTag("input");
     }
 
     public UploadButton(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public UploadButton(WebLocator container, String id) {
         this(container);
-        setId(id);
+        withId(id);
     }
 
     public boolean uploadFile(String path) {

@@ -11,9 +11,9 @@ public class TableRow extends Row {
      * @deprecated use {@link Row#Row()}
      */
     public TableRow() {
-        setRenderMillis(200);
-        setClassName("TableRow");
-        setTag("tr");
+        withRenderMillis(200);
+        withClassName("TableRow");
+        withTag("tr");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
@@ -23,7 +23,7 @@ public class TableRow extends Row {
      */
     public TableRow(WebLocator container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     /**
@@ -33,7 +33,7 @@ public class TableRow extends Row {
      */
     public TableRow(WebLocator container, int indexRow) {
         this(container);
-        setPosition(indexRow);
+        withPosition(indexRow);
     }
 
     /**
@@ -44,7 +44,7 @@ public class TableRow extends Row {
      */
     public TableRow(WebLocator table, String searchElement, SearchType... searchTypes) {
         this(table);
-        setText(searchElement, searchTypes);
+        withText(searchElement, searchTypes);
     }
 
     /**
@@ -54,7 +54,7 @@ public class TableRow extends Row {
      */
     public TableRow(WebLocator table, AbstractCell... cells) {
         this(table);
-        setChildNodes(cells);
+        withChildNodes(cells);
     }
 
     /**
@@ -65,6 +65,6 @@ public class TableRow extends Row {
      */
     public TableRow(WebLocator table, int indexRow, AbstractCell... cells) {
         this(table, indexRow);
-        setChildNodes(cells);
+        withChildNodes(cells);
     }
 }

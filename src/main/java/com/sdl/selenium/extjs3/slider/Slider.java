@@ -17,7 +17,7 @@ public class Slider extends ExtJsComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(Slider.class);
 
     public Slider() {
-        setClassName("Slider");
+        withClassName("Slider");
     }
 
     /**
@@ -27,12 +27,12 @@ public class Slider extends ExtJsComponent {
      */
     public Slider(ExtJsComponent container) {
         this();
-        setContainer(container);
+        withContainer(container);
     }
 
     public Slider(ExtJsComponent container, String label) {
         this(container);
-        setLabel(label);
+        withLabel(label);
     }
 
     public String getThumbPath(int thumbIndex) {
@@ -42,7 +42,7 @@ public class Slider extends ExtJsComponent {
     public boolean move(int thumbIndex, int distance) {
         boolean exists = true;
         String thumbPath = getThumbPath(thumbIndex);
-        WebLocator element = new WebLocator().setElPath(thumbPath);
+        WebLocator element = new WebLocator().withElxPath(thumbPath);
         if (thumbPath != null && element.exists()) {
             // to scroll to this element (if element is not visible)
             WebDriver driver = WebDriverConfig.getDriver();
