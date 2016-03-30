@@ -39,8 +39,6 @@ public class DeployTesty extends TestBase {
     private static final String JENKINS_JOB_URL = "http://cluj-jenkins02:8080/job/testy/";
 
     private static final String NEXUS_REPOSITORY_URL = "http://cljeng-nexus02:8081/nexus/#view-repositories;oss-sonatype-snapshots";
-    private static final String NEXUS_ADMIN_USER = "admin";
-    private static final String NEXUS_ADMIN_PASS = "***";
 
     private WebLocator loginContainer = new WebLocator().setClasses("login");
     private WebLink loginEl = new WebLink(loginContainer, "log in").setSearchTextType(SearchType.HTML_NODE);
@@ -102,8 +100,8 @@ public class DeployTesty extends TestBase {
         logInNexus.click();
         Utils.sleep(1000);
         userName.ready();
-        userName.setValue(NEXUS_ADMIN_USER);
-        password.setValue(NEXUS_ADMIN_PASS);
+        userName.setValue(DOMAIN_USER);
+        password.setValue(DOMAIN_PASS);
         logIn.click();
     }
 
@@ -124,7 +122,7 @@ public class DeployTesty extends TestBase {
     private void cleanDir(String path) {
         try {
             FileUtils.cleanDirectory(new File(path));
-        } catch (IOException e) {
+        } catch (IllegalArgumentException | IOException e) {
             logger.debug("not found " + path);
         }
     }
