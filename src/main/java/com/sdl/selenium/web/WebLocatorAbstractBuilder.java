@@ -937,6 +937,15 @@ public abstract class WebLocatorAbstractBuilder {
         pathBuilder.setClassName(className);
     }
 
+    /**
+     * @deprecated use {@link #withClassName(String)}}
+     * <p>Used only to identify class type of current object</p>
+     * @param className className
+     */
+    protected void setClassName(final String className) {
+        pathBuilder.setClassName(className);
+    }
+
     protected boolean hasId() {
         return pathBuilder.hasId();
     }
