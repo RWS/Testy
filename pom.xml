@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.19</version>
+            <version>1.7.20</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -99,10 +99,15 @@
             <version>6.9.10</version>
             <!--<scope>test</scope>-->
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
