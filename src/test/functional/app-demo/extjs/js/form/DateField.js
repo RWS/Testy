@@ -32,6 +32,7 @@ Ext.onReady(function(){
         }
     });
 
+    Testy.topToolbar.add('-');
     Testy.topToolbar.add(showComponentButton);
     Testy.topToolbar.doLayout();
 });

@@ -20,6 +20,8 @@ public class DatePickerIntegrationTest extends TestBase {
         driver.get(InputData.BOOTSTRAP_URL);
     }
 
+    // TODO bug - select 29/01 will select the 29 of preview month
+
     @Test
     public void selectDate() {
         long startMs = System.currentTimeMillis();

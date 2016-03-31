@@ -20,7 +20,13 @@ Ext.onReady(function(){
         renderTo: Ext.getBody(),
         buttonAlign: 'center',
         items: [
-
+            {
+                text: 'Bootstrap Examples',
+                handler: function(){
+                    document.location = '../bootstrap/index.html';
+                }
+            },
+            '-'
         ]
     });
 

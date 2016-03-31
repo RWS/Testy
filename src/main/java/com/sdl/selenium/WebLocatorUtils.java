@@ -69,6 +69,7 @@ public final class WebLocatorUtils extends WebLocator {
         return log;
     }
 
+    // TODO add in anonymous function and simplify var names
     private static void appendLocatorXPath(StringBuilder builder, String locatorName, WebLocator locator, boolean compact) {
         String path = locator.getXPath();
         String xpathLocatorVar = "xpath_" + locatorName;
