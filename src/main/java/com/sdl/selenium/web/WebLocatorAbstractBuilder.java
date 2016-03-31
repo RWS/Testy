@@ -39,7 +39,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withRoot(String)}
+     *
      * @param root If the path starts with // then all elements in the document which fulfill following criteria are selected. eg. // or /
      * @param <T>  the element which calls this method
      * @return this element
@@ -51,7 +51,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withTag(String)}
+     *
      * @param tag (type of DOM element) eg. input or h2
      * @param <T> the element which calls this method
      * @return this element
@@ -63,7 +63,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withId(String)}
+     *
      * @param id  eg. id="buttonSubmit"
      * @param <T> the element which calls this method
      * @return this element
@@ -76,7 +76,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
-     * @deprecated use {@link #withElxPath(String)}
+     *
      * @param elPath absolute way (xpath) to identify element
      * @param <T>    the element which calls this method
      * @return this element
@@ -89,7 +89,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate css selectors address)</b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
-     * @deprecated use {@link #withElCssSelector(String)}
+     *
      * @param elCssSelector absolute way (css selectors) to identify element
      * @param <T>    the element which calls this method
      * @return this element
@@ -101,7 +101,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withBaseCls(String)}
+     *
      * @param baseCls base class
      * @param <T>     the element which calls this method
      * @return this element
@@ -114,7 +114,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Find element with <b>exact math</b> of specified class (equals)</p>
-     * @deprecated use {@link #withCls(String)}
+     *
      * @param cls class of element
      * @param <T> the element which calls this method
      * @return this element
@@ -130,7 +130,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
      * </ul>
-     * @deprecated use {@link #withClasses(String...)}
+     *
      * @param classes list of classes
      * @param <T>     the element which calls this method
      * @return this element
@@ -142,7 +142,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withExcludeClasses(String...)}
+     *
      * @param excludeClasses list of class to be excluded
      * @param <T>            the element which calls this method
      * @return this element
@@ -153,7 +153,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #withChildNodes(WebLocator...)}
+     *
      * @param childNodes list of WebLocators
      * @param <T> the element which calls this method
      * @return this element
@@ -165,7 +165,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withName(String)}
+     *
      * @param name eg. name="buttonSubmit"
      * @param <T>  the element which calls this method
      * @return this element
@@ -177,7 +177,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withText(String, SearchType...)}
+     *
      * @param text       with which to identify the item
      * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
@@ -191,7 +191,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method reset searchTextType and set to new searchTextType.
-     * @deprecated use {@link #withSearchTextType(SearchType...)}
+     *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
      * @return this element
@@ -203,7 +203,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withSearchLabelType(SearchType...)}
+     *
      * @param searchLabelTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
@@ -215,7 +215,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withSearchTitleType(SearchType...)}
+     *
      * @param searchTitleTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
@@ -227,7 +227,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withStyle(String)}
+     *
      * @param style of element
      * @param <T>   the element which calls this method
      * @return this element
@@ -239,7 +239,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withTitle(String, SearchType...)}
+     *
      * @param title of element
      * @param searchTypes see {@link SearchType}
      * @param <T>   the element which calls this method
@@ -251,7 +251,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #withTemplateTitle(WebLocator)}
+     *
      * @param titleEl title element
      * @param <T> the element which calls this method
      * @return this element
@@ -267,7 +267,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     * @deprecated use {@link #withElxPathSuffix(String, String)}
+     *
      * @param key          suffix key
      * @param elPathSuffix additional identification xpath element that will be added at the end
      * @param <T>          the element which calls this method
@@ -284,7 +284,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     * @deprecated use {@link #withTemplateValue(String, String)}
+     *
      * @param key   identify key
      * @param value value
      * @param <T>   the element which calls this method
@@ -297,7 +297,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
-     * @deprecated use {@link #withTemplate(String, String)}
+     *
      * @param key   name template
      * @param value template
      * @param <T>   the element which calls this method
@@ -310,7 +310,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used in logging process</i></b></p>
-     * @deprecated use {@link #withInfoMessage(String)}
+     *
      * @param infoMessage info Message
      * @param <T>         the element which calls this method
      * @return this element
@@ -326,7 +326,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     * @deprecated use {@link #withVisibility(boolean)}
+     *
      * @param visibility true or false
      * @param <T> the element which calls this method
      * @return this element
@@ -337,7 +337,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #withRenderMillis(long)}
+     *
      * @param renderMillis true or false
      * @param <T> the element which calls this method
      * @return this element
@@ -348,7 +348,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #withActivateSeconds(int)}
+     *
      * @param activateSeconds true or false
      * @param <T> the element which calls this method
      * @return this element
@@ -360,7 +360,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withContainer(WebLocator)}
+     *
      * @param container parent containing element.
      * @param <T>       the element which calls this method
      * @return this element
@@ -372,7 +372,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withLabel(String, SearchType...)}
+     *
      * @param label      text label element
      * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
@@ -385,7 +385,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withLabelTag(String)}
+     *
      * @param labelTag label tag element
      * @param <T>      the element which calls this method
      * @return this element
@@ -397,7 +397,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * @deprecated use {@link #withLabelPosition(String)}
+     *
      * @param labelPosition position of this element reported to label
      * @param <T>           the element which calls this method
      * @return this element
@@ -414,7 +414,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
-     * @deprecated use {@link #withPosition(int)}
+     *
      * @param position starting index = 1
      * @param <T>      the element which calls this method
      * @return this element
@@ -430,7 +430,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
-     * @deprecated use {@link #withResultIdx(int)}
+     *
      * @param resultIdx starting index = 1
      * @param <T>       the element which calls this method
      * @return this element
@@ -446,7 +446,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[@type='type']
      * </pre>
-     * @deprecated use {@link #withType(String)}
+     *
      * @param type eg. checkbox, button
      * @param <T>  the element which calls this method
      * @return this element
@@ -462,7 +462,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[@placeholder='Search']
      * </pre>
-     * @deprecated use {@link #withAttribute(String, String, SearchType...)}
+     *
      * @param attribute eg. placeholder
      * @param value     eg. Search
      * @param searchTypes see {@link SearchType}
@@ -938,7 +938,6 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #withClassName(String)}}
      * <p>Used only to identify class type of current object</p>
      * @param className className
      */
