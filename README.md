@@ -132,7 +132,8 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 ## Release Notes
 **Release Notes for Testy 2.2.0-SNAPSHOT**
 - change set***() in with***()
-- make deprecated all methods set***()
+  ex: WebLocator el = new WebLocator().setClasses("x-btn").setText("Save").setType("text");
+      WebLocator el = new WebLocator().withClasses("x-btn").withText("Save").withType("text");
 
 **Release Notes for Testy 2.1.0**
 - add support for css selector when setExcludeClasses
@@ -140,6 +141,9 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 - add log at sendKeys method
 - add possibility to overwritten value from webLocator.properties in browser.properties
 - change getHtmlText() in getText()
+  ex: WebLocator el = new WebLocator().setClasses("x-btn");
+      el.getHtmlText(); - make deprecated;
+      el.getText(); - use this;
 - update webdriver version 2.53.0
 
 [Detailed Release Notes](./release-notes.md) 

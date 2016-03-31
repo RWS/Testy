@@ -2,7 +2,8 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.2.0-SNAPSHOT**
 - change set***() in with***()
-- make deprecated all methods set***()
+  ex: WebLocator el = new WebLocator().setClasses("x-btn").setText("Save").setType("text");
+      WebLocator el = new WebLocator().withClasses("x-btn").withText("Save").withType("text");
 
 **Release Notes for Testy 2.1.0**
 - use attributes when generate toString, in case no other important string is present
@@ -11,6 +12,9 @@ RELEASE NOTES
 - add log at sendKeys method
 - add possibility to overwritten value from webLocator.properties in browser.properties
 - change getHtmlText() in getText()
+  ex: WebLocator el = new WebLocator().setClasses("x-btn");
+      el.getHtmlText(); - make deprecated;
+      el.getText(); - use this;
 - update webdriver version 2.53.0
 
 **Release Notes for Testy 2.0.0**
