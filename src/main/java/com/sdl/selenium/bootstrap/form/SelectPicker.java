@@ -27,7 +27,7 @@ public class SelectPicker extends WebLocator implements ICombo {
 
     public SelectPicker() {
         withClassName("SelectPicker");
-        withBaseCls("btn dropdown-toggle");
+        withBaseCls("dropdown-toggle");
         withTag("button");
     }
 
@@ -43,12 +43,15 @@ public class SelectPicker extends WebLocator implements ICombo {
 
     @Override
     public boolean select(String value) {
-        if (click()) {
-            WebLocator select = new WebLocator(this).withElxPath("//following-sibling::*[contains(@class, 'dropdown-menu')]//span[text()='" + value + "']")
-                    .withInfoMessage("select: '" + value + "'");
-            return select.click();
-        }
-        return false;
+        assertClick();
+        doSelect(value);
+        return true;
+    }
+
+    protected void doSelect(String value) {
+        WebLocator group = new WebLocator().setClasses("btn-group", "open");
+        WebLocator select = new WebLocator(group).setText(value).withInfoMessage("select: '" + value + "'");
+        select.assertClick();
     }
 
     @Override
