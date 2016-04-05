@@ -129,13 +129,24 @@ public class WebDriverConfig {
      * @throws IOException exception
      */
     public static WebDriver getWebDriver(String browserProperties) throws IOException {
+        return getWebDriver(browserProperties, null);
+    }
+
+    /**
+     * Create and return new WebDriver or RemoteWebDriver based on properties file
+     *
+     * @param browserProperties path to browser.properties
+     * @return WebDriver
+     * @throws IOException exception
+     */
+    public static WebDriver getWebDriver(String browserProperties, URL remoteUrl) throws IOException {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(browserProperties);
 
         LOGGER.debug("File: {} " + (resource != null ? "exists" : "does not exist"), browserProperties);
 
         if (resource != null) {
             Browser browser = findBrowser(resource.openStream());
-            return getDriver(browser, resource.openStream());
+            return getDriver(browser, resource.openStream(), remoteUrl);
         }
         return null;
     }
@@ -151,7 +162,7 @@ public class WebDriverConfig {
         return getDriver(browser, null);
     }
 
-    private static WebDriver getDriver(Browser browser, InputStream inputStream) throws IOException {
+    private static WebDriver getDriver(Browser browser, InputStream inputStream, URL remoteUrl) throws IOException {
         AbstractBrowserConfigReader properties = null;
         if (browser == Browser.FIREFOX) {
             properties = new FirefoxConfigReader();
@@ -171,7 +182,7 @@ public class WebDriverConfig {
             }
             LOGGER.info(properties.toString());
 
-            driver = properties.createDriver();
+            driver = properties.createDriver(remoteUrl);
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
         }
@@ -179,7 +190,11 @@ public class WebDriverConfig {
         return driver;
     }
 
-    public static Browser getBrowser(String browserKey) {
+    private static WebDriver getDriver(Browser browser, InputStream inputStream) throws IOException {
+        return getDriver(browser, inputStream, null);
+    }
+
+        public static Browser getBrowser(String browserKey) {
         browserKey = browserKey.toUpperCase();
         Browser browser = null;
         try {
