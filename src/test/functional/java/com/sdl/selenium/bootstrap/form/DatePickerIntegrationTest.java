@@ -47,17 +47,23 @@ public class DatePickerIntegrationTest extends TestBase {
         endMs = System.currentTimeMillis();
         LOGGER.info(String.format("selectDate4 took %s ms", endMs - startMs));
         assertTrue("12-09-2016".equals(datePicker.getDate()));
+
+        startMs = System.currentTimeMillis();
+        datePicker.select("29/01/2016");
+        endMs = System.currentTimeMillis();
+        LOGGER.info(String.format("selectDate5 took %s ms", endMs - startMs));
+        assertTrue("29-01-2016".equals(datePicker.getDate()));
     }
 
     @Test
     public void selectOldDate() {
-        datePicker.select("11/08/2009");
-        assertTrue("11-08-2009".equals(datePicker.getDate()));
+        datePicker.select("11/08/1972");
+        assertTrue("11-08-1972".equals(datePicker.getDate()));
     }
 
     @Test
     public void selectNewDate() {
-        datePicker.select("02/08/2019");
-        assertTrue("02-08-2019".equals(datePicker.getDate()));
+        datePicker.select("02/08/2052");
+        assertTrue("02-08-2052".equals(datePicker.getDate()));
     }
 }

@@ -39,7 +39,7 @@ public class DatePicker extends WebLocator {
 
     private WebLocator monthSelect = new WebLocator(dataPickerMonths).withClasses("month");
     private WebLocator yearSelect = new WebLocator(dataPickerYear).withClasses("year");
-    private WebLocator daySelect = new WebLocator(dataPickerDays).withClasses("day");
+    private WebLocator daySelect = new WebLocator(dataPickerDays).withClasses("day").setExcludeClasses("old", "new");
 
     public WebLocator getInput() {
         return input;
@@ -111,6 +111,7 @@ public class DatePicker extends WebLocator {
             if (!fullDate.contains(year)) {
                 getSwitchDay().click();
                 getSwitchMonth().click();
+                goToYear(year, fullDate);
                 getYearSelect().withText(year, SearchType.EQUALS);
                 ok = getYearSelect().click() &&
                         getMonthSelect().click();
@@ -122,6 +123,24 @@ public class DatePicker extends WebLocator {
             return ok && getDaySelect().click();
         }
         return false;
+    }
+
+    private void goToYear(String year, String fullDate) {
+        int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
+        int yearInt = Integer.parseInt(year);
+        int count = (int) Math.ceil((yearInt - currentYear)/10.0);
+
+        while (count > 0){
+            WebLocator next = new WebLocator(dataPickerYear).setClasses("next");
+            next.click();
+           count--;
+        }
+
+        while (0 > count){
+            WebLocator prev = new WebLocator(dataPickerYear).setClasses("prev");
+            prev.click();
+            count++;
+        }
     }
 
     public String getDate() {

@@ -57,7 +57,7 @@ public class TextField extends ExtJsComponent implements ITextField {
         if (value != null) {
             doClear();
             Utils.copyToClipboard(value);
-            executor.doSendKeys(this, Keys.CONTROL, "v");
+            executor.sendKeys(this, Keys.CONTROL, "v");
             LOGGER.info("Set value(" + this + "): " + value + "'");
             return true;
         }

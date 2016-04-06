@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +13,15 @@ import java.util.Locale;
 
 public class DateField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
+
+    private WebLocator calendarLayer = new WebLocator("x-layer").withStyle("visibility: visible;");
+    private Button monthYearButton = new Button(calendarLayer);
+    private WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).withInfoMessage("Ok");
+    private WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-date-mp").setVisibility(true);
+    private WebLocator yearContainer = new WebLocator(yearAndMonth).withClasses("x-date-mp-year");
+    private WebLocator monthContainer = new WebLocator(yearAndMonth).withClasses("x-date-mp-month");
+    private WebLocator dayInner = new WebLocator(calendarLayer).withClasses("x-date-inner");
+    private WebLocator dayContainer = new WebLocator(dayInner).withClasses("x-date-active");
 
     public DateField() {
         withClassName("DateField");
@@ -42,24 +51,42 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        WebLocator calendarLayer = new WebLocator("x-layer").withStyle("visibility: visible;");
-        Button monthYearButton = new Button(calendarLayer);
-        WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).withInfoMessage("Ok");
-        if (click()) {
+        assertClick();
+        String fullDate = monthYearButton.getText().trim();
+        if (!fullDate.contains(month) || !fullDate.contains(year)) {
             monthYearButton.click();
-            Utils.sleep(100);
-            // TODO find elements without withElxPath
-            WebLocator yearEl = new WebLocator(calendarLayer).withElxPath("//*[contains(@class, 'x-date-mp-year')]//*[text() = '" + year + "']").withInfoMessage("year " + year);
-            yearEl.click();
-            WebLocator monthEl = new WebLocator(calendarLayer).withElxPath("//*[contains(@class, 'x-date-mp-month')]//*[text() = '" + month + "']").withInfoMessage("month " + month);
-            monthEl.click();
+            goToYear(year, fullDate);
+            WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).withInfoMessage("year " + year);
+            yearEl.assertClick();
+            WebLocator yearContainer1 = new WebLocator(yearAndMonth).withClasses("x-date-mp-year", "x-date-mp-sel");
+            WebLocator yearEl1 = new WebLocator(yearContainer1).setText(year, SearchType.EQUALS);
+            if (!yearEl1.ready(1)) {
+                yearEl.assertClick();
+            }
+            WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).withInfoMessage("month " + month);
+            monthEl.assertClick();
             selectOkButton.click();
-            Utils.sleep(60); // wait for Chrome
-            WebLocator dayEl = new WebLocator(calendarLayer).withElxPath("//*[contains(@class, 'x-date-inner')]//*[contains(@class, 'x-date-active')]//*[text() = '" + Integer.parseInt(day) + "']").withInfoMessage("day " + day);
-            return dayEl.click();
-        } else {
-            LOGGER.warn("The selected month doesn't have the " + day + " day.");
-            return false;
+        }
+        WebLocator dayEl = new WebLocator(dayContainer).withText(day, SearchType.EQUALS).withInfoMessage("day " + day);
+        dayEl.assertClick();
+        return true;
+    }
+
+    private void goToYear(String year, String fullDate) {
+        int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
+        int yearInt = Integer.parseInt(year);
+        int count = (int) Math.ceil((yearInt - currentYear) / 9.0);
+
+        while (count > 0) {
+            WebLocator next = new WebLocator(yearAndMonth).setClasses("x-date-mp-next");
+            next.click();
+            count--;
+        }
+
+        while (0 > count) {
+            WebLocator prev = new WebLocator(yearAndMonth).setClasses("x-date-mp-prev");
+            prev.click();
+            count++;
         }
     }
 
@@ -90,7 +117,7 @@ public class DateField extends TextField {
 
         LOGGER.debug("select: " + date);
         String[] dates = date.split("/");
-        String day = dates[0];
+        String day = Integer.parseInt(dates[0]) + "";
         String month = dates[1];
         String year = dates[2];
         return setDate(day, month, year);

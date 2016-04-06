@@ -13,8 +13,8 @@ Ext.onReady(function(){
                 items: new fm.DateField({
                     name: 'dateField',
                     editable : false,
-                    format: 'd/m/Y',
-                    minValue: '01/01/06'
+                    format: 'd/m/Y'
+                    //minValue: '01/01/06'
                }),
 
                 buttons: [{
