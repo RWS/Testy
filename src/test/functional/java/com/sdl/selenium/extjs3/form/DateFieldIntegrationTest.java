@@ -62,13 +62,13 @@ public class DateFieldIntegrationTest extends TestBase {
 
     @Test
     public void setDateField4() {
-        assertTrue(dateField.select("05/May/1980", "dd/MMM/yyyy"));
-        assertEquals(dateField.getValue(), "05/05/1980");
+        assertTrue(dateField.select("05/May/1880", "dd/MMM/yyyy"));
+        assertEquals(dateField.getValue(), "05/05/1880");
     }
 
     @Test
     public void setDateField5() {
-        assertTrue(dateField.select("05/Apr/2016", "dd/MMM/yyyy"));
-        assertEquals(dateField.getValue(), "05/04/2016");
+        assertTrue(dateField.select("05/Apr/2216", "dd/MMM/yyyy"));
+        assertEquals(dateField.getValue(), "05/04/2216");
     }
 }

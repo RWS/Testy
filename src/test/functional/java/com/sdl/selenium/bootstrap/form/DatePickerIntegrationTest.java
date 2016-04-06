@@ -57,8 +57,8 @@ public class DatePickerIntegrationTest extends TestBase {
 
     @Test
     public void selectOldDate() {
-        datePicker.select("11/08/1972");
-        assertTrue("11-08-1972".equals(datePicker.getDate()));
+        datePicker.select("11/08/1872");
+        assertTrue("11-08-1872".equals(datePicker.getDate()));
     }
 
     @Test

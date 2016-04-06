@@ -75,7 +75,7 @@ public class DateField extends TextField {
     private void goToYear(String year, String fullDate) {
         int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
         int yearInt = Integer.parseInt(year);
-        int count = (int) Math.ceil((yearInt - currentYear) / 9.0);
+        int count = (int) Math.ceil((yearInt - currentYear - 4) / 10.0);
 
         while (count > 0) {
             WebLocator next = new WebLocator(yearAndMonth).setClasses("x-date-mp-next");
@@ -117,10 +117,7 @@ public class DateField extends TextField {
 
         LOGGER.debug("select: " + date);
         String[] dates = date.split("/");
-        String day = Integer.parseInt(dates[0]) + "";
-        String month = dates[1];
-        String year = dates[2];
-        return setDate(day, month, year);
+        return setDate(Integer.parseInt(dates[0]) + "", dates[1], dates[2]);
     }
 
     public boolean select(Date date) {
