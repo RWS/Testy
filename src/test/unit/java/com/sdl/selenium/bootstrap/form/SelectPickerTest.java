@@ -11,12 +11,12 @@ public class SelectPickerTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new SelectPicker(),                                       "//button[contains(concat(' ', @class, ' '), ' btn dropdown-toggle ')]"},
-                {new SelectPicker().withId("ID"),                           "//button[@id='ID' and contains(concat(' ', @class, ' '), ' btn dropdown-toggle ')]"},
-                {new SelectPicker(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//button[contains(concat(' ', @class, ' '), ' btn dropdown-toggle ')]"},
+                {new SelectPicker(),                                       "//button[contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
+                {new SelectPicker().withId("ID"),                           "//button[@id='ID' and contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
+                {new SelectPicker(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//button[contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
                 {new SelectPicker(container).withElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
-                {new SelectPicker(container, "SelectPickerLabel"),         "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='SelectPickerLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' btn dropdown-toggle ')]"},
-                {new SelectPicker(container).withId("ID"),                         "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@id='ID' and contains(concat(' ', @class, ' '), ' btn dropdown-toggle ')]"},
+                {new SelectPicker(container, "SelectPickerLabel"),         "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='SelectPickerLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
+                {new SelectPicker(container).withId("ID"),                         "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@id='ID' and contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
         };
     }
 
