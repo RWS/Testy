@@ -4,11 +4,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +35,14 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         super(DEFAULT_CONFIG, resourcePath);
     }
 
-    @Override
-    public WebDriver createDriver() throws IOException {
+    /***
+     * If you're using Selenium Grid, make sure the selenium server is in the same folder with the ChromeDriver
+     * or include the path to the ChromeDriver in command line when registering the node:
+     * -Dwebdriver.chrome.driver=%{path to chrome driver}
+     * @return chrome capabilities
+     * @throws IOException
+     */
+    private DesiredCapabilities getDesiredCapabilities() throws IOException {
         String driverPath = getProperty("browser.driver.path");
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.chrome.driver", driverPath);
@@ -43,7 +51,23 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         setProfilePreferences(options);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        return capabilities;
+    }
+
+    @Override
+    public WebDriver createDriver() throws IOException {
+        DesiredCapabilities capabilities = getDesiredCapabilities();
         return new ChromeDriver(capabilities);
+    }
+
+    @Override
+    public WebDriver createDriver(URL remoteUrl) throws IOException {
+        DesiredCapabilities capabilities = getDesiredCapabilities();
+        if (isRemoteDriver()) {
+            return new RemoteWebDriver(remoteUrl, capabilities);
+        } else {
+            return new ChromeDriver(capabilities);
+        }
     }
 
     @Override
@@ -52,7 +76,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
     }
 
     private void setProfilePreferences(ChromeOptions options) throws IOException {
-        Map<String, Object> prefs = new HashMap<String, Object>();
+        Map<String, Object> prefs = new HashMap<>();
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
             String value = (String) entry.getValue();

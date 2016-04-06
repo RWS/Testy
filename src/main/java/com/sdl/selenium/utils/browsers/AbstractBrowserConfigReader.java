@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,6 +17,8 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
     }
 
     public abstract WebDriver createDriver() throws IOException;
+
+    public abstract WebDriver createDriver(URL remoteUrl) throws IOException;
 
     public abstract boolean isSilentDownload();
 
@@ -33,5 +36,10 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
         downloadDir = downloadDir.replaceAll("\\{pid\\}", pid);
         downloadDir = downloadDir.replaceAll("\\{date\\}", date);
         return downloadDir;
+    }
+
+    public boolean isRemoteDriver() {
+        String remoteProperty = getProperty("browser.remote.driver");
+        return remoteProperty != null && Boolean.parseBoolean(remoteProperty);
     }
 }

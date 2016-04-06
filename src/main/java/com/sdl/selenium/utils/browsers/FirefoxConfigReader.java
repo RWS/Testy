@@ -5,11 +5,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
 
 public class FirefoxConfigReader extends AbstractBrowserConfigReader {
@@ -54,7 +56,39 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public WebDriver createDriver() throws IOException {
-        WebDriver driver;
+        DesiredCapabilities firefoxCapabilities = getDesiredCapabilities();
+        return new FirefoxDriver(firefoxCapabilities);
+    }
+
+    @Override
+    public WebDriver createDriver(URL remoteUrl) throws IOException {
+        DesiredCapabilities firefoxCapabilities = getDesiredCapabilities();
+        if (isRemoteDriver()) {
+            return new RemoteWebDriver(remoteUrl, firefoxCapabilities);
+        } else {
+            return new FirefoxDriver(firefoxCapabilities);
+        }
+    }
+
+    private DesiredCapabilities getDesiredCapabilities() throws IOException {
+        DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
+        FirefoxProfile profile = getProfile();
+        if (profile == null) {
+            String version = getProperty("browser.version");
+            if (version != null) {
+                firefoxCapabilities.setCapability("version", version);
+            }
+            String homeDir = getProperty("browser.binary.path");
+            if (homeDir != null) {
+                firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
+            }
+        } else {
+            firefoxCapabilities.setCapability(FirefoxDriver.PROFILE, profile);
+        }
+        return firefoxCapabilities;
+    }
+
+    private FirefoxProfile getProfile() throws IOException {
         String profileName = getProperty("browser.profile.name");
         FirefoxProfile profile;
         if (!"".equals(profileName) && profileName != null) {
@@ -63,36 +97,19 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
         } else {
             profile = new FirefoxProfile();
         }
-        if (profile != null) {
-            LOGGER.info("profile not null");
-            setProfilePreferences(profile);
-
-            File file = new File(getDownloadPath());
-            String downloadDir = file.getCanonicalPath();
-            if (!"".equals(downloadDir)) {
-                profile.setPreference("browser.download.dir", downloadDir);
-            }
-            driver = new FirefoxDriver(profile);
+        setProfilePreferences(profile);
+        File file = new File(getDownloadPath());
+        String downloadDir = file.getCanonicalPath();
+        if (!"".equals(downloadDir)) {
+            profile.setPreference("browser.download.dir", downloadDir);
         } else {
             String profilePath = getProperty("browser.profile.path");
             if (profilePath != null && !profilePath.equals("")) {
                 profile = new FirefoxProfile(new File(profilePath));
                 setProfilePreferences(profile);
-                driver = new FirefoxDriver(profile);
-            } else {
-                DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
-                String version = getProperty("browser.version");
-                if (version != null) {
-                    firefoxCapabilities.setCapability("version", version);
-                }
-                String homeDir = getProperty("browser.binary.path");
-                if (homeDir != null) {
-                    firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
-                }
-                driver = new FirefoxDriver(firefoxCapabilities);
             }
         }
-        return driver;
+        return profile;
     }
 
     @Override
