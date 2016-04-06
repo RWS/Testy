@@ -39,7 +39,7 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
     }
 
     public boolean isRemoteDriver() {
-        String remoteProperty = getProperty("browser.remote.driver");
+        String remoteProperty = System.getProperty("remoteDriver");
         return remoteProperty != null && Boolean.parseBoolean(remoteProperty);
     }
 }
