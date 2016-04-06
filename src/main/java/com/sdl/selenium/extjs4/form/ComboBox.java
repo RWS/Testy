@@ -85,9 +85,4 @@ public class ComboBox extends TextField implements ICombo {
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }
-
-   /* public static void main(String[] args) {
-        ComboBox comboBox = new ComboBox(null, "[review]Choose Source");
-        LOGGER.info(comboBox.getXPath());
-    }*/
 }

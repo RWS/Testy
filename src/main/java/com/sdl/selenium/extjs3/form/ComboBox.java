@@ -36,11 +36,6 @@ public class ComboBox extends TextField implements ICombo {
         withName(name);
     }
 
-    public ComboBox(WebLocator container, String cls, String name, boolean hasName) {
-        this(name, container);
-        withClasses(cls);
-    }
-
     /**
      * @param value value
      * @return true if value was selected
