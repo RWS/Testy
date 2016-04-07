@@ -1,8 +1,8 @@
 package com.sdl.selenium.bootstrap.button;
 
-import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.bootstrap.form.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
@@ -27,6 +27,12 @@ public class UploadFileIntegrationTest extends TestBase {
     @Test
     public void upload() {
         uploadFile.upload("Select file", new String[]{InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt"});
+        assertThat(new File(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt").getName(), equalTo(uploadFile.uploadedNameFile()));
+    }
+
+    @Test
+    public void uploadSimple() {
+        uploadFile.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt");
         assertThat(new File(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\example.txt").getName(), equalTo(uploadFile.uploadedNameFile()));
     }
 

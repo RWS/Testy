@@ -46,7 +46,7 @@ public class UploadFile extends WebLocator implements Upload {
 
     /**
      * Upload file with AutoIT.
-     * Use only this: button.upload("Browse", "C:\\upload.exe", "C:\\text.txt");
+     * Use only this: button.upload("Browse", new String[]{"C:\\upload.exe", "C:\\text.txt"});
      *
      * @param text     button text
      * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
@@ -55,6 +55,18 @@ public class UploadFile extends WebLocator implements Upload {
     public boolean upload(String text, String... filePath) {
         WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
         return upload(upload, filePath);
+    }
+
+    /**
+     * Upload file with AutoIT.
+     * Use only this: button.upload("C:\\upload.exe", "C:\\text.txt");
+     *
+     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
+     * @return true | false
+     */
+    public boolean upload(String fileExe, String filePath) {
+        WebLocator upload = new WebLocator(this).withTag("input").withType("file");
+        return upload(upload, fileExe, filePath);
     }
 
     public void change(String... filePath) {
