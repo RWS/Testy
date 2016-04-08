@@ -11,6 +11,35 @@ var Testy = {
 
 Ext.onReady(function(){
 
+    Testy.headerToolbar = new Ext.Toolbar({
+        renderTo: Ext.getBody(),
+        items: [
+            ' ',
+            {
+                text: 'ExtJS App Example',
+                pressed: true,
+                handler: function(){
+                    document.location = '';
+                }
+            },
+            '-',
+            {
+                text: 'Bootstrap Examples',
+                handler: function(){
+                    document.location = '../bootstrap/index.html';
+                }
+            },
+            '->',
+            {
+                text: 'Logout',
+                handler: function(){
+                    document.location = '../login.html';
+                }
+            },
+            ' '
+        ]
+    });
+
     /**
      * @class Testy.topToolbar
      * @type {Ext.Toolbar}
@@ -19,15 +48,7 @@ Ext.onReady(function(){
         id: 'top-toolbar',
         renderTo: Ext.getBody(),
         buttonAlign: 'center',
-        items: [
-            {
-                text: 'Bootstrap Examples',
-                handler: function(){
-                    document.location = '../bootstrap/index.html';
-                }
-            },
-            '-'
-        ]
+        items: []
     });
 
 });
