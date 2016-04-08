@@ -17,6 +17,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     private static final String DEFAULT_CONFIG = "" +
             "\n browser=iexplore" +
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\IEDriverServer.exe" +
+            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe" +
             "\n desired.capabilities.ignoreProtectedModeSettings=true" +
             "\n desired.capabilities.javascriptEnabled=true";
 
@@ -49,6 +50,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.ie.driver", driverPath);
         }
+        setUploadPathExe();
         return capabilities;
     }
 

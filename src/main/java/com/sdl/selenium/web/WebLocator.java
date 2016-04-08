@@ -117,7 +117,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #getText()}}
+     * @deprecated use {@link #getText()}
      * @return text's element
      */
     public String getHtmlText() {
@@ -125,7 +125,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @deprecated use {@link #getText(boolean)}}
+     * @deprecated use {@link #getText(boolean)}
      * @param instant true or false
      * @return text's element
      */

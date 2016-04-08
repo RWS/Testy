@@ -125,7 +125,10 @@ public interface WebLocatorExecutor {
 
     boolean download(String fileName, long timeoutMillis);
 
-    public boolean browse(WebLocator el);
+    boolean browse(WebLocator el);
 
-    public boolean upload(String... filePath);
+    @Deprecated
+    boolean upload(String... filePath);
+
+    boolean upload(String filePath);
 }

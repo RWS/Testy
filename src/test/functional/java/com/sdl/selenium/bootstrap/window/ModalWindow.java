@@ -27,9 +27,4 @@ public class ModalWindow extends Window {
     public void save() {
         saveButton.click();
     }
-
-
-    public static void main(String[] args) {
-        WebLocatorUtils.getXPathScript(new ModalWindow());
-    }
 }

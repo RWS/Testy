@@ -25,6 +25,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             "\n browser.binary.path=" +
             "\n browser.driver.path=" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
+            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe" +
             "\n profile.preference.dom.max_script_run_time=500" +
             "\n profile.preference.browser.download.folderList=2" +
             "\n profile.preference.browser.download.manager.showWhenStarting=false" +
@@ -109,6 +110,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 setProfilePreferences(profile);
             }
         }
+        setUploadPathExe();
         return profile;
     }
 

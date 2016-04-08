@@ -25,8 +25,13 @@ public class RunExe {
         return doRun(filePath + " " + downloadWindowName);
     }
 
+    @Deprecated
     public boolean upload(String... filePath) {
         return doRun(filePath[0] + " \"" + filePath[1] + "\"");
+    }
+
+    public boolean upload(String filePath) {
+        return doRun(System.getProperty("upload.exe.path") + " \"" + filePath + "\"");
     }
 
     private boolean doRun(String filePath) {

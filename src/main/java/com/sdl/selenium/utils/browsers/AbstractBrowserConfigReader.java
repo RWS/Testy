@@ -42,4 +42,11 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
         String remoteProperty = System.getProperty("remoteDriver");
         return remoteProperty != null && Boolean.parseBoolean(remoteProperty);
     }
+
+    public void setUploadPathExe() {
+        String uploadExePath = getProperty("upload.exe.path");
+        if (!"".equals(uploadExePath)) {
+            System.setProperty("upload.exe.path", uploadExePath);
+        }
+    }
 }

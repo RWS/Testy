@@ -20,11 +20,11 @@ public class UploadButtonIntegrationTest extends TestBase {
 
     @Test
     public void uploadFile() {
-        assertThat(simpleForm.uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"), is(true));
+        assertThat(simpleForm.uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx"), is(true));
     }
 
     @Test
     public void uploadFileWithSpaces() {
-        assertThat(simpleForm.uploadButton.upload(InputData.UPLOAD_EXE_PATH, InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"), is(true));
+        assertThat(simpleForm.uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text t.docx"), is(true));
     }
 }
