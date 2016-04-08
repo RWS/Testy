@@ -55,7 +55,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     @Deprecated
-    private boolean upload(WebLocator el, String... filePath) {
+    public boolean upload(WebLocator el, String... filePath) {
         return executor.browse(el) && executor.upload(filePath);
     }
 
@@ -67,7 +67,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @param filePath e.g. "C:\\text.txt"
      * @return true | false
      */
-    private boolean upload(WebLocator el, String filePath) {
+    public boolean upload(WebLocator el, String filePath) {
         return executor.browse(el) && executor.upload(filePath);
     }
 }
