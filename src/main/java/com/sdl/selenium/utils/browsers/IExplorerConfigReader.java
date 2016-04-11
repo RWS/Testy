@@ -50,7 +50,6 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.ie.driver", driverPath);
         }
-        setUploadPathExe();
         return capabilities;
     }
 

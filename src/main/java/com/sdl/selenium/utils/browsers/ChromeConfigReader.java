@@ -21,7 +21,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "\n browser=chrome" +
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
-            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe" +
             "\n options.arguments=--lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
             "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
             "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
@@ -48,7 +47,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.chrome.driver", driverPath);
         }
-        setUploadPathExe();
         ChromeOptions options = new ChromeOptions();
         setProfilePreferences(options);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();

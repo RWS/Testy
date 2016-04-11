@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class RunExe {
     }
 
     public boolean upload(String filePath) {
-        return doRun(System.getProperty("upload.exe.path") + " \"" + filePath + "\"");
+        return doRun(WebLocatorConfig.getUploadExePath() + " \"" + filePath + "\"");
     }
 
     private boolean doRun(String filePath) {

@@ -21,7 +21,8 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.defaults.labelPosition=//following-sibling::*//" +
             "\n weblocator.min.chars.toType=-1" +
             "\n driver.autoClose=true" +
-            "\n driver.implicitlyWait=100";
+            "\n driver.implicitlyWait=100" +
+            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe";
 
     public WebLocatorConfigReader() {
         this(null);

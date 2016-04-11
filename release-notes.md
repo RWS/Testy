@@ -4,7 +4,7 @@ RELEASE NOTES
 - change set***() in with***()
     ex: WebLocator el = new WebLocator().setClasses("x-btn").setText("Save").setType("text");
         WebLocator el = new WebLocator().withClasses("x-btn").withText("Save").withType("text");
--  Add possibility to set in browser config: upload.exe.path=src\\test\\resources\\upload\\upload.exe
+-  Add possibility to set in webLocator.properties: upload.exe.path=src\\test\\resources\\upload\\upload.exe
     ex: UploadFile uploadButton = new UploadFile().withText("Browse");
         uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx");
 

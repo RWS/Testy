@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class WebLocatorConfig {
 
@@ -28,6 +30,7 @@ public class WebLocatorConfig {
     }};
     public static String defaultLabelPosition;
     public static int minCharsToType;
+    public static String uploadExePath;
 
     private static WebLocatorConfigReader properties = null;
 
@@ -90,8 +93,7 @@ public class WebLocatorConfig {
         if (renderMillis != null) {
             setDefaultRenderMillis(renderMillis);
         }
-        String labelPosition = getProperty("weblocator.defaults.labelPosition");
-        setDefaultLabelPosition(labelPosition);
+        setDefaultLabelPosition(getProperty("weblocator.defaults.labelPosition"));
 
         Boolean logUseClassName = getBoolean("weblocator.log.useClassName");
         if (logUseClassName != null) {
@@ -126,10 +128,11 @@ public class WebLocatorConfig {
             setGenerateCssSelector(generateCssSelector);
         }
 
-        String searchTextType = getProperty("weblocator.defaults.searchType");
-        convertAndSetSearchTextType(searchTextType);
+        convertAndSetSearchTextType(getProperty("weblocator.defaults.searchType"));
 
         setMinCharsToType(getInt("weblocator.min.chars.toType"));
+
+        setUploadExePath(getProperty("upload.exe.path"));
     }
 
     public static void convertAndSetSearchTextType(String searchTextType) {
@@ -238,6 +241,15 @@ public class WebLocatorConfig {
 
     public static void setMinCharsToType(int minCharsToType) {
         WebLocatorConfig.minCharsToType = minCharsToType;
+    }
+
+    public static String getUploadExePath() {
+        return uploadExePath;
+    }
+
+
+    public static void setUploadExePath(String uploadExePath) {
+        WebLocatorConfig.uploadExePath = uploadExePath;
     }
 
     public static void setBrowserProperties(PropertiesReader properties) {

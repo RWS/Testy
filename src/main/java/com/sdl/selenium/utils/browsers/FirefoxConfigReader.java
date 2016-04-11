@@ -110,7 +110,6 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 setProfilePreferences(profile);
             }
         }
-        setUploadPathExe();
         return profile;
     }
 
