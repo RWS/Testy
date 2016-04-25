@@ -137,7 +137,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean clickAt() {
-        return doClickAt();
+        boolean clickAt = waitToRender();
+        assertThat("Element was not rendered " + toString(), clickAt);
+        clickAt = executor.clickAt(this);
+        assertThat("Could not clickAt " + toString(), clickAt);
+        LOGGER.info("clickAt on {}", toString());
+        return clickAt;
     }
 
     /**
@@ -158,13 +163,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return doClick;
     }
 
+    /**
+     * @deprecated use {@link #clickAt()}
+     * @return true
+     */
+    @Deprecated
     public boolean assertClickAt() {
-        boolean clickAt = waitToRender();
-        assertThat("Element was not rendered " + toString(), clickAt);
-        clickAt = executor.clickAt(this);
-        assertThat("Could not clickAt " + toString(), clickAt);
-        LOGGER.info("clickAt on {}", toString());
-        return clickAt;
+        return clickAt();
     }
 
     public boolean assertExists() {
@@ -179,7 +184,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public boolean click() {
-        return doClick();
+        boolean click = waitToRender();
+        assertThat("Element was not rendered " + toString(), click);
+        click = executor.click(this);
+        assertThat("Could not click " + toString(), click);
+        LOGGER.info("click on {}", toString());
+        return click;
     }
 
     /**
@@ -201,18 +211,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * //TODO Daca nu a facut click pe element sa se intrerupa testul de facut si pentru clickAt() si sa fie setabil
-     *
+     * @deprecated use {@link #click()}
      * @return true
      */
-
+    @Deprecated
     public boolean assertClick() {
-        boolean click = waitToRender();
-        assertThat("Element was not rendered " + toString(), click);
-        click = executor.click(this);
-        assertThat("Could not click " + toString(), click);
-        LOGGER.info("click on {}", toString());
-        return click;
+        return click();
     }
 
     public void highlight() {
@@ -236,7 +240,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean clear() {
-        return doClear();
+        boolean clear = waitToRender();
+        assertThat("Element was not rendered " + toString(), clear);
+        clear = executor.clear(this);
+        assertThat("Could not clear " + toString(), clear);
+        LOGGER.info("clear on {}", toString());
+        return clear;
     }
 
     public boolean doClear() {
@@ -281,7 +290,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean blur() {
-        return doBlur();
+        boolean blur = waitToRender();
+        assertThat("Element was not rendered " + toString(), blur);
+        executor.blur(this);
+        LOGGER.info("blur on {}", toString());
+        return blur;
     }
 
     public boolean doBlur() {
@@ -301,7 +314,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public WebLocator focus() {
-        return doFocus();
+        boolean focus = waitToRender();
+        assertThat("Element was not rendered " + toString(), focus);
+        executor.focus(this);
+        LOGGER.info("focus on {}", toString());
+        return this;
     }
 
     public WebLocator doFocus() {
@@ -316,7 +333,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return true | false
      */
     public boolean doubleClickAt() {
-        return doDoubleClickAt();
+        boolean doubleClickAt = waitToRender();
+        assertThat("Element was not rendered " + toString(), doubleClickAt);
+        doubleClickAt = executor.doubleClickAt(this);
+        assertThat("Could not doubleClickAt " + toString(), doubleClickAt);
+        LOGGER.info("doubleClickAt on {}", toString());
+        return doubleClickAt;
     }
 
     public boolean doDoubleClickAt() {
