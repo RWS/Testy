@@ -340,9 +340,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public Number getRowCount(String searchElement, Boolean startWith) {
         ready();
-        String rowPath = getCell(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).getXPath();
-        WebLocator locator = new WebLocator().withElxPath(rowPath);
-        return locator.size();
+        GridCell cell = getCell(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);
+        return cell.size();
     }
 
     public Number getRowCount(String searchElement) {
@@ -462,16 +461,15 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     @Override
     public GridCell getCell(String searchElement, SearchType... searchTypes) {
-        WebLocator textCell = new WebLocator().withText(searchElement, searchTypes);
-        String cellPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]" + textCell.getXPath();
-        GridCell cell = new GridCell().withContainer(this).withElxPath(cellPath);
+        WebLocator el = new WebLocator(this).withClasses("x-grid3-td-" + searchColumnId);
+        GridCell cell = new GridCell().withContainer(el).withText(searchElement, searchTypes);
         cell.withInfoMessage("cell(" + searchElement + ")");
         return cell;
     }
 
     public GridCell getGridCell(int rowIndex) {
-        String rowPath = "//*[contains(@class, 'x-grid3-td-" + searchColumnId + "')]//*[contains(@class, 'x-grid3-cell-inner')]";
-        return new GridCell().withContainer(getRow(rowIndex)).withElxPath(rowPath);
+        WebLocator el = new WebLocator(getRow(rowIndex)).withClasses("x-grid3-td-" + searchColumnId);
+        return new GridCell().withContainer(el).withClasses("x-grid3-cell-inner");
     }
 
     public GridCell getGridCell(int rowIndex, int columnIndex, String text) {
