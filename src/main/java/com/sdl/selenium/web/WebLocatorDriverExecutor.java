@@ -5,6 +5,7 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
+import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
@@ -263,11 +264,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             LOGGER.info("Set value({}): '{}'", el, value);
         } else {
             try {
-                Utils.copyToClipboard(StringUtils.chop(value));
+                MultiThreadClipboardUtils.copyString(StringUtils.chop(value));
             } catch (IllegalStateException e) {
                 LOGGER.debug("IllegalStateException: cannot open system clipboard - try again.");
-                Utils.copyToClipboard(StringUtils.chop(value));
+                MultiThreadClipboardUtils.copyString(StringUtils.chop(value));
             }
+            MultiThreadClipboardUtils.pasteString(el);
             el.currentElement.sendKeys(Keys.CONTROL, "v");
             el.currentElement.sendKeys(value.substring(length - 1));
             LOGGER.info("Paste value({}): string with size: '{}'", el, length);

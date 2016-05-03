@@ -69,6 +69,13 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
         assertThat(email.getValue(), equalTo(""));
     }
 
+    @Test (dependsOnMethods = "clearTest")
+    public void pasteInValueTest() {
+        String value = "test";
+        email.pasteInValue(value);
+        assertThat(email.getValue(), is(value));
+    }
+
     @Test
     public void mouseOverTest() {
         assertThat(locator.mouseOver(), is(true));
