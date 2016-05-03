@@ -2,8 +2,7 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
-import org.openqa.selenium.Keys;
+import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +37,8 @@ public class TextField extends WebLocator implements ITextField {
         assertReady();
         if (value != null) {
             currentElement.clear();
-            Utils.copyToClipboard(value);
-            currentElement.sendKeys(Keys.CONTROL, "v");
+            MultiThreadClipboardUtils.copyString(value);
+            MultiThreadClipboardUtils.pasteString(this);
             LOGGER.info("Set value(" + this + "): " + value + "'");
             return true;
         }

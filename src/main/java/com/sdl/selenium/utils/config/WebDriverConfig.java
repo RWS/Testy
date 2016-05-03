@@ -27,6 +27,7 @@ public class WebDriverConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfig.class);
 
     private static WebDriver driver;
+    private static String driverId;
 
     private static boolean isIE;
     private static boolean isOpera;
@@ -69,6 +70,7 @@ public class WebDriverConfig {
             LOGGER.info("|          Open Selenium Web Driver ");
             LOGGER.info("===============================================================\n");
             WebDriverConfig.driver = driver;
+            driverId = System.currentTimeMillis() + "";
             WebLocator.setDriverExecutor(driver);
             if (driver instanceof InternetExplorerDriver) {
                 isIE = true;
@@ -194,7 +196,11 @@ public class WebDriverConfig {
         return getDriver(browser, inputStream, null);
     }
 
-        public static Browser getBrowser(String browserKey) {
+    public static String getDriverId() {
+        return driverId;
+    }
+
+    public static Browser getBrowser(String browserKey) {
         browserKey = browserKey.toUpperCase();
         Browser browser = null;
         try {
