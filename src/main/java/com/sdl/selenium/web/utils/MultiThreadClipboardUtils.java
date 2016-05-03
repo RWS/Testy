@@ -22,7 +22,7 @@ public class MultiThreadClipboardUtils {
     private static Map<String, String> clipboardContents = new HashMap<>();
     private static final String LOCK_FILE_NAME = "target/clipboardLock.lock";
     private static File lockFile = new File(LOCK_FILE_NAME);
-    private static long lockTimeoutMillis = 1000;
+    private static long lockTimeoutMillis = 2000;
 
     /***
      * Correlates the given String with the current WebDriver instance and stores it so it can be pasted somewhere else.
@@ -69,6 +69,7 @@ public class MultiThreadClipboardUtils {
     private static void waitForUnlockedClipboard() {
         long remainingMillis = lockTimeoutMillis;
         long waitMillis = 50;
+        File lockFile = new File(LOCK_FILE_NAME);
         while (lockFile.exists() && remainingMillis > 0) {
             try {
                 Thread.sleep(waitMillis);
