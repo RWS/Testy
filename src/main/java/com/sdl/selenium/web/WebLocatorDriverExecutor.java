@@ -270,7 +270,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 MultiThreadClipboardUtils.copyString(StringUtils.chop(value));
             }
             MultiThreadClipboardUtils.pasteString(el);
-            el.currentElement.sendKeys(Keys.CONTROL, "v");
             el.currentElement.sendKeys(value.substring(length - 1));
             LOGGER.info("Paste value({}): string with size: '{}'", el, length);
         }
