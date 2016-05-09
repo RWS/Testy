@@ -3,6 +3,7 @@ package com.sdl.selenium.web.utils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
@@ -34,7 +35,7 @@ public class MultiThreadClipboardUtils {
      * @param value String to be copied
      */
     public static void copyString(String value) {
-        clipboardContents.put(WebDriverConfig.getDriverId(), value);
+        clipboardContents.put(((RemoteWebDriver) WebDriverConfig.getDriver()).getSessionId().toString(), value);
     }
 
     /***
@@ -49,7 +50,7 @@ public class MultiThreadClipboardUtils {
     public static void pasteString(WebLocator locator) {
         waitForUnlockedClipboard();
         lockClipboard();
-        String value = clipboardContents.get(WebDriverConfig.getDriverId());
+        String value = clipboardContents.get(((RemoteWebDriver) WebDriverConfig.getDriver()).getSessionId().toString());
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(value),
                 new ClipboardOwner() {
                     @Override
