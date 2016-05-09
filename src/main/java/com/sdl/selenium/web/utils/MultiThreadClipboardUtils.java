@@ -23,7 +23,7 @@ public class MultiThreadClipboardUtils {
     private static Map<String, String> clipboardContents = new HashMap<>();
     private static final String LOCK_FILE_NAME = "target/clipboardLock.lock";
     private static File lockFile = new File(LOCK_FILE_NAME);
-    private static long lockTimeoutMillis = 2000;
+    private static long lockTimeoutMillis = 5000;
 
     /***
      * Correlates the given String with the current WebDriver instance and stores it so it can be pasted somewhere else.
