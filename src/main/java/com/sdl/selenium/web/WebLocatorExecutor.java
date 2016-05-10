@@ -33,13 +33,14 @@ public interface WebLocatorExecutor {
 
     boolean clear(WebLocator el);
 
-    void sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
+    boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
     /**
      * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
      * @param el currentEl
      * @param charSequences chars
      */
+    @Deprecated
     void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
     boolean setValue(WebLocator el, String value);
@@ -85,17 +86,18 @@ public interface WebLocatorExecutor {
 
     Dimension getSize(WebLocator el);
 
-    void focus(WebLocator el);
+    boolean focus(WebLocator el);
 
     /**
      * @deprecated use {@link #mouseOver(WebLocator)}
      * @param el currentEl
      */
+    @Deprecated
     void doMouseOver(WebLocator el);
 
-    void mouseOver(WebLocator el);
+    boolean mouseOver(WebLocator el);
 
-    void blur(WebLocator el);
+    boolean blur(WebLocator el);
 
     boolean isTextPresent(WebLocator el, String text);
 
@@ -119,6 +121,7 @@ public interface WebLocatorExecutor {
      * @deprecated use {@link #highlight(WebLocator)}
      * @param el currentEl
      */
+    @Deprecated
     void doHighlight(WebLocator el);
 
     boolean highlight = WebLocatorConfig.isHighlight();

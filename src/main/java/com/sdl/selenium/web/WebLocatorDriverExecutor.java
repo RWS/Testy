@@ -97,7 +97,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public boolean doubleClickAt(WebLocator el) {
         boolean clicked = false;
-        if(ensureExists(el)) {
+        if (ensureExists(el)) {
             try {
                 Actions builder = new Actions(driver);
                 builder.doubleClick(el.currentElement).perform();
@@ -163,18 +163,19 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+    public boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        boolean sendKeys = false;
         if (ensureExists(el)) {
             try {
                 el.currentElement.sendKeys(charSequences);
-                LOGGER.info("SendKeys value({}): '{}'", el, getKeysName(charSequences));
+                sendKeys = true;
             } catch (ElementNotVisibleException e) {
                 try {
-                    tryAgainDoSendKeys(el, charSequences);
+                    sendKeys = tryAgainDoSendKeys(el, charSequences);
                 } catch (ElementNotVisibleException ex) {
                     try {
-                        doMouseOver(el);
-                        tryAgainDoSendKeys(el, charSequences);
+                        mouseOver(el);
+                        sendKeys = tryAgainDoSendKeys(el, charSequences);
                     } catch (ElementNotVisibleException exc) {
                         LOGGER.error("final ElementNotVisibleException in sendKeys: {}", el, exc);
                         throw exc;
@@ -185,34 +186,30 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 Actions builder = new Actions(driver);
                 builder.click(el.currentElement);
                 builder.sendKeys(charSequences);
+                sendKeys = true;
             }
         }
+        return sendKeys;
     }
 
-    private String getKeysName(java.lang.CharSequence... charSequences) {
-        StringBuilder builder = new StringBuilder();
-        int i = 0;
-            for (CharSequence ch: charSequences){
-                if(i > 0){
-                    builder.append(",");
-                }
-                builder.append(ch instanceof Keys ? ((Keys) ch).name() : ch);
-                i++;
-            }
-        return builder.toString();
-    }
-
+    /**
+     * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
+     * @param el currentEl
+     * @param charSequences chars
+     */
+    @Deprecated
     @Override
     public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         sendKeys(el, charSequences);
     }
 
-    private void tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+    private boolean tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         if (findAgain(el)) {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
-            LOGGER.info("again SendKeys value({}): '{}'", el, getKeysName(charSequences));
+            return true;
         } else {
             LOGGER.error("currentElement is null after to try currentElement: {}", el);
+            return false;
         }
     }
 
@@ -238,7 +235,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                         Utils.sleep(RETRY_MS);
                     }
                     executed = setValue(el, value, retries);
-                } catch (StaleElementReferenceException ex){
+                } catch (StaleElementReferenceException ex) {
                     invalidateCache(el);
                     if (retries >= 0) {
                         Utils.sleep(RETRY_MS);
@@ -303,9 +300,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return pathId;
     }
 
-    private boolean ensureExists(final WebLocator el){
+    private boolean ensureExists(final WebLocator el) {
         boolean present = el.currentElement != null || isElementPresent(el);
-        if(!present){
+        if (!present) {
             LOGGER.debug("Element not found: {}", el);
         }
         return present;
@@ -339,7 +336,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             } catch (StaleElementReferenceException e) {
                 if (findAgain(el)) {
                     text = el.currentElement.getText();
-
                 }
             } catch (WebDriverException e) {
                 LOGGER.error("element has vanished meanwhile: " + getSelector(el), e);
@@ -465,25 +461,41 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public void focus(WebLocator el) {
-        fireEventWithJS(el, "mouseover");
+    public boolean focus(WebLocator el) {
+        return fireEventWithJS(el, "mouseover") != null;
     }
 
     @Override
-    public void mouseOver(WebLocator el) {
-        ensureExists(el);
-        Actions builder = new Actions(driver);
-        builder.moveToElement(el.currentElement).perform();
+    public boolean mouseOver(WebLocator el) {
+        boolean mouseOver;
+        try {
+            if (ensureExists(el)) {
+                Actions builder = new Actions(driver);
+                builder.moveToElement(el.currentElement).perform();
+                mouseOver = true;
+            } else {
+                mouseOver = false;
+            }
+        } catch (WebDriverException e) {
+            LOGGER.error("Could not mouse over {}, {}", el, e);
+            mouseOver = false;
+        }
+        return mouseOver;
     }
 
+    /**
+     * @deprecated use {@link #mouseOver(WebLocator)}
+     * @param el currentEl
+     */
+    @Deprecated
     @Override
     public void doMouseOver(WebLocator el) {
         mouseOver(el);
     }
 
     @Override
-    public void blur(WebLocator el) {
-        fireEventWithJS(el, "blur");
+    public boolean blur(WebLocator el) {
+        return fireEventWithJS(el, "blur") != null;
     }
 
     @Override
@@ -557,6 +569,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         highlightElementWithDriver(el.currentElement);
     }
 
+    /**
+     * @deprecated use {@link #highlight(WebLocator)}
+     * @param el currentEl
+     */
+    @Deprecated
     @Override
     public void doHighlight(WebLocator el) {
         highlight(el);
@@ -586,9 +603,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     /**
-     * @deprecated The next version, replaced by {@link #upload(String)}.
      * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
      * @return true of false
+     * @deprecated The next version, replaced by {@link #upload(String)}.
      */
     @Deprecated
     public boolean upload(String... filePath) {
