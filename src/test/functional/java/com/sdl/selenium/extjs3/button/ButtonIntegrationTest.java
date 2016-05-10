@@ -120,7 +120,7 @@ public class ButtonIntegrationTest extends TestBase {
         Button button = new Button(panel, "ButtonThatDoesNotExist").withRenderMillis(millis);
 
         long startMs = System.currentTimeMillis();
-        boolean clicked = button.click();
+        boolean clicked = button.doClick();
         long endMs = System.currentTimeMillis();
 
         LOGGER.info(String.format("took %s ms", endMs - startMs));

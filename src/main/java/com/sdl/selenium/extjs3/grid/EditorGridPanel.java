@@ -151,7 +151,7 @@ public class EditorGridPanel extends GridPanel {
         TextField editor = getActiveEditor();
         boolean edited = editor.setValue(value);
         if (edited) {
-            editor.blur();
+            editor.doBlur();
         }
         return edited;
     }

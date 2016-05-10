@@ -545,9 +545,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         String script = "if(document.createEvent){" +
                 "var evObj = document.createEvent('MouseEvents');\n" +
                 "evObj.initEvent('" + eventName + "', true, true);\n" +
-                "fireOnThis.dispatchEvent(evObj);\n" +
+                "return fireOnThis.dispatchEvent(evObj);\n" +
                 "} else if(document.createEventObject) {" +
-                "fireOnThis.fireEvent('on" + eventName + "');" +
+                "return fireOnThis.fireEvent('on" + eventName + "');" +
                 "}";
         String id = getAttributeId(el);
         String cls;
@@ -559,7 +559,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             script = "var fireOnThis = document.evaluate(\"" + el.getXPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                     "var evObj = document.createEvent('MouseEvents');\n" +
                     "evObj.initEvent( '" + eventName + "', true, true );\n" +
-                    "fireOnThis.dispatchEvent(evObj);";
+                    "return fireOnThis.dispatchEvent(evObj);";
         }
         return executeScript(script);
     }
