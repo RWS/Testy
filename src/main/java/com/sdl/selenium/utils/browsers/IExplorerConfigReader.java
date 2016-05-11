@@ -3,6 +3,7 @@ package com.sdl.selenium.utils.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,9 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     public WebDriver createDriver(URL remoteUrl) throws IOException {
         DesiredCapabilities capabilities = getDesiredCapabilities();
         if (isRemoteDriver()) {
-            return new RemoteWebDriver(remoteUrl, capabilities);
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);
+            driver.setFileDetector(new LocalFileDetector());
+            return driver;
         } else {
             return new InternetExplorerDriver(capabilities);
         }

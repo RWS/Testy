@@ -5,6 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,9 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     public WebDriver createDriver(URL remoteUrl) throws IOException {
         DesiredCapabilities firefoxCapabilities = getDesiredCapabilities();
         if (isRemoteDriver()) {
-            return new RemoteWebDriver(remoteUrl, firefoxCapabilities);
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, firefoxCapabilities);
+            driver.setFileDetector(new LocalFileDetector());
+            return driver;
         } else {
             return new FirefoxDriver(firefoxCapabilities);
         }

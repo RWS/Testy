@@ -3,6 +3,7 @@ package com.sdl.selenium.utils.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
@@ -29,7 +30,9 @@ public class HtmlUnitConfigReader extends AbstractBrowserConfigReader {
     @Override
     public WebDriver createDriver(URL remoteUrl) throws IOException {
         if (isRemoteDriver()) {
-            return new RemoteWebDriver(remoteUrl, DesiredCapabilities.htmlUnit());
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, DesiredCapabilities.htmlUnit());
+            driver.setFileDetector(new LocalFileDetector());
+            return driver;
         } else {
             return createDriver();
         }
