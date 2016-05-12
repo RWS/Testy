@@ -55,7 +55,7 @@ public class DeployTesty extends TestBase {
     private Row buildNowEl = new Row(buildHistory).withClasses("build-row", "transitive");
 
     private WebLocator logInNexus = new WebLocator().withId("head-link-r");
-    private Window nexusLogInWindow = new Window("Nexus Log In");
+    private Window nexusLogInWindow = new Window("Nexus Repository Manager Log In");
     private com.sdl.selenium.extjs3.form.TextField userName = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Username:");
     private com.sdl.selenium.extjs3.form.TextField password = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Password:");
     private Button logIn = new Button(nexusLogInWindow, "Log In");
