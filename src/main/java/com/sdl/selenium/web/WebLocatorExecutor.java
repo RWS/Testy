@@ -3,6 +3,7 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -85,6 +86,8 @@ public interface WebLocatorExecutor {
     Point getLocation(WebLocator el);
 
     Dimension getSize(WebLocator el);
+
+    Rectangle getRect(WebLocator el);
 
     boolean focus(WebLocator el);
 

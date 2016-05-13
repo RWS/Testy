@@ -461,6 +461,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    public Rectangle getRect(WebLocator el) {
+        return ensureExists(el) ? el.currentElement.getRect() : null;
+    }
+
+    @Override
     public boolean focus(WebLocator el) {
         return fireEventWithJS(el, "mouseover") != null;
     }

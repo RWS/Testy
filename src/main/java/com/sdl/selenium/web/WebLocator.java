@@ -405,6 +405,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getSize(this);
     }
 
+    /**
+     * @return The location and size of the rendered element
+     */
+    public Rectangle getRect(){
+        return executor.getRect(this);
+    }
+
     public boolean exists() {
         return executor.exists(this);
     }
