@@ -113,7 +113,7 @@ public class TextField extends ExtJsComponent implements ITextField {
         WebLocator iconLocator = new WebLocator(this).withElxPath(triggerPath);
         iconLocator.withRenderMillis(500);
         iconLocator.withInfoMessage(this + " -> trigger-" + icon);
-        iconLocator.assertClick();
+        iconLocator.click();
         return true;
     }
 

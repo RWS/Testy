@@ -51,24 +51,24 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        assertClick();
+        click();
         String fullDate = monthYearButton.getText().trim();
         if (!fullDate.contains(month) || !fullDate.contains(year)) {
             monthYearButton.click();
             goToYear(year, fullDate);
             WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).withInfoMessage("year " + year);
-            yearEl.assertClick();
+            yearEl.click();
             WebLocator yearContainer1 = new WebLocator(yearAndMonth).withClasses("x-date-mp-year", "x-date-mp-sel");
             WebLocator yearEl1 = new WebLocator(yearContainer1).setText(year, SearchType.EQUALS);
             if (!yearEl1.ready(1)) {
-                yearEl.assertClick();
+                yearEl.click();
             }
             WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).withInfoMessage("month " + month);
-            monthEl.assertClick();
+            monthEl.click();
             selectOkButton.click();
         }
         WebLocator dayEl = new WebLocator(dayContainer).withText(day, SearchType.EQUALS).withInfoMessage("day " + day);
-        dayEl.assertClick();
+        dayEl.click();
         return true;
     }
 

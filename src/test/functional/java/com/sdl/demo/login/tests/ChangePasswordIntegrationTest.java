@@ -23,7 +23,7 @@ public class ChangePasswordIntegrationTest extends TestBase {
 
     @Test
     public void whenPreviewPasswordIsWrongIGetCorrectErrorMessage() {
-        preferencesButton.assertClick();
+        preferencesButton.click();
 
         changePasswordWindow.changePassword("pass1", "pass2", "pass2");
 

@@ -505,7 +505,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean exists(WebLocator el) {
-        return size(el) > 0;
+        return ensureExists(el) && size(el) > 0;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ModalWindowIntegrationTest extends TestBase {
 
     @Test
     public void openAndInteractWithModalWindow() {
-        button.assertClick();
+        button.click();
 
         window.setValues("selenium@example.com", "Testy");
 

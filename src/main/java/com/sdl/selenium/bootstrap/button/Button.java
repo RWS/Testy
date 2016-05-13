@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * <p>In Java write this:</p>
  * <pre>{@code
  * Button saveButton = new Button().withText("Save");
- * saveButton.assertClick();
+ * saveButton.click();
  * }</pre>
  */
 public class Button extends WebLocator implements IButton {

@@ -37,7 +37,7 @@ public class WebDriverConfigIntegrationTest extends TestBase {
 
     @Test
     public void shouldSwitchToFirstTab() {
-        firstTab.textExamplesLink.assertClick();
+        firstTab.textExamplesLink.click();
         WebDriverConfig.switchToLastTab();
         secondTab.header.assertExists();
         WebDriverConfig.getDriver().close();

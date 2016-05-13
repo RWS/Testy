@@ -46,7 +46,7 @@ This project is optimized for:
      
         public void subscribe(String email) {
             emailField.setValue(email);
-            subscribeLink.assertClick();
+            subscribeLink.click();
         }
     }
     

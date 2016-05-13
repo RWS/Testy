@@ -49,22 +49,22 @@ public class MultiSelect extends SelectPicker {
     @Override
     public boolean select(String value) {
         super.select(value);
-        assertClick();
+        click();
         return true;
     }
 
     public boolean select(String... values) {
-        assertClick();
+        click();
         for (String value : values) {
             super.doSelect(value);
         }
 //        WebLocator shadow = new WebLocator().setClasses("dropdown-backdrop");
-        assertClick();
+        click();
         return true;
     }
 
     public List<String> getValueSelected() {
-        assertClick();
+        click();
         List<String> list = new ArrayList<>();
         WebLocator group = new WebLocator().setClasses("btn-group", "open");
         WebLocator li = new WebLocator(group).withTag("li").withCls("active");
@@ -75,7 +75,7 @@ public class MultiSelect extends SelectPicker {
             String text = element.getText();
             list.add(text);
         }
-        assertClick();
+        click();
         return list;
     }
 }

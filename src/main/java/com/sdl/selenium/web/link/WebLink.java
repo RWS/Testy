@@ -27,7 +27,7 @@ public class WebLink extends WebLocator {
     }
 
     public boolean openInNewWindow() {
-        assertClick();
+        click();
         oldTab = null;
         if(WebDriverConfig.waitForNewTab(2, 1000)) {
             oldTab = WebDriverConfig.switchToLastTab();

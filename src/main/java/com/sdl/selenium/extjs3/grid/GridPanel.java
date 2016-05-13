@@ -310,7 +310,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public boolean assertCheckSelectAll(String columnId) {
         LOGGER.debug("Select-all checker path: " + getSelectAllChecker(columnId));
-        return getSelectAllChecker(columnId).assertClick();
+        return getSelectAllChecker(columnId).click();
     }
 
     /**

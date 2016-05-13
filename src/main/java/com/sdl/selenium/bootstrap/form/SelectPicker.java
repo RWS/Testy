@@ -43,7 +43,7 @@ public class SelectPicker extends WebLocator implements ICombo {
 
     @Override
     public boolean select(String value) {
-        assertClick();
+        click();
         doSelect(value);
         return true;
     }
@@ -51,7 +51,7 @@ public class SelectPicker extends WebLocator implements ICombo {
     protected void doSelect(String value) {
         WebLocator group = new WebLocator().setClasses("btn-group", "open");
         WebLocator select = new WebLocator(group).setText(value).withInfoMessage("select: '" + value + "'");
-        select.assertClick();
+        select.click();
     }
 
     @Override

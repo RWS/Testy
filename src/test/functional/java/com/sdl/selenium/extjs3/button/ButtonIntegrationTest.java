@@ -133,7 +133,7 @@ public class ButtonIntegrationTest extends TestBase {
     void testSplitButton() {
         showComponent("Buttons");
 
-        splitButton.assertClick();
+        splitButton.click();
         MessageBoxIntegrationTest.assertThatMessageBoxExists("You selected Export");
 
         boolean clicked = splitButton.clickOnMenu("PDF");

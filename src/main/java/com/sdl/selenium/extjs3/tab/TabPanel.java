@@ -81,7 +81,7 @@ public class TabPanel extends ExtJsComponent {
         LOGGER.info("setActive : " + toString());
         boolean activated;
         try {
-            activated = titleElement.assertClick();
+            activated = titleElement.click();
         } catch (ElementNotVisibleException e) {
             LOGGER.error("setActive Exception: " + e.getMessage());
             activated = setActiveWithExtJS();

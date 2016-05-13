@@ -23,7 +23,7 @@ public class WindowIntegrationTest extends TestBase {
 
     @Test
     public void openNewTab() {
-        button.assertClick();
+        button.click();
 
     }
 }

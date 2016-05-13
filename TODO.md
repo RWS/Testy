@@ -27,5 +27,5 @@
       at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:84)
       at com.sdl.selenium.web.WebLocatorDriverExecutor.tryAgainDoClick(WebLocatorDriverExecutor.java:64)
       at com.sdl.selenium.web.WebLocatorDriverExecutor.doClick(WebLocatorDriverExecutor.java:45)
-      at com.sdl.selenium.web.WebLocator.assertClick(WebLocator.java:189)
+      at com.sdl.selenium.web.WebLocator.click(WebLocator.java:189)
 

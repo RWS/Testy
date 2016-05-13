@@ -338,7 +338,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public WebLocator focus() {
         boolean focus = waitToRender();
         assertThat("Element was not rendered " + toString(), focus);
-        executor.focus(this);
+        focus = executor.focus(this);
+        assertThat("Could not focus " + toString(), focus);
         LOGGER.info("focus on {}", toString());
         return this;
     }

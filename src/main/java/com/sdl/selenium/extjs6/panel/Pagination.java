@@ -26,7 +26,7 @@ public class Pagination extends ToolBar {
     private Button gotoFirstPageBtn = getButton("x-tbar-page-first");
 
     public boolean goToFirstPage() {
-        return gotoFirstPageBtn.assertClick();
+        return gotoFirstPageBtn.click();
     }
 
     public Button getGotoFirstPageBtn() {
@@ -36,7 +36,7 @@ public class Pagination extends ToolBar {
     private Button gotoPreviousPageBtn = getButton("x-tbar-page-prev");
 
     public boolean goToPreviousPage() {
-        return gotoPreviousPageBtn.assertClick();
+        return gotoPreviousPageBtn.click();
     }
 
     public Button getGotoPreviousPageBtn() {
@@ -46,7 +46,7 @@ public class Pagination extends ToolBar {
     private Button gotoNextPageBtn = getButton("x-tbar-page-next");
 
     public boolean goToNextPage() {
-        return gotoNextPageBtn.assertClick();
+        return gotoNextPageBtn.click();
     }
 
     public Button getGotoNextPageBtn() {
@@ -56,7 +56,7 @@ public class Pagination extends ToolBar {
     private Button gotoLastPageBtn = getButton("x-tbar-page-last");
 
     public boolean goToLastPage() {
-        return gotoLastPageBtn.assertClick();
+        return gotoLastPageBtn.click();
     }
 
     public Button getGotoLastPageBtn() {
@@ -68,7 +68,7 @@ public class Pagination extends ToolBar {
     }
 
     public boolean refresh() {
-        return getButton("x-tbar-loading").assertClick();
+        return getButton("x-tbar-loading").click();
     }
 
     public final String itemTotalsLabel = "Displaying items ";

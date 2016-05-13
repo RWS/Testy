@@ -30,11 +30,11 @@ public class ChangePasswordWindow extends Window {
         currentPassField.setValue(currentPass);
         newPassField.setValue(newPass);
         confirmPassField.setValue(confirmPass);
-        saveButton.assertClick();
+        saveButton.click();
     }
 
     public void close() {
-        closeButton.assertClick();
+        closeButton.click();
     }
 
     public String getStatusMessage() {
