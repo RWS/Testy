@@ -403,8 +403,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return el.currentElement;
     }
 
-    public List<WebElement> findElements(WebLocator webLocator) {
-        return driver.findElements(By.xpath(webLocator.getXPath()));
+    public List<WebElement> findElements(WebLocator el) {
+        return driver.findElements(el.getSelector());
     }
 
     @Override

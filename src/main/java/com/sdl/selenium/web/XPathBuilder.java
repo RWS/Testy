@@ -1260,7 +1260,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     private boolean isCssSelectorSupported() {
-        return !(hasText() || hasElPath() || hasChildNodes() || hasStyle() || hasLabel() || hasTitle() || hasPosition() || hasResultIdx());
+        return !(hasText() || hasElPath() || hasChildNodes() || hasStyle() || hasLabel() || hasTitle() || hasResultIdx());
     }
 
     public final String getCssSelector() {
@@ -1271,6 +1271,9 @@ public class XPathBuilder implements Cloneable {
             if (StringUtils.isEmpty(cssSelector)) {
                 if (isCssSelectorSupported()) {
                     cssSelector = getItemCssSelector();
+                    if (hasPosition()) {
+                        cssSelector += ":nth-child(" + getPosition() + ")";
+                    }
                 }
             } else {
 //            String baseCssSelector = getItemCssSelector();
@@ -1418,7 +1421,7 @@ public class XPathBuilder implements Cloneable {
         return itemPath;
     }
 
-    protected String addPositionToPath(String itemPath) {
+    protected String addPositionToPath(String itemPath)  {
         if (hasPosition()) {
             itemPath += "[position() = " + getPosition() + "]";
         }

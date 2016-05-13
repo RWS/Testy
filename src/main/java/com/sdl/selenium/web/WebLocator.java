@@ -420,6 +420,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public List<WebElement> findElements() {
+        boolean findElements = waitToRender();
+        assertThat("Elements were not rendered " + toString(), findElements);
         return executor.findElements(this);
     }
 
