@@ -43,8 +43,8 @@ public class TableIntegrationTest extends TestBase {
     @Test
     public void verifyIfButtonsIsPresent() {
         Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
-        Button first = new Button(row).withText("First", SearchType.CONTAINS);
-        Button second = new Button(row, "Second");
+        Button first = new Button(row).withText("Details", SearchType.CONTAINS);
+        Button second = new Button(row, "Remove");
         assertTrue(first.isElementPresent());
         assertTrue(second.isElementPresent());
     }
@@ -55,7 +55,7 @@ public class TableIntegrationTest extends TestBase {
         Cell firstName = new Cell(2, "First Name", SearchType.EQUALS).withTag("th");
         Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).withTag("th");
         Cell email = new Cell(4, "Email", SearchType.EQUALS).withTag("th");
-        Cell buttons = new Cell(5, "Buttons", SearchType.EQUALS).withTag("th");
+        Cell buttons = new Cell(5, "Actions", SearchType.EQUALS).withTag("th");
         assertTrue(table.getRow(row, firstName, lastName, email, buttons).ready());
     }
 
@@ -63,12 +63,12 @@ public class TableIntegrationTest extends TestBase {
     public void getAllTexts() {
         List<List<String>> listOfList = new ArrayList<>();
 
-        listOfList.add(Arrays.asList("", "John", "Carter", "johncarter@mail.com", "First (1) Second"));
-        listOfList.add(Arrays.asList("", "Peter", "Parker", "peterparker@mail.com", "First (2) Second"));
-        listOfList.add(Arrays.asList("", "John", "Rambo", "johnrambo@mail.com", "First (3) Second"));
-        listOfList.add(Arrays.asList("", "John1", "Rambo1", "johnrambo@mail.com", "First (3) Second"));
-        listOfList.add(Arrays.asList("", "John2", "Rambo2", "johnrambo@mail.com", "First (3) Second"));
-        listOfList.add(Arrays.asList("", "John3", "Rambo3", "johnrambo@mail.com", "First (3) Second"));
+        listOfList.add(Arrays.asList("", "John", "Carter", "johncarter@mail.com", "Details Remove"));
+        listOfList.add(Arrays.asList("", "Peter", "Parker", "peterparker@mail.com", "Details Remove"));
+        listOfList.add(Arrays.asList("", "John", "Moore", "johnmoore@mail.com", "Details Remove"));
+        listOfList.add(Arrays.asList("", "David", "Miller", "davidmiller@mail.com", "Details Remove"));
+        listOfList.add(Arrays.asList("", "Nick", "White", "nickwhite@mail.com", "Details Remove"));
+        listOfList.add(Arrays.asList("", "Bob", "Smith", "bobsmith@mail.com", "Details Remove"));
 
         List<List<String>> cellsText = table.getCellsText();
         StringBuffer stringBuffer = new StringBuffer();
@@ -84,7 +84,7 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void getAllTextsFromRow() {
-        List<String> listOfList = Arrays.asList("", "John", "Carter", "johncarter@mail.com", "First (1) Second");
+        List<String> listOfList = Arrays.asList("", "John", "Carter", "johncarter@mail.com", "Details Remove");
 
         Row row = table.getRow(new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         List<String> cellsText = row.getCellsText();
@@ -102,10 +102,10 @@ public class TableIntegrationTest extends TestBase {
         ArrayList<List<String>> lists = new ArrayList<>();
         lists.add(Arrays.asList("John", "Carter"));
         lists.add(Arrays.asList("Peter", "Parker"));
-        lists.add(Arrays.asList("John", "Rambo"));
-        lists.add(Arrays.asList("John1", "Rambo1"));
-        lists.add(Arrays.asList("John2", "Rambo2"));
-        lists.add(Arrays.asList("John3", "Rambo3"));
+        lists.add(Arrays.asList("John", "Moore"));
+        lists.add(Arrays.asList("David", "Miller"));
+        lists.add(Arrays.asList("Nick", "White"));
+        lists.add(Arrays.asList("Bob", "Smith"));
 
         table.ready(true);
         long startMs = System.currentTimeMillis();
@@ -123,7 +123,7 @@ public class TableIntegrationTest extends TestBase {
             try {
                 globalClick = globalClick && future.get();
             } catch (ExecutionException e) {
-                globalClick=false;
+                globalClick = false;
                 LOGGER.warn("Warning waiting for table click on checkboxes ", e);
             }
         }
