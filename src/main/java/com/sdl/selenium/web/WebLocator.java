@@ -60,21 +60,21 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * @return tag name
+     * @return The tag name of this element.
      */
     public String getTagName() {
         return executor.getTagName(this);
     }
 
     /**
-     * @return id
+     * @return The id of this element.
      */
     public String getAttributeId() {
         return getAttribute("id");
     }
 
     /**
-     * @return class
+     * @return The classes of this element.
      */
     public String getAttributeClass() {
         return getAttribute("class");
@@ -89,8 +89,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     /**
-     * This method return the WebElement
-     * @return WebElement
+     * @return This method return the WebElement
      */
     public WebElement getWebElement() {
         return currentElement != null ? currentElement : findElement();
@@ -110,10 +109,17 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getCurrentElementAttribute(this, attribute);
     }
 
+    /**
+     * @return The text of this element.
+     */
     public String getText() {
         return getText(false);
     }
 
+    /**
+     * @param instant If instant is true, return text without wait to render element.
+     * @return The text of this element.
+     */
     public String getText(boolean instant) {
         if (instant || ready()) {
             return executor.getText(this);
@@ -176,7 +182,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean assertClickAt() {
         return clickAt();
     }
-
 
     /**
      * Click once do you catch exceptions StaleElementReferenceException.
@@ -397,12 +402,25 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.size(this);
     }
 
+    /**
+     * @return A point, containing the location of the top left-hand corner of the element
+     */
     public Point getLocation() {
         return executor.getLocation(this);
     }
 
+    /**
+     * @return The size of the element on the page.
+     */
     public Dimension getSize() {
         return executor.getSize(this);
+    }
+
+    /**
+     * @return The location and size of the rendered element
+     */
+    public Rectangle getRect(){
+        return executor.getRect(this);
     }
 
     public boolean exists() {
@@ -532,10 +550,16 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return waitToRender(seconds * 1000) && waitToActivate(seconds);
     }
 
+    /**
+     * @return True if the element is disabled, false otherwise.
+     */
     public boolean isDisabled() {
-        return ready() && !currentElement.isEnabled();
+        return !executor.isEnabled(this);
     }
 
+    /**
+     * @return Whether or not the element is displayed
+     */
     public boolean isDisplayed() {
         return executor.isDisplayed(this);
     }

@@ -7,6 +7,11 @@ RELEASE NOTES
 -  Add possibility to set in webLocator.properties: upload.exe.path=src\\test\\resources\\upload\\upload.exe
     ex: UploadFile uploadButton = new UploadFile().withText("Browse");
         uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx");
+- added support for using system clipboard in several WebDriver instances in parallel without mixing copied values
+- implemented all methods with assert
+- added fileDetector to RemoteWebDrivers
+- findElements support cssSelector
+- added getRect()
 
 **Release Notes for Testy 2.1.0**
 - use attributes when generate toString, in case no other important string is present
