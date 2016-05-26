@@ -1386,11 +1386,11 @@ public class XPathBuilder implements Cloneable {
         return getXPath(disabled);
     }
 
-    private String addResultIndexToPath(String finalPath) {
+    private String addResultIndexToPath(String xPath) {
         if (hasResultIdx()) {
-            finalPath = "(" + finalPath + ")[" + getResultIdx().toString() + "]" ;
+            xPath = "(" + xPath + ")[" + getResultIdx().toString() + "]" ;
         }
-        return finalPath;
+        return xPath;
     }
 
     @Override

@@ -237,6 +237,19 @@ public class WebLocatorTest {
         assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
 
         WebLocator locator3 = new WebLocator().withText("text").setResultIdx("last()").setPosition("last()");
-        assertEquals(locator2.getXPath(), "(//*[contains(text(),'text')])[last()]");
+        assertEquals(locator3.getXPath(), "(//*[contains(text(),'text')][position() = last()])[last()]");
+    }
+
+    @Test
+    public void setPosition() {
+        WebLocator locator = new WebLocator().withText("text").setPosition(1);
+        WebLocator locator1 = new WebLocator(locator).withText("text").setPosition(2);
+        WebLocator locator2 = new WebLocator().withText("text").setPosition("last()");
+        assertEquals(locator2.getXPath(), "//*[contains(text(),'text')][position() = last()]");
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')][position() = 2]");
+        locator1.setPosition(-1);
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')]");
+        locator.setPosition(-1);
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
     }
 }
