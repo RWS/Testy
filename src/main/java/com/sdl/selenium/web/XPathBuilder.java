@@ -926,11 +926,11 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasId() {
-        return id != null && !id.equals("");
+        return id != null && !"".equals(id);
     }
 
     protected boolean hasCls() {
-        return cls != null && !cls.equals("");
+        return cls != null && !"".equals(cls);
     }
 
     protected boolean hasClasses() {
@@ -946,35 +946,35 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasBaseCls() {
-        return baseCls != null && !baseCls.equals("");
+        return baseCls != null && !"".equals(baseCls);
     }
 
     protected boolean hasName() {
-        return name != null && !name.equals("");
+        return name != null && !"".equals(name);
     }
 
     protected boolean hasText() {
-        return text != null && !text.equals("");
+        return text != null && !"".equals(text);
     }
 
     protected boolean hasStyle() {
-        return style != null && !style.equals("");
+        return style != null && !"".equals(style);
     }
 
     protected boolean hasElPath() {
-        return elPath != null && !elPath.equals("");
+        return elPath != null && !"".equals(elPath);
     }
 
     protected boolean hasTag() {
-        return tag != null && !tag.equals("*");
+        return tag != null && !"*".equals(tag);
     }
 
     protected boolean hasLabel() {
-        return label != null && !label.equals("");
+        return label != null && !"".equals(label);
     }
 
     protected boolean hasTitle() {
-        return title != null && !title.equals("");
+        return title != null && !"".equals(title);
     }
 
     protected boolean hasPosition() {
@@ -986,7 +986,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasType() {
-        return type != null && !type.equals("");
+        return type != null && !"".equals(type);
     }
 
     // =========================================
