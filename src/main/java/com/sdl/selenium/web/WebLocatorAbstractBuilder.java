@@ -428,6 +428,22 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
+     *     //*[contains(@class, 'x-grid-panel')][position() = last()]
+     * </pre>
+     *
+     * @param position first() or last()
+     * @param <T>      the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setPosition(final String position) {
+        pathBuilder.setPosition(position);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
      *
@@ -436,6 +452,22 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setResultIdx(final int resultIdx) {
+        pathBuilder.setResultIdx(resultIdx);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[contains(@class, 'x-grid-panel')][last()]
+     * </pre>
+     *
+     * @param resultIdx first() or last()
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    public <T extends WebLocatorAbstractBuilder> T setResultIdx(final String resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
     }

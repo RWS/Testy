@@ -46,8 +46,8 @@ public class XPathBuilder implements Cloneable {
     private String labelTag = "label";
     private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
-    private int position = -1;
-    private int resultIdx = -1;
+    private Object position = -1;
+    private Object resultIdx = -1;
     private String type;
     private Map<String, SearchText> attribute = new LinkedHashMap<>();
 
@@ -773,9 +773,9 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
-     * @return value that has been set in {@link #setPosition(int)}
+     * @return value that has been set in @{link #setPosition(int)} or @{link #setPosition(String)}
      */
-    public int getPosition() {
+    public Object getPosition() {
         return position;
     }
 
@@ -796,11 +796,27 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[contains(@class, 'x-grid-panel')][last()]
+     * </pre>
+     *
+     * @param position first() or last()
+     * @param <T>      the element which calls this method
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setPosition(final String position) {
+        this.position = position;
+        return (T) this;
+    }
+
+    /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
-     * @return value that has been set in {@link #setPosition(int)}
+     * @return value that has been set in {@link #setResultIdx(int)} or {@link #setResultIdx(String)}
      */
-    public int getResultIdx() {
+    public Object getResultIdx() {
         return resultIdx;
     }
 
@@ -817,6 +833,23 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     public <T extends XPathBuilder> T setResultIdx(final int resultIdx) {
+        this.resultIdx = resultIdx;
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     (//*[contains(@class, 'x-grid-panel')])[last()]
+     * </pre>
+     * More details please see: http://stackoverflow.com/questions/4961349/combine-xpath-predicate-with-position
+     *
+     * @param resultIdx first() or last()
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    public <T extends XPathBuilder> T setResultIdx(final String resultIdx) {
         this.resultIdx = resultIdx;
         return (T) this;
     }
@@ -945,11 +978,11 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasPosition() {
-        return position > 0;
+        return position.hashCode() > 0 || !"-1".equals(position.toString()) && !"".equals(position.toString()) && position.toString() != null;
     }
 
     protected boolean hasResultIdx() {
-        return resultIdx > 0;
+        return resultIdx.hashCode() > 0 || !"-1".equals(resultIdx.toString()) && !"".equals(resultIdx.toString()) && resultIdx.toString() != null;
     }
 
     protected boolean hasType() {
@@ -1355,7 +1388,7 @@ public class XPathBuilder implements Cloneable {
 
     private String addResultIndexToPath(String finalPath) {
         if (hasResultIdx()) {
-            finalPath = "(" + finalPath + ")[" + getResultIdx() + "]";
+            finalPath = "(" + finalPath + ")[" + getResultIdx().toString() + "]" ;
         }
         return finalPath;
     }
