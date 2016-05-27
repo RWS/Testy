@@ -116,7 +116,7 @@ public class DeployTesty extends TestBase {
         Utils.sleep(1000);
         Actions action = new Actions(driver);
         action.contextClick(testyDir.currentElement).perform();
-        deleteEl.assertClick();
+        deleteEl.click();
         confirmYesMSG("Delete the selected \"/com/sdl/lt/Testy/\" folder?");
         Utils.sleep(1000);
     }
