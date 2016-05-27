@@ -46,8 +46,8 @@ public class XPathBuilder implements Cloneable {
     private String labelTag = "label";
     private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
 
-    private Object position = -1;
-    private Object resultIdx = -1;
+    private String position;
+    private String resultIdx;
     private String type;
     private Map<String, SearchText> attribute = new LinkedHashMap<>();
 
@@ -773,9 +773,9 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
-     * @return value that has been set in @{link #setPosition(int)} or @{link #setPosition(String)}
+     * @return value that has been set in @{link #setPosition(int)} or @{link #setPosition(Position)}
      */
-    public Object getPosition() {
+    public String getPosition() {
         return position;
     }
 
@@ -791,7 +791,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     public <T extends XPathBuilder> T setPosition(final int position) {
-        this.position = position;
+        this.position = position + "";
         return (T) this;
     }
 
@@ -802,21 +802,21 @@ public class XPathBuilder implements Cloneable {
      *     //*[contains(@class, 'x-grid-panel')][last()]
      * </pre>
      *
-     * @param position first() or last()
+     * @param position {@link Position}
      * @param <T>      the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setPosition(final String position) {
-        this.position = position;
+    public <T extends XPathBuilder> T setPosition(final Position position) {
+        this.position = position.getValue();
         return (T) this;
     }
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      *
-     * @return value that has been set in {@link #setResultIdx(int)} or {@link #setResultIdx(String)}
+     * @return value that has been set in {@link #setResultIdx(int)} or {@link #setResultIdx(Position)}
      */
-    public Object getResultIdx() {
+    public String getResultIdx() {
         return resultIdx;
     }
 
@@ -833,7 +833,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     public <T extends XPathBuilder> T setResultIdx(final int resultIdx) {
-        this.resultIdx = resultIdx;
+        this.resultIdx = resultIdx + "";
         return (T) this;
     }
 
@@ -845,12 +845,12 @@ public class XPathBuilder implements Cloneable {
      * </pre>
      * More details please see: http://stackoverflow.com/questions/4961349/combine-xpath-predicate-with-position
      *
-     * @param resultIdx first() or last()
+     * @param resultIdx {@link Position}
      * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setResultIdx(final String resultIdx) {
-        this.resultIdx = resultIdx;
+    public <T extends XPathBuilder> T setResultIdx(final Position resultIdx) {
+        this.resultIdx = resultIdx.getValue();
         return (T) this;
     }
 
@@ -978,11 +978,23 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasPosition() {
-        return position.hashCode() > 0 || !"-1".equals(position.toString()) && !"".equals(position.toString()) && position.toString() != null;
+        int anInt;
+        try {
+            anInt = Integer.parseInt(position);
+        } catch (NumberFormatException e) {
+            anInt = 1;
+        }
+        return position != null && !"".equals(position) && anInt > 0;
     }
 
     protected boolean hasResultIdx() {
-        return resultIdx.hashCode() > 0 || !"-1".equals(resultIdx.toString()) && !"".equals(resultIdx.toString()) && resultIdx.toString() != null;
+        int anInt;
+        try {
+            anInt = Integer.parseInt(resultIdx);
+        } catch (NumberFormatException e) {
+            anInt = 1;
+        }
+        return resultIdx != null && !"".equals(resultIdx) && anInt > 0;
     }
 
     protected boolean hasType() {
@@ -1305,7 +1317,13 @@ public class XPathBuilder implements Cloneable {
                 if (isCssSelectorSupported()) {
                     cssSelector = getItemCssSelector();
                     if (hasPosition()) {
-                        cssSelector += ":nth-child(" + getPosition() + ")";
+                        if("first()".equals(position)){
+                            cssSelector += ":first-child";
+                        } else if("last()".equals(position)){
+                            cssSelector += ":last-child";
+                        } else {
+                            cssSelector += ":nth-child(" + getPosition() + ")";
+                        }
                     }
                 }
             } else {
@@ -1388,7 +1406,7 @@ public class XPathBuilder implements Cloneable {
 
     private String addResultIndexToPath(String xPath) {
         if (hasResultIdx()) {
-            xPath = "(" + xPath + ")[" + getResultIdx().toString() + "]" ;
+            xPath = "(" + xPath + ")[" + getResultIdx() + "]" ;
         }
         return xPath;
     }

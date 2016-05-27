@@ -435,7 +435,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>      the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setPosition(final String position) {
+    public <T extends WebLocatorAbstractBuilder> T setPosition(final Position position) {
         pathBuilder.setPosition(position);
         return (T) this;
     }
@@ -467,7 +467,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setResultIdx(final String resultIdx) {
+    public <T extends WebLocatorAbstractBuilder> T setResultIdx(final Position resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
     }

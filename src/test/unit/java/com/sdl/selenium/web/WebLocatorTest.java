@@ -228,7 +228,7 @@ public class WebLocatorTest {
     public void setResultIdx() {
         WebLocator locator = new WebLocator().withText("text").withResultIdx(1);
         WebLocator locator1 = new WebLocator(locator).withText("text").withResultIdx(2);
-        WebLocator locator2 = new WebLocator().withText("text").setResultIdx("last()");
+        WebLocator locator2 = new WebLocator().withText("text").setResultIdx(Position.LAST);
         assertEquals(locator2.getXPath(), "(//*[contains(text(),'text')])[last()]");
         assertEquals(locator1.getXPath(), "((//*[contains(text(),'text')])[1]//*[contains(text(),'text')])[2]");
         locator1.withResultIdx(-1);
@@ -236,7 +236,7 @@ public class WebLocatorTest {
         locator.withResultIdx(-1);
         assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
 
-        WebLocator locator3 = new WebLocator().withText("text").setResultIdx("last()").setPosition("last()");
+        WebLocator locator3 = new WebLocator().withText("text").setResultIdx(Position.LAST).setPosition(Position.LAST);
         assertEquals(locator3.getXPath(), "(//*[contains(text(),'text')][position() = last()])[last()]");
     }
 
@@ -244,7 +244,7 @@ public class WebLocatorTest {
     public void setPosition() {
         WebLocator locator = new WebLocator().withText("text").setPosition(1);
         WebLocator locator1 = new WebLocator(locator).withText("text").setPosition(2);
-        WebLocator locator2 = new WebLocator().withText("text").setPosition("last()");
+        WebLocator locator2 = new WebLocator().withText("text").setPosition(Position.LAST);
         assertEquals(locator2.getXPath(), "//*[contains(text(),'text')][position() = last()]");
         assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')][position() = 2]");
         locator1.setPosition(-1);

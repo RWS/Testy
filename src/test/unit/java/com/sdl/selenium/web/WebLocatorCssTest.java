@@ -44,6 +44,7 @@ public class WebLocatorCssTest {
                 {new WebLocator().withName("newPassword"), "[name='newPassword']", "//*[@name='newPassword']"},
                 {new WebLocator().withAttribute("data-toggle", "modal"), "[data-toggle='modal']", "//*[@data-toggle='modal']"},
                 {new WebLocator().withTag("li").withPosition(1), "li:nth-child(1)", "//li[position() = 1]"},
+                {new WebLocator().withTag("li").setPosition(Position.LAST), "li:last-child", "//li[position() = last()]"},
         };
     }
 
