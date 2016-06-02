@@ -1,5 +1,6 @@
 package com.sdl.selenium.utils.browsers;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -26,7 +27,6 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             "\n browser.binary.path=" +
             "\n browser.driver.path=" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
-            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe" +
             "\n profile.preference.dom.max_script_run_time=500" +
             "\n profile.preference.browser.download.folderList=2" +
             "\n profile.preference.browser.download.manager.showWhenStarting=false" +
@@ -93,25 +93,25 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     }
 
     private FirefoxProfile getProfile() throws IOException {
-        String profileName = getProperty("browser.profile.name");
+        String profileName = Platform.getCurrent().equals(Platform.LINUX) ? "" : getProperty("browser.profile.name"); //TODO find solution
         FirefoxProfile profile;
-        if (!"".equals(profileName) && profileName != null) {
+        if (profileName == null || "".equals(profileName)) {
+            profile = new FirefoxProfile();
+        } else {
             ProfilesIni allProfiles = new ProfilesIni();
             profile = allProfiles.getProfile(profileName);
-        } else {
-            profile = new FirefoxProfile();
         }
         setProfilePreferences(profile);
         File file = new File(getDownloadPath());
         String downloadDir = file.getCanonicalPath();
-        if (!"".equals(downloadDir)) {
-            profile.setPreference("browser.download.dir", downloadDir);
-        } else {
+        if ("".equals(downloadDir)) {
             String profilePath = getProperty("browser.profile.path");
-            if (profilePath != null && !profilePath.equals("")) {
+            if (profilePath != null && !"".equals(profilePath)) {
                 profile = new FirefoxProfile(new File(profilePath));
                 setProfilePreferences(profile);
             }
+        } else {
+            profile.setPreference("browser.download.dir", downloadDir);
         }
         return profile;
     }
