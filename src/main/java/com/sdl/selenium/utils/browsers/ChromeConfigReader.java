@@ -18,7 +18,7 @@ import java.util.Map;
 public class ChromeConfigReader extends AbstractBrowserConfigReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChromeConfigReader.class);
 
-    private static final String DEFAULT_CONFIG = "" +
+    private static final String DEFAULT_CONFIG =
             "\n browser=chrome" +
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +

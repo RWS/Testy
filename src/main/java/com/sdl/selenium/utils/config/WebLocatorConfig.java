@@ -256,7 +256,7 @@ public class WebLocatorConfig {
         properties.keySet().retainAll(WebLocatorConfig.properties.keySet());
         if(properties.size() > 0){
             WebLocatorConfig.properties.putAll(properties);
-            LOGGER.info("The webLocator.properties were overwriten with value from browser properties: {}", properties.toString());
+            LOGGER.info("The webLocator.properties were overwritten with value from browser properties: {}", properties.toString());
             init();
         }
     }

@@ -19,7 +19,7 @@ import java.util.Map;
 public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(FirefoxConfigReader.class);
 
-    private static final String DEFAULT_CONFIG = "" +
+    private static final String DEFAULT_CONFIG =
             "\n browser=firefox" +
             "\n browser.version=" +
             "\n browser.profile.name=default" +
