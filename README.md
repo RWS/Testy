@@ -95,29 +95,40 @@ This project is optimized for:
 ## Getting the maven plugin
 
 ```xml
-    <dependency>
-        <groupId>com.sdl.lt</groupId>
-        <artifactId>Testy</artifactId>
-        <version>2.1.0</version>
-    </dependency>
+<dependency>
+    <groupId>com.sdl.lt</groupId>
+    <artifactId>Testy</artifactId>
+    <version>2.1.0</version>
+</dependency>
 ```
 
 [Here is how these lines appear in a project pom.xml](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/pom.xml)
 
-And you need to instantiate the WebDriver with Testy as follows:
+## Initialize Testy
+
+### Simple way to migrate or use Testy
+After you create your driver, pass the reference to Testy, then just it use as you want
 
 ```java
-    public static WebDriver driver;
-    static {
-        startSuite();
+driver = new FirefoxDriver();
+WebDriverConfig.init(driver);
+// then just use WebLocator or any other classes from Testy
+```
+
+### OR Create your driver using Testy much simpler
+
+```java
+public static WebDriver driver;
+static {
+    startSuite();
+}
+private static void startSuite() {
+    try {
+        driver = WebDriverConfig.getWebDriver(Browser.FIREFOX);
+    } catch (Exception e) {
+        LOGGER.error("Exception when start suite", e);
     }
-    private static void startSuite() {
-        try {
-            driver = WebDriverConfig.getWebDriver(Browser.FIREFOX);
-        } catch (Exception e) {
-            LOGGER.error("Exception when start suite", e);
-        }
-    }
+}
 ```
 
 [Here is how these lines appear in a project](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/src/test/java/org/fasttrackit/util/TestBase.java)
