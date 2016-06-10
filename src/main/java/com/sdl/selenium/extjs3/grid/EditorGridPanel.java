@@ -96,13 +96,16 @@ public class EditorGridPanel extends GridPanel {
      * @return true or false
      */
     public boolean startEdit(int rowIndex, int colIndex) {
-        LOGGER.debug("startEdit(" + rowIndex + ", " + colIndex + ")");
         GridCell cell = getCell(rowIndex, colIndex);
         return prepareEdit(cell);
     }
 
+    public boolean startEdit(int rowIndex, int colIndex, long milliseconds) {
+        GridCell cell = getCell(rowIndex, colIndex);
+        return prepareEdit(cell, milliseconds);
+    }
+
     public boolean startEdit(String searchElement, int colIndex) {
-        LOGGER.debug("startEdit(" + searchElement + ", " + colIndex + ")");
         GridCell cell = getCell(colIndex, new GridCell(searchElement, SearchType.EQUALS));
         return prepareEdit(cell);
     }
@@ -116,7 +119,20 @@ public class EditorGridPanel extends GridPanel {
         return startEdit(cell);
     }
 
+    private boolean prepareEdit(GridCell cell, long milliseconds) {
+        boolean selected;
+        scrollTop();
+        do {
+            selected = cell.sendKeys(Keys.TAB) != null;
+        } while (!selected && scrollPageDown());
+        return startEdit(cell, milliseconds);
+    }
+
     private boolean startEdit(final GridCell cell) {
+        return startEdit(cell, 200);
+    }
+
+    private boolean startEdit(final GridCell cell, long milliseconds) {
         boolean clicked = false;
         if (ready(true)) {
             if (clicksToEdit == 1) {
@@ -125,7 +141,8 @@ public class EditorGridPanel extends GridPanel {
                 clicked = cell.doubleClickAt();
             }
             if (clicked) {
-                Utils.sleep(200);
+                Utils.sleep(milliseconds);
+                LOGGER.debug("startEdit(" + cell + ")");
             }
         }
         return clicked;
@@ -178,17 +195,18 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(String value) {
-        LOGGER.debug("appendRowValue(" + value + ") - in active editor");
         TextField editor = getActiveEditor();
         editor.sendKeys(Keys.END);
         editor.sendKeys(value);
         editor.blur();
+        LOGGER.debug("appendRowValue(" + value + ") - in active editor");
         return true;
     }
 
     public boolean setRowValue(int rowIndex, int colIndex, String value) {
+        boolean success = startEdit(rowIndex, colIndex) && setRowValue(value);
         LOGGER.debug("setRowValue(" + rowIndex + ", " + colIndex + "): " + value);
-        return startEdit(rowIndex, colIndex) && setRowValue(value);
+        return success;
     }
 
     public boolean setRowValueSafe(int rowIndex, int colIndex, String value) {
@@ -196,19 +214,22 @@ public class EditorGridPanel extends GridPanel {
     }
 
     public boolean appendRowValue(int rowIndex, int colIndex, String value) {
+        boolean success = startEdit(rowIndex, colIndex) && appendRowValue(value);
         LOGGER.debug("appendRowValue(" + rowIndex + ", " + colIndex + "): " + value);
-        return startEdit(rowIndex, colIndex) && appendRowValue(value);
+        return success;
     }
 
 
     public boolean setRowValue(String searchElement, int colIndex, String value) {
+        boolean success = startEdit(searchElement, colIndex) && setRowValue(value);
         LOGGER.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);
-        return startEdit(searchElement, colIndex) && setRowValue(value);
+        return success;
     }
 
     public boolean appendRowValue(String searchElement, int colIndex, String value) {
+        boolean success = startEdit(searchElement, colIndex) && appendRowValue(value);
         LOGGER.debug("appendRowValue(" + searchElement + ", " + colIndex + "): " + value);
-        return startEdit(searchElement, colIndex) && appendRowValue(value);
+        return success;
     }
 
     private void setCursorPosition(TextField editor, int position) {

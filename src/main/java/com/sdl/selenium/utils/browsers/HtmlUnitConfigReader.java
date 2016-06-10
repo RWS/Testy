@@ -11,7 +11,7 @@ import java.net.URL;
 
 public class HtmlUnitConfigReader extends AbstractBrowserConfigReader {
 
-    private static final String DEFAULT_CONFIG = ""+
+    private static final String DEFAULT_CONFIG =
             "\n browser=htmlunit";
 
     public HtmlUnitConfigReader() {

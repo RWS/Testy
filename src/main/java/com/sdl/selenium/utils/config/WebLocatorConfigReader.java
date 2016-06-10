@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class WebLocatorConfigReader extends PropertiesReader {
 
-    private static final String DEFAULT_CONFIG = ""+
+    private static final String DEFAULT_CONFIG =
             "\n weblocator.log.containers=true" +
             "\n weblocator.log.useClassName=false" +
             "\n weblocator.log.xPath=true" +
