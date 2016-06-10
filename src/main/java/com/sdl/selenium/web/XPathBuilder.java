@@ -69,6 +69,7 @@ public class XPathBuilder implements Cloneable {
         setTemplate("cls", "@class='%s'");
         setTemplate("type", "@type='%s'");
         setTemplate("title", "@title='%s'");
+        setTemplate("titleEl", "count(.%s) > 0");
     }
 
     // =========================================
@@ -426,26 +427,6 @@ public class XPathBuilder implements Cloneable {
         }
         return groups;
     }
-
-    /*public static void main(String[] args) {
-        List<SearchType> searchTextType = new ArrayList<>();
-        searchTextType.add(SearchType.CASE_SENSITIVE);
-        searchTextType.add(SearchType.TRIM);
-        searchTextType.add(SearchType.CASE_INSENSITIVE);
-        searchTextType.remove(SearchType.CASE_INSENSITIVE);
-        searchTextType.remove(SearchType.TRIM);
-        searchTextType.add(SearchType.TRIM);
-        searchTextType.add(SearchType.CASE_INSENSITIVE);
-        searchTextType.add(SearchType.NO_TRIM);
-        searchTextType.add(SearchType.TRIM);
-        searchTextType.add(SearchType.EQUALS);
-        searchTextType.remove(SearchType.EQUALS);
-        searchTextType.add(SearchType.STARTS_WITH);
-        searchTextType.add(SearchType.CONTAINS_ALL_CHILD_NODES);
-        searchTextType.add(SearchType.CONTAINS);
-        searchTextType.remove(SearchType.CONTAINS);
-        LOGGER.debug(new XPathBuilder().cleanUpSearchType(searchTextType).toString());
-    }*/
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -1059,8 +1040,8 @@ public class XPathBuilder implements Cloneable {
             WebLocator titleTplEl = templateTitle.get("title");
             if (titleTplEl != null) {
                 titleTplEl.withText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
-                setTemplate("title", "count(.%s) > 0");
-                addTemplate(selector, "title", titleTplEl.getXPath());
+                //setTemplate("title", "count(.%s) > 0");
+                addTemplate(selector, "titleEl", titleTplEl.getXPath());
             } else if (!searchTitleType.isEmpty()) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
                 String title = getTextAfterEscapeQuotes(hasContainsAll, getTitle(), searchTitleType);
