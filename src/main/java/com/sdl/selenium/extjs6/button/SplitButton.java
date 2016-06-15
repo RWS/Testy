@@ -5,6 +5,9 @@ import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SplitButton extends Button {
     private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
@@ -41,6 +44,14 @@ public class SplitButton extends Button {
             selected = false;
         }
         return selected;
+    }
+
+    public List<String> getAllSplitButtonValues() {
+        click();
+        WebLocator comboList = new WebLocator(new WebLocator("x-menu")).withClasses("x-menu-body").withVisibility(true);
+        String[] comboValues = comboList.getText().split("\\n");
+        click();
+        return Arrays.asList(comboValues);
     }
 
     private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
