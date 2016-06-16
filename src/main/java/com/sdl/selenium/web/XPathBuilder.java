@@ -1247,7 +1247,7 @@ public class XPathBuilder implements Cloneable {
             selector.add("." + getBaseCls());
         }
         if (hasCls()) {
-            selector.add("." + getCls()); //TODO
+            selector.add("[class=" + getCls() + "]");
         }
         if (hasClasses()) {
             for (String cls : getClasses()) {

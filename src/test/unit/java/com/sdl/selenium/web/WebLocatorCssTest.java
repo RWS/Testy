@@ -36,7 +36,7 @@ public class WebLocatorCssTest {
                 {new WebLocator().withId("email"), "#email", "//*[@id='email']"},
                 {new WebLocator().withId("email").withClasses("input-block-level"), "#email.input-block-level", "//*[@id='email' and contains(concat(' ', @class, ' '), ' input-block-level ')]"},
                 {new WebLocator().withTag("td"), "td", "//td"},
-                {new WebLocator().withCls("error-msg"), ".error-msg", "//*[@class='error-msg']"}, //TODO see if supports only one class
+                {new WebLocator().withCls("error-msg"), "[class=error-msg]", "//*[@class='error-msg']"}, //TODO see if supports only one class
                 {new WebLocator().withClasses("error-msg"), ".error-msg", "//*[contains(concat(' ', @class, ' '), ' error-msg ')]"},
                 {new WebLocator().withTag("button").withExcludeClasses("error-msg"), "button:not(.error-msg)", "//button[not(contains(@class, 'error-msg'))]"},
                 {new WebLocator().withExcludeClasses("error-msg", "msg"), ":not(.error-msg):not(.msg)", "//*[not(contains(@class, 'error-msg')) and not(contains(@class, 'msg'))]"},
