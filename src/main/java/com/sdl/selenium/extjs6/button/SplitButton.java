@@ -46,12 +46,14 @@ public class SplitButton extends Button {
         return selected;
     }
 
-    public List<String> getAllSplitButtonValues() {
+    public List<String> getAllMenuValues() {
         click();
-        WebLocator comboList = new WebLocator(new WebLocator("x-menu")).withClasses("x-menu-body").withVisibility(true);
-        String[] comboValues = comboList.getText().split("\\n");
+        WebLocator menuContainer = new WebLocator("x-menu").withAttribute("aria-hidden", "false");
+        WebLocator menuList = new WebLocator(menuContainer).withClasses("x-menu-body").withInfoMessage(this + " -> x-menu-body");
+        menuList.assertReady();
+        String[] menuValues = menuList.getText().split("\\n");
         click();
-        return Arrays.asList(comboValues);
+        return Arrays.asList(menuValues);
     }
 
     private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
