@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
@@ -45,14 +46,31 @@ public class ComboBox extends TextField implements ICombo {
         return select(value);
     }
 
-    public boolean select(String value, boolean startWith, long optionRenderMillis) {
+    /**
+     * @deprecated use {@link #doSelect(String, SearchType, long)}
+     * @param value value
+     * @param searchType {@link SearchType}
+     * @param optionRenderMillis 300
+     * @return true or false
+     */
+    @Deprecated
+    public boolean select(String value, SearchType searchType, long optionRenderMillis) {
+        return doSelect(value, searchType, optionRenderMillis);
+    }
+
+    /**
+     * @param value value
+     * @param searchType {@link SearchType}
+     * @param optionRenderMillis 300
+     * @return true or false
+     */
+    public boolean doSelect(String value, SearchType searchType, long optionRenderMillis) {
         boolean selected;
         String componentId;
         String info = toString();
 
-        String valueTest = startWith ? ("starts-with(text(),'" + value + "')") : ("text()='" + value + "'");
-        WebLocator comboListElement = new WebLocator(listClass).withStyle("visibility: visible;").withInfoMessage(this + " -> " + listClass);
-        WebLocator option = new WebLocator(comboListElement).withElxPath("//*[" + valueTest + "]").withRenderMillis(optionRenderMillis).withInfoMessage(value);
+        WebLocator comboListElement = new WebLocator().withClasses(listClass).withStyle("visibility: visible;").withInfoMessage(this + " -> " + listClass);
+        WebLocator option = new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
 
         if (clickIcon("arrow")) {
             try {
@@ -88,8 +106,10 @@ public class ComboBox extends TextField implements ICombo {
         return false;
     }
 
-    public boolean select(String value, boolean startWith) {
-        return select(value, startWith, 300);
+    public boolean select(String value, SearchType searchType) {
+        boolean selected = doSelect(value, searchType, 300);
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
     }
 
     private String getListId() {
@@ -122,12 +142,11 @@ public class ComboBox extends TextField implements ICombo {
 
     @Override
     public boolean select(String value) {
-        return select(value, false);
+        return select(value, SearchType.EQUALS);
     }
 
+    @Deprecated
     public boolean assertSelect(String value) {
-        boolean selected = select(value);
-        assertThat("Could not selected value on : " + this, selected);
-        return selected;
+        return select(value);
     }
 }
