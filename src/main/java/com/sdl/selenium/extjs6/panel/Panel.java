@@ -11,7 +11,7 @@ public class Panel extends WebLocator {
     public Panel() {
         withClassName("Panel");
         withBaseCls("x-panel");
-        WebLocator header = new WebLocator().withClasses("x-header").withRoot("/");
+        WebLocator header = new WebLocator().withClasses("x-title").withRoot("//");
         withTemplateTitle(new WebLocator(header));
     }
 
@@ -25,14 +25,16 @@ public class Panel extends WebLocator {
         withTitle(title, SearchType.EQUALS);
     }
 
-    private WebLocator collapseButton = new WebLocator(this).withClasses("x-tool-collapse-right");
-
-    public WebLocator getCollapseButton() {
-        return collapseButton;
+    private WebLocator getCollapseEl(String type) {
+        return new WebLocator(this).setElPath("//*[contains(@class, 'x-tool-" + type + "')]");
     }
 
     public boolean collapse() {
-        return collapseButton.click();
+        return !getCollapseEl("collapse").isElementPresent() || getCollapseEl("collapse").click();
+    }
+
+    public boolean expand() {
+        return !getCollapseEl("expand").isElementPresent() || getCollapseEl("expand").click();
     }
 
     @Override
@@ -44,10 +46,4 @@ public class Panel extends WebLocator {
         }
         return this;
     }
-
-//    public static void main(String[] args) {
-////        Panel panel = new Panel(null, "API Key Details");
-//        Panel panel = new Panel().withTitle("API Key Details");
-//        LOGGER.debug(panel.getXPath());
-//    }
 }
