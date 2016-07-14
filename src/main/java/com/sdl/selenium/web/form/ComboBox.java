@@ -35,7 +35,7 @@ public class ComboBox extends WebLocator implements ICombo {
         ready();
         if ("".equals(value)) {
             LOGGER.warn("value is empty");
-            selected = true;
+            selected = false;
         } else {
             new Select(getWebElement()).selectByVisibleText(value);
             selected = true;
