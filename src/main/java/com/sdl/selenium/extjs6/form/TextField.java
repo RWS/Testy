@@ -15,7 +15,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         withLabelPosition("//following-sibling::*//");
     }
 
-    public TextField(WebLocator container){
+    public TextField(WebLocator container) {
         this();
         withContainer(container);
     }
@@ -26,7 +26,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     }
 
     // methods
-     public boolean assertSetValue(String value) {
+    public boolean assertSetValue(String value) {
         boolean setted = setValue(value);
         assertThat(setted, is(true));
         return true;
@@ -66,10 +66,4 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     public boolean isDisabled() {
         return "true".equals(getAttribute("disabled"));
     }
-
-    /*public static void main(String[] args) {
-        TextField textField = new TextField(null, "[review]Choose Source");
-        WebLocator iconLocator = new WebLocator(textField).withElxPath(textField.getTriggerPath("arrow"));
-        LOGGER.debug(iconLocator.getXPath());
-    }*/
 }
