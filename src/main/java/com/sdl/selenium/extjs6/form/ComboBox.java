@@ -73,7 +73,7 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public boolean select(String value, SearchType searchType) {
-        boolean selected = select(value, searchType, 300);
+        boolean selected = doSelect(value, searchType, 300);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }

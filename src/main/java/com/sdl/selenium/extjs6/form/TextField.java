@@ -13,6 +13,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public TextField() {
         withLabelPosition("//following-sibling::*//");
+        withBaseCls("x-form-text");
     }
 
     public TextField(WebLocator container) {

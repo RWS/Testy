@@ -29,7 +29,6 @@ public class UploadButton extends Button implements Upload {
      * @return true | false
      */
     @Deprecated
-    @Override
     public boolean upload(String... filePath) {
         return upload(this, filePath);
     }

@@ -29,7 +29,6 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     @Deprecated
-    @Override
     public boolean upload(String... filePath) {
         return upload(this, filePath);
     }
