@@ -74,6 +74,7 @@ public class DateField extends TextField {
         if (!yearEl.waitToRender(200)) {
             toYear(count > 0 ? 1 : -1);
         }
+        Utils.sleep(1000);
         yearEl.click();
     }
 
