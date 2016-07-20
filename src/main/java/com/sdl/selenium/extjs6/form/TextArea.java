@@ -20,6 +20,6 @@ public class TextArea extends TextField {
 
     public TextArea(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE);
+        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 }

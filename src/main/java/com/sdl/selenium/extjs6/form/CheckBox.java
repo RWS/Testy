@@ -42,9 +42,4 @@ public class CheckBox extends WebLocator implements ICheck {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
-
-    /*public static void main(String[] args) {
-        CheckBox checkBox = new CheckBox("Send the API Key to this email address.", null);
-        LOGGER.debug(checkBox.getXPath());
-    }*/
 }

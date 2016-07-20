@@ -3,10 +3,7 @@ package com.sdl.selenium.extjs3.form;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.window.Window;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -19,14 +16,10 @@ public class DateFieldIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTJS_URL);
-    }
-
-    @BeforeMethod
-    public void startTests() {
         showComponent("DateField");
     }
 
-    @AfterMethod
+    @AfterClass
     public void endTests() {
         dateFieldWindow.close();
     }

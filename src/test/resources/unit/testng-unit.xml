@@ -28,6 +28,10 @@
             <class name="com.sdl.selenium.extjs3.tab.TabPanelTest"/>
             <class name="com.sdl.selenium.extjs3.window.WindowTest"/>
 
+            <class name="com.sdl.selenium.extjs6.button.ButtonTest"/>
+            <class name="com.sdl.selenium.extjs6.form.ComboBoxTest"/>
+            <class name="com.sdl.selenium.extjs6.slider.SliderTest"/>
+
             <class name="com.sdl.selenium.bootstrap.window.PopOverTest"/>
             <class name="com.sdl.selenium.bootstrap.window.TooltipTest"/>
             <class name="com.sdl.selenium.bootstrap.window.WindowTest"/>

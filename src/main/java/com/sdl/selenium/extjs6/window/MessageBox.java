@@ -28,11 +28,6 @@ public class MessageBox extends WebLocator {
         withTemplate("msg", "count(*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
     }
 
-    public static void main(String[] args) {
-        MessageBox messageBox = new MessageBox("Delete", "Delete Api key 2");
-        LOGGER.debug(messageBox.getXPath());
-    }
-
     public MessageBox(String title) {
         this();
         withTitle(title, SearchType.EQUALS);

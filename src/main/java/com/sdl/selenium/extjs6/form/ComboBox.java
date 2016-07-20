@@ -30,16 +30,26 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     /**
-     *
-     * @param value value
-     * @param startWith true or false
+     * @deprecated use {@link #doSelect(String, SearchType, long)}
+     * @param value              value
+     * @param searchType         use {@link SearchType}
      * @param optionRenderMillis eg. 300ms
      * @return true if value was selected
      */
-    public boolean select(String value, boolean startWith, long optionRenderMillis) {
+    public boolean select(String value, SearchType searchType, long optionRenderMillis) {
+        return doSelect(value, searchType, optionRenderMillis);
+    }
+
+    /**
+     * @param value              value
+     * @param searchType         use {@link SearchType}
+     * @param optionRenderMillis eg. 300ms
+     * @return true if value was selected
+     */
+    public boolean doSelect(String value, SearchType searchType, long optionRenderMillis) {
         boolean selected;
         String info = toString();
-        WebLocator option = getComboEl(value, startWith, optionRenderMillis);
+        WebLocator option = getComboEl(value, searchType, optionRenderMillis);
 
         if (clickIcon("arrow")) {
             selected = option.click();
@@ -57,18 +67,20 @@ public class ComboBox extends TextField implements ICombo {
         return false;
     }
 
-    private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
+    private WebLocator getComboEl(String value, SearchType searchType, long optionRenderMillis) {
         WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
-        return new WebLocator(comboListElement).withText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+        return new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
     }
 
-    public boolean select(String value, boolean startWith) {
-        return select(value, startWith, 300);
+    public boolean select(String value, SearchType searchType) {
+        boolean selected = doSelect(value, searchType, 300);
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
     }
 
     @Override
     public boolean select(String value) {
-        return select(value, false);
+        return select(value, SearchType.EQUALS);
     }
 
     @Override
@@ -85,14 +97,8 @@ public class ComboBox extends TextField implements ICombo {
         return Arrays.asList(comboValues);
     }
 
+    @Deprecated
     public boolean assertSelect(String value) {
-        boolean selected = select(value);
-        assertThat("Could not selected value on : " + this, selected);
-        return selected;
+        return select(value);
     }
-
-   /* public static void main(String[] args) {
-        ComboBox comboBox = new ComboBox(null, "[review]Choose Source");
-        LOGGER.info(comboBox.getXPath());
-    }*/
 }
