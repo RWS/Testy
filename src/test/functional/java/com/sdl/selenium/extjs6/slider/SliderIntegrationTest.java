@@ -14,11 +14,11 @@ public class SliderIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.1/examples/kitchensink/#slider-field");
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#slider-field");
     }
 
     @Test
-    void SliderTest() {
+    void sliderTest() {
         slider.ready(20);
 
         slider.move(60);

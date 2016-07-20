@@ -27,8 +27,8 @@ public class Tree extends WebLocator {
             if (nodeEl.ready() && !expandedEl.isElementPresent() && expanderEl.isElementPresent()) {
                 expanderEl.click();
             } else {
-                textEl.setContainer(nodeEl);
-                selected = textEl.click();
+                WebLocator checkTree = new WebLocator(nodeEl).setClasses(" x-tree-checkbox");
+                selected = checkTree.click();
             }
         }
         return selected;

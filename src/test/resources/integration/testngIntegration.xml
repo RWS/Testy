@@ -67,6 +67,22 @@
             <class name="com.sdl.selenium.extjs3.button.UploadButtonIntegrationTest"/>
         </classes>
     </test>
+    <test name="DateFieldIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
+        </classes>
+    </test>
+    <test name="SliderIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.slider.SliderIntegrationTest"/>
+        </classes>
+    </test>
+    <test name="TreeIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
+        </classes>
+    </test>
+
     <test name="DatePickerTest">
         <classes>
             <class name="com.sdl.selenium.bootstrap.form.DatePickerIntegrationTest"/>
