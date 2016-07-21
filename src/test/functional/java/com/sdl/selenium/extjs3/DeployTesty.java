@@ -109,6 +109,7 @@ public class DeployTesty extends TestBase {
 
     @Test(dependsOnMethods = "loginAsAdminSDLNexus")
     public void removeFormSDLNexus() {
+        repositoryGridPanel.setTimeout(10);
         repositoryGridPanel.rowSelect("OSS Sonatype Snapshots");
         browseStorage.setActive();
         searchField.setValue("com/sdl/lt/Testy");

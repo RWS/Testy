@@ -72,6 +72,7 @@
         <classes>
             <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.ComboBoxIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.RadioGroupIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextAriaIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextFieldIntegrationTest"/>
         </classes>
@@ -84,6 +85,11 @@
     <test name="TreeIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
+        </classes>
+    </test>
+    <test name="TabIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.tab.TabIntegrationTest"/>
         </classes>
     </test>
 
