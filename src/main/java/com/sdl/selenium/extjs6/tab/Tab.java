@@ -14,7 +14,7 @@ public class Tab extends WebLocator {
 
     public Tab() {
         withClassName("TabPanel");
-        withBaseCls("x-tabpanel-child");
+        withBaseCls("x-tab-bar");
         WebLink activeTab = new WebLink().withClasses("x-tab-active");
         withTemplateTitle(new WebLocator(activeTab));
     }
@@ -29,15 +29,14 @@ public class Tab extends WebLocator {
         withContainer(container);
     }
 
-    public Tab(WebLocator container, String text) {
-        this(text);
+    public Tab(WebLocator container, String title) {
+        this(title);
         withContainer(container);
     }
 
     private WebLocator getTitleInactiveEl() {
         WebLocator container = new WebLocator(getPathBuilder().getContainer()).withClasses(getPathBuilder().getBaseCls());
-//        SearchType[] st = getPathBuilder().getSearchTextType().toArray(new SearchType[getPathBuilder().getSearchTextType().size() + 1]);
-        return new WebLink(container).withText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS).withExcludeClasses("x-tab-active")
+        return new WebLink(container).withText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS)
                 .withInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
@@ -73,7 +72,8 @@ public class Tab extends WebLocator {
      * @return true or false
      */
     public boolean setActive() {
-        boolean activated = isActive() || getTitleInactiveEl().click();
+        WebLocator inactiveTab = getTitleInactiveEl().setExcludeClasses("x-tab-active");
+        boolean activated = isActive() || inactiveTab.click();
         if (activated) {
             LOGGER.info("setActive : " + toString());
         }
@@ -84,8 +84,9 @@ public class Tab extends WebLocator {
         return new ConditionManager(200).add(new RenderSuccessCondition(this)).execute().isSuccess();
     }
 
-//    public static void main(String[] args) {
-//        Tab tab = new Tab("API Keys");
-//        LOGGER.debug(tab.getXPath());
-//    }
+    public boolean close() {
+        WebLocator titleEl = getTitleInactiveEl().setClasses("x-tab-active");
+        WebLocator closeEl = new WebLocator(titleEl).setClasses("x-tab-close-btn");
+        return closeEl.click();
+    }
 }
