@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fratiu on 8/2/2016.
@@ -13,11 +14,18 @@ public class InternationalizedTextRetriever {
     private final Logger LOGGER = LoggerFactory.getLogger(InternationalizedTextRetriever.class);
 
     private boolean internationalizedTestsSuite;
-    private List<TranslatedString> translatedStrings;
+    private List<Map<String, String>> translatedStrings;
     private String baseLanguage;
     private String currentLanguage;
 
-    public InternationalizedTextRetriever(boolean internationalizedTestsSuite, List<TranslatedString> translatedStrings, String baseLanguage) {
+    /***
+     *
+     * @param internationalizedTestsSuite enables or disables the search for translations
+     * @param translatedStrings a list of maps representing the collection of strings to be used in tests with their matching translations;
+     *                          each map contains the translations for one string
+     * @param baseLanguage the language in which the expected strings are written in tests
+     */
+    public InternationalizedTextRetriever(boolean internationalizedTestsSuite, List<Map<String, String>> translatedStrings, String baseLanguage) {
         this.internationalizedTestsSuite = internationalizedTestsSuite;
         this.translatedStrings = translatedStrings;
         this.baseLanguage = baseLanguage;
@@ -27,7 +35,7 @@ public class InternationalizedTextRetriever {
         return internationalizedTestsSuite;
     }
 
-    public List<TranslatedString> getTranslatedStrings() {
+    public List<Map<String, String>> getTranslatedStrings() {
         return translatedStrings;
     }
 
@@ -43,18 +51,25 @@ public class InternationalizedTextRetriever {
         this.currentLanguage = currentLanguage;
     }
 
+    /***
+     * Gets the translation to the {@link #currentLanguage} of the specified text
+     * @param textInBaseLanguage text in the base language used in tests
+     * @return "null" (as a String) if a translation is expected but not found;
+     *          the matching translation if found;
+     *          the original text if internationalization is disabled or languages are not set properly
+     */
     public String getText(String textInBaseLanguage) {
         if (!isInternationalizedTestsSuite() || currentLanguage == null || baseLanguage == null || baseLanguage.equals(currentLanguage)) {
             return textInBaseLanguage;
         } else if (!translatedStrings.isEmpty()) {
             // Searching for the translation of the base string to the current language
-            for (TranslatedString translatedString : translatedStrings) {
-                String recordInBaseLanguage = translatedString.getTextInBaseLanguage();
-                if (recordInBaseLanguage != null && recordInBaseLanguage.equals(textInBaseLanguage)) {
-                    String text = translatedString.getTranslations().get(currentLanguage);
-                    return text == null ? "null" : text;
+            for (Map<String, String> translationsMap : translatedStrings) {
+                    String recordInBaseLanguage = translationsMap.get(baseLanguage);
+                    if (recordInBaseLanguage != null && recordInBaseLanguage.equals(textInBaseLanguage)) {
+                        String text = translationsMap.get(currentLanguage);
+                        return text == null ? "null" : text;
+                    }
                 }
-            }
         }
         return "null";
     }
