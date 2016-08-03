@@ -60,16 +60,21 @@
     <test name="DownloadTest">
         <classes>
             <class name="com.sdl.selenium.extjs3.button.DownloadIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs3.button.UploadButtonIntegrationTest"/>
         </classes>
     </test>
-    <test name="UploadButtonTest">
+    <test name="FileUploadIntegrationTest">
         <classes>
-            <class name="com.sdl.selenium.extjs3.button.UploadButtonIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.button.FileUploadIntegrationTest"/>
         </classes>
     </test>
     <test name="DateFieldIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.ComboBoxIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.RadioGroupIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.TextAriaIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.TextFieldIntegrationTest"/>
         </classes>
     </test>
     <test name="SliderIntegrationTest">
@@ -80,6 +85,11 @@
     <test name="TreeIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
+        </classes>
+    </test>
+    <test name="TabIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.tab.TabIntegrationTest"/>
         </classes>
     </test>
 
