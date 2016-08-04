@@ -54,11 +54,12 @@ public class InternationalizedTextRetriever {
     /***
      * Gets the translation to the {@link #currentLanguage} of the specified text
      * @param textInBaseLanguage text in the base language used in tests
-     * @return "null" (as a String) if a translation is expected but not found;
+     * @return  missing text if a translation is expected but not found;
      *          the matching translation if found;
      *          the original text if internationalization is disabled or languages are not set properly
      */
     public String getText(String textInBaseLanguage) {
+        String textIfRetrievalFails = "Missing " + currentLanguage + " text for: " + textInBaseLanguage;
         if (!isInternationalizedTestsSuite() || currentLanguage == null || baseLanguage == null || baseLanguage.equals(currentLanguage)) {
             return textInBaseLanguage;
         } else if (!translatedStrings.isEmpty()) {
@@ -67,11 +68,15 @@ public class InternationalizedTextRetriever {
                     String recordInBaseLanguage = translationsMap.get(baseLanguage);
                     if (recordInBaseLanguage != null && recordInBaseLanguage.equals(textInBaseLanguage)) {
                         String text = translationsMap.get(currentLanguage);
-                        return text == null ? "null" : text;
+                        if (text == null || text.equals("")) {
+                            return textIfRetrievalFails;
+                        } else {
+                            return text;
+                        }
                     }
                 }
         }
-        return "null";
+        return textIfRetrievalFails;
     }
 
 }
