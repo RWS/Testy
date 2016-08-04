@@ -19,7 +19,7 @@ public class InternationalizedTextRetriever {
     private String currentLanguage;
 
     /***
-     *
+     * Utility for retrieving text in the requested language based on text in the base language
      * @param internationalizedTestsSuite enables or disables the search for translations
      * @param translatedStrings a list of maps representing the collection of strings to be used in tests with their matching translations;
      *                          each map contains the translations for one string
