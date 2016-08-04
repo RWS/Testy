@@ -184,7 +184,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T setText(String text, final SearchType... searchTypes) {
+        text = InternationalizationUtils.getInternationalizedText(text);
         pathBuilder.setText(text, searchTypes);
         return (T) this;
     }
@@ -246,7 +247,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setTitle(final String title, SearchType... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T setTitle(String title, SearchType... searchTypes) {
+        title = InternationalizationUtils.getInternationalizedText(title);
         pathBuilder.setTitle(title, searchTypes);
         return (T) this;
     }
@@ -729,7 +731,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T withTitle(final String title, SearchType... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T withTitle(String title, SearchType... searchTypes) {
+        title = InternationalizationUtils.getInternationalizedText(title);
         pathBuilder.setTitle(title, searchTypes);
         return (T) this;
     }
@@ -864,7 +867,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T withLabel(final String label, final SearchType... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T withLabel(String label, final SearchType... searchTypes) {
+        label = InternationalizationUtils.getInternationalizedText(label);
         pathBuilder.setLabel(label, searchTypes);
         return (T) this;
     }
