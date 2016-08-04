@@ -21,4 +21,8 @@ public class InternationalizationUtils {
     public static String getInternationalizedText(String text) {
         return internationalizedTextRetriever.getText(text);
     }
+
+    public static InternationalizedTextRetriever getInternationalizedTextRetriever() {
+        return internationalizedTextRetriever;
+    }
 }
