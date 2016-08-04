@@ -68,7 +68,7 @@ public class InternationalizedTextRetriever {
                     String recordInBaseLanguage = translationsMap.get(baseLanguage);
                     if (recordInBaseLanguage != null && recordInBaseLanguage.equals(textInBaseLanguage)) {
                         String text = translationsMap.get(currentLanguage);
-                        if (text == null || text.equals("")) {
+                        if (text == null || "".equals(text)) {
                             return textIfRetrievalFails;
                         } else {
                             return text;
