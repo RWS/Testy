@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -378,7 +379,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setLabel(final String label, final SearchType... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchTypes) {
+        label = InternationalizationUtils.getInternationalizedText(label);
         pathBuilder.setLabel(label, searchTypes);
         return (T) this;
     }
@@ -505,7 +507,7 @@ public abstract class WebLocatorAbstractBuilder {
         pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
     }
-    
+
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
@@ -651,7 +653,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T withText(final String text, final SearchType... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T withText(String text, final SearchType... searchTypes) {
+        text = InternationalizationUtils.getInternationalizedText(text);
         pathBuilder.setText(text, searchTypes);
         return (T) this;
     }

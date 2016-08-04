@@ -8,18 +8,30 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * See split button examples <a href="http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons">here</a>
+ */
 public class SplitButton extends Button {
     private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
+    /**
+     * See split button examples <a href="http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons">here</a>
+     */
     public SplitButton() {
         withClassName("SplitButton");
     }
 
+    /**
+     * See {@link #SplitButton()}
+     */
     public SplitButton(WebLocator container) {
         this();
         withContainer(container);
     }
 
+    /**
+     * See {@link #SplitButton()}
+     */
     public SplitButton(WebLocator container, String text) {
         this(container);
         withText(text);

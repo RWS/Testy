@@ -1,6 +1,7 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
+import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -503,6 +504,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return string
      */
     public String waitTextToRender(int seconds, String excludeText) {
+        excludeText = InternationalizationUtils.getInternationalizedText(excludeText);
         String text = null;
         if (seconds == 0 && ((text = getText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
             return text;
