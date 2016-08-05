@@ -3,6 +3,7 @@ package com.sdl.selenium.web;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
+import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -873,11 +874,14 @@ public class XPathBuilder implements Cloneable {
      * @param <T>         the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setAttribute(final String attribute, final String value, final SearchType... searchTypes) {
+    public <T extends XPathBuilder> T setAttribute(final String attribute, String value, final SearchType... searchTypes) {
         if (attribute != null) {
             if (value == null) {
                 this.attribute.remove(attribute);
             } else {
+                if (attribute.equals("placeholder") || attribute.equals("alt") || attribute.equals("title")) {
+                    value = InternationalizationUtils.getInternationalizedText(value);
+                }
                 this.attribute.put(attribute, new SearchText(value, searchTypes));
             }
         }
