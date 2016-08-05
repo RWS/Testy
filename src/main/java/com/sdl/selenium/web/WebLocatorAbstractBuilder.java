@@ -505,7 +505,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType ... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, String value, final SearchType ... searchTypes) {
         pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
     }
@@ -959,7 +959,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T withAttribute(final String attribute, final String value, final SearchType ... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T withAttribute(final String attribute, String value, final SearchType ... searchTypes) {
         pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
     }
