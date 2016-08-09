@@ -16,4 +16,9 @@ public class TextArea extends com.sdl.selenium.web.form.TextArea {
         this(container);
         withLabel(label);
     }
+
+    public TextArea(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
 }

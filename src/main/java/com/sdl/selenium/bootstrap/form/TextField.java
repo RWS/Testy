@@ -21,4 +21,9 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         this(container);
         withLabel(label);
     }
+
+    public TextField(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
 }

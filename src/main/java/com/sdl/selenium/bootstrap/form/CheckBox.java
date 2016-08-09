@@ -40,6 +40,12 @@ public class CheckBox extends TextField implements ICheck {
         withLabelPosition("//");
     }
 
+    public CheckBox(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized, SearchType.CONTAINS);
+        withLabelPosition("//");
+    }
+
     public CheckBox(String boxLabel, WebLocator container) {
         this(container);
         withLabel(boxLabel);

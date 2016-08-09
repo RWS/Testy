@@ -22,4 +22,9 @@ public class Button extends WebLocator implements IButton {
         this(container);
         withText(text, searchTypes);
     }
+
+    public Button(WebLocator container, String text, boolean isInternationalized, final SearchType... searchTypes) {
+        this(container);
+        withText(text, isInternationalized, searchTypes);
+    }
 }

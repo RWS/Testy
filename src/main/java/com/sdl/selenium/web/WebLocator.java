@@ -46,6 +46,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         withText(text);
     }
 
+    public WebLocator(String text, boolean isInternationalized, String cls, WebLocator container) {
+        this(cls, container);
+        withText(text, isInternationalized);
+    }
+
     // getters and setters
 
     public static void setDriverExecutor(WebDriver driver) {

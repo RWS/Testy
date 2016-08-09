@@ -25,6 +25,11 @@ public class Radio extends WebLocator {
         withLabel(label);
     }
 
+    public Radio(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
+
     public boolean isSelected() {
         WebLocator input = new WebLocator(this).setElPath("/../input");
         String checked = input.getAttribute("aria-checked");

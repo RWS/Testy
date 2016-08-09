@@ -31,6 +31,16 @@ public class TabPanel extends ExtJsComponent {
         withContainer(container);
     }
 
+    public TabPanel(String text, boolean isInternationalized) {
+        this();
+        withText(text, isInternationalized, SearchType.EQUALS);
+    }
+
+    public TabPanel(WebLocator container, String text, boolean isInternationalized) {
+        this(text, isInternationalized);
+        withContainer(container);
+    }
+
     private String getTitlePath() {
         WebLocator header = new WebLocator().withClasses("x-tab-panel-header");
         WebLocator locator = new WebLocator().withText(getPathBuilder().getText()).withContainer(header);

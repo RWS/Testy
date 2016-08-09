@@ -21,4 +21,9 @@ public class TextArea extends TextField {
         this(container);
         withLabel(label, SearchType.DEEP_CHILD_NODE);
     }
+
+    public TextArea(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized, SearchType.DEEP_CHILD_NODE);
+    }
 }

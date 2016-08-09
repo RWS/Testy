@@ -27,6 +27,11 @@ public class Button extends WebLocator {
         withText(text, SearchType.EQUALS);
     }
 
+    public Button(WebLocator container, String text, boolean isInternationalized) {
+        this(container);
+        withText(text, isInternationalized, SearchType.EQUALS);
+    }
+
     public boolean showMenu() {
         final String id = getAttributeId();
         if (id != null && !"".equals(id)) {

@@ -43,6 +43,11 @@ public class UploadFile extends WebLocator implements Upload {
         withLabel(label);
     }
 
+    public UploadFile(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
+
     /**
      * Upload file with AutoIT.
      * Use only this: {@code button.upload("Browse", new String[]{"C:\\upload.exe", "C:\\text.txt"});}

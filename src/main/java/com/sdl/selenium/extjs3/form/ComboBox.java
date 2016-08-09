@@ -32,6 +32,11 @@ public class ComboBox extends TextField implements ICombo {
         withLabel(label);
     }
 
+    public ComboBox(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
+
     public ComboBox(String name, WebLocator container) {
         this(container);
         withName(name);

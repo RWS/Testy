@@ -33,6 +33,12 @@ public class AdvancedTextField extends TextField {
         withLabel(label);
     }
 
+    public AdvancedTextField(WebLocator container, String label, boolean isInternationalized) {
+        this();
+        withContainer(container);
+        withLabel(label, isInternationalized);
+    }
+
     public AdvancedTextField(String cls, WebLocator container) {
         this();
         withContainer(container);
