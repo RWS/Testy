@@ -41,7 +41,21 @@ public class InternationalizedWebLocatorTest {
         record3Translations.put("Japanese", "鳥");
         record3Translations.put("Arabic", "انفلونزا");
 
-        InternationalizationUtils.setInternationalizedTextRetriever(new InternationalizedTextRetriever(true, Arrays.asList(record1Translations, record2Translations, record3Translations), "English"));
+        Map<String, String> record4Translations = new HashMap<>();
+        record4Translations.put("English", "bird with variables {0}, {1}, {2} and html");
+        record4Translations.put("French", "oiseau with variables {0}, {1}, {2} and html");
+        record4Translations.put("Romanian", "pasăre with variables {0}, {1}, {2} and html");
+        record4Translations.put("Japanese", "鳥 with variables {0}, {1}, {2} and html");
+        record4Translations.put("Arabic", "with variables {0}, {1}, {2} and html انفلونزا");
+
+        Map<String, String> record5Translations = new HashMap<>();
+        record5Translations.put("English", "car with variables %s, %s, %s and html");
+        record5Translations.put("French", "voiture with variables %s, %s, %s and html");
+        record5Translations.put("Romanian", "mașină with variables %s, %s, %s and html");
+        record5Translations.put("Japanese", "車 with variables %s, %s, %s and html");
+        record5Translations.put("Arabic", "with variables %s, %s, %s and html سيارة");
+
+        InternationalizationUtils.setInternationalizedTextRetriever(new InternationalizedTextRetriever(true, Arrays.asList(record1Translations, record2Translations, record3Translations, record4Translations, record5Translations), "English"));
     }
 
     @Test
@@ -84,7 +98,7 @@ public class InternationalizedWebLocatorTest {
     public void setTextForLanguageWithNullValue() {
         InternationalizationUtils.setCurrentLanguage("Romanian");
         locator = new WebLocator().withText("negative");
-        assertThat(locator.getXPath(), containsString("null"));
+        assertThat(locator.getXPath(), containsString("Missing Romanian text for: negative"));
     }
 
     @Test
@@ -127,6 +141,21 @@ public class InternationalizedWebLocatorTest {
         locator = new WebLocator().withLabel("negative").withText("bird");
         assertThat(locator.getXPath(), containsString("négatif"));
         assertThat(locator.getXPath(), containsString("oiseau"));
+    }
+
+    @Test
+    public void setLabelAndTextForDefinedLanguagesWithVariables() {
+        InternationalizationUtils.setCurrentLanguage("Romanian");
+        locator = new WebLocator().withLabel("car with variables 10, 20, StringValue and html");
+        assertThat(locator.getXPath(), containsString("mașină with variables 10, 20, StringValue and html"));
+
+        InternationalizationUtils.setCurrentLanguage("Japanese");
+        locator = new WebLocator().withLabel("bird with variables 10, 20, StringValue and html");
+        assertThat(locator.getXPath(), containsString("鳥 with variables 10, 20, StringValue and html"));
+
+        InternationalizationUtils.setCurrentLanguage("Arabic");
+        locator = new WebLocator().withLabel("car with variables 10, 20, StringValue and html");
+        assertThat(locator.getXPath(), containsString("with variables 10, 20, StringValue and html سيارة"));
     }
 
 }
