@@ -22,6 +22,10 @@ public class InternationalizationUtils {
         internationalizedTextRetriever.setCurrentLanguage(language);
     }
 
+    public static boolean isInternationalizedTestsSuite() {
+        return internationalizedTextRetriever.isInternationalizedTestsSuite();
+    }
+
     public static void setInternationalizedTestsSuite(boolean enabled) {
         internationalizedTextRetriever.setInternationalizedTestsSuite(enabled);
     }
@@ -35,6 +39,14 @@ public class InternationalizationUtils {
 
     public static String getInternationalizedText(String text) {
         return internationalizedTextRetriever.getText(text);
+    }
+
+    public static String getInternationalizedText(String text, boolean isInternationalized) {
+        if (isInternationalized) {
+            return internationalizedTextRetriever.getText(text);
+        } else {
+            return text;
+        }
     }
 
     public static InternationalizedTextRetriever getInternationalizedTextRetriever() {

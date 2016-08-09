@@ -870,22 +870,30 @@ public class XPathBuilder implements Cloneable {
      *
      * @param attribute   eg. placeholder
      * @param value       eg. Search
+     * @param isInternationalized override general internationalization setting for this specific WebLocator
      * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
      * @param <T>         the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setAttribute(final String attribute, String value, final SearchType... searchTypes) {
+    public <T extends XPathBuilder> T setAttribute(final String attribute, String value, boolean isInternationalized, final SearchType... searchTypes) {
         if (attribute != null) {
             if (value == null) {
                 this.attribute.remove(attribute);
             } else {
                 if (attribute.equals("placeholder") || attribute.equals("alt") || attribute.equals("title")) {
-                    value = InternationalizationUtils.getInternationalizedText(value);
+                    value = InternationalizationUtils.getInternationalizedText(value, isInternationalized);
                 }
                 this.attribute.put(attribute, new SearchText(value, searchTypes));
             }
         }
         return (T) this;
+    }
+
+    /***
+     * @see #setAttribute(String, String, boolean, SearchType...)
+     */
+    public <T extends XPathBuilder> T setAttribute(final String attribute, String value, final SearchType... searchTypes) {
+        return setAttribute(attribute, value, InternationalizationUtils.isInternationalizedTestsSuite(), searchTypes);
     }
 
     public Map<String, SearchText> getAttributes() {

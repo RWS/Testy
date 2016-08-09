@@ -501,10 +501,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      *
      * @param seconds     time in seconds
      * @param excludeText exclude text
+     * @param isInternationalized override general internationalization setting for this specific WebLocator
      * @return string
      */
-    public String waitTextToRender(int seconds, String excludeText) {
-        excludeText = InternationalizationUtils.getInternationalizedText(excludeText);
+    public String waitTextToRender(int seconds, String excludeText, boolean isInternationalized) {
+        excludeText = InternationalizationUtils.getInternationalizedText(excludeText, isInternationalized);
         String text = null;
         if (seconds == 0 && ((text = getText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
             return text;
@@ -522,6 +523,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         }
         LOGGER.warn("No text was found for Element after " + seconds + " sec; " + this);
         return excludeText.equals(text) ? null : text;
+    }
+
+    /***
+     * @see #waitTextToRender(int, String, boolean)
+     */
+    public String waitTextToRender(int seconds, String excludeText) {
+        return waitTextToRender(seconds, excludeText, InternationalizationUtils.isInternationalizedTestsSuite());
     }
 
     public boolean waitToActivate() {
