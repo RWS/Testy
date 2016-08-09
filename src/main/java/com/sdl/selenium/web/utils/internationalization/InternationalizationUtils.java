@@ -22,6 +22,10 @@ public class InternationalizationUtils {
         internationalizedTextRetriever.setCurrentLanguage(language);
     }
 
+    public static void setInternationalizedTestsSuite(boolean enabled) {
+        internationalizedTextRetriever.setInternationalizedTestsSuite(enabled);
+    }
+
     /***
      * @see InternationalizedTextRetriever#setVariableNotationPatterns(String...)
      */

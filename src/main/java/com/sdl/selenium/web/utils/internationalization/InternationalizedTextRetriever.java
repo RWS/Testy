@@ -42,6 +42,10 @@ public class InternationalizedTextRetriever {
         return internationalizedTestsSuite;
     }
 
+    public void setInternationalizedTestsSuite(boolean internationalizedTestsSuite) {
+        this.internationalizedTestsSuite = internationalizedTestsSuite;
+    }
+
     public List<Map<String, String>> getTranslatedStrings() {
         return translatedStrings;
     }
