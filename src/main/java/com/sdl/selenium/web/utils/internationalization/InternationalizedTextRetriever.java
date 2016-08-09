@@ -92,6 +92,8 @@ public class InternationalizedTextRetriever {
      * Gets the translation to the {@link #currentLanguage} of the specified text.
      * If the translation contains variables, the values from {@param textInBaseLanguage} will be used.
      *
+     * It doesn't work with partial translations for now.
+     *
      * @param textInBaseLanguage text in the base language used in tests
      * @return missing text if a translation is expected but not found;
      * the matching translation if found;
