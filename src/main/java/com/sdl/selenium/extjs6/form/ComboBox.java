@@ -67,7 +67,7 @@ public class ComboBox extends TextField implements ICombo {
         return false;
     }
 
-    private WebLocator getComboEl(String value, SearchType searchType, long optionRenderMillis) {
+    protected WebLocator getComboEl(String value, SearchType searchType, long optionRenderMillis) {
         WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
         return new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
     }
@@ -89,7 +89,16 @@ public class ComboBox extends TextField implements ICombo {
         return executor.getValue(this);
     }
 
+    /**
+     * @deprecated use {@link #getAllValues()}
+     * @return list of elements
+     */
+    @Deprecated
     public List<String> getAllComboValues() {
+        return getAllValues();
+    }
+
+    public List<String> getAllValues() {
         clickIcon("arrow");
         WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).withClasses(listClass).withVisibility(true);
         String[] comboValues = comboList.getText().split("\\n");

@@ -39,9 +39,4 @@ public class Button extends WebLocator {
         LOGGER.debug("id is: {}", id);
         return false;
     }
-
-//    public static void main(String[] args) {
-//        Button button = new Button(null, "OK");
-//        LOGGER.debug(button.getXPath());
-//    }
 }

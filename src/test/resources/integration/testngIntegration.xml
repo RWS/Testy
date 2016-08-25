@@ -75,6 +75,7 @@
             <class name="com.sdl.selenium.extjs6.form.RadioGroupIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextAriaIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextFieldIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.TagIntegrationTest"/>
         </classes>
     </test>
     <test name="SliderIntegrationTest">

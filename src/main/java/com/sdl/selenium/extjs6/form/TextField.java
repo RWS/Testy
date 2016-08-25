@@ -33,15 +33,14 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         return true;
     }
 
-    public String getTriggerPath(String icon) {
-        return "/parent::*/parent::*/*[contains(@class,'x-form-" + icon + "-trigger')]";
+    public WebLocator getTriggerEl(String icon) {
+        return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/*").setClasses("x-form-" + icon + "-trigger").withInfoMessage(this + " -> trigger-" + icon);
     }
 
     public boolean clickIcon(String icon) {
         if (ready()) {
-            WebLocator iconLocator = new WebLocator(this).withElxPath(getTriggerPath(icon));
+            WebLocator iconLocator = getTriggerEl(icon);
             iconLocator.withRenderMillis(500);
-            iconLocator.withInfoMessage(this + " -> trigger-" + icon);
             try {
                 return iconLocator.click();
             } catch (Exception e) {
