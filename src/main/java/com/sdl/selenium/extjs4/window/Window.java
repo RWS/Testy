@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs4.window;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
@@ -11,12 +12,14 @@ public class Window extends WebLocator {
     public Window() {
         withClassName("Window");
         withBaseCls("x-window");
-        withTemplate("title", "count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+        WebLocator header = new WebLocator().withTag("*[contains(@class,'x-window-header') or contains(@class, '-tl')]");
+        withTemplateTitle(new WebLocator(header));
+//        withTemplate("title", "count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
     public Window(String title) {
         this();
-        withTitle(title);
+        withTitle(title, SearchType.EQUALS);
     }
 
     public String getTitleWindow() {
