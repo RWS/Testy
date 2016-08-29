@@ -41,6 +41,11 @@ public class SelectPicker extends WebLocator implements ICombo {
         withLabel(label);
     }
 
+    public SelectPicker(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
+
     @Override
     public boolean select(String value) {
         click();

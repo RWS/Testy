@@ -46,6 +46,11 @@ public class MultiSelect extends SelectPicker {
         withLabel(label);
     }
 
+    public MultiSelect(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
+
     @Override
     public boolean select(String value) {
         super.select(value);

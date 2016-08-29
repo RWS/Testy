@@ -188,7 +188,13 @@ public enum SearchType {
      *      .withText("|Cancel|Button", SearchType.CONTAINS_ANY);
      * }</pre>
      */
-    CONTAINS_ANY("advance");
+    CONTAINS_ANY("advance"),
+
+    /**
+     * Override general setting regarding internationalized text for specific web locators
+     * without disabling internationalization for all locators
+     */
+    NOT_INTERNATIONALIZED("text");
 
     private final String group;
 

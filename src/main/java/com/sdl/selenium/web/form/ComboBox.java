@@ -2,6 +2,7 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +24,19 @@ public class ComboBox extends WebLocator implements ICombo {
 
     @Override
     public boolean select(String value) {
+        return select(value, InternationalizationUtils.isInternationalizedTestsSuite());
+    }
+
+    public boolean select(String value, boolean isInternationalized) {
         boolean selected = waitToRender();
         assertThat("Element was not rendered " + toString(), selected);
-        selected = doSelect(value);
+        selected = doSelect(value, isInternationalized);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }
 
-    public boolean doSelect(String value) {
+    public boolean doSelect(String value, boolean isInternationalized) {
+        value = InternationalizationUtils.getInternationalizedText(value, isInternationalized);
         boolean selected;
         ready();
         if ("".equals(value)) {
@@ -44,6 +50,10 @@ public class ComboBox extends WebLocator implements ICombo {
             LOGGER.info("Set value(" + this + "): " + value);
         }
         return selected;
+    }
+
+    public boolean doSelect(String value) {
+        return doSelect(value, InternationalizationUtils.isInternationalizedTestsSuite());
     }
 
     @Override

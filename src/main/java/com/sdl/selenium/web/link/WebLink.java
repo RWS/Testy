@@ -26,6 +26,11 @@ public class WebLink extends WebLocator {
         withText(text);
     }
 
+    public WebLink(WebLocator container, String text, boolean isInternationalized) {
+        this(container);
+        withText(text, isInternationalized);
+    }
+
     public boolean openInNewWindow() {
         click();
         oldTab = null;

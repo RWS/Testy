@@ -24,4 +24,10 @@ public class ButtonLink extends Button {
         withText(text);
         withSearchTextType(SearchType.EQUALS);
     }
+
+    public ButtonLink(WebLocator container, String text, boolean isInternationalized) {
+        this(container);
+        withText(text, isInternationalized);
+        withSearchTextType(SearchType.EQUALS);
+    }
 }

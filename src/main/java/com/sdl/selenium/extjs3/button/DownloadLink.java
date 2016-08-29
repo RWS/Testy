@@ -22,6 +22,11 @@ public class DownloadLink extends ExtJsComponent implements Download {
         withText(text, SearchType.EQUALS);
     }
 
+    public DownloadLink(WebLocator container, String text, boolean isInternationalized) {
+        this(container);
+        withText(text, isInternationalized, SearchType.EQUALS);
+    }
+
     /**
      * Wait for the element to be activated when there is deactivation mask on top of it
      *
