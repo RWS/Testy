@@ -879,8 +879,10 @@ public class XPathBuilder implements Cloneable {
             if (value == null) {
                 this.attribute.remove(attribute);
             } else {
-                if (attribute.equals("placeholder") || attribute.equals("alt") || attribute.equals("title")) {
-                    value = InternationalizationUtils.getInternationalizedText(value);
+                if (!Arrays.asList(searchTypes).contains(SearchType.NOT_INTERNATIONALIZED)) {
+                    if (attribute.equals("placeholder") || attribute.equals("alt") || attribute.equals("title")) {
+                        value = InternationalizationUtils.getInternationalizedText(value);
+                    }
                 }
                 this.attribute.put(attribute, new SearchText(value, searchTypes));
             }
@@ -1041,17 +1043,22 @@ public class XPathBuilder implements Cloneable {
             }
         }
         if (hasTitle()) {
+            String title = getTitle();
+            if (!searchTitleType.contains(SearchType.NOT_INTERNATIONALIZED)) {
+                title = InternationalizationUtils.getInternationalizedText(title);
+            }
+
             WebLocator titleTplEl = templateTitle.get("title");
             if (titleTplEl != null) {
-                titleTplEl.withText(getTitle(), searchTitleType.toArray(new SearchType[searchTitleType.size()]));
+                titleTplEl.withText(title, searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 //setTemplate("title", "count(.%s) > 0");
                 addTemplate(selector, "titleEl", titleTplEl.getXPath());
             } else if (!searchTitleType.isEmpty()) {
                 boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
-                String title = getTextAfterEscapeQuotes(hasContainsAll, getTitle(), searchTitleType);
+                title = getTextAfterEscapeQuotes(hasContainsAll, title, searchTitleType);
                 selector.add(getTextSearchTypePath(searchTitleType, title, hasContainsAll, "@title"));
             } else {
-                addTemplate(selector, "title", getTitle());
+                addTemplate(selector, "title", title);
             }
         }
         if (hasType()) {
@@ -1156,6 +1163,9 @@ public class XPathBuilder implements Cloneable {
         if (hasText()) {
             selector = "";
             String text = getText();
+            if (!searchTextType.contains(SearchType.NOT_INTERNATIONALIZED)) {
+                text = InternationalizationUtils.getInternationalizedText(text);
+            }
 
             if (templates.get("text") != null) {
                 return String.format(templates.get("text"), text);

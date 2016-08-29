@@ -1,6 +1,5 @@
 package com.sdl.selenium.web;
 
-import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -185,7 +184,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setText(String text, final SearchType... searchTypes) {
-        text = InternationalizationUtils.getInternationalizedText(text);
         pathBuilder.setText(text, searchTypes);
         return (T) this;
     }
@@ -248,7 +246,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title, SearchType... searchTypes) {
-        title = InternationalizationUtils.getInternationalizedText(title);
         pathBuilder.setTitle(title, searchTypes);
         return (T) this;
     }
@@ -382,7 +379,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchTypes) {
-        label = InternationalizationUtils.getInternationalizedText(label);
         pathBuilder.setLabel(label, searchTypes);
         return (T) this;
     }
@@ -656,7 +652,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T withText(String text, final SearchType... searchTypes) {
-        text = InternationalizationUtils.getInternationalizedText(text);
         pathBuilder.setText(text, searchTypes);
         return (T) this;
     }
@@ -732,7 +727,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T withTitle(String title, SearchType... searchTypes) {
-        title = InternationalizationUtils.getInternationalizedText(title);
         pathBuilder.setTitle(title, searchTypes);
         return (T) this;
     }
@@ -868,7 +862,6 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T withLabel(String label, final SearchType... searchTypes) {
-        label = InternationalizationUtils.getInternationalizedText(label);
         pathBuilder.setLabel(label, searchTypes);
         return (T) this;
     }

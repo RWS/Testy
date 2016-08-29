@@ -504,7 +504,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return string
      */
     public String waitTextToRender(int seconds, String excludeText) {
-        excludeText = InternationalizationUtils.getInternationalizedText(excludeText);
+        if (!getPathBuilder().getSearchTextType().contains(SearchType.NOT_INTERNATIONALIZED)) {
+            excludeText = InternationalizationUtils.getInternationalizedText(excludeText);
+        }
         String text = null;
         if (seconds == 0 && ((text = getText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
             return text;
