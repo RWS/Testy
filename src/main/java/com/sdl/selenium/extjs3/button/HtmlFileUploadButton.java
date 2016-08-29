@@ -19,4 +19,11 @@ public class HtmlFileUploadButton extends SelectFilesHandler {
         WebLocator button = new Button(container, text);
         setButtonElement(button);
     }
+
+    public HtmlFileUploadButton(WebLocator container, String text, boolean isInternationalized) {
+        this();
+        //withContainer(container);
+        WebLocator button = new Button(container, text, isInternationalized);
+        setButtonElement(button);
+    }
 }

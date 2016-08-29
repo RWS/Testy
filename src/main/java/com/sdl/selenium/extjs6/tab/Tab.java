@@ -24,6 +24,11 @@ public class Tab extends WebLocator {
         withTitle(title, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
     }
 
+    public Tab(String title, boolean isInternationalized) {
+        this();
+        withTitle(title, isInternationalized, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
+    }
+
     public Tab(WebLocator container) {
         this();
         withContainer(container);
@@ -31,6 +36,11 @@ public class Tab extends WebLocator {
 
     public Tab(WebLocator container, String title) {
         this(title);
+        withContainer(container);
+    }
+
+    public Tab(WebLocator container, String title, boolean isInternationalized) {
+        this(title, isInternationalized);
         withContainer(container);
     }
 

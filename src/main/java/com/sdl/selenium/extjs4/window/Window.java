@@ -22,6 +22,11 @@ public class Window extends WebLocator {
         withTitle(title, SearchType.EQUALS);
     }
 
+    public Window(String title, boolean isInternationalized) {
+        this();
+        withTitle(title, isInternationalized);
+    }
+
     public String getTitleWindow() {
         ready();
         WebLocator locator = new WebLocator(this).withClasses("x-window-header-text");

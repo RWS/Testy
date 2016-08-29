@@ -37,6 +37,17 @@ public class Cell extends AbstractCell {
         withText(columnText, searchTypes);
     }
 
+    public Cell(int columnIndex, String columnText, boolean isInternationalized , SearchType... searchTypes) {
+        this();
+        withPosition(columnIndex);
+        withText(columnText, isInternationalized, searchTypes);
+    }
+
+    public Cell(WebLocator container, int columnIndex, String columnText, boolean isInternationalized, SearchType... searchTypes) {
+        this(container, columnIndex);
+        withText(columnText, isInternationalized, searchTypes);
+    }
+
     protected XPathBuilder createXPathBuilder() {
         return new XPathBuilder() {
             @Override

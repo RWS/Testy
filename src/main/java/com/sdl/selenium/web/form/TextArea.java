@@ -18,4 +18,9 @@ public class TextArea extends TextField {
         this(container);
         withLabel(label);
     }
+
+    public TextArea(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
 }

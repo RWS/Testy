@@ -35,6 +35,11 @@ public class Slider extends ExtJsComponent {
         withLabel(label);
     }
 
+    public Slider(ExtJsComponent container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized);
+    }
+
     public String getThumbPath(int thumbIndex) {
         return getXPath() + "//descendant::*//*[contains(@class,'x-slider-thumb')][" + thumbIndex + "]";
     }

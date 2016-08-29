@@ -25,6 +25,11 @@ public class FileUpload extends TextField implements Upload {
         withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
+    public FileUpload(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized, SearchType.DEEP_CHILD_NODE_OR_SELF);
+    }
+
     /**
      * Upload file with AutoIT.
      * Use only this: button.upload("C:\\text.txt");

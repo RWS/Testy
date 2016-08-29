@@ -24,6 +24,11 @@ public class Panel extends ExtJsComponent {
         withTitle(title);
     }
 
+    public Panel(String title, boolean isInternationalized) {
+        this();
+        withTitle(title, isInternationalized);
+    }
+
     public Panel(WebLocator container) {
         this();
         withContainer(container);
@@ -32,6 +37,11 @@ public class Panel extends ExtJsComponent {
     public Panel(WebLocator container, String title) {
         this(container);
         withTitle(title);
+    }
+
+    public Panel(WebLocator container, String title, boolean isInternationalized) {
+        this(container);
+        withTitle(title, isInternationalized);
     }
 
     public Panel(String cls, WebLocator container, String excludeClass) {

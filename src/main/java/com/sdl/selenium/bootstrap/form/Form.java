@@ -39,8 +39,17 @@ public class Form extends WebLocator implements IWebLocator {
         this(null, title);
     }
 
+    public Form(String title, boolean isInternationalized) {
+        this(null, title, isInternationalized);
+    }
+
     public Form(WebLocator container, String title) {
         this(container);
         withTitle(title, SearchType.EQUALS);
+    }
+
+    public Form(WebLocator container, String title, boolean isInternationalized) {
+        this(container);
+        withTitle(title, isInternationalized, SearchType.EQUALS);
     }
 }

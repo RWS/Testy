@@ -24,9 +24,20 @@ public class CheckBox extends WebLocator implements ICheck {
         withLabel(label, SearchType.CONTAINS);
     }
 
+    public CheckBox(WebLocator container, String label, boolean isInternationalized) {
+        this(container);
+        withLabel(label, isInternationalized, SearchType.CONTAINS);
+    }
+
     public CheckBox(String boxLabel, WebLocator container) {
         this(container);
         withLabel(boxLabel);
+        withLabelPosition("/../");
+    }
+
+    public CheckBox(String boxLabel, boolean isInternationalized, WebLocator container) {
+        this(container);
+        withLabel(boxLabel, isInternationalized);
         withLabelPosition("/../");
     }
 

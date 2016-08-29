@@ -33,6 +33,11 @@ public class MessageBox extends WebLocator {
         withTitle(title, SearchType.EQUALS);
     }
 
+    public MessageBox(String title, boolean isInternationalized) {
+        this();
+        withTitle(title, isInternationalized, SearchType.EQUALS);
+    }
+
     public MessageBox(String title, String msg) {
         this(title);
         withTemplateValue("msg", msg);
