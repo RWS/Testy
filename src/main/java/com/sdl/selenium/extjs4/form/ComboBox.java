@@ -25,11 +25,6 @@ public class ComboBox extends TextField implements ICombo {
         withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
-    public ComboBox(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized, SearchType.DEEP_CHILD_NODE_OR_SELF);
-    }
-
     /**
      * @param value              value
      * @param searchType         true or false

@@ -63,16 +63,6 @@ public class Window extends Panel {
         withTitle(title);
     }
 
-    public Window(boolean isInternationalized, String title) {
-        this();
-        withTitle(title, isInternationalized);
-    }
-
-    public Window(boolean isInternationalized, String title, Boolean modal) {
-        this(modal);
-        withTitle(title, isInternationalized);
-    }
-
     public String getTitleWindow() {
         ready();
         WebLocator locator = new WebLocator(this).withClasses("x-window-header-text");

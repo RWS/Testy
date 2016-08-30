@@ -42,11 +42,6 @@ public class ExtJsComponent extends WebLocator {
         withText(text);
     }
 
-    public ExtJsComponent(String text, boolean isInternationalized, String cls, WebLocator container) {
-        this(cls, container);
-        withText(text, isInternationalized);
-    }
-
     @Override
     public boolean isVisible() {
         boolean visible = super.isVisible();

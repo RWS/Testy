@@ -52,12 +52,6 @@ public class Button extends WebLocator implements IButton {
         withSearchTextType(SearchType.EQUALS);
     }
 
-    public Button(WebLocator container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized);
-        withSearchTextType(SearchType.EQUALS);
-    }
-
     /**
      * <pre>{@code
      * <button class="btn" type="button" disabled>DisableBtn</button>

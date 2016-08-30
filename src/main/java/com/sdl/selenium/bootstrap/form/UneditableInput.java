@@ -23,9 +23,4 @@ public class UneditableInput extends WebLocator implements IText {
         this(container);
         withLabel(label);
     }
-
-    public UneditableInput(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
 }

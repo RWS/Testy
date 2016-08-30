@@ -29,9 +29,4 @@ public class InputButton extends WebLocator implements IButton {
         this(container);
         withText(text);
     }
-
-    public InputButton(WebLocator container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized);
-    }
 }

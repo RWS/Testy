@@ -33,11 +33,6 @@ public class Row extends AbstractRow {
         withText(searchElement, searchTypes);
     }
 
-    public Row(WebLocator table, String searchElement, boolean isInternationalized, SearchType... searchTypes) {
-        this(table);
-        withText(searchElement, isInternationalized, searchTypes);
-    }
-
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
         withChildNodes(cells);

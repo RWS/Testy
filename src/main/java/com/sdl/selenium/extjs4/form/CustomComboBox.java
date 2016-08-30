@@ -26,11 +26,6 @@ public class CustomComboBox extends TextField implements ICombo {
         withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
-    public CustomComboBox(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized, SearchType.DEEP_CHILD_NODE_OR_SELF);
-    }
-
     public String getTriggerPath(String icon) {
         return "/parent::*/parent::*//*[contains(@class,'x-form-trigger-" + icon + "')]";
     }

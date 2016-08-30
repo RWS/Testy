@@ -24,11 +24,6 @@ public class Slider extends WebLocator {
         withLabel(label);
     }
 
-    public Slider(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     public boolean move(int distance) {
         boolean exists = true;
         WebLocator element = new WebLocator(this).setTag("descendant::*").setClasses("x-slider-thumb");

@@ -16,11 +16,6 @@ public class Window extends WebLocator {
         withTitle(title);
     }
 
-    public Window(String title, boolean isInternationalized) {
-        this();
-        withTitle(title, isInternationalized);
-    }
-
     public String getMessageWindow() {
         WebLocator webLocator = new WebLocator(this).withClasses("ui-dialog-content ui-widget-content");
         return webLocator.getText();

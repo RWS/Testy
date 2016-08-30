@@ -37,11 +37,6 @@ public class DownloadFile extends WebLocator implements Download {
         withLabel(label);
     }
 
-    public DownloadFile(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     /**
      * if WebDriverConfig.isSilentDownload() is true, se face silentDownload, is is false se face download with AutoIT.
      * Download file with AutoIT, works only on FireFox. SilentDownload works FireFox and Chrome

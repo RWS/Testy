@@ -28,11 +28,6 @@ public class MultipleSelect extends ComboBox {
         withLabel(label);
     }
 
-    public MultipleSelect(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     public boolean selectRows(String... values) {
         boolean select = false;
         if (ready()) {

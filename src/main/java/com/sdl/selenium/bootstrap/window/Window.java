@@ -23,11 +23,6 @@ public class Window extends WebLocator implements IWebLocator {
         withTitle(title, SearchType.EQUALS);
     }
 
-    public Window(String title, boolean isInternationalized) {
-        this();
-        withTitle(title, isInternationalized, SearchType.EQUALS);
-    }
-
     public String getTitleWindow() {
         WebLocator header = new WebLocator(this).withElxPath("//*[contains(@class, '-header')]//h3");
         return header.getText();

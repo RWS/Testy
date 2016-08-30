@@ -15,10 +15,4 @@ public class Tooltip extends WebLocator {
         withTitle(message);
         withInfoMessage("Tooltip has message: '" + message + "'.");
     }
-
-    public Tooltip(String message, boolean isInternationalized) {
-        this();
-        withTitle(message, isInternationalized);
-        withInfoMessage("Tooltip has message: '" + message + "'.");
-    }
 }

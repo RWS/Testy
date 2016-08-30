@@ -23,11 +23,6 @@ public class InputAppend extends TextField {
         withLabel(label);
     }
 
-    public InputAppend(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     /**
      * click on checkbox
      * @return true | false

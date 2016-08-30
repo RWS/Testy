@@ -20,11 +20,6 @@ public class UploadButton extends Button implements Upload {
         withText(text, SearchType.EQUALS);
     }
 
-    public UploadButton(WebLocator container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized, SearchType.EQUALS);
-    }
-
     /**
      * Upload file with AutoIT.
      * Use only this: button.upload(this, "C:\\upload.exe", "C:\\text.txt");

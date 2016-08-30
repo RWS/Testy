@@ -26,11 +26,6 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         withLabel(label, SearchType.DEEP_CHILD_NODE);
     }
 
-    public TextField(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized, SearchType.DEEP_CHILD_NODE);
-    }
-
     // methods
      public boolean assertSetValue(String value) {
         boolean setted = setValue(value);

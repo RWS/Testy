@@ -26,18 +26,8 @@ public class FieldSet extends WebLocator {
         withText(text);
     }
 
-    public FieldSet(WebLocator container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized);
-    }
-
     public FieldSet(WebLocator container, String cls, String text) {
         this(container, text);
-        withClasses(cls);
-    }
-
-    public FieldSet(WebLocator container, String cls, String text, boolean isInternationalized) {
-        this(container, text, isInternationalized);
         withClasses(cls);
     }
 

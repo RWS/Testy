@@ -31,11 +31,6 @@ public class MessageBoxWindow extends Window {
         withTitle(title);
     }
 
-    public MessageBoxWindow(String title, boolean isInternationalized) {
-        this();
-        withTitle(title, isInternationalized);
-    }
-
     public static String OK_TEXT = "OK";
     public static String CANCEL_TEXT = "Cancel";
     public static String YES_TEXT = "Yes";

@@ -23,11 +23,6 @@ public class DisplayField extends TextField {
         withLabel(label);
     }
 
-    public DisplayField(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     public DisplayField(String name, WebLocator container) {
         this(container);
         withName(name);

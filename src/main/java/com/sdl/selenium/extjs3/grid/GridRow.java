@@ -36,21 +36,10 @@ public class GridRow extends AbstractRow {
         this(gridPanel, new GridCell(searchColumnIndex, searchElement, searchTypes));
     }
 
-    public GridRow(GridPanel gridPanel, int searchColumnIndex, String searchElement, boolean isInternationalized, SearchType... searchTypes) {
-        this(gridPanel, new GridCell(searchColumnIndex, searchElement, isInternationalized, searchTypes));
-    }
-
     public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, SearchType... searchTypes) {
         this(gridPanel);
         withTag("*");
         WebLocator cellEl = new WebLocator().withText(searchElement, searchTypes);
-        withElxPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
-    }
-
-    public GridRow(GridPanel gridPanel, String searchColumnId, String searchElement, boolean isInternationalized, SearchType... searchTypes) {
-        this(gridPanel);
-        withTag("*");
-        WebLocator cellEl = new WebLocator().withText(searchElement, isInternationalized, searchTypes);
         withElxPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 

@@ -23,11 +23,6 @@ public class DownloadButton extends Button implements Download {
         withText(text, SearchType.EQUALS);
     }
 
-    public DownloadButton(WebLocator container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized, SearchType.EQUALS);
-    }
-
     /**
      * if WebDriverConfig.isSilentDownload() is true, se face silentDownload, is is false se face download with AutoIT.
      * Download file with AutoIT, works only on FireFox. SilentDownload works FireFox and Chrome

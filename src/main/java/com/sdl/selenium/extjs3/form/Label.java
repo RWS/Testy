@@ -19,11 +19,6 @@ public class Label extends ExtJsComponent {
         withText(text);
     }
 
-    public Label(String text, boolean isInternationalized) {
-        this();
-        withText(text, isInternationalized);
-    }
-
     public Label(WebLocator container) {
         this();
         withContainer(container);
@@ -31,11 +26,6 @@ public class Label extends ExtJsComponent {
 
     public Label(WebLocator container, String text) {
         this(text);
-        withContainer(container);
-    }
-
-    public Label(WebLocator container, String text, boolean isInternationalized) {
-        this(text, isInternationalized);
         withContainer(container);
     }
 }

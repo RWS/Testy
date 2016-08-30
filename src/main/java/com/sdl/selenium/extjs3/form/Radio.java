@@ -21,11 +21,6 @@ public class Radio extends ExtJsComponent {
         withText(value);
     }
 
-    public Radio(String value, boolean isInternationalized) {
-        this();
-        withText(value, isInternationalized);
-    }
-
     public Radio(WebLocator container) {
         this();
         withContainer(container);
@@ -39,11 +34,6 @@ public class Radio extends ExtJsComponent {
     public Radio(String label, WebLocator container) {
         this(container);
         withLabel(label);
-    }
-
-    public Radio(String label, boolean isInternationalized, WebLocator container) {
-        this(container);
-        withLabel(label, isInternationalized);
     }
 
     public boolean isSelected() {

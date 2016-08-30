@@ -50,11 +50,6 @@ public class Button extends ExtJsComponent implements IButton {
         withText(text, SearchType.EQUALS);
     }
 
-    public Button(WebLocator container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized, SearchType.EQUALS);
-    }
-
     // Methods
     @Override
     public boolean click() {

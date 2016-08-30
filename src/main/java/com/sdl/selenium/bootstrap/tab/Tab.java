@@ -23,19 +23,8 @@ public class Tab extends WebLocator {
         withSearchTextType(SearchType.EQUALS);
     }
 
-    public Tab(String text, boolean isInternationalized) {
-        this();
-        withText(text, isInternationalized);
-        withSearchTextType(SearchType.EQUALS);
-    }
-
     public Tab(WebLocator container, String text) {
         this(text);
-        withContainer(container);
-    }
-
-    public Tab(WebLocator container, String text, boolean isInternationalized) {
-        this(text, isInternationalized);
         withContainer(container);
     }
 

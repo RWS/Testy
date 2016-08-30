@@ -22,11 +22,6 @@ public class TextArea extends TextField {
         withLabel(label);
     }
 
-    public TextArea(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     public TextArea(String name, WebLocator container) {
         this(container);
         withName(name);

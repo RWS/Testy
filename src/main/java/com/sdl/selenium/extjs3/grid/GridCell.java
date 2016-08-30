@@ -28,22 +28,9 @@ public class GridCell extends AbstractCell {
         withClasses("x-grid3-cell-inner");
     }
 
-    public GridCell(String text, boolean isInternationalized, WebLocator container) {
-        this();
-        withContainer(container);
-        withText(text, isInternationalized);
-        withClasses("x-grid3-cell-inner");
-    }
-
     public GridCell(String text, SearchType... searchTypes) {
         this();
         withText(text, searchTypes);
-        withClasses("x-grid3-cell-inner");
-    }
-
-    public GridCell(String text, boolean isInternationalized, SearchType... searchTypes) {
-        this();
-        withText(text, isInternationalized, searchTypes);
         withClasses("x-grid3-cell-inner");
     }
 
@@ -54,23 +41,10 @@ public class GridCell extends AbstractCell {
         withClasses("x-grid3-cell-inner");
     }
 
-    public GridCell(WebLocator container, String text, boolean isInternationalized, SearchType... searchTypes) {
-        this();
-        withContainer(container);
-        withText(text, isInternationalized, searchTypes);
-        withClasses("x-grid3-cell-inner");
-    }
-
     public GridCell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
         withPosition(columnIndex);
         withText(columnText, searchTypes);
-    }
-
-    public GridCell(int columnIndex, String columnText, boolean isInternationalized, SearchType... searchTypes) {
-        this();
-        withPosition(columnIndex);
-        withText(columnText, isInternationalized, searchTypes);
     }
 
     protected XPathBuilder createXPathBuilder() {

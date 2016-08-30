@@ -37,11 +37,6 @@ public class DateField extends TextField {
         withLabel(label);
     }
 
-    public DateField(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     /**
      * example new DataField().setDate("19", "05", "2013")
      *

@@ -1,8 +1,6 @@
 package com.sdl.selenium.bootstrap.button;
 
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -41,11 +39,6 @@ public class UploadFile extends WebLocator implements Upload {
     public UploadFile(WebLocator container, String label) {
         this(container);
         withLabel(label);
-    }
-
-    public UploadFile(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
     }
 
     /**

@@ -24,9 +24,4 @@ public class Accordion extends Panel {
         this(container);
         withTitle(title, SearchType.EQUALS);
     }
-
-    public Accordion(WebLocator container, String title, boolean isInternationalized) {
-        this(container);
-        withTitle(title, isInternationalized, SearchType.EQUALS);
-    }
 }

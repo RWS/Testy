@@ -25,11 +25,6 @@ public class Panel extends WebLocator {
         withTitle(title, SearchType.EQUALS);
     }
 
-    public Panel(WebLocator container, String title, boolean isInternationalized) {
-        this(container);
-        withTitle(title, isInternationalized, SearchType.EQUALS);
-    }
-
     private WebLocator getCollapseEl(String type) {
         return new WebLocator(this).setElPath("//*[contains(@class, 'x-tool-" + type + "')]");
     }

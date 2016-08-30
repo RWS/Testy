@@ -35,11 +35,6 @@ public class TextField extends ExtJsComponent implements ITextField {
         withLabel(label);
     }
 
-    public TextField(WebLocator container, String label, boolean isInternationalized) {
-        this(container);
-        withLabel(label, isInternationalized);
-    }
-
     public TextField(String name, WebLocator container) {
         this(container);
         withName(name);

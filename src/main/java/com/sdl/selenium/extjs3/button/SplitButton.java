@@ -26,11 +26,6 @@ public class SplitButton extends Button {
         withText(text);
     }
 
-    public SplitButton(ExtJsComponent container, String text, boolean isInternationalized) {
-        this(container);
-        withText(text, isInternationalized);
-    }
-
     public boolean clickOnMenu(String option) {
         return clickOnMenu(new String[]{option});
     }
