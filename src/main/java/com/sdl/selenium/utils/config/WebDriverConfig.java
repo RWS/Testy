@@ -135,6 +135,7 @@ public class WebDriverConfig {
      * Create and return new WebDriver or RemoteWebDriver based on properties file
      *
      * @param browserProperties path to browser.properties
+     * @param remoteUrl url
      * @return WebDriver
      * @throws IOException exception
      */

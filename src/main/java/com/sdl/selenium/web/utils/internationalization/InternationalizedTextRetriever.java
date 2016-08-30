@@ -88,9 +88,9 @@ public class InternationalizedTextRetriever {
         regexPattern = Pattern.compile(pattern);
     }
 
-    /***
+    /**
      * Gets the translation to the {@link #currentLanguage} of the specified text.
-     * If the translation contains variables, the values from {@param textInBaseLanguage} will be used.
+     * If the translation contains variables, the values from textInBaseLanguage will be used.
      *
      * It doesn't work with partial translations for now.
      *

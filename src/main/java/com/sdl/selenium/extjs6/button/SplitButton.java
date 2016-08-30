@@ -21,17 +21,11 @@ public class SplitButton extends Button {
         withClassName("SplitButton");
     }
 
-    /**
-     * See {@link #SplitButton()}
-     */
     public SplitButton(WebLocator container) {
         this();
         withContainer(container);
     }
 
-    /**
-     * See {@link #SplitButton()}
-     */
     public SplitButton(WebLocator container, String text) {
         this(container);
         withText(text);

@@ -1,7 +1,6 @@
 package com.sdl.selenium.web.utils.internationalization;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,8 +10,8 @@ public class InternationalizationUtils {
 
     private static InternationalizedTextRetriever internationalizedTextRetriever = new InternationalizedTextRetriever(false, new ArrayList<Map<String, String>>(), "");
 
-    /***
-     * @see InternationalizedTextRetriever#InternationalizedTextRetriever(boolean, List, String)
+    /**
+     * @param internationalizedTextRetriever @see InternationalizedTextRetriever#InternationalizedTextRetriever(boolean, List, String)
      */
     public static void setInternationalizedTextRetriever(InternationalizedTextRetriever internationalizedTextRetriever) {
         InternationalizationUtils.internationalizedTextRetriever = internationalizedTextRetriever;
@@ -30,8 +29,9 @@ public class InternationalizationUtils {
         internationalizedTextRetriever.setInternationalizedTestsSuite(enabled);
     }
 
-    /***
+    /**
      * @see InternationalizedTextRetriever#setVariableNotationPatterns(String...)
+     * @param variablePatterns variablePatterns
      */
     public static void setVariablePatterns(String... variablePatterns) {
         internationalizedTextRetriever.setVariableNotationPatterns(variablePatterns);
