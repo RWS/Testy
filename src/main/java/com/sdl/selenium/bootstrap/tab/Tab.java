@@ -6,10 +6,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
+import com.sdl.selenium.web.tab.ITab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Tab extends WebLocator {
+public class Tab extends WebLocator implements ITab {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     private Tab() {
@@ -17,10 +18,9 @@ public class Tab extends WebLocator {
         withBaseCls("nav nav-tabs");
     }
 
-    public Tab(String text) {
+    public Tab(String title) {
         this();
-        withText(text);
-        withSearchTextType(SearchType.EQUALS);
+        withText(title, SearchType.EQUALS);
     }
 
     public Tab(WebLocator container, String text) {
@@ -32,7 +32,7 @@ public class Tab extends WebLocator {
         WebLink link = new WebLink().withText(getPathBuilder().getText(), SearchType.EQUALS);
         String isActive = active ? "@class='active'" : "not(@class='active')";
         WebLocator el = new WebLocator().withTag("ul").withClasses(getPathBuilder().getBaseCls());
-        return  el.getXPath() + "//li[" + isActive + "]" + link.getXPath();
+        return el.getXPath() + "//li[" + isActive + "]" + link.getXPath();
     }
 
     /**
@@ -66,9 +66,9 @@ public class Tab extends WebLocator {
      *
      * @return true or false
      */
+    @Override
     public boolean setActive() {
-        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).withElxPath(getTitlePath(true));
-        boolean activated = new ConditionManager(200).add(new RenderSuccessCondition(locator)).execute().isSuccess();
+        boolean activated = isActive();
         if (!activated) {
             WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).withElxPath(getTitlePath(false));
             WebLocator titleElement = locator1.withInfoMessage(getPathBuilder().getText() + " Tab");
@@ -80,13 +80,9 @@ public class Tab extends WebLocator {
         return activated;
     }
 
-   /* public static void main(String[] args) {
-        WebLocator webLocator = new WebLocator().withBaseCls("tab-pane active").withLabel("tt").withLabelPosition("//following-sibling::*[@class='tab-content']//").withLabelTag("a");
-         //TODO improvement
-        Tab tab  = new Tab("tt");
-
-        LOGGER.debug(tab.getXPath());
-        LOGGER.debug(webLocator.getXPath());
-
-    }*/
+    @Override
+    public boolean isActive() {
+        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).withElxPath(getTitlePath(true));
+        return new ConditionManager(200).add(new RenderSuccessCondition(locator)).execute().isSuccess();
+    }
 }

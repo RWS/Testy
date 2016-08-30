@@ -6,10 +6,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
+import com.sdl.selenium.web.tab.ITab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Tab extends WebLocator {
+public class Tab extends WebLocator implements ITab {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     public Tab() {
@@ -61,7 +62,7 @@ public class Tab extends WebLocator {
             public String getItemPath(boolean disabled) {
                 WebLocator body = new WebLocator().withTag("following-sibling::*").withClasses("x-panel-body");
                 WebLocator tab = new WebLocator(body).withRoot("/").withExcludeClasses("x-hidden-offsets").withClasses("x-tabpanel-child");
-                return  getBaseTabPanelPath() + tab.getXPath();
+                return getBaseTabPanelPath() + tab.getXPath();
             }
         };
     }
@@ -71,6 +72,7 @@ public class Tab extends WebLocator {
      *
      * @return true or false
      */
+    @Override
     public boolean setActive() {
         WebLocator inactiveTab = getTitleInactiveEl().setExcludeClasses("x-tab-active");
         boolean activated = isActive() || inactiveTab.click();
@@ -80,6 +82,7 @@ public class Tab extends WebLocator {
         return activated;
     }
 
+    @Override
     public boolean isActive() {
         return new ConditionManager(200).add(new RenderSuccessCondition(this)).execute().isSuccess();
     }
