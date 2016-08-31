@@ -33,9 +33,11 @@ public class MessageBox extends WebLocator {
         withTitle(title, SearchType.EQUALS);
     }
 
-    public MessageBox(String title, String msg) {
+    public MessageBox(String title, String msg, SearchType... msgSearchTypes) {
         this(title);
-        withTemplateValue("msg", msg);
+        WebLocator body = new WebLocator().setClasses("x-window-body").setRoot("");
+        WebLocator textEl = new WebLocator(body).setText(msg, msgSearchTypes);
+        withElxPathSuffix("msg", "count(" + textEl.getXPath() + ") > 0");
     }
 
     public Button getOkButton() {
