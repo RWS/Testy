@@ -93,6 +93,11 @@
             <class name="com.sdl.selenium.extjs6.tab.TabIntegrationTest"/>
         </classes>
     </test>
+    <test name="MessageBoxIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.window.MessageBoxIntegrationTest"/>
+        </classes>
+    </test>
 
     <test name="DatePickerTest">
         <classes>
