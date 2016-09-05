@@ -14,7 +14,7 @@ public interface IWebLocator {
      * @param attribute e.g. class, id
      * @return String attribute, if element not exist return null.
      */
-    public String getAttribute(String attribute);
+    String getAttribute(String attribute);
 
     boolean isElementPresent();
 

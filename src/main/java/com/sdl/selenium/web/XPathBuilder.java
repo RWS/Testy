@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -331,9 +332,9 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param text       with which to identify the item
+     * @param text        with which to identify the item
      * @param searchTypes type search text element: see more details see {@link SearchType}
-     * @param <T>        the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setText(final String text, final SearchType... searchTypes) {
@@ -367,7 +368,7 @@ public class XPathBuilder implements Cloneable {
      * This method reset searchTextTypes and set to new searchTextTypes.
      *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
-     * @param <T>            the element which calls this method
+     * @param <T>             the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextTypes) {
@@ -387,7 +388,7 @@ public class XPathBuilder implements Cloneable {
      * This method add new searchTextTypes to existing searchTextTypes.
      *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
-     * @param <T>            the element which calls this method
+     * @param <T>             the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T addSearchTextType(SearchType... searchTextTypes) {
@@ -399,34 +400,13 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected List<SearchType> cleanUpSearchType(List<SearchType> searchTextTypes) {
-        if(searchTextTypes.size() > 1){
-            Map<String, List<SearchType>> groups = getSearchTypesByGroups(searchTextTypes);
-
-            List<SearchType> result = new ArrayList<>();
-            for(Map.Entry<String, List<SearchType>> entry: groups.entrySet()) {
-                List<SearchType> searchTypes = entry.getValue();
-                if (searchTypes != null && !searchTypes.isEmpty()) {
-                    SearchType searchType = searchTypes.get(searchTypes.size() - 1);
-                    result.add(searchType);
-                }
-            }
-            return result;
+        if (searchTextTypes.size() > 1) {
+            Set<String> duplicated = new HashSet<>();
+            return searchTextTypes.stream()
+                    .filter(c -> duplicated.add(c.getGroup()))
+                    .collect(Collectors.toList());
         }
         return searchTextTypes;
-    }
-
-    private Map<String, List<SearchType>> getSearchTypesByGroups(List<SearchType> searchTextTypes) {
-        Map<String, List<SearchType>> groups = new HashMap<>();
-
-        for(SearchType searchType : searchTextTypes) {
-            if(groups.get(searchType.getGroup()) == null) {
-                groups.put(searchType.getGroup(), new ArrayList<SearchType>());
-            }
-            List<SearchType> group = groups.get(searchType.getGroup());
-            group.add(searchType);
-            groups.put(searchType.getGroup(), group);
-        }
-        return groups;
     }
 
     /**
@@ -442,7 +422,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchLabelTypes accepted values are: {@link SearchType}
-     * @param <T>             the element which calls this method
+     * @param <T>              the element which calls this method
      * @return this element
      */
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
@@ -488,9 +468,9 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param title of element
+     * @param title       of element
      * @param searchTypes see {@link SearchType}
-     * @param <T>   the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setTitle(final String title, final SearchType... searchTypes) {
@@ -528,7 +508,7 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
-    public Map<String, WebLocator> getTemplatesTitle(){
+    public Map<String, WebLocator> getTemplatesTitle() {
         return templateTitle;
     }
 
@@ -696,9 +676,9 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param label      text label element
+     * @param label       text label element
      * @param searchTypes type search text element: see more details see {@link SearchType}
-     * @param <T>        the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends XPathBuilder> T setLabel(final String label, final SearchType... searchTypes) {
@@ -1075,9 +1055,7 @@ public class XPathBuilder implements Cloneable {
         for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
             addTemplate(selector, entry.getKey(), entry.getValue());
         }
-        for (String suffix : elPathSuffix.values()) {
-            selector.add(suffix);
-        }
+        selector.addAll(elPathSuffix.values().stream().collect(Collectors.toList()));
         selector.addAll(getChildNodesToSelector());
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
@@ -1086,9 +1064,7 @@ public class XPathBuilder implements Cloneable {
     private List<String> getChildNodesToSelector() {
         List<String> selector = new ArrayList<>();
         if (hasChildNodes()) {
-            for (WebLocator child : getChildNodes()) {
-                selector.add(getChildNodeSelector(child));
-            }
+            selector.addAll(getChildNodes().stream().map(this::getChildNodeSelector).collect(Collectors.toList()));
         }
         return selector;
     }
@@ -1281,9 +1257,9 @@ public class XPathBuilder implements Cloneable {
             selector.add("[type='" + getType() + "']");
         }
         if (!attribute.isEmpty()) {
-            for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                selector.add("[" + entry.getKey() + "='" + entry.getValue().getValue() + "']");
-            }
+            selector.addAll(attribute.entrySet().stream()
+                    .map(e -> "[" + e.getKey() + "='" + e.getValue().getValue() + "']")
+                    .collect(Collectors.toList()));
         }
 //        for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
 //            addTemplate(selector, entry.getKey(), entry.getValue());
@@ -1312,9 +1288,9 @@ public class XPathBuilder implements Cloneable {
                 if (isCssSelectorSupported()) {
                     cssSelector = getItemCssSelector();
                     if (hasPosition()) {
-                        if("first()".equals(position)){
+                        if ("first()".equals(position)) {
                             cssSelector += ":first-child";
-                        } else if("last()".equals(position)){
+                        } else if ("last()".equals(position)) {
                             cssSelector += ":last-child";
                         } else {
                             cssSelector += ":nth-child(" + getPosition() + ")";
@@ -1383,8 +1359,8 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * @deprecated use getXPath()
      * @return xpath
+     * @deprecated use getXPath()
      */
     public final String getPath() {
         return getXPath();
@@ -1401,7 +1377,7 @@ public class XPathBuilder implements Cloneable {
 
     private String addResultIndexToPath(String xPath) {
         if (hasResultIdx()) {
-            xPath = "(" + xPath + ")[" + getResultIdx() + "]" ;
+            xPath = "(" + xPath + ")[" + getResultIdx() + "]";
         }
         return xPath;
     }
@@ -1467,7 +1443,7 @@ public class XPathBuilder implements Cloneable {
         return itemPath;
     }
 
-    protected String addPositionToPath(String itemPath)  {
+    protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
             itemPath += "[position() = " + getPosition() + "]";
         }

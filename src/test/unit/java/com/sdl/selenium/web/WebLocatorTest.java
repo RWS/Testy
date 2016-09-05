@@ -58,9 +58,9 @@ public class WebLocatorTest {
                 {new WebLocator().withClasses(cls).withText(text, SearchType.EQUALS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
                 {new WebLocator().withClasses(cls).withText(text, SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
 
-                {new WebLocator().withClasses(cls).withText(text, SearchType.CONTAINS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(text(),'" + text + "')]"},
-                {new WebLocator().withClasses(cls).withText(text, SearchType.EQUALS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
-                {new WebLocator().withClasses(cls).withText(text, SearchType.STARTS_WITH, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
+                {new WebLocator().withClasses(cls).withText(text, SearchType.CONTAINS, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(text(),'" + text + "')]"},
+                {new WebLocator().withClasses(cls).withText(text, SearchType.EQUALS, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
+                {new WebLocator().withClasses(cls).withText(text, SearchType.STARTS_WITH, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
 
                 {new WebLocator().withClasses(cls).withText(text, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
                 {new WebLocator().withClasses(cls).withText(text, SearchType.CONTAINS, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
@@ -216,6 +216,14 @@ public class WebLocatorTest {
         assertEquals(locator.getXPath(), "//*[text()='text']");
         locator.withSearchTextType(null);
         assertEquals(locator.getXPath(), "//*[contains(text(),'text')]");
+    }
+
+    @Test
+    public void verifyxPath() {
+        WebLocator locator = new WebLocator().setBaseCls("cls").withText("text", SearchType.DEEP_CHILD_NODE);
+        assertEquals(locator.getXPath(), "//*[contains(concat(' ', @class, ' '), ' cls ') and count(*//text()[contains(.,'text')]) > 0]");
+        locator.setContainer(container);
+        assertEquals(locator.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ') and count(*//text()[contains(.,'text')]) > 0]");
     }
 
     @Test
