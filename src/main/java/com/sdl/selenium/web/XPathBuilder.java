@@ -1013,14 +1013,10 @@ public class XPathBuilder implements Cloneable {
             selector.add(applyTemplate("cls", getCls()));
         }
         if (hasClasses()) {
-            for (String cls : getClasses()) {
-                selector.add(applyTemplate("class", cls));
-            }
+            selector.addAll(getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList()));
         }
         if (hasExcludeClasses()) {
-            for (String excludeClass : getExcludeClasses()) {
-                selector.add(applyTemplate("excludeClass", excludeClass));
-            }
+            selector.addAll(getExcludeClasses().stream().map(excludeClass -> applyTemplate("excludeClass", excludeClass)).collect(Collectors.toList()));
         }
         if (hasTitle()) {
             String title = getTitle();
