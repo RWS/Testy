@@ -18,6 +18,8 @@ public class DateField extends TextField {
     private Button monthYearButton = new Button(calendarLayer);
     private WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).withInfoMessage("Ok");
     private WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-date-mp").setVisibility(true);
+    private WebLocator nextYears = new WebLocator(yearAndMonth).setClasses("x-date-mp-next").setVisibility(true);
+    private WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-date-mp-prev").setVisibility(true);
     private WebLocator yearContainer = new WebLocator(yearAndMonth).withClasses("x-date-mp-year");
     private WebLocator monthContainer = new WebLocator(yearAndMonth).withClasses("x-date-mp-month");
     private WebLocator dayInner = new WebLocator(calendarLayer).withClasses("x-date-inner");
@@ -77,25 +79,20 @@ public class DateField extends TextField {
         int yearInt = Integer.parseInt(year);
         int con = yearInt > currentYear ? -4 : 4;
         int count = (int) Math.ceil((yearInt - currentYear - con) / 10);
-        toYear(count);
+        selectYearPage(count);
         WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).withInfoMessage("year " + year);
         if (!yearEl.waitToRender(200)) {
-            toYear(count > 0 ? 1 : -1);
+            selectYearPage(count > 0 ? 1 : -1);
         }
         yearEl.click();
     }
 
-    private void toYear(int count) {
+    private void selectYearPage(int count) {
+        WebLocator btn = count > 0 ? nextYears : prevYears;
+        count = Math.abs(count);
         while (count > 0) {
-            WebLocator next = new WebLocator(yearAndMonth).setClasses("x-date-mp-next").setVisibility(true);
-            next.click();
+            btn.click();
             count--;
-        }
-
-        while (0 > count) {
-            WebLocator prev = new WebLocator(yearAndMonth).setClasses("x-date-mp-prev").setVisibility(true);
-            prev.click();
-            count++;
         }
     }
 
