@@ -60,9 +60,9 @@ public class Tab extends WebLocator implements ITab {
              */
             @Override
             public String getItemPath(boolean disabled) {
-                WebLocator body = new WebLocator().withTag("following-sibling::*").withClasses("x-panel-body");
-                WebLocator tab = new WebLocator(body).withRoot("/").withExcludeClasses("x-hidden-offsets").withClasses("x-tabpanel-child");
-                return getBaseTabPanelPath() + tab.getXPath();
+                WebLocator tab = new WebLocator().withRoot("/").withExcludeClasses("x-hidden-offsets").withClasses("x-tabpanel-child");
+                WebLocator body = new WebLocator().withTag("following-sibling::*").withClasses("x-panel-body").setChildNodes(tab);
+                return getBaseTabPanelPath() + body.getXPath();
             }
         };
     }
