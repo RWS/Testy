@@ -20,7 +20,7 @@ public class TabIntegrationTest extends TestBase {
     }
 
     @Test
-    void TabTest() {
+    void tabTest() {
         boolean selected = inactiveTab.setActive() && inactiveTab.isActive();
         assertThat(selected, is(true));
 
