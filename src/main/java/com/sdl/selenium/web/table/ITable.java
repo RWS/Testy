@@ -19,7 +19,7 @@ public interface ITable <R extends AbstractRow, C extends AbstractCell> extends 
      * @param searchTypes searchTypes
      * @return true or false
      */
-    public boolean rowSelect(String searchText, SearchType... searchTypes);
+    boolean rowSelect(String searchText, SearchType... searchTypes);
 
     /**
      * @return row count. -1 if not table not ready to be used or not found
