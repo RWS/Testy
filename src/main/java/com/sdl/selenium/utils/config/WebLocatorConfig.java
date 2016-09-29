@@ -31,7 +31,7 @@ public class WebLocatorConfig {
     public static String defaultLabelPosition;
     public static int minCharsToType;
     public static String uploadExePath;
-    public static ArrayList<String> notLoggingWords;
+    public static ArrayList<String> logParamsExclude;
 
     private static WebLocatorConfigReader properties = null;
 
@@ -135,7 +135,7 @@ public class WebLocatorConfig {
 
         setUploadExePath(getProperty("upload.exe.path"));
 
-        setNotLoggingWords(getProperty("not.logging.words"));
+        setLogParamsExclude(getProperty("weblocator.log.params.exclude"));
     }
 
     public static void convertAndSetSearchTextType(String searchTextType) {
@@ -255,16 +255,17 @@ public class WebLocatorConfig {
         WebLocatorConfig.uploadExePath = uploadExePath;
     }
 
-    public static void setNotLoggingWords(String notLoggingWords) {
+    public static void setLogParamsExclude(String logParamsExclude) {
         ArrayList<String> list = new ArrayList<>();
-        if (!notLoggingWords.isEmpty()) {
-            list.addAll(Arrays.asList(notLoggingWords.split(",")));
+        if (!logParamsExclude.isEmpty()) {
+            logParamsExclude = logParamsExclude.toLowerCase();
+            list.addAll(Arrays.asList(logParamsExclude.split(",")));
         }
-        WebLocatorConfig.notLoggingWords = list;
+        WebLocatorConfig.logParamsExclude = list;
     }
 
-    public static ArrayList<String> getNotLoggingWords() {
-        return notLoggingWords;
+    public static ArrayList<String> getLogParamsExclude() {
+        return logParamsExclude;
     }
 
     public static void setBrowserProperties(PropertiesReader properties) {

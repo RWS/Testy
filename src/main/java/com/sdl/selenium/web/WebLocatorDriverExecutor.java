@@ -274,13 +274,13 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private String getLogValue(WebLocator el, String value) {
-        boolean notExist = true;
-        for (String word : WebLocatorConfig.getNotLoggingWords()) {
-            String xPath = el.getXPath().toLowerCase();
-//            LOGGER.debug(xPath);
-            notExist = notExist && !xPath.contains(word.toLowerCase());
+        String info = el.getPathBuilder().getInfoMessage();
+        if (info == null || "".equals(info)) {
+            info = el.getPathBuilder().itemToString();
         }
-        return notExist ? value : "*****";
+        info = info.toLowerCase();
+
+        return WebLocatorConfig.getLogParamsExclude().contains(info) ? "*****" : value;
     }
 
     @Override
