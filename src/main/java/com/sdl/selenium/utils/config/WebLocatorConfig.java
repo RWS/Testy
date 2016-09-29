@@ -31,6 +31,7 @@ public class WebLocatorConfig {
     public static String defaultLabelPosition;
     public static int minCharsToType;
     public static String uploadExePath;
+    public static ArrayList<String> notLoggingWords;
 
     private static WebLocatorConfigReader properties = null;
 
@@ -133,6 +134,8 @@ public class WebLocatorConfig {
         setMinCharsToType(getInt("weblocator.min.chars.toType"));
 
         setUploadExePath(getProperty("upload.exe.path"));
+
+        setNotLoggingWords(getProperty("not.logging.words"));
     }
 
     public static void convertAndSetSearchTextType(String searchTextType) {
@@ -252,9 +255,21 @@ public class WebLocatorConfig {
         WebLocatorConfig.uploadExePath = uploadExePath;
     }
 
+    public static void setNotLoggingWords(String notLoggingWords) {
+        ArrayList<String> list = new ArrayList<>();
+        if (!notLoggingWords.isEmpty()) {
+            list.addAll(Arrays.asList(notLoggingWords.split(",")));
+        }
+        WebLocatorConfig.notLoggingWords = list;
+    }
+
+    public static ArrayList<String> getNotLoggingWords() {
+        return notLoggingWords;
+    }
+
     public static void setBrowserProperties(PropertiesReader properties) {
         properties.keySet().retainAll(WebLocatorConfig.properties.keySet());
-        if(properties.size() > 0){
+        if (properties.size() > 0) {
             WebLocatorConfig.properties.putAll(properties);
             LOGGER.info("The webLocator.properties were overwritten with value from browser properties: {}", properties.toString());
             init();

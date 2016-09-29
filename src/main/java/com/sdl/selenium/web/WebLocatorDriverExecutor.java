@@ -193,9 +193,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     /**
-     * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
-     * @param el currentEl
+     * @param el            currentEl
      * @param charSequences chars
+     * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
      */
     @Deprecated
     @Override
@@ -258,7 +258,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         el.currentElement.clear();
         if (lengthVal == -1 || length <= lengthVal) {
             el.currentElement.sendKeys(value);
-            LOGGER.info("Set value({}): '{}'", el, value);
+            LOGGER.info("Set value({}): '{}'", el, getLogValue(el, value));
         } else {
             try {
                 MultiThreadClipboardUtils.copyString(StringUtils.chop(value));
@@ -271,6 +271,16 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             LOGGER.info("Paste value({}): string with size: '{}'", el, length);
         }
         return true;
+    }
+
+    private String getLogValue(WebLocator el, String value) {
+        boolean notExist = true;
+        for (String word : WebLocatorConfig.getNotLoggingWords()) {
+            String xPath = el.getXPath().toLowerCase();
+//            LOGGER.debug(xPath);
+            notExist = notExist && !xPath.contains(word.toLowerCase());
+        }
+        return notExist ? value : "*****";
     }
 
     @Override
@@ -489,8 +499,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     /**
-     * @deprecated use {@link #mouseOver(WebLocator)}
      * @param el currentEl
+     * @deprecated use {@link #mouseOver(WebLocator)}
      */
     @Deprecated
     @Override
@@ -575,8 +585,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     /**
-     * @deprecated use {@link #highlight(WebLocator)}
      * @param el currentEl
+     * @deprecated use {@link #highlight(WebLocator)}
      */
     @Deprecated
     @Override

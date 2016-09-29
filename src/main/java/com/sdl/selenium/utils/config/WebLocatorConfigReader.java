@@ -22,7 +22,8 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.min.chars.toType=-1" +
             "\n driver.autoClose=true" +
             "\n driver.implicitlyWait=100" +
-            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe";
+            "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe" +
+            "\n not.logging.words=password";
 
     public WebLocatorConfigReader() {
         this(null);
