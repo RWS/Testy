@@ -5,9 +5,9 @@ http://central.sonatype.org/pages/apache-maven.html
 
 Run following commands in windows cmd prompt:
 
-mvn release:clean release:prepare
+    mvn release:clean release:prepare
 
-mvn release:perform
+    mvn release:perform
 
 https://oss.sonatype.org
 user:
