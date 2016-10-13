@@ -11,7 +11,7 @@ public class InternationalizationUtils {
     private static InternationalizedTextRetriever internationalizedTextRetriever = new InternationalizedTextRetriever(false, new ArrayList<Map<String, String>>(), "");
 
     /**
-     * @param internationalizedTextRetriever @see InternationalizedTextRetriever#InternationalizedTextRetriever(boolean, List, String)
+     * @param internationalizedTextRetriever @see InternationalizedTextRetriever
      */
     public static void setInternationalizedTextRetriever(InternationalizedTextRetriever internationalizedTextRetriever) {
         InternationalizationUtils.internationalizedTextRetriever = internationalizedTextRetriever;
