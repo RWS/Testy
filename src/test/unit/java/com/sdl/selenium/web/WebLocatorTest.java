@@ -260,4 +260,13 @@ public class WebLocatorTest {
         locator.setPosition(-1);
         assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
     }
+
+    @Test
+    public void setChildNodes() {
+        WebLocator child = new WebLocator().withText("child").setPosition(1);
+        WebLocator childFirst = new WebLocator().withText("childFirst").setPosition(Position.FIRST);
+        WebLocator parent = new WebLocator().withClasses("parent").withChildNodes(child, childFirst);
+
+        assertEquals(parent.getXPath(), "//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(text(),'child')][position() = 1]) > 0 and count(.//*[contains(text(),'childFirst')][position() = first()]) > 0]");
+    }
 }
