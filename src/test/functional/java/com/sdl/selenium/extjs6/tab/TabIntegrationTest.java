@@ -30,4 +30,10 @@ public class TabIntegrationTest extends TestBase {
         boolean selected2 = inactiveTab.isActive();
         assertThat(selected2, is(true));
     }
+
+    @Test
+    void isTabDisplayedTest() {
+        boolean selected = inactiveTab.isTabDisplayed();
+        assertThat(selected, is(true));
+    }
 }

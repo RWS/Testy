@@ -1,6 +1,9 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.2.0-SNAPSHOT**
+**Release Notes for Testy 2.3.0-SNAPSHOT**
+- update webdriver version 3.0.1
+
+**Release Notes for Testy 2.2.10**
 - change set***() in with***()
     ex: WebLocator el = new WebLocator().setClasses("x-btn").setText("Save").setType("text");
         WebLocator el = new WebLocator().withClasses("x-btn").withText("Save").withType("text");

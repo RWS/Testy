@@ -87,6 +87,10 @@ public class Tab extends WebLocator implements ITab {
         return new ConditionManager(200).add(new RenderSuccessCondition(this)).execute().isSuccess();
     }
 
+    public boolean isTabDisplayed() {
+        return getTitleInactiveEl().ready();
+    }
+
     public boolean close() {
         WebLocator titleEl = getTitleInactiveEl().setClasses("x-tab-active");
         WebLocator closeEl = new WebLocator(titleEl).setClasses("x-tab-close-btn");
