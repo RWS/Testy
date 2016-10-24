@@ -180,7 +180,7 @@ public class WebDriverConfig {
             if (inputStream != null) {
                 properties.load(inputStream);
             }
-            LOGGER.info(properties.toString());
+            LOGGER.debug(properties.toString());
 
             driver = properties.createDriver(remoteUrl);
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
