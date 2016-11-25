@@ -41,7 +41,7 @@ public class Slider extends WebLocator {
                     done = true;
                 }
                 if (!done) {
-                    LOGGER.info("not done for: {}", distance);
+                    LOGGER.info("not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
                     if (distanceTemp == 1 || distanceTemp == 2) {
                         distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
                     } else if (distanceTemp == -1 || distanceTemp == -2) {
