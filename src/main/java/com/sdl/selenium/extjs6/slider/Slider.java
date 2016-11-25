@@ -49,7 +49,11 @@ public class Slider extends WebLocator {
                     } else {
                         distanceTemp = distanceTemp * 2 + 1;
                     }
-                    new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
+                    if (getAttributeClass().contains("x-slider-vert")) {
+                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).build().perform();
+                    } else {
+                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
+                    }
                     element.mouseOver();
                 }
             } while (!done);
