@@ -41,6 +41,7 @@ public class Slider extends WebLocator {
                     done = true;
                 }
                 if (!done) {
+                    LOGGER.info("not done for: {}", distance);
                     if (distanceTemp == 1 || distanceTemp == 2) {
                         distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
                     } else if (distanceTemp == -1 || distanceTemp == -2) {
@@ -49,6 +50,7 @@ public class Slider extends WebLocator {
                         distanceTemp = distanceTemp * 2 + 1;
                     }
                     new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
+                    element.mouseOver();
                 }
             } while (!done);
         } else {
