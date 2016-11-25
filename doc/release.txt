@@ -9,6 +9,10 @@ Run following commands in windows cmd prompt:
 
     mvn release:perform
 
+    http://central.sonatype.org/pages/manual-staging-bundle-creation-and-deployment.html
+
+
+
 https://oss.sonatype.org
 user:
 password:
