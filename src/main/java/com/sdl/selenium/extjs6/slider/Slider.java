@@ -50,6 +50,7 @@ public class Slider extends WebLocator {
                         distanceTemp = distanceTemp * 2 + 1;
                     }
                     if (getAttributeClass().contains("x-slider-vert")) {
+                        LOGGER.info("Vertical->>>>");
                         new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).build().perform();
                     } else {
                         new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
