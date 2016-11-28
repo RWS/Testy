@@ -44,14 +44,14 @@ public class Slider extends WebLocator {
                 LOGGER.info("not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
                 if (!done) {
                     if (vertical) {
-                        distanceTemp = distanceTemp + 1;
+                        distanceTemp = distanceTemp * 2 + 2;
                     } else {
                         if (distanceTemp == 1 || distanceTemp == 2) {
                             distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
                         } else if (distanceTemp == -1 || distanceTemp == -2) {
                             distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
                         } else {
-                            distanceTemp = distanceTemp * 2 - 1;
+                            distanceTemp = distanceTemp * 2 + 1;
                         }
                     }
                     LOGGER.info("before not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
