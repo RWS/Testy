@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.extjs6.button.Button;
+import com.sdl.selenium.extjs6.slider.Slider;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
@@ -15,7 +16,8 @@ import java.util.Locale;
 public class DateField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
-    private WebLocator calendarLayer = new WebLocator("x-layer").withAttribute("aria-hidden", "false").setVisibility(true);
+    private WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
+    private WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").withAttribute("aria-hidden", "false").setVisibility(true);
     private Button monthYearButton = new Button(calendarLayer);
     private WebLocator selectOkButton = new WebLocator(calendarLayer).setText("OK").setVisibility(true).withInfoMessage("Ok");
     private WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-monthpicker").setVisibility(true);
@@ -24,6 +26,10 @@ public class DateField extends TextField {
     private WebLocator yearContainer = new WebLocator(yearAndMonth).withClasses("x-monthpicker-years");
     private WebLocator monthContainer = new WebLocator(yearAndMonth).withClasses("x-monthpicker-months");
     private WebLocator dayContainer = new WebLocator(calendarLayer).withClasses("x-datepicker-active");
+
+    private WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
+    private Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private Slider minuteSlider = new Slider(hourLayer).setLabel("Min", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
     public DateField() {
         withClassName("DateField");
@@ -48,8 +54,6 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
-        trigger.click();
         String fullDate = monthYearButton.getText().trim();
         if (!fullDate.contains(month) || !fullDate.contains(year)) {
             monthYearButton.click();
@@ -64,6 +68,11 @@ public class DateField extends TextField {
         WebLocator dayEl = new WebLocator(dayContainer).withText(day, SearchType.EQUALS).setVisibility(true).withInfoMessage("day " + day);
         Utils.sleep(50);
         return dayEl.click();
+    }
+
+    private boolean setHour(String hour, String minute) {
+        return hourSlider.move(Integer.parseInt(hour)) &&
+                minuteSlider.move(Integer.parseInt(minute));
     }
 
     private void goToYear(String year, String fullDate) {
@@ -109,7 +118,7 @@ public class DateField extends TextField {
 
     public boolean select(String date, String format, Locale locale) {
         SimpleDateFormat inDateFormat = new SimpleDateFormat(format, locale);
-        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy", locale);
+        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy H:m", locale);
         Date fromDate;
         try {
             fromDate = inDateFormat.parse(date);
@@ -120,7 +129,17 @@ public class DateField extends TextField {
 
         LOGGER.debug("select: " + date);
         String[] dates = date.split("/");
-        return setDate(Integer.parseInt(dates[0]) + "", dates[1], dates[2]);
+        trigger.click();
+        String[] extraDates = dates[2].split(" ");
+        String year = extraDates[0];
+        if (format.contains("H")) {
+            String[] hours = extraDates[1].split(":");
+            String hour = hours[0];
+            String minutes = hours[1];
+            return setHour(hour, minutes) && setDate(Integer.parseInt(dates[0]) + "", dates[1], year);
+        } else {
+            return setDate(Integer.parseInt(dates[0]) + "", dates[1], year);
+        }
     }
 
     public boolean select(Date date) {

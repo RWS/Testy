@@ -49,7 +49,6 @@ public class Slider extends WebLocator {
                 } else {
                     done = true;
                 }
-                LOGGER.info("not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
                 if (!done) {
                     if (vertical) {
                         distanceTemp = distanceTemp * 2 + 4;
@@ -62,10 +61,7 @@ public class Slider extends WebLocator {
                             distanceTemp = distanceTemp * 2 + 1;
                         }
                     }
-                    LOGGER.info("before not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
-
                     if (vertical) {
-                        LOGGER.info("Vertical->>>>");
                         new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).build().perform();
                     } else {
                         new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
