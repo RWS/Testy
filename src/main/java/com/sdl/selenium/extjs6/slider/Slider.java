@@ -47,7 +47,7 @@ public class Slider extends WebLocator {
                     } else if (distanceTemp == -1 || distanceTemp == -2) {
                         distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
                     } else {
-                        distanceTemp = distanceTemp * 2 + 1;
+                        distanceTemp = distanceTemp * 2 - 1;
                     }
                     LOGGER.info("before not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
                     if (getAttributeClass().contains("x-slider-vert")) {
