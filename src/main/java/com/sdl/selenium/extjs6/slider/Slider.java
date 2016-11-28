@@ -42,7 +42,7 @@ public class Slider extends WebLocator {
                     }
                 } else if (value < distance) {
                     if (vertical) {
-                        distanceTemp = -1 * (value - distance);
+                        distanceTemp = -1 * (distance - value);
                     } else {
                         distanceTemp = distance - value;
                     }
