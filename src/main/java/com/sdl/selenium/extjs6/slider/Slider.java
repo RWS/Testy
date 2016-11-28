@@ -32,6 +32,7 @@ public class Slider extends WebLocator {
             boolean done = false;
             int distanceTemp = distance;
             do {
+                boolean vertical = getAttributeClass().contains("x-slider-vert");
                 int value = Integer.parseInt(getAttribute("aria-valuenow"));
                 if (value > distance || value == 0) {
                     distanceTemp = -(value - distance);
@@ -42,15 +43,18 @@ public class Slider extends WebLocator {
                 }
                 LOGGER.info("not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
                 if (!done) {
-                    if (distanceTemp == 1 || distanceTemp == 2) {
-                        distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
-                    } else if (distanceTemp == -1 || distanceTemp == -2) {
-                        distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
-                    } else {
-                        distanceTemp = distanceTemp * 2 - 1;
+                    if (!vertical) {
+                        if (distanceTemp == 1 || distanceTemp == 2) {
+                            distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
+                        } else if (distanceTemp == -1 || distanceTemp == -2) {
+                            distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
+                        } else {
+                            distanceTemp = distanceTemp * 2 - 1;
+                        }
                     }
                     LOGGER.info("before not done for: distance={}, distanceTemp={}, value={}", distance, distanceTemp, value);
-                    if (getAttributeClass().contains("x-slider-vert")) {
+
+                    if (vertical) {
                         LOGGER.info("Vertical->>>>");
                         new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).build().perform();
                     } else {
