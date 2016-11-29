@@ -32,23 +32,41 @@ public class Slider extends WebLocator {
             boolean done = false;
             int distanceTemp = distance;
             do {
+                boolean vertical = getAttributeClass().contains("x-slider-vert");
                 int value = Integer.parseInt(getAttribute("aria-valuenow"));
                 if (value > distance) {
-                    distanceTemp = -(value - distance);
+                    if (vertical) {
+                        distanceTemp = value - distance;
+                    } else {
+                        distanceTemp = -1 * (value - distance);
+                    }
                 } else if (value < distance) {
-                    distanceTemp = distance - value;
+                    if (vertical) {
+                        distanceTemp = -1 * (distance - value);
+                    } else {
+                        distanceTemp = distance - value;
+                    }
                 } else {
                     done = true;
                 }
                 if (!done) {
-                    if (distanceTemp == 1 || distanceTemp == 2) {
-                        distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
-                    } else if (distanceTemp == -1 || distanceTemp == -2) {
-                        distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
+                    if (vertical) {
+                        distanceTemp = distanceTemp * 2 + 4;
                     } else {
-                        distanceTemp = distanceTemp * 2 + 1;
+                        if (distanceTemp == 1 || distanceTemp == 2) {
+                            distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
+                        } else if (distanceTemp == -1 || distanceTemp == -2) {
+                            distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
+                        } else {
+                            distanceTemp = distanceTemp * 2 + 1;
+                        }
                     }
-                    new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
+                    if (vertical) {
+                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).build().perform();
+                    } else {
+                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
+                    }
+                    element.mouseOver();
                 }
             } while (!done);
         } else {
