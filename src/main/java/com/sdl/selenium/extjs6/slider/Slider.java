@@ -34,7 +34,7 @@ public class Slider extends WebLocator {
             do {
                 boolean vertical = getAttributeClass().contains("x-slider-vert");
                 int value = Integer.parseInt(getAttribute("aria-valuenow"));
-                if (value > distance || value == 0) {
+                if (value > distance) {
                     if (vertical) {
                         distanceTemp = value - distance;
                     } else {
