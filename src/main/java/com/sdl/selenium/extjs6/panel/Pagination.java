@@ -21,58 +21,35 @@ public class Pagination extends ToolBar {
 
     private WebLocator currentPageContainer = new WebLocator("x-tbar-page-number");
     private TextField currentPage = new TextField(currentPageContainer);
+    private WebLocator itemTotals = new WebLocator(this).withBaseCls("x-toolbar-text").withText("Displaying items", SearchType.STARTS_WITH);
 
+    private Button firstPageBtn = getButton("x-tbar-page-first");
 
-    private Button gotoFirstPageBtn = getButton("x-tbar-page-first");
-
-    public boolean goToFirstPage() {
-        return gotoFirstPageBtn.click();
+    public Button getFirstPageBtn() {
+        return firstPageBtn;
     }
 
-    public Button getGotoFirstPageBtn() {
-        return gotoFirstPageBtn;
+    private Button previousPageBtn = getButton("x-tbar-page-prev");
+
+    public Button getPreviousPageBtn() {
+        return previousPageBtn;
     }
 
-    private Button gotoPreviousPageBtn = getButton("x-tbar-page-prev");
+    private Button nextPageBtn = getButton("x-tbar-page-next");
 
-    public boolean goToPreviousPage() {
-        return gotoPreviousPageBtn.click();
+    public Button getNextPageBtn() {
+        return nextPageBtn;
     }
 
-    public Button getGotoPreviousPageBtn() {
-        return gotoPreviousPageBtn;
-    }
+    private Button lastPageBtn = getButton("x-tbar-page-last");
 
-    private Button gotoNextPageBtn = getButton("x-tbar-page-next");
-
-    public boolean goToNextPage() {
-        return gotoNextPageBtn.click();
-    }
-
-    public Button getGotoNextPageBtn() {
-        return gotoNextPageBtn;
-    }
-
-    private Button gotoLastPageBtn = getButton("x-tbar-page-last");
-
-    public boolean goToLastPage() {
-        return gotoLastPageBtn.click();
-    }
-
-    public Button getGotoLastPageBtn() {
-        return gotoLastPageBtn;
+    public Button getLastPageBtn() {
+        return lastPageBtn;
     }
 
     public TextField getCurrentPage() {
         return currentPage;
     }
-
-    public boolean refresh() {
-        return getButton("x-tbar-loading").click();
-    }
-
-    public final String itemTotalsLabel = "Displaying items ";
-    private WebLocator itemTotals = new WebLocator(this).withBaseCls("x-toolbar-text").withText(itemTotalsLabel, SearchType.STARTS_WITH);
 
     public WebLocator getItemTotals() {
         return itemTotals;
@@ -83,9 +60,23 @@ public class Pagination extends ToolBar {
         return new Button(this).withChildNodes(el);
     }
 
-//    public static void main(String[] args) {
-//        Pagination pagination = new Pagination();
-//        LOGGER.info(pagination.getCurrentPage().getXPath());
-//
-//    }
+    public boolean goToFirstPage() {
+        return firstPageBtn.click();
+    }
+
+    public boolean goToPreviousPage() {
+        return previousPageBtn.click();
+    }
+
+    public boolean goToNextPage() {
+        return nextPageBtn.click();
+    }
+
+    public boolean goToLastPage() {
+        return lastPageBtn.click();
+    }
+
+    public boolean refresh() {
+        return getButton("x-tbar-loading").click();
+    }
 }

@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
@@ -14,6 +15,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = Logger.getLogger(ComboBox.class);
     private static String listClass = "x-list-plain";
+    private WebLocator boundList = new WebLocator("x-boundlist");
+    private Pagination pagination = new Pagination(boundList).setRenderMillis(500);
 
     public ComboBox() {
         withClassName("ComboBox");
@@ -30,29 +33,24 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     /**
-     * @deprecated use {@link #doSelect(String, SearchType, long)}
      * @param value              value
      * @param searchType         use {@link SearchType}
      * @param optionRenderMillis eg. 300ms
      * @return true if value was selected
      */
-    public boolean select(String value, SearchType searchType, long optionRenderMillis) {
-        return doSelect(value, searchType, optionRenderMillis);
-    }
-
-    /**
-     * @param value              value
-     * @param searchType         use {@link SearchType}
-     * @param optionRenderMillis eg. 300ms
-     * @return true if value was selected
-     */
-    public boolean doSelect(String value, SearchType searchType, long optionRenderMillis) {
+    public boolean doSelect(String value, long optionRenderMillis, SearchType... searchType) {
         boolean selected;
         String info = toString();
-        WebLocator option = getComboEl(value, searchType, optionRenderMillis);
+        WebLocator option = getComboEl(value, optionRenderMillis, searchType);
 
         if (clickIcon("arrow")) {
-            selected = option.click();
+            if (pagination.ready()) {
+                do {
+                    selected = option.doClick();
+                } while (!selected || pagination.goToNextPage());
+            } else {
+                selected = option.click();
+            }
             if (selected) {
                 LOGGER.info("Set value(" + info + "): " + value);
                 Utils.sleep(20);
@@ -67,13 +65,19 @@ public class ComboBox extends TextField implements ICombo {
         return false;
     }
 
-    protected WebLocator getComboEl(String value, SearchType searchType, long optionRenderMillis) {
+    protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
         WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
         return new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
     }
 
-    public boolean select(String value, SearchType searchType) {
-        boolean selected = doSelect(value, searchType, 300);
+    public boolean select(String value, SearchType... searchType) {
+        boolean selected = doSelect(value, 300, searchType);
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
+    }
+
+    public boolean select(String value, long optionRenderMillis) {
+        boolean selected = doSelect(value, optionRenderMillis, SearchType.EQUALS);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }
@@ -89,25 +93,11 @@ public class ComboBox extends TextField implements ICombo {
         return executor.getValue(this);
     }
 
-    /**
-     * @deprecated use {@link #getAllValues()}
-     * @return list of elements
-     */
-    @Deprecated
-    public List<String> getAllComboValues() {
-        return getAllValues();
-    }
-
     public List<String> getAllValues() {
         clickIcon("arrow");
-        WebLocator comboList = new WebLocator(new WebLocator("x-boundlist")).withClasses(listClass).withVisibility(true);
+        WebLocator comboList = new WebLocator(boundList).withClasses(listClass).withVisibility(true);
         String[] comboValues = comboList.getText().split("\\n");
         clickIcon("arrow");
         return Arrays.asList(comboValues);
-    }
-
-    @Deprecated
-    public boolean assertSelect(String value) {
-        return select(value);
     }
 }

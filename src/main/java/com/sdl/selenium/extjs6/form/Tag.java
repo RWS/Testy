@@ -54,7 +54,7 @@ public class Tag extends ComboBox {
         String info = toString();
         if (clickIcon("arrow")) {
             for (String value : values) {
-                WebLocator option = getComboEl(value, searchType, optionRenderMillis);
+                WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                 selected = selected && option.doClick();
                 if (selected) {
                     LOGGER.info("Set value(" + info + "): " + value);
