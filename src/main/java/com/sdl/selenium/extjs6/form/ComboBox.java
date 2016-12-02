@@ -16,7 +16,7 @@ public class ComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = Logger.getLogger(ComboBox.class);
     private static String listClass = "x-list-plain";
     private WebLocator boundList = new WebLocator("x-boundlist");
-    private Pagination pagination = new Pagination(boundList).setRenderMillis(500);
+    private Pagination pagination = new Pagination(boundList).setRenderMillis(300);
 
     public ComboBox() {
         withClassName("ComboBox");
@@ -46,8 +46,10 @@ public class ComboBox extends TextField implements ICombo {
         if (clickIcon("arrow")) {
             if (pagination.ready()) {
                 do {
-                    selected = option.doClick();
-                } while (!selected || pagination.goToNextPage());
+                    if (selected = option.doClick()) {
+                        break;
+                    }
+                } while (pagination.goToNextPage());
             } else {
                 selected = option.click();
             }
