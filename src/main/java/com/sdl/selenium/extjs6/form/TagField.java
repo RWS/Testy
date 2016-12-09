@@ -55,6 +55,9 @@ public class TagField extends ComboBox {
         if (clickIcon("arrow")) {
             for (String value : values) {
                 WebLocator option = getComboEl(value, optionRenderMillis, searchType);
+                if (!option.isElementPresent()) {
+                    clickIcon("arrow");
+                }
                 selected = selected && option.doClick();
                 if (selected) {
                     LOGGER.info("Set value(" + info + "): " + value);
