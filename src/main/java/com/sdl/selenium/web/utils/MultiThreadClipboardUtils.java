@@ -97,7 +97,7 @@ public class MultiThreadClipboardUtils {
     }
 
     private static void unlockClipboard() {
-        boolean lockRemoved = lockFile.delete();
+        boolean lockRemoved = !lockFile.exists() || lockFile.delete();
         if (!lockRemoved) {
             throw new RuntimeException("Failed to remove clipboard lock");
         }
