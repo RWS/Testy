@@ -44,9 +44,9 @@
             <class name="com.sdl.selenium.bootstrap.button.ButtonLinkTest"/>
             <class name="com.sdl.selenium.bootstrap.button.DownloadFileTest"/>
             <class name="com.sdl.selenium.bootstrap.button.UploadFileTest"/>
+            <class name="com.sdl.selenium.bootstrap.form.FormTest"/>
             <class name="com.sdl.selenium.bootstrap.form.CheckBoxTest"/>
             <class name="com.sdl.selenium.bootstrap.form.DatePickerTest"/>
-            <class name="com.sdl.selenium.bootstrap.form.FormTest"/>
             <class name="com.sdl.selenium.bootstrap.form.MultiSelectTest"/>
             <class name="com.sdl.selenium.bootstrap.form.TextFieldTest"/>
             <class name="com.sdl.selenium.bootstrap.form.TextAreaTest"/>

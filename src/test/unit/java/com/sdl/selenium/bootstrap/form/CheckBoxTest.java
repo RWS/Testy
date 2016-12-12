@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CheckBoxTest {
-    public static WebLocator container = new WebLocator("container");
+    private static WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -23,7 +23,7 @@ public class CheckBoxTest {
                 {new CheckBox("TextFieldText", container).withAttribute("placeholder", "Search").withAttribute(null, "Search"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search']"},
                 {new CheckBox("TextFieldText", container).withAttribute("placeholder", "Search").withAttribute("role", "SearchRole"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and @role='SearchRole']"},
                 {new CheckBox("TextFieldText", container).withAttribute("placeholder", "Search").withAttribute("role", "SearchRole", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and contains(@role,'SearchRole')]"},
-                {new CheckBox("TextFieldText", container).withAttribute("placeholder", "Search").withAttribute("role", "SearchRole", null), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and contains(@role,'SearchRole')]"},
+                {new CheckBox("TextFieldText", container).withAttribute("placeholder", "Search").withAttribute("role", "SearchRole"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @placeholder='Search' and @role='SearchRole']"},
                 {new CheckBox("TextFieldText", container).withAttribute("role", "SearchRole", SearchType.EQUALS), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and @role='SearchRole']"},
                 {new CheckBox("TextFieldText", container).withAttribute("role", "SearchRole", SearchType.TRIM), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and contains(normalize-space(@role),'SearchRole')]"},
                 {new CheckBox("TextFieldText", container).withAttribute("role", "SearchRole", SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='checkbox' and starts-with(@role,'SearchRole')]"},
