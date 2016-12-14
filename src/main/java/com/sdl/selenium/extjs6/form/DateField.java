@@ -5,6 +5,7 @@ import com.sdl.selenium.extjs6.slider.Slider;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
+import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,11 +26,13 @@ public class DateField extends TextField {
     private WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-prev").setVisibility(true);
     private WebLocator yearContainer = new WebLocator(yearAndMonth).withClasses("x-monthpicker-years");
     private WebLocator monthContainer = new WebLocator(yearAndMonth).withClasses("x-monthpicker-months");
-    private WebLocator dayContainer = new WebLocator(calendarLayer).withClasses("x-datepicker-active");
+    private WebLocator dayContainer = new WebLocator(calendarLayer).withClasses("x-datepicker-cell").setExcludeClasses("x-datepicker-disabled");
 
     private WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
     private Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
     private Slider minuteSlider = new Slider(hourLayer).setLabel("Min", SearchType.DEEP_CHILD_NODE_OR_SELF);
+
+    private WebLocator tooltip = new WebLocator().setClasses("x-tip").setAttribute("aria-hidden", "false");
 
     public DateField() {
         withClassName("DateField");
@@ -87,8 +90,11 @@ public class DateField extends TextField {
         }
         try {
             yearEl.click();
-        } catch (Exception e) {
-            Utils.sleep(500);
+        } catch (WebDriverException e) {
+            if (tooltip.waitToRender(500)) {
+                WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).withInfoMessage("month Jan");
+                monthEl.focus();
+            }
             yearEl.click();
         }
     }
