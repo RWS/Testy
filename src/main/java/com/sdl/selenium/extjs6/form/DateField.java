@@ -93,7 +93,8 @@ public class DateField extends TextField {
         } catch (WebDriverException e) {
             if (tooltip.waitToRender(500)) {
                 WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).withInfoMessage("month Jan");
-                monthEl.focus();
+                monthEl.mouseOver();
+                Utils.sleep(300);
             }
             yearEl.click();
         }
