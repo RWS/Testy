@@ -220,7 +220,13 @@ public class WebDriverConfig {
      * @return oldTabName
      */
     public static String switchToLastTab() {
-        int totalTabs = driver.getWindowHandles().size();
+        int totalTabs;
+        int time = 0;
+        do {
+            totalTabs = driver.getWindowHandles().size();
+            LOGGER.info("totalTabs is {}", totalTabs);
+            time++;
+        } while (totalTabs < 1 && time < 10);
         return switchToTab(totalTabs - 1);
     }
 
