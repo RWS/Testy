@@ -223,10 +223,11 @@ public class WebDriverConfig {
         int totalTabs;
         int time = 0;
         do {
+            Utils.sleep(100L);
             totalTabs = driver.getWindowHandles().size();
-            LOGGER.info("totalTabs is {}", totalTabs);
+            LOGGER.debug("totalTabs is {}", totalTabs);
             time++;
-        } while (totalTabs < 1 && time < 10);
+        } while (totalTabs <= 1 && time < 10);
         return switchToTab(totalTabs - 1);
     }
 
