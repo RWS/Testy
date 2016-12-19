@@ -63,11 +63,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return clicked;
     }
 
-    @Override
-    public boolean doClick(WebLocator el) {
-        return click(el);
-    }
-
     private boolean tryAgainDoClick(WebLocator el) {
         boolean doClick;
         if (findAgain(el)) {
@@ -86,11 +81,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //            doHighlight(el);
 //        }
         focus(el);
-        return doClick(el);
-    }
-
-    @Override
-    public boolean doClickAt(WebLocator el) {
         return click(el);
     }
 
@@ -190,17 +180,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             }
         }
         return sendKeys;
-    }
-
-    /**
-     * @param el            currentEl
-     * @param charSequences chars
-     * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
-     */
-    @Deprecated
-    @Override
-    public void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
-        sendKeys(el, charSequences);
     }
 
     private boolean tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
@@ -354,12 +333,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return text;
     }
 
-    @Override
-    @Deprecated
-    public String getHtmlText(WebLocator el) {
-        return getText(el);
-    }
-
     private String getSelector(WebLocator el) {
         String css = el.getCssSelector();
         return StringUtils.isEmpty(css) ? el.getXPath() : css;
@@ -373,21 +346,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private void invalidateCache(WebLocator el) {
         el.currentElement = null;
         el.setCurrentElementPath("");
-    }
-
-    @Override
-    public String getHtmlSource() {
-        return driver.getPageSource();
-    }
-
-    @Override
-    @Deprecated
-    public String getHtmlSource(WebLocator el) {
-        String text = null;
-        if (ensureExists(el)) {
-            text = driver.getPageSource();
-        }
-        return text;
     }
 
     @Override
@@ -498,25 +456,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return mouseOver;
     }
 
-    /**
-     * @param el currentEl
-     * @deprecated use {@link #mouseOver(WebLocator)}
-     */
-    @Deprecated
-    @Override
-    public void doMouseOver(WebLocator el) {
-        mouseOver(el);
-    }
-
     @Override
     public boolean blur(WebLocator el) {
         return fireEventWithJS(el, "blur") != null;
     }
 
-    @Override
-    public boolean isTextPresent(WebLocator el, String text) {
-        return driver.getPageSource().contains(text);
-    }
 
     @Override
     public boolean exists(WebLocator el) {
@@ -582,16 +526,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public void highlight(WebLocator el) {
         highlightElementWithDriver(el.currentElement);
-    }
-
-    /**
-     * @param el currentEl
-     * @deprecated use {@link #highlight(WebLocator)}
-     */
-    @Deprecated
-    @Override
-    public void doHighlight(WebLocator el) {
-        highlight(el);
     }
 
     public boolean download(String fileName, long timeoutMillis) {

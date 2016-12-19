@@ -12,21 +12,7 @@ public interface WebLocatorExecutor {
 
     boolean click(WebLocator el);
 
-    /**
-     * @deprecated use {@link #click(WebLocator)}
-     * @param el currentEl
-     * @return true
-     */
-    boolean doClick(WebLocator el);
-
     boolean clickAt(WebLocator el);
-
-    /**
-     * @deprecated use {@link #clickAt(WebLocator)}
-     * @param el currentEl
-     * @return true
-     */
-    boolean doClickAt(WebLocator el);
 
     boolean doubleClickAt(WebLocator el);
 
@@ -35,14 +21,6 @@ public interface WebLocatorExecutor {
     boolean clear(WebLocator el);
 
     boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
-
-    /**
-     * @deprecated use {@link #sendKeys(WebLocator, CharSequence...)}
-     * @param el currentEl
-     * @param charSequences chars
-     */
-    @Deprecated
-    void doSendKeys(WebLocator el, java.lang.CharSequence... charSequences);
 
     boolean setValue(WebLocator el, String value);
 
@@ -57,19 +35,6 @@ public interface WebLocatorExecutor {
     String getCurrentElementAttribute(final WebLocator el, final String attribute);
 
     String getText(WebLocator el);
-
-    /**
-     * @deprecated use {@link #getText(WebLocator)}}
-     * @param el currentEl
-     * @return text's element
-     */
-    String getHtmlText(WebLocator el);
-
-    @Deprecated
-    String getHtmlSource();
-
-    @Deprecated
-    String getHtmlSource(WebLocator el);
 
     String getValue(WebLocator el);
 
@@ -91,18 +56,9 @@ public interface WebLocatorExecutor {
 
     boolean focus(WebLocator el);
 
-    /**
-     * @deprecated use {@link #mouseOver(WebLocator)}
-     * @param el currentEl
-     */
-    @Deprecated
-    void doMouseOver(WebLocator el);
-
     boolean mouseOver(WebLocator el);
 
     boolean blur(WebLocator el);
-
-    boolean isTextPresent(WebLocator el, String text);
 
     boolean exists(WebLocator el);
 
@@ -119,13 +75,6 @@ public interface WebLocatorExecutor {
     Object fireEventWithJS(WebLocator el, String eventName);
 
     void highlight(WebLocator el);
-
-    /**
-     * @deprecated use {@link #highlight(WebLocator)}
-     * @param el currentEl
-     */
-    @Deprecated
-    void doHighlight(WebLocator el);
 
     boolean highlight = WebLocatorConfig.isHighlight();
 

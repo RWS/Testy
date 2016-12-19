@@ -39,4 +39,9 @@ public class Button extends WebLocator {
         LOGGER.debug("id is: {}", id);
         return false;
     }
+
+    public boolean isEnabled() {
+        String cls = getAttributeClass();
+        return cls != null && !cls.contains("x-btn-disabled");
+    }
 }

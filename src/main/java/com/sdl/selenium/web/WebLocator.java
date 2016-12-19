@@ -128,26 +128,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return null;
     }
 
-    /**
-     * @deprecated use {@link #getText()}
-     * @return text's element
-     */
-    public String getHtmlText() {
-        return getText(false);
-    }
-
-    /**
-     * @deprecated use {@link #getText(boolean)}
-     * @param instant true or false
-     * @return text's element
-     */
-    public String getHtmlText(boolean instant) {
-        if (instant || ready()) {
-            return executor.getText(this);
-        }
-        return null;
-    }
-
     public boolean clickAt() {
         boolean clickAt = waitToRender();
         assertThat("Element was not rendered " + toString(), clickAt);
@@ -173,15 +153,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             }
         }
         return doClick;
-    }
-
-    /**
-     * @deprecated use {@link #clickAt()}
-     * @return true
-     */
-    @Deprecated
-    public boolean assertClickAt() {
-        return clickAt();
     }
 
     /**
@@ -214,15 +185,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             }
         }
         return doClick;
-    }
-
-    /**
-     * @deprecated use {@link #click()}
-     * @return true
-     */
-    @Deprecated
-    public boolean assertClick() {
-        return click();
     }
 
     public void highlight() {
@@ -462,17 +424,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return visible;
     }
 
-    // TODO remove from this class, it does not belong to this element
-
-    /**
-     * @deprecated please use driver.getPageSource().contains(text);
-     * @param text text
-     * @return true
-     */
-    public boolean isTextPresent(String text) {
-        return executor.isTextPresent(this, text);
-    }
-
     /**
      * wait 5 seconds (or specified value for renderSeconds)
      *
@@ -546,7 +497,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     public boolean assertReady() {
         boolean ready = ready();
-        assertThat("Element is not ready : " + this, ready);
+        assertThat("Element is not ready: " + this, ready);
         return ready;
     }
 
@@ -556,9 +507,17 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * @return True if the element is disabled, false otherwise.
+     * @deprecated use {@link #isEnabled}
      */
     public boolean isDisabled() {
         return !executor.isEnabled(this);
+    }
+
+    /**
+     * @return True if the element is enable, false otherwise.
+     */
+    public boolean isEnabled() {
+        return executor.isEnabled(this);
     }
 
     /**
@@ -566,6 +525,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public boolean isDisplayed() {
         return executor.isDisplayed(this);
+    }
+
+    public boolean assertDisplayed() {
+        boolean displayed = isDisplayed();
+        assertThat("Element is not displayed: " + this, displayed);
+        return displayed;
     }
 
     @Override
