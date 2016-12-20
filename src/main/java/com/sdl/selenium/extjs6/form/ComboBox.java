@@ -41,7 +41,7 @@ public class ComboBox extends TextField implements ICombo {
     public boolean doSelect(String value, long optionRenderMillis, SearchType... searchType) {
         boolean selected;
         String info = toString();
-        WebLocator option = getComboEl(value, optionRenderMillis, searchType);
+        WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
 
         if (clickIcon("arrow")) {
             if (pagination.ready()) {
