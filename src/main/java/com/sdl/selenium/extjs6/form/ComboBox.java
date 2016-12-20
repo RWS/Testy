@@ -66,6 +66,10 @@ public class ComboBox extends TextField implements ICombo {
         return false;
     }
 
+    public boolean doSelect(String value, long optionRenderMillis, SearchType... searchType) {
+        return doSelect(value, optionRenderMillis, false, searchType);
+    }
+
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
         WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
         return new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
