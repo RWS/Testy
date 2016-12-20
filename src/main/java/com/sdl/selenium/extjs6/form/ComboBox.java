@@ -16,7 +16,7 @@ public class ComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = Logger.getLogger(ComboBox.class);
     private static String listClass = "x-list-plain";
     private WebLocator boundList = new WebLocator("x-boundlist");
-    private Pagination pagination = new Pagination(boundList).setRenderMillis(300);
+    private Pagination paginationEl = new Pagination(boundList).setRenderMillis(300);
 
     public ComboBox() {
         withClassName("ComboBox");
@@ -38,18 +38,17 @@ public class ComboBox extends TextField implements ICombo {
      * @param optionRenderMillis eg. 300ms
      * @return true if value was selected
      */
-    public boolean doSelect(String value, long optionRenderMillis, SearchType... searchType) {
+    public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
-
         if (clickIcon("arrow")) {
-            if (pagination.ready()) {
+            if (pagination) {
                 do {
                     if (selected = option.doClick()) {
                         break;
                     }
-                } while (pagination.goToNextPage());
+                } while (paginationEl.goToNextPage());
             } else {
                 selected = option.click();
             }
@@ -73,13 +72,31 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public boolean select(String value, SearchType... searchType) {
-        boolean selected = doSelect(value, 300, searchType);
+        boolean selected = doSelect(value, 300L, false, searchType);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }
 
     public boolean select(String value, long optionRenderMillis) {
-        boolean selected = doSelect(value, optionRenderMillis, SearchType.EQUALS);
+        boolean selected = doSelect(value, optionRenderMillis, false, SearchType.EQUALS);
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
+    }
+
+    public boolean select(String value, boolean pagination) {
+        boolean selected = doSelect(value, 300L, pagination, SearchType.EQUALS);
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
+    }
+
+    public boolean select(String value, long optionRenderMillis, boolean pagination) {
+        boolean selected = doSelect(value, optionRenderMillis, pagination, SearchType.EQUALS);
+        assertThat("Could not selected value on : " + this, selected);
+        return selected;
+    }
+
+    public boolean select(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
+        boolean selected = doSelect(value, optionRenderMillis, pagination, searchType);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }
