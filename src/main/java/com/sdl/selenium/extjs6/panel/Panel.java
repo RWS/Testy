@@ -26,7 +26,7 @@ public class Panel extends WebLocator {
     }
 
     private WebLocator getCollapseEl(String type) {
-        return new WebLocator(this).setClasses("x-tool-" + type);
+        return new WebLocator(this).setElPath("//*[contains(@class, 'x-tool-" + type + "')]");
     }
 
     public boolean collapse() {
