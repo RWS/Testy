@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,6 @@ public class DisplayField extends WebLocator {
 
     public DisplayField(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 }
