@@ -6,7 +6,7 @@ import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DownloadButton extends Button implements Download {
+public class DownloadButton extends SplitButton implements Download {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadButton.class);
 
     public DownloadButton() {
@@ -34,6 +34,17 @@ public class DownloadButton extends Button implements Download {
     @Override
     public boolean download(String fileName) {
         openBrowse();
+        return executor.download(fileName, 10000L);
+    }
+
+    /**
+     * if WebDriverConfig.isSilentDownload() is true, se face silentDownload, is is false se face download with AutoIT.
+     * @param name e.g. TBX
+     * @param fileName e.g. "TestSet.tmx"
+     * @return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
+     */
+    public boolean downloadFromMenu(String name, String fileName) {
+        clickOnMenu(name);
         return executor.download(fileName, 10000L);
     }
 
