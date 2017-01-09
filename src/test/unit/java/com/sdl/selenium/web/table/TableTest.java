@@ -25,25 +25,6 @@ public class TableTest {
     }
 
     @DataProvider
-    public static Object[][] testConstructorPathDataProviderRow() {
-        return new Object[][]{
-                {new Table().getRowLocator(1), "//table//tr[position() = 1]"},
-                {new Table().getTableRow("SearchElement"), "//table//tr[(.='SearchElement' or count(*//text()[.='SearchElement']) > 0)]"},
-                {new Table().getTableRow("SearchElement", SearchType.CONTAINS), "//table//tr[(contains(.,'SearchElement') or count(*//text()[contains(.,'SearchElement')]) > 0)]"},
-                {new Table().getTableRow("SearchElement", SearchType.STARTS_WITH), "//table//tr[(starts-with(.,'SearchElement') or count(*//text()[starts-with(.,'SearchElement')]) > 0)]"},
-                {new Table().getTableRow("/SearchElement/text", SearchType.CONTAINS_ALL), "//table//tr[(contains(.,'SearchElement') and contains(.,'text') or count(*//text()[contains(.,'SearchElement') and contains(.,'text')]) > 0)]"},
-                {new Table().getTableRow("|SearchElement|text", SearchType.CONTAINS_ANY), "//table//tr[((contains(.,'SearchElement') or contains(.,'text')) or count(*//text()[(contains(.,'SearchElement') or contains(.,'text'))]) > 0)]"},
-                {new Table().getRow(new TableCell(3, "1234", SearchType.EQUALS), new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]"},
-                {new Table().getRow(tableCell, new TableCell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(.//th[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]"},
-        };
-    }
-
-    @Test(dataProvider = "testConstructorPathDataProviderRow")
-    public void getPathSelectorCorrectlyFromConstructorsRow(TableRow row, String expectedXpath) {
-        Assert.assertEquals(row.getXPath(), expectedXpath);
-    }
-
-    @DataProvider
     public static Object[][] testConstructorPathDataProviderCell() {
         return new Object[][]{
                 {new Table().getCell(1, 1), "//table//tr[position() = 1]//td[1]"},

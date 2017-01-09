@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.*;
 import com.sdl.selenium.web.utils.Utils;
@@ -19,6 +20,8 @@ public class Grid extends Table {
         withClassName("Grid");
         withBaseCls("x-grid");
         withTag("*");
+        WebLocator header = new WebLocator().withClasses("x-title").withRoot("//");
+        withTemplateTitle(new WebLocator(header));
     }
 
     public Grid(WebLocator container) {
@@ -26,17 +29,23 @@ public class Grid extends Table {
         withContainer(container);
     }
 
-    /**
-     * @deprecated use {@link #getRow(int, AbstractCell...)}
-     * @param indexRow eg. 1
-     * @param byCells TableCell
-     * @return TableRow
-     */
-    public TableRow getRow(int indexRow, TableCell... byCells) {
-        return new TableRow(this, indexRow, byCells).withTag("table").withInfoMessage("-Row");
+    public Row getRow(int rowIndex) {
+        return new Row(this, rowIndex).withTag("table").withInfoMessage("-Row");
     }
 
-    public Row getRow(int indexRow, AbstractCell... byCells) {
+    public Row getRow(String searchElement) {
+        return new Row(this, searchElement, SearchType.EQUALS).withTag("table").withInfoMessage("-Row");
+    }
+
+    public Row getRow(String searchElement, SearchType... searchTypes) {
+        return new Row(this, searchElement, searchTypes).withTag("table").withInfoMessage("-Row");
+    }
+
+    public Row getRow(Cell... byCells) {
+        return new Row(this, byCells).withTag("table").withInfoMessage("-Row");
+    }
+
+    public Row getRow(int indexRow, Cell... byCells) {
         return new Row(this, indexRow, byCells).withTag("table").withInfoMessage("-Row");
     }
 
@@ -53,8 +62,7 @@ public class Grid extends Table {
     }
 
     private boolean hasMask(){
-        WebLocator mask = new WebLocator(this).withClasses("x-mask").withElxPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false");
-        LOGGER.debug("mask {}", mask.getXPath());
+        WebLocator mask = new WebLocator(this).withClasses("x-mask").withElxPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
         return mask.waitToRender(500);
     }
 

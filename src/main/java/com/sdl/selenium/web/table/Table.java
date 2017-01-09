@@ -97,39 +97,12 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         }
     }
 
-    /**
-     * @deprecated use {@link #getRow(int)}
-     */
-    @Override
-    public TableRow getRowLocator(int rowIndex) {
-        return new TableRow(this, rowIndex).withInfoMessage("row - Table");
-    }
-
     public Row getRow(int rowIndex) {
         return new Row(this, rowIndex).withInfoMessage("row - Table");
     }
 
-    /**
-     * @deprecated use {@link #getRow(String)}
-     * @param searchElement text
-     * @return TableRow
-     */
-    public TableRow getTableRow(String searchElement) {
-        return new TableRow(this, searchElement, SearchType.EQUALS);
-    }
-
     public Row getRow(String searchElement) {
         return new Row(this, searchElement, SearchType.EQUALS);
-    }
-
-    /**
-     * @deprecated use {@link #getRow(String, SearchType[])}
-     * @param searchElement text
-     * @param searchTypes see {@link SearchType}
-     * @return TableRow
-     */
-    public TableRow getTableRow(String searchElement, SearchType... searchTypes) {
-        return new TableRow(this, searchElement, searchTypes);
     }
 
     public Row getRow(String searchElement, SearchType... searchTypes) {
@@ -204,28 +177,9 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return new Cell(new Row(this, searchElement, searchTypes), columnIndex);
     }
 
-    /**
-     * @deprecated use {@link #getRow(Cell...)}
-     * @param byCells TableCell
-     * @return TableRow
-     */
-    public TableRow getRow(TableCell... byCells) {
-        return new TableRow(this, byCells).withInfoMessage("-TableRow");
-    }
-
     @Override
     public Row getRow(Cell... byCells) {
         return new Row(this, byCells).withInfoMessage("-Row");
-    }
-
-    /**
-     * @deprecated use {@link #getRow(int, Cell...)}
-     * @param indexRow index row
-     * @param byCells TableCell
-     * @return TableRow
-     */
-    public TableRow getRow(int indexRow, TableCell... byCells) {
-        return new TableRow(this, indexRow, byCells).withInfoMessage("-TableRow");
     }
 
     public Row getRow(int indexRow, Cell... byCells) {

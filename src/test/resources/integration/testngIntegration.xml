@@ -88,6 +88,11 @@
             <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
         </classes>
     </test>
+    <test name="GridIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.grid.GridIntegrationTest"/>
+        </classes>
+    </test>
     <test name="TabIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs6.tab.TabIntegrationTest"/>

@@ -26,14 +26,6 @@ public interface ITable <R extends AbstractRow, C extends AbstractCell> extends 
      */
     int getCount();
 
-    /**
-     * TODO rename in getRow
-     * @param rowIndex rowIndex
-     * @deprecated use {@link #getRow(int)}
-     * @return R
-     */
-    R getRowLocator(int rowIndex);
-
     R getRow(int rowIndex);
 
     R getRow(C... byCells);
