@@ -131,4 +131,11 @@ public class Grid extends Table {
         LOGGER.info(this + " - " + info + " > " + scrolled);
         return scrolled;
     }
+
+    public boolean waitToPopulate(int seconds) {
+        Row row = getRow(1).withVisibility(true).setRoot("//..//").withInfoMessage("first Row");
+        WebLocator body = new WebLocator(this).withClasses("x-grid-header-ct"); // TODO see if must add for all rows
+        row.withContainer(body);
+        return row.waitToRender(seconds * 1000L);
+    }
 }
