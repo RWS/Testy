@@ -26,7 +26,9 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
             "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
             "\n options.experimental.profile.default_content_settings.popups=0" +
-            "\n options.experimental.download.prompt_for_download=1";
+            "\n options.experimental.download.prompt_for_download=1" +
+            "\n options.experimental.safebrowsing.enabled=true";
+
 
     public ChromeConfigReader() {
         this(null);
