@@ -40,6 +40,6 @@ public class GridIntegrationTest extends TestBase {
     @Test
     void headerTest() {
         List<String> headers = grid.getHeaders();
-        assertThat(headers, containsInAnyOrder(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated", " ").toArray()));
+        assertThat(headers, contains(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated", " ").toArray()));
     }
 }
