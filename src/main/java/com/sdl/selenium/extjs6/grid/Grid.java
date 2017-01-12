@@ -3,12 +3,17 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.*;
+import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -61,7 +66,7 @@ public class Grid extends Table {
         return !hasMask;
     }
 
-    private boolean hasMask(){
+    private boolean hasMask() {
         WebLocator mask = new WebLocator(this).withClasses("x-mask").withElxPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
         return mask.waitToRender(500);
     }
@@ -137,5 +142,12 @@ public class Grid extends Table {
         WebLocator body = new WebLocator(this).withClasses("x-grid-header-ct"); // TODO see if must add for all rows
         row.withContainer(body);
         return row.waitToRender(seconds * 1000L);
+    }
+
+    public List<String> getHeaders() {
+        List<String> headers = new ArrayList<>();
+        WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
+        Collections.addAll(headers, header.getText().split("\n"));
+        return headers;
     }
 }
