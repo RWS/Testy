@@ -12,6 +12,7 @@ public class TextAriaIntegrationTest extends TestBase {
 
     private Panel form = new Panel(null, "Form Fields").setClasses("x-panel-default-framed");
     private TextArea area = new TextArea(form, "TextArea:");
+    private ComboBox time = new ComboBox(form, "Time Field:");
 
     @BeforeClass
     public void startTest() {
@@ -20,9 +21,15 @@ public class TextAriaIntegrationTest extends TestBase {
     }
 
     @Test
-    public void comboBoxTest() {
+    public void textAreaTest() {
         assertTrue(area.setValue("New York"));
         assertEquals(area.getValue(), "New York");
+    }
+
+    @Test
+    public void comboBoxTest() {
+        assertTrue(time.setValue("2:45 AM"));
+        assertEquals(time.getValue(), "2:45 AM");
     }
 
 }

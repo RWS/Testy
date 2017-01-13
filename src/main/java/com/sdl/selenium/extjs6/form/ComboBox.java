@@ -42,7 +42,7 @@ public class ComboBox extends TextField implements ICombo {
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
-        if (clickIcon("arrow")) {
+        if (clickIcon("trigger")) {
             if (pagination) {
                 do {
                     if (selected = option.doClick()) {
@@ -57,7 +57,7 @@ public class ComboBox extends TextField implements ICombo {
                 Utils.sleep(20);
                 return true;
             } else {
-                clickIcon("arrow"); // to close combo
+                clickIcon("trigger"); // to close combo
             }
             LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
@@ -117,10 +117,10 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public List<String> getAllValues() {
-        clickIcon("arrow");
+        clickIcon("trigger");
         WebLocator comboList = new WebLocator(boundList).withClasses(listClass).withVisibility(true);
         String[] comboValues = comboList.getText().split("\\n");
-        clickIcon("arrow");
+        clickIcon("trigger");
         return Arrays.asList(comboValues);
     }
 }

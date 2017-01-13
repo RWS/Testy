@@ -6,6 +6,9 @@ import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class TextField extends WebLocator implements ITextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
@@ -39,7 +42,10 @@ public class TextField extends WebLocator implements ITextField {
             currentElement.clear();
             MultiThreadClipboardUtils.copyString(value);
             MultiThreadClipboardUtils.pasteString(this);
-            LOGGER.info("Set value(" + this + "): " + value + "'");
+            String info = this.toString();
+            //if(info.contains())
+//            "/password|/";
+            LOGGER.info("Set value(" +  this + "): " + value + "'");
             return true;
         }
         return false;
@@ -53,5 +59,16 @@ public class TextField extends WebLocator implements ITextField {
     public String getValue() {
         assertReady();
         return executor.getValue(this);
+    }
+
+    private static String REGEX = ".+123";
+    private static String INPUT = "dog123";
+
+    public static void main(String[] args) {
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(INPUT);
+        if(m.matches()){
+            LOGGER.debug("Contains doc!");
+        }
     }
 }

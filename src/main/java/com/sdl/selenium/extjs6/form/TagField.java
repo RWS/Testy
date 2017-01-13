@@ -52,7 +52,7 @@ public class TagField extends ComboBox {
     public boolean doSelect(SearchType searchType, long optionRenderMillis, String... values) {
         boolean selected = true;
         String info = toString();
-        if (clickIcon("arrow")) {
+        if (clickIcon("trigger")) {
             for (String value : values) {
                 WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                 selected = selected && option.doClick();
@@ -62,7 +62,7 @@ public class TagField extends ComboBox {
                     LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
                 }
             }
-            clickIcon("arrow"); // to close combo
+            clickIcon("trigger"); // to close combo
             LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return selected;
