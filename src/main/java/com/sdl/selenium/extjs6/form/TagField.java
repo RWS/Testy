@@ -42,7 +42,7 @@ public class TagField extends ComboBox {
     }
 
     public boolean select(SearchType searchType, String... values) {
-        boolean selected = doSelect(searchType, 300, false, values);
+        boolean selected = doSelect(searchType, 300, true, values);
         assertThat("Could not selected value on : " + this, selected, is(true));
         return selected;
     }
