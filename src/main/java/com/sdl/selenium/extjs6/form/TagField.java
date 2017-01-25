@@ -37,8 +37,18 @@ public class TagField extends ComboBox {
         return select(SearchType.EQUALS, values);
     }
 
+    public boolean select(boolean holdOpen, String... values) {
+        return select(SearchType.EQUALS, holdOpen, values);
+    }
+
     public boolean select(SearchType searchType, String... values) {
-        boolean selected = doSelect(searchType, 300, values);
+        boolean selected = doSelect(searchType, 300, false, values);
+        assertThat("Could not selected value on : " + this, selected, is(true));
+        return selected;
+    }
+
+    public boolean select(SearchType searchType, boolean holdOpen, String... values) {
+        boolean selected = doSelect(searchType, 300, holdOpen, values);
         assertThat("Could not selected value on : " + this, selected, is(true));
         return selected;
     }
@@ -49,21 +59,34 @@ public class TagField extends ComboBox {
      * @param optionRenderMillis eg. 300ms
      * @return true if value was selected
      */
-    public boolean doSelect(SearchType searchType, long optionRenderMillis, String... values) {
+    public boolean doSelect(SearchType searchType, long optionRenderMillis, boolean holdOpen, String... values) {
         boolean selected = true;
         String info = toString();
-        if (clickIcon("trigger")) {
+        if (holdOpen) {
+            if (clickIcon("trigger")) {
+                for (String value : values) {
+                    WebLocator option = getComboEl(value, optionRenderMillis, searchType);
+                    selected = selected && option.doClick();
+                    if (selected) {
+                        LOGGER.info("Set value(" + info + "): " + value);
+                    } else {
+                        LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+                    }
+                }
+                clickIcon("trigger"); // to close combo
+            }
+        } else {
             for (String value : values) {
+                clickIcon("trigger");
                 WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                 selected = selected && option.doClick();
                 if (selected) {
                     LOGGER.info("Set value(" + info + "): " + value);
                 } else {
                     LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+                    clickIcon("trigger");
                 }
             }
-            clickIcon("trigger"); // to close combo
-            LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return selected;
     }
