@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Keys;
 
 import java.util.Arrays;
 import java.util.List;
@@ -99,6 +100,12 @@ public class TagField extends ComboBox {
             removed = removed && closeEl.click();
         }
         return removed;
+    }
+
+    public boolean setValue(String value) {
+        assertReady();
+        WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
+        return executor.setValue(input, value) && input.sendKeys(Keys.ENTER) != null;
     }
 
     @Override

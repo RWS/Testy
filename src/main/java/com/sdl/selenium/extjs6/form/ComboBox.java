@@ -71,8 +71,15 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
-        WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
-        return new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+//        WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
+        boundList = boundList.withVisibility(true);
+        WebLocator item = new WebLocator(boundList).withTag("li").withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+//        for (SearchType type : searchType) {
+//            if (type.equals(SearchType.CONTAINS_ALL_CHILD_NODES)) {
+//                item.withTag("ul//ul");
+//            }
+//        }
+        return item;
     }
 
     public boolean select(String value, SearchType... searchType) {
