@@ -147,7 +147,7 @@ public class Grid extends Table {
     public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        Collections.addAll(headers, header.getText().split("\n"));
+        Collections.addAll(headers, header.getText().replaceAll(" ", "").split("\n"));
         return headers;
     }
 }
