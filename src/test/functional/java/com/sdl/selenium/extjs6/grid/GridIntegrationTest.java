@@ -42,4 +42,13 @@ public class GridIntegrationTest extends TestBase {
         List<String> headers = grid.getHeaders();
         assertThat(headers, contains(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated", " ").toArray()));
     }
+
+    @Test
+    void checkTest() {
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
+        Grid spreadsheet = new Grid().setTitle("Spreadsheet");
+        spreadsheet.ready(true);
+        assertThat(spreadsheet.check("1900", 3), is(true));
+        assertThat(spreadsheet.unCheck("1900", 3), is(true));
+    }
 }

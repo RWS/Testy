@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
@@ -149,5 +150,25 @@ public class Grid extends Table {
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
         Collections.addAll(headers, header.getText().replaceAll(" ", "").split("\n"));
         return headers;
+    }
+
+    public boolean check(String searchText, int columnIndex, SearchType... searchTypes) {
+        Row row = getRow(new Cell(columnIndex, searchText, searchTypes));
+        ready(true);
+        if (!row.getAttributeClass().contains("x-grid-item-selected")) {
+            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
+            checkBox.click();
+        }
+        return row.getAttributeClass().contains("x-grid-item-selected");
+    }
+
+    public boolean unCheck(String searchText, int columnIndex, SearchType... searchTypes) {
+        Row row = getRow(new Cell(columnIndex, searchText, searchTypes));
+        ready(true);
+        if (row.getAttributeClass().contains("x-grid-item-selected")) {
+            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
+            checkBox.click();
+        }
+        return !row.getAttributeClass().contains("x-grid-item-selected");
     }
 }

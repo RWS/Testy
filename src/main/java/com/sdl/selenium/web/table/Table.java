@@ -304,11 +304,11 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return text != null && text.trim().equals(compareText);
     }
 
-    public boolean checkboxColumnSelect(String searchText, int columnIndex) {
-        return checkboxColumnSelect(searchText, columnIndex, SearchType.EQUALS);
+    public boolean check(String searchText, int columnIndex) {
+        return check(searchText, columnIndex, SearchType.EQUALS);
     }
 
-    public boolean checkboxColumnSelect(String searchText, int columnIndex, SearchType... searchTypes) {
+    public boolean check(String searchText, int columnIndex, SearchType... searchTypes) {
         boolean selected = false;
         if (ready(true)) {
             CheckBox checkBox = new CheckBox().withContainer(getCell(searchText, columnIndex, searchTypes));
@@ -317,11 +317,11 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return selected;
     }
 
-    public boolean checkboxColumnDeselect(String searchText, int columnIndex) {
-        return checkboxColumnDeselect(searchText, columnIndex, SearchType.EQUALS);
+    public boolean unCheck(String searchText, int columnIndex) {
+        return unCheck(searchText, columnIndex, SearchType.EQUALS);
     }
 
-    public boolean checkboxColumnDeselect(String searchText, int columnIndex, SearchType... searchTypes) {
+    public boolean unCheck(String searchText, int columnIndex, SearchType... searchTypes) {
         boolean selected = false;
         if (ready(true)) {
             CheckBox checkBox = new CheckBox().withContainer(getCell(searchText, columnIndex, searchTypes));
