@@ -29,15 +29,16 @@ public class MultipleSelect extends ComboBox {
     }
 
     public boolean selectRows(String... values) {
+        return selectRows(SearchType.EQUALS, values);
+    }
+
+
+    public boolean selectRows(SearchType searchType, String... values) {
         boolean select = false;
         if (ready()) {
-//            sendKeys(Keys.CONTROL);
             for (String value : values) {
-                WebLocator el = new WebLocator(this).withText(value, SearchType.EQUALS);
+                WebLocator el = new WebLocator(this).withText(value, searchType);
                 select = el.click();
-                if (!select) {
-                    return false;
-                }
             }
         }
         return select;
