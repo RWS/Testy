@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-
 public class GridIntegrationTest extends TestBase {
 
     private Grid grid = new Grid().setTitle("Array Grid");
