@@ -9,7 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 
@@ -31,19 +32,19 @@ public class GridIntegrationTest extends TestBase {
         grid.getRow(2).assertReady();
     }
 
-    @Test
+    @Test (dependsOnMethods = "rowTest")
     void cellTest() {
         String cellValue = grid.getCell(4, new Cell(1, "3m Co"), new Cell(2, "$71.72")).getText();
         assertThat(cellValue, equalTo("0.03%"));
     }
 
-    @Test
+    @Test (dependsOnMethods = "cellTest")
     void headerTest() {
         List<String> headers = grid.getHeaders();
-        assertThat(headers, contains(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated", " ").toArray()));
+        assertThat(headers, contains(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated").toArray()));
     }
 
-    @Test
+    @Test (dependsOnMethods = "headerTest")
     void checkTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
