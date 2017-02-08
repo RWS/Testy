@@ -5,9 +5,6 @@ import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-
 public class TextField extends com.sdl.selenium.web.form.TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
@@ -24,13 +21,6 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     public TextField(WebLocator container, String label) {
         this(container);
         withLabel(label, SearchType.DEEP_CHILD_NODE);
-    }
-
-    // methods
-     public boolean assertSetValue(String value) {
-        boolean setted = setValue(value);
-        assertThat(setted, is(true));
-        return true;
     }
 
     public String getTriggerPath(String icon) {

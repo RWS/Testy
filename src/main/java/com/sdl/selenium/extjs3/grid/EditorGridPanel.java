@@ -219,7 +219,6 @@ public class EditorGridPanel extends GridPanel {
         return success;
     }
 
-
     public boolean setRowValue(String searchElement, int colIndex, String value) {
         boolean success = startEdit(searchElement, colIndex) && setRowValue(value);
         LOGGER.debug("setRowValue(" + searchElement + ", " + colIndex + "): " + value);

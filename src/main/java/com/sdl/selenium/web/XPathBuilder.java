@@ -1354,23 +1354,6 @@ public class XPathBuilder implements Cloneable {
         return addResultIndexToPath(returnPath);
     }
 
-    /**
-     * @return xpath
-     * @deprecated use getXPath()
-     */
-    public final String getPath() {
-        return getXPath();
-    }
-
-    /**
-     * @param disabled disabled
-     * @return String
-     * @deprecated use getXPath(boolean disabled)
-     */
-    public String getPath(boolean disabled) {
-        return getXPath(disabled);
-    }
-
     private String addResultIndexToPath(String xPath) {
         if (hasResultIdx()) {
             xPath = "(" + xPath + ")[" + getResultIdx() + "]";

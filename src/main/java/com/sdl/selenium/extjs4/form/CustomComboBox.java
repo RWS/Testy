@@ -7,8 +7,6 @@ import com.sdl.selenium.web.utils.Utils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class CustomComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = Logger.getLogger(CustomComboBox.class);
 
@@ -86,11 +84,5 @@ public class CustomComboBox extends TextField implements ICombo {
             LOGGER.debug("(" + this + ") The combo or arrow could not be located.");
         }
         return value;
-    }
-
-    public boolean assertSelect(String value) {
-        boolean selected = select(value);
-        assertThat("Could not selected value on : " + this, selected);
-        return selected;
     }
 }

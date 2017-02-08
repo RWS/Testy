@@ -1,9 +1,7 @@
 package com.sdl.selenium.web.form;
 
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,11 +50,8 @@ public class MultipleSelect extends ComboBox {
         List<String> list = null;
         if (ready()) {
             list = new ArrayList<>();
-            List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(new WebLocator(this).getXPath()));
-            for (WebElement element : elements) {
-                String text = element.getText();
-                LOGGER.debug(text);
-                list.add(text);
+            for (WebElement element : findElements()) {
+                list.add(element.getText());
             }
         }
         return list;

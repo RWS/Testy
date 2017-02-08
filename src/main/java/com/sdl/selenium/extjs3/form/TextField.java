@@ -84,16 +84,6 @@ public class TextField extends ExtJsComponent implements ITextField {
     }
 
     /**
-     * @deprecated use {@link #setValue(String)}
-     * @param value value
-     * @return true or false
-     */
-    public boolean assertSetValue(String value) {
-        setValue(value);
-        return true;
-    }
-
-    /**
      * getValue using xPath only, depending on the parameter
      *
      * @return string

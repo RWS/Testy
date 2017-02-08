@@ -43,34 +43,6 @@ public class UploadFile extends WebLocator implements Upload {
 
     /**
      * Upload file with AutoIT.
-     * Use only this: {@code button.upload("Browse", new String[]{"C:\\upload.exe", "C:\\text.txt"});}
-     * @deprecated The next version, replaced by {@link #upload(String, String)}.
-     * @param text     button text
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean upload(String text, String... filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
-        return upload(upload, filePath);
-    }
-
-    /**
-     * Upload file with AutoIT.
-     * Use only this: {@code button.upload("Browse", "C:\\text.txt")};}
-     *
-     * @param text     button text
-     * @param filePath e.g. "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean upload(String text, String filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
-        return upload(upload, filePath);
-    }
-
-    /**
-     * Upload file with AutoIT.
      * Use only this: button.upload("C:\\text.txt");
      *
      * @param filePath e.g. ""C:\\text.txt"
@@ -82,47 +54,8 @@ public class UploadFile extends WebLocator implements Upload {
         return upload(upload, filePath);
     }
 
-    /**
-     * Upload file with AutoIT.
-     * Use only this: button.upload("C:\\upload.exe", "C:\\text.txt");
-     * @deprecated The next version, replaced by {@link #upload(String)}.
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean upload(String... filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withType("file");
-        return upload(upload, filePath);
-    }
-
-    /**
-     * Upload file with AutoIT.
-     * Use only this: button.change("C:\\upload.exe", "C:\\text.txt");
-     * @deprecated The next version, replaced by {@link #change(String)}.
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean change(String... filePath) {
-        return change("Change", filePath);
-    }
-
     public boolean change(String filePath) {
         return change("Change", filePath);
-    }
-
-    /**
-     * Upload file with AutoIT.
-     * Use only this: {@code button.change("Change", new String[]{"C:\\upload.exe", "C:\\text.txt"});}
-     * @deprecated The next version, replaced by {@link #change(String, String)}.
-     * @param text e.g. "Change"
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean change(String text, String... filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
-        return upload(upload, filePath);
     }
 
     /**
@@ -152,19 +85,6 @@ public class UploadFile extends WebLocator implements Upload {
 
     /**
      * Upload file with AutoIT.
-     * Use only this: button.reUpload("C:\\upload.exe", "C:\\text.txt");
-     * @deprecated The next version, replaced by {@link #reUpload(String)}.
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean reUpload(String... filePath) {
-        WebLocator uploadButton = new WebLocator(this).withTag("span").withClasses("fileupload-exists").withElxPathSuffix("icon-refresh", "count(.//i[@class='icon-refresh']) > 0");
-        return upload(uploadButton, filePath);
-    }
-
-    /**
-     * Upload file with AutoIT.
      * Use only this: button.reUpload("C:\\text.txt");
      *
      * @param filePath e.g. "C:\\text.txt"
@@ -183,19 +103,6 @@ public class UploadFile extends WebLocator implements Upload {
     public String uploadedNameFile() {
         WebLocator upload = new WebLocator(this).withTag("span").withClasses("fileupload-preview");
         return upload.getText();
-    }
-
-    /**
-     * Upload file with AutoIT.
-     * Use only this: button.upload(this, "C:\\upload.exe", "C:\\text.txt");
-     * @deprecated The next version, replaced by {@link #upload(WebLocator, String)}.
-     * @param el the item that you click to open upload window
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true | false
-     */
-    @Deprecated
-    public boolean upload(WebLocator el, String... filePath) {
-        return executor.browse(el) && executor.upload(filePath);
     }
 
     /**

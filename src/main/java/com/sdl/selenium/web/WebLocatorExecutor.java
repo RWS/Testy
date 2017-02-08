@@ -82,8 +82,5 @@ public interface WebLocatorExecutor {
 
     boolean browse(WebLocator el);
 
-    @Deprecated
-    boolean upload(String... filePath);
-
     boolean upload(String filePath);
 }

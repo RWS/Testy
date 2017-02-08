@@ -110,33 +110,20 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     @Override
-    public TableCell getCell(int rowIndex, int columnIndex) {
+    public Cell getCell(int rowIndex, int columnIndex) {
         Row row = getRow(rowIndex);
-        return new TableCell(row, columnIndex).withInfoMessage("cell - Table");
+        return new Cell(row, columnIndex).withInfoMessage("cell - Table");
     }
 
     @Override
-    public TableCell getCell(String searchElement) {
+    public Cell getCell(String searchElement) {
         return getCell(searchElement, SearchType.EQUALS);
     }
 
     @Override
-    public TableCell getCell(String searchElement, SearchType ...searchTypes) {
+    public Cell getCell(String searchElement, SearchType ...searchTypes) {
         Row row = new Row(this);
-        return new TableCell(row).withText(searchElement, searchTypes);
-    }
-
-    /**
-     * @deprecated use {@link #getCell(int, int, String)}
-     * @param rowIndex row index
-     * @param columnIndex colum index
-     * @param text text
-     * @return TableCell
-     */
-    public TableCell getTableCell(int rowIndex, int columnIndex, String text) {
-        Row row = getRow(rowIndex);
-        String selector = new Cell().withText(text, SearchType.EQUALS).getXPath();
-        return new TableCell(row).withElxPath(selector + "[" + columnIndex + "]");
+        return new Cell(row).withText(searchElement, searchTypes);
     }
 
     public Cell getCell(int rowIndex, int columnIndex, String text) {
@@ -145,32 +132,9 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return new Cell(row).withElxPath(selector + "[" + columnIndex + "]");
     }
 
-    /**
-     * @deprecated use {@link #getCell(String, String, SearchType[])}
-     * @param searchElement text
-     * @param columnText text
-     * @param searchTypes see {@link SearchType}
-     * @return TableCell
-     */
-    public TableCell getTableCell(String searchElement, String columnText, SearchType... searchTypes) {
-        Row row = getRow(searchElement, SearchType.CONTAINS);
-        return new TableCell(row).withText(columnText, searchTypes);
-    }
-
     public Cell getCell(String searchElement, String columnText, SearchType... searchTypes) {
         Row row = getRow(searchElement, SearchType.CONTAINS);
         return new Cell(row).withText(columnText, searchTypes);
-    }
-
-    /**
-     * @deprecated use {@link #getCell(String, int, SearchType[])}
-     * @param searchElement text
-     * @param columnIndex column index
-     * @param searchTypes see {@link SearchType}
-     * @return TableCell
-     */
-    public TableCell getTableCell(String searchElement, int columnIndex, SearchType... searchTypes) {
-        return new TableCell(new Row(this, searchElement, searchTypes), columnIndex);
     }
 
     public Cell getCell(String searchElement, int columnIndex, SearchType... searchTypes) {
@@ -186,30 +150,9 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return new Row(this, indexRow, byCells).withInfoMessage("-Row");
     }
 
-    /**
-     * @deprecated use {@link #getCell(int, Cell...)}
-     * @param columnIndex column index
-     * @param byCells TableCell
-     * @return TableCell
-     */
-    public TableCell getCell(int columnIndex, TableCell... byCells) {
-        return new TableCell(getRow(byCells), columnIndex);
-    }
-
     @Override
     public Cell getCell(int columnIndex, Cell... byCells) {
         return new Cell(getRow(byCells), columnIndex);
-    }
-
-    /**
-     * @deprecated use {@link #getCell(int, String, Cell...)}
-     * @param columnIndex column index
-     * @param text text
-     * @param byCells TableCell
-     * @return TableCell
-     */
-    public TableCell getCell(int columnIndex, String text, TableCell... byCells) {
-        return new TableCell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
     }
 
     @Override

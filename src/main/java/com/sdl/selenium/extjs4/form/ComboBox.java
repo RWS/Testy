@@ -92,9 +92,4 @@ public class ComboBox extends TextField implements ICombo {
         }
         return value;
     }
-
-    @Deprecated
-    public boolean assertSelect(String value) {
-        return select(value);
-    }
 }

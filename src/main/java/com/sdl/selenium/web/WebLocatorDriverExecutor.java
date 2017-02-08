@@ -552,16 +552,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     /**
-     * @param filePath e.g. "C:\\upload.exe", "C:\\text.txt"
-     * @return true of false
-     * @deprecated The next version, replaced by {@link #upload(String)}.
-     */
-    @Deprecated
-    public boolean upload(String... filePath) {
-        return RunExe.getInstance().upload(filePath);
-    }
-
-    /**
      * @param filePath e.g. "C:\\text.txt"
      * @return true of false
      */

@@ -82,6 +82,4 @@ public class GridEditor extends Grid {
         }
         return success;
     }
-
-
 }

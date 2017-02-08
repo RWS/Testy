@@ -21,11 +21,6 @@ public final class WebLocatorUtils extends WebLocator {
 
     }
 
-    @Deprecated
-    public static String getPageHtmlSource() {
-        return getPageSource();
-    }
-
     public static String getPageSource() {
         return WebDriverConfig.getDriver().getPageSource();
     }
@@ -33,7 +28,6 @@ public final class WebLocatorUtils extends WebLocator {
     public static Object doExecuteScript(String script, Object... objects) {
         return executor.executeScript(script, objects);
     }
-
 
     /**
      * <p>Generate JS script to validate and test xpath of all WebLocator's.

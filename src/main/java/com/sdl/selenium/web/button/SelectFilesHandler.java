@@ -41,18 +41,6 @@ public class SelectFilesHandler {
 
     /**
      * Upload file with AutoIT exe
-     * Use only this: button.browseWithAutoIT("C:\\upload.exe", "C:\\text.txt");
-     * @deprecated The next version, replaced by {@link #browseWithAutoIT(String)}.
-     * @param filePath   path to upload.exe
-     * @return true or false
-     */
-    public boolean browseWithAutoIT(String... filePath) {
-        openBrowseWindow();
-        return RunExe.getInstance().upload(filePath);
-    }
-
-    /**
-     * Upload file with AutoIT exe
      * Use only this: button.browseWithAutoIT("C:\\text.txt");
      *
      * @param filePath   path to file

@@ -427,14 +427,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return new GridRow(this);
     }
 
-
-    /**
-     * @deprecated use {@link #getRow(int)}
-     */
-    public GridRow getRowLocator(int rowIndex) {
-        return new GridRow(this, rowIndex);
-    }
-
     @Override
     public GridRow getRow(int rowIndex) {
         return new GridRow(this, rowIndex);
@@ -490,17 +482,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         WebLocator gridColTd = new WebLocator(gridRow).withElxPath("//td[" + columnIndex + "]");
         return new GridCell(gridColTd, columnText, searchTypes);
     }
-
-//    /**
-//     * @param searchElement element
-//     * @param columnIndex   element
-//     * @return new GridCell
-//     * @deprecated use getCell(...);
-//     */
-//    protected GridCell getGridCell(String searchElement, int columnIndex) {
-//        GridRow gridRow = getGridRow(searchElement, SearchType.CONTAINS);
-//        return new GridCell(columnIndex).withContainer(gridRow);
-//    }
 
     public GridCell getGridCell(String searchElement, String searchColumnId, int columnIndex) {
         GridRow gridRow = new GridRow(this, searchColumnId, searchElement, SearchType.CONTAINS);

@@ -1024,23 +1024,6 @@ public abstract class WebLocatorAbstractBuilder {
         return pathBuilder.getXPath(disabled);
     }
 
-    /**
-     * @deprecated use getXPath()
-     * @return xPath
-     */
-    public final String getPath() {
-        return getXPath();
-    }
-
-    /**
-     * @deprecated use getXPath(boolean disabled)
-     * @param disabled true or false
-     * @return xPath
-     */
-    public String getPath(boolean disabled) {
-        return getXPath(disabled);
-    }
-
     protected String applyTemplate(String key, Object... arguments) {
         return pathBuilder.applyTemplate(key, arguments);
     }

@@ -47,18 +47,6 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     /**
-     * @deprecated use {@link #doSelect(String, SearchType, long)}
-     * @param value value
-     * @param searchType {@link SearchType}
-     * @param optionRenderMillis 300
-     * @return true or false
-     */
-    @Deprecated
-    public boolean select(String value, SearchType searchType, long optionRenderMillis) {
-        return doSelect(value, searchType, optionRenderMillis);
-    }
-
-    /**
      * @param value value
      * @param searchType {@link SearchType}
      * @param optionRenderMillis 300
@@ -143,10 +131,5 @@ public class ComboBox extends TextField implements ICombo {
     @Override
     public boolean select(String value) {
         return select(value, SearchType.EQUALS);
-    }
-
-    @Deprecated
-    public boolean assertSelect(String value) {
-        return select(value);
     }
 }
