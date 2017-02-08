@@ -54,6 +54,19 @@ public class UploadFile extends WebLocator implements Upload {
         return upload(upload, filePath);
     }
 
+    /**
+     * Upload file with AutoIT.
+     * Use only this: {@code button.upload("Browse", "C:\\text.txt")};}
+     *
+     * @param text     button text
+     * @param filePath e.g. "C:\\text.txt"
+     * @return true | false
+     */
+    public boolean upload(String text, String filePath) {
+        WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
+        return upload(upload, filePath);
+    }
+
     public boolean change(String filePath) {
         return change("Change", filePath);
     }
