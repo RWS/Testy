@@ -14,9 +14,9 @@ public class UploadButtonTest {
                 {new UploadButton(), "//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new UploadButton(container, "Upload"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[.='Upload']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new UploadButton(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
-                {new UploadButton(container).withId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
-                {new UploadButton(container).withElxPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
-                {new UploadButton().withElxPath("//*[text()='Download']"), "//*[text()='Download']"},
+                {new UploadButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+                {new UploadButton(container).setElPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
+                {new UploadButton().setElPath("//*[text()='Download']"), "//*[text()='Download']"},
         };
     }
 

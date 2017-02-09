@@ -9,16 +9,16 @@ public class TextArea extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextArea.class);
 
     public TextArea() {
-        withClassName("TextArea");
+        setClassName("TextArea");
     }
 
     public TextArea(WebLocator container){
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TextArea(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE);
+        setLabel(label, SearchType.DEEP_CHILD_NODE);
     }
 }

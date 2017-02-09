@@ -20,24 +20,24 @@ public class MessageBox extends WebLocator {
     private Button noButton = new Button(this, NO_TEXT);
 
     private MessageBox() {
-        withClassName("MessageBox");
-        withBaseCls("x-message-box");
-        withExcludeClasses("x-hidden-offsets");
-        WebLocator header = new WebLocator().withClasses("x-header");
-        withTemplateTitle(new WebLocator(header));
-        withTemplate("msg", "count(*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
+        setClassName("MessageBox");
+        setBaseCls("x-message-box");
+        setExcludeClasses("x-hidden-offsets");
+        WebLocator header = new WebLocator().setClasses("x-header");
+        setTemplateTitle(new WebLocator(header));
+        setTemplate("msg", "count(*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
     }
 
     public MessageBox(String title) {
         this();
-        withTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS);
     }
 
     public MessageBox(String title, String msg, SearchType... msgSearchTypes) {
         this(title);
         WebLocator body = new WebLocator().setClasses("x-window-body").setRoot("");
         WebLocator textEl = new WebLocator(body).setText(msg, msgSearchTypes);
-        withElxPathSuffix("msg", "count(" + textEl.getXPath() + ") > 0");
+        setElPathSuffix("msg", "count(" + textEl.getXPath() + ") > 0");
     }
 
     public Button getOkButton() {
@@ -57,7 +57,7 @@ public class MessageBox extends WebLocator {
     }
 
     public String getMessage() {
-        WebLocator mbTextElement = new WebLocator(this).withClasses("x-window-text");
+        WebLocator mbTextElement = new WebLocator(this).setClasses("x-window-text");
         return mbTextElement.getText();
     }
 
@@ -94,7 +94,7 @@ public class MessageBox extends WebLocator {
     }
 
     public boolean close() {
-        WebLocator close = new WebLocator(this).withClasses("x-tool-close");
+        WebLocator close = new WebLocator(this).setClasses("x-tool-close");
         return close.click();
     }
 

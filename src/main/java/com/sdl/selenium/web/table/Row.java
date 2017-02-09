@@ -12,39 +12,39 @@ public class Row extends AbstractRow {
     private static final Logger LOGGER = LoggerFactory.getLogger(Row.class);
 
     public Row() {
-        withRenderMillis(200);
-        withClassName("Row");
-        withTag("tr");
+        setRenderMillis(200);
+        setClassName("Row");
+        setTag("tr");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public Row(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Row(WebLocator container, int indexRow) {
         this(container);
-        withPosition(indexRow);
+        setPosition(indexRow);
     }
 
     public Row(WebLocator table, String searchElement, SearchType... searchTypes) {
         this(table);
-        withText(searchElement, searchTypes);
+        setText(searchElement, searchTypes);
     }
 
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
-        withChildNodes(cells);
+        setChildNodes(cells);
     }
 
     public Row(WebLocator table, int indexRow, AbstractCell... cells) {
         this(table, indexRow);
-        withChildNodes(cells);
+        setChildNodes(cells);
     }
 
     public List<String> getCellsText() {
-        WebLocator columnsEl = new WebLocator(this).withTag("td");
+        WebLocator columnsEl = new WebLocator(this).setTag("td");
         int columns = columnsEl.size() + 1;
 
         List<String> list = new ArrayList<String>();

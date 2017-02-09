@@ -8,18 +8,18 @@ import com.sdl.selenium.web.WebLocator;
 public class DownloadLink extends ExtJsComponent implements Download {
 
     public DownloadLink() {
-        withClassName("DownloadLink");
-        withTag("a");
+        setClassName("DownloadLink");
+        setTag("a");
     }
 
     public DownloadLink(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public DownloadLink(WebLocator container, String text) {
         this(container);
-        withText(text, SearchType.EQUALS);
+        setText(text, SearchType.EQUALS);
     }
 
     /**

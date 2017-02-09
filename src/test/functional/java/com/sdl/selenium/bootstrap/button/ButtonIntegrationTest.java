@@ -35,29 +35,29 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test
     public void shouldFindElementWithChildNode() {
-        UneditableInput input = new UneditableInput().withLabel("Execute");
+        UneditableInput input = new UneditableInput().setLabel("Execute");
 
-        Form form = new Form().withTitle("Page Object And Page Factory").withChildNodes(input);
+        Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
 
         assertTrue(form.ready());
     }
 
     @Test
     public void shouldFindElementWithChildNodes() {
-        UneditableInput input = new UneditableInput().withLabel("Execute");
-        SelectPicker picker = new SelectPicker().withLabel("Execute");
+        UneditableInput input = new UneditableInput().setLabel("Execute");
+        SelectPicker picker = new SelectPicker().setLabel("Execute");
 
-        Form form = new Form().withTitle("Page Object And Page Factory").withChildNodes(input, picker);
+        Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input, picker);
 
         assertTrue(form.ready());
     }
 
     @Test
     public void shouldFindElementWithChildNodeThatHasContainerSelf() {
-        UneditableInput input = new UneditableInput().withLabel("Execute");
+        UneditableInput input = new UneditableInput().setLabel("Execute");
 
-        Form form = new Form().withTitle("Page Object And Page Factory").withChildNodes(input);
-        input.withContainer(form);
+        Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
+        input.setContainer(form);
 
         assertTrue(form.ready());
     }

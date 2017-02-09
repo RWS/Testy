@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * Button saveButton = new Button().withText("Save");
+ * Button saveButton = new Button().setText("Save");
  * saveButton.click();
  * }</pre>
  */
@@ -30,26 +30,26 @@ public class Button extends WebLocator implements IButton {
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
         String key = "icon-cls";
-        withElxPathSuffix(key, applyTemplate(key, iconCls));
+        setElPathSuffix(key, applyTemplate(key, iconCls));
         return (T) this;
     }
 
     public Button() {
-        withClassName("Button");
-        withBaseCls("btn");
-        withTag("button");
-        withTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+        setClassName("Button");
+        setBaseCls("btn");
+        setTag("button");
+        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
     public Button(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Button(WebLocator container, String text) {
         this(container);
-        withText(text);
-        withSearchTextType(SearchType.EQUALS);
+        setText(text);
+        setSearchTextType(SearchType.EQUALS);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Button extends WebLocator implements IButton {
      * }</pre>
      * <p>Example:</p>
      * <pre>{@code
-     * Button disableButton = new Button().withText("DisableBtn");
+     * Button disableButton = new Button().setText("DisableBtn");
      * disableButton.isDisabled();
      * }</pre>
      *

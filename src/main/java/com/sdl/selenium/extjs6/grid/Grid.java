@@ -23,36 +23,36 @@ public class Grid extends Table {
     private static final Logger LOGGER = LoggerFactory.getLogger(Grid.class);
 
     public Grid() {
-        withClassName("Grid");
-        withBaseCls("x-grid");
-        withTag("*");
-        WebLocator header = new WebLocator().withClasses("x-title").withRoot("//");
-        withTemplateTitle(new WebLocator(header));
+        setClassName("Grid");
+        setBaseCls("x-grid");
+        setTag("*");
+        WebLocator header = new WebLocator().setClasses("x-title").setRoot("//");
+        setTemplateTitle(new WebLocator(header));
     }
 
     public Grid(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Row getRow(int rowIndex) {
-        return new Row(this, rowIndex).withTag("table").withInfoMessage("-Row");
+        return new Row(this, rowIndex).setTag("table").setInfoMessage("-Row");
     }
 
     public Row getRow(String searchElement) {
-        return new Row(this, searchElement, SearchType.EQUALS).withTag("table").withInfoMessage("-Row");
+        return new Row(this, searchElement, SearchType.EQUALS).setTag("table").setInfoMessage("-Row");
     }
 
     public Row getRow(String searchElement, SearchType... searchTypes) {
-        return new Row(this, searchElement, searchTypes).withTag("table").withInfoMessage("-Row");
+        return new Row(this, searchElement, searchTypes).setTag("table").setInfoMessage("-Row");
     }
 
     public Row getRow(Cell... byCells) {
-        return new Row(this, byCells).withTag("table").withInfoMessage("-Row");
+        return new Row(this, byCells).setTag("table").setInfoMessage("-Row");
     }
 
     public Row getRow(int indexRow, Cell... byCells) {
-        return new Row(this, indexRow, byCells).withTag("table").withInfoMessage("-Row");
+        return new Row(this, indexRow, byCells).setTag("table").setInfoMessage("-Row");
     }
 
     public boolean waitToActivate(int seconds) {
@@ -68,7 +68,7 @@ public class Grid extends Table {
     }
 
     private boolean hasMask() {
-        WebLocator mask = new WebLocator(this).withClasses("x-mask").withElxPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
+        WebLocator mask = new WebLocator(this).setClasses("x-mask").setElPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
         return mask.waitToRender(500);
     }
 
@@ -139,9 +139,9 @@ public class Grid extends Table {
     }
 
     public boolean waitToPopulate(int seconds) {
-        Row row = getRow(1).withVisibility(true).setRoot("//..//").withInfoMessage("first Row");
-        WebLocator body = new WebLocator(this).withClasses("x-grid-header-ct"); // TODO see if must add for all rows
-        row.withContainer(body);
+        Row row = getRow(1).setVisibility(true).setRoot("//..//").setInfoMessage("first Row");
+        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct"); // TODO see if must add for all rows
+        row.setContainer(body);
         return row.waitToRender(seconds * 1000L);
     }
 

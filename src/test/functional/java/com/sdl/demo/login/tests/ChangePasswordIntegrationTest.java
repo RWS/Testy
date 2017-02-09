@@ -12,7 +12,7 @@ import static org.hamcrest.core.Is.is;
 
 public class ChangePasswordIntegrationTest extends TestBase {
 
-    private Button preferencesButton = new Button().withText("Preferences");
+    private Button preferencesButton = new Button().setText("Preferences");
 
     private ChangePasswordWindow changePasswordWindow = new ChangePasswordWindow();
 

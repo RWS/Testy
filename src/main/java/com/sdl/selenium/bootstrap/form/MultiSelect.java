@@ -26,24 +26,24 @@ import java.util.List;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * MultiSelect multiSelect = new MultiSelect().withLabel("Source:");
+ * MultiSelect multiSelect = new MultiSelect().setLabel("Source:");
  * multiSelect.select("Cheese", "Tomatoes");
  * }</pre>
  */
 public class MultiSelect extends SelectPicker {
 
     public MultiSelect() {
-        super.withClassName("MultiSelect");
+        super.setClassName("MultiSelect");
     }
 
     public MultiSelect(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public MultiSelect(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class MultiSelect extends SelectPicker {
         click();
         List<String> list = new ArrayList<>();
         WebLocator group = new WebLocator().setClasses("btn-group", "open");
-        WebLocator li = new WebLocator(group).withTag("li").withCls("active");
-        WebLocator label = new WebLocator(li).withTag("label");
+        WebLocator li = new WebLocator(group).setTag("li").setCls("active");
+        WebLocator label = new WebLocator(li).setTag("label");
         label.ready();
         List<WebElement> elements = WebDriverConfig.getDriver().findElements(By.xpath(label.getXPath()));
         for (WebElement element : elements) {

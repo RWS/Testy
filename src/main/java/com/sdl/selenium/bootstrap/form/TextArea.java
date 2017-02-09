@@ -9,11 +9,11 @@ public class TextArea extends com.sdl.selenium.web.form.TextArea {
 
     public TextArea(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TextArea(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 }

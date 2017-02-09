@@ -9,18 +9,18 @@ public class InputAppend extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(InputAppend.class);
 
     public InputAppend() {
-        withClassName("InputAppend");
-        withType("text");
+        setClassName("InputAppend");
+        setType("text");
     }
 
     public InputAppend(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public InputAppend(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     /**
@@ -28,7 +28,7 @@ public class InputAppend extends TextField {
      * @return true | false
      */
     public boolean append() {
-        WebLocator appendEl = new WebLocator(this).withElxPath("//following-sibling::*").withInfoMessage("append");
+        WebLocator appendEl = new WebLocator(this).setElPath("//following-sibling::*").setInfoMessage("append");
         return appendEl.click();
     }
 }

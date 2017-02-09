@@ -14,34 +14,34 @@ import java.util.Locale;
 public class DateField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
-    private WebLocator calendarLayer = new WebLocator("x-layer").withStyle("visibility: visible;");
+    private WebLocator calendarLayer = new WebLocator("x-layer").setStyle("visibility: visible;");
     private Button monthYearButton = new Button(calendarLayer);
-    private WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).withInfoMessage("Ok");
+    private WebLocator selectOkButton = new WebLocator("x-date-mp-ok", calendarLayer).setInfoMessage("Ok");
     private WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-date-mp").setVisibility(true);
     private WebLocator nextYears = new WebLocator(yearAndMonth).setClasses("x-date-mp-next").setVisibility(true);
     private WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-date-mp-prev").setVisibility(true);
-    private WebLocator yearContainer = new WebLocator(yearAndMonth).withClasses("x-date-mp-year");
-    private WebLocator monthContainer = new WebLocator(yearAndMonth).withClasses("x-date-mp-month");
-    private WebLocator dayInner = new WebLocator(calendarLayer).withClasses("x-date-inner");
-    private WebLocator dayContainer = new WebLocator(dayInner).withClasses("x-date-active");
+    private WebLocator yearContainer = new WebLocator(yearAndMonth).setClasses("x-date-mp-year");
+    private WebLocator monthContainer = new WebLocator(yearAndMonth).setClasses("x-date-mp-month");
+    private WebLocator dayInner = new WebLocator(calendarLayer).setClasses("x-date-inner");
+    private WebLocator dayContainer = new WebLocator(dayInner).setClasses("x-date-active");
 
     public DateField() {
-        withClassName("DateField");
+        setClassName("DateField");
     }
 
     public DateField(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public DateField(WebLocator container, String cls) {
         this(container);
-        withClasses(cls);
+        setClasses(cls);
     }
 
     public DateField(String name, WebLocator container) {
         this(container);
-        withName(name);
+        setName(name);
     }
 
     /**
@@ -58,18 +58,18 @@ public class DateField extends TextField {
         if (!fullDate.contains(month) || !fullDate.contains(year)) {
             monthYearButton.click();
             goToYear(year, fullDate);
-            WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).withInfoMessage("year " + year);
+            WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setInfoMessage("year " + year);
             yearEl.click();
-            WebLocator yearContainer1 = new WebLocator(yearAndMonth).withClasses("x-date-mp-year", "x-date-mp-sel");
+            WebLocator yearContainer1 = new WebLocator(yearAndMonth).setClasses("x-date-mp-year", "x-date-mp-sel");
             WebLocator yearEl1 = new WebLocator(yearContainer1).setText(year, SearchType.EQUALS);
             if (!yearEl1.ready(1)) {
                 yearEl.click();
             }
-            WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).withInfoMessage("month " + month);
+            WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).setInfoMessage("month " + month);
             monthEl.click();
             selectOkButton.click();
         }
-        WebLocator dayEl = new WebLocator(dayContainer).withText(day, SearchType.EQUALS).withInfoMessage("day " + day);
+        WebLocator dayEl = new WebLocator(dayContainer).setText(day, SearchType.EQUALS).setInfoMessage("day " + day);
         dayEl.click();
         return true;
     }
@@ -80,7 +80,7 @@ public class DateField extends TextField {
         int con = yearInt > currentYear ? -4 : 4;
         int count = (int) Math.ceil((yearInt - currentYear - con) / 10);
         selectYearPage(count);
-        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).withInfoMessage("year " + year);
+        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setInfoMessage("year " + year);
         if (!yearEl.waitToRender(200)) {
             selectYearPage(count > 0 ? 1 : -1);
         }

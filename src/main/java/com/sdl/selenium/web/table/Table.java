@@ -15,13 +15,13 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     private int timeout = 30;
 
     public Table() {
-        withClassName("Table");
-        withTag("table");
+        setClassName("Table");
+        setTag("table");
     }
 
     public Table(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     @Override
     public int getCount() {
         if (ready()) {
-            WebLocator body = new WebLocator(this).withTag("tbody");
+            WebLocator body = new WebLocator(this).setTag("tbody");
             return new Row(body).size();
         } else {
             LOGGER.warn("table is not ready to be used");
@@ -98,7 +98,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     public Row getRow(int rowIndex) {
-        return new Row(this, rowIndex).withInfoMessage("row - Table");
+        return new Row(this, rowIndex).setInfoMessage("row - Table");
     }
 
     public Row getRow(String searchElement) {
@@ -112,7 +112,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     @Override
     public Cell getCell(int rowIndex, int columnIndex) {
         Row row = getRow(rowIndex);
-        return new Cell(row, columnIndex).withInfoMessage("cell - Table");
+        return new Cell(row, columnIndex).setInfoMessage("cell - Table");
     }
 
     @Override
@@ -123,18 +123,18 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     @Override
     public Cell getCell(String searchElement, SearchType ...searchTypes) {
         Row row = new Row(this);
-        return new Cell(row).withText(searchElement, searchTypes);
+        return new Cell(row).setText(searchElement, searchTypes);
     }
 
     public Cell getCell(int rowIndex, int columnIndex, String text) {
         Row row = getRow(rowIndex);
-        String selector = new Cell().withText(text, SearchType.EQUALS).getXPath();
-        return new Cell(row).withElxPath(selector + "[" + columnIndex + "]");
+        String selector = new Cell().setText(text, SearchType.EQUALS).getXPath();
+        return new Cell(row).setElPath(selector + "[" + columnIndex + "]");
     }
 
     public Cell getCell(String searchElement, String columnText, SearchType... searchTypes) {
         Row row = getRow(searchElement, SearchType.CONTAINS);
-        return new Cell(row).withText(columnText, searchTypes);
+        return new Cell(row).setText(columnText, searchTypes);
     }
 
     public Cell getCell(String searchElement, int columnIndex, SearchType... searchTypes) {
@@ -143,11 +143,11 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     @Override
     public Row getRow(Cell... byCells) {
-        return new Row(this, byCells).withInfoMessage("-Row");
+        return new Row(this, byCells).setInfoMessage("-Row");
     }
 
     public Row getRow(int indexRow, Cell... byCells) {
-        return new Row(this, indexRow, byCells).withInfoMessage("-Row");
+        return new Row(this, indexRow, byCells).setInfoMessage("-Row");
     }
 
     @Override
@@ -197,7 +197,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     public List<List<String>> getCellsText() {
-        WebLocator parentEl = new WebLocator(this).withTag("tbody");
+        WebLocator parentEl = new WebLocator(this).setTag("tbody");
         Row rowsEl = new Row(parentEl);
         Row rowEl = new Row(parentEl, 1);
         Cell columnsEl = new Cell(rowEl);
@@ -254,7 +254,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     public boolean check(String searchText, int columnIndex, SearchType... searchTypes) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().withContainer(getCell(searchText, columnIndex, searchTypes));
+            CheckBox checkBox = new CheckBox().setContainer(getCell(searchText, columnIndex, searchTypes));
             selected = checkBox.isSelected() || checkBox.click();
         }
         return selected;
@@ -267,7 +267,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     public boolean unCheck(String searchText, int columnIndex, SearchType... searchTypes) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().withContainer(getCell(searchText, columnIndex, searchTypes));
+            CheckBox checkBox = new CheckBox().setContainer(getCell(searchText, columnIndex, searchTypes));
             selected = !checkBox.isSelected() || checkBox.click();
         }
         return selected;
@@ -278,9 +278,9 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     public boolean waitToPopulate(int seconds) {
-        Row row = getRow(1).withVisibility(true).withInfoMessage("first Row");
-        WebLocator body = new WebLocator(this).withTag("tbody"); // TODO see if must add for all rows
-        row.withContainer(body);
+        Row row = getRow(1).setVisibility(true).setInfoMessage("first Row");
+        WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
+        row.setContainer(body);
         return row.waitToRender(seconds * 1000L);
     }
 

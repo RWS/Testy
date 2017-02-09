@@ -14,9 +14,9 @@ public class TextFieldTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new TextField(),                                       "//input[contains(concat(' ', @class, ' '), ' x-form-text ')]"},
-                {new TextField().withClasses("cls"),                    "//input[contains(concat(' ', @class, ' '), ' x-form-text ') and contains(concat(' ', @class, ' '), ' cls ')]"},
+                {new TextField().setClasses("cls"),                    "//input[contains(concat(' ', @class, ' '), ' x-form-text ') and contains(concat(' ', @class, ' '), ' cls ')]"},
                 {new TextField(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-text ')]"},
-                {new TextField(container).withElxPath("//table//tr[1]"),"//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
+                {new TextField(container).setElPath("//table//tr[1]"),"//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
                 {new TextField(container, "LabelText"),                 "//*[contains(concat(' ', @class, ' '), ' container ')]//label[count(*//text()[contains(.,'LabelText')]) > 0]//following-sibling::*//input[contains(concat(' ', @class, ' '), ' x-form-text ')]"},
         };
     }

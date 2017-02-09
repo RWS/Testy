@@ -63,84 +63,84 @@ public class InternationalizedWebLocatorTest {
     @Test
     public void setTextForBaseLanguage() {
         InternationalizationUtils.setCurrentLanguage("English");
-        locator = new WebLocator().withText("car");
+        locator = new WebLocator().setText("car");
         assertThat(locator.getXPath(), containsString("car"));
     }
 
     @Test
     public void setTextForDefinedLanguage() {
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withText("car");
+        locator = new WebLocator().setText("car");
         assertThat(locator.getXPath(), containsString("voiture"));
     }
 
     @Test
     public void setTextForDefinedLanguagesWithSpecialCharacters() {
         InternationalizationUtils.setCurrentLanguage("Romanian");
-        locator = new WebLocator().withText("car");
+        locator = new WebLocator().setText("car");
         assertThat(locator.getXPath(), containsString("mașină"));
 
         InternationalizationUtils.setCurrentLanguage("Japanese");
-        locator = new WebLocator().withText("car");
+        locator = new WebLocator().setText("car");
         assertThat(locator.getXPath(), containsString("車"));
 
         InternationalizationUtils.setCurrentLanguage("Arabic");
-        locator = new WebLocator().withText("car");
+        locator = new WebLocator().setText("car");
         assertThat(locator.getXPath(), containsString("سيارة"));
     }
 
     @Test
     public void setTextUsingOtherCsvRecordThanTheFirstOne() {
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withText("negative");
+        locator = new WebLocator().setText("negative");
         assertThat(locator.getXPath(), containsString("négatif"));
     }
 
     @Test
     public void setTextForLanguageWithNullValue() {
         InternationalizationUtils.setCurrentLanguage("Romanian");
-        locator = new WebLocator().withText("negative");
+        locator = new WebLocator().setText("negative");
         assertThat(locator.getXPath(), containsString("Missing Romanian text for: negative"));
     }
 
     @Test
     public void setLabelForDefinedLanguagesWithSpecialCharacters() {
         InternationalizationUtils.setCurrentLanguage("Romanian");
-        locator = new WebLocator().withLabel("car");
+        locator = new WebLocator().setLabel("car");
         assertThat(locator.getXPath(), containsString("mașină"));
 
         InternationalizationUtils.setCurrentLanguage("Japanese");
-        locator = new WebLocator().withLabel("car");
+        locator = new WebLocator().setLabel("car");
         assertThat(locator.getXPath(), containsString("車"));
 
         InternationalizationUtils.setCurrentLanguage("Arabic");
-        locator = new WebLocator().withLabel("car");
+        locator = new WebLocator().setLabel("car");
         assertThat(locator.getXPath(), containsString("سيارة"));
 
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withLabel("negative");
+        locator = new WebLocator().setLabel("negative");
         assertThat(locator.getXPath(), containsString("négatif"));
     }
 
     @Test
     public void setLabelAndTextForDefinedLanguagesWithSpecialCharacters() {
         InternationalizationUtils.setCurrentLanguage("Romanian");
-        locator = new WebLocator().withLabel("car").withText("bird");
+        locator = new WebLocator().setLabel("car").setText("bird");
         assertThat(locator.getXPath(), containsString("mașină"));
         assertThat(locator.getXPath(), containsString("pasăre"));
 
         InternationalizationUtils.setCurrentLanguage("Japanese");
-        locator = new WebLocator().withLabel("car").withText("bird");
+        locator = new WebLocator().setLabel("car").setText("bird");
         assertThat(locator.getXPath(), containsString("車"));
         assertThat(locator.getXPath(), containsString("鳥"));
 
         InternationalizationUtils.setCurrentLanguage("Arabic");
-        locator = new WebLocator().withLabel("car").withText("bird");
+        locator = new WebLocator().setLabel("car").setText("bird");
         assertThat(locator.getXPath(), containsString("سيارة"));
         assertThat(locator.getXPath(), containsString("انفلونزا"));
 
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withLabel("negative").withText("bird");
+        locator = new WebLocator().setLabel("negative").setText("bird");
         assertThat(locator.getXPath(), containsString("négatif"));
         assertThat(locator.getXPath(), containsString("oiseau"));
     }
@@ -148,33 +148,33 @@ public class InternationalizedWebLocatorTest {
     @Test
     public void setLabelAndTextForDefinedLanguagesWithVariables() {
         InternationalizationUtils.setCurrentLanguage("Romanian");
-        locator = new WebLocator().withLabel("car with variables 10, 20, StringValue and html");
+        locator = new WebLocator().setLabel("car with variables 10, 20, StringValue and html");
         assertThat(locator.getXPath(), containsString("mașină with variables 10, 20, StringValue and html"));
 
         InternationalizationUtils.setCurrentLanguage("Japanese");
-        locator = new WebLocator().withLabel("bird with variables 10, 20, StringValue and html");
+        locator = new WebLocator().setLabel("bird with variables 10, 20, StringValue and html");
         assertThat(locator.getXPath(), containsString("鳥 with variables 10, 20, StringValue and html"));
 
         InternationalizationUtils.setCurrentLanguage("Arabic");
-        locator = new WebLocator().withLabel("car with variables 10, 20, StringValue and html");
+        locator = new WebLocator().setLabel("car with variables 10, 20, StringValue and html");
         assertThat(locator.getXPath(), containsString("with variables 10, 20, StringValue and html سيارة"));
     }
 
     @Test
     public void overrideTextInternationalizationFlagAtWebLocatorLevel() {
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withText("car");
+        locator = new WebLocator().setText("car");
         assertThat(locator.getXPath(), containsString("voiture"));
 
-        locator = new WebLocator().withText("car", SearchType.NOT_INTERNATIONALIZED);
+        locator = new WebLocator().setText("car", SearchType.NOT_INTERNATIONALIZED);
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
 
-        locator = new WebLocator().withText("car").setSearchTextType(SearchType.NOT_INTERNATIONALIZED);
+        locator = new WebLocator().setText("car").setSearchTextType(SearchType.NOT_INTERNATIONALIZED);
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
 
-        locator = new WebLocator().setSearchTextType(SearchType.NOT_INTERNATIONALIZED).withText("car");
+        locator = new WebLocator().setSearchTextType(SearchType.NOT_INTERNATIONALIZED).setText("car");
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
 
@@ -186,18 +186,18 @@ public class InternationalizedWebLocatorTest {
     @Test
     public void overrideTitleInternationalizationFlagAtWebLocatorLevel() {
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withTitle("car");
+        locator = new WebLocator().setTitle("car");
         assertThat(locator.getXPath(), containsString("voiture"));
 
-        locator = new WebLocator().withTitle("car", SearchType.NOT_INTERNATIONALIZED);
+        locator = new WebLocator().setTitle("car", SearchType.NOT_INTERNATIONALIZED);
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
 
-        locator = new WebLocator().withTitle("car").setSearchTitleType(SearchType.NOT_INTERNATIONALIZED);
+        locator = new WebLocator().setTitle("car").setSearchTitleType(SearchType.NOT_INTERNATIONALIZED);
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
 
-        locator = new WebLocator().setSearchTitleType(SearchType.NOT_INTERNATIONALIZED).withTitle("car");
+        locator = new WebLocator().setSearchTitleType(SearchType.NOT_INTERNATIONALIZED).setTitle("car");
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
     }
@@ -205,10 +205,10 @@ public class InternationalizedWebLocatorTest {
     @Test
     public void overrideLabelInternationalizationFlagAtWebLocatorLevel() {
         InternationalizationUtils.setCurrentLanguage("French");
-        locator = new WebLocator().withLabel("car");
+        locator = new WebLocator().setLabel("car");
         assertThat(locator.getXPath(), containsString("voiture"));
 
-        locator = new WebLocator().withLabel("car", SearchType.NOT_INTERNATIONALIZED);
+        locator = new WebLocator().setLabel("car", SearchType.NOT_INTERNATIONALIZED);
         assertThat(locator.getXPath(), containsString("car"));
         assertThat(locator.getXPath(), not(containsString("voiture")));
     }

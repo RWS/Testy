@@ -8,19 +8,19 @@ import com.sdl.selenium.web.WebLocator;
 public class PopOver extends WebLocator {
 
     private PopOver() {
-        withInfoMessage("PopOver");
-        withClasses("popover");
-        withTemplate("title", "count(.//*[@class='popover-title' and text()='%s'])> 0");
+        setInfoMessage("PopOver");
+        setClasses("popover");
+        setTemplate("title", "count(.//*[@class='popover-title' and text()='%s'])> 0");
     }
 
     public PopOver(String title, String message) {
         this(title);
-        withTemplate("title", "count(.//*[@class='popover-title' and text()='%s']//following-sibling::*[@class='popover-content' and text()='" + message + "'])> 0");
+        setTemplate("title", "count(.//*[@class='popover-title' and text()='%s']//following-sibling::*[@class='popover-content' and text()='" + message + "'])> 0");
     }
 
     public PopOver(String title) {
         this();
-        withTitle(title);
+        setTitle(title);
     }
 
     public boolean close() {

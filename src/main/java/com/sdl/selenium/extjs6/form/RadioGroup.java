@@ -11,18 +11,18 @@ public class RadioGroup extends WebLocator {
     private Radio radio = new Radio(this);
 
     public RadioGroup() {
-        withClassName("RadioGroup");
-        withAttribute("role", "radiogroup");
+        setClassName("RadioGroup");
+        setAttribute("role", "radiogroup");
     }
 
     public RadioGroup(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public RadioGroup(WebLocator container, String name) {
         this(container);
-        radio.withName(name);
+        radio.setName(name);
     }
 
     public boolean selectByLabel(String label) {
@@ -30,19 +30,19 @@ public class RadioGroup extends WebLocator {
     }
 
     public boolean selectByLabel(String label, SearchType searchType) {
-        radio.withLabel(label, searchType);
+        radio.setLabel(label, searchType);
         boolean selected = !radio.isSelected() || radio.click();
-        radio.withLabel(null);
+        radio.setLabel(null);
         return selected;
     }
 
     public String getLabelName(String label) {
-        WebLocator locator = new WebLocator(radio).withElxPath("/following-sibling::label[contains(text(),'" + label + "')]");
+        WebLocator locator = new WebLocator(radio).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
         return locator.getText();
     }
 
 //    public boolean isDisabled() {
-//        WebLocator locator = new WebLocator().withElxPath(radio.getXPath(true));
+//        WebLocator locator = new WebLocator().setElPath(radio.getXPath(true));
 //        return locator.exists();
 //    }
 }

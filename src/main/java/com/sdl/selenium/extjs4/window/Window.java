@@ -10,21 +10,21 @@ public class Window extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Window.class);
 
     public Window() {
-        withClassName("Window");
-        withBaseCls("x-window");
-        WebLocator header = new WebLocator().withTag("*[contains(@class,'x-window-header') or contains(@class, '-tl')]");
-        withTemplateTitle(new WebLocator(header));
-//        withTemplate("title", "count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+        setClassName("Window");
+        setBaseCls("x-window");
+        WebLocator header = new WebLocator().setTag("*[contains(@class,'x-window-header') or contains(@class, '-tl')]");
+        setTemplateTitle(new WebLocator(header));
+//        setTemplate("title", "count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
     public Window(String title) {
         this();
-        withTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS);
     }
 
     public String getTitleWindow() {
         ready();
-        WebLocator locator = new WebLocator(this).withClasses("x-window-header-text");
+        WebLocator locator = new WebLocator(this).setClasses("x-window-header-text");
         return locator.getText();
     }
 
@@ -34,7 +34,7 @@ public class Window extends WebLocator {
      * @return true | false
      */
     public boolean clickOnTool(String id) {
-        WebLocator toolElement = getToolElement(id).withVisibility(true);
+        WebLocator toolElement = getToolElement(id).setVisibility(true);
         return toolElement.click();
     }
 
@@ -61,7 +61,7 @@ public class Window extends WebLocator {
     }
 
     private WebLocator getToolElement(String id) {
-        return new WebLocator(this).withClasses("x-tool-" + id);
+        return new WebLocator(this).setClasses("x-tool-" + id);
     }
 
     public boolean restore() {

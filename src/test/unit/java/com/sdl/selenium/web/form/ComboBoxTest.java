@@ -13,8 +13,8 @@ public class ComboBoxTest {
         return new Object[][]{
                 {new ComboBox(),             "//select"},
                 {new ComboBox(container),    "//*[contains(concat(' ', @class, ' '), ' container ')]//select"},
-                {new ComboBox().withId("ID"), "//select[@id='ID']"},
-                {new ComboBox().withType("type"), "//select[@type='type']"},
+                {new ComboBox().setId("ID"), "//select[@id='ID']"},
+                {new ComboBox().setType("type"), "//select[@type='type']"},
         };
     }
 

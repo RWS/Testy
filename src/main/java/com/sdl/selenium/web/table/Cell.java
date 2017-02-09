@@ -10,31 +10,31 @@ public class Cell extends AbstractCell {
     private static final Logger LOGGER = LoggerFactory.getLogger(Cell.class);
 
     public Cell() {
-        withRenderMillis(200);
-        withClassName("Cell");
-        withTag("td");
+        setRenderMillis(200);
+        setClassName("Cell");
+        setTag("td");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public Cell(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Cell(WebLocator container, int columnIndex) {
         this(container);
-        withPosition(columnIndex);
+        setPosition(columnIndex);
     }
 
     public Cell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
-        withPosition(columnIndex);
-        withText(columnText, searchTypes);
+        setPosition(columnIndex);
+        setText(columnText, searchTypes);
     }
 
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
-        withText(columnText, searchTypes);
+        setText(columnText, searchTypes);
     }
 
     protected XPathBuilder createXPathBuilder() {

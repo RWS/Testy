@@ -42,32 +42,32 @@ public class DeployTesty extends TestBase {
 
     private static final String NEXUS_REPOSITORY_URL = "http://cljeng-nexus02:8081/nexus/#view-repositories;oss-sonatype-snapshots";
 
-    private WebLocator loginContainer = new WebLocator().withClasses("login");
-    private WebLink loginEl = new WebLink(loginContainer, "log in").withSearchTextType(SearchType.HTML_NODE);
-    private WebLink logOutEl = new WebLink(loginContainer, "log out").withSearchTextType(SearchType.HTML_NODE);
-    private Form loginForm = new Form().withName("login");
-    private TextField login = new TextField(loginForm).withName("j_username");
-    private TextField pass = new TextField(loginForm).withName("j_password");
-    private com.sdl.selenium.web.button.Button logInButton = new com.sdl.selenium.web.button.Button(loginForm).withId("yui-gen1-button");
-    private WebLocator table = new WebLocator().withId("tasks");
-    private WebLink buildNow = new WebLink(table, "Build Now").withClasses("task-link");
-    private Table buildHistory = new Table().withClasses("pane", "stripped");
-    private Row buildNowEl = new Row(buildHistory).withClasses("build-row", "transitive");
+    private WebLocator loginContainer = new WebLocator().setClasses("login");
+    private WebLink loginEl = new WebLink(loginContainer, "log in").setSearchTextType(SearchType.HTML_NODE);
+    private WebLink logOutEl = new WebLink(loginContainer, "log out").setSearchTextType(SearchType.HTML_NODE);
+    private Form loginForm = new Form().setName("login");
+    private TextField login = new TextField(loginForm).setName("j_username");
+    private TextField pass = new TextField(loginForm).setName("j_password");
+    private com.sdl.selenium.web.button.Button logInButton = new com.sdl.selenium.web.button.Button(loginForm).setId("yui-gen1-button");
+    private WebLocator table = new WebLocator().setId("tasks");
+    private WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
+    private Table buildHistory = new Table().setClasses("pane", "stripped");
+    private Row buildNowEl = new Row(buildHistory).setClasses("build-row", "transitive");
 
-    private WebLocator logInNexus = new WebLocator().withId("head-link-r");
+    private WebLocator logInNexus = new WebLocator().setId("head-link-r");
     private Window nexusLogInWindow = new Window("Nexus Repository Manager Log In");
     private com.sdl.selenium.extjs3.form.TextField userName = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Username:");
     private com.sdl.selenium.extjs3.form.TextField password = new com.sdl.selenium.extjs3.form.TextField(nexusLogInWindow, "Password:");
     private Button logIn = new Button(nexusLogInWindow, "Log In");
-    private WebLocator viewRepositories = new WebLocator().withId("view-repositories");
+    private WebLocator viewRepositories = new WebLocator().setId("view-repositories");
     private GridPanel repositoryGridPanel = new GridPanel(viewRepositories);
     private TabPanel browseStorage = new TabPanel(viewRepositories, "Browse Storage");
-    private Table table1 = new Table(browseStorage).withCls("x-toolbar-ct");
-    private WebLocator testyDir = new WebLocator().withElxPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
+    private Table table1 = new Table(browseStorage).setCls("x-toolbar-ct");
+    private WebLocator testyDir = new WebLocator().setElPath("//a[@class='x-tree-node-anchor' and count(.//span[text()='Testy']) > 0]");
     private Cell cell = table1.getCell(4, new Cell(3, "Path Lookup:", SearchType.EQUALS));
     private com.sdl.selenium.extjs3.form.TextField searchField = new com.sdl.selenium.extjs3.form.TextField(cell);
-    private WebLocator menuList = new WebLocator().withClasses("x-menu").withExcludeClasses("x-hide-offsets");
-    private WebLocator deleteEl = new WebLocator(menuList).withClasses("x-menu-item-text").withText("Delete");
+    private WebLocator menuList = new WebLocator().setClasses("x-menu").setExcludeClasses("x-hide-offsets");
+    private WebLocator deleteEl = new WebLocator(menuList).setClasses("x-menu-item-text").setText("Delete");
 
     @BeforeClass
     public void startTests() {
@@ -101,7 +101,7 @@ public class DeployTesty extends TestBase {
         Utils.sleep(1000);
         logInNexus.click();
         Utils.sleep(1000);
-        userName.ready();
+        userName.ready(10);
         userName.setValue(DOMAIN_USER);
         password.setValue(DOMAIN_PASS);
         logIn.click();

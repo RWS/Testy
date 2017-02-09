@@ -22,38 +22,38 @@ public class ButtonIntegrationTest extends TestBase {
 
     private Window dateFieldWindow = new Window("DateFieldWindow");
     private Button closeButton = new Button(dateFieldWindow, "Close");
-    private WebLocator close = new WebLocator().withId("close");
+    private WebLocator close = new WebLocator().setId("close");
     private Button dateFieldButton = new Button(null, "DateField");
 
     private SimpleForm simpleForm = new SimpleForm();
     private Panel panel = new Panel("Find Elements when contains quotes");
 
     private Button dontAcceptButton = new Button(panel, "Don't Accept");
-    private Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").withSearchTextType(SearchType.CONTAINS);
+    private Button dontAcceptButton1 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CONTAINS);
     private Button dontAcceptButton2 = new Button(panel, "It was \"good\" ok!");
     private Button dontAcceptButton3 = new Button(panel, "Don't do it \"now\" ok!");
     private Button dontAcceptItButton = new Button(panel, "Don't do \"it\" :)");
 
-    private Button dontAcceptButton4 = new Button(panel, "Don't Accept").withSearchTextType(SearchType.CASE_INSENSITIVE);
-    private Button dontAcceptButton5 = new Button(panel, "Don't Accept").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
-    private Button dontAcceptButton6 = new Button(panel, "Don't Accept").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+    private Button dontAcceptButton4 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton5 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton6 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
 
-    private Button dontAcceptButton7 = new Button(panel, "Don'\"t Accept").withSearchTextType(SearchType.CASE_INSENSITIVE);
-    private Button dontAcceptButton8 = new Button(panel, "Don'\"t Accept").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
-    private Button dontAcceptButton9 = new Button(panel, "Don'\"t Accept").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+    private Button dontAcceptButton7 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton8 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton9 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
 
-    private Button dontAcceptButton10 = new Button(panel, "It was \"good\" ok!").withSearchTextType(SearchType.CASE_INSENSITIVE);
-    private Button dontAcceptButton11 = new Button(panel, "It was \"good\" ok!").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
-    private Button dontAcceptButton12 = new Button(panel, "It was \"good\" ok!").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+    private Button dontAcceptButton10 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton11 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton12 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
 
-    private Button dontAcceptButton13 = new Button(panel, "Don't do it \"now\" ok!").withSearchTextType(SearchType.CASE_INSENSITIVE);
-    private Button dontAcceptButton14 = new Button(panel, "Don't do it \"now\" ok!").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
-    private Button dontAcceptButton15 = new Button(panel, "Don't do it \"now\" ok!").withSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
+    private Button dontAcceptButton13 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE);
+    private Button dontAcceptButton14 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.CONTAINS);
+    private Button dontAcceptButton15 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.CASE_INSENSITIVE, SearchType.STARTS_WITH);
 
-    private Button dontAcceptButton16 = new Button(panel, "Don't Accept").withSearchTextType(SearchType.TRIM);
-    private Button dontAcceptButton17 = new Button(panel, "Don'\"t Accept").withSearchTextType(SearchType.TRIM);
-    private Button dontAcceptButton18 = new Button(panel, "It was \"good\" ok!").withSearchTextType(SearchType.TRIM);
-    private Button dontAcceptButton19 = new Button(panel, "Don't do it \"now\" ok!").withSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton16 = new Button(panel, "Don't Accept").setSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton17 = new Button(panel, "Don'\"t Accept").setSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton18 = new Button(panel, "It was \"good\" ok!").setSearchTextType(SearchType.TRIM);
+    private Button dontAcceptButton19 = new Button(panel, "Don't do it \"now\" ok!").setSearchTextType(SearchType.TRIM);
 
     private Window buttonsWindow = new Window("Buttons Window");
     private SplitButton splitButton = new SplitButton(buttonsWindow, "Export");
@@ -117,7 +117,7 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test(dataProvider = "renderMillis")
     void tryToClickOnButtonThatDoesNotExist(long millis) {
-        Button button = new Button(panel, "ButtonThatDoesNotExist").withRenderMillis(millis);
+        Button button = new Button(panel, "ButtonThatDoesNotExist").setRenderMillis(millis);
 
         long startMs = System.currentTimeMillis();
         boolean clicked = button.doClick();

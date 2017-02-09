@@ -10,21 +10,21 @@ public class Window extends WebLocator implements IWebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Window.class);
 
     public Window() {
-        withClassName("Window");
-//        withTemplate("title", "count(*[contains(@class,'-header')]//*[text()='%s']) > 0"); //TODO make sure withTemplate Title is working
-        WebLocator header = new WebLocator().withClasses("modal-header");
-        withTemplateTitle(new WebLocator(header));
-        withAttribute("role", "dialog");
-        withAttribute("aria-hidden", "false");
+        setClassName("Window");
+//        setTemplate("title", "count(*[contains(@class,'-header')]//*[text()='%s']) > 0"); //TODO make sure setTemplate Title is working
+        WebLocator header = new WebLocator().setClasses("modal-header");
+        setTemplateTitle(new WebLocator(header));
+        setAttribute("role", "dialog");
+        setAttribute("aria-hidden", "false");
     }
 
     public Window(String title) {
         this();
-        withTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS);
     }
 
     public String getTitleWindow() {
-        WebLocator header = new WebLocator(this).withElxPath("//*[contains(@class, '-header')]//h3");
+        WebLocator header = new WebLocator(this).setElPath("//*[contains(@class, '-header')]//h3");
         return header.getText();
     }
 }

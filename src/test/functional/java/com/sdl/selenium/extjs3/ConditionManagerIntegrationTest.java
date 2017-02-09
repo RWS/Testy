@@ -22,7 +22,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
     private Button expect2Button = new Button(conditionManagerPanel, "Expect2");
     private Button expect3Button = new Button(conditionManagerPanel, "Expect3");
 
-    private Window messageBoxWindow = new Window(true).withClasses("x-window-dlg").withInfoMessage("MessageBox");
+    private Window messageBoxWindow = new Window(true).setClasses("x-window-dlg").setInfoMessage("MessageBox");
     private Button button = new Button(messageBoxWindow, "Nossss");
 
     private Condition doClick(Button button){

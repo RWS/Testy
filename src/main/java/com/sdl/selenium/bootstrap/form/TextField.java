@@ -8,17 +8,17 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
-        withClassName("TextField");
-        withType("text"); // TODO try to move in TextField
+        setClassName("TextField");
+        setType("text"); // TODO try to move in TextField
     }
 
     public TextField(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TextField(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 }

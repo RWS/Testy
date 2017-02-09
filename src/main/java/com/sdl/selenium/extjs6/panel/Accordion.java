@@ -9,19 +9,19 @@ public class Accordion extends Panel {
     private static final Logger LOGGER = LoggerFactory.getLogger(Accordion.class);
 
     public Accordion() {
-        withClassName("Accordion");
-        withBaseCls("x-accordion-item");
-        WebLocator header = new WebLocator().withClasses("x-title").withRoot("//");
-        withTemplateTitle(new WebLocator(header));
+        setClassName("Accordion");
+        setBaseCls("x-accordion-item");
+        WebLocator header = new WebLocator().setClasses("x-title").setRoot("//");
+        setTemplateTitle(new WebLocator(header));
     }
 
     public Accordion(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Accordion(WebLocator container, String title) {
         this(container);
-        withTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS);
     }
 }

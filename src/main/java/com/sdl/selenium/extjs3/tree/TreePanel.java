@@ -11,21 +11,21 @@ public class TreePanel extends ExtJsComponent {
 
     public TreePanel() {
         LOGGER.warn("TreePanel is not implemented 100%");
-        withClassName("TreePanel");
+        setClassName("TreePanel");
     }
 
     public TreePanel(String cls){
         this();
-        withClasses(cls);
+        setClasses(cls);
     }
 
     public TreePanel(WebLocator container){
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public boolean expand(String searchElement) {
-        WebLocator node = new WebLocator(getParentNode()).withText(searchElement, SearchType.STARTS_WITH);
+        WebLocator node = new WebLocator(getParentNode()).setText(searchElement, SearchType.STARTS_WITH);
         LOGGER.info("Expanding the tree");
         return node.doubleClickAt();
     }
@@ -35,15 +35,15 @@ public class TreePanel extends ExtJsComponent {
     }
 
     public boolean select(String searchElement, Boolean startWith) {
-        WebLocator node = new WebLocator(getParentNode()).withText(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);
+        WebLocator node = new WebLocator(getParentNode()).setText(searchElement, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS);
         LOGGER.info("Selecting the tree node");
         return node.doClick();
     }
 
     public String getStatus(String searchElement) {
-        WebLocator node = new WebLocator(getParentNode()).withText(searchElement, SearchType.CONTAINS);
+        WebLocator node = new WebLocator(getParentNode()).setText(searchElement, SearchType.CONTAINS);
         String path = node.getXPath() + "/following::*";
-        WebLocator currentElement = new WebLocator(getPathBuilder().getContainer()).withElxPath(path);
+        WebLocator currentElement = new WebLocator(getPathBuilder().getContainer()).setElPath(path);
         if (currentElement.isElementPresent()) {
             return currentElement.getPathBuilder().getText();
         }
@@ -51,6 +51,6 @@ public class TreePanel extends ExtJsComponent {
     }
 
     public WebLocator getParentNode() {
-        return new WebLocator(getPathBuilder().getContainer()).withClasses("x-tree-node-el");
+        return new WebLocator(getPathBuilder().getContainer()).setClasses("x-tree-node-el");
     }
 }

@@ -9,18 +9,18 @@ public class DisplayField extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DisplayField.class);
 
     public DisplayField() {
-        withClassName("DisplayField");
-        withBaseCls("x-form-display-field");
-        withTag("div");
+        setClassName("DisplayField");
+        setBaseCls("x-form-display-field");
+        setTag("div");
     }
 
     public DisplayField(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public DisplayField(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 }

@@ -38,14 +38,14 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
 
     @Test
     public void whenContainerDoesNotExistIAmInformed() {
-        WebLocator parent = new WebLocator().withId("foo");
+        WebLocator parent = new WebLocator().setId("foo");
 
-        WebLocator textLocator = new WebLocator().withText("Search Type", SearchType.TRIM);
+        WebLocator textLocator = new WebLocator().setText("Search Type", SearchType.TRIM);
 
         assertFalse(parent.isElementPresent(), "parent should not be present");
         assertTrue(textLocator.isElementPresent(), "textLocator should be present");
 
-        textLocator.withContainer(parent);
+        textLocator.setContainer(parent);
 
         String originalXpath = textLocator.getXPath();
 
@@ -60,7 +60,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
      */
     @Test
     public void labelSearchTypeCorrection() {
-        WebLocator inputWithLabel = new WebLocator().withLabel("User Name").withLabelPosition("//following-sibling::*//");
+        WebLocator inputWithLabel = new WebLocator().setLabel("User Name").setLabelPosition("//following-sibling::*//");
         String originalXpath = inputWithLabel.getXPath();
 
         assertFalse(inputWithLabel.isElementPresent());
@@ -82,7 +82,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
      */
     @Test
     public void elementTagCorrection() {
-        TextField inputWithLabel = new TextField().withLabel("User Name:", SearchType.TRIM).withLabelPosition("//following-sibling::*//");
+        TextField inputWithLabel = new TextField().setLabel("User Name:", SearchType.TRIM).setLabelPosition("//following-sibling::*//");
         String originalXPath = inputWithLabel.getXPath();
 
         assertFalse(inputWithLabel.isElementPresent(), "Element should not be present.");
@@ -102,7 +102,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
      */
     @Test
     public void labelTagCorrection() {
-        WebLocator inputWithLabel = new WebLocator().withLabel("Email:", SearchType.TRIM).withLabelPosition("//following-sibling::*//");
+        WebLocator inputWithLabel = new WebLocator().setLabel("Email:", SearchType.TRIM).setLabelPosition("//following-sibling::*//");
         String originalXPath = inputWithLabel.getXPath();
 
         assertFalse(inputWithLabel.isElementPresent(), "Element should not be present.");
@@ -122,7 +122,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
      */
     @Test
     public void titleSearchTypeCorrection() {
-        Form form = new Form().withTitle("Form Title");
+        Form form = new Form().setTitle("Form Title");
         String originalXPath = form.getXPath();
 
         assertFalse(form.isElementPresent(), "The element should not be present.");
@@ -141,7 +141,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
      */
     @Test
     public void textSearchTypeCorrection() {
-        WebLocator webLocator = new WebLocator().withText("Search Type", SearchType.EQUALS, SearchType.CHILD_NODE);
+        WebLocator webLocator = new WebLocator().setText("Search Type", SearchType.EQUALS, SearchType.CHILD_NODE);
         String originalXPath = webLocator.getXPath();
 
         assertFalse(webLocator.isElementPresent(), "The element should not be present.");
@@ -159,7 +159,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
      */
     @Test
     public void classIsWrong() {
-        WebLocator textLocator = new WebLocator().withText("Search Type", SearchType.TRIM).withCls("foo");
+        WebLocator textLocator = new WebLocator().setText("Search Type", SearchType.TRIM).setCls("foo");
         String originalXPath = textLocator.getXPath();
 
         assertFalse(textLocator.isElementPresent(), "Element should not be present.");

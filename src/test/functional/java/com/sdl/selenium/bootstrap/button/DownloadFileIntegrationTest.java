@@ -16,7 +16,7 @@ public class DownloadFileIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadFileIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
-    private DownloadFile downloadFile = new DownloadFile(form).withText("Download");
+    private DownloadFile downloadFile = new DownloadFile(form).setText("Download");
 
     @BeforeClass
     public void startTests() {

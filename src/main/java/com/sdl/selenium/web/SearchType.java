@@ -38,7 +38,7 @@ public enum SearchType {
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn").withText("Cancel", SearchType.TRIM);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.TRIM);
      * }</pre>
      */
     TRIM("trim"),
@@ -55,7 +55,7 @@ public enum SearchType {
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn").withText("cancel", SearchType.CASE_INSENSITIVE);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("cancel", SearchType.CASE_INSENSITIVE);
      * }</pre>
      */
     CASE_INSENSITIVE("sensitive"),
@@ -87,7 +87,7 @@ public enum SearchType {
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn").withText("Cancel", SearchType.CHILD_NODE);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.CHILD_NODE);
      * }</pre>
      */
     CHILD_NODE("child"),
@@ -103,7 +103,7 @@ public enum SearchType {
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn").withText("Cancel", SearchType.DEEP_CHILD_NODE);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE);
      * }</pre>
      */
     DEEP_CHILD_NODE("child"),
@@ -122,7 +122,7 @@ public enum SearchType {
      * <div class="btn">Cancel</div>}</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn").withText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Cancel", SearchType.DEEP_CHILD_NODE_OR_SELF);
      * }</pre>
      */
     DEEP_CHILD_NODE_OR_SELF("child"),
@@ -138,7 +138,7 @@ public enum SearchType {
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn").withText("Get an instant Quote", SearchType.HTML_NODE);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Get an instant Quote", SearchType.HTML_NODE);
      * }</pre>
      */
     HTML_NODE("child"),
@@ -152,8 +152,8 @@ public enum SearchType {
      * </div>}</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     *     WebLocator cancelBtn = new WebLocator().withClasses("btn")
-     *          .withText("&Cancel&Button", SearchType.CONTAINS_ALL);
+     *     WebLocator cancelBtn = new WebLocator().setClasses("btn")
+     *          .setText("&Cancel&Button", SearchType.CONTAINS_ALL);
      * }</pre>
      */
     CONTAINS_ALL("advance"),
@@ -168,8 +168,8 @@ public enum SearchType {
      * </div>}</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     *     WebLocator cancelBtn = new WebLocator().withClasses("btn")
-     *          .withText("&Cancel&Button", SearchType.CONTAINS_ALL_CHILD_NODES);
+     *     WebLocator cancelBtn = new WebLocator().setClasses("btn")
+     *          .setText("&Cancel&Button", SearchType.CONTAINS_ALL_CHILD_NODES);
      * }</pre>
      */
     CONTAINS_ALL_CHILD_NODES("advance"),
@@ -184,8 +184,8 @@ public enum SearchType {
      * }</pre>
      * <p>so must be used like:</p>
      * <pre>{@code
-     * WebLocator cancelBtn = new WebLocator().withClasses("btn")
-     *      .withText("|Cancel|Button", SearchType.CONTAINS_ANY);
+     * WebLocator cancelBtn = new WebLocator().setClasses("btn")
+     *      .setText("|Cancel|Button", SearchType.CONTAINS_ANY);
      * }</pre>
      */
     CONTAINS_ANY("advance"),

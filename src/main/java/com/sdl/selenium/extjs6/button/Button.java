@@ -11,20 +11,20 @@ public class Button extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     public Button() {
-        withClassName("Button");
-        withBaseCls("x-btn");
-        withTag("a");
+        setClassName("Button");
+        setBaseCls("x-btn");
+        setTag("a");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public Button(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Button(WebLocator container, String text) {
         this(container);
-        withText(text, SearchType.EQUALS);
+        setText(text, SearchType.EQUALS);
     }
 
     public boolean showMenu() {

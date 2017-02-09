@@ -10,22 +10,22 @@ public class Label extends ExtJsComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(Label.class);
 
     public Label() {
-        withClassName("Label");
-        withTag("label");
+        setClassName("Label");
+        setTag("label");
     }
 
     public Label(String text) {
         this();
-        withText(text);
+        setText(text);
     }
 
     public Label(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Label(WebLocator container, String text) {
         this(text);
-        withContainer(container);
+        setContainer(container);
     }
 }

@@ -25,24 +25,24 @@ public class CheckBox extends TextField implements ICheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
-        withClassName("CheckBox");
-        withType("checkbox");
+        setClassName("CheckBox");
+        setType("checkbox");
     }
 
     public CheckBox(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public CheckBox(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.CONTAINS);
-        withLabelPosition("//");
+        setLabel(label, SearchType.CONTAINS);
+        setLabelPosition("//");
     }
 
     public CheckBox(String boxLabel, WebLocator container) {
         this(container);
-        withLabel(boxLabel);
+        setLabel(boxLabel);
     }
 
     @Override

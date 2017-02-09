@@ -3,7 +3,7 @@ package com.sdl.demo.extjs3.form;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.button.DownloadButton;
 import com.sdl.selenium.extjs3.button.UploadButton;
-import com.sdl.selenium.extjs3.form.CheckBox;
+import com.sdl.selenium.extjs3.form.Checkbox;
 import com.sdl.selenium.extjs3.panel.Panel;
 
 public class SimpleForm extends Panel {
@@ -22,8 +22,8 @@ public class SimpleForm extends Panel {
     public DownloadButton downloadWithSpacesButton = new DownloadButton(this, "Download with spaces");
     public DownloadButton downloadFileButton = new DownloadButton(this, "Download File");
 
-    public CheckBox rightCheckBox = new CheckBox(this).withLabel("CatRight").withLabelPosition("//preceding-sibling::");
-    public CheckBox leftCheckBox = new CheckBox(this).withLabel("CatLeft:");
+    public Checkbox rightCheckBox = new Checkbox(this).setLabel("CatRight").setLabelPosition("//preceding-sibling::");
+    public Checkbox leftCheckBox = new Checkbox(this).setLabel("CatLeft:");
 
     public Button cancelButton = new Button(this, "Cancel");
 }

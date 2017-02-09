@@ -14,7 +14,7 @@ public class TableTest {
         return new Object[][]{
                 {new Table(), "//table"},
                 {new Table(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//table"},
-                {new Table().withId("ID"), "//table[@id='ID']"},
+                {new Table().setId("ID"), "//table[@id='ID']"},
         };
     }
 
@@ -32,7 +32,7 @@ public class TableTest {
                 {new Table().getCell("SearchElement", SearchType.STARTS_WITH), "//table//tr//td[(starts-with(.,'SearchElement') or count(*//text()[starts-with(.,'SearchElement')]) > 0)]"},
 
                 {new Table().getCell(1, new Cell(3, "1234", SearchType.EQUALS), new Cell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]//td[1]"},
-                {new Table().getCell(1, new Cell(3, "1234", SearchType.EQUALS), new Cell(4, "Eng-Fra", SearchType.EQUALS)).withVisibility(true), "//table//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]//td[1][count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
+                {new Table().getCell(1, new Cell(3, "1234", SearchType.EQUALS), new Cell(4, "Eng-Fra", SearchType.EQUALS)).setVisibility(true), "//table//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]//td[1][count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
                 {new Table().getCell(1, "111", new Cell(3, "1234", SearchType.EQUALS), new Cell(4, "Eng-Fra", SearchType.EQUALS)), "//table//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]//td[1][(.='111' or count(*//text()[.='111']) > 0)]"},
         };
     }

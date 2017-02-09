@@ -15,8 +15,8 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class WebLocatorActionsIntegrationTest extends TestBase {
 
-    private WebLocator locator = new WebLocator().withId("loginButton").withVisibility(true);
-    private TextField email = new TextField().withLabel("Email:");
+    private WebLocator locator = new WebLocator().setId("loginButton").setVisibility(true);
+    private TextField email = new TextField().setLabel("Email:");
 
     @BeforeClass
     public void startTests() {

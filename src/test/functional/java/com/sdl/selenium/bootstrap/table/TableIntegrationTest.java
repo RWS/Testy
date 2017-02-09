@@ -43,7 +43,7 @@ public class TableIntegrationTest extends TestBase {
     @Test
     public void verifyIfButtonsIsPresent() {
         Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
-        Button first = new Button(row).withText("Details", SearchType.CONTAINS);
+        Button first = new Button(row).setText("Details", SearchType.CONTAINS);
         Button second = new Button(row, "Remove");
         assertTrue(first.isElementPresent());
         assertTrue(second.isElementPresent());
@@ -51,11 +51,11 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void verifyHeaderName() {
-        Cell row = new Cell(1, "Row", SearchType.EQUALS).withTag("th");
-        Cell firstName = new Cell(2, "First Name", SearchType.EQUALS).withTag("th");
-        Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).withTag("th");
-        Cell email = new Cell(4, "Email", SearchType.EQUALS).withTag("th");
-        Cell buttons = new Cell(5, "Actions", SearchType.EQUALS).withTag("th");
+        Cell row = new Cell(1, "Row", SearchType.EQUALS).setTag("th");
+        Cell firstName = new Cell(2, "First Name", SearchType.EQUALS).setTag("th");
+        Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).setTag("th");
+        Cell email = new Cell(4, "Email", SearchType.EQUALS).setTag("th");
+        Cell buttons = new Cell(5, "Actions", SearchType.EQUALS).setTag("th");
         assertTrue(table.getRow(row, firstName, lastName, email, buttons).ready());
     }
 

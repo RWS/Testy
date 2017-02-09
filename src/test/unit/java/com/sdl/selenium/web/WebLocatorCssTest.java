@@ -9,8 +9,8 @@ import org.testng.asserts.SoftAssert;
 
 public class WebLocatorCssTest {
 
-    private static WebLocator cssContainer = new WebLocator().withElCssSelector(".experiment-tile");
-    private static WebLocator xpathContainer = new WebLocator().withElxPath("//*[@class='error-msg']");
+    private static WebLocator cssContainer = new WebLocator().setElCssSelector(".experiment-tile");
+    private static WebLocator xpathContainer = new WebLocator().setElPath("//*[@class='error-msg']");
 
     private SoftAssert softAssert;
     private boolean generateCssSelector = false;
@@ -32,19 +32,19 @@ public class WebLocatorCssTest {
     public static Object[][] testConstructorCssSelectorDataProvider() {
         return new Object[][]{
                 {new WebLocator(), "*", "//*"},
-                {new WebLocator().withElCssSelector("div.error-msg"), "div.error-msg", "//*"},
-                {new WebLocator().withId("email"), "#email", "//*[@id='email']"},
-                {new WebLocator().withId("email").withClasses("input-block-level"), "#email.input-block-level", "//*[@id='email' and contains(concat(' ', @class, ' '), ' input-block-level ')]"},
-                {new WebLocator().withTag("td"), "td", "//td"},
-                {new WebLocator().withCls("error-msg"), "[class=error-msg]", "//*[@class='error-msg']"},
-                {new WebLocator().withClasses("error-msg"), ".error-msg", "//*[contains(concat(' ', @class, ' '), ' error-msg ')]"},
-                {new WebLocator().withTag("button").withExcludeClasses("error-msg"), "button:not(.error-msg)", "//button[not(contains(@class, 'error-msg'))]"},
-                {new WebLocator().withExcludeClasses("error-msg", "msg"), ":not(.error-msg):not(.msg)", "//*[not(contains(@class, 'error-msg')) and not(contains(@class, 'msg'))]"},
-                {new WebLocator().withClasses("error-msg", "error"), ".error-msg.error", "//*[contains(concat(' ', @class, ' '), ' error-msg ') and contains(concat(' ', @class, ' '), ' error ')]"},
-                {new WebLocator().withName("newPassword"), "[name='newPassword']", "//*[@name='newPassword']"},
-                {new WebLocator().withAttribute("data-toggle", "modal"), "[data-toggle='modal']", "//*[@data-toggle='modal']"},
-                {new WebLocator().withTag("li").withPosition(1), "li:nth-child(1)", "//li[position() = 1]"},
-                {new WebLocator().withTag("li").setPosition(Position.LAST), "li:last-child", "//li[position() = last()]"},
+                {new WebLocator().setElCssSelector("div.error-msg"), "div.error-msg", "//*"},
+                {new WebLocator().setId("email"), "#email", "//*[@id='email']"},
+                {new WebLocator().setId("email").setClasses("input-block-level"), "#email.input-block-level", "//*[@id='email' and contains(concat(' ', @class, ' '), ' input-block-level ')]"},
+                {new WebLocator().setTag("td"), "td", "//td"},
+                {new WebLocator().setCls("error-msg"), "[class=error-msg]", "//*[@class='error-msg']"},
+                {new WebLocator().setClasses("error-msg"), ".error-msg", "//*[contains(concat(' ', @class, ' '), ' error-msg ')]"},
+                {new WebLocator().setTag("button").setExcludeClasses("error-msg"), "button:not(.error-msg)", "//button[not(contains(@class, 'error-msg'))]"},
+                {new WebLocator().setExcludeClasses("error-msg", "msg"), ":not(.error-msg):not(.msg)", "//*[not(contains(@class, 'error-msg')) and not(contains(@class, 'msg'))]"},
+                {new WebLocator().setClasses("error-msg", "error"), ".error-msg.error", "//*[contains(concat(' ', @class, ' '), ' error-msg ') and contains(concat(' ', @class, ' '), ' error ')]"},
+                {new WebLocator().setName("newPassword"), "[name='newPassword']", "//*[@name='newPassword']"},
+                {new WebLocator().setAttribute("data-toggle", "modal"), "[data-toggle='modal']", "//*[@data-toggle='modal']"},
+                {new WebLocator().setTag("li").setPosition(1), "li:nth-child(1)", "//li[position() = 1]"},
+                {new WebLocator().setTag("li").setPosition(Position.LAST), "li:last-child", "//li[position() = last()]"},
         };
     }
 
@@ -53,7 +53,7 @@ public class WebLocatorCssTest {
         softAssert.assertEquals(el.getCssSelector(), expectedCss);
         softAssert.assertEquals(el.getXPath(), expectedXpath);
 
-        el.withContainer(cssContainer);
+        el.setContainer(cssContainer);
         softAssert.assertEquals(el.getCssSelector(), cssContainer.getCssSelector() + " " + expectedCss);
         softAssert.assertEquals(el.getXPath(), cssContainer.getXPath() + expectedXpath);
         softAssert.assertAll();
@@ -61,7 +61,7 @@ public class WebLocatorCssTest {
 
     @Test(dataProvider = "testConstructorCssSelectorDataProvider")
     public void whenParentHasXPathThenCssSelectorIsNull(WebLocator el, String expectedCss, String expectedXpath) {
-        el.withContainer(xpathContainer);
+        el.setContainer(xpathContainer);
         softAssert.assertEquals(el.getCssSelector(), null);
         softAssert.assertEquals(el.getXPath(), xpathContainer.getXPath() + expectedXpath);
         softAssert.assertAll();
