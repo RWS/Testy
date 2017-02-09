@@ -7,13 +7,13 @@ import com.sdl.selenium.web.table.Table;
 public class Tree extends WebLocator {
 
     public Tree() {
-        withClassName("Tree");
-        withBaseCls("x-tree-panel");
+        setClassName("Tree");
+        setBaseCls("x-tree-panel");
     }
 
     public Tree(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public boolean select(String... nodes) {

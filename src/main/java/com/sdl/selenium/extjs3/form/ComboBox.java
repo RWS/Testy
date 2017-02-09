@@ -19,22 +19,22 @@ public class ComboBox extends TextField implements ICombo {
     //TODO change the way comboBox is identified, without using cls
     // (create baseCls and if there is no cls, label then take first combo by baseCls)
     public ComboBox() {
-        withClassName("ComboBox");
+        setClassName("ComboBox");
     }
 
     public ComboBox(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public ComboBox(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     public ComboBox(String name, WebLocator container) {
         this(container);
-        withName(name);
+        setName(name);
     }
 
     /**
@@ -57,8 +57,8 @@ public class ComboBox extends TextField implements ICombo {
         String componentId;
         String info = toString();
 
-        WebLocator comboListElement = new WebLocator().withClasses(listClass).withStyle("visibility: visible;").withInfoMessage(this + " -> " + listClass);
-        WebLocator option = new WebLocator(comboListElement).withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+        WebLocator comboListElement = new WebLocator().setClasses(listClass).setStyle("visibility: visible;").setInfoMessage(this + " -> " + listClass);
+        WebLocator option = new WebLocator(comboListElement).setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
 
         if (clickIcon("arrow")) {
             try {
@@ -69,8 +69,8 @@ public class ComboBox extends TextField implements ICombo {
 //                    return selected;
 //                }
                 if (WebDriverConfig.isIE()) {
-                    comboListElement.withId(getListId());
-                    option.withContainer(comboListElement);
+                    comboListElement.setId(getListId());
+                    option.setContainer(comboListElement);
                 }
                 selected = option.click();
             } catch (Exception e) {

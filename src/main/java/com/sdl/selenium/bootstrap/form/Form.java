@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * private Form form = new Form().withTitle("Form Title");
+ * private Form form = new Form().setTitle("Form Title");
  * form.ready();
  * }</pre>
  */
@@ -24,15 +24,15 @@ public class Form extends WebLocator implements IWebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Form.class);
 
     public Form() {
-        withClassName("Form");
-        withTag("form");
-        WebLocator e = new WebLocator().withTag("legend");
-        withTemplateTitle(e);
+        setClassName("Form");
+        setTag("form");
+        WebLocator e = new WebLocator().setTag("legend");
+        setTemplateTitle(e);
     }
 
     public Form(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Form(String title) {
@@ -41,6 +41,6 @@ public class Form extends WebLocator implements IWebLocator {
 
     public Form(WebLocator container, String title) {
         this(container);
-        withTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS);
     }
 }

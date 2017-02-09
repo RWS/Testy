@@ -127,14 +127,14 @@ public class WebLocatorSuggestions {
         SearchType[] solution = suggestTextSearchType(webLocator);
         if (solution != null) {
             LOGGER.warn("Found the element using text search type {}", Arrays.toString(solution));
-            webLocator.withSearchTextType(solution);
+            webLocator.setSearchTextType(solution);
             return webLocator;
         }
 
         solution = suggestTitleSearchType(webLocator);
         if (solution != null) {
             LOGGER.warn("Found the element using title search type {}", Arrays.toString(solution));
-            webLocator.withSearchTitleType(solution);
+            webLocator.setSearchTitleType(solution);
             return webLocator;
         }
 
@@ -180,9 +180,9 @@ public class WebLocatorSuggestions {
         searchTypes.toArray(labelSearchTypes);
 
         WebLocator labelLocator = new WebLocator(xPathBuilder.getContainer())
-                .withRenderMillis(0)
-                .withText(label, labelSearchTypes)
-                .withTag(xPathBuilder.getLabelTag());
+                .setRenderMillis(0)
+                .setText(label, labelSearchTypes)
+                .setTag(xPathBuilder.getLabelTag());
 
         if (labelLocator.isElementPresent()) {
 
@@ -191,17 +191,17 @@ public class WebLocatorSuggestions {
             String tag = webLocator.getPathBuilder().getTag();
 
             WebLocator labelPosition = new WebLocator(labelLocator)
-                    .withElxPath(xPathBuilder.getLabelPosition() + tag);
+                    .setElxPath(xPathBuilder.getLabelPosition() + tag);
 
             if (labelPosition.isElementPresent()) {
                 LOGGER.info("'{}' elements found at the specified label position: {}", tag, getMatchedElementsHtml(labelPosition));
             } else {
                 LOGGER.info("No '{}' elements found at the specified label position: {}", tag, xPathBuilder.getLabelPosition());
 
-                labelPosition.withElxPath(xPathBuilder.getLabelPosition() + "*");
+                labelPosition.setElxPath(xPathBuilder.getLabelPosition() + "*");
                 if (labelPosition.isElementPresent()) {
                     LOGGER.warn("All elements found at the specified label position: {}", getMatchedElementsHtml(labelPosition));
-                    webLocator.withTag("*");
+                    webLocator.setTag("*");
                     return webLocator;
                 }
             }
@@ -213,20 +213,20 @@ public class WebLocatorSuggestions {
             SearchType[] solution = suggestTextSearchType(labelLocator);
             if (solution != null) {
                 LOGGER.warn("But found it using search types {}", Arrays.toString(solution));
-                webLocator.withLabel(label, solution);
+                webLocator.setLabel(label, solution);
                 return webLocator;
             } else {
-                labelLocator.withTag("*");
+                labelLocator.setTag("*");
                 if(labelLocator.isElementPresent()) {
                     LOGGER.warn("But found it using tag *.");
-                    webLocator.withLabelTag("*");
+                    webLocator.setLabelTag("*");
                     return webLocator;
                 } else {
                     SearchType[] solution2 = suggestTextSearchType(labelLocator);
                     if (solution2 != null) {
                         LOGGER.warn("But found it using tag * and search types {}", Arrays.toString(solution2));
-                        webLocator.withLabel(label, solution2);
-                        webLocator.withLabelTag("*");
+                        webLocator.setLabel(label, solution2);
+                        webLocator.setLabelTag("*");
                         return webLocator;
                     }
                 }
@@ -241,7 +241,7 @@ public class WebLocatorSuggestions {
         for (SearchType textSearchType : textGroup) {
 
             SearchType[] solution1 = {textSearchType, SearchType.TRIM};
-            webLocator.withSearchTextType(solution1);
+            webLocator.setSearchTextType(solution1);
 
             if (webLocator.isElementPresent()) {
                 return solution1;
@@ -250,7 +250,7 @@ public class WebLocatorSuggestions {
             for (SearchType childSearchType : childGroup) {
 
                 SearchType[] solution2 = {textSearchType, childSearchType, SearchType.TRIM};
-                webLocator.withSearchTextType(solution2);
+                webLocator.setSearchTextType(solution2);
 
                 if (webLocator.isElementPresent()) {
                     return solution2;
@@ -266,7 +266,7 @@ public class WebLocatorSuggestions {
         for (SearchType textSearchType : textGroup) {
 
             SearchType[] solution1 = {textSearchType, SearchType.TRIM};
-            webLocator.withSearchTitleType(solution1);
+            webLocator.setSearchTitleType(solution1);
 
             if (webLocator.isElementPresent()) {
                 return solution1;
@@ -275,7 +275,7 @@ public class WebLocatorSuggestions {
             for (SearchType childSearchType : childGroup) {
 
                 SearchType[] solution2 = {textSearchType, childSearchType, SearchType.TRIM};
-                webLocator.withSearchTitleType(solution2);
+                webLocator.setSearchTitleType(solution2);
 
                 if (webLocator.isElementPresent()) {
                     return solution2;

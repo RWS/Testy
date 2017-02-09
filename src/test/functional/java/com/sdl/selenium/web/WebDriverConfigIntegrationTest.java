@@ -13,10 +13,10 @@ public class WebDriverConfigIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverConfigIntegrationTest.class);
 
     private class FirstTab {
-        public WebLink textExamplesLink = new WebLink().withText("open text examples");
+        public WebLink textExamplesLink = new WebLink().setText("open text examples");
     }
     private class SecondTab {
-        public WebLocator header = new WebLocator().withText("Text with different SearchTypes examples");
+        public WebLocator header = new WebLocator().setText("Text with different SearchTypes examples");
     }
 
     private FirstTab firstTab = new FirstTab();

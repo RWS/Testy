@@ -19,26 +19,26 @@ import com.sdl.selenium.web.form.ICombo;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * SelectPicker selectPicker = new SelectPicker().withLabel("Tech:");
+ * SelectPicker selectPicker = new SelectPicker().setLabel("Tech:");
  * selectPicker.select("Manual");
  * }</pre>
  */
 public class SelectPicker extends WebLocator implements ICombo {
 
     public SelectPicker() {
-        withClassName("SelectPicker");
-        withBaseCls("dropdown-toggle");
-        withTag("button");
+        setClassName("SelectPicker");
+        setBaseCls("dropdown-toggle");
+        setTag("button");
     }
 
     public SelectPicker(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public SelectPicker(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SelectPicker extends WebLocator implements ICombo {
 
     protected void doSelect(String value) {
         WebLocator group = new WebLocator().setClasses("btn-group", "open");
-        WebLocator select = new WebLocator(group).setText(value).withInfoMessage("select: '" + value + "'");
+        WebLocator select = new WebLocator(group).setText(value).setInfoMessage("select: '" + value + "'");
         select.click();
     }
 

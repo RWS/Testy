@@ -10,24 +10,24 @@ import org.slf4j.LoggerFactory;
 public class GridEditor extends Grid {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridEditor.class);
 
-    private WebLocator gridEditor = new WebLocator().withBaseCls("x-grid-editor").withExcludeClasses("x-hide-offsets");
+    private WebLocator gridEditor = new WebLocator().setBaseCls("x-grid-editor").setExcludeClasses("x-hide-offsets");
 
 
     public GridEditor() {
-        withClassName("Grid");
-        withBaseCls("x-tree-panel");
-        withTag("*");
+        setClassName("Grid");
+        setBaseCls("x-tree-panel");
+        setTag("*");
     }
 
     public GridEditor(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TextField getActiveEditor() {
         TextField editor;
-        WebLocator container = new WebLocator().withBaseCls("x-grid-editor").withExcludeClasses("x-hide-offsets");
-        WebLocator editableEl = new WebLocator(container).withElxPath("//*[contains(@class, '-focus')]");
+        WebLocator container = new WebLocator().setBaseCls("x-grid-editor").setExcludeClasses("x-hide-offsets");
+        WebLocator editableEl = new WebLocator(container).setElxPath("//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
         LOGGER.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {
@@ -38,7 +38,7 @@ public class GridEditor extends Grid {
             // TODO when is DateField
             LOGGER.debug("active editor is ComboBox");
             editor = new ComboBox();
-            editor.withInfoMessage("active combo editor");
+            editor.setInfoMessage("active combo editor");
         } else if (stringClass.contains("x-form-textarea")) {
             LOGGER.debug("active editor is TextArea");
             editor = new TextArea();
@@ -46,18 +46,18 @@ public class GridEditor extends Grid {
             LOGGER.debug("active editor is TextField");
             editor = new TextField();
         }
-        editor.withContainer(this).withClasses("x-form-focus").withRenderMillis(1000).withInfoMessage("active editor");
+        editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
         return editor;
     }
 
     public boolean setValue(WebLocator editor, int columnIndex, String value){
-        Table table = new Table(gridEditor).withPosition(columnIndex);
-        editor.withContainer(table);
+        Table table = new Table(gridEditor).setPosition(columnIndex);
+        editor.setContainer(table);
         return doSetValue(editor, value);
     }
 
     public boolean setValue(WebLocator editor, String value) {
-        editor.withContainer(gridEditor);
+        editor.setContainer(gridEditor);
         return doSetValue(editor, value);
     }
 

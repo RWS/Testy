@@ -9,7 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class ButtonLinkTest {
-    public static WebLocator container = new WebLocator().withId("ID");
+    public static WebLocator container = new WebLocator().setId("ID");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -17,11 +17,11 @@ public class ButtonLinkTest {
                 {new ButtonLink(),                  "//a[contains(concat(' ', @class, ' '), ' btn ')]"},
                 {new ButtonLink(container),         "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ')]"},
                 {new ButtonLink(container, "ButtonText"), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ') and text()='ButtonText']"},
-                {new ButtonLink(container, "ButtonText").withSearchTextType(SearchType.CONTAINS), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'ButtonText')]"},
-                {new ButtonLink(container).withId("ID"), "//*[@id='ID']//a[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new ButtonLink(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ') and contains(text(),'ButtonText')]"},
+                {new ButtonLink(container).setId("ID"), "//*[@id='ID']//a[@id='ID' and contains(concat(' ', @class, ' '), ' btn ')]"},
                 {new ButtonLink(new Table().getRow(new Cell(1, "Test", SearchType.EQUALS)), "ButtonText"), "//table//tr[count(.//td[1][(.='Test' or count(*//text()[.='Test']) > 0)]) > 0]//a[contains(concat(' ', @class, ' '), ' btn ') and text()='ButtonText']"},
-                {new ButtonLink(container).withElxPathSuffix("a", "aa").withElxPathSuffix("a", ""), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ')]"},
-                {new ButtonLink(container).withTemplate("a", "aa").withTemplate("a", ""), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new ButtonLink(container).setElPathSuffix("a", "aa").setElPathSuffix("a", ""), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ')]"},
+                {new ButtonLink(container).setTemplate("a", "aa").setTemplate("a", ""), "//*[@id='ID']//a[contains(concat(' ', @class, ' '), ' btn ')]"},
         };
     }
 

@@ -7,17 +7,17 @@ import com.sdl.selenium.web.WebLocator;
 public class UploadButton extends Button implements Upload {
 
     public UploadButton() {
-        withClassName("UploadButton");
+        setClassName("UploadButton");
     }
 
     public UploadButton(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public UploadButton(WebLocator container, String text) {
         this(container);
-        withText(text, SearchType.EQUALS);
+        setText(text, SearchType.EQUALS);
     }
 
     /**

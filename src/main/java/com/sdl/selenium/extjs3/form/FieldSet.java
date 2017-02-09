@@ -9,26 +9,26 @@ public class FieldSet extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(FieldSet.class);
 
     public FieldSet() {
-        withClassName("FieldSet");
-        withBaseCls("x-fieldset");
-        withTag("fieldset");
-        withExcludeClasses("x-hide-display", "x-masked");
-        withTemplate("text", "count(.//*[normalize-space(text())='%s']) > 0");
+        setClassName("FieldSet");
+        setBaseCls("x-fieldset");
+        setTag("fieldset");
+        setExcludeClasses("x-hide-display", "x-masked");
+        setTemplate("text", "count(.//*[normalize-space(text())='%s']) > 0");
     }
 
     public FieldSet(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public FieldSet(WebLocator container, String text) {
         this(container);
-        withText(text);
+        setText(text);
     }
 
     public FieldSet(WebLocator container, String cls, String text) {
         this(container, text);
-        withClasses(cls);
+        setClasses(cls);
     }
 
     // methods
@@ -38,7 +38,7 @@ public class FieldSet extends WebLocator {
     }
 
     public boolean expand() {
-        WebLocator legendElement = new WebLocator(this).withText(getPathBuilder().getText());
+        WebLocator legendElement = new WebLocator(this).setText(getPathBuilder().getText());
         boolean expanded = !isCollapsed() || legendElement.click();
         if (expanded) {
             Utils.sleep(500);

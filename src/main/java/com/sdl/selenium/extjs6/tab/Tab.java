@@ -14,31 +14,31 @@ public class Tab extends WebLocator implements ITab {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     public Tab() {
-        withClassName("TabPanel");
-        withBaseCls("x-tab-bar");
-        WebLink activeTab = new WebLink().withClasses("x-tab-active");
-        withTemplateTitle(new WebLocator(activeTab));
+        setClassName("TabPanel");
+        setBaseCls("x-tab-bar");
+        WebLink activeTab = new WebLink().setClasses("x-tab-active");
+        setTemplateTitle(new WebLocator(activeTab));
     }
 
     public Tab(String title) {
         this();
-        withTitle(title, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
+        setTitle(title, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
     }
 
     public Tab(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Tab(WebLocator container, String title) {
         this(title);
-        withContainer(container);
+        setContainer(container);
     }
 
     private WebLocator getTitleInactiveEl() {
-        WebLocator container = new WebLocator(getPathBuilder().getContainer()).withClasses(getPathBuilder().getBaseCls());
-        return new WebLink(container).withText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS)
-                .withInfoMessage(getPathBuilder().getTitle() + " Tab");
+        WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls());
+        return new WebLink(container).setText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS)
+                .setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
     /**
@@ -60,8 +60,8 @@ public class Tab extends WebLocator implements ITab {
              */
             @Override
             public String getItemPath(boolean disabled) {
-                WebLocator body = new WebLocator().withTag("following-sibling::*").withClasses("x-panel-body");
-                WebLocator tab = new WebLocator(body).withRoot("/").withExcludeClasses("x-hidden-offsets").withClasses("x-tabpanel-child");
+                WebLocator body = new WebLocator().setTag("following-sibling::*").setClasses("x-panel-body");
+                WebLocator tab = new WebLocator(body).setRoot("/").setExcludeClasses("x-hidden-offsets").setClasses("x-tabpanel-child");
                 return getBaseTabPanelPath() + tab.getXPath();
             }
         };

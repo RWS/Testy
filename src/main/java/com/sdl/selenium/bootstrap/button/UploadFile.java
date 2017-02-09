@@ -16,16 +16,16 @@ import com.sdl.selenium.web.WebLocator;
  * }</pre>
  * <p>In Java write this:</p>
  * <pre>{@code
- * private UploadFile uploadButton = new UploadFile().withText("Browse");
+ * private UploadFile uploadButton = new UploadFile().setText("Browse");
  * uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx");
  * }</pre>
  */
 public class UploadFile extends WebLocator implements Upload {
 
     public UploadFile() {
-        withClassName("UploadFile");
-        withBaseCls("fileupload");
-        withTag("div");
+        setClassName("UploadFile");
+        setBaseCls("fileupload");
+        setTag("div");
     }
 
     /**
@@ -33,12 +33,12 @@ public class UploadFile extends WebLocator implements Upload {
      */
     public UploadFile(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public UploadFile(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     /**
@@ -50,7 +50,7 @@ public class UploadFile extends WebLocator implements Upload {
      */
     @Override
     public boolean upload(String filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withType("file");
+        WebLocator upload = new WebLocator(this).setTag("input").setType("file");
         return upload(upload, filePath);
     }
 
@@ -63,7 +63,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     public boolean upload(String text, String filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
+        WebLocator upload = new WebLocator(this).setTag("input").setLabel(text).setLabelPosition("//following-sibling::").setLabelTag("span").setType("file");
         return upload(upload, filePath);
     }
 
@@ -80,7 +80,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     public boolean change(String text, String filePath) {
-        WebLocator upload = new WebLocator(this).withTag("input").withLabel(text).withLabelPosition("//following-sibling::").withLabelTag("span").withType("file");
+        WebLocator upload = new WebLocator(this).setTag("input").setLabel(text).setLabelPosition("//following-sibling::").setLabelTag("span").setType("file");
         return upload(upload, filePath);
     }
 
@@ -92,7 +92,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     public boolean newUpload(String filePath) {
-        WebLocator uploadButton = new WebLocator(this).withTag("span").withClasses("fileupload-new").withElxPathSuffix("icon-folder-open", "count(.//i[@class='icon-folder-open']) > 0");
+        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-new").setElPathSuffix("icon-folder-open", "count(.//i[@class='icon-folder-open']) > 0");
         return upload(uploadButton, filePath);
     }
 
@@ -104,17 +104,17 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     public boolean reUpload(String filePath) {
-        WebLocator uploadButton = new WebLocator(this).withTag("span").withClasses("fileupload-exists").withElxPathSuffix("icon-refresh", "count(.//i[@class='icon-refresh']) > 0");
+        WebLocator uploadButton = new WebLocator(this).setTag("span").setClasses("fileupload-exists").setElPathSuffix("icon-refresh", "count(.//i[@class='icon-refresh']) > 0");
         return upload(uploadButton, filePath);
     }
 
     public boolean removeFile() {
-        WebLocator removeButton = new WebLocator(this).withTag("a").withClasses("fileupload-exists").withElxPathSuffix("icon-trash", "count(.//i[@class='icon-trash']) > 0");
+        WebLocator removeButton = new WebLocator(this).setTag("a").setClasses("fileupload-exists").setElPathSuffix("icon-trash", "count(.//i[@class='icon-trash']) > 0");
         return removeButton.clickAt();
     }
 
     public String uploadedNameFile() {
-        WebLocator upload = new WebLocator(this).withTag("span").withClasses("fileupload-preview");
+        WebLocator upload = new WebLocator(this).setTag("span").setClasses("fileupload-preview");
         return upload.getText();
     }
 

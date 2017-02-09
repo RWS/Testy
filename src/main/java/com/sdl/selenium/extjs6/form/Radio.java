@@ -8,20 +8,20 @@ public class Radio extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Radio.class);
 
     public Radio() {
-        withClassName("Radio");
-        withTag("span");
-        withBaseCls("x-form-radio");
-        withLabelPosition("/../");
+        setClassName("Radio");
+        setTag("span");
+        setBaseCls("x-form-radio");
+        setLabelPosition("/../");
     }
 
     public Radio(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Radio(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     public boolean isSelected() {

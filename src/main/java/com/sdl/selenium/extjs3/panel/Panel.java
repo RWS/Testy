@@ -12,32 +12,32 @@ public class Panel extends ExtJsComponent {
     private String headerBaseCls;
 
     public Panel() {
-        withClassName("Panel");
-        withBaseCls("x-panel");
+        setClassName("Panel");
+        setBaseCls("x-panel");
         setHeaderBaseCls(getPathBuilder().getBaseCls());
-        withElxPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
-        withTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
+        setElPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
+        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
     public Panel(String title) {
         this();
-        withTitle(title);
+        setTitle(title);
     }
 
     public Panel(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Panel(WebLocator container, String title) {
         this(container);
-        withTitle(title);
+        setTitle(title);
     }
 
     public Panel(String cls, WebLocator container, String excludeClass) {
         this(container);
-        withClasses(cls);
-        withExcludeClasses(excludeClass);
+        setClasses(cls);
+        setExcludeClasses(excludeClass);
     }
 
     public String getHeaderBaseCls() {
@@ -58,7 +58,7 @@ public class Panel extends ExtJsComponent {
      * @return true | false
      */
     public boolean clickOnTool(String id) {
-        ExtJsComponent toolElement = getToolElement(id).withVisibility(true);
+        ExtJsComponent toolElement = getToolElement(id).setVisibility(true);
         return toolElement.click();
     }
 
@@ -85,7 +85,7 @@ public class Panel extends ExtJsComponent {
     }
 
     private ExtJsComponent getToolElement(String id) {
-        return new ExtJsComponent(this).withClasses("x-tool-" + id);
+        return new ExtJsComponent(this).setClasses("x-tool-" + id);
     }
 
     public boolean restore() {

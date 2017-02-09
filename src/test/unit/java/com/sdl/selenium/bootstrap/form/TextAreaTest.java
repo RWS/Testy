@@ -12,9 +12,9 @@ public class TextAreaTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new TextArea(),                                       "//textarea"},
-                {new TextArea().withId("ID"),                           "//textarea[@id='ID']"},
+                {new TextArea().setId("ID"),                           "//textarea[@id='ID']"},
                 {new TextArea(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
-                {new TextArea(container).withElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new TextArea(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new TextArea(container, "TextAriaLabel"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextAriaLabel']//following-sibling::*//textarea"},
         };
     }

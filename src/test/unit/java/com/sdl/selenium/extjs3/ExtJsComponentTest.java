@@ -12,14 +12,14 @@ public class ExtJsComponentTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new ExtJsComponent(),                             "//*"},
-                {new ExtJsComponent().withId("ID"),                 "//*[@id='ID']"},
+                {new ExtJsComponent().setId("ID"),                 "//*[@id='ID']"},
                 {new ExtJsComponent("cls"),                        "//*[contains(concat(' ', @class, ' '), ' cls ')]"},
                 {new ExtJsComponent(container),                    "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
-                {new ExtJsComponent(container).withElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new ExtJsComponent(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new ExtJsComponent(container, "path"),            "//*[contains(concat(' ', @class, ' '), ' container ')]path"},
                 {new ExtJsComponent("cls", container),             "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ')]"},
                 {new ExtJsComponent("Text","cls", container),      "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ') and contains(text(),'Text')]"},
-                {new ExtJsComponent(container).withVisibility(true),"//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0]"},
+                {new ExtJsComponent(container).setVisibility(true),"//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0]"},
         };
     }
 

@@ -12,18 +12,18 @@ public class WebLink extends WebLocator {
     private String oldTab;
 
     public WebLink() {
-        withClassName("WebLink");
-        withTag("a");
+        setClassName("WebLink");
+        setTag("a");
     }
 
     public WebLink(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public WebLink(WebLocator container, String text) {
         this(container);
-        withText(text);
+        setText(text);
     }
 
     public boolean openInNewWindow() {

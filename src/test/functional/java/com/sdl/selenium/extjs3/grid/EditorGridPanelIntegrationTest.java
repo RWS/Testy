@@ -21,7 +21,7 @@ import static org.testng.Assert.assertTrue;
 public class EditorGridPanelIntegrationTest extends TestBase {
 
     private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").withTitle("EditableGrid");
+    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
     private Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider

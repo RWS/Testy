@@ -12,11 +12,11 @@ public class MultiSelectTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new MultiSelect(),                                       "//button[contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
-                {new MultiSelect().withId("ID"),                           "//button[@id='ID' and contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
+                {new MultiSelect().setId("ID"),                           "//button[@id='ID' and contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
                 {new MultiSelect(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//button[contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
-                {new MultiSelect(container).withElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new MultiSelect(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new MultiSelect(container, "SelectPickerLabel"),         "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='SelectPickerLabel']//following-sibling::*//button[contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
-                {new MultiSelect(container).withId("ID"),                         "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@id='ID' and contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
+                {new MultiSelect(container).setId("ID"),                         "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@id='ID' and contains(concat(' ', @class, ' '), ' dropdown-toggle ')]"},
         };
     }
 

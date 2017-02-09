@@ -11,19 +11,19 @@ public class SplitButton extends Button {
     private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
     public SplitButton() {
-        withClassName("SplitButton");
-        withBaseCls("x-btn");
-        withVisibility(true);
+        setClassName("SplitButton");
+        setBaseCls("x-btn");
+        setVisibility(true);
     }
 
     public SplitButton(ExtJsComponent container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public SplitButton(ExtJsComponent container, String text) {
         this(container);
-        withText(text);
+        setText(text);
     }
 
     public boolean clickOnMenu(String option) {
@@ -51,12 +51,12 @@ public class SplitButton extends Button {
                     LOGGER.info("In IE is visible");
                 }
             } else {
-                menu.withStyle("visibility: visible;");
+                menu.setStyle("visibility: visible;");
             }
-            menu.withInfoMessage("active menu");
+            menu.setInfoMessage("active menu");
             ExtJsComponent option = new ExtJsComponent(menu);
             for (String menuOption : menuOptions) {
-                option.withText(menuOption);
+                option.setText(menuOption);
                 if (!option.mouseOver()) {
                     return false;
                 }

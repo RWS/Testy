@@ -15,18 +15,18 @@ public class TagField extends ComboBox {
     private static final Logger LOGGER = Logger.getLogger(TagField.class);
 
     public TagField() {
-        withClassName("TagField");
-        withTag("div");
+        setClassName("TagField");
+        setTag("div");
     }
 
     public TagField(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TagField(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     @Override

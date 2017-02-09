@@ -101,7 +101,7 @@ public class TestBase {
     }
 
     public void showComponent(String buttonText) {
-        WebLocator tbar = new WebLocator().withId("top-toolbar");
+        WebLocator tbar = new WebLocator().setId("top-toolbar");
         Button showComponentButton = new Button(tbar, buttonText);
         showComponentButton.click();
     }

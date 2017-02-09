@@ -18,15 +18,15 @@ public class DateField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
     private WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
-    private WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").withAttribute("aria-hidden", "false").setVisibility(true);
+    private WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
     private Button monthYearButton = new Button(calendarLayer);
-    private WebLocator selectOkButton = new WebLocator(calendarLayer).setText("OK").setVisibility(true).withInfoMessage("Ok");
+    private WebLocator selectOkButton = new WebLocator(calendarLayer).setText("OK").setVisibility(true).setInfoMessage("Ok");
     private WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-monthpicker").setVisibility(true);
     private WebLocator nextYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-next").setVisibility(true);
     private WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-prev").setVisibility(true);
-    private WebLocator yearContainer = new WebLocator(yearAndMonth).withClasses("x-monthpicker-years");
-    private WebLocator monthContainer = new WebLocator(yearAndMonth).withClasses("x-monthpicker-months");
-    private WebLocator dayContainer = new WebLocator(calendarLayer).withClasses("x-datepicker-cell").setExcludeClasses("x-datepicker-disabled");
+    private WebLocator yearContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-years");
+    private WebLocator monthContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-months");
+    private WebLocator dayContainer = new WebLocator(calendarLayer).setClasses("x-datepicker-cell").setExcludeClasses("x-datepicker-disabled");
 
     private WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
     private Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
@@ -35,17 +35,17 @@ public class DateField extends TextField {
     private WebLocator tooltip = new WebLocator().setClasses("x-tip").setAttribute("aria-hidden", "false");
 
     public DateField() {
-        withClassName("DateField");
+        setClassName("DateField");
     }
 
     public DateField(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public DateField(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     /**
@@ -64,11 +64,11 @@ public class DateField extends TextField {
                 monthYearButton.click();
             }
             goToYear(year, fullDate);
-            WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).withInfoMessage("month " + month);
+            WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).setInfoMessage("month " + month);
             monthEl.click();
             selectOkButton.click();
         }
-        WebLocator dayEl = new WebLocator(dayContainer).withText(day, SearchType.EQUALS).setVisibility(true).withInfoMessage("day " + day);
+        WebLocator dayEl = new WebLocator(dayContainer).setText(day, SearchType.EQUALS).setVisibility(true).setInfoMessage("day " + day);
         Utils.sleep(50);
         return dayEl.click();
     }
@@ -84,7 +84,7 @@ public class DateField extends TextField {
         int con = yearInt > currentYear ? -4 : 4;
         int count = (int) Math.ceil((yearInt - currentYear - con) / 10);
         selectYearPage(count);
-        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).withInfoMessage("year " + year);
+        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setInfoMessage("year " + year);
         if (!yearEl.waitToRender(200)) {
             selectYearPage(count > 0 ? 1 : -1);
         }
@@ -92,7 +92,7 @@ public class DateField extends TextField {
             yearEl.click();
         } catch (WebDriverException e) {
             if (tooltip.waitToRender(500)) {
-                WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).withInfoMessage("month Jan");
+                WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).setInfoMessage("month Jan");
                 monthEl.mouseOver();
                 Utils.sleep(300);
             }

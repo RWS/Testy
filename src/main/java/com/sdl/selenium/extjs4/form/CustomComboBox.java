@@ -11,17 +11,17 @@ public class CustomComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = Logger.getLogger(CustomComboBox.class);
 
     public CustomComboBox() {
-        withClassName("CustomComboBox");
+        setClassName("CustomComboBox");
     }
 
     public CustomComboBox(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public CustomComboBox(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public String getTriggerPath(String icon) {
@@ -60,8 +60,8 @@ public class CustomComboBox extends TextField implements ICombo {
 
     private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
         String classList = "x-boundlist";
-        WebLocator comboListElement = new WebLocator(classList).withInfoMessage(this + " -> " + classList);
-        return new WebLocator(comboListElement).withText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+        WebLocator comboListElement = new WebLocator(classList).setInfoMessage(this + " -> " + classList);
+        return new WebLocator(comboListElement).setText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).setRenderMillis(optionRenderMillis).setInfoMessage(value);
     }
 
     public boolean select(String value, boolean startWith) {
@@ -77,7 +77,7 @@ public class CustomComboBox extends TextField implements ICombo {
     public String getValue() {
         String value = null;
         if (click()) {
-            WebLocator option = getComboEl(null, true, 300).withClasses("x-boundlist-selected");
+            WebLocator option = getComboEl(null, true, 300).setClasses("x-boundlist-selected");
             value = option.getText();
             sendKeys(Keys.ESCAPE); // to close combo
         } else {

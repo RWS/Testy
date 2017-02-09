@@ -21,19 +21,19 @@ public class Button extends ExtJsComponent implements IButton {
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
         String key = "icon-cls";
-        withElxPathSuffix(key, applyTemplate(key, iconCls));
+        setElPathSuffix(key, applyTemplate(key, iconCls));
         return (T) this;
     }
 
     private String iconCls;
 
     public Button() {
-        withClassName("Button");
-        withBaseCls("x-btn");
-        withTag("table");
-        withVisibility(true);
-        withTemplate("enabled", "not(contains(@class, 'x-item-disabled'))");
-        withTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
+        setClassName("Button");
+        setBaseCls("x-btn");
+        setTag("table");
+        setVisibility(true);
+        setTemplate("enabled", "not(contains(@class, 'x-item-disabled'))");
+        setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
@@ -42,22 +42,22 @@ public class Button extends ExtJsComponent implements IButton {
      */
     public Button(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Button(WebLocator container, String text) {
         this(container);
-        withText(text, SearchType.EQUALS);
+        setText(text, SearchType.EQUALS);
     }
 
     // Methods
     @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
-        WebLocator buttonEl = new WebLocator(this).withTag("button").withInfoMessage(getPathBuilder().itemToString() + "//button");
+        WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(getPathBuilder().itemToString() + "//button");
         // TODO try to click on button that has mask - with first solution is not saying that has mask
-        //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").withInfoMessage(this + "//button");
-        buttonEl.withRenderMillis(getPathBuilder().getRenderMillis());
+        //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
+        buttonEl.setRenderMillis(getPathBuilder().getRenderMillis());
         boolean buttonExist;
         buttonEl.sendKeys(Keys.TAB);
         buttonExist = buttonEl.currentElement != null;
@@ -102,7 +102,7 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean isDisabled() {
-        WebLocator disabledLocator = new WebLocator().withElxPath(getXPath(true));
+        WebLocator disabledLocator = new WebLocator().setElxPath(getXPath(true));
         return disabledLocator.exists();
     }
 
@@ -158,12 +158,12 @@ public class Button extends ExtJsComponent implements IButton {
 //                    LOGGER.info("In IE is visible");
 //                }
             } else {
-                menu.withStyle("visibility: visible;");
+                menu.setStyle("visibility: visible;");
             }
-            menu.withInfoMessage("active menu");
+            menu.setInfoMessage("active menu");
             ExtJsComponent option = new ExtJsComponent(menu);
             for (String menuOption : menuOptions) {
-                option.withText(menuOption);
+                option.setText(menuOption);
                 if (!option.mouseOver()) {
                     return false;
                 }

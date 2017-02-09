@@ -11,18 +11,18 @@ public class FileUpload extends TextField implements Upload {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUpload.class);
 
     public FileUpload() {
-        withClassName("FileUpload");
-        withType("file");
+        setClassName("FileUpload");
+        setType("file");
     }
 
     public FileUpload(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public FileUpload(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     /**

@@ -14,9 +14,9 @@ public class DownloadButtonTest {
                 {new DownloadButton(), "//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new DownloadButton(container, "Download"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(*//text()[.='Download']) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
                 {new DownloadButton(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
-                {new DownloadButton(container).withId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
-                {new DownloadButton(container).withElxPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
-                {new DownloadButton().withElxPath("//*[text()='Download']"), "//*[text()='Download']"},
+                {new DownloadButton(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0 and count(ancestor-or-self::*[contains(@class, 'x-hide-display')]) = 0 and not(contains(@class, 'x-item-disabled'))]"},
+                {new DownloadButton(container).setElxPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
+                {new DownloadButton().setElxPath("//*[text()='Download']"), "//*[text()='Download']"},
         };
     }
 

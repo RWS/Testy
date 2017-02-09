@@ -238,7 +238,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
      * <p>Example:</p>
      * <pre>
-     *     WebLocator element = new WebLocator().withClasses("bg-btn", "new-btn");
+     *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
      * </pre>
      *
      * @return value that has been set in {@link #setClasses(String...)}
@@ -457,7 +457,7 @@ public class XPathBuilder implements Cloneable {
 
     /**
      * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "withTemplate("title", "@title='%s'")" a template.</b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
      *
      * @return value that has been set in {@link #setTitle(String, SearchType...)}
      */
@@ -1026,7 +1026,7 @@ public class XPathBuilder implements Cloneable {
 
             WebLocator titleTplEl = templateTitle.get("title");
             if (titleTplEl != null) {
-                titleTplEl.withText(title, searchTitleType.toArray(new SearchType[searchTitleType.size()]));
+                titleTplEl.setText(title, searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 //setTemplate("title", "count(.%s) > 0");
                 addTemplate(selector, "titleEl", titleTplEl.getXPath());
             } else if (!searchTitleType.isEmpty()) {
@@ -1075,7 +1075,7 @@ public class XPathBuilder implements Cloneable {
 
             // child element has myself as parent
             if (parentElementIterator.getPathBuilder() == this) {
-                childIterator.withContainer(null); // break parent tree while generating child address
+                childIterator.setContainer(null); // break parent tree while generating child address
                 parentElement = parentElementIterator;
                 breakElement = childIterator;
             } else {
@@ -1085,7 +1085,7 @@ public class XPathBuilder implements Cloneable {
 
         String selector = "count(." + child.getXPath() + ") > 0";
         if (breakElement != null) {
-            breakElement.withContainer(parentElement);
+            breakElement.setContainer(parentElement);
         }
         return selector;
     }
@@ -1195,8 +1195,10 @@ public class XPathBuilder implements Cloneable {
                 if (searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
                     if (searchType.contains(SearchType.CASE_INSENSITIVE)) {
                         strings[i] = "count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0";
+//                        strings[i] = "(count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0 or count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0)";
                     } else {
                         strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
+//                        strings[i] = "(count(*//text()[contains(.," + escapeQuotesText + ")]) > 0 or count(..//text()[contains(.," + escapeQuotesText + ")]) > 0)";
                     }
                 } else {
                     strings[i] = "contains(" + pathText + "," + escapeQuotesText + ")";
@@ -1434,7 +1436,7 @@ public class XPathBuilder implements Cloneable {
             searchLabelType.add(SearchType.EQUALS);
         }
         SearchType[] st = searchLabelType.toArray(new SearchType[searchLabelType.size()]);
-        return new WebLocator().withText(getLabel(), st).withTag(getLabelTag()).getXPath();
+        return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getXPath();
     }
 
     @Override

@@ -9,20 +9,20 @@ public class Panel extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Panel.class);
 
     public Panel() {
-        withClassName("Panel");
-        withBaseCls("x-panel");
-        WebLocator header = new WebLocator().withClasses("x-title").withRoot("//");
-        withTemplateTitle(new WebLocator(header));
+        setClassName("Panel");
+        setBaseCls("x-panel");
+        WebLocator header = new WebLocator().setClasses("x-title").setRoot("//");
+        setTemplateTitle(new WebLocator(header));
     }
 
     public Panel(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Panel(WebLocator container, String title) {
         this(container);
-        withTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS);
     }
 
     private WebLocator getCollapseEl(String type) {
@@ -38,11 +38,11 @@ public class Panel extends WebLocator {
     }
 
     @Override
-    public Panel withVisibility(boolean visible) {
+    public Panel setVisibility(boolean visible) {
         if (visible) {
-            this.withExcludeClasses("x-collapsed ", "x-panel-collapsed");
+            this.setExcludeClasses("x-collapsed ", "x-panel-collapsed");
         } else {
-            this.withClasses("x-collapsed ", "x-panel-collapsed");
+            this.setClasses("x-collapsed ", "x-panel-collapsed");
         }
         return this;
     }

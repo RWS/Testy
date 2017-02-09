@@ -10,18 +10,18 @@ public class Slider extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Slider.class);
 
     public Slider() {
-        withClassName("Slider");
-        withBaseCls("x-slider");
+        setClassName("Slider");
+        setBaseCls("x-slider");
     }
 
     public Slider(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public Slider(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     public boolean move(int distance) {

@@ -14,9 +14,9 @@ public class ComboBoxTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new ComboBox(),                                       "//input[contains(concat(' ', @class, ' '), ' x-form-text ')]"},
-                {new ComboBox().withClasses("ComboBoxClass"),          "//input[contains(concat(' ', @class, ' '), ' x-form-text ') and contains(concat(' ', @class, ' '), ' ComboBoxClass ')]"},
+                {new ComboBox().setClasses("ComboBoxClass"),          "//input[contains(concat(' ', @class, ' '), ' x-form-text ') and contains(concat(' ', @class, ' '), ' ComboBoxClass ')]"},
                 {new ComboBox(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-text ')]"},
-                {new ComboBox(container).withElxPath("//table//tr[1]"),"//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
+                {new ComboBox(container).setElxPath("//table//tr[1]"),"//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
                 {new ComboBox(container, "ComboBoxText"),              "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'ComboBoxText') or count(*//text()[contains(.,'ComboBoxText')]) > 0)]//following-sibling::*//input[contains(concat(' ', @class, ' '), ' x-form-text ')]"},
         };
     }

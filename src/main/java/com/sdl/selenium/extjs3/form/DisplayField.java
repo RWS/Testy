@@ -8,24 +8,24 @@ public class DisplayField extends TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(DisplayField.class);
 
     public DisplayField() {
-        withClassName("DisplayField");
-        withBaseCls("x-form-display-field");
-        withTag("*");
+        setClassName("DisplayField");
+        setBaseCls("x-form-display-field");
+        setTag("*");
     }
 
     public DisplayField(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public DisplayField(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 
     public DisplayField(String name, WebLocator container) {
         this(container);
-        withName(name);
+        setName(name);
     }
 
     public boolean setValue(String value) {

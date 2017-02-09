@@ -19,17 +19,17 @@ public class ComboBox extends TextField implements ICombo {
     private Pagination paginationEl = new Pagination(boundList).setRenderMillis(300);
 
     public ComboBox() {
-        withClassName("ComboBox");
+        setClassName("ComboBox");
     }
 
     public ComboBox(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public ComboBox(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     /**
@@ -71,12 +71,12 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
-//        WebLocator comboListElement = new WebLocator(listClass).withAttribute("aria-hidden", "false").withInfoMessage(this + " -> " + listClass);
-        boundList = boundList.withVisibility(true);
-        WebLocator item = new WebLocator(boundList).withTag("li").withText(value, searchType).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+//        WebLocator comboListElement = new WebLocator(listClass).setAttribute("aria-hidden", "false").setInfoMessage(this + " -> " + listClass);
+        boundList = boundList.setVisibility(true);
+        WebLocator item = new WebLocator(boundList).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
 //        for (SearchType type : searchType) {
 //            if (type.equals(SearchType.CONTAINS_ALL_CHILD_NODES)) {
-//                item.withTag("ul//ul");
+//                item.setTag("ul//ul");
 //            }
 //        }
         return item;
@@ -125,7 +125,7 @@ public class ComboBox extends TextField implements ICombo {
 
     public List<String> getAllValues() {
         clickIcon("trigger");
-        WebLocator comboList = new WebLocator(boundList).withClasses(listClass).withVisibility(true);
+        WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
         String[] comboValues = comboList.getText().split("\\n");
         clickIcon("trigger");
         return Arrays.asList(comboValues);

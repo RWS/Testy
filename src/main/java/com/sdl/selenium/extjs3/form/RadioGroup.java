@@ -12,18 +12,18 @@ public class RadioGroup extends ExtJsComponent {
     private Radio radio = new Radio(this);
 
     public RadioGroup() {
-        withClassName("RadioGroup");
-        withBaseCls("x-form-radio-group");
+        setClassName("RadioGroup");
+        setBaseCls("x-form-radio-group");
     }
 
     public RadioGroup(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public RadioGroup(WebLocator container, String name) {
         this(container);
-        radio.withName(name);
+        radio.setName(name);
     }
 
     public boolean selectByLabel(String label) {
@@ -31,26 +31,26 @@ public class RadioGroup extends ExtJsComponent {
     }
 
     public boolean selectByLabel(String label, SearchType searchType) {
-        radio.withLabel(label, searchType);
+        radio.setLabel(label, searchType);
         boolean selected = !isDisabled() && radio.click();
-        radio.withLabel(null);
+        radio.setLabel(null);
         return selected;
     }
 
     public boolean selectByValue(String value) {
-        radio.withText(value);
+        radio.setText(value);
         boolean selected = !isDisabled() && radio.click();
-        radio.withText(null);
+        radio.setText(null);
         return selected;
     }
 
     public String getLabelName(String label) {
-        WebLocator locator = new WebLocator(radio).withElxPath("/following-sibling::label[contains(text(),'" + label + "')]");
+        WebLocator locator = new WebLocator(radio).setElxPath("/following-sibling::label[contains(text(),'" + label + "')]");
         return locator.getText();
     }
 
     public boolean isDisabled() {
-        WebLocator locator = new WebLocator().withElxPath(radio.getXPath(true));
+        WebLocator locator = new WebLocator().setElxPath(radio.getXPath(true));
         return locator.exists();
     }
 }

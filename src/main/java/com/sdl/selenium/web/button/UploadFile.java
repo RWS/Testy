@@ -9,7 +9,7 @@ public class UploadFile extends WebLocator implements Upload {
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadFile.class);
 
     public UploadFile() {
-        withClassName("UploadFile");
+        setClassName("UploadFile");
     }
 
     /**
@@ -17,7 +17,7 @@ public class UploadFile extends WebLocator implements Upload {
      */
     public UploadFile(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     /**

@@ -11,17 +11,17 @@ public class Pagination extends ToolBar {
     private static final Logger LOGGER = LoggerFactory.getLogger(Pagination.class);
 
     public Pagination() {
-        withClassName("Pagination");
+        setClassName("Pagination");
     }
 
     public Pagination(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     private WebLocator currentPageContainer = new WebLocator("x-tbar-page-number");
     private TextField currentPage = new TextField(currentPageContainer);
-    private WebLocator itemTotals = new WebLocator(this).withBaseCls("x-toolbar-text").withText("Displaying items", SearchType.STARTS_WITH);
+    private WebLocator itemTotals = new WebLocator(this).setBaseCls("x-toolbar-text").setText("Displaying items", SearchType.STARTS_WITH);
 
     private Button firstPageBtn = getButton("x-tbar-page-first");
 
@@ -56,8 +56,8 @@ public class Pagination extends ToolBar {
     }
 
     private Button getButton(String cls) {
-        WebLocator el = new WebLocator().withTag("span").withClasses(cls);
-        return new Button(this).withChildNodes(el);
+        WebLocator el = new WebLocator().setTag("span").setClasses(cls);
+        return new Button(this).setChildNodes(el);
     }
 
     public boolean goToFirstPage() {

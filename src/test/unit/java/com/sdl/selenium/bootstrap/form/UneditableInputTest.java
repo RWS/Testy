@@ -12,9 +12,9 @@ public class UneditableInputTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new UneditableInput(),                                       "//span[contains(concat(' ', @class, ' '), ' uneditable-input ')]"},
-                {new UneditableInput().withId("ID"),                           "//span[@id='ID' and contains(concat(' ', @class, ' '), ' uneditable-input ')]"},
+                {new UneditableInput().setId("ID"),                           "//span[@id='ID' and contains(concat(' ', @class, ' '), ' uneditable-input ')]"},
                 {new UneditableInput(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//span[contains(concat(' ', @class, ' '), ' uneditable-input ')]"},
-                {new UneditableInput(container).withElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new UneditableInput(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new UneditableInput(container, "TextFieldText"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//span[contains(concat(' ', @class, ' '), ' uneditable-input ')]"},
         };
     }

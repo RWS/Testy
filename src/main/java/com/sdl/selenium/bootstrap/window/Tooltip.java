@@ -5,14 +5,14 @@ import com.sdl.selenium.web.WebLocator;
 public class Tooltip extends WebLocator {
 
     public Tooltip() {
-        withInfoMessage("Tooltip");
-        withClasses("tooltip");
-        withTemplate("title", "count(//*[@class='tooltip-inner' and text()='%s']) > 0");
+        setInfoMessage("Tooltip");
+        setClasses("tooltip");
+        setTemplate("title", "count(//*[@class='tooltip-inner' and text()='%s']) > 0");
     }
 
     public Tooltip(String message) {
         this();
-        withTitle(message);
-        withInfoMessage("Tooltip has message: '" + message + "'.");
+        setTitle(message);
+        setInfoMessage("Tooltip has message: '" + message + "'.");
     }
 }

@@ -12,9 +12,9 @@ public class DatePickerTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new DatePicker(),                                       "//*[contains(concat(' ', @class, ' '), ' date ')]"},
-                {new DatePicker().withId("ID"),                           "//*[@id='ID' and contains(concat(' ', @class, ' '), ' date ')]"},
+                {new DatePicker().setId("ID"),                           "//*[@id='ID' and contains(concat(' ', @class, ' '), ' date ')]"},
                 {new DatePicker(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' date ')]"},
-                {new DatePicker(container).withElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new DatePicker(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new DatePicker(container, "ID"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' date ')]"},
         };
     }

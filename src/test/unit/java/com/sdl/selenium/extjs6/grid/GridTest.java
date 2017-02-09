@@ -14,10 +14,10 @@ public class GridTest {
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
                 {new Grid(), "//*[contains(concat(' ', @class, ' '), ' x-grid ')]"},
-                {new Grid().withClasses("GridClass"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and contains(concat(' ', @class, ' '), ' GridClass ')]"},
+                {new Grid().setClasses("GridClass"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and contains(concat(' ', @class, ' '), ' GridClass ')]"},
                 {new Grid(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]"},
-                {new Grid(container).withElxPath("//table//tr[1]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
-                {new Grid().withTitle("Array Grid"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and count(.//*[contains(concat(' ', @class, ' '), ' x-title ')]//*[contains(text(),'Array Grid')]) > 0]"},
+                {new Grid(container).setElxPath("//table//tr[1]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
+                {new Grid().setTitle("Array Grid"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and count(.//*[contains(concat(' ', @class, ' '), ' x-title ')]//*[contains(text(),'Array Grid')]) > 0]"},
         };
     }
 

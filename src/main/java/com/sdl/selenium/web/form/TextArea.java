@@ -5,17 +5,17 @@ import com.sdl.selenium.web.WebLocator;
 public class TextArea extends TextField {
 
     public TextArea() {
-        withClassName("TextArea");
-        withTag("textarea");
+        setClassName("TextArea");
+        setTag("textarea");
     }
 
     public TextArea(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TextArea(WebLocator container, String label) {
         this(container);
-        withLabel(label);
+        setLabel(label);
     }
 }

@@ -32,10 +32,10 @@ public class FindElementIntegrationTest extends TestBase {
     private Panel findElementsAfterTimeoutFormPanel = new Panel("Find Elements after Timeout");
     private TextField timeOutTextField = new TextField(findElementsAfterTimeoutFormPanel, "Timeout:");
     private Button showButton = new Button(findElementsAfterTimeoutFormPanel, "Show");
-    private Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").withRenderMillis(200);
+    private Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").setRenderMillis(200);
     private Button showHiddenButton = new Button(findElementsAfterTimeoutFormPanel, "Show Hidden Button");
-    private WebLocator hiddenElVisible = new WebLocator().withId("hiddenButton").withVisibility(true);
-    private WebLocator hiddenElNotVisible = new WebLocator().withId("hiddenButton");
+    private WebLocator hiddenElVisible = new WebLocator().setId("hiddenButton").setVisibility(true);
+    private WebLocator hiddenElNotVisible = new WebLocator().setId("hiddenButton");
 
     @BeforeClass
     public void startTests() {
@@ -70,7 +70,7 @@ public class FindElementIntegrationTest extends TestBase {
 
     @Test
     public void findElementAfterTimeOut2() {
-        WebLocator el = new WebLocator().withText("Timeout element in 3000");
+        WebLocator el = new WebLocator().setText("Timeout element in 3000");
         showButton.click();
 
         long startMs = System.currentTimeMillis();
@@ -94,15 +94,15 @@ public class FindElementIntegrationTest extends TestBase {
 
     @Test
     public void testNewMethod() {
-        DownloadFile downloadFile = new DownloadFile().withLabel("Download");
+        DownloadFile downloadFile = new DownloadFile().setLabel("Download");
         assertFalse(hasStatus("disabled", downloadFile));
         assertTrue(hasStatus("enabled", downloadFile));
 
-        SelectPicker selectPicker = new SelectPicker().withLabel("SimpleTextField"); // TODO change label
+        SelectPicker selectPicker = new SelectPicker().setLabel("SimpleTextField"); // TODO change label
         assertFalse(hasStatus("disabled", selectPicker));
         assertTrue(hasStatus("enabled", selectPicker));
 
-//        WebLocator el = new WebLocator().withElxPath("SimpleTextField"); // TODO see why this has this path
+//        WebLocator el = new WebLocator().setElxPath("SimpleTextField"); // TODO see why this has this path
 //        assertFalse(hasStatus("disabled", el));
 //        assertTrue(hasStatus("enabled", el));
 //        assertFalse(hasStatus("test", el));

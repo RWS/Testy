@@ -15,7 +15,7 @@ public class RadioTest {
                 {new Radio("LabelText"), "//input[contains(concat(' ', @class, ' '), ' x-form-radio ') and @value='LabelText']"},
                 {new Radio(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
                 {new Radio(container, "Name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
-                {new Radio(container, "Name").withLabel("label"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='label']/../input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
+                {new Radio(container, "Name").setLabel("label"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='label']/../input[@name='Name' and contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
                 {new Radio("Label", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Label']/../input[contains(concat(' ', @class, ' '), ' x-form-radio ')]"},
         };
     }

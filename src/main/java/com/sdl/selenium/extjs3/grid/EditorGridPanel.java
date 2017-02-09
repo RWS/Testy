@@ -16,17 +16,17 @@ public class EditorGridPanel extends GridPanel {
     private int clicksToEdit = 2;
 
     public EditorGridPanel() {
-        withClassName("EditorGridPanel");
+        setClassName("EditorGridPanel");
     }
 
     public EditorGridPanel(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public EditorGridPanel(String cls) {
         this();
-        withClasses(cls);
+        setClasses(cls);
     }
 
     public EditorGridPanel(String cls, String searchColumnId) {
@@ -65,7 +65,7 @@ public class EditorGridPanel extends GridPanel {
     public TextField getActiveEditor() {
         TextField editor;
         WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl = new WebLocator(container).withElxPath("//*[contains(@class, '-focus')]");
+        WebLocator editableEl = new WebLocator(container).setElxPath("//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
         LOGGER.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {
@@ -76,7 +76,7 @@ public class EditorGridPanel extends GridPanel {
             // TODO when is DateField
             LOGGER.debug("active editor is ComboBox");
             editor = new ComboBox();
-            editor.withInfoMessage("active combo editor");
+            editor.setInfoMessage("active combo editor");
         } else if (stringClass.contains("x-form-textarea")) {
             LOGGER.debug("active editor is TextArea");
             editor = new TextArea();
@@ -84,7 +84,7 @@ public class EditorGridPanel extends GridPanel {
             LOGGER.debug("active editor is TextField");
             editor = new TextField();
         }
-        editor.withContainer(this).withClasses("x-form-focus").withRenderMillis(1000).withInfoMessage("active editor");
+        editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
         return editor;
     }
 

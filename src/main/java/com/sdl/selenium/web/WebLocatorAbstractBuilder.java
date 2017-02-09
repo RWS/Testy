@@ -1,14 +1,11 @@
 package com.sdl.selenium.web;
 
 import org.openqa.selenium.By;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
 public abstract class WebLocatorAbstractBuilder {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorAbstractBuilder.class);
 
     private XPathBuilder pathBuilder = createXPathBuilder();
 
@@ -508,11 +505,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setRoot(String)}
      * @param root If the path starts with // then all elements in the document which fulfill following criteria are selected. eg. // or /
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withRoot(final String root) {
         pathBuilder.setRoot(root);
         return (T) this;
@@ -520,11 +518,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setTag(String)}
      * @param tag (type of DOM element) eg. input or h2
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withTag(final String tag) {
         pathBuilder.setTag(tag);
         return (T) this;
@@ -532,11 +531,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setId(String)}
      * @param id  eg. id="buttonSubmit"
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withId(final String id) {
         pathBuilder.setId(id);
         return (T) this;
@@ -545,11 +545,12 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
-     *
+     * @deprecated use {@link #setElPath(String)}
      * @param elxPath absolute way (xpath) to identify element
      * @param <T>    the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withElxPath(final String elxPath) {
         pathBuilder.setElPath(elxPath);
         return (T) this;
@@ -558,11 +559,12 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate css selectors address)</b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
-     *
+     * @deprecated use {@link #setElCssSelector(String)}
      * @param elCssSelector absolute way (css selectors) to identify element
      * @param <T>    the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withElCssSelector(final String elCssSelector) {
         pathBuilder.setElCssSelector(elCssSelector);
         return (T) this;
@@ -570,11 +572,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setBaseCls(String)}
      * @param baseCls base class
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withBaseCls(final String baseCls) {
         pathBuilder.setBaseCls(baseCls);
         return (T) this;
@@ -583,11 +586,12 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Find element with <b>exact math</b> of specified class (equals)</p>
-     *
+     * @deprecated use {@link #setCls(String)}
      * @param cls class of element
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withCls(final String cls) {
         pathBuilder.setCls(cls);
         return (T) this;
@@ -599,11 +603,12 @@ public abstract class WebLocatorAbstractBuilder {
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
      * </ul>
-     *
+     * @deprecated use {@link #setClasses(String...)}
      * @param classes list of classes
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withClasses(final String... classes) {
         pathBuilder.setClasses(classes);
         return (T) this;
@@ -611,21 +616,24 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setExcludeClasses(String...)}
      * @param excludeClasses list of class to be excluded
      * @param <T>            the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withExcludeClasses(final String... excludeClasses) {
         pathBuilder.setExcludeClasses(excludeClasses);
         return (T) this;
     }
 
     /**
+     * @deprecated use {@link #setChildNodes(WebLocator...)}
      * @param childNodes list of WebLocators
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withChildNodes(final WebLocator... childNodes) {
         pathBuilder.setChildNodes(childNodes);
         return (T) this;
@@ -633,11 +641,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setName(String)}
      * @param name eg. name="buttonSubmit"
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withName(final String name) {
         pathBuilder.setName(name);
         return (T) this;
@@ -645,12 +654,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setText(String, SearchType...)}
      * @param text       with which to identify the item
      * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withText(String text, final SearchType... searchTypes) {
         pathBuilder.setText(text, searchTypes);
         return (T) this;
@@ -659,11 +669,12 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method reset searchTextType and set to new searchTextType.
-     *
+     * @deprecated use {@link #setSearchTextType(SearchType...)}
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
      * @param <T>            the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withSearchTextType(SearchType... searchTextTypes) {
         pathBuilder.setSearchTextType(searchTextTypes);
         return (T) this;
@@ -684,11 +695,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setSearchLabelType(SearchType...)}
      * @param searchLabelTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @Deprecated
     private <T extends WebLocatorAbstractBuilder> T withSearchLabelType(SearchType... searchLabelTypes) {
         pathBuilder.setSearchTextType(searchLabelTypes);
         return (T) this;
@@ -696,11 +708,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setSearchTitleType(SearchType...)}
      * @param searchTitleTypes accepted values are: {@link SearchType}
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withSearchTitleType(SearchType... searchTitleTypes) {
         pathBuilder.setSearchTitleType(searchTitleTypes);
         return (T) this;
@@ -708,11 +721,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setStyle(String)}
      * @param style of element
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withStyle(final String style) {
         pathBuilder.setStyle(style);
         return (T) this;
@@ -720,22 +734,25 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setTitle(String, SearchType...)}
      * @param title of element
      * @param searchTypes see {@link SearchType}
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withTitle(String title, SearchType... searchTypes) {
         pathBuilder.setTitle(title, searchTypes);
         return (T) this;
     }
 
     /**
+     * @deprecated use {@link #setTemplateTitle(WebLocator)}
      * @param titleEl title element
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withTemplateTitle(WebLocator titleEl) {
         pathBuilder.setTemplateTitle(titleEl);
         return (T) this;
@@ -747,12 +764,13 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     *
+     * @deprecated use {@link #setElPathSuffix(String, String)}
      * @param key          suffix key
      * @param elxPathSuffix additional identification xpath element that will be added at the end
      * @param <T>          the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withElxPathSuffix(final String key, final String elxPathSuffix) {
         pathBuilder.setElPathSuffix(key, elxPathSuffix);
         return (T) this;
@@ -764,12 +782,13 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     *
+     * @deprecated use {@link #setTemplateValue(String, String)}
      * @param key   identify key
      * @param value value
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withTemplateValue(final String key, final String value) {
         pathBuilder.setTemplateValue(key, value);
         return (T) this;
@@ -777,12 +796,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * For customize template please see here: See http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#dpos
-     *
+     * @deprecated use {@link #setTemplate(String, String)}
      * @param key   name template
      * @param value template
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withTemplate(final String key, final String value) {
         pathBuilder.setTemplate(key, value);
         return (T) this;
@@ -795,11 +815,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b><i>Used in logging process</i></b></p>
-     *
+     * @deprecated use {@link #setInfoMessage(String)}
      * @param infoMessage info Message
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withInfoMessage(final String infoMessage) {
         pathBuilder.setInfoMessage(infoMessage);
         return (T) this;
@@ -811,7 +832,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     TODO
      * </pre>
-     *
+     * @deprecated use {@link #setVisibility(boolean)}
      * @param visibility true or false
      * @param <T> the element which calls this method
      * @return this element
@@ -822,20 +843,24 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
+     * @deprecated use {@link #setRenderMillis(long)}
      * @param renderMillis long
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withRenderMillis(final long renderMillis) {
         pathBuilder.setRenderMillis(renderMillis);
         return (T) this;
     }
 
     /**
+     * @deprecated use {@link #setActivateSeconds(int)}
      * @param activateSeconds true or false
      * @param <T> the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withActivateSeconds(final int activateSeconds) {
         pathBuilder.setActivateSeconds(activateSeconds);
         return (T) this;
@@ -843,11 +868,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setContainer(WebLocator)}
      * @param container parent containing element.
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withContainer(WebLocator container) {
         pathBuilder.setContainer(container);
         return (T) this;
@@ -855,12 +881,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setLabel(String, SearchType...)}
      * @param label      text label element
      * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>        the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withLabel(String label, final SearchType... searchTypes) {
         pathBuilder.setLabel(label, searchTypes);
         return (T) this;
@@ -868,11 +895,12 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setLabelTag(String)}
      * @param labelTag label tag element
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withLabelTag(final String labelTag) {
         pathBuilder.setLabelTag(labelTag);
         return (T) this;
@@ -880,12 +908,13 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     *
+     * @deprecated use {@link #setLabelPosition(String)}
      * @param labelPosition position of this element reported to label
      * @param <T>           the element which calls this method
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withLabelPosition(final String labelPosition) {
         pathBuilder.setLabelPosition(labelPosition);
         return (T) this;
@@ -897,7 +926,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
-     *
+     * @deprecated use {@link #setPosition(int)}
      * @param position starting index = 1
      * @param <T>      the element which calls this method
      * @return this element
@@ -913,11 +942,12 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[contains(@class, 'x-grid-panel')][position() = 1]
      * </pre>
-     *
+     * @deprecated use {@link #setResultIdx(int)}
      * @param resultIdx starting index = 1
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withResultIdx(final int resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
@@ -929,11 +959,12 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[@type='type']
      * </pre>
-     *
+     * @deprecated use {@link #setType(String)}
      * @param type eg. checkbox, button
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withType(final String type) {
         pathBuilder.setType(type);
         return (T) this;
@@ -945,13 +976,14 @@ public abstract class WebLocatorAbstractBuilder {
      * <pre>
      *     //*[@placeholder='Search']
      * </pre>
-     *
+     * @deprecated use {@link #setAttribute(String, String, SearchType...)}
      * @param attribute eg. placeholder
      * @param value     eg. Search
      * @param searchTypes see {@link SearchType}
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T withAttribute(final String attribute, String value, final SearchType ... searchTypes) {
         pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
@@ -962,9 +994,11 @@ public abstract class WebLocatorAbstractBuilder {
     // =========================================
 
     /**
+     * @deprecated use {@link #setClassName(String)}
      * <p>Used only to identify class type of current object</p>
      * @param className className
      */
+    @Deprecated
     protected void withClassName(final String className) {
         pathBuilder.setClassName(className);
     }

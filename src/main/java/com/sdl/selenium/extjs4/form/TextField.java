@@ -9,18 +9,18 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
-        withClassName("TextField");
-        withLabelPosition("//following-sibling::*//");
+        setClassName("TextField");
+        setLabelPosition("//following-sibling::*//");
     }
 
     public TextField(WebLocator container){
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public TextField(WebLocator container, String label) {
         this(container);
-        withLabel(label, SearchType.DEEP_CHILD_NODE);
+        setLabel(label, SearchType.DEEP_CHILD_NODE);
     }
 
     public String getTriggerPath(String icon) {
@@ -29,9 +29,9 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public boolean clickIcon(String icon) {
         if (ready()) {
-            WebLocator iconLocator = new WebLocator(this).withElxPath(getTriggerPath(icon));
-            iconLocator.withRenderMillis(500);
-            iconLocator.withInfoMessage(this + " -> trigger-" + icon);
+            WebLocator iconLocator = new WebLocator(this).setElxPath(getTriggerPath(icon));
+            iconLocator.setRenderMillis(500);
+            iconLocator.setInfoMessage(this + " -> trigger-" + icon);
             try {
                 return iconLocator.click();
             } catch (Exception e) {

@@ -18,17 +18,17 @@ public class SplitButton extends Button {
      * See split button examples <a href="http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons">here</a>
      */
     public SplitButton() {
-        withClassName("SplitButton");
+        setClassName("SplitButton");
     }
 
     public SplitButton(WebLocator container) {
         this();
-        withContainer(container);
+        setContainer(container);
     }
 
     public SplitButton(WebLocator container, String text) {
         this(container);
-        withText(text);
+        setText(text);
     }
 
     public boolean clickOnMenu(String option) {
@@ -54,8 +54,8 @@ public class SplitButton extends Button {
 
     public List<String> getAllMenuValues() {
         click();
-        WebLocator menuContainer = new WebLocator("x-menu").withAttribute("aria-hidden", "false");
-        WebLocator menuList = new WebLocator(menuContainer).withClasses("x-menu-body").withInfoMessage(this + " -> x-menu-body");
+        WebLocator menuContainer = new WebLocator("x-menu").setAttribute("aria-hidden", "false");
+        WebLocator menuList = new WebLocator(menuContainer).setClasses("x-menu-body").setInfoMessage(this + " -> x-menu-body");
         menuList.assertReady();
         String[] menuValues = menuList.getText().split("\\n");
         click();
@@ -63,7 +63,7 @@ public class SplitButton extends Button {
     }
 
     private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
-        WebLocator comboListElement = new WebLocator("x-menu").withAttribute("aria-hidden", "false").withInfoMessage(this + " -> x-menu");
-        return new WebLocator(comboListElement).withText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).withRenderMillis(optionRenderMillis).withInfoMessage(value);
+        WebLocator comboListElement = new WebLocator("x-menu").setAttribute("aria-hidden", "false").setInfoMessage(this + " -> x-menu");
+        return new WebLocator(comboListElement).setText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).setRenderMillis(optionRenderMillis).setInfoMessage(value);
     }
 }
