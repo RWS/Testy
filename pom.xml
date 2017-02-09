@@ -74,6 +74,7 @@
             <artifactId>selenium-edge-driver</artifactId>
             <version>3.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-htmlunit-driver</artifactId>
