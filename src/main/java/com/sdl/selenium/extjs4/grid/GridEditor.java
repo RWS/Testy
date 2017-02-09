@@ -27,7 +27,7 @@ public class GridEditor extends Grid {
     public TextField getActiveEditor() {
         TextField editor;
         WebLocator container = new WebLocator().setBaseCls("x-grid-editor").setExcludeClasses("x-hide-offsets");
-        WebLocator editableEl = new WebLocator(container).setElxPath("//*[contains(@class, '-focus')]");
+        WebLocator editableEl = new WebLocator(container).setElPath("//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
         LOGGER.debug("active editor stringClass: " + stringClass);
         if (stringClass == null) {

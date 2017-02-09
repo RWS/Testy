@@ -12,7 +12,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class ButtonIntegrationTest extends TestBase {
 
     private Button loginWithCss = new Button().setElCssSelector("#loginButton");
-    private Button loginWithXPath = new Button().setElxPath("//*[@id='loginButton']");
+    private Button loginWithXPath = new Button().setElPath("//*[@id='loginButton']");
 
     @BeforeClass
     public void startTests() {

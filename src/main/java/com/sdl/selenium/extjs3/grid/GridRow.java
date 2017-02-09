@@ -40,7 +40,7 @@ public class GridRow extends AbstractRow {
         this(gridPanel);
         setTag("*");
         WebLocator cellEl = new WebLocator().setText(searchElement, searchTypes);
-        setElxPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
+        setElPath("//" + getPathBuilder().getTag() + "[" + getSearchPaths(searchColumnId, cellEl) + "]");
     }
 
     public GridRow(GridPanel gridPanel, AbstractCell... cells) {

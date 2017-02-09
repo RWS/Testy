@@ -51,7 +51,7 @@ public class AdvancedTextField extends TextField {
             }
             String valuePath = "//*[contains(@class, '" + menuClass + "')" + stylePath + "]//*[text()='" + value + "']";
             WebLocator iconLocator = new WebLocator();
-            iconLocator.setElxPath(valuePath);
+            iconLocator.setElPath(valuePath);
             found = iconLocator.clickAt();
             if (!found) {
                 LOGGER.error("The option " + value + " could not be located.");

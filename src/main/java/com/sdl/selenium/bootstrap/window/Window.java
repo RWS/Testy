@@ -24,7 +24,7 @@ public class Window extends WebLocator implements IWebLocator {
     }
 
     public String getTitleWindow() {
-        WebLocator header = new WebLocator(this).setElxPath("//*[contains(@class, '-header')]//h3");
+        WebLocator header = new WebLocator(this).setElPath("//*[contains(@class, '-header')]//h3");
         return header.getText();
     }
 }

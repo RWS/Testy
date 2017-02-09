@@ -14,7 +14,7 @@ public class TextFieldTest {
                 {new TextField(),                                       "//input[@type='text']"},
                 {new TextField().setId("ID"),                           "//input[@id='ID' and @type='text']"},
                 {new TextField(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='text']"},
-                {new TextField(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new TextField(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new TextField(container, "TextFieldText"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[@type='text']"},
         };
     }

@@ -102,7 +102,7 @@ public class FindElementIntegrationTest extends TestBase {
         assertFalse(hasStatus("disabled", selectPicker));
         assertTrue(hasStatus("enabled", selectPicker));
 
-//        WebLocator el = new WebLocator().setElxPath("SimpleTextField"); // TODO see why this has this path
+//        WebLocator el = new WebLocator().setElPath("SimpleTextField"); // TODO see why this has this path
 //        assertFalse(hasStatus("disabled", el));
 //        assertTrue(hasStatus("enabled", el));
 //        assertFalse(hasStatus("test", el));

@@ -191,14 +191,14 @@ public class WebLocatorSuggestions {
             String tag = webLocator.getPathBuilder().getTag();
 
             WebLocator labelPosition = new WebLocator(labelLocator)
-                    .setElxPath(xPathBuilder.getLabelPosition() + tag);
+                    .setElPath(xPathBuilder.getLabelPosition() + tag);
 
             if (labelPosition.isElementPresent()) {
                 LOGGER.info("'{}' elements found at the specified label position: {}", tag, getMatchedElementsHtml(labelPosition));
             } else {
                 LOGGER.info("No '{}' elements found at the specified label position: {}", tag, xPathBuilder.getLabelPosition());
 
-                labelPosition.setElxPath(xPathBuilder.getLabelPosition() + "*");
+                labelPosition.setElPath(xPathBuilder.getLabelPosition() + "*");
                 if (labelPosition.isElementPresent()) {
                     LOGGER.warn("All elements found at the specified label position: {}", getMatchedElementsHtml(labelPosition));
                     webLocator.setTag("*");

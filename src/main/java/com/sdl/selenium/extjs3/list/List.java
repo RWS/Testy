@@ -47,7 +47,7 @@ public class List extends GridPanel {
     public boolean isSelectedRows(String ...values) {
         boolean select = false;
         for (String value : values) {
-            WebLocator webLocator = new WebLocator(getCell(value)).setElxPath("/parent::*/parent::dl");
+            WebLocator webLocator = new WebLocator(getCell(value)).setElPath("/parent::*/parent::dl");
             select = webLocator.getAttributeClass().contains("ux-mselect-selected");
             if (!select) {
                 return false;
@@ -59,7 +59,7 @@ public class List extends GridPanel {
     @Override
     public GridCell getCell(String searchElement, SearchType... searchTypes) {
         WebLocator textCell = new WebLocator().setText(searchElement, searchTypes);
-        GridCell cell = new GridCell().setContainer(this).setElxPath(textCell.getXPath());
+        GridCell cell = new GridCell().setContainer(this).setElPath(textCell.getXPath());
         cell.setInfoMessage("cell(" + searchElement + ")");
         return cell;
     }
@@ -78,7 +78,7 @@ public class List extends GridPanel {
 
     @Override
     public GridRow getRow(int rowIndex) {
-        return new GridRow(this).setElxPath("//dl[" + rowIndex + "]");
+        return new GridRow(this).setElPath("//dl[" + rowIndex + "]");
     }
 }
 

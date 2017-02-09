@@ -78,7 +78,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         String elPath = tabPanel.getXPath();
         tabPanel.setContainer(container); // set container back
 
-        gridPanel.setElxPath(elPath);
+        gridPanel.setElPath(elPath);
         gridPanel.setSearchColumnId(searchColumnId);
         return gridPanel;
     }
@@ -298,12 +298,12 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public WebLocator getSelectAllChecker(String columnId) {
         waitToRender();
-        return new WebLocator(this).setElxPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
+        return new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "')]/div/div");
     }
 
     public WebLocator getHeader(String columnId) {
         waitToRender();
-        WebLocator headerEl = new WebLocator(this).setElxPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
+        WebLocator headerEl = new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
         headerEl.setInfoMessage(toString() + " Header[" + columnId + "]");
         return headerEl;
     }
@@ -401,7 +401,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         int index = -1;
         if (ready()) {
             String path = getGridCell(startRowIndex).getXPath();
-            WebLocator currentElement = new WebLocator().setElxPath(path);
+            WebLocator currentElement = new WebLocator().setElPath(path);
             while (currentElement.isElementPresent()) {
                 String option = currentElement.getText();
                 //LOGGER.debug("row[" + i + "]" + option);
@@ -412,7 +412,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 }
                 startRowIndex++;
                 path = getGridCell(startRowIndex).getXPath();
-                currentElement.setElxPath(path);
+                currentElement.setElPath(path);
             }
             if (index == -1) {
                 LOGGER.warn("The element '" + searchElement + "' was not found.");
@@ -479,7 +479,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     private GridCell getGridCellWithText(GridRow gridRow, int columnIndex, String columnText, SearchType... searchTypes) {
-        WebLocator gridColTd = new WebLocator(gridRow).setElxPath("//td[" + columnIndex + "]");
+        WebLocator gridColTd = new WebLocator(gridRow).setElPath("//td[" + columnIndex + "]");
         return new GridCell(gridColTd, columnText, searchTypes);
     }
 
@@ -608,11 +608,11 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 String cls = gridRow.getAttributeClass();
                 boolean isSelected = cls != null && cls.contains("x-grid3-row-selected");
                 path = "//*[contains(@class, 'x-grid3-row-checker')]";
-                WebLocator element = new WebLocator(gridRow).setElxPath(path);
+                WebLocator element = new WebLocator(gridRow).setElPath(path);
                 element.setInfoMessage("row-checker");
                 if (element.exists()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
-                    WebLocator locator = new WebLocator(this).setElxPath("//*[contains(@class,'x-grid3-focus')]");
+                    WebLocator locator = new WebLocator(this).setElPath("//*[contains(@class,'x-grid3-focus')]");
                     locator.sendKeys(Keys.TAB);
                     element.click();
                     LOGGER.info("Clicking on checkbox corresponding to line index: " + rowIndex);
@@ -686,7 +686,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public GridCell getCheckerCell(final String searchText, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//*[contains(@class, 'x-grid3-row-checker')]";
-        return new GridCell().setContainer(getGridRow()).setElxPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
+        return new GridCell().setContainer(getGridRow()).setElPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
     }
 
     private GridCell getCheckboxCell(final String searchText, int columnIndex) {
@@ -696,7 +696,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public GridCell getCheckboxCell(final String searchText, int columnIndex, boolean containsText) {
         String cellPath = getTableRowSearchPath(searchText, containsText);
         cellPath += "//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-check-col')]";
-        return new GridCell().setContainer(getGridRow()).setElxPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
+        return new GridCell().setContainer(getGridRow()).setElPath(cellPath).setInfoMessage("row-checker (" + searchText + ")");
     }
 
     private String getTableRowSearchPath(String searchText, boolean containsText) {
@@ -760,10 +760,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             int rowIndex = getRowIndex(searchText);
             if (rowIndex != -1) {
                 path = getRow(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col')]";
-                WebLocator element = new WebLocator().setElxPath(path);
+                WebLocator element = new WebLocator().setElPath(path);
                 if (element.exists()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
-                    WebLocator locator = new WebLocator(this).setElxPath("//*[contains(@class,'x-grid3-focus')]");
+                    WebLocator locator = new WebLocator(this).setElPath("//*[contains(@class,'x-grid3-focus')]");
                     locator.sendKeys(Keys.TAB);
                     selected = isCheckBoxColumnSelected(searchText) || element.click();
                     LOGGER.info("Clicking on checkboxColumnSelect corresponding to line : " + searchText);
@@ -785,7 +785,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             int rowIndex = getRowIndex(searchText);
             if (rowIndex != -1) {
                 String path = getRow(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
-                WebLocator locator = new WebLocator().setElxPath(path);
+                WebLocator locator = new WebLocator().setElPath(path);
                 isSelected = locator.exists();
             }
         }

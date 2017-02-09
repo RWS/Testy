@@ -32,7 +32,7 @@ public class CheckBox extends WebLocator implements ICheck {
 
     @Override
     public boolean isSelected() {
-        WebLocator el = new WebLocator(this).setElxPath("/../input");
+        WebLocator el = new WebLocator(this).setElPath("/../input");
         String select = el.getAttribute("aria-checked");
         return select != null && select.contains("true");
     }

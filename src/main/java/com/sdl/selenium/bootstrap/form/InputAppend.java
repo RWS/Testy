@@ -28,7 +28,7 @@ public class InputAppend extends TextField {
      * @return true | false
      */
     public boolean append() {
-        WebLocator appendEl = new WebLocator(this).setElxPath("//following-sibling::*").setInfoMessage("append");
+        WebLocator appendEl = new WebLocator(this).setElPath("//following-sibling::*").setInfoMessage("append");
         return appendEl.click();
     }
 }

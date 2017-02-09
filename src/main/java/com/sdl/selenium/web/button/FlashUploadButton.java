@@ -34,6 +34,6 @@ public class FlashUploadButton extends SelectFilesHandler {
     }
 
     public void setElPath(String elPath){
-        getButtonElement().setElxPath(elPath);
+        getButtonElement().setElPath(elPath);
     }
 }

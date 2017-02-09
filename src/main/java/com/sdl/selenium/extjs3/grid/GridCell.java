@@ -17,7 +17,7 @@ public class GridCell extends AbstractCell {
 
     public GridCell(int columnIndex) {
         this();
-        setElxPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
+        setElPath("//td[" + columnIndex + "]//*[contains(@class, 'x-grid3-cell-inner')]");
         setInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
     }
 

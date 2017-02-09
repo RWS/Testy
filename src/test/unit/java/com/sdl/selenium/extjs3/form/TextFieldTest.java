@@ -15,7 +15,7 @@ public class TextFieldTest {
                 {new TextField().setId("ID"),                           "//input[@id='ID' and not(@type='hidden')]"},
                 {new TextField("TextFieldClass"),                       "//input[contains(concat(' ', @class, ' '), ' TextFieldClass ') and not(@type='hidden')]"},
                 {new TextField(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[not(@type='hidden')]"},
-                {new TextField(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new TextField(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new TextField(container, "TextFieldText"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextFieldText']//following-sibling::*//input[not(@type='hidden')]"},
                 {new TextField("name", container),                      "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and not(@type='hidden')]"},
         };

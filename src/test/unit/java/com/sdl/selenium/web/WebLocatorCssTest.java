@@ -10,7 +10,7 @@ import org.testng.asserts.SoftAssert;
 public class WebLocatorCssTest {
 
     private static WebLocator cssContainer = new WebLocator().setElCssSelector(".experiment-tile");
-    private static WebLocator xpathContainer = new WebLocator().setElxPath("//*[@class='error-msg']");
+    private static WebLocator xpathContainer = new WebLocator().setElPath("//*[@class='error-msg']");
 
     private SoftAssert softAssert;
     private boolean generateCssSelector = false;

@@ -100,7 +100,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     public boolean clickIcon(String icon) {
         assertReady();
         String triggerPath = getTriggerPath(icon);
-        WebLocator iconLocator = new WebLocator(this).setElxPath(triggerPath);
+        WebLocator iconLocator = new WebLocator(this).setElPath(triggerPath);
         iconLocator.setRenderMillis(500);
         iconLocator.setInfoMessage(this + " -> trigger-" + icon);
         iconLocator.click();

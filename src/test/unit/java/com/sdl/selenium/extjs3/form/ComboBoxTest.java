@@ -14,7 +14,7 @@ public class ComboBoxTest {
                 {new ComboBox(),                                       "//input[not(@type='hidden')]"},
                 {new ComboBox().setClasses("ComboBoxClass"),                        "//input[contains(concat(' ', @class, ' '), ' ComboBoxClass ') and not(@type='hidden')]"},
                 {new ComboBox(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//input[not(@type='hidden')]"},
-                {new ComboBox(container).setElxPath("//table//tr[1]"),  "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
+                {new ComboBox(container).setElPath("//table//tr[1]"),  "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
                 {new ComboBox(container, "ComboBoxText"),              "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='ComboBoxText']//following-sibling::*//input[not(@type='hidden')]"},
                 {new ComboBox("name", container),                      "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and not(@type='hidden')]"}
         };

@@ -29,7 +29,7 @@ public class ExtJsComponent extends WebLocator {
 
     public ExtJsComponent(WebLocator container, String elPath) {
         this(container);
-        setElxPath(elPath);
+        setElPath(elPath);
     }
 
     public ExtJsComponent(String cls, WebLocator container) {
@@ -83,7 +83,7 @@ public class ExtJsComponent extends WebLocator {
 
     public WebLocator getMaskElement() {
         String maskXPathSelector = "/ancestor-or-self::*[contains(@class, 'x-masked')]";
-        return new WebLocator(this).setElxPath(maskXPathSelector);
+        return new WebLocator(this).setElPath(maskXPathSelector);
     }
 
     /**

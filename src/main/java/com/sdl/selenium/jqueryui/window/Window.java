@@ -26,7 +26,7 @@ public class Window extends WebLocator {
     }
 
     public boolean press(String textButton) {
-        WebLocator webLocator = new WebLocator(this).setElxPath("//button[count(.//*[text()='" + textButton + "']) > 0]");
+        WebLocator webLocator = new WebLocator(this).setElPath("//button[count(.//*[text()='" + textButton + "']) > 0]");
         return webLocator.click();
     }
 

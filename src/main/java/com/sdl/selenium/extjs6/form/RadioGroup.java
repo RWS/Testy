@@ -37,12 +37,12 @@ public class RadioGroup extends WebLocator {
     }
 
     public String getLabelName(String label) {
-        WebLocator locator = new WebLocator(radio).setElxPath("/following-sibling::label[contains(text(),'" + label + "')]");
+        WebLocator locator = new WebLocator(radio).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
         return locator.getText();
     }
 
 //    public boolean isDisabled() {
-//        WebLocator locator = new WebLocator().setElxPath(radio.getXPath(true));
+//        WebLocator locator = new WebLocator().setElPath(radio.getXPath(true));
 //        return locator.exists();
 //    }
 }

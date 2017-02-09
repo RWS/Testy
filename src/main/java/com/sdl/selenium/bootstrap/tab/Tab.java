@@ -70,7 +70,7 @@ public class Tab extends WebLocator implements ITab {
     public boolean setActive() {
         boolean activated = isActive();
         if (!activated) {
-            WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).setElxPath(getTitlePath(false));
+            WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(false));
             WebLocator titleElement = locator1.setInfoMessage(getPathBuilder().getText() + " Tab");
             activated = titleElement.click();
         }
@@ -82,7 +82,7 @@ public class Tab extends WebLocator implements ITab {
 
     @Override
     public boolean isActive() {
-        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).setElxPath(getTitlePath(true));
+        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(true));
         return new ConditionManager(200).add(new RenderSuccessCondition(locator)).execute().isSuccess();
     }
 }

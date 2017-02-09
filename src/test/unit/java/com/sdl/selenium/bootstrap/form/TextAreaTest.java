@@ -14,7 +14,7 @@ public class TextAreaTest {
                 {new TextArea(),                                       "//textarea"},
                 {new TextArea().setId("ID"),                           "//textarea[@id='ID']"},
                 {new TextArea(container),                              "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
-                {new TextArea(container).setElxPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
+                {new TextArea(container).setElPath("//*[contains(text(), 'Register')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(), 'Register')]"},
                 {new TextArea(container, "TextAriaLabel"),             "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='TextAriaLabel']//following-sibling::*//textarea"},
         };
     }

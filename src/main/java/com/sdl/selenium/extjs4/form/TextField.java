@@ -29,7 +29,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public boolean clickIcon(String icon) {
         if (ready()) {
-            WebLocator iconLocator = new WebLocator(this).setElxPath(getTriggerPath(icon));
+            WebLocator iconLocator = new WebLocator(this).setElPath(getTriggerPath(icon));
             iconLocator.setRenderMillis(500);
             iconLocator.setInfoMessage(this + " -> trigger-" + icon);
             try {

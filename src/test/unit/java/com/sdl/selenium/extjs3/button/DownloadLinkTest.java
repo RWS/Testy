@@ -15,8 +15,8 @@ public class DownloadLinkTest {
                 {new DownloadLink(container, "Download"), "//*[contains(concat(' ', @class, ' '), ' container ')]//a[text()='Download']"},
                 {new DownloadLink(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//a"},
                 {new DownloadLink(container).setId("ID"), "//*[contains(concat(' ', @class, ' '), ' container ')]//a[@id='ID']"},
-                {new DownloadLink(container).setElxPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
-                {new DownloadLink().setElxPath("//*[text()='Download']"), "//*[text()='Download']"},
+                {new DownloadLink(container).setElPath("//*[text()='Download']"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Download']"},
+                {new DownloadLink().setElPath("//*[text()='Download']"), "//*[text()='Download']"},
         };
     }
 
