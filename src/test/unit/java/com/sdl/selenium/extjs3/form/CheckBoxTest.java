@@ -11,14 +11,14 @@ public class CheckBoxTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Checkbox(),                  "//input[contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
-                {new Checkbox(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
-                {new Checkbox(container, "name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
+                {new CheckBox(),                  "//input[contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
+                {new CheckBox(container),         "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
+                {new CheckBox(container, "name"), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@name='name' and contains(concat(' ', @class, ' '), ' x-form-checkbox ')]"},
         };
     }
 
     @Test(dataProvider = "testConstructorPathDataProvider")
-    public void getPathSelectorCorrectlyFromConstructors(Checkbox combo, String expectedXpath) {
+    public void getPathSelectorCorrectlyFromConstructors(CheckBox combo, String expectedXpath) {
         Assert.assertEquals(combo.getXPath(), expectedXpath);
     }
 }
