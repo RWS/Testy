@@ -11,21 +11,21 @@ import org.slf4j.LoggerFactory;
  *    - tag      : input
  *    - baseCls  : x-form-checkbox
  */
-public class CheckBox1 extends ExtJsComponent implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox1.class);
+public class CheckBox extends ExtJsComponent implements ICheck {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
-    public CheckBox1() {
-        setClassName("CheckBox1");
+    public CheckBox() {
+        setClassName("CheckBox");
         setTag("input");
         setBaseCls("x-form-checkbox");
     }
 
-    public CheckBox1(WebLocator container) {
+    public CheckBox(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public CheckBox1(WebLocator container, String name) {
+    public CheckBox(WebLocator container, String name) {
         this(container);
         setName(name);
     }
