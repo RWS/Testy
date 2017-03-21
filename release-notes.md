@@ -2,6 +2,13 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.3.0-SNAPSHOT**
 - update webdriver version 3.0.1
+- make deprecated methods with***()
+- implement check and unCheck methods in Grid and Table
+- add TagField
+- implement setValue() in TagField
+- add Tree
+- add select(String value, boolean pagination) in ComboBox
+
 
 **Release Notes for Testy 2.2.10**
 - change set***() in with***()
