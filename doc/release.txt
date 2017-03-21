@@ -7,7 +7,7 @@ Run following commands in windows cmd prompt:
 
     mvn release:clean release:prepare
 
-    mvn release:perform
+    mvn release:perform -Prelease-sign-artifacts
 
     http://central.sonatype.org/pages/manual-staging-bundle-creation-and-deployment.html
 
