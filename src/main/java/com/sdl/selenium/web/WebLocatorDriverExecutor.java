@@ -413,6 +413,36 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return el.currentElement;
     }
 
+//    private WebElement doWaitElement(final WebLocator el, final long millis) {
+//        Wait<WebDriver> wait = new FluentWait<>(driver)
+//                .withTimeout(10, TimeUnit.SECONDS)
+//                .pollingEvery(5, TimeUnit.SECONDS)
+//                .ignoring(NoSuchElementException.class)
+//                .ignoring(ElementNotVisibleException.class)
+//                .ignoring(WebDriverException.class);
+//
+//        try {
+//            if (el.getPathBuilder().isVisibility()) {
+//                el.currentElement = wait.until(new Function<WebDriver, WebElement>() {
+//                    public WebElement apply(WebDriver driver) {
+//                        LOGGER.debug("isVisibility: {}", el);
+//                        return driver.findElement(el.getSelector());
+//                    }
+//                });
+//            } else {
+//                el.currentElement = wait.until(new Function<WebDriver, WebElement>() {
+//                    public WebElement apply(WebDriver driver) {
+//                        LOGGER.debug("isNormal: {}", el);
+//                        return driver.findElement(el.getSelector());
+//                    }
+//                });
+//            }
+//        } catch (TimeoutException e) {
+//            el.currentElement = null;
+//        }
+//        return el.currentElement;
+//    }
+
     @Override
     public int size(WebLocator el) {
         return findElements(el).size();

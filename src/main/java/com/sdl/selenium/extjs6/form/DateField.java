@@ -4,6 +4,7 @@ import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.extjs6.slider.Slider;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
@@ -64,7 +65,7 @@ public class DateField extends TextField {
                 monthYearButton.click();
             }
             goToYear(year, fullDate);
-            WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).setInfoMessage("month " + month);
+            WebLink monthEl = new WebLink(monthContainer).setText(month, SearchType.EQUALS).setInfoMessage("month " + month);
             monthEl.click();
             selectOkButton.click();
         }
