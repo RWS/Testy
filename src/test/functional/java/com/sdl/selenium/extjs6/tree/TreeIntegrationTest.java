@@ -6,21 +6,19 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class TreeIntegrationTest extends TestBase {
 
-    private Tree tree = new Tree();
+    private Tree tree = new Tree().setVisibility(true);
 
     @BeforeClass
     public void startTests() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#check-tree");
+        tree.ready(20);
     }
 
     @Test
     void treeTest() {
-        tree.ready(20);
-
         boolean selected = tree.select("Grocery List", "Energy foods", "Coffee");
         assertThat(selected, is(true));
     }

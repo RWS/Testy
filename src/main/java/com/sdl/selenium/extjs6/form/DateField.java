@@ -26,7 +26,7 @@ public class DateField extends TextField {
     private WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-prev").setVisibility(true);
     private WebLocator yearContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-years");
     private WebLocator monthContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-months");
-    private WebLocator dayContainer = new WebLocator(calendarLayer).setClasses("x-datepicker-cell").setExcludeClasses("x-datepicker-disabled");
+    private WebLocator dayContainer = new WebLocator(calendarLayer).setClasses("x-datepicker-active");
 
     private WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
     private Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
@@ -45,7 +45,7 @@ public class DateField extends TextField {
 
     public DateField(WebLocator container, String label) {
         this(container);
-        setLabel(label);
+        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     /**
