@@ -1,6 +1,9 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 2.3.0-SNAPSHOT**
+- update webdriver version 3.3.1
+
+**Release Notes for Testy 2.3.0**
 - update webdriver version 3.0.1
 - make deprecated methods with***()
 - implement check and unCheck methods in Grid and Table

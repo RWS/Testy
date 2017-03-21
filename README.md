@@ -98,7 +98,7 @@ This project is optimized for:
 <dependency>
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
-    <version>2.2.10</version>
+    <version>2.3.0</version>
 </dependency>
 ```
 
@@ -141,18 +141,14 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.2.10**
-- change set***() in with***()
-    ex: WebLocator el = new WebLocator().setClasses("x-btn").setText("Save").setType("text");
-        WebLocator el = new WebLocator().withClasses("x-btn").withText("Save").withType("text");
--  Add possibility to set in webLocator.properties: upload.exe.path=src\\test\\resources\\upload\\upload.exe
-    ex: UploadFile uploadButton = new UploadFile().withText("Browse");
-        uploadButton.upload(InputData.RESOURCES_DIRECTORY_PATH + "\\upload\\text.docx");
-- added support for using system clipboard in several WebDriver instances in parallel without mixing copied values
-- implemented all methods with assert
-- added fileDetector to RemoteWebDrivers
-- findElements support cssSelector
-- added getRect()
+**Release Notes for Testy 2.3.0**
+- update webdriver version 3.0.1
+- make deprecated methods with***()
+- implement check and unCheck methods in Grid and Table
+- add TagField
+- implement setValue() in TagField
+- add Tree
+- add select(String value, boolean pagination) in ComboBox
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -169,7 +165,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.3.0-SNAPSHOT</version>
+        <version>2.4.0-SNAPSHOT</version>
     </dependency>
 ```
 
