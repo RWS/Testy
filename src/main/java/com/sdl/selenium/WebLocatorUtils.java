@@ -1,6 +1,5 @@
 package com.sdl.selenium;
 
-import com.google.common.collect.Lists;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
@@ -9,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class WebLocatorUtils extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
@@ -131,7 +127,7 @@ public final class WebLocatorUtils extends WebLocator {
                 parent = parent.findElement(By.xpath(".."));
             }
 
-            elements = Lists.reverse(elements);
+            elements.sort(Comparator.reverseOrder());
             String indent = "\n";
             for(String elem : elements) {
                 result = result.concat(indent).concat(elem);
