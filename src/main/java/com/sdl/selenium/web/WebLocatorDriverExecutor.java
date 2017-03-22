@@ -11,9 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -395,53 +395,24 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private WebElement doWaitElement(final WebLocator el, final long millis) {
-        WebDriverWait wait = new WebDriverWait(driver, 0, 100);
-        wait.withTimeout(millis, TimeUnit.MILLISECONDS); // hack enforce WebDriverWait to accept millis (default is seconds)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(millis, TimeUnit.MILLISECONDS)
+                .pollingEvery(1, TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(ElementNotVisibleException.class)
+                .ignoring(WebDriverException.class);
+
         try {
             if (el.getPathBuilder().isVisibility()) {
                 el.currentElement = wait.until(ExpectedConditions.visibilityOfElementLocated(el.getSelector()));
             } else {
-                el.currentElement = wait.until(new ExpectedCondition<WebElement>() {
-                    public WebElement apply(WebDriver driver1) {
-                        return driver.findElement(el.getSelector());
-                    }
-                });
+                el.currentElement = wait.until(d -> d.findElement(el.getSelector()));
             }
         } catch (TimeoutException e) {
             el.currentElement = null;
         }
         return el.currentElement;
     }
-
-//    private WebElement doWaitElement(final WebLocator el, final long millis) {
-//        Wait<WebDriver> wait = new FluentWait<>(driver)
-//                .withTimeout(10, TimeUnit.SECONDS)
-//                .pollingEvery(5, TimeUnit.SECONDS)
-//                .ignoring(NoSuchElementException.class)
-//                .ignoring(ElementNotVisibleException.class)
-//                .ignoring(WebDriverException.class);
-//
-//        try {
-//            if (el.getPathBuilder().isVisibility()) {
-//                el.currentElement = wait.until(new Function<WebDriver, WebElement>() {
-//                    public WebElement apply(WebDriver driver) {
-//                        LOGGER.debug("isVisibility: {}", el);
-//                        return driver.findElement(el.getSelector());
-//                    }
-//                });
-//            } else {
-//                el.currentElement = wait.until(new Function<WebDriver, WebElement>() {
-//                    public WebElement apply(WebDriver driver) {
-//                        LOGGER.debug("isNormal: {}", el);
-//                        return driver.findElement(el.getSelector());
-//                    }
-//                });
-//            }
-//        } catch (TimeoutException e) {
-//            el.currentElement = null;
-//        }
-//        return el.currentElement;
-//    }
 
     @Override
     public int size(WebLocator el) {

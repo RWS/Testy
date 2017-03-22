@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -15,6 +16,7 @@ public class TreeIntegrationTest extends TestBase {
     public void startTests() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#check-tree");
         tree.ready(20);
+        Utils.sleep(1000);
     }
 
     @Test
