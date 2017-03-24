@@ -51,7 +51,7 @@ public class Row extends AbstractRow {
         WebLocator columnsEl = new WebLocator(this).setTag("td");
         int columns = columnsEl.size() + 1;
 
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (int j = 1; j < columns; j++) {
             Cell cell = new Cell(this, j);
             list.add(cell.getText());
