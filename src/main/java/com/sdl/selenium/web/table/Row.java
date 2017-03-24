@@ -43,6 +43,10 @@ public class Row extends AbstractRow {
         setChildNodes(cells);
     }
 
+    public Cell getCell(int columnIndex) {
+        return new Cell(this, columnIndex);
+    }
+
     public List<String> getCellsText() {
         WebLocator columnsEl = new WebLocator(this).setTag("td");
         int columns = columnsEl.size() + 1;

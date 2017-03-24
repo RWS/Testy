@@ -30,4 +30,16 @@ public class RowTest {
     public void getPathSelectorCorrectlyFromConstructors(Row tableRow, String expectedXpath) {
         Assert.assertEquals(tableRow.getXPath(), expectedXpath);
     }
+
+    @DataProvider
+    public static Object[][] testConstructorPathDataProviderCell() {
+        return new Object[][]{
+                {new Row(table, tableCell).getCell(1), "//table[@id='ID']//tr[count(.//th[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0]//td[1]"},
+        };
+    }
+
+    @Test(dataProvider = "testConstructorPathDataProviderCell")
+    public void getPathSelectorCorrectlyFromConstructorsCell(Cell cell, String expectedXpath) {
+        Assert.assertEquals(cell.getXPath(), expectedXpath);
+    }
 }
