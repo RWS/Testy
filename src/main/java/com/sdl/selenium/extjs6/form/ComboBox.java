@@ -50,7 +50,7 @@ public class ComboBox extends TextField implements ICombo {
                     }
                 } while (paginationEl.goToNextPage());
             } else {
-                selected = option.click();
+                selected = option.doClick();
             }
             if (selected) {
                 LOGGER.info("Set value(" + info + "): " + value);

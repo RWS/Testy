@@ -13,7 +13,6 @@ RELEASE NOTES
 - add Tree
 - add select(String value, boolean pagination) in ComboBox
 
-
 **Release Notes for Testy 2.2.10**
 - change set***() in with***()
     ex: WebLocator el = new WebLocator().setClasses("x-btn").setText("Save").setType("text");
