@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ComboBox extends TextField implements ICombo {
     private static final Logger LOGGER = Logger.getLogger(ComboBox.class);
     private static String listClass = "x-list-plain";
-    private WebLocator boundList = new WebLocator("x-boundlist");
+    private WebLocator boundList = new WebLocator("x-boundlist").setVisibility(true);
     private Pagination paginationEl = new Pagination(boundList).setRenderMillis(300);
 
     public ComboBox() {
@@ -56,7 +56,8 @@ public class ComboBox extends TextField implements ICombo {
                 LOGGER.info("Set value(" + info + "): " + value);
                 Utils.sleep(20);
                 return true;
-            } else {
+            }
+            if (boundList.isDisplayed()) {
                 clickIcon("trigger"); // to close combo
             }
             LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
@@ -72,7 +73,6 @@ public class ComboBox extends TextField implements ICombo {
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
 //        WebLocator comboListElement = new WebLocator(listClass).setAttribute("aria-hidden", "false").setInfoMessage(this + " -> " + listClass);
-        boundList = boundList.setVisibility(true);
         WebLocator item = new WebLocator(boundList).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
 //        for (SearchType type : searchType) {
 //            if (type.equals(SearchType.CONTAINS_ALL_CHILD_NODES)) {
