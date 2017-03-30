@@ -152,8 +152,8 @@ public class Grid extends Table {
         return headers;
     }
 
-    public boolean check(String searchText, int columnIndex, SearchType... searchTypes) {
-        Row row = getRow(new Cell(columnIndex, searchText, searchTypes));
+    public boolean check(Cell... cells) {
+        Row row = getRow(cells);
         ready(true);
         if (!row.getAttributeClass().contains("x-grid-item-selected")) {
             CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
@@ -162,8 +162,8 @@ public class Grid extends Table {
         return row.getAttributeClass().contains("x-grid-item-selected");
     }
 
-    public boolean unCheck(String searchText, int columnIndex, SearchType... searchTypes) {
-        Row row = getRow(new Cell(columnIndex, searchText, searchTypes));
+    public boolean unCheck(Cell... cells) {
+        Row row = getRow(cells);
         ready(true);
         if (row.getAttributeClass().contains("x-grid-item-selected")) {
             CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");

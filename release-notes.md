@@ -3,6 +3,7 @@ RELEASE NOTES
 **Release Notes for Testy 2.4.0-SNAPSHOT**
 - update webdriver version 3.3.1
 - add FieldSet for extjs 6 package
+- add check(Cell... cells) and unCheck(Cell... cells) in Grid and Table
 
 **Release Notes for Testy 2.3.0**
 - update webdriver version 3.0.1

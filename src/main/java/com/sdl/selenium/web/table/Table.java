@@ -121,7 +121,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     @Override
-    public Cell getCell(String searchElement, SearchType ...searchTypes) {
+    public Cell getCell(String searchElement, SearchType... searchTypes) {
         Row row = new Row(this);
         return new Cell(row).setText(searchElement, searchTypes);
     }
@@ -247,27 +247,19 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return text != null && text.trim().equals(compareText);
     }
 
-    public boolean check(String searchText, int columnIndex) {
-        return check(searchText, columnIndex, SearchType.EQUALS);
-    }
-
-    public boolean check(String searchText, int columnIndex, SearchType... searchTypes) {
+    public boolean check(Cell... cells) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().setContainer(getCell(searchText, columnIndex, searchTypes));
+            CheckBox checkBox = new CheckBox(getRow(cells));
             selected = checkBox.isSelected() || checkBox.click();
         }
         return selected;
     }
 
-    public boolean unCheck(String searchText, int columnIndex) {
-        return unCheck(searchText, columnIndex, SearchType.EQUALS);
-    }
-
-    public boolean unCheck(String searchText, int columnIndex, SearchType... searchTypes) {
+    public boolean unCheck(Cell... cells) {
         boolean selected = false;
         if (ready(true)) {
-            CheckBox checkBox = new CheckBox().setContainer(getCell(searchText, columnIndex, searchTypes));
+            CheckBox checkBox = new CheckBox(getRow(cells));
             selected = !checkBox.isSelected() || checkBox.click();
         }
         return selected;

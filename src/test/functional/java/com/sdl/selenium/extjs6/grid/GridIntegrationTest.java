@@ -31,24 +31,24 @@ public class GridIntegrationTest extends TestBase {
         grid.getRow(2).assertReady();
     }
 
-    @Test (dependsOnMethods = "rowTest")
+    @Test(dependsOnMethods = "rowTest")
     void cellTest() {
         String cellValue = grid.getCell(4, new Cell(1, "3m Co"), new Cell(2, "$71.72")).getText();
         assertThat(cellValue, equalTo("0.03%"));
     }
 
-    @Test (dependsOnMethods = "cellTest")
+    @Test(dependsOnMethods = "cellTest")
     void headerTest() {
         List<String> headers = grid.getHeaders();
         assertThat(headers, contains(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated").toArray()));
     }
 
-    @Test (dependsOnMethods = "headerTest")
+    @Test(dependsOnMethods = "headerTest")
     void checkTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
-        assertThat(spreadsheet.check("1900", 3), is(true));
-        assertThat(spreadsheet.unCheck("1900", 3), is(true));
+        assertThat(spreadsheet.check(new Cell(3, "1900")), is(true));
+        assertThat(spreadsheet.unCheck(new Cell(3, "1900")), is(true));
     }
 }
