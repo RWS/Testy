@@ -11,6 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,6 +163,13 @@ public class WebDriverConfig {
      */
     public static WebDriver getWebDriver(Browser browser) throws IOException {
         return getDriver(browser, null);
+    }
+
+    public static WebDriver getWebDriver(URL remoteUrl, DesiredCapabilities capabilities) throws IOException {
+        driver = new RemoteWebDriver(remoteUrl, capabilities);
+        ((RemoteWebDriver)driver).setFileDetector(new LocalFileDetector());
+        init(driver);
+        return driver;
     }
 
     private static WebDriver getDriver(Browser browser, InputStream inputStream, URL remoteUrl) throws IOException {
