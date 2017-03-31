@@ -155,9 +155,7 @@ public class Grid extends Table {
     public boolean check(Cell... cells) {
         Row row = getRow(cells);
         ready(true);
-        while (!row.waitToRender(100)) {
-            scrollPageDown();
-        }
+        scrollInGrid(row);
         if (!row.getAttributeClass().contains("x-grid-item-selected")) {
             CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
             checkBox.click();
@@ -168,13 +166,19 @@ public class Grid extends Table {
     public boolean unCheck(Cell... cells) {
         Row row = getRow(cells);
         ready(true);
-        while (!row.waitToRender(100)) {
-            scrollPageDown();
-        }
+        scrollInGrid(row);
         if (row.getAttributeClass().contains("x-grid-item-selected")) {
             CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
             checkBox.click();
         }
         return !row.getAttributeClass().contains("x-grid-item-selected");
+    }
+
+    private void scrollInGrid(Row row) {
+        int time = 0;
+        while (!row.waitToRender(100) && time < 1000) {
+            scrollPageDown();
+            time++;
+        }
     }
 }
