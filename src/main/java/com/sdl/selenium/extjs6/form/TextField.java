@@ -66,4 +66,9 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     public boolean isDisabled() {
         return "true".equals(getAttribute("disabled"));
     }
+
+    public String getError(){
+        WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");
+        return error.getText();
+    }
 }

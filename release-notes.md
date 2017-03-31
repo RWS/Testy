@@ -5,6 +5,7 @@ RELEASE NOTES
 - add FieldSet for extjs 6 package
 - add check(Cell... cells) and unCheck(Cell... cells) in Grid and Table
 - check(Cell... cells) and unCheck(Cell... cells) doing scrollButton if row is not visible in Grid
+- added  method getError for TextField in extjs 6 package
 
 **Release Notes for Testy 2.3.0**
 - update webdriver version 3.0.1
