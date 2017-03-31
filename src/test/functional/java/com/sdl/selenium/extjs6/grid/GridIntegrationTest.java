@@ -50,5 +50,8 @@ public class GridIntegrationTest extends TestBase {
         spreadsheet.ready(true);
         assertThat(spreadsheet.check(new Cell(3, "1900")), is(true));
         assertThat(spreadsheet.unCheck(new Cell(3, "1900")), is(true));
+
+        assertThat(spreadsheet.check(new Cell(3, "2017")), is(true));
+        assertThat(spreadsheet.unCheck(new Cell(3, "2017")), is(true));
     }
 }
