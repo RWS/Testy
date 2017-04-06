@@ -90,6 +90,11 @@ public class DatePicker extends WebLocator {
         return select(date, "dd/MM/yyyy", Locale.ENGLISH);
     }
 
+    /**
+     * example new DatePicker().select("19/05/2013", "dd/MM/yyyy", Locale.ENGLISH)
+     *
+     * @return true if is selected date, false when DatePicker doesn't exist
+     */
     public boolean select(String date, String format, Locale locale) {
         SimpleDateFormat inDateFormat = new SimpleDateFormat(format, locale);
         SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy");
