@@ -63,6 +63,8 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.25</version>
+            <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -107,8 +109,9 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.9.10</version>
-            <!--<scope>test</scope>-->
+            <version>6.11</version>
+            <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
