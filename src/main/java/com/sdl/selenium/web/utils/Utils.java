@@ -1,16 +1,13 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,43 +30,8 @@ public class Utils {
         }
     }
 
-    /**
-     * @deprecated TODO find better solution
-     *
-     * @param milliseconds Try to make more specific method for grids for example (with parameter loadMsg)
-     * @return True | False
-     */
-    public static boolean pleaseWait(int milliseconds) {
-        int i = 0;
-        do {
-            Utils.sleep(milliseconds);
-            i++;
-            if (i == 60) {
-                LOGGER.warn("pleaseWait. Waited for 60x" + milliseconds + " milliseconds.");
-                return false;
-            }
-        } while (WebDriverConfig.getDriver().getPageSource().contains("Please Wait..."));
-        return true;
-    }
-
-    /**
-     * @deprecated TODO find better solution
-     * Try to make more specific method for grids for example (with parameter loadMsg)
-     *
-     * @param milliseconds milliseconds
-     * @return True | False
-     */
-    public static boolean loading(int milliseconds) {
-        int i = 0;
-        do {
-            Utils.sleep(milliseconds);
-            i++;
-            if (i == 60) {
-                LOGGER.warn("loading. Waited for 60x" + milliseconds + " milliseconds.");
-                return false;
-            }
-        } while (WebDriverConfig.getDriver().getPageSource().contains("Loading..."));
-        return true;
+    private void scrollToElement(WebLocator element) {
+        WebLocator.getExecutor().executeScript("arguments[0].scrollIntoView(true);", element.getWebElement());
     }
 
     public static String getEscapeQuotesText(String text) {
@@ -92,17 +54,6 @@ public class Utils {
             return String.format("'%s'", text);
         }
         return String.format("\"%s\"", text);
-    }
-
-    public static void copyToClipboard(final String text) {
-        final StringSelection stringSelection = new StringSelection(text);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection,
-                new ClipboardOwner() {
-                    @Override
-                    public void lostOwnership(final java.awt.datatransfer.Clipboard clipboard, final Transferable contents) {
-                        // do nothing
-                    }
-                });
     }
 
     public static String getScreenShot(String fileName, String screensPath) {
