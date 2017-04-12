@@ -109,7 +109,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.11</version>
+            <version>6.9.10</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
