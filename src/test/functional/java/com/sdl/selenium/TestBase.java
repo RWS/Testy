@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 
 public class TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
-    
+
     public static WebDriver driver;
 
     public static int TEST_RUNS = 0;

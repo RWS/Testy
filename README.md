@@ -131,6 +131,17 @@ private static void startSuite() {
 }
 ```
 
+### To use Selenium Grid you need the following:
+
+1. Set this system property: remoteDriver=true
+2. Pass the remote hub url as a parameter when initializing the WebDriver.
+e.g.: 
+```java
+WebDriver driver = WebDriverConfig.getWebDriver(EnvConfig.getBrowserConfigPath(), new URL("http://localhost:4444/wd/hub"));
+or 
+WebDriver driver = WebDriverConfig.getWebDriver(URL remoteUrl, DesiredCapabilities capabilities);
+```
+
 [Here is how these lines appear in a project](https://github.com/nmatei/cucumber-testy-tutorial/blob/master/src/test/java/org/fasttrackit/util/TestBase.java)
 
 ## Example project
