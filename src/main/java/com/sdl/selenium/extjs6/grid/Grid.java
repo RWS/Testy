@@ -154,6 +154,10 @@ public class Grid extends Table {
 
     public boolean check(Cell... cells) {
         Row row = getRow(cells);
+        return check(row);
+    }
+
+    public boolean check(Row row) {
         ready(true);
         scrollInGrid(row);
         if (!row.getAttributeClass().contains("x-grid-item-selected")) {
@@ -165,6 +169,10 @@ public class Grid extends Table {
 
     public boolean unCheck(Cell... cells) {
         Row row = getRow(cells);
+        return unCheck(row);
+    }
+
+    public boolean unCheck(Row row) {
         ready(true);
         scrollInGrid(row);
         if (row.getAttributeClass().contains("x-grid-item-selected")) {
