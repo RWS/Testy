@@ -160,11 +160,25 @@ public class Grid extends Table {
     public boolean check(Row row) {
         ready(true);
         scrollInGrid(row);
-        if (!row.getAttributeClass().contains("x-grid-item-selected")) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
-            checkBox.click();
+        boolean checked = false;
+        Cell firstCell = new Cell(row).setClasses("x-grid-cell-row-checker").setVisibility(true);
+        if (firstCell.isDisplayed()) {
+            CheckBox checkBox = new CheckBox(firstCell).setBaseCls("x-grid-row-checker");
+            if (!row.getAttributeClass().contains("x-grid-item-selected")) {
+                checkBox.click();
+            }
+            checked = row.getAttributeClass().contains("x-grid-item-selected");
         }
-        return row.getAttributeClass().contains("x-grid-item-selected");
+
+        Cell lastCell = new Cell(row).setClasses("x-grid-cell-checkcolumn").setVisibility(true);
+        if (lastCell.isDisplayed()) {
+            CheckBox checkBox = new CheckBox(lastCell).setBaseCls("x-grid-checkcolumn");
+            if (!checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked")) {
+                checkBox.click();
+            }
+            checked = checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked");
+        }
+        return checked;
     }
 
     public boolean unCheck(Cell... cells) {
@@ -175,11 +189,25 @@ public class Grid extends Table {
     public boolean unCheck(Row row) {
         ready(true);
         scrollInGrid(row);
-        if (row.getAttributeClass().contains("x-grid-item-selected")) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
-            checkBox.click();
+        boolean checked = false;
+        Cell firstCell = new Cell(row).setClasses("x-grid-cell-row-checker").setVisibility(true);
+        if (firstCell.isDisplayed()) {
+            CheckBox checkBox = new CheckBox(firstCell).setBaseCls("x-grid-row-checker");
+            if (row.getAttributeClass().contains("x-grid-item-selected")) {
+                checkBox.click();
+            }
+            checked = !row.getAttributeClass().contains("x-grid-item-selected");
         }
-        return !row.getAttributeClass().contains("x-grid-item-selected");
+
+        Cell lastCell = new Cell(row).setClasses("x-grid-cell-checkcolumn").setVisibility(true);
+        if (lastCell.isDisplayed()) {
+            CheckBox checkBox = new CheckBox(lastCell).setBaseCls("x-grid-checkcolumn");
+            if (checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked")) {
+                checkBox.click();
+            }
+            checked = !checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked");
+        }
+        return checked;
     }
 
     private void scrollInGrid(Row row) {
