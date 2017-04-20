@@ -1,7 +1,9 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.Row;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -53,5 +55,15 @@ public class GridIntegrationTest extends TestBase {
 
         assertThat(spreadsheet.check(new Cell(3, "2017")), is(true));
         assertThat(spreadsheet.unCheck(new Cell(3, "2017")), is(true));
+    }
+
+    @Test(dependsOnMethods = "checkTest")
+    void checkCellTest() {
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
+        Grid spreadsheet = new Grid().setTitle("Edit Plants");
+        spreadsheet.ready(true);
+        Row row = spreadsheet.getRow(new Cell(1, "Anemone", SearchType.EQUALS));
+        assertThat(spreadsheet.unCheck(row), is(true));
+        assertThat(spreadsheet.check(row), is(true));
     }
 }

@@ -171,7 +171,7 @@ public class Grid extends Table {
         }
 
         Cell lastCell = new Cell(row).setClasses("x-grid-cell-checkcolumn").setVisibility(true);
-        if (lastCell.isDisplayed()) {
+        if (!checked && lastCell.isDisplayed()) {
             CheckBox checkBox = new CheckBox(lastCell).setBaseCls("x-grid-checkcolumn");
             if (!checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked")) {
                 checkBox.click();
@@ -200,7 +200,7 @@ public class Grid extends Table {
         }
 
         Cell lastCell = new Cell(row).setClasses("x-grid-cell-checkcolumn").setVisibility(true);
-        if (lastCell.isDisplayed()) {
+        if (!checked && lastCell.isDisplayed()) {
             CheckBox checkBox = new CheckBox(lastCell).setBaseCls("x-grid-checkcolumn");
             if (checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked")) {
                 checkBox.click();
