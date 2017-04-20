@@ -158,7 +158,6 @@ public class Grid extends Table {
     }
 
     public boolean check(Row row) {
-        ready(true);
         scrollInGrid(row);
         boolean checked = false;
         Cell firstCell = new Cell(row).setClasses("x-grid-cell-row-checker").setVisibility(true);
@@ -187,7 +186,6 @@ public class Grid extends Table {
     }
 
     public boolean unCheck(Row row) {
-        ready(true);
         scrollInGrid(row);
         boolean checked = false;
         Cell firstCell = new Cell(row).setClasses("x-grid-cell-row-checker").setVisibility(true);
