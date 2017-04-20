@@ -50,11 +50,17 @@ public class GridIntegrationTest extends TestBase {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
-        assertThat(spreadsheet.check(new Cell(3, "1900")), is(true));
-        assertThat(spreadsheet.unCheck(new Cell(3, "1900")), is(true));
+        Row row = spreadsheet.getRow(new Cell(3, "1900"));
+        spreadsheet.select(row);
+        assertThat(spreadsheet.isSelected(row), is(true));
+        spreadsheet.unSelect(row);
+        assertThat(spreadsheet.isSelected(row), is(false));
 
-        assertThat(spreadsheet.check(new Cell(3, "2017")), is(true));
-        assertThat(spreadsheet.unCheck(new Cell(3, "2017")), is(true));
+        row = spreadsheet.getRow(new Cell(3, "2017"));
+        spreadsheet.select(row);
+        assertThat(spreadsheet.isSelected(row), is(true));
+        spreadsheet.unSelect(row);
+        assertThat(spreadsheet.isSelected(row), is(false));
     }
 
     @Test(dependsOnMethods = "checkTest")
@@ -62,8 +68,11 @@ public class GridIntegrationTest extends TestBase {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");
         spreadsheet.ready(true);
-        Row row = spreadsheet.getRow(new Cell(1, "Anemone", SearchType.EQUALS));
-        assertThat(spreadsheet.unCheck(row), is(true));
-        assertThat(spreadsheet.check(row), is(true));
+        Cell cell = new Cell(1, "Anemone", SearchType.EQUALS);
+        spreadsheet.unCheck(cell);
+        assertThat(spreadsheet.isChecked(cell), is(false));
+
+        spreadsheet.check(cell);
+        assertThat(spreadsheet.isChecked(cell), is(true));
     }
 }

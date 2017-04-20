@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class Table extends WebLocator implements ITable<Row, Cell> {
     private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
 
@@ -247,22 +249,28 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return text != null && text.trim().equals(compareText);
     }
 
-    public boolean check(Cell... cells) {
-        boolean selected = false;
-        if (ready(true)) {
-            CheckBox checkBox = new CheckBox(getRow(cells));
-            selected = checkBox.isSelected() || checkBox.click();
-        }
-        return selected;
+    public void select(Row row) {
+        CheckBox checkBox = new CheckBox(row);
+        boolean selected = checkBox.isSelected() || checkBox.click();
+        assertThat("Could not selected " + toString(), selected);
     }
 
-    public boolean unCheck(Cell... cells) {
-        boolean selected = false;
-        if (ready(true)) {
-            CheckBox checkBox = new CheckBox(getRow(cells));
-            selected = !checkBox.isSelected() || checkBox.click();
-        }
-        return selected;
+    public void check(Cell... cells) {
+        CheckBox checkBox = new CheckBox(getRow(cells));
+        boolean selected = checkBox.isSelected() || checkBox.click();
+        assertThat("Could not checked " + toString(), selected);
+    }
+
+    public void unSelect(Row row) {
+        CheckBox checkBox = new CheckBox(row);
+        boolean selected = !checkBox.isSelected() || checkBox.click();
+        assertThat("Could not unselected " + toString(), selected);
+    }
+
+    public void unCheck(Cell... cells) {
+        CheckBox checkBox = new CheckBox(getRow(cells));
+        boolean selected = !checkBox.isSelected() || checkBox.click();
+        assertThat("Could not unchecked " + toString(), selected);
     }
 
     public boolean waitToPopulate() {
