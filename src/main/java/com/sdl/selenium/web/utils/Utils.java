@@ -30,7 +30,7 @@ public class Utils {
         }
     }
 
-    private void scrollToElement(WebLocator element) {
+    private void scrollToWebLocator(WebLocator element) {
         WebLocator.getExecutor().executeScript("arguments[0].scrollIntoView(true);", element.getWebElement());
     }
 

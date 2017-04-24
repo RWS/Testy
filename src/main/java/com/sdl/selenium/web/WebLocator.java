@@ -509,6 +509,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      * @return True if the element is disabled, false otherwise.
      * @deprecated use {@link #isEnabled}
      */
+    @Deprecated
     public boolean isDisabled() {
         return !executor.isEnabled(this);
     }
