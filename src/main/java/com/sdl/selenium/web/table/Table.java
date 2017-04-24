@@ -53,14 +53,8 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         } else {
             selected = cell.click();
         }
-        if (selected) {
-            LOGGER.info("The element '" + cell + "' has been located.");
-        } else {
-            LOGGER.warn("The element '" + cell + "' is not present in the list.");
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Path's element is: " + cell.getXPath());
-                LOGGER.debug("Total Rows: " + getCount());
-            }
+        if (!selected) {
+            LOGGER.warn("The element '{}' is not present in the list.", cell);
         }
         return selected;
     }
@@ -163,29 +157,12 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     }
 
     /**
-     * returns all text elements from a table
-     *
-     * @param searchText searchText
-     * @return all text elements from a table
-     * @deprecated //TODO fix it
-     */
-
-    public String[] getRowText(String searchText) {
-        String[] rowElements = null;
-        String text = getRow(searchText).getText();
-        if (text != null) {
-            rowElements = text.split("\n");
-        }
-        return rowElements;
-    }
-
-    /**
      * get all strings as array from specified columnIndex
      *
      * @param columnIndex columnIndex
      * @return all strings as array from specified columnIndex
      */
-    public String[] getCollTexts(int columnIndex) {
+    public String[] getColumnTexts(int columnIndex) {
         int count = getCount();
         if (count > 0) {
             String[] texts = new String[count];
@@ -234,19 +211,6 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     public String getText(int rowIndex, int columnIndex) {
         return getCell(rowIndex, columnIndex).getText();
-    }
-
-    /**
-     * returns if a specific Table contains a certain element
-     *
-     * @param searchText  the element that is already part of the table
-     * @param columnIndex the column index where the comparison is done (STARTS AT 0)
-     * @param compareText the text to which the element found is compared to
-     * @return if a specific Table contains a certain element
-     */
-    public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
-        String text = getText(searchText, columnIndex);
-        return text != null && text.trim().equals(compareText);
     }
 
     public void select(Row row) {

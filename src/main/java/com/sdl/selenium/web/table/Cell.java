@@ -26,6 +26,11 @@ public class Cell extends AbstractCell {
         setPosition(columnIndex);
     }
 
+    public Cell(String columnText, SearchType... searchTypes) {
+        this();
+        setText(columnText, searchTypes);
+    }
+
     public Cell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
         setPosition(columnIndex);

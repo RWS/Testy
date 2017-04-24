@@ -203,12 +203,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return rowSelect(searchText, SearchType.EQUALS);
     }
 
-    public boolean assertRowSelect(String searchElement) {
-        boolean selected = rowSelect(searchElement);
-        assertThat("Could not select row with text: " + searchElement, selected);
-        return selected;
-    }
-
     @Override
     public boolean rowSelect(String searchText, SearchType... searchTypes) {
         ready(true);
@@ -585,19 +579,6 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public String getText(int rowIndex, int columnIndex) {
         GridCell cell = getCell(rowIndex, columnIndex);
         return cell.getText();
-    }
-
-    /**
-     * returns if a specific Grid contains a certain element
-     *
-     * @param searchText  the element that is already part of the grid
-     * @param columnIndex the column index where the comparison is done (STARTS AT 0)
-     * @param compareText the text to which the element found is compared to
-     * @return if a specific Grid contains a certain element
-     */
-    public boolean isTextPresent(String searchText, int columnIndex, String compareText) {
-        String text = getText(searchText, columnIndex);
-        return text != null && text.trim().equals(compareText);
     }
 
     public boolean checkboxSMSelectRow(int rowIndex) {

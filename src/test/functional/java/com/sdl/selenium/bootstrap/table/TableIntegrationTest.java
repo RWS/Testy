@@ -41,6 +41,12 @@ public class TableIntegrationTest extends TestBase {
     }
 
     @Test
+    public void verifyIfCellByTextIsPresent() {
+        Row row = table.getRow(new Cell("Carter", SearchType.EQUALS));
+        assertTrue(row.isElementPresent());
+    }
+
+    @Test
     public void verifyIfButtonsIsPresent() {
         Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         Button first = new Button(row).setText("Details", SearchType.CONTAINS);

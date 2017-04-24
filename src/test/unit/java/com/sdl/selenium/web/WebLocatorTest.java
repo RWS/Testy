@@ -43,7 +43,7 @@ public class WebLocatorTest {
                 {new WebLocator("text", "testcls", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]"},
                 {new WebLocator().setId("ID"), "//*[@id='ID']"},
                 {new WebLocator(container).setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
-                {new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]").withTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
+                {new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
                 {new WebLocator().setElPathSuffix("has-div", "count(div) > 0"), "//*[count(div) > 0]"},
                 {new WebLocator().setExcludeClasses("cls1", "cls2"), "//*[not(contains(@class, 'cls1')) and not(contains(@class, 'cls2'))]"},
         };
