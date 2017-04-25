@@ -17,12 +17,25 @@ public final class WebLocatorUtils extends WebLocator {
 
     }
 
+    /**
+     * @deprecated use WebDriverConfig.getDriver().getPageSource();
+     * @return resource of page
+     */
+    @Deprecated
     public static String getPageSource() {
         return WebDriverConfig.getDriver().getPageSource();
     }
 
     public static Object doExecuteScript(String script, Object... objects) {
         return executor.executeScript(script, objects);
+    }
+
+    /**
+     * Scroll to element
+     * @param element type WebLocator
+     */
+    public static void scrollToWebLocator(WebLocator element) {
+        doExecuteScript("arguments[0].scrollIntoView(true);", element.getWebElement());
     }
 
     /**

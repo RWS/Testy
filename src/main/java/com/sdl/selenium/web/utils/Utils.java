@@ -1,7 +1,6 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
-import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -28,10 +27,6 @@ public class Utils {
         } catch (InterruptedException e) {
             LOGGER.error("InterruptedException: {}", e);
         }
-    }
-
-    private void scrollToWebLocator(WebLocator element) {
-        WebLocator.getExecutor().executeScript("arguments[0].scrollIntoView(true);", element.getWebElement());
     }
 
     public static String getEscapeQuotesText(String text) {
