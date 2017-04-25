@@ -98,7 +98,7 @@ This project is optimized for:
 <dependency>
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
 </dependency>
 ```
 
@@ -152,14 +152,16 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.3.0**
-- update webdriver version 3.0.1
-- make deprecated methods with***()
-- implement check and unCheck methods in Grid and Table
-- add TagField
-- implement setValue() in TagField
-- add Tree
-- add select(String value, boolean pagination) in ComboBox
+**Release Notes for Testy 2.4.0**
+- update webdriver version 3.3.1
+- add FieldSet for extjs 6 package
+- add check(Cell... cells) and unCheck(Cell... cells) in Grid and Table
+- check(Cell... cells) and unCheck(Cell... cells) doing scrollButton if row is not visible in Grid
+- added method scrollToWebLocator(WebLocator element) in Utils
+- added  method getError for TextField in extjs 6 package
+- remove deprecated methods
+- added select(Row row) and unSelect(Row row) in Grid
+- added Cell(String columnText, SearchType... searchTypes) method in Cell
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -176,7 +178,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.4.0-SNAPSHOT</version>
+        <version>2.5.0-SNAPSHOT</version>
     </dependency>
 ```
 
