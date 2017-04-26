@@ -13,13 +13,12 @@ import java.util.*;
 public final class WebLocatorUtils extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
 
-    private WebLocatorUtils(){
-
+    private WebLocatorUtils() {
     }
 
     /**
-     * @deprecated use WebDriverConfig.getDriver().getPageSource();
      * @return resource of page
+     * @deprecated use WebDriverConfig.getDriver().getPageSource();
      */
     @Deprecated
     public static String getPageSource() {
@@ -32,6 +31,7 @@ public final class WebLocatorUtils extends WebLocator {
 
     /**
      * Scroll to element
+     *
      * @param element type WebLocator
      */
     public static void scrollToWebLocator(WebLocator element) {
@@ -45,8 +45,9 @@ public final class WebLocatorUtils extends WebLocator {
      * <pre>{@code
      * WebLocatorUtils.getXPathScript(new LoginView());
      * }</pre>
+     *
      * @param view any instance of WebLocator
-     * <p>Views must respect the JavaBeans conventions</p>
+     *             <p>Views must respect the JavaBeans conventions</p>
      * @return script
      */
     public static String getXPathScript(WebLocator view) {
@@ -54,7 +55,7 @@ public final class WebLocatorUtils extends WebLocator {
         builder.append("\n\n");
         Map<String, WebLocator> map = webLocatorAsMap(view);
 
-        if(map.size() == 0) {
+        if (map.size() == 0) {
             builder.append(getFirebugXPath(view));
         } else {
             builder.append("// Run next lines in firebug to see if all elements are present in your page").append("\n\n");
@@ -95,12 +96,12 @@ public final class WebLocatorUtils extends WebLocator {
     public static Map<String, WebLocator> webLocatorAsMap(WebLocator webLocator) {
         Map<String, WebLocator> result = new HashMap<>();
 
-        for(Field field : webLocator.getClass().getDeclaredFields()) {
+        for (Field field : webLocator.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             Object fieldInstance = null;
             try {
                 fieldInstance = field.get(webLocator);
-                if(fieldInstance instanceof WebLocator) {
+                if (fieldInstance instanceof WebLocator) {
                     result.put(field.getName(), (WebLocator) fieldInstance);
                 }
             } catch (IllegalAccessException e) {
@@ -122,13 +123,13 @@ public final class WebLocatorUtils extends WebLocator {
     public static String getHtmlTree(WebLocator webLocator) {
         String result = "";
 
-        if(webLocator.currentElement != null || webLocator.isElementPresent()) {
+        if (webLocator.currentElement != null || webLocator.isElementPresent()) {
 
             WebElement parent = webLocator.currentElement;
 
             List<String> elements = new LinkedList<>();
 
-            while (!parent.getTagName().equals("html")){
+            while (!parent.getTagName().equals("html")) {
 
                 String outerHtml = parent.getAttribute("outerHTML");
                 String innerHtml = parent.getAttribute("innerHTML");
@@ -142,7 +143,7 @@ public final class WebLocatorUtils extends WebLocator {
 
             elements.sort(Comparator.reverseOrder());
             String indent = "\n";
-            for(String elem : elements) {
+            for (String elem : elements) {
                 result = result.concat(indent).concat(elem);
                 indent = indent.concat("\t");
             }
