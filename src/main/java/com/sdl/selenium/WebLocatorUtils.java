@@ -35,7 +35,10 @@ public final class WebLocatorUtils extends WebLocator {
      * @param element type WebLocator
      */
     public static void scrollToWebLocator(WebLocator element) {
-        doExecuteScript("arguments[0].scrollIntoView(true);", element.getWebElement());
+        if (element.isElementPresent()) {
+            doExecuteScript("arguments[0].scrollIntoView(true);", element.getWebElement());
+//            doExecuteScript("var e = arguments[0]; e.scrollIntoView(); var rect = e.getBoundingClientRect(); return {'x': rect.left, 'y': rect.top};", element.getWebElement());
+        }
     }
 
     /**

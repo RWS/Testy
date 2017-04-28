@@ -386,10 +386,18 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getRect(this);
     }
 
+    /**
+     * @deprecated please use {@link #size()}
+     * @return true if size is > 0
+     */
     public boolean exists() {
         return executor.exists(this);
     }
 
+    /**
+     * @deprecated please use {@link #size()}
+     * @return true if size is > 0
+     */
     public boolean assertExists() {
         boolean exists = exists();
         assertThat("Element does not exists : " + this, exists);
@@ -526,12 +534,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public boolean isDisplayed() {
         return executor.isDisplayed(this);
-    }
-
-    public boolean assertDisplayed() {
-        boolean displayed = isDisplayed();
-        assertThat("Element is not displayed: " + this, displayed);
-        return displayed;
     }
 
     @Override

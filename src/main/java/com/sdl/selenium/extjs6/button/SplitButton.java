@@ -1,11 +1,10 @@
 package com.sdl.selenium.extjs6.button;
 
-import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.extjs6.menu.Menu;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,13 +36,13 @@ public class SplitButton extends Button {
 
     public boolean clickOnMenu(String[] menuOptions) {
         int n = menuOptions.length;
-        LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
         assertReady();
+        LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
         boolean selected = true;
-        if (showMenu()) {
+        Menu menu = new Menu();
+        if (menu.showMenu(this)) {
             for (String val : menuOptions) {
-                WebLocator option = getComboEl(val, false, 300);
-                selected = selected && option.click();
+                menu.clickOnMenu(val);
             }
         } else {
             LOGGER.debug("(" + toString() + ") The element arrow could not be located.");
@@ -53,17 +52,10 @@ public class SplitButton extends Button {
     }
 
     public List<String> getAllMenuValues() {
-        click();
-        WebLocator menuContainer = new WebLocator("x-menu").setAttribute("aria-hidden", "false");
-        WebLocator menuList = new WebLocator(menuContainer).setClasses("x-menu-body").setInfoMessage(this + " -> x-menu-body");
-        menuList.assertReady();
-        String[] menuValues = menuList.getText().split("\\n");
-        click();
-        return Arrays.asList(menuValues);
-    }
-
-    private WebLocator getComboEl(String value, boolean startWith, long optionRenderMillis) {
-        WebLocator comboListElement = new WebLocator("x-menu").setAttribute("aria-hidden", "false").setInfoMessage(this + " -> x-menu");
-        return new WebLocator(comboListElement).setText(value, startWith ? SearchType.STARTS_WITH : SearchType.EQUALS).setRenderMillis(optionRenderMillis).setInfoMessage(value);
+        Menu menu = new Menu();
+        menu.showMenu(this);
+        List<String> menuValues = menu.getMenuValues();
+        menu.hideMenu(this);
+        return menuValues;
     }
 }

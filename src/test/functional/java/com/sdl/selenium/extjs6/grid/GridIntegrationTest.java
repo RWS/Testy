@@ -3,7 +3,6 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.table.Cell;
-import com.sdl.selenium.web.table.Row;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -61,6 +60,16 @@ public class GridIntegrationTest extends TestBase {
         assertThat(spreadsheet.isSelected(row), is(true));
         spreadsheet.unSelect(row);
         assertThat(spreadsheet.isSelected(row), is(false));
+    }
+
+    @Test//(dependsOnMethods = "checkTest")
+    void scrollToCellTest() {
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
+        Grid spreadsheet = new Grid().setTitle("Spreadsheet");
+        spreadsheet.ready(true);
+        Row row = spreadsheet.getRow(new Cell(3, "2ttt017"));
+        boolean actual = row.scrollTo();
+        assertThat(actual, is(true));
     }
 
     @Test(dependsOnMethods = "checkTest")

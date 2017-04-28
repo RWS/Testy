@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.link;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -21,15 +22,15 @@ public class WebLink extends WebLocator {
         setContainer(container);
     }
 
-    public WebLink(WebLocator container, String text) {
+    public WebLink(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
-        setText(text);
+        setText(text, searchTypes);
     }
 
     public boolean openInNewWindow() {
         click();
         oldTab = null;
-        if(WebDriverConfig.waitForNewTab(2, 1000)) {
+        if (WebDriverConfig.waitForNewTab(2, 1000)) {
             oldTab = WebDriverConfig.switchToLastTab();
         }
         return oldTab != null;
@@ -37,7 +38,7 @@ public class WebLink extends WebLocator {
 
     public boolean returnDefaultWindow() {
         WebDriver driver = WebDriverConfig.getDriver();
-        if(oldTab != null) {
+        if (oldTab != null) {
             driver.close();
         }
         WebDriverConfig.switchToFirstTab();

@@ -3,7 +3,6 @@ package com.sdl.selenium.extjs6.button;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,11 +31,8 @@ public class Button extends WebLocator {
         if (id != null && !"".equals(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.showMenu(); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            LOGGER.info("showMenu for {}; result: {}", toString(), object);
-            Utils.sleep(200);
             return (Boolean) object;
         }
-        LOGGER.debug("id is: {}", id);
         return false;
     }
 

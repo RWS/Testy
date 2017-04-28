@@ -5,7 +5,6 @@ import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
-import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
