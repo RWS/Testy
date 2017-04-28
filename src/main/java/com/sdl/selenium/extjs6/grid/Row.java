@@ -40,7 +40,6 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setChildNodes(cells);
     }
 
-    @Override
     public boolean scrollTo() {
         while (!isElementPresent()) {
             WebLocator container = getPathBuilder().getContainer();
