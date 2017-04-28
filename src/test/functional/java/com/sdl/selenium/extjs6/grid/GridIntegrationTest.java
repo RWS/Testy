@@ -62,7 +62,7 @@ public class GridIntegrationTest extends TestBase {
         assertThat(spreadsheet.isSelected(row), is(false));
     }
 
-    @Test//(dependsOnMethods = "checkTest")
+    @Test(dependsOnMethods = "checkTest")
     void scrollToCellTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
@@ -72,7 +72,7 @@ public class GridIntegrationTest extends TestBase {
         assertThat(actual, is(true));
     }
 
-    @Test(dependsOnMethods = "checkTest")
+    @Test(dependsOnMethods = "scrollToCellTest")
     void checkCellTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");
