@@ -388,7 +388,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * @deprecated please use {@link #size()}
-     * @return true if size is > 0
+     * @return true if size is more than zero
      */
     public boolean exists() {
         return executor.exists(this);
@@ -396,7 +396,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * @deprecated please use {@link #size()}
-     * @return true if size is > 0
+     * @return true if size is more than zero
      */
     public boolean assertExists() {
         boolean exists = exists();

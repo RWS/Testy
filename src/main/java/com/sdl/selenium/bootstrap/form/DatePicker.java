@@ -93,6 +93,9 @@ public class DatePicker extends WebLocator {
     /**
      * example new DatePicker().select("19/05/2013", "dd/MM/yyyy", Locale.ENGLISH)
      *
+     * @param date   "19/05/2013"
+     * @param format "dd/MMM/yyyy"
+     * @param locale Locale.ENGLISH
      * @return true if is selected date, false when DatePicker doesn't exist
      */
     public boolean select(String date, String format, Locale locale) {
@@ -133,15 +136,15 @@ public class DatePicker extends WebLocator {
     private void goToYear(String year, String fullDate) {
         int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
         int yearInt = Integer.parseInt(year);
-        int count = (int) Math.ceil((yearInt - currentYear)/10.0);
+        int count = (int) Math.ceil((yearInt - currentYear) / 10.0);
 
-        while (count > 0){
+        while (count > 0) {
             WebLocator next = new WebLocator(dataPickerYear).setClasses("next");
             next.click();
-           count--;
+            count--;
         }
 
-        while (0 > count){
+        while (0 > count) {
             WebLocator prev = new WebLocator(dataPickerYear).setClasses("prev");
             prev.click();
             count++;

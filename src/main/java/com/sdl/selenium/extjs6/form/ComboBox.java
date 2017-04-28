@@ -34,8 +34,9 @@ public class ComboBox extends TextField implements ICombo {
 
     /**
      * @param value              value
-     * @param searchType         use {@link SearchType}
      * @param optionRenderMillis eg. 300ms
+     * @param pagination         true | false
+     * @param searchType         use {@link SearchType}
      * @return true if value was selected
      */
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {

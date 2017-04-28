@@ -55,9 +55,10 @@ public class TagField extends ComboBox {
     }
 
     /**
-     * @param values             value
-     * @param searchType         use {@link SearchType}
+     * @param searchType use {@link SearchType}
      * @param optionRenderMillis eg. 300ms
+     * @param holdOpen true | false
+     * @param values values[]
      * @return true if value was selected
      */
     public boolean doSelect(SearchType searchType, long optionRenderMillis, boolean holdOpen, String... values) {
