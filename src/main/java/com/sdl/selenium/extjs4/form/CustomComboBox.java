@@ -4,11 +4,12 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomComboBox extends TextField implements ICombo {
-    private static final Logger LOGGER = Logger.getLogger(CustomComboBox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomComboBox.class);
 
     public CustomComboBox() {
         setClassName("CustomComboBox");

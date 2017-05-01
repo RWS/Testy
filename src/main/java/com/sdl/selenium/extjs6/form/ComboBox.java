@@ -5,7 +5,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ComboBox extends TextField implements ICombo {
-    private static final Logger LOGGER = Logger.getLogger(ComboBox.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
     private static String listClass = "x-list-plain";
     private WebLocator boundList = new WebLocator("x-boundlist").setVisibility(true);
     private Pagination paginationEl = new Pagination(boundList).setRenderMillis(300);

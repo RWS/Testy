@@ -2,8 +2,9 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class TagField extends ComboBox {
-    private static final Logger LOGGER = Logger.getLogger(TagField.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TagField.class);
 
     public TagField() {
         setClassName("TagField");
