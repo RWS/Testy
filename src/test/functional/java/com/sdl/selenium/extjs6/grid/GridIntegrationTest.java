@@ -67,7 +67,7 @@ public class GridIntegrationTest extends TestBase {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
-        Row row = spreadsheet.getRow(new Cell(3, "2ttt017"));
+        Row row = spreadsheet.getRow(new Cell(3, "2017"));
         boolean actual = row.scrollTo();
         assertThat(actual, is(true));
     }

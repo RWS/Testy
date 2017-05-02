@@ -53,7 +53,10 @@ public class SplitButton extends Button {
 
     public List<String> getAllMenuValues() {
         Menu menu = new Menu();
-        menu.showMenu(this);
+        if (!menu.showMenu(this)) {
+            menu.ready();
+            menu.showMenu(this);
+        }
         List<String> menuValues = menu.getMenuValues();
         menu.hideMenu(this);
         return menuValues;

@@ -66,28 +66,19 @@
     <test name="FileUploadIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs6.button.FileUploadIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.button.SplitButtonIntegrationTest"/>
         </classes>
     </test>
     <test name="DateFieldIntegrationTest">
         <classes>
-            <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.ComboBoxIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.DisplayFieldIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.FieldSetIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.RadioGroupIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.form.TagFieldIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextAriaIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextFieldIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs6.form.TagFieldIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs6.form.FieldSetIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs6.form.DisplayFieldIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="SliderIntegrationTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs6.slider.SliderIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="TreeIntegrationTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
         </classes>
     </test>
     <test name="GridIntegrationTest">
@@ -95,9 +86,19 @@
             <class name="com.sdl.selenium.extjs6.grid.GridIntegrationTest"/>
         </classes>
     </test>
+    <test name="SliderIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.slider.SliderIntegrationTest"/>
+        </classes>
+    </test>
     <test name="TabIntegrationTest">
         <classes>
             <class name="com.sdl.selenium.extjs6.tab.TabIntegrationTest"/>
+        </classes>
+    </test>
+    <test name="TreeIntegrationTest">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
         </classes>
     </test>
     <test name="MessageBoxIntegrationTest">

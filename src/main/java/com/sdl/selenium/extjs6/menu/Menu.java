@@ -27,7 +27,7 @@ public class Menu extends WebLocator {
     }
 
     public List<String> getMenuValues() {
-        WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setInfoMessage(this + " -> x-menu-body");
+        WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setVisibility(true).setInfoMessage(this + " -> x-menu-body");
         menuList.assertReady();
         String[] menuValues = menuList.getText().split("\\n");
         return Arrays.asList(menuValues);
@@ -36,7 +36,7 @@ public class Menu extends WebLocator {
     public boolean showMenu(WebLocator parent) {
         final String id = parent.getAttributeId();
         if (id != null && !"".equals(id)) {
-            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.showMenu(); return true;} return false;})()";
+            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b.menu.isHidden()) {b.showMenu();} return !b.menu.isHidden();})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
             return (Boolean) object;
         }
@@ -46,7 +46,7 @@ public class Menu extends WebLocator {
     public boolean hideMenu(WebLocator parent) {
         final String id = parent.getAttributeId();
         if (id != null && !"".equals(id)) {
-            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.hideMenu(); return true;} return false;})()";
+            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(!b.menu.isHidden()) {b.hideMenu();} return b.menu.isHidden();})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
             return (Boolean) object;
         }
