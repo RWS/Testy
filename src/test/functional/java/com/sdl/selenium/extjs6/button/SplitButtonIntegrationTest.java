@@ -34,7 +34,7 @@ public class SplitButtonIntegrationTest extends TestBase {
         small.clickOnMenu("Menu Item 3");
     }
 
-    @Test
+    @Test (dependsOnMethods = "splitButton")
     public void getAllMenuValuesTest() {
         assertThat(small.getAllMenuValues(), is(Arrays.asList("Menu Item 1", "Menu Item 2", "Menu Item 3")));
     }
