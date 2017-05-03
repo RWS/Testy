@@ -2,7 +2,6 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.table.Cell;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -45,24 +44,24 @@ public class GridIntegrationTest extends TestBase {
     }
 
     @Test(dependsOnMethods = "headerTest")
-    void checkTest() {
+    void selectTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "1900"));
-        spreadsheet.select(row);
-        assertThat(spreadsheet.isSelected(row), is(true));
-        spreadsheet.unSelect(row);
-        assertThat(spreadsheet.isSelected(row), is(false));
+        row.select();
+        assertThat(row.isSelected(), is(true));
+        row.unSelect();
+        assertThat(row.isSelected(), is(false));
 
         row = spreadsheet.getRow(new Cell(3, "2017"));
-        spreadsheet.select(row);
-        assertThat(spreadsheet.isSelected(row), is(true));
-        spreadsheet.unSelect(row);
-        assertThat(spreadsheet.isSelected(row), is(false));
+        row.select();
+        assertThat(row.isSelected(), is(true));
+        row.unSelect();
+        assertThat(row.isSelected(), is(false));
     }
 
-    @Test(dependsOnMethods = "checkTest")
+    @Test(dependsOnMethods = "selectTest")
     void scrollToCellTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
@@ -83,5 +82,12 @@ public class GridIntegrationTest extends TestBase {
 
         spreadsheet.check(cell);
         assertThat(spreadsheet.isChecked(cell), is(true));
+
+        cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
+        cell.unCheck();
+        assertThat(cell.isChecked(), is(false));
+
+        cell.check();
+        assertThat(cell.isChecked(), is(true));
     }
 }

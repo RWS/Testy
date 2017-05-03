@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
@@ -40,6 +41,26 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setChildNodes(cells);
     }
 
+    public void select() {
+        scrollInGrid(this);
+        if (!isSelected()) {
+            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
+            checkBox.click();
+        }
+    }
+
+    public void unSelect() {
+        scrollInGrid(this);
+        if (isSelected()) {
+            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
+            checkBox.click();
+        }
+    }
+
+    public boolean isSelected() {
+        return getAttributeClass().contains("x-grid-item-selected");
+    }
+
     public boolean scrollTo() {
         while (!isElementPresent()) {
             WebLocator container = getPathBuilder().getContainer();
@@ -48,5 +69,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
             WebLocatorUtils.scrollToWebLocator(row);
         }
         return isElementPresent();
+    }
+
+    private void scrollInGrid(Row row) {
+        int time = 0;
+        while (!row.waitToRender(100) && time < 1000) {
+            ((Grid)getPathBuilder().getContainer()).scrollPageDown();
+            time++;
+        }
     }
 }

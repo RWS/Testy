@@ -4,7 +4,6 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
@@ -34,24 +33,46 @@ public class Grid extends Table {
         setContainer(container);
     }
 
+    @Override
     public Row getRow(int rowIndex) {
-        return new Row(this, rowIndex).setTag("table").setInfoMessage("-Row");
+        return new Row(this, rowIndex).setInfoMessage("-Row");
     }
 
+    @Override
     public Row getRow(String searchElement) {
-        return new Row(this, searchElement, SearchType.EQUALS).setTag("table").setInfoMessage("-Row");
+        return new Row(this, searchElement, SearchType.EQUALS).setInfoMessage("-Row");
     }
 
+    @Override
     public Row getRow(String searchElement, SearchType... searchTypes) {
-        return new Row(this, searchElement, searchTypes).setTag("table").setInfoMessage("-Row");
+        return new Row(this, searchElement, searchTypes).setInfoMessage("-Row");
     }
 
     public Row getRow(Cell... byCells) {
-        return new Row(this, byCells).setTag("table").setInfoMessage("-Row");
+        return new Row(this, byCells).setInfoMessage("-Row");
     }
 
     public Row getRow(int indexRow, Cell... byCells) {
-        return new Row(this, indexRow, byCells).setTag("table").setInfoMessage("-Row");
+        return new Row(this, indexRow, byCells).setInfoMessage("-Row");
+    }
+
+    @Override
+    public Cell getCell(String searchElement, SearchType... searchTypes) {
+        Row row = new Row(this);
+        return new Cell(row).setText(searchElement, searchTypes);
+    }
+
+    @Override
+    public Cell getCell(String searchElement, int columnIndex, SearchType... searchTypes) {
+        return new Cell(new Row(this, searchElement, searchTypes), columnIndex);
+    }
+
+    public Cell getCell(int columnIndex, Cell... byCells) {
+        return new Cell(getRow(byCells), columnIndex);
+    }
+
+    public Cell getCell(int columnIndex, String text, Cell... byCells) {
+        return new Cell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
     }
 
     public boolean waitToActivate(int seconds) {
@@ -137,6 +158,7 @@ public class Grid extends Table {
         return scrolled;
     }
 
+    @Override
     public boolean waitToPopulate(int seconds) {
         Row row = getRow(1).setVisibility(true).setRoot("//..//").setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct"); // TODO see if must add for all rows
@@ -151,18 +173,45 @@ public class Grid extends Table {
         return headers;
     }
 
+    /**
+     * @deprecated please use {@link Row#select()}
+     * @param row row which want to select
+     */
+    @Deprecated
     public void select(Row row) {
         scrollInGrid(row);
-        if (!isSelected(row)) {
+        if (!row.isSelected()) {
             CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
             checkBox.click();
         }
     }
 
+    /**
+     * @deprecated please use {@link Row#unSelect()}
+     * @param row row which want to unSelect
+     */
+    @Deprecated
+    public void unSelect(Row row) {
+        scrollInGrid(row);
+        if (row.isSelected()) {
+            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
+            checkBox.click();
+        }
+    }
+
+    /**
+     * @deprecated please use {@link Row#isSelected()}
+     * @param row row which want to verify status
+     */
+    @Deprecated
     public boolean isSelected(Row row) {
         return row.getAttributeClass().contains("x-grid-item-selected");
     }
 
+    /**
+     * @deprecated please use {@link Cell#check()}
+     * @param cells cells by which I locate the row of 'checkcolumn'
+     */
     public void check(Cell... cells) {
         Row row = getRow(cells);
         scrollInGrid(row);
@@ -172,13 +221,10 @@ public class Grid extends Table {
         }
     }
 
-    public boolean isChecked(Cell... cells) {
-        Row row = getRow(cells);
-        CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-checkcolumn");
-        return checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked");
-    }
-
-
+    /**
+     * @deprecated please use {@link Cell#unCheck()}
+     * @param cells cells by which I locate the row of 'checkcolumn'
+     */
     public void unCheck(Cell... cells) {
         Row row = getRow(cells);
         scrollInGrid(row);
@@ -188,12 +234,15 @@ public class Grid extends Table {
         }
     }
 
-    public void unSelect(Row row) {
-        scrollInGrid(row);
-        if (isSelected(row)) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
-            checkBox.click();
-        }
+    /**
+     * @deprecated please use {@link Cell#isChecked()}
+     * @param cells cells by which I locate the row of 'checkcolumn'
+     * @return true if cell is checked, otherwise false
+     */
+    public boolean isChecked(Cell... cells) {
+        Row row = getRow(cells);
+        CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-checkcolumn");
+        return checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked");
     }
 
     private void scrollInGrid(Row row) {
