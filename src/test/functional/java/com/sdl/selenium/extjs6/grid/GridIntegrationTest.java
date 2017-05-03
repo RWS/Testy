@@ -2,6 +2,8 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -14,6 +16,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GridIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GridIntegrationTest.class);
 
     private Grid grid = new Grid().setTitle("Array Grid");
 
@@ -89,5 +92,20 @@ public class GridIntegrationTest extends TestBase {
 
         cell.check();
         assertThat(cell.isChecked(), is(true));
+    }
+
+//    @Test//(dependsOnMethods = "checkCellTest")
+    void performanceIsCheckedTest() {
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
+        Grid spreadsheet = new Grid().setTitle("Edit Plants");
+        spreadsheet.ready(true);
+
+        Cell cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
+        long startMs = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            cell.isChecked();
+        }
+        long endMs = System.currentTimeMillis();
+        LOGGER.info("performanceIsCheckedTest took {} ms", endMs - startMs);
     }
 }
