@@ -57,6 +57,12 @@ public class Grid extends Table {
     }
 
     @Override
+    public Cell getCell(int rowIndex, int columnIndex) {
+        Row row = getRow(rowIndex);
+        return new Cell(row, columnIndex).setInfoMessage("cell - Table");
+    }
+
+    @Override
     public Cell getCell(String searchElement, SearchType... searchTypes) {
         Row row = new Row(this);
         return new Cell(row).setText(searchElement, searchTypes);
