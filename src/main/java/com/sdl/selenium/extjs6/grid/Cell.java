@@ -64,16 +64,16 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     }
 
     private void scrollInGrid(Cell cell) {
-        int time = 0;
-        while (!cell.waitToRender(100) && time < 1000) {
+        while (!cell.waitToRender(100)) {
             Grid grid;
             try {
                 grid = (Grid) getPathBuilder().getContainer();
             } catch (ClassCastException e) {
                 grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
             }
-            grid.scrollPageDown();
-            time++;
+            if (!grid.scrollPageDown()) {
+                break;
+            }
         }
     }
 }
