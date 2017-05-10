@@ -22,26 +22,26 @@ public class SliderIntegrationTest extends TestBase {
         slider.ready(20);
 
         slider.move(60);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("60"));
+        assertThat(slider.getValue(), equalTo(60));
         slider.move(0);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("0"));
+        assertThat(slider.getValue(), equalTo(0));
         slider.move(40);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("40"));
+        assertThat(slider.getValue(), equalTo(40));
         slider.move(80);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("80"));
+        assertThat(slider.getValue(), equalTo(80));
         slider.move(30);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("30"));
+        assertThat(slider.getValue(), equalTo(30));
         slider.move(0);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("0"));
+        assertThat(slider.getValue(), equalTo(0));
         slider.move(99);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("99"));
+        assertThat(slider.getValue(), equalTo(99));
         slider.move(1);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("1"));
+        assertThat(slider.getValue(), equalTo(1));
         slider.move(57);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("57"));
+        assertThat(slider.getValue(), equalTo(57));
         slider.move(58);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("58"));
+        assertThat(slider.getValue(), equalTo(58));
         slider.move(57);
-        assertThat(slider.getAttribute("aria-valuenow"), equalTo("57"));
+        assertThat(slider.getValue(), equalTo(57));
     }
 }

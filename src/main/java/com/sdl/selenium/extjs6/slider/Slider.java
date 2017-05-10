@@ -24,6 +24,10 @@ public class Slider extends WebLocator {
         setLabel(label);
     }
 
+    public int getValue() {
+        return Integer.parseInt(getAttribute("aria-valuenow"));
+    }
+
     public boolean move(int distance) {
         boolean exists = true;
         WebLocator element = new WebLocator(this).setTag("descendant::*").setClasses("x-slider-thumb");
@@ -33,7 +37,7 @@ public class Slider extends WebLocator {
             int distanceTemp = distance;
             do {
                 boolean vertical = getAttributeClass().contains("x-slider-vert");
-                int value = Integer.parseInt(getAttribute("aria-valuenow"));
+                int value = getValue();
                 if (value > distance) {
                     if (vertical) {
                         distanceTemp = value - distance;
