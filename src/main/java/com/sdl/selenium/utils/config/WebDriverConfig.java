@@ -18,6 +18,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -102,6 +103,12 @@ public class WebDriverConfig {
         LOGGER.info("|          Stopping driver (closing browser)                   |");
         LOGGER.info("===============================================================");
         driver.quit();
+        String user = System.getProperty("user.name");
+        try {
+            org.apache.commons.io.FileUtils.cleanDirectory(new File("C:\\Users\\" + user + "\\AppData\\Local\\Temp"));
+        } catch (IOException e) {
+            LOGGER.debug("{}", e.getMessage());
+        }
         LOGGER.debug("===============================================================");
         LOGGER.debug("|         Driver stopped (browser closed)                     |");
         LOGGER.debug("===============================================================\n");
@@ -138,7 +145,7 @@ public class WebDriverConfig {
      * Create and return new WebDriver or RemoteWebDriver based on properties file
      *
      * @param browserProperties path to browser.properties
-     * @param remoteUrl url
+     * @param remoteUrl         url
      * @return WebDriver
      * @throws IOException exception
      */
@@ -167,7 +174,7 @@ public class WebDriverConfig {
 
     public static WebDriver getWebDriver(URL remoteUrl, DesiredCapabilities capabilities) throws IOException {
         driver = new RemoteWebDriver(remoteUrl, capabilities);
-        ((RemoteWebDriver)driver).setFileDetector(new LocalFileDetector());
+        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
         init(driver);
         return driver;
     }
@@ -227,6 +234,7 @@ public class WebDriverConfig {
 
     /**
      * Switch driver to last browser tab
+     *
      * @return oldTabName
      */
     public static String switchToLastTab() {
@@ -244,6 +252,7 @@ public class WebDriverConfig {
     /**
      * Switch driver to first browser tab
      * Tab is not visible but we can interact with it, TODO see how to make it active
+     *
      * @return oldTabName
      */
     public static String switchToFirstTab() {
@@ -275,8 +284,8 @@ public class WebDriverConfig {
     }
 
     /**
-     * @param tabCount  : this is webdriver
-     * @param millis : time you define to wait the tab open
+     * @param tabCount : this is webdriver
+     * @param millis   : time you define to wait the tab open
      * @return true if tab open in the time, false if tab not open in the time.
      */
     public static boolean waitForNewTab(int tabCount, long millis) {
