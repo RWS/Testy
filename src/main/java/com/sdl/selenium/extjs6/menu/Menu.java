@@ -20,6 +20,13 @@ public class Menu extends WebLocator {
         setVisibility(true);
     }
 
+    public Menu(String title) {
+        this();
+        WebLocator titleEL = new WebLocator().setClasses("x-menu-item-plain").setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        setTemplateTitle(titleEL);
+        setTitle(title);
+    }
+
     public void clickOnMenu(String option, SearchType... searchTypes) {
         ready();
         WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);

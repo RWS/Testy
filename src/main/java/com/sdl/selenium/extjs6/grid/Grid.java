@@ -68,6 +68,16 @@ public class Grid extends Table {
         return new Cell(row).setText(searchElement, searchTypes);
     }
 
+    public Cell getCell(int rowIndex, int columnIndex, String text) {
+        Row row = getRow(rowIndex);
+        return new Cell(row, columnIndex, text, SearchType.EQUALS);
+    }
+
+    public Cell getCell(String searchElement, String columnText, SearchType... searchTypes) {
+        Row row = getRow(searchElement, SearchType.CONTAINS);
+        return new Cell(row).setText(columnText, searchTypes);
+    }
+
     @Override
     public Cell getCell(String searchElement, int columnIndex, SearchType... searchTypes) {
         return new Cell(new Row(this, searchElement, searchTypes), columnIndex);

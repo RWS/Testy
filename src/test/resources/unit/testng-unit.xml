@@ -31,11 +31,14 @@
             <class name="com.sdl.selenium.extjs6.button.ButtonTest"/>
             <class name="com.sdl.selenium.extjs6.form.ComboBoxTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextField"/>
+            <class name="com.sdl.selenium.extjs6.grid.CellTest"/>
+            <class name="com.sdl.selenium.extjs6.grid.GridTest"/>
+            <class name="com.sdl.selenium.extjs6.grid.RowTest"/>
+            <class name="com.sdl.selenium.extjs6.menu.MenuTest"/>
             <class name="com.sdl.selenium.extjs6.slider.SliderTest"/>
             <class name="com.sdl.selenium.extjs6.tab.TabTest"/>
-            <class name="com.sdl.selenium.extjs6.grid.GridTest"/>
-            <class name="com.sdl.selenium.extjs6.window.WindowTest"/>
             <class name="com.sdl.selenium.extjs6.window.MessageBoxTest"/>
+            <class name="com.sdl.selenium.extjs6.window.WindowTest"/>
 
             <class name="com.sdl.selenium.bootstrap.window.PopOverTest"/>
             <class name="com.sdl.selenium.bootstrap.window.TooltipTest"/>

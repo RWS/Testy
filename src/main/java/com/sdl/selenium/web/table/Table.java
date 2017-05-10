@@ -124,8 +124,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     public Cell getCell(int rowIndex, int columnIndex, String text) {
         Row row = getRow(rowIndex);
-        String selector = new Cell().setText(text, SearchType.EQUALS).getXPath();
-        return new Cell(row).setElPath(selector + "[" + columnIndex + "]");
+        return new Cell(row, columnIndex, text, SearchType.EQUALS);
     }
 
     public Cell getCell(String searchElement, String columnText, SearchType... searchTypes) {

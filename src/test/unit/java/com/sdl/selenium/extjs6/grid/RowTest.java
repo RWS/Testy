@@ -2,7 +2,6 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.Cell;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
