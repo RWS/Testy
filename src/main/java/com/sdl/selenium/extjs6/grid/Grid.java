@@ -33,6 +33,24 @@ public class Grid extends Table {
         setContainer(container);
     }
 
+    public <T extends Grid> T setHeaders(final String... headers) {
+        LOGGER.debug("h'{}'", headers.length);
+        List<WebLocator> list = new ArrayList<>();
+        for (int i = 0; i < headers.length; i++) {
+            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").
+                    setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS).
+                    setPosition(i);
+            list.add(headerEL);
+        }
+        setChildNodes(list.toArray(new WebLocator[list.size()]));
+        return (T) this;
+    }
+
+    public static void main(String[] args) {
+        Grid grid = new Grid().setHeaders("Company", "Price", "Change");
+        LOGGER.debug("{}", grid.getXPath());
+    }
+
     @Override
     public Row getRow(int rowIndex) {
         return new Row(this, rowIndex).setInfoMessage("-Row");
@@ -190,8 +208,8 @@ public class Grid extends Table {
     }
 
     /**
-     * @deprecated please use {@link Row#select()}
      * @param row row which want to select
+     * @deprecated please use {@link Row#select()}
      */
     @Deprecated
     public void select(Row row) {
@@ -203,8 +221,8 @@ public class Grid extends Table {
     }
 
     /**
-     * @deprecated please use {@link Row#unSelect()}
      * @param row row which want to unSelect
+     * @deprecated please use {@link Row#unSelect()}
      */
     @Deprecated
     public void unSelect(Row row) {
@@ -216,8 +234,8 @@ public class Grid extends Table {
     }
 
     /**
-     * @deprecated please use {@link Row#isSelected()}
      * @param row row which want to verify status
+     * @deprecated please use {@link Row#isSelected()}
      */
     @Deprecated
     public boolean isSelected(Row row) {
@@ -225,8 +243,8 @@ public class Grid extends Table {
     }
 
     /**
-     * @deprecated please use {@link Cell#check()}
      * @param cells cells by which I locate the row of 'checkcolumn'
+     * @deprecated please use {@link Cell#check()}
      */
     public void check(Cell... cells) {
         Row row = getRow(cells);
@@ -238,8 +256,8 @@ public class Grid extends Table {
     }
 
     /**
-     * @deprecated please use {@link Cell#unCheck()}
      * @param cells cells by which I locate the row of 'checkcolumn'
+     * @deprecated please use {@link Cell#unCheck()}
      */
     public void unCheck(Cell... cells) {
         Row row = getRow(cells);
@@ -251,9 +269,9 @@ public class Grid extends Table {
     }
 
     /**
-     * @deprecated please use {@link Cell#isChecked()}
      * @param cells cells by which I locate the row of 'checkcolumn'
      * @return true if cell is checked, otherwise false
+     * @deprecated please use {@link Cell#isChecked()}
      */
     public boolean isChecked(Cell... cells) {
         Row row = getRow(cells);
