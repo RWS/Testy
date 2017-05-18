@@ -44,6 +44,9 @@ public class GridIntegrationTest extends TestBase {
     void headerTest() {
         List<String> headers = grid.getHeaders();
         assertThat(headers, contains(Arrays.asList("Company", "Price", "Change", "% Change", "Last Updated").toArray()));
+
+        Grid grid1 = new Grid().setHeaders("Company", "Price", "Change", "% Change", "Last Updated", "");
+        grid1.assertReady();
     }
 
     @Test(dependsOnMethods = "headerTest")
@@ -94,7 +97,7 @@ public class GridIntegrationTest extends TestBase {
         assertThat(cell.isChecked(), is(true));
     }
 
-//    @Test//(dependsOnMethods = "checkCellTest")
+    //    @Test//(dependsOnMethods = "checkCellTest")
     void performanceIsCheckedTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");

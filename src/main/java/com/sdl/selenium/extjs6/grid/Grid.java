@@ -33,22 +33,24 @@ public class Grid extends Table {
         setContainer(container);
     }
 
-    public <T extends Grid> T setHeaders(final String... headers) {
-        LOGGER.debug("h'{}'", headers.length);
+    /**
+     * <pre>{@code
+     * Grid grid = new Grid().setHeaders("Company", "Price", "Change");
+     * }</pre>
+     *
+     * @param headers grid's headers in order
+     * @param <T>     element which extended the Grid
+     * @return this Grid
+     */
+    public <T extends Table> T setHeaders(final String... headers) {
         List<WebLocator> list = new ArrayList<>();
         for (int i = 0; i < headers.length; i++) {
-            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").
-                    setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS).
-                    setPosition(i);
+            WebLocator headerEL = new WebLocator(this).setTag("*[" + (i + 1) + "]").setClasses("x-column-header").
+                    setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
             list.add(headerEL);
         }
         setChildNodes(list.toArray(new WebLocator[list.size()]));
         return (T) this;
-    }
-
-    public static void main(String[] args) {
-        Grid grid = new Grid().setHeaders("Company", "Price", "Change");
-        LOGGER.debug("{}", grid.getXPath());
     }
 
     @Override
