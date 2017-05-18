@@ -82,10 +82,10 @@ public class DateField extends TextField {
     private void goToYear(String year, String fullDate) {
         int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
         int yearInt = Integer.parseInt(year);
-        int con = yearInt > currentYear ? -4 : 4;
+        int con = yearInt > currentYear ? -5 : 5;
         int count = (int) Math.ceil((yearInt - currentYear - con) / 10);
         selectYearPage(count);
-        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setInfoMessage("year " + year);
+        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setVisibility(true).setInfoMessage("year " + year);
         if (!yearEl.waitToRender(200)) {
             selectYearPage(count > 0 ? 1 : -1);
         }
