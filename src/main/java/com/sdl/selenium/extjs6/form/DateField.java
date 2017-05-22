@@ -82,13 +82,15 @@ public class DateField extends TextField {
     private void goToYear(String year, String fullDate) {
         int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
         int yearInt = Integer.parseInt(year);
-        int con = yearInt > currentYear ? -5 : 5;
-        int count = (int) Math.ceil((yearInt - currentYear - con) / 10);
-        selectYearPage(count);
+        WebLocator btn = yearInt > currentYear ? nextYears : prevYears;
         WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setVisibility(true).setInfoMessage("year " + year);
-        if (!yearEl.waitToRender(200)) {
-            selectYearPage(count > 0 ? 1 : -1);
-        }
+        boolean render;
+        do {
+            render = yearEl.waitToRender(100);
+            if (!render) {
+                btn.click();
+            }
+        } while (!render);
         try {
             yearEl.click();
         } catch (WebDriverException e) {
@@ -98,15 +100,6 @@ public class DateField extends TextField {
                 Utils.sleep(300);
             }
             yearEl.click();
-        }
-    }
-
-    private void selectYearPage(int count) {
-        WebLocator btn = count > 0 ? nextYears : prevYears;
-        count = Math.abs(count);
-        while (count > 0) {
-            btn.click();
-            count--;
         }
     }
 

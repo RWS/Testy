@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs4.window;
 
+import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
@@ -30,6 +31,7 @@ public class Window extends WebLocator {
 
     /**
      * click on element with class "x-tool-" + id
+     *
      * @param id element
      * @return true | false
      */
@@ -44,6 +46,11 @@ public class Window extends WebLocator {
             Utils.sleep(50);
         }
         return closed;
+    }
+
+    public void cancel() {
+        Button close = new Button(this, "Close");
+        close.click();
     }
 
     public boolean maximize() {
