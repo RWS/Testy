@@ -49,7 +49,7 @@ public class Window extends WebLocator {
     }
 
     public void cancel() {
-        Button close = new Button(this, "Close");
+        Button close = new Button(this, "Cancel");
         close.click();
     }
 
