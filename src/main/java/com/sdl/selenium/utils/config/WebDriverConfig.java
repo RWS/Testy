@@ -242,11 +242,16 @@ public class WebDriverConfig {
         int time = 0;
         do {
             Utils.sleep(100L);
-            totalTabs = driver.getWindowHandles().size();
-            LOGGER.debug("totalTabs is {}", totalTabs);
+            totalTabs = getCountTabs();
             time++;
         } while (totalTabs <= 1 && time < 10);
         return switchToTab(totalTabs - 1);
+    }
+
+    public static int getCountTabs() {
+        int totalTabs = driver.getWindowHandles().size();
+        LOGGER.debug("totalTabs is {}", totalTabs);
+        return totalTabs;
     }
 
     /**
@@ -291,7 +296,7 @@ public class WebDriverConfig {
     public static boolean waitForNewTab(int tabCount, long millis) {
         boolean hasExpectedTabs = false;
         while (!hasExpectedTabs && millis > 0) {
-            if (driver.getWindowHandles().size() >= tabCount) {
+            if (getCountTabs() >= tabCount) {
                 hasExpectedTabs = true;
             } else {
                 LOGGER.info("Waiting {} ms for new tab...", millis);
