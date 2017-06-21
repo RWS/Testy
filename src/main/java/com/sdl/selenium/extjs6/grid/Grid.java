@@ -125,7 +125,7 @@ public class Grid extends Table {
 
     private boolean hasMask() {
         WebLocator mask = new WebLocator(this).setClasses("x-mask").setElPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
-        return mask.waitToRender(500);
+        return mask.waitToRender(500, false);
     }
 
     /**

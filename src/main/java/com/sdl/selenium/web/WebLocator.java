@@ -442,7 +442,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean waitToRender(final long millis) {
-        executor.waitElement(this, millis);
+        executor.waitElement(this, millis, true);
+        return currentElement != null;
+    }
+
+    public boolean waitToRender(final long millis, boolean showXPathLog) {
+        executor.waitElement(this, millis, showXPathLog);
         return currentElement != null;
     }
 

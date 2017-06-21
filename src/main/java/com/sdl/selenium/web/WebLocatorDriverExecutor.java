@@ -376,9 +376,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public WebElement waitElement(final WebLocator el, final long millis) {
+    public WebElement waitElement(final WebLocator el, final long millis, boolean showXPathLog) {
         doWaitElement(el, millis);
-        if (el.currentElement == null) {
+        if (el.currentElement == null && showXPathLog) {
             LOGGER.warn("Element not found after " + millis + " millis; {}", el);
             logDetails(el);
         }

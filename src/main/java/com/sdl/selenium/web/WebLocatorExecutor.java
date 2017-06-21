@@ -44,7 +44,7 @@ public interface WebLocatorExecutor {
 
     List<WebElement> findElements(WebLocator webLocator);
 
-    WebElement waitElement(WebLocator el, final long millis);
+    WebElement waitElement(WebLocator el, final long millis, boolean showXPathLog);
 
     int size(WebLocator el);
 
