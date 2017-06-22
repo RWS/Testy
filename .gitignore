@@ -1,4 +1,5 @@
 .idea/
+target/
 *.iml
 *.class
 src/test/functional/java/com/sdl/selenium/extjs3/DeployTesty.java
