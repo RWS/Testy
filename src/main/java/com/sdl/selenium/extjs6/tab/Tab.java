@@ -35,7 +35,7 @@ public class Tab extends WebLocator implements ITab {
         setContainer(container);
     }
 
-    private WebLocator getTitleInactiveEl() {
+    protected WebLocator getTitleInactiveEl() {
         WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
         return new WebLink(container).setText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS)
                 .setInfoMessage(getPathBuilder().getTitle() + " Tab");
