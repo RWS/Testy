@@ -20,9 +20,10 @@ public class Tab extends WebLocator implements ITab {
         setTemplateTitle(new WebLocator(activeTab));
     }
 
-    public Tab(String title) {
+    public Tab(String title, SearchType... searchTypes) {
         this();
-        setTitle(title, SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
+        setSearchTitleType(SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
+        setTitle(title, searchTypes);
     }
 
     public Tab(WebLocator container) {
