@@ -27,12 +27,23 @@ public class ComboBox extends WebLocator implements ICombo {
         return select(value, InternationalizationUtils.isInternationalizedTestsSuite());
     }
 
+    public boolean selectByIndex(int index) {
+        return doSelect(index);
+    }
+
     public boolean select(String value, boolean isInternationalized) {
         boolean selected = waitToRender();
         assertThat("Element was not rendered " + toString(), selected);
         selected = doSelect(value, isInternationalized);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
+    }
+
+    private boolean doSelect(int index) {
+        ready();
+        new Select(getWebElement()).selectByIndex(index);
+        LOGGER.info("Set value(" + this + "): " + index);
+        return true;
     }
 
     public boolean doSelect(String value, boolean isInternationalized) {
