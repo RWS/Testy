@@ -1182,11 +1182,7 @@ public class XPathBuilder implements Cloneable {
             text = text.toLowerCase();
         }
 
-        if (searchType.contains(SearchType.EQUALS) && !searchType.contains(SearchType.CONTAINS_ANY)) {
-            selector = pathText + "=" + text;
-        } else if (searchType.contains(SearchType.STARTS_WITH)) {
-            selector = "starts-with(" + pathText + "," + text + ")";
-        } else if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
+        if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
             String[] strings = pattern.split(text.substring(1));
@@ -1206,6 +1202,10 @@ public class XPathBuilder implements Cloneable {
             }
             String operator = hasContainsAll ? " and " : " or ";
             selector = hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
+        } else if (searchType.contains(SearchType.EQUALS)) {
+            selector = pathText + "=" + text;
+        } else if (searchType.contains(SearchType.STARTS_WITH)) {
+            selector = "starts-with(" + pathText + "," + text + ")";
         } else {
             selector = "contains(" + pathText + "," + text + ")";
         }
