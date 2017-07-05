@@ -10,6 +10,9 @@ import com.sdl.selenium.web.tab.ITab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Tab extends WebLocator implements ITab {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
@@ -38,7 +41,9 @@ public class Tab extends WebLocator implements ITab {
 
     public WebLocator getTitleInactiveEl() {
         WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
-        return new WebLink(container).setText(getPathBuilder().getTitle(), SearchType.DEEP_CHILD_NODE, SearchType.EQUALS)
+        List<SearchType> ts = getPathBuilder().getSearchTitleType();
+        Collections.addAll(ts, SearchType.DEEP_CHILD_NODE, SearchType.EQUALS);
+        return new WebLink(container).setText(getPathBuilder().getTitle(), ts.toArray(new SearchType[ts.size()]))
                 .setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
