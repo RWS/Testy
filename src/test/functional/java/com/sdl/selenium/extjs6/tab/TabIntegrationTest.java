@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.tab;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,7 @@ public class TabIntegrationTest extends TestBase {
     private Tab activeTab = new Tab("Active Tab");
     private Tab inactiveTab = new Tab("Inactive Tab");
     private Tab closableTab = new Tab("Closable Tab");
+    private Tab inactiveTab1 = new Tab("/Inactive Tab/Closable Tab", SearchType.CONTAINS_ANY);
 
     @BeforeClass
     public void startTests() {
@@ -33,7 +35,7 @@ public class TabIntegrationTest extends TestBase {
 
     @Test
     void isTabDisplayedTest() {
-        boolean selected = inactiveTab.isTabDisplayed();
+        boolean selected = inactiveTab1.isTabDisplayed();
         assertThat(selected, is(true));
     }
 }

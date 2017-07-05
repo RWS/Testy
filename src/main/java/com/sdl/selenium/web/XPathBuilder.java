@@ -1182,7 +1182,7 @@ public class XPathBuilder implements Cloneable {
             text = text.toLowerCase();
         }
 
-        if (searchType.contains(SearchType.EQUALS)) {
+        if (searchType.contains(SearchType.EQUALS) && !searchType.contains(SearchType.CONTAINS_ANY)) {
             selector = pathText + "=" + text;
         } else if (searchType.contains(SearchType.STARTS_WITH)) {
             selector = "starts-with(" + pathText + "," + text + ")";
