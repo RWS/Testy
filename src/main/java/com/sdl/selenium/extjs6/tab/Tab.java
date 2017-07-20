@@ -43,7 +43,7 @@ public class Tab extends WebLocator implements ITab {
         WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
         List<SearchType> ts = getPathBuilder().getSearchTitleType();
         Collections.addAll(ts, SearchType.DEEP_CHILD_NODE, SearchType.EQUALS);
-        return new WebLink(container).setText(getPathBuilder().getTitle(), ts.toArray(new SearchType[ts.size()]))
+        return new WebLink(container).setClasses("x-tab").setText(getPathBuilder().getTitle(), ts.toArray(new SearchType[ts.size()]))
                 .setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
