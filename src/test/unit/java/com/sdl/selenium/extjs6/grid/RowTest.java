@@ -14,8 +14,9 @@ public class RowTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Grid().getRow(1, new Cell(2, "Test")), "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[2][(contains(.,'Test') or count(*//text()[contains(.,'Test')]) > 0)]) > 0][position() = 1]"},
+                {new Grid().getRow(new Cell(1, "Test"), new Cell(2, ""), new Cell(3, null)),    "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[1][(contains(.,'Test') or count(*//text()[contains(.,'Test')]) > 0)]) > 0 and count(.//td[2]) > 0]"},
                 {new Grid().getRow(new Cell(2, "Test")),    "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[2][(contains(.,'Test') or count(*//text()[contains(.,'Test')]) > 0)]) > 0]"},
+                {new Grid().getRow(1, new Cell(2, "Test")), "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[2][(contains(.,'Test') or count(*//text()[contains(.,'Test')]) > 0)]) > 0][position() = 1]"},
                 {new Grid(container).getRow(1),             "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[position() = 1]"},
                 {new Grid(container).getRow("Text"),        "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[(.='Text' or count(*//text()[.='Text']) > 0)]"},
                 {new Grid(container).getRow("Text", SearchType.STARTS_WITH),   "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[(starts-with(.,'Text') or count(*//text()[starts-with(.,'Text')]) > 0)]"},

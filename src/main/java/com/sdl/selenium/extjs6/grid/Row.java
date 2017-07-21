@@ -4,9 +4,13 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.*;
+import com.sdl.selenium.web.table.AbstractCell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
     private static final Logger LOGGER = LoggerFactory.getLogger(Row.class);
@@ -33,12 +37,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
-        setChildNodes(cells);
+        List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
+        setChildNodes(collect.toArray(new AbstractCell[collect.size()]));
     }
 
     public Row(WebLocator table, int indexRow, AbstractCell... cells) {
-        this(table, indexRow);
-        setChildNodes(cells);
+        this(table, cells);
+        setPosition(indexRow);
     }
 
     @Override

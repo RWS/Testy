@@ -20,8 +20,8 @@ public class RowTest {
                 {new Row(table, new Cell(3, "1234", SearchType.EQUALS), new Cell(4, "Eng-Fra", SearchType.EQUALS)), "//table[@id='ID']//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]"},
                 {new Row(table, new Cell(3, "1234", SearchType.EQUALS), new Cell(4, "Eng-Fra", SearchType.EQUALS)).setVisibility(true), "//table[@id='ID']//tr[count(.//td[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0 and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
                 {new Row(table, tableCell, new Cell(4, "Eng-Fra", SearchType.EQUALS)), "//table[@id='ID']//tr[count(.//th[3][(.='1234' or count(*//text()[.='1234']) > 0)]) > 0 and count(.//td[4][(.='Eng-Fra' or count(*//text()[.='Eng-Fra']) > 0)]) > 0]"},
-                {new Row(table, new Cell(), new Cell()), "//table[@id='ID']//tr[count(.//td) > 0 and count(.//td) > 0]"},
-                {new Row(table, 1, new Cell(), new Cell()), "//table[@id='ID']//tr[count(.//td) > 0 and count(.//td) > 0][position() = 1]"},
+                {new Row(table, new Cell(), new Cell()), "//table[@id='ID']//tr"},
+                {new Row(table, 1, new Cell(), new Cell()), "//table[@id='ID']//tr[position() = 1]"},
                 {new Row(table, 1), "//table[@id='ID']//tr[position() = 1]"},
         };
     }
