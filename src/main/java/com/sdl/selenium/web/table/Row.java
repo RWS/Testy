@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Row extends AbstractRow {
     private static final Logger LOGGER = LoggerFactory.getLogger(Row.class);
@@ -37,8 +35,7 @@ public class Row extends AbstractRow {
 
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
-        List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
-        setChildNodes(collect.toArray(new AbstractCell[collect.size()]));
+        setChildNodes(cells);
     }
 
     public Row(WebLocator table, int indexRow, AbstractCell... cells) {

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -294,7 +295,7 @@ public class XPathBuilder implements Cloneable {
 
     public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
         if (childNodes != null) {
-            this.childNodes = Arrays.asList(childNodes);
+            this.childNodes = Stream.of(childNodes).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
         }
         return (T) this;
     }
