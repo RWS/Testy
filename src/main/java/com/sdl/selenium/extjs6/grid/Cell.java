@@ -60,7 +60,11 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public boolean isChecked() {
         CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
-        return checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked");
+        String attributeClass = checkBox.getAttributeClass();
+        if (attributeClass == null || "".equals(attributeClass)) {
+            attributeClass = checkBox.getAttributeClass();
+        }
+        return attributeClass.contains("x-grid-checkcolumn-checked");
     }
 
     private void scrollInGrid(Cell cell) {
