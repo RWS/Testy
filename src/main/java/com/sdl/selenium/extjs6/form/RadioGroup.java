@@ -12,7 +12,7 @@ public class RadioGroup extends WebLocator {
 
     public RadioGroup() {
         setClassName("RadioGroup");
-        setAttribute("role", "radiogroup");
+        setBaseCls("x-form-checkboxgroup");
     }
 
     public RadioGroup(WebLocator container) {
@@ -20,9 +20,13 @@ public class RadioGroup extends WebLocator {
         setContainer(container);
     }
 
-    public RadioGroup(WebLocator container, String name) {
+    public RadioGroup(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        radio.setName(name);
+//        List<SearchType> search = Arrays.asList(searchTypes);
+//        Collections.addAll(search, SearchType.DEEP_CHILD_NODE_OR_SELF);
+//        SearchType[] types = search.toArray(new SearchType[search.size()]);
+        WebLocator labelEl = new WebLocator().setTag("label").setText(label, searchTypes);
+        setChildNodes(labelEl);
     }
 
     public boolean selectByLabel(String label) {

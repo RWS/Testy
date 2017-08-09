@@ -11,7 +11,7 @@ import static org.testng.Assert.*;
 public class RadioGroupIntegrationTest extends TestBase {
 
     private Panel radioGroupPanel = new Panel(null, "Radio Group Example").setClasses("x-panel-default-framed");
-    private RadioGroup radioGroup = new RadioGroup(radioGroupPanel).setLabel("Auto Layout:", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private RadioGroup radioGroup = new RadioGroup(radioGroupPanel, "Auto Layout:", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
     @BeforeClass
     public void startTests() {
