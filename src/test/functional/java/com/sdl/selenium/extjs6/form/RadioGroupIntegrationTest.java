@@ -22,9 +22,13 @@ public class RadioGroupIntegrationTest extends TestBase {
     @Test
     public void selectRadioGroup() {
         assertTrue(radioGroup.selectByLabel("Item 2"));
+        assertTrue(radioGroup.isSelectedByLabel("Item 2"));
         assertTrue(radioGroup.selectByLabel("5", SearchType.CONTAINS));
+        assertTrue(radioGroup.isSelectedByLabel("Item 5"));
         assertTrue(radioGroup.selectByLabel("Item 4"));
+        assertTrue(radioGroup.isSelectedByLabel("Item 4"));
         assertTrue(radioGroup.selectByLabel("Item 1"));
+        assertTrue(radioGroup.isSelectedByLabel("Item 1"));
     }
 
     @Test

@@ -33,9 +33,16 @@ public class RadioGroup extends WebLocator {
         return selectByLabel(label, SearchType.EQUALS);
     }
 
-    public boolean selectByLabel(String label, SearchType searchType) {
+    public boolean selectByLabel(String label, SearchType... searchType) {
         radio.setLabel(label, searchType);
-        boolean selected = !radio.isSelected() || radio.click();
+        boolean selected = radio.isSelected() || radio.click();
+        radio.setLabel(null);
+        return selected;
+    }
+
+    public boolean isSelectedByLabel(String label, SearchType... searchType) {
+        radio.setLabel(label, searchType);
+        boolean selected = radio.isSelected();
         radio.setLabel(null);
         return selected;
     }
