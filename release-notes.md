@@ -1,6 +1,9 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.5.0-SNAPSHOT**
+**Release Notes for Testy 2.6.0-SNAPSHOT**
+- update webdriver version 3.5.1
+
+**Release Notes for Testy 2.5.0**
 - update webdriver version 3.4.0
 - added public Tab(String title, SearchType... searchTypes) method in Tab
 - added waitToRender(final long millis, boolean showXPathLog)
