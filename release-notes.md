@@ -2,6 +2,12 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.5.0-SNAPSHOT**
 - update webdriver version 3.4.0
+- added public Tab(String title, SearchType... searchTypes) method in Tab
+- added waitToRender(final long millis, boolean showXPathLog)
+- added ToolTip in extjs6 package
+- added setHeaders(final String... headers) in Grid
+- delete temporary file automatically when driver is close
+- add Cell and Row in extjs6 package
 
 **Release Notes for Testy 2.4.0**
 - update webdriver version 3.3.1
