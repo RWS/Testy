@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -14,7 +15,8 @@ public class CheckBoxTest {
                 {new CheckBox(),           "//input[@type='checkbox']"},
                 {new CheckBox(container),  "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
                 {new CheckBox("Id"), "//input[@id='Id' and @type='checkbox']"},
-                {new CheckBox("Id").setType("check"), "//input[@id='Id' and @type='check']"}
+                {new CheckBox("Id").setType("check"), "//input[@id='Id' and @type='check']"},
+                {new CheckBox(container).setTag("span").setLabel("No Limit", SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'No Limit') or count(*//text()[contains(.,'No Limit')]) > 0)]//following-sibling::*//span[@type='checkbox']"}
         };
     }
 
