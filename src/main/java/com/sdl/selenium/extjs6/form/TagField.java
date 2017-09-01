@@ -6,6 +6,7 @@ import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,10 +57,10 @@ public class TagField extends ComboBox {
     }
 
     /**
-     * @param searchType use {@link SearchType}
+     * @param searchType         use {@link SearchType}
      * @param optionRenderMillis eg. 300ms
-     * @param holdOpen true | false
-     * @param values values[]
+     * @param holdOpen           true | false
+     * @param values             values[]
      * @return true if value was selected
      */
     public boolean doSelect(SearchType searchType, long optionRenderMillis, boolean holdOpen, String... values) {
@@ -117,6 +118,10 @@ public class TagField extends ComboBox {
 
     public List<String> getAllSelectedValues() {
         String[] comboValues = getText().split("\\n");
-        return Arrays.asList(comboValues);
+        boolean isEmpty = false;
+        if (comboValues.length == 1) {
+            isEmpty = "".equals(comboValues[0]);
+        }
+        return isEmpty ? new ArrayList<>() : Arrays.asList(comboValues);
     }
 }

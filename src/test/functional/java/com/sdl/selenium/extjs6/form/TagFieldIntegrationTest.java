@@ -4,6 +4,7 @@ import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +25,9 @@ public class TagFieldIntegrationTest extends TestBase {
 
     @Test
     public void tagTest() {
-        assertThat(tagField.select("Alaska"), is(true));
+        assertThat(tagField.remove("California"), is(true));
+        assertThat(tagField.getAllSelectedValues(), is(new ArrayList<>()));
+        assertThat(tagField.select("California", "Alaska"), is(true));
         assertThat(tagField.getValue(), containsString("Alaska"));
         assertThat(tagField.getAllSelectedValues(), is(Arrays.asList("California", "Alaska")));
     }
