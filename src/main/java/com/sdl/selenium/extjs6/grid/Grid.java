@@ -1,7 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
@@ -213,83 +212,25 @@ public class Grid extends Table {
         return headers;
     }
 
-    /**
-     * @param row row which want to select
-     * @deprecated please use {@link Row#select()}
-     */
-    @Deprecated
-    public void select(Row row) {
-        scrollInGrid(row);
-        if (!row.isSelected()) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
-            checkBox.click();
-        }
-    }
-
-    /**
-     * @param row row which want to unSelect
-     * @deprecated please use {@link Row#unSelect()}
-     */
-    @Deprecated
-    public void unSelect(Row row) {
-        scrollInGrid(row);
-        if (row.isSelected()) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-row-checker");
-            checkBox.click();
-        }
-    }
-
-    /**
-     * @param row row which want to verify status
-     * @deprecated please use {@link Row#isSelected()}
-     */
-    @Deprecated
-    public boolean isSelected(Row row) {
-        return row.getAttributeClass().contains("x-grid-item-selected");
-    }
-
-    /**
-     * @param cells cells by which I locate the row of 'checkcolumn'
-     * @deprecated please use {@link Cell#check()}
-     */
-    public void check(Cell... cells) {
-        Row row = getRow(cells);
-        scrollInGrid(row);
-        if (!isChecked(cells)) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-checkcolumn");
-            checkBox.click();
-        }
-    }
-
-    /**
-     * @param cells cells by which I locate the row of 'checkcolumn'
-     * @deprecated please use {@link Cell#unCheck()}
-     */
-    public void unCheck(Cell... cells) {
-        Row row = getRow(cells);
-        scrollInGrid(row);
-        if (isChecked(cells)) {
-            CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-checkcolumn");
-            checkBox.click();
-        }
-    }
-
-    /**
-     * @param cells cells by which I locate the row of 'checkcolumn'
-     * @return true if cell is checked, otherwise false
-     * @deprecated please use {@link Cell#isChecked()}
-     */
-    public boolean isChecked(Cell... cells) {
-        Row row = getRow(cells);
-        CheckBox checkBox = new CheckBox(row).setBaseCls("x-grid-checkcolumn");
-        return checkBox.getAttributeClass().contains("x-grid-checkcolumn-checked");
-    }
-
-    private void scrollInGrid(Row row) {
-        int time = 0;
-        while (!row.waitToRender(100) && time < 1000) {
-            scrollPageDown();
-            time++;
+    @Override
+    public List<List<String>> getCellsText() {
+        Row rowsEl = new Row(this);
+        Row rowEl = new Row(this, 1);
+        Cell columnsEl = new Cell(rowEl);
+        int rows = rowsEl.size() + 1;
+        int columns = columnsEl.size();
+        if (rows <= 0) {
+            return null;
+        } else {
+            List<List<String>> listOfList = new ArrayList<>();
+            for (int i = 1; i <= rows; ++i) {
+                List<String> list = new ArrayList<>();
+                for (int j = 1; j <= columns; ++j) {
+                    list.add(this.getCell(i, j).getText());
+                }
+                listOfList.add(list);
+            }
+            return listOfList;
         }
     }
 }

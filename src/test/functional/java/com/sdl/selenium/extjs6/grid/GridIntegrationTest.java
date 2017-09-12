@@ -82,14 +82,7 @@ public class GridIntegrationTest extends TestBase {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");
         spreadsheet.ready(true);
-        Cell cell = new Cell(1, "Anemone", SearchType.EQUALS);
-        spreadsheet.unCheck(cell);
-        assertThat(spreadsheet.isChecked(cell), is(false));
-
-        spreadsheet.check(cell);
-        assertThat(spreadsheet.isChecked(cell), is(true));
-
-        cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
+        Cell cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
         cell.unCheck();
         assertThat(cell.isChecked(), is(false));
 
