@@ -127,6 +127,6 @@ public class TagField extends ComboBox {
             }
             return isEmpty ? new ArrayList<>() : Arrays.asList(comboValues);
         }
-        return null;
+        return new ArrayList<>();
     }
 }
