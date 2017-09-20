@@ -11,7 +11,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
 
-
 public class TagFieldIntegrationTest extends TestBase {
 
     private TagField tagField = new TagField(null, "Select a state:");

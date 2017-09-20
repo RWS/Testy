@@ -117,11 +117,16 @@ public class TagField extends ComboBox {
     }
 
     public List<String> getAllSelectedValues() {
-        String[] comboValues = getText().split("\\n");
-        boolean isEmpty = false;
-        if (comboValues.length == 1) {
-            isEmpty = "".equals(comboValues[0]);
+        String text = getText();
+        if (text != null) {
+            boolean isEmpty = false;
+
+            String[] comboValues = text.split("\\n");
+            if (comboValues.length == 1) {
+                isEmpty = "".equals(comboValues[0]);
+            }
+            return isEmpty ? new ArrayList<>() : Arrays.asList(comboValues);
         }
-        return isEmpty ? new ArrayList<>() : Arrays.asList(comboValues);
+        return null;
     }
 }

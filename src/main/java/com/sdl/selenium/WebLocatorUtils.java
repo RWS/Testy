@@ -1,6 +1,5 @@
 package com.sdl.selenium;
 
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,15 +13,6 @@ public final class WebLocatorUtils extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
 
     private WebLocatorUtils() {
-    }
-
-    /**
-     * @return resource of page
-     * @deprecated use WebDriverConfig.getDriver().getPageSource();
-     */
-    @Deprecated
-    public static String getPageSource() {
-        return WebDriverConfig.getDriver().getPageSource();
     }
 
     public static Object doExecuteScript(String script, Object... objects) {
@@ -153,6 +143,33 @@ public final class WebLocatorUtils extends WebLocator {
         }
 
         return result;
+    }
+
+    private static void setupJs() {
+        // Check for jQuery on the page, add it if need be
+        doExecuteScript("if (!window.jQuery) {" +
+                "var jquery = document.createElement('script'); jquery.type = 'text/javascript';" +
+                "jquery.src = 'https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js';" +
+                "document.getElementsByTagName('head')[0].appendChild(jquery);" +
+                "}");
+
+        // Use jQuery to add jquery-growl to the page
+        doExecuteScript("$.getScript('http://the-internet.herokuapp.com/js/vendor/jquery.growl.js')");
+
+        // Use jQuery to add jquery-growl styles to the page
+        doExecuteScript("$('head').append('<link rel=\"stylesheet\" href=\"http://the-internet.herokuapp.com/css/jquery.growl.css\" type=\"text/css\" />');");
+
+        // jquery-growl w/ no frills
+        doExecuteScript("$.growl({ title: 'GET', message: '/' });");
+    }
+
+    public static void showPopup(String msg) {
+        setupJs();
+        doExecuteScript("$.growl.notice({ title: 'Notice', message: '" + msg + "' });");
+    }
+
+    public static void showNotification(String title, String msg) {
+        doExecuteScript("SDL.Notification.success('" + title + "', '" + msg + "');");
     }
 
     public static void main(String[] args) {
