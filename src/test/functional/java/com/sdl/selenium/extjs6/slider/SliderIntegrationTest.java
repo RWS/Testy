@@ -43,5 +43,11 @@ public class SliderIntegrationTest extends TestBase {
         assertThat(slider.getValue(), equalTo(58));
         slider.move(57);
         assertThat(slider.getValue(), equalTo(57));
+        slider.move(0);
+        assertThat(slider.getValue(), equalTo(0));
+        slider.move(1);
+        assertThat(slider.getValue(), equalTo(1));
+        slider.move(0);
+        assertThat(slider.getValue(), equalTo(0));
     }
 }
