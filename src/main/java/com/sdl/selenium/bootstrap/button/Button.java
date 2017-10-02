@@ -69,4 +69,9 @@ public class Button extends WebLocator implements IButton {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
+
+    public boolean isEnabled() {
+        String cls = getAttributeClass();
+        return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
+    }
 }

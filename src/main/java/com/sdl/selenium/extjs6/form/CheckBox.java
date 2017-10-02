@@ -42,4 +42,10 @@ public class CheckBox extends WebLocator implements ICheck {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
+
+    @Override
+    public boolean isEnabled() {
+        String cls = getAttributeClass();
+        return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
+    }
 }

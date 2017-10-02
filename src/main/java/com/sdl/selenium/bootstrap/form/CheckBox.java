@@ -55,4 +55,10 @@ public class CheckBox extends TextField implements ICheck {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
+
+    @Override
+    public boolean isEnabled() {
+        String cls = getAttributeClass();
+        return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
+    }
 }

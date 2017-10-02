@@ -120,4 +120,8 @@ public class TextField extends ExtJsComponent implements ITextField {
     public boolean isDisabled() {
         return "true".equals(getAttribute("disabled"));
     }
+
+    public boolean isEnabled() {
+        return !"true".equals(getAttribute("disabled"));
+    }
 }
