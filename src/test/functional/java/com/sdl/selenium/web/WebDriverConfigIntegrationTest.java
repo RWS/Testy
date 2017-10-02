@@ -30,18 +30,18 @@ public class WebDriverConfigIntegrationTest extends TestBase {
     @Test
     public void shouldInteractWithElementsOpenedInNewWindowThenReturnToPreviewTab() {
         firstTab.textExamplesLink.openInNewWindow();
-        secondTab.header.assertExists();
+        secondTab.header.assertReady();
         firstTab.textExamplesLink.returnDefaultWindow();
-        firstTab.textExamplesLink.assertExists();
+        firstTab.textExamplesLink.assertReady();
     }
 
     @Test
     public void shouldSwitchToFirstTab() {
         firstTab.textExamplesLink.click();
         WebDriverConfig.switchToLastTab();
-        secondTab.header.assertExists();
+        secondTab.header.assertReady();
         WebDriverConfig.getDriver().close();
         WebDriverConfig.switchToFirstTab();
-        firstTab.textExamplesLink.assertExists();
+        firstTab.textExamplesLink.assertReady();
     }
 }

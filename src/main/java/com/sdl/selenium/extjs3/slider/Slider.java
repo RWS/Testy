@@ -43,7 +43,7 @@ public class Slider extends ExtJsComponent {
         boolean exists = true;
         String thumbPath = getThumbPath(thumbIndex);
         WebLocator element = new WebLocator().setElPath(thumbPath);
-        if (thumbPath != null && element.exists()) {
+        if (thumbPath != null && element.ready()) {
             // to scroll to this element (if element is not visible)
             WebDriver driver = WebDriverConfig.getDriver();
             WebElement thumbElement = driver.findElement(By.xpath(thumbPath));

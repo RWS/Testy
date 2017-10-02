@@ -103,7 +103,7 @@ public class Button extends ExtJsComponent implements IButton {
      */
     public boolean isDisabled() {
         WebLocator disabledLocator = new WebLocator().setElPath(getXPath(true));
-        return disabledLocator.exists();
+        return disabledLocator.size() > 0;
     }
 
     /**
@@ -118,7 +118,7 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean isEnabled() {
-        return exists();
+        return size() > 0;
     }
 
     public boolean hasId(String id) {

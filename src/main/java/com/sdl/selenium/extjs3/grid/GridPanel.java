@@ -591,7 +591,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 path = "//*[contains(@class, 'x-grid3-row-checker')]";
                 WebLocator element = new WebLocator(gridRow).setElPath(path);
                 element.setInfoMessage("row-checker");
-                if (element.exists()) {
+                if (element.ready()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
                     WebLocator locator = new WebLocator(this).setElPath("//*[contains(@class,'x-grid3-focus')]");
                     locator.sendKeys(Keys.TAB);
@@ -742,7 +742,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             if (rowIndex != -1) {
                 path = getRow(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col')]";
                 WebLocator element = new WebLocator().setElPath(path);
-                if (element.exists()) {
+                if (element.ready()) {
                     // TODO (verify if is working) to scroll to this element (if element is not visible)
                     WebLocator locator = new WebLocator(this).setElPath("//*[contains(@class,'x-grid3-focus')]");
                     locator.sendKeys(Keys.TAB);
@@ -767,7 +767,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             if (rowIndex != -1) {
                 String path = getRow(rowIndex).getXPath() + "//div[contains(@class,'x-grid3-check-col-on')]";
                 WebLocator locator = new WebLocator().setElPath(path);
-                isSelected = locator.exists();
+                isSelected = locator.ready();
             }
         }
         return isSelected;

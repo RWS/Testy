@@ -72,7 +72,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
 
         assertThat(suggestedElement, is(notNullValue()));
         LOGGER.debug("found suggestion: {}", suggestedElement.getXPath());
-        suggestedElement.assertExists();
+        suggestedElement.assertReady();
 
         assertTrue("userName".equals(suggestedElement.getAttribute("id")));
     }
@@ -90,7 +90,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(inputWithLabel);
 
         assertThat(suggestedElement, is(notNullValue()));
-        suggestedElement.assertExists();
+        suggestedElement.assertReady();
 
         assertTrue("userName".equals(suggestedElement.getAttribute("id")), "The id of the found element should be 'userName'");
 
@@ -110,7 +110,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(inputWithLabel);
 
         assertThat(suggestedElement, is(notNullValue()));
-        suggestedElement.assertExists();
+        suggestedElement.assertReady();
 
         assertTrue("email".equals(suggestedElement.getAttribute("id")), "The id of the found element should be 'email'");
 
@@ -130,7 +130,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(form);
 
         assertThat(suggestedElement, is(notNullValue()));
-        suggestedElement.assertExists();
+        suggestedElement.assertReady();
 
         assertTrue("myForm".equals(suggestedElement.getAttribute("id")), "The id of the found element should be 'myForm'");
         assertThat("original element should not be changed", form.getXPath(), is(originalXPath));
@@ -149,7 +149,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(webLocator);
 
         assertThat(suggestedElement, is(notNullValue()));
-        suggestedElement.assertExists();
+        suggestedElement.assertReady();
 
         assertThat("original element should not be changed", webLocator.getXPath(), is(originalXPath));
     }
@@ -167,7 +167,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(textLocator);
 
         assertThat(suggestedElement, is(notNullValue()));
-        suggestedElement.assertExists();
+        suggestedElement.assertReady();
 
         assertThat("original element should not be changed", textLocator.getXPath(), is(originalXPath));
     }
