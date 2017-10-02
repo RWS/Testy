@@ -60,8 +60,6 @@ public interface WebLocatorExecutor {
 
     boolean blur(WebLocator el);
 
-    boolean exists(WebLocator el);
-
     boolean isSelected(WebLocator el);
 
     boolean isDisplayed(WebLocator el);

@@ -462,12 +462,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return fireEventWithJS(el, "blur") != null;
     }
 
-
-    @Override
-    public boolean exists(WebLocator el) {
-        return ensureExists(el) && size(el) > 0;
-    }
-
     @Override
     public boolean isSelected(WebLocator el) {
         return ensureExists(el) && el.currentElement.isSelected();

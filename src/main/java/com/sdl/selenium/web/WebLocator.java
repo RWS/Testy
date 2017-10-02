@@ -386,24 +386,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return executor.getRect(this);
     }
 
-    /**
-     * @deprecated please use {@link #size()}
-     * @return true if size is more than zero
-     */
-    public boolean exists() {
-        return executor.exists(this);
-    }
-
-    /**
-     * @deprecated please use {@link #size()}
-     * @return true if size is more than zero
-     */
-    public boolean assertExists() {
-        boolean exists = exists();
-        assertThat("Element does not exists : " + this, exists);
-        return exists;
-    }
-
     // TODO see where is used and if is necessary to be public
     public WebElement findElement() {
         return executor.findElement(this);
