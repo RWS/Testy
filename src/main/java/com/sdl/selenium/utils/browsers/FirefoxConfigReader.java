@@ -1,11 +1,10 @@
 package com.sdl.selenium.utils.browsers;
 
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -25,7 +24,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             "\n browser.profile.name=default" +
             "\n browser.profile.path=" +
             "\n browser.binary.path=" +
-            "\n browser.driver.path=" +
+            "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\geckodriver.exe" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
             "\n profile.preference.dom.max_script_run_time=500" +
             "\n profile.preference.browser.download.folderList=2" +
@@ -58,49 +57,43 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public WebDriver createDriver() throws IOException {
-        DesiredCapabilities firefoxCapabilities = getDesiredCapabilities();
-        return new FirefoxDriver(firefoxCapabilities);
+        FirefoxOptions options = getFirefoxOptions();
+        return new FirefoxDriver(options);
     }
 
     @Override
     public WebDriver createDriver(URL remoteUrl) throws IOException {
-        DesiredCapabilities firefoxCapabilities = getDesiredCapabilities();
+        FirefoxOptions options = getFirefoxOptions();
         if (isRemoteDriver()) {
-            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, firefoxCapabilities);
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, options);
             driver.setFileDetector(new LocalFileDetector());
             return driver;
         } else {
-            return new FirefoxDriver(firefoxCapabilities);
+            return new FirefoxDriver(options);
         }
     }
 
-    private DesiredCapabilities getDesiredCapabilities() throws IOException {
-        DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
+    private FirefoxOptions getFirefoxOptions() throws IOException {
+        String driverPath = getProperty("browser.driver.path");
+        if (!"".equals(driverPath)) {
+            System.setProperty("webdriver.gecko.driver", driverPath);
+        }
+        FirefoxOptions options = new FirefoxOptions();
+        options.setLogLevel(FirefoxDriverLogLevel.FATAL);
         FirefoxProfile profile = getProfile();
         if (profile == null) {
             String version = getProperty("browser.version");
             if (version != null) {
-                firefoxCapabilities.setCapability("version", version);
-            }
-            String homeDir = getProperty("browser.binary.path");
-            if (homeDir != null) {
-                firefoxCapabilities.setCapability("firefox_binary", homeDir + "firefox.exe");
+                options.setCapability("version", version);
             }
         } else {
-            firefoxCapabilities.setCapability(FirefoxDriver.PROFILE, profile);
+            options.setProfile(profile);
         }
-        return firefoxCapabilities;
+        return options;
     }
 
     private FirefoxProfile getProfile() throws IOException {
-        String profileName = Platform.getCurrent().equals(Platform.LINUX) ? "" : getProperty("browser.profile.name"); //TODO find solution
-        FirefoxProfile profile;
-        if (profileName == null || "".equals(profileName)) {
-            profile = new FirefoxProfile();
-        } else {
-            ProfilesIni allProfiles = new ProfilesIni();
-            profile = allProfiles.getProfile(profileName);
-        }
+        FirefoxProfile profile = new FirefoxProfile();
         setProfilePreferences(profile);
         File file = new File(getDownloadPath());
         String downloadDir = file.getCanonicalPath();
