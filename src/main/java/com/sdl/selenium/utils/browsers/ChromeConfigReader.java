@@ -3,7 +3,6 @@ package com.sdl.selenium.utils.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -22,12 +21,13 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "\n browser=chrome" +
             "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
             "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
-            "\n options.arguments=--lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
+            "\n options.arguments=--disable-infobars --lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
             "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
             "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
             "\n options.experimental.profile.default_content_settings.popups=0" +
             "\n options.experimental.download.prompt_for_download=1" +
-            "\n options.experimental.safebrowsing.enabled=true";
+            "\n options.experimental.credentials_enable_service=false" +
+            "\n options.experimental.profile.password_manager_enabled=false";
 
 
     public ChromeConfigReader() {
@@ -38,40 +38,37 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         super(DEFAULT_CONFIG, resourcePath);
     }
 
-    /***
+    /**
      * If you're using Selenium Grid, make sure the selenium server is in the same folder with the ChromeDriver
      * or include the path to the ChromeDriver in command line when registering the node:
      * -Dwebdriver.chrome.driver=%{path to chrome driver}
-     * @return chrome capabilities
-     * @throws IOException
+     *
+     * @return ChromeOptions
      */
-    private DesiredCapabilities getDesiredCapabilities() throws IOException {
+    private ChromeOptions getChromeOptions() {
         String driverPath = getProperty("browser.driver.path");
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.chrome.driver", driverPath);
         }
         ChromeOptions options = new ChromeOptions();
         setProfilePreferences(options);
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-        return capabilities;
+        return options;
     }
 
     @Override
     public WebDriver createDriver() throws IOException {
-        DesiredCapabilities capabilities = getDesiredCapabilities();
-        return new ChromeDriver(capabilities);
+        return new ChromeDriver(getChromeOptions());
     }
 
     @Override
     public WebDriver createDriver(URL remoteUrl) throws IOException {
-        DesiredCapabilities capabilities = getDesiredCapabilities();
+        ChromeOptions chromeOptions = getChromeOptions();
         if (isRemoteDriver()) {
-            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, chromeOptions);
             driver.setFileDetector(new LocalFileDetector());
             return driver;
         } else {
-            return new ChromeDriver(capabilities);
+            return new ChromeDriver(chromeOptions);
         }
     }
 
@@ -80,7 +77,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         return !"".equals(getProperty("browser.download.dir"));
     }
 
-    private void setProfilePreferences(ChromeOptions options) throws IOException {
+    private void setProfilePreferences(ChromeOptions options) {
         Map<String, Object> prefs = new HashMap<>();
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
@@ -102,7 +99,12 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         }
         String property = getDownloadPath();
         File file = new File(property);
-        String downloadDir = file.getCanonicalPath();
+        String downloadDir = null;
+        try {
+            downloadDir = file.getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (!"".equals(downloadDir)) {
             prefs.put("download.default_directory", downloadDir);
         }
