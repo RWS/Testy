@@ -187,6 +187,6 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 [Setting UP](./setup.md) 
 
-### License
+## License
 
 Testy is [MIT licensed](./LICENSE.md).
