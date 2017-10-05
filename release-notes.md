@@ -1,7 +1,16 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.6.0-SNAPSHOT**
+**Release Notes for Testy 2.7.0-SNAPSHOT**
+- update webdriver version 3.6.0
+- improvement FirefoxConfigReader with geckodriver.exe
+- improvement ChromeConfigReader
+- added isEnabled method
+
+**Release Notes for Testy 2.6.2**
 - update webdriver version 3.5.1
+- improvement getCellsText method from Grid
+- improvement Tree
+- improvement TagField
 
 **Release Notes for Testy 2.5.0**
 - update webdriver version 3.4.0

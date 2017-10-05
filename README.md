@@ -98,7 +98,7 @@ This project is optimized for:
 <dependency>
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
-    <version>2.5.0</version>
+    <version>2.6.2</version>
 </dependency>
 ```
 
@@ -152,14 +152,11 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.5.0**
-- update webdriver version 3.4.0
-- added public Tab(String title, SearchType... searchTypes) method in Tab
-- added waitToRender(final long millis, boolean showXPathLog)
-- added ToolTip in extjs6 package
-- added setHeaders(final String... headers) in Grid
-- delete temporary file automatically when driver is close
-- add Cell and Row in extjs6 package
+**Release Notes for Testy 2.6.2**
+- update webdriver version 3.5.1
+- improvement getCellsText method from Grid
+- improvement Tree
+- improvement TagField
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -176,7 +173,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.6.0-SNAPSHOT</version>
+        <version>2.7.0-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -190,4 +187,6 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 [Setting UP](./setup.md) 
 
-[MIT License](./LICENSE.md) 
+### License
+
+Testy is [MIT licensed](./LICENSE.md).
