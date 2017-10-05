@@ -189,3 +189,5 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 ## Setting up Testy project
 
 [Setting UP](./setup.md) 
+
+[MIT License](./LICENSE.md) 
