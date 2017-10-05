@@ -27,7 +27,8 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "\n options.experimental.profile.default_content_settings.popups=0" +
             "\n options.experimental.download.prompt_for_download=1" +
             "\n options.experimental.credentials_enable_service=false" +
-            "\n options.experimental.profile.password_manager_enabled=false";
+            "\n options.experimental.profile.password_manager_enabled=false" +
+            "\n options.experimental.safebrowsing.enabled=true";
 
 
     public ChromeConfigReader() {
