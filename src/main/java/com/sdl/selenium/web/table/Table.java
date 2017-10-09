@@ -187,7 +187,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
             for (int i = 1; i < rows; i++) {
                 List<String> list = new ArrayList<>();
                 for (int j = 1; j < columns; j++) {
-                    list.add(getCell(i, j).getText());
+                    list.add(getCell(i, j).getText(true));
                 }
                 listOfList.add(list);
             }

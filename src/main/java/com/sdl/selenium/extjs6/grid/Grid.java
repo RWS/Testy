@@ -204,9 +204,9 @@ public class Grid extends Table {
     public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = header.getText();
+        String headerText = header.getText(true);
         if (headerText == null || "".equals(headerText)) {
-            headerText = header.getText();
+            headerText = header.getText(true);
         }
         Collections.addAll(headers, headerText.trim().split("\n"));
         return headers;
@@ -226,7 +226,7 @@ public class Grid extends Table {
             for (int i = 1; i <= rows; ++i) {
                 List<String> list = new ArrayList<>();
                 for (int j = 1; j <= columns; ++j) {
-                    list.add(this.getCell(i, j).getText());
+                    list.add(this.getCell(i, j).getText(true));
                 }
                 listOfList.add(list);
             }

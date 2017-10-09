@@ -613,7 +613,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public int checkboxSMSelectRow(List<String> searchTexts) {
         int selected = 0;
-        List<GridCell> cells = new ArrayList<GridCell>();
+        List<GridCell> cells = new ArrayList<>();
         for (String searchText : searchTexts) {
             cells.add(getCheckerCell(searchText));
         }
@@ -634,7 +634,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     public int checkboxSMSelectRow(HashSet<String> searchTexts) {
-        return checkboxSMSelectRow(new ArrayList<String>(searchTexts));
+        return checkboxSMSelectRow(new ArrayList<>(searchTexts));
     }
 
     public int checkboxSMSelectRow(String[] searchTexts) {
