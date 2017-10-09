@@ -217,7 +217,7 @@ public class Grid extends Table {
         Row rowsEl = new Row(this);
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
-        int rows = rowsEl.size() + 1;
+        int rows = rowsEl.size();
         int columns = columnsEl.size();
         if (rows <= 0) {
             return null;

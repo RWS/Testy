@@ -90,6 +90,28 @@ public class GridIntegrationTest extends TestBase {
         assertThat(cell.isChecked(), is(true));
     }
 
+    @Test(dependsOnMethods = "checkCellTest")
+    void getCellsTest() {
+        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#xml-grid");
+        Grid spreadsheet = new Grid().setTitle("XML Grid");
+        spreadsheet.ready(true);
+        List<List<String>> cellsText = spreadsheet.getCellsText();
+
+        List<List<String>> expectedCellsText = Arrays.asList(
+                Arrays.asList("Sidney Sheldon", "Master of the Game", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "Are You Afraid of the Dark?", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "If Tomorrow Comes", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "Tell Me Your Dreams", "Warner Vision", "Book"),
+                Arrays.asList("Sidney Sheldon", "Bloodline", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "The Other Side of Me", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "A Stranger in the Mirror", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "The Sky Is Falling", "William Morrow & Company", "Book"),
+                Arrays.asList("Sidney Sheldon", "Nothing Lasts Forever", "Warner Books", "Book"),
+                Arrays.asList("Sidney Sheldon", "The Naked Face", "Warner Books", "Book")
+        );
+        assertThat(cellsText, contains(expectedCellsText.toArray()));
+    }
+
     //    @Test//(dependsOnMethods = "checkCellTest")
     void performanceIsCheckedTest() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
