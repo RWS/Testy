@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -108,6 +109,55 @@ public class GridIntegrationTest extends TestBase {
                 Arrays.asList("Sidney Sheldon", "The Sky Is Falling", "William Morrow & Company", "Book"),
                 Arrays.asList("Sidney Sheldon", "Nothing Lasts Forever", "Warner Books", "Book"),
                 Arrays.asList("Sidney Sheldon", "The Naked Face", "Warner Books", "Book")
+        );
+        assertThat(cellsText, contains(expectedCellsText.toArray()));
+
+
+        cellsText = spreadsheet.getCellsText(1, 4);
+
+        expectedCellsText = Arrays.asList(
+                Arrays.asList("Master of the Game", "Warner Books"),
+                Arrays.asList("Are You Afraid of the Dark?", "Warner Books"),
+                Arrays.asList("If Tomorrow Comes", "Warner Books"),
+                Arrays.asList("Tell Me Your Dreams", "Warner Vision"),
+                Arrays.asList("Bloodline", "Warner Books"),
+                Arrays.asList("The Other Side of Me", "Warner Books"),
+                Arrays.asList("A Stranger in the Mirror", "Warner Books"),
+                Arrays.asList("The Sky Is Falling", "William Morrow & Company"),
+                Arrays.asList("Nothing Lasts Forever", "Warner Books"),
+                Arrays.asList("The Naked Face", "Warner Books")
+        );
+        assertThat(cellsText, contains(expectedCellsText.toArray()));
+
+        cellsText = spreadsheet.getCellsText(4);
+
+        expectedCellsText = Arrays.asList(
+                Arrays.asList("Sidney Sheldon", "Master of the Game", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "Are You Afraid of the Dark?", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "If Tomorrow Comes", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "Tell Me Your Dreams", "Warner Vision"),
+                Arrays.asList("Sidney Sheldon", "Bloodline", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "The Other Side of Me", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "A Stranger in the Mirror", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "The Sky Is Falling", "William Morrow & Company"),
+                Arrays.asList("Sidney Sheldon", "Nothing Lasts Forever", "Warner Books"),
+                Arrays.asList("Sidney Sheldon", "The Naked Face", "Warner Books")
+        );
+        assertThat(cellsText, contains(expectedCellsText.toArray()));
+
+        cellsText = spreadsheet.getCellsText(1, 3, 4);
+
+        expectedCellsText = Arrays.asList(
+                Collections.singletonList("Master of the Game"),
+                Collections.singletonList("Are You Afraid of the Dark?"),
+                Collections.singletonList("If Tomorrow Comes"),
+                Collections.singletonList("Tell Me Your Dreams"),
+                Collections.singletonList("Bloodline"),
+                Collections.singletonList("The Other Side of Me"),
+                Collections.singletonList("A Stranger in the Mirror"),
+                Collections.singletonList("The Sky Is Falling"),
+                Collections.singletonList("Nothing Lasts Forever"),
+                Collections.singletonList("The Naked Face")
         );
         assertThat(cellsText, contains(expectedCellsText.toArray()));
     }

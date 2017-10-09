@@ -174,19 +174,21 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         }
     }
 
-    public List<List<String>> getCellsText() {
+    public List<List<String>> getCellsText(int... excludedColumns) {
         WebLocator parentEl = new WebLocator(this).setTag("tbody");
         Row rowsEl = new Row(parentEl);
         Row rowEl = new Row(parentEl, 1);
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size() + 1;
-        int columns = columnsEl.size() + 1;
+        int columns = columnsEl.size();
+
+        List<Integer> columnsList = getColumns(columns, excludedColumns);
 
         if (rows > 0) {
             List<List<String>> listOfList = new ArrayList<>();
             for (int i = 1; i < rows; i++) {
                 List<String> list = new ArrayList<>();
-                for (int j = 1; j < columns; j++) {
+                for (int j : columnsList) {
                     list.add(getCell(i, j).getText(true));
                 }
                 listOfList.add(list);
@@ -195,6 +197,21 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         } else {
             return null;
         }
+    }
+
+    protected List<Integer> getColumns(int columns, int[] excludedColumns) {
+        List<Integer> excluded = new ArrayList<>();
+        for (int excludedColumn : excludedColumns) {
+            excluded.add(excludedColumn);
+        }
+
+        List<Integer> columnsList = new ArrayList<>();
+        for (int i = 1; i <= columns; i++) {
+            if (!excluded.contains(i)) {
+                columnsList.add(i);
+            }
+        }
+        return columnsList;
     }
 
     public String getText(String searchText, int columnId) {

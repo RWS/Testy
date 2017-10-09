@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -69,23 +71,23 @@ public class TableIntegrationTest extends TestBase {
     public void getAllTexts() {
         List<List<String>> listOfList = new ArrayList<>();
 
-        listOfList.add(Arrays.asList("", "John", "Carter", "johncarter@mail.com", "Details Remove"));
-        listOfList.add(Arrays.asList("", "Peter", "Parker", "peterparker@mail.com", "Details Remove"));
-        listOfList.add(Arrays.asList("", "John", "Moore", "johnmoore@mail.com", "Details Remove"));
-        listOfList.add(Arrays.asList("", "David", "Miller", "davidmiller@mail.com", "Details Remove"));
-        listOfList.add(Arrays.asList("", "Nick", "White", "nickwhite@mail.com", "Details Remove"));
-        listOfList.add(Arrays.asList("", "Bob", "Smith", "bobsmith@mail.com", "Details Remove"));
+        listOfList.add(Arrays.asList("John", "Carter", "johncarter@mail.com"));
+        listOfList.add(Arrays.asList("Peter", "Parker", "peterparker@mail.com"));
+        listOfList.add(Arrays.asList("John", "Moore", "johnmoore@mail.com"));
+        listOfList.add(Arrays.asList("David", "Miller", "davidmiller@mail.com"));
+        listOfList.add(Arrays.asList("Nick", "White", "nickwhite@mail.com"));
+        listOfList.add(Arrays.asList("Bob", "Smith", "bobsmith@mail.com"));
 
-        List<List<String>> cellsText = table.getCellsText();
-        StringBuffer stringBuffer = new StringBuffer();
-        for (List<String> listEl : cellsText) {
-            stringBuffer.append("\n| ");
-            for (String el : listEl) {
-                stringBuffer.append(el).append(" | ");
-            }
-        }
-        LOGGER.info("test {}", stringBuffer);
-        assertEquals(cellsText, listOfList);
+        List<List<String>> cellsText = table.getCellsText(1, 5);
+//        StringBuffer stringBuffer = new StringBuffer();
+//        for (List<String> listEl : cellsText) {
+//            stringBuffer.append("\n| ");
+//            for (String el : listEl) {
+//                stringBuffer.append(el).append(" | ");
+//            }
+//        }
+//        LOGGER.info("test {}", stringBuffer);
+        assertThat(cellsText, contains(listOfList.toArray()));
     }
 
     @Test
