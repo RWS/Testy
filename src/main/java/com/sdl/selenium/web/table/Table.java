@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.Position;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.CheckBox;
@@ -177,7 +178,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     public List<List<String>> getCellsText(int... excludedColumns) {
         WebLocator parentEl = new WebLocator(this).setTag("tbody");
         Row rowsEl = new Row(parentEl);
-        Row rowEl = new Row(parentEl, 1);
+        Row rowEl = new Row(parentEl).setPosition(Position.LAST);
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size() + 1;
         int columns = columnsEl.size();
