@@ -204,7 +204,7 @@ public class Grid extends Table {
     public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = header.getText(true);
+        String headerText = header.getText();
         if (headerText == null || "".equals(headerText)) {
             headerText = header.getText(true);
         }
