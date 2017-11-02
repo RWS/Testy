@@ -1,11 +1,12 @@
 package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.table.Table;
 
-public class Tree extends WebLocator {
+public class Tree extends WebLocator implements Scrollable {
 
     public Tree() {
         setClassName("Tree");
