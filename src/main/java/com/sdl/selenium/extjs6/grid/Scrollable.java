@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.WebLocator;
 
 public interface Scrollable extends IWebLocator {
 
@@ -48,5 +49,13 @@ public interface Scrollable extends IWebLocator {
     default boolean scrollPageDown(String id) {
         String script = "return (function(c){var a=c.view,b=a.getScrollable()._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    }
+
+    default void scrollTo(WebLocator cell) {
+        while (!cell.waitToRender(100) || !cell.isDisplayed()) {
+            if (!scrollPageDown()) {
+                break;
+            }
+        }
     }
 }

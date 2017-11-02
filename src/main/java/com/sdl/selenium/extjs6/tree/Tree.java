@@ -23,6 +23,7 @@ public class Tree extends WebLocator implements Scrollable {
         for (String node : nodes) {
             WebLocator textEl = new WebLocator().setText(node);
             Table nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            scrollTo(nodeEl);
             WebLocatorUtils.scrollToWebLocator(nodeEl);
             Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
