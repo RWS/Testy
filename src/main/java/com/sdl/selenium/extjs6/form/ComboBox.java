@@ -136,4 +136,8 @@ public class ComboBox extends TextField implements ICombo {
         clickIcon("trigger");
         return Arrays.asList(comboValues);
     }
+
+    public WebLocator getBoundList() {
+        return boundList;
+    }
 }
