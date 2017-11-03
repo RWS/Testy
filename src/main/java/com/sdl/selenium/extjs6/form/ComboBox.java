@@ -126,18 +126,18 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public List<String> getAllValues() {
-        clickIcon("trigger");
+        if (boundList.isDisplayed()) {
+            clickIcon("trigger");
+        }
         WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
         String text = comboList.getText();
         String[] comboValues = new String[0];
-        if(text != null){
+        if (text != null) {
             comboValues = text.split("\\n");
         }
-        clickIcon("trigger");
+        if (boundList.isDisplayed()) {
+            clickIcon("trigger");
+        }
         return Arrays.asList(comboValues);
-    }
-
-    public WebLocator getBoundList() {
-        return boundList;
     }
 }
