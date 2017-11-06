@@ -126,7 +126,7 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public List<String> getAllValues() {
-        if (boundList.isDisplayed()) {
+        if (!boundList.isDisplayed()) {
             clickIcon("trigger");
         }
         WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
