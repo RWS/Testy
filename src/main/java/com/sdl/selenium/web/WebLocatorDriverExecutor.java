@@ -476,8 +476,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         int attempts = 0;
         do {
             try {
-                ensureExists(el);
-                result = el.getWebElement().isDisplayed();
+                result = ensureExists(el) && el.currentElement.isDisplayed();
             } catch (StaleElementReferenceException e) {
                 Utils.sleep(50);
             }
