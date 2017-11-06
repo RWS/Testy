@@ -50,9 +50,10 @@ public class ComboBox extends TextField implements ICombo {
             isDisplayed = boundList.isDisplayed();
         } catch (StaleElementReferenceException first) {
             try {
+                Utils.sleep(100);
                 isDisplayed = boundList.isDisplayed();
             } catch (StaleElementReferenceException second) {
-                Utils.sleep(50);
+                Utils.sleep(1000);
                 isDisplayed = boundList.isDisplayed();
             }
         }
