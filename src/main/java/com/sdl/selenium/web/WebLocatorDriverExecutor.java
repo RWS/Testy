@@ -468,7 +468,21 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean isDisplayed(WebLocator el) {
-        return ensureExists(el) && el.currentElement.isDisplayed();
+        return retryingIsDisplayed(el);
+    }
+
+    private boolean retryingIsDisplayed(WebLocator el) {
+        boolean result = false;
+        int attempts = 0;
+        do {
+            try {
+                result = el.getWebElement().isDisplayed();
+            } catch (StaleElementReferenceException e) {
+                Utils.sleep(50);
+            }
+            attempts++;
+        } while (!result && attempts < 10);
+        return result;
     }
 
     public boolean isEnabled(WebLocator el) {
