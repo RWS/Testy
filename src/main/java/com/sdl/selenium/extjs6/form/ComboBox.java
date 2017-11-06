@@ -5,6 +5,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,13 @@ public class ComboBox extends TextField implements ICombo {
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
-        if (boundList.isDisplayed() || clickIcon("trigger")) {
+        boolean isDisplayed;
+        try {
+            isDisplayed = boundList.isDisplayed();
+        } catch (StaleElementReferenceException e) {
+            isDisplayed = boundList.isDisplayed();
+        }
+        if (isDisplayed || clickIcon("trigger")) {
             if (pagination) {
                 do {
                     if (selected = option.doClick()) {
