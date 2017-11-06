@@ -48,8 +48,13 @@ public class ComboBox extends TextField implements ICombo {
         boolean isDisplayed;
         try {
             isDisplayed = boundList.isDisplayed();
-        } catch (StaleElementReferenceException e) {
-            isDisplayed = boundList.isDisplayed();
+        } catch (StaleElementReferenceException first) {
+            try {
+                isDisplayed = boundList.isDisplayed();
+            } catch (StaleElementReferenceException second) {
+                Utils.sleep(50);
+                isDisplayed = boundList.isDisplayed();
+            }
         }
         if (isDisplayed || clickIcon("trigger")) {
             if (pagination) {
