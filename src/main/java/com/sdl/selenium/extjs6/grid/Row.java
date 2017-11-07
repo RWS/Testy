@@ -82,7 +82,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private void scrollInGrid(Row row) {
-        while (!row.waitToRender(100)) {
+        while (!row.waitToRender(100L, false)) {
             Grid grid = (Grid) getPathBuilder().getContainer();
             if (!grid.scrollPageDown()) {
                 break;
