@@ -19,11 +19,12 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class GridIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridIntegrationTest.class);
 
-    private Grid grid = new Grid().setTitle("Array Grid");
+    private Grid grid = new Grid().setTitle("Array Grid").setVisibility(true);
 
     @BeforeClass
     public void startTests() {
         driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#array-grid");
+        grid.ready(10);
         grid.ready(true);
     }
 
