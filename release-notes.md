@@ -1,10 +1,16 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.7.0-SNAPSHOT**
+**Release Notes for Testy 2.8.0-SNAPSHOT**
+- update webdriver version 3.7.0
+
+**Release Notes for Testy 2.7.0**
 - update webdriver version 3.6.0
 - improvement FirefoxConfigReader with geckodriver.exe
 - improvement ChromeConfigReader
 - added isEnabled method
+- improvement ComboBox class
+- create Scrollable interface
+- improvement getCellsText(int... excludedColumns) for Table and Grid
 
 **Release Notes for Testy 2.6.2**
 - update webdriver version 3.5.1
