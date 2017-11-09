@@ -66,8 +66,11 @@ public class ComboBox extends TextField implements ICombo {
                 Utils.sleep(20);
                 return true;
             }
-            if (boundList.isDisplayed()) {
-                clickIcon("trigger"); // to close combo
+            try {
+                if (boundList.isDisplayed()) {
+                    clickIcon("trigger"); // to close combo
+                }
+            } catch (StaleElementReferenceException e) {
             }
             LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
