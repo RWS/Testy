@@ -42,6 +42,7 @@ public class ComboBox extends TextField implements ICombo {
      * @return true if value was selected
      */
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
+        waitToRender(300L);
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
@@ -49,6 +50,7 @@ public class ComboBox extends TextField implements ICombo {
         try {
             trigger = boundList.isDisplayed() || clickIcon("trigger");
         } catch (StaleElementReferenceException e) {
+            LOGGER.debug("StaleElementReferenceException1");
             trigger = clickIcon("trigger");
         }
         if (trigger) {
@@ -71,6 +73,7 @@ public class ComboBox extends TextField implements ICombo {
                     clickIcon("trigger"); // to close combo
                 }
             } catch (StaleElementReferenceException e) {
+                LOGGER.debug("StaleElementReferenceException2");
             }
             LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
@@ -129,9 +132,11 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public List<String> getAllValues() {
+        waitToRender(300L);
         try {
             boolean trigger = boundList.isDisplayed() || clickIcon("trigger");
         } catch (StaleElementReferenceException e) {
+            LOGGER.debug("StaleElementReferenceException1");
             clickIcon("trigger");
         }
         WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
@@ -145,6 +150,7 @@ public class ComboBox extends TextField implements ICombo {
                 clickIcon("trigger"); // to close combo
             }
         } catch (StaleElementReferenceException e) {
+            LOGGER.debug("StaleElementReferenceException2");
         }
         return Arrays.asList(comboValues);
     }
