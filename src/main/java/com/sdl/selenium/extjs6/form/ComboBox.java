@@ -84,14 +84,7 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
-//        WebLocator comboListElement = new WebLocator(listClass).setAttribute("aria-hidden", "false").setInfoMessage(this + " -> " + listClass);
-        WebLocator item = new WebLocator(boundList).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
-//        for (SearchType type : searchType) {
-//            if (type.equals(SearchType.CONTAINS_ALL_CHILD_NODES)) {
-//                item.setTag("ul//ul");
-//            }
-//        }
-        return item;
+        return new WebLocator(boundList).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
     }
 
     public boolean select(String value, SearchType... searchType) {
@@ -136,7 +129,9 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public List<String> getAllValues() {
-        if (!boundList.isDisplayed()) {
+        try {
+            boolean trigger = boundList.isDisplayed() || clickIcon("trigger");
+        } catch (StaleElementReferenceException e) {
             clickIcon("trigger");
         }
         WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
@@ -145,8 +140,11 @@ public class ComboBox extends TextField implements ICombo {
         if (text != null) {
             comboValues = text.split("\\n");
         }
-        if (boundList.isDisplayed()) {
-            clickIcon("trigger");
+        try {
+            if (boundList.isDisplayed()) {
+                clickIcon("trigger"); // to close combo
+            }
+        } catch (StaleElementReferenceException e) {
         }
         return Arrays.asList(comboValues);
     }
