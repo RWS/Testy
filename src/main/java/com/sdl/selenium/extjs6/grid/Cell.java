@@ -58,8 +58,11 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         }
     }
 
-    public boolean isChecked() {
+    public Boolean isChecked() {
         CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+        if (checkBox.waitToRender(500L, false)) {
+            return null;
+        }
         String attributeClass = checkBox.getAttributeClass();
         if (attributeClass == null || "".equals(attributeClass)) {
             attributeClass = checkBox.getAttributeClass();
