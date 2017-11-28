@@ -19,9 +19,17 @@ public class Tree extends WebLocator implements Scrollable {
 
     public boolean select(String... nodes) {
         boolean selected = false;
+        String parent = null;
         for (String node : nodes) {
             WebLocator textEl = new WebLocator().setText(node);
-            Table nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected");
+            Row rowSelected = nodeSelected.getRow(1).setClasses("x-grid-row");
+            Table nodeEl;
+            if (parent != null && nodeSelected.waitToRender(800L, false) && rowSelected.getAttributeClass().contains("x-grid-tree-node-expanded")) {
+                nodeEl = new Table(nodeSelected).setClasses("x-grid-item").setTag("following::table").setChildNodes(textEl).setVisibility(true);
+            } else {
+                nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            }
             scrollTo(nodeEl);
             Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
@@ -35,6 +43,7 @@ public class Tree extends WebLocator implements Scrollable {
                     selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
                 }
             }
+            parent = node;
         }
         return selected;
     }
