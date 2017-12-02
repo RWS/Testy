@@ -1,7 +1,12 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.8.0-SNAPSHOT**
+**Release Notes for Testy 2.9.0-SNAPSHOT**
+- update webdriver version 3.8.0
+
+**Release Notes for Testy 2.8.0**
 - update webdriver version 3.7.0
+- improvement select method from Tree
+- improvement ComboBox
 
 **Release Notes for Testy 2.7.0**
 - update webdriver version 3.6.0

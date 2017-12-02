@@ -98,7 +98,7 @@ This project is optimized for:
 <dependency>
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
-    <version>2.7.0</version>
+    <version>2.8.0</version>
 </dependency>
 ```
 
@@ -152,14 +152,10 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.7.0**
-- update webdriver version 3.6.0
-- improvement FirefoxConfigReader with geckodriver.exe
-- improvement ChromeConfigReader
-- added isEnabled method
-- improvement ComboBox class
-- create Scrollable interface
-- improvement getCellsText(int... excludedColumns) for Table and Grid
+**Release Notes for Testy 2.8.0**
+- update webdriver version 3.7.0
+- improvement select method from Tree
+- improvement ComboBox
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -176,7 +172,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.8.0-SNAPSHOT</version>
+        <version>2.9.0-SNAPSHOT</version>
     </dependency>
 ```
 
