@@ -5,7 +5,7 @@
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
     <name>testy</name>
-    <version>2.8.0-SNAPSHOT</version>
+    <version>2.8.0</version>
     <packaging>jar</packaging>
     <description>Automated Acceptance Testing. Selenium and Selenium WebDriver test framework for web applications.
         (optimized for dynamic html, ExtJS, Bootstrap, complex UI, simple web applications/sites)
@@ -43,7 +43,7 @@
         <connection>scm:git:git@github.com:sdl/Testy.git</connection>
         <developerConnection>scm:git:git@github.com:sdl/Testy.git</developerConnection>
         <url>git@github.com:sdl/Testy.git</url>
-      <tag>HEAD</tag>
+      <tag>Testy-2.8.0</tag>
   </scm>
 
     <distributionManagement>
