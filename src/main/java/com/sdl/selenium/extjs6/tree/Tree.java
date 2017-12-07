@@ -4,6 +4,7 @@ import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.table.Table;
+import org.openqa.selenium.WebDriverException;
 
 public class Tree extends WebLocator implements Scrollable {
 
@@ -18,6 +19,7 @@ public class Tree extends WebLocator implements Scrollable {
     }
 
     public boolean select(String... nodes) {
+        scrollTop();
         boolean selected = false;
         String parent = null;
         for (String node : nodes) {
@@ -40,7 +42,12 @@ public class Tree extends WebLocator implements Scrollable {
                 } else {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
                     WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
-                    selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
+                    try {
+                        selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
+                    } catch (WebDriverException e) {
+                        scrollPageDown();
+                        selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
+                    }
                 }
             }
             parent = node;
