@@ -19,6 +19,13 @@ public class Tree extends WebLocator implements Scrollable {
     }
 
     public boolean select(String... nodes) {
+        return select(false, nodes);
+    }
+
+    public boolean select(boolean doScroll, String... nodes) {
+        if (doScroll) {
+            scrollTop();
+        }
         boolean selected = false;
         String parent = null;
         for (String node : nodes) {
@@ -44,7 +51,9 @@ public class Tree extends WebLocator implements Scrollable {
                     try {
                         selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
                     } catch (WebDriverException e) {
-                        scrollPageDown();
+                        if (doScroll) {
+                            scrollPageDown();
+                        }
                         selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
                     }
                 }
