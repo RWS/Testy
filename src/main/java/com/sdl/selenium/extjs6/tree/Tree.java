@@ -19,7 +19,6 @@ public class Tree extends WebLocator implements Scrollable {
     }
 
     public boolean select(String... nodes) {
-        scrollTop();
         boolean selected = false;
         String parent = null;
         for (String node : nodes) {
