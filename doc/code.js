@@ -42,3 +42,16 @@ var c = Ext.getCmp('grid-1009');
     }
     return false
 })(c)
+
+//isScrollButton
+(function (c) {
+    var a = c.view.scrollable,
+        b = a._scrollElement;
+    return b.dom.scrollTop >= a.getMaxPosition().y;
+})(c)
+
+
+//isScrollTop
+(function (c) {
+    return c.view.scrollable._scrollElement.dom.scrollTop == 0;
+})(c)

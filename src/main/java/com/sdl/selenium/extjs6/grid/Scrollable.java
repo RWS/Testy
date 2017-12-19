@@ -24,6 +24,18 @@ public interface Scrollable extends IWebLocator {
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
+    default boolean isScrollTop() {
+        String id = getAttributeId();
+        String script = "return (function (c){return c.view.scrollable._scrollElement.dom.scrollTop == 0;})(window.Ext.getCmp('" + id + "'))";
+        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    }
+
+    default boolean isScrollBottom() {
+        String id = getAttributeId();
+        String script = "return (function (c){var a=c.view.scrollable,b=a._scrollElement;return b.dom.scrollTop >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
+        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    }
+
     /**
      * Scroll Up one visible page in Grid
      *
