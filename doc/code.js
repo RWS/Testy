@@ -35,9 +35,10 @@ var c = Ext.getCmp('terminologyexcelinportstructuretree-1096');
 //scrollPageDownInTree
 (function (c) {
     var a = c.view,
-        b = a.scrollable._scrollElement;
+        b = a.scrollable._scrollElement,
+        d = a.body.dom.firstChild.scrollHeight;
     if (b.dom.scrollTop < a.scrollable.getMaxPosition().y) {
-        b.dom.scrollTop += (a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) - a.body.dom.firstChild.scrollHeight;
+        b.dom.scrollTop += (a.body.dom.childElementCount * d) - d;
         return true
     }
     return false
