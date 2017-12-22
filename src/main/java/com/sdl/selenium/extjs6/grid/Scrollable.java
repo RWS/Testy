@@ -63,9 +63,15 @@ public interface Scrollable extends IWebLocator {
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
-    default boolean scrollTo(WebLocator cell) {
+    @Deprecated
+    default boolean scrollTo(WebLocator el) {
+        return scrollPageDownTo(el);
+    }
+
+    default boolean scrollPageDownTo(WebLocator el) {
+        el.setVisibility(true);
         boolean scroll = true;
-        while (!cell.waitToRender(100) || !cell.isDisplayed()) {
+        while (!el.waitToRender(100)) {
             scroll = scrollPageDown();
             if (!scroll) {
                 break;
