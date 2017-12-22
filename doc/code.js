@@ -37,7 +37,7 @@ var c = Ext.getCmp('terminologyexcelinportstructuretree-1096');
     var a = c.view,
         b = a.scrollable._scrollElement;
     if (b.dom.scrollTop < a.scrollable.getMaxPosition().y) {
-        b.dom.scrollTop += (a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) * 2 - a.body.dom.firstChild.scrollHeight;
+        b.dom.scrollTop += (a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) - a.body.dom.firstChild.scrollHeight;
         return true
     }
     return false
@@ -66,4 +66,3 @@ var c = Ext.getCmp('terminologyexcelinportstructuretree-1096');
 (function (c) {
     return c.view.scrollable._scrollElement.dom.scrollTop == 0;
 })(c)
-
