@@ -1,9 +1,9 @@
 // For extjs 6 grid
-var c = Ext.getCmp('grid-1009');
+var c = Ext.getCmp('terminologyexcelinportstructuretree-1096');
 
 //scrollTop
 (function (c) {
-    var a = c.view.getScrollable()._scrollElement;
+    var a = c.view.scrollable._scrollElement;
     if (a.dom.scrollTop != 0) {
         a.dom.scrollTop = 0;
         return true
@@ -24,9 +24,20 @@ var c = Ext.getCmp('grid-1009');
 //scrollPageDown
 (function (c) {
     var a = c.view,
-        b = a.getScrollable()._scrollElement;
+        b = a.scrollable._scrollElement;
     if (b.dom.scrollTop < a.scrollable.getMaxPosition().y) {
         b.dom.scrollTop += a.getHeight() - 13;
+        return true
+    }
+    return false
+})(c)
+
+//scrollPageDownInTree
+(function (c) {
+    var a = c.view,
+        b = a.scrollable._scrollElement;
+    if (b.dom.scrollTop < a.scrollable.getMaxPosition().y) {
+        b.dom.scrollTop += (a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) * 2 - a.body.dom.firstChild.scrollHeight;
         return true
     }
     return false
@@ -35,7 +46,7 @@ var c = Ext.getCmp('grid-1009');
 //scrollPageUp
 (function (c) {
     var a = c.view,
-        b = a.getScrollable()._scrollElement;
+        b = a.scrollable._scrollElement;
     if (b.dom.scrollTop > 0) {
         b.dom.scrollTop -= a.getHeight() - 13;
         return true
@@ -55,3 +66,4 @@ var c = Ext.getCmp('grid-1009');
 (function (c) {
     return c.view.scrollable._scrollElement.dom.scrollTop == 0;
 })(c)
+
