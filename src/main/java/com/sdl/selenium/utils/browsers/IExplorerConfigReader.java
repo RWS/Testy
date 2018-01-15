@@ -2,7 +2,7 @@ package com.sdl.selenium.utils.browsers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -31,8 +31,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public WebDriver createDriver() throws IOException {
-        DesiredCapabilities capabilities = getDesiredCapabilities();
-        return new InternetExplorerDriver(capabilities);
+        return new InternetExplorerDriver(getOptions());
     }
 
     /***
@@ -41,21 +40,19 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
      * -Dwebdriver.chrome.driver=%{path to chrome driver}
      * @return Internet Explorer capabilities
      */
-    private DesiredCapabilities getDesiredCapabilities() {
-        DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-//        capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-//        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        setCapabilities(capabilities);
+    private InternetExplorerOptions getOptions() {
+        InternetExplorerOptions options = new InternetExplorerOptions();
+        setOptions(options);
         String driverPath = getProperty("browser.driver.path");
         if (!"".equals(driverPath)) {
             System.setProperty("webdriver.ie.driver", driverPath);
         }
-        return capabilities;
+        return options;
     }
 
     @Override
     public WebDriver createDriver(URL remoteUrl) throws IOException {
-        DesiredCapabilities capabilities = getDesiredCapabilities();
+        InternetExplorerOptions capabilities = getOptions();
         if (isRemoteDriver()) {
             RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);
             driver.setFileDetector(new LocalFileDetector());
@@ -76,7 +73,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
         return "";
     }
 
-    private void setCapabilities(DesiredCapabilities capabilities) {
+    private void setOptions(InternetExplorerOptions options) {
         for (Map.Entry<Object, Object> entry : entrySet()) {
             String key = (String) entry.getKey();
             if (key.startsWith("desired.capabilities.")) {
@@ -85,13 +82,13 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 
                 if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
                     boolean aBoolean = Boolean.valueOf(value);
-                    capabilities.setCapability(preferenceKey, aBoolean);
+                    options.setCapability(preferenceKey, aBoolean);
                 } else {
                     try {
                         int intValue = Integer.parseInt(value);
-                        capabilities.setCapability(preferenceKey, intValue);
+                        options.setCapability(preferenceKey, intValue);
                     } catch (NumberFormatException e) {
-                        capabilities.setCapability(preferenceKey, value);
+                        options.setCapability(preferenceKey, value);
                     }
                 }
             }

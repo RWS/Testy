@@ -63,13 +63,13 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public WebDriver createDriver(URL remoteUrl) throws IOException {
-        ChromeOptions chromeOptions = getChromeOptions();
+        ChromeOptions options = getChromeOptions();
         if (isRemoteDriver()) {
-            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, chromeOptions);
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, options);
             driver.setFileDetector(new LocalFileDetector());
             return driver;
         } else {
-            return new ChromeDriver(chromeOptions);
+            return new ChromeDriver(options);
         }
     }
 
