@@ -52,8 +52,7 @@ public class Row extends AbstractRow {
 
     public List<String> getCellsText() {
         WebLocator columnsEl = new WebLocator(this).setTag("td");
-        int columns = columnsEl.size() + 1;
-
+        int columns = columnsEl.size();
         List<String> list = new ArrayList<>();
         for (int j = 1; j < columns; j++) {
             Cell cell = new Cell(this, j);
