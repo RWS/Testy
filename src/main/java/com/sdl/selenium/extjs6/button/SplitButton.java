@@ -40,7 +40,7 @@ public class SplitButton extends Button {
         LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
         boolean selected = true;
         Menu menu = new Menu();
-        if (menu.showMenu(this)) {
+        if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String val : menuOptions) {
                 menu.clickOnMenu(val);
             }
