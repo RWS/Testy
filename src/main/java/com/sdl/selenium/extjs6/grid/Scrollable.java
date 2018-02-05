@@ -8,7 +8,7 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollTop() {
         String id = getAttributeId();
-        return scrollTop(id);
+        return (id != null || !"".equals(id)) && scrollTop(id);
     }
 
     default boolean scrollTop(String id) {
@@ -20,20 +20,29 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollBottom() {
         String id = getAttributeId();
-        String script = "return (function(c){var b=c.view.scrollable.getMaxUserPosition().y;c.view.scrollBy(0, b);setTimeout(function(){c.view.scrollBy(0, 1000);},50);return true})(window.Ext.getCmp('" + id + "'))";
-        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        if (id != null || !"".equals(id)) {
+            String script = "return (function(c){var b=c.view.scrollable.getMaxUserPosition().y;c.view.scrollBy(0, b);setTimeout(function(){c.view.scrollBy(0, 1000);},50);return true})(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
     }
 
     default boolean isScrollTop() {
         String id = getAttributeId();
-        String script = "return (function (c){return c.view.scrollable._scrollElement.dom.scrollTop == 0;})(window.Ext.getCmp('" + id + "'))";
-        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        if (id != null || !"".equals(id)) {
+            String script = "return (function (c){return c.view.scrollable._scrollElement.dom.scrollTop == 0;})(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
     }
 
     default boolean isScrollBottom() {
         String id = getAttributeId();
-        String script = "return (function (c){var a=c.view.scrollable,b=a._scrollElement;return b.dom.scrollTop >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
-        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        if (id != null || !"".equals(id)) {
+            String script = "return (function (c){var a=c.view.scrollable,b=a._scrollElement;return b.dom.scrollTop >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
     }
 
     /**
@@ -44,8 +53,11 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollPageUp() {
         String id = getAttributeId();
-        String script = "return (function(c){var a=c.view,b=a.getScrollable()._scrollElement;if(b.dom.scrollTop>0){b.dom.scrollTop-=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        if (id != null || !"".equals(id)) {
+            String script = "return (function(c){var a=c.view,b=a.getScrollable()._scrollElement;if(b.dom.scrollTop>0){b.dom.scrollTop-=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
     }
 
     /**
@@ -55,7 +67,7 @@ public interface Scrollable extends IWebLocator {
      */
     default boolean scrollPageDown() {
         String id = getAttributeId();
-        return scrollPageDown(id);
+        return (id != null || !"".equals(id)) && scrollPageDown(id);
     }
 
     default boolean scrollPageDown(String id) {
@@ -65,8 +77,11 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollPageDownInTree() {
         String id = getAttributeId();
-        String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=(a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) - a.body.dom.firstChild.scrollHeight;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        if (id != null || !"".equals(id)) {
+            String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=(a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) - a.body.dom.firstChild.scrollHeight;return true}return false})(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
     }
 
     @Deprecated
