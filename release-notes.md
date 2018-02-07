@@ -1,6 +1,9 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.9.0-SNAPSHOT**
+**Release Notes for Testy 2.10.0-SNAPSHOT**
+- update webdriver version 3.9.0
+
+**Release Notes for Testy 2.9.0**
 - update webdriver version 3.8.0
 - update webdriver version 3.8.1
 
