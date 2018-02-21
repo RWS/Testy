@@ -1,5 +1,5 @@
 // For extjs 6 grid
-var c = Ext.getCmp('terminologyexcelinportstructuretree-1096');
+var c = Ext.getCmp('terminologylanguagesgrid-1243');
 
 //scrollTop
 (function (c) {
@@ -39,6 +39,9 @@ var c = Ext.getCmp('terminologyexcelinportstructuretree-1096');
         d = a.body.dom.firstChild.scrollHeight;
     if (b.dom.scrollTop < a.scrollable.getMaxPosition().y) {
         b.dom.scrollTop += (a.body.dom.childElementCount * d) - d;
+        setTimeout(function () {
+            b.dom.scrollTop += 1;
+        }, 1);
         return true
     }
     return false

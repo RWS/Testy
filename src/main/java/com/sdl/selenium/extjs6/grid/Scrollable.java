@@ -78,7 +78,7 @@ public interface Scrollable extends IWebLocator {
     default boolean scrollPageDownInTree() {
         String id = getAttributeId();
         if (id != null || !"".equals(id)) {
-            String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=(a.body.dom.childElementCount * a.body.dom.firstChild.scrollHeight) - a.body.dom.firstChild.scrollHeight;return true}return false})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement,d=a.body.dom.firstChild.scrollHeight;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=(a.body.dom.childElementCount*d)-d;setTimeout(function(){b.dom.scrollTop+=1;},1);return true}return false})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
