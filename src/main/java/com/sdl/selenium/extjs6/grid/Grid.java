@@ -148,20 +148,36 @@ public class Grid extends Table implements Scrollable {
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();
         int columns = columnsEl.size();
-
         List<Integer> columnsList = getColumns(columns, excludedColumns);
 
         if (rows <= 0) {
             return null;
         } else {
             List<List<String>> listOfList = new ArrayList<>();
-            for (int i = 1; i <= rows; ++i) {
-                List<String> list = new ArrayList<>();
-                for (int j : columnsList) {
-                    list.add(this.getCell(i, j).getText(true));
+            boolean canRead = true;
+            String id = "";
+            do {
+                for (int i = 1; i <= rows; ++i) {
+                    if (canRead) {
+                        List<String> list = new ArrayList<>();
+                        for (int j : columnsList) {
+                            list.add(this.getCell(i, j).getText(true));
+                        }
+                        listOfList.add(list);
+                    } else {
+                        String currentId = new Row(this, i).getAttributeId();
+                        if (!"".equals(id) && id.equals(currentId)) {
+                            canRead = true;
+                        }
+                    }
                 }
-                listOfList.add(list);
-            }
+                if (isScrollBottom()) {
+                    break;
+                }
+                id = new Row(this, rows).getAttributeId();
+                scrollPageDownInTree();
+                canRead = false;
+            } while (true);
             return listOfList;
         }
     }
