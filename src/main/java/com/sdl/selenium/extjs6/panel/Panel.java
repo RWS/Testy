@@ -11,7 +11,8 @@ public class Panel extends WebLocator {
     public Panel() {
         setClassName("Panel");
         setBaseCls("x-panel");
-        WebLocator header = new WebLocator().setClasses("x-title").setRoot("//");
+        WebLocator panelHeader = new WebLocator().setClasses("x-panel-header").setRoot("/");
+        WebLocator header = new WebLocator(panelHeader).setClasses("x-title");
         setTemplateTitle(new WebLocator(header));
     }
 
@@ -46,4 +47,9 @@ public class Panel extends WebLocator {
         }
         return this;
     }
+
+//    public static void main(String[] args) {
+//        Panel p = new Panel(null, "Title");
+//        LOGGER.debug("{}", p.getXPath());
+//    }
 }
