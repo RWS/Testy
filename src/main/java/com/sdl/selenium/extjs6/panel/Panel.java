@@ -27,7 +27,7 @@ public class Panel extends WebLocator {
     }
 
     private WebLocator getCollapseEl(String type) {
-        return new WebLocator(this).setClasses("x-tool-" + type);
+        return new WebLocator(this).setCls("x-tool-" + type).setTemplate("cls", "contains(@class,'%s')");
     }
 
     public boolean collapse() {
@@ -47,9 +47,4 @@ public class Panel extends WebLocator {
         }
         return this;
     }
-
-//    public static void main(String[] args) {
-//        Panel p = new Panel(null, "Title");
-//        LOGGER.debug("{}", p.getXPath());
-//    }
 }
