@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
-import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -16,7 +16,7 @@ public class TextFieldIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#form-fieldtypes");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         field.ready(20);
     }
 

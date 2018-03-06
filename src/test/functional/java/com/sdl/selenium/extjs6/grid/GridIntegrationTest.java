@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class GridIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#array-grid");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
         grid.ready(10);
         grid.ready(true);
     }
@@ -53,7 +54,7 @@ public class GridIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "headerTest")
     void selectTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "1900"));
@@ -71,7 +72,7 @@ public class GridIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "selectTest")
     void scrollToCellTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#spreadsheet-checked");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#spreadsheet-checked");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "2017"));
@@ -81,7 +82,7 @@ public class GridIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "scrollToCellTest")
     void checkCellTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#cell-editing");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");
         spreadsheet.ready(true);
         Cell cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
@@ -94,7 +95,7 @@ public class GridIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "checkCellTest")
     void getCellsTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#xml-grid");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
         Grid spreadsheet = new Grid().setTitle("XML Grid");
         spreadsheet.ready(true);
         List<List<String>> cellsText = spreadsheet.getCellsText();
@@ -165,7 +166,7 @@ public class GridIntegrationTest extends TestBase {
 
     //    @Test//(dependsOnMethods = "checkCellTest")
     void performanceIsCheckedTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#cell-editing");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#cell-editing");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");
         spreadsheet.ready(true);
 

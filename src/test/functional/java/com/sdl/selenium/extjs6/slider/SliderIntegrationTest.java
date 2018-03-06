@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.slider;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
@@ -14,7 +15,7 @@ public class SliderIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#slider-field");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#slider-field");
     }
 
     @Test

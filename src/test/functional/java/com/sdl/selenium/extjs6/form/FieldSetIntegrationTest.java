@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
 import org.testng.annotations.BeforeClass;
@@ -15,7 +16,7 @@ public class FieldSetIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#form-fieldcontainer");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldcontainer");
         field.ready(20);
     }
 

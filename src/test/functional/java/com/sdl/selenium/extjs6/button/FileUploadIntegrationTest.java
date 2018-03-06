@@ -2,9 +2,7 @@ package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.extjs6.form.TextArea;
 import com.sdl.selenium.extjs6.panel.Panel;
-import com.sdl.selenium.extjs6.tree.Tree;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -18,7 +16,7 @@ public class FileUploadIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#form-fieldtypes");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         fileUpload.ready(20);
     }
 

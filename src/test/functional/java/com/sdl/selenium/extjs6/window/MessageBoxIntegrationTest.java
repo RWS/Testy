@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.window;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
@@ -17,7 +18,7 @@ public class MessageBoxIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#message-box");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#message-box");
         dialogButton.ready(20);
         dialogButton.click();
     }

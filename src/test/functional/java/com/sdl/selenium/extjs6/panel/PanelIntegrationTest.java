@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.panel;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -13,7 +14,7 @@ public class PanelIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#basic-panels");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-panels");
         collapsiblePanel.ready(20);
     }
 

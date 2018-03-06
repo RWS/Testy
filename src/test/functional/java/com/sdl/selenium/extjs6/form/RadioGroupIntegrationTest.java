@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
 import com.sdl.selenium.web.SearchType;
@@ -15,7 +16,7 @@ public class RadioGroupIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#form-radiogroup");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-radiogroup");
         radioGroup.ready(20);
     }
 

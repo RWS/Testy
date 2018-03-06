@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
@@ -14,7 +15,7 @@ public class DateFieldIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#form-fieldtypes");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         dateField.ready(20);
         Utils.sleep(3000);
     }

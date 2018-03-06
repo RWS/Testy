@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.tab;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
@@ -17,7 +18,7 @@ public class TabIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#basic-tabs");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-tabs");
         activeTab.ready(20);
     }
 

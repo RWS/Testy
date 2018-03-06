@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
@@ -19,7 +20,7 @@ public class ComboBoxIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#simple-combo");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#simple-combo");
         comboBox.ready(20);
         Utils.sleep(2000);
     }

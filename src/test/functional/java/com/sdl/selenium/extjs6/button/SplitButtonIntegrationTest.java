@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.button;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Table;
@@ -23,7 +24,7 @@ public class SplitButtonIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#split-buttons");
         small.ready(10);
         Utils.sleep(1000);
     }
@@ -34,7 +35,7 @@ public class SplitButtonIntegrationTest extends TestBase {
         small.clickOnMenu("Menu Item 3");
     }
 
-    @Test (dependsOnMethods = "splitButton")
+    @Test(dependsOnMethods = "splitButton")
     public void getAllMenuValuesTest() {
         assertThat(small.getAllMenuValues(), is(Arrays.asList("Menu Item 1", "Menu Item 2", "Menu Item 3")));
     }
