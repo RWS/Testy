@@ -6,6 +6,7 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -14,18 +15,19 @@ import static org.hamcrest.core.Is.is;
 
 public class MessageBoxIntegrationTest extends TestBase {
 
-    private Button dialogButton = new Button().setText("Yes/No/Cancel Dialog", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private Button dialogButton = new Button().setText("Confirm Dialog", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
     @BeforeClass
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#message-box");
         dialogButton.ready(20);
+        Utils.sleep(2000);
         dialogButton.click();
     }
 
     @Test
     void messageBoxTest() {
-        MessageBox messageBox = new MessageBox("Save Changes?", "You are closing a tab that has unsaved changes. Would you like to save your changes?", SearchType.HTML_NODE);
+        MessageBox messageBox = new MessageBox("Confirmh", "Are you sure you want to do that?");
         ConditionManager conditionManager = new ConditionManager(10000);
         conditionManager.add(new RenderSuccessCondition(messageBox));
 

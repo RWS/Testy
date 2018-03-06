@@ -19,7 +19,7 @@ public class SplitButtonIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(SplitButtonIntegrationTest.class);
 
     private Table table = new Table().setClasses("x-table-layout");
-    Cell cell = table.getCell(1, 2);
+    private Cell cell = table.getCell(1, 2);
     private SplitButton small = new SplitButton(cell, "Small").setVisibility(true);
 
     @BeforeClass

@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,6 +22,7 @@ public class TagFieldIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-tag");
         tagField.ready(20);
+        Utils.sleep(2000);
     }
 
     @Test

@@ -86,7 +86,7 @@ public class DateField extends TextField {
         WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setVisibility(true).setInfoMessage("year " + year);
         boolean render;
         do {
-            render = yearEl.waitToRender(100);
+            render = yearEl.waitToRender(100L, false);
             if (!render) {
                 btn.click();
             }
@@ -94,7 +94,7 @@ public class DateField extends TextField {
         try {
             yearEl.click();
         } catch (WebDriverException e) {
-            if (tooltip.waitToRender(500)) {
+            if (tooltip.waitToRender(500L, false)) {
                 WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).setInfoMessage("month Jan");
                 monthEl.mouseOver();
                 Utils.sleep(300);
