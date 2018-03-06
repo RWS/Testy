@@ -26,8 +26,7 @@ public class ElementRemovedSuccessCondition extends SuccessCondition implements 
     }
 
     public boolean execute() {
-        component.waitToRender(component.getPathBuilder().getRenderMillis(), false);
-        return !component.isElementPresent();
+        return !component.waitToRender(0L, false);
     }
 
     @Override
