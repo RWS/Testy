@@ -2,6 +2,12 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.10.0-SNAPSHOT**
 - update webdriver version 3.9.0
+- update webdriver version 3.9.1
+- improvement scrollPageDownInTree() method in Scrollable interface
+- improvement getCellsText(int... excludedColumns) in Grid with scroll
+- improvement collapse method on Panel 
+- improvement ElementRemovedSuccessCondition, no show log if element wasn't present 
+- update webdriver version 3.10.0
 
 **Release Notes for Testy 2.9.0**
 - update webdriver version 3.8.0
