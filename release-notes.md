@@ -8,6 +8,7 @@ RELEASE NOTES
 - improvement collapse method on Panel 
 - improvement ElementRemovedSuccessCondition, no show log if element wasn't present 
 - update webdriver version 3.10.0
+- update webdriver version 3.11.0
 
 **Release Notes for Testy 2.9.0**
 - update webdriver version 3.8.0
