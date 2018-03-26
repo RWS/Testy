@@ -62,7 +62,7 @@ var c = Ext.getCmp('terminologylanguagesgrid-1243');
 (function (c) {
     var a = c.view.scrollable,
         b = a._scrollElement;
-    return b.dom.scrollTop >= a.getMaxPosition().y;
+    return Math.round(b.dom.scrollTop) >= a.getMaxPosition().y;
 })(c)
 
 
