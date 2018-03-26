@@ -156,6 +156,7 @@ public class Grid extends Table implements Scrollable {
             List<List<String>> listOfList = new ArrayList<>();
             boolean canRead = true;
             String id = "";
+            int timeout = 0;
             do {
                 for (int i = 1; i <= rows; ++i) {
                     if (canRead) {
@@ -177,7 +178,8 @@ public class Grid extends Table implements Scrollable {
                 id = new Row(this, rows).getAttributeId();
                 scrollPageDownInTree();
                 canRead = false;
-            } while (true);
+                timeout++;
+            } while (timeout < 30);
             return listOfList;
         }
     }
