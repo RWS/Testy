@@ -103,9 +103,9 @@ public class WebDriverConfig {
         LOGGER.info("|          Stopping driver (closing browser)                   |");
         LOGGER.info("===============================================================");
         driver.quit();
-        String user = System.getProperty("user.name");
+        String user = System.getProperty("user.home");
         try {
-            org.apache.commons.io.FileUtils.cleanDirectory(new File("C:\\Users\\" + user + "\\AppData\\Local\\Temp"));
+            org.apache.commons.io.FileUtils.cleanDirectory(new File(user + "\\AppData\\Local\\Temp"));
         } catch (IOException e) {
             LOGGER.debug("{}", e.getMessage());
         }
