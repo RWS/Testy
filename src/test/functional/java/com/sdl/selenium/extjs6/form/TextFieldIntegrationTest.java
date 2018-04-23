@@ -21,9 +21,8 @@ public class TextFieldIntegrationTest extends TestBase {
     }
 
     @Test
-    public void comboBoxTest() {
+    public void textFieldTest() {
         assertTrue(field.setValue("New York"));
         assertEquals(field.getValue(), "New York");
     }
-
 }

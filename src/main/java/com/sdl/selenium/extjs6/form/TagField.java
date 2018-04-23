@@ -19,7 +19,8 @@ public class TagField extends ComboBox {
 
     public TagField() {
         setClassName("TagField");
-        setTag("div");
+        setBaseCls("x-tagfield-list");
+        setTag("ul");
     }
 
     public TagField(WebLocator container) {
@@ -131,5 +132,9 @@ public class TagField extends ComboBox {
             return isEmpty ? new ArrayList<>() : Arrays.asList(comboValues);
         }
         return new ArrayList<>();
+    }
+
+    public WebLocator getTriggerEl(String icon) {
+        return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
     }
 }
