@@ -281,7 +281,13 @@ public class WebDriverConfig {
             LOGGER.debug("Switch to tab id: {}", tabID);
 
             driver.switchTo().window(tabID);
-            LOGGER.info("Current tab title : {}", driver.getTitle());
+            String title = driver.getTitle();
+            if (title == null || "".equals(title)) {
+                Utils.sleep(200);
+                driver.switchTo().window(tabID);
+                title = driver.getTitle();
+            }
+            LOGGER.info("Current tab title : {}", title);
         } catch (NoSuchWindowException e) {
             LOGGER.error("NoSuchWindowException", e);
         }
