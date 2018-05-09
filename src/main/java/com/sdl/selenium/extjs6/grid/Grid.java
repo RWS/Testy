@@ -183,4 +183,13 @@ public class Grid extends Table implements Scrollable {
             return listOfList;
         }
     }
+
+    @Override
+    public int getCount() {
+        if (ready(true)) {
+            return new Row(this).size();
+        } else {
+            return -1;
+        }
+    }
 }
