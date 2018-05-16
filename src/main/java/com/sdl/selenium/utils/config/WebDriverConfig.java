@@ -85,7 +85,7 @@ public class WebDriverConfig {
                 isOpera = true;
             }
 
-            driver.manage().window().maximize();
+//            driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
