@@ -1,5 +1,6 @@
 package com.sdl.selenium.utils.browsers;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,16 +20,16 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     private static final String DEFAULT_CONFIG =
             "\n browser=chrome" +
-            "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
-            "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
-            "\n options.arguments=--disable-infobars --lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
-            "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
-            "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
-            "\n options.experimental.profile.default_content_settings.popups=0" +
-            "\n options.experimental.download.prompt_for_download=1" +
-            "\n options.experimental.credentials_enable_service=false" +
-            "\n options.experimental.profile.password_manager_enabled=false" +
-            "\n options.experimental.safebrowsing.enabled=true";
+                    "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
+                    "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
+                    "\n options.arguments=--disable-infobars --lang=en --allow-running-insecure-content --enable-logging --v=1 --test-type" +
+                    "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
+                    "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
+                    "\n options.experimental.profile.default_content_settings.popups=0" +
+                    "\n options.experimental.download.prompt_for_download=1" +
+                    "\n options.experimental.credentials_enable_service=false" +
+                    "\n options.experimental.profile.password_manager_enabled=false" +
+                    "\n options.experimental.safebrowsing.enabled=true";
 
 
     public ChromeConfigReader() {
@@ -106,7 +107,10 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (!"".equals(downloadDir)) {
+        if (downloadDir != null && !"".equals(downloadDir)) {
+            if (SystemUtils.IS_OS_LINUX) {
+                downloadDir = downloadDir.replaceAll("/", "\\");
+            }
             prefs.put("download.default_directory", downloadDir);
         }
         String arguments = getProperty("options.arguments");
