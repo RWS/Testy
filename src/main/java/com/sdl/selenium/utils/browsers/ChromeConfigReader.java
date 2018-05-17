@@ -110,7 +110,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             prefs.put("download.default_directory", downloadDir);
         }
         String arguments = getProperty("options.arguments");
-        options.addArguments(arguments);
+        options.addArguments(arguments.split(" "));
         options.setExperimentalOption("prefs", prefs);
         LOGGER.debug("The properties was load with success: {}", toString());
     }
