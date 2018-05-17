@@ -28,7 +28,7 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
     }
 
     public String getDownloadDir() {
-        String downloadDir = getProperty("browser.download.dir");
+        String downloadDir = getProperty("browser.download.dir").replaceAll("\\\\", "/");
         String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MMM-dd");
         String date = sdf.format(new Date());

@@ -2,18 +2,26 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.utils.Utils;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
 
 public class TagFieldIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TagFieldIntegrationTest.class);
 
     private TagField tagField = new TagField(null, "Select a state:");
     private TagField selectTagField = new TagField(null, "Select/add location:");
@@ -32,6 +40,11 @@ public class TagFieldIntegrationTest extends TestBase {
         assertThat(tagField.select("California", "Alaska"), is(true));
         assertThat(tagField.getValue(), containsString("Alaska"));
         assertThat(tagField.getAllSelectedValues(), is(Arrays.asList("California", "Alaska")));
+
+        LogEntries logEntries = WebDriverConfig.getDriver().manage().logs().get(LogType.PERFORMANCE);
+        for (LogEntry entry : logEntries) {
+            LOGGER.debug("{}", entry.toString());
+        }
     }
 
     @Test(dependsOnMethods = "tagTest")

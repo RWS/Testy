@@ -35,16 +35,16 @@ public class DeployTesty extends TestBase {
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "domain.user";
-    private static final String DOMAIN_PASS = "***";
+    private static final String DOMAIN_USER = "vculea";
+    private static final String DOMAIN_PASS = "VCinit*%";
 
-    private static final String JENKINS_JOB_URL = "http://cluj-jenkins02:8080/job/testy/";
+    private static final String JENKINS_JOB_URL = "https://cluj-jenkins02.global.sdl.corp:8443/job/testy/";
 
     private static final String NEXUS_REPOSITORY_URL = "http://cljeng-nexus02:8081/nexus/#view-repositories;oss-sonatype-snapshots";
 
     private WebLocator loginContainer = new WebLocator().setClasses("login");
-    private WebLink loginEl = new WebLink(loginContainer, "log in").setSearchTextType(SearchType.HTML_NODE);
-    private WebLink logOutEl = new WebLink(loginContainer, "log out").setSearchTextType(SearchType.HTML_NODE);
+    private WebLink loginEl = new WebLink(loginContainer, "log in", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private WebLink logOutEl = new WebLink(loginContainer).setAttribute("href", "/logout");
     private Form loginForm = new Form().setName("login");
     private TextField login = new TextField(loginForm).setName("j_username");
     private TextField pass = new TextField(loginForm).setName("j_password");
