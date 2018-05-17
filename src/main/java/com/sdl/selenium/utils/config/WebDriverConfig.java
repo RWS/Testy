@@ -6,6 +6,7 @@ import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.Utils;
+import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -85,7 +86,9 @@ public class WebDriverConfig {
                 isOpera = true;
             }
 
-            driver.manage().window().maximize();
+            if(!SystemUtils.IS_OS_LINUX){
+                driver.manage().window().maximize();
+            }
             driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
