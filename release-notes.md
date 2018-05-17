@@ -1,6 +1,9 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.10.0-SNAPSHOT**
+**Release Notes for Testy 2.11.0-SNAPSHOT**
+- update webdriver version 3.9.0
+
+**Release Notes for Testy 2.10.0**
 - update webdriver version 3.9.0
 - update webdriver version 3.9.1
 - improvement scrollPageDownInTree() method in Scrollable interface
