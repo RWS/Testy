@@ -108,9 +108,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             e.printStackTrace();
         }
         if (downloadDir != null && !"".equals(downloadDir)) {
-            if (SystemUtils.IS_OS_LINUX) {
-                downloadDir = downloadDir.replaceAll("/", "\\\\");
-            }
             prefs.put("download.default_directory", downloadDir);
         }
         String arguments = getProperty("options.arguments");
