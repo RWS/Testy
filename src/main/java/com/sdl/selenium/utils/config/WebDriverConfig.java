@@ -200,7 +200,7 @@ public class WebDriverConfig {
             LOGGER.debug(properties.toString());
 
             driver = properties.createDriver(remoteUrl);
-            WebDriverConfig.setDownloadPath(properties.getDownloadPath().replaceAll("\\\\", File.separator));
+            WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
         }
         init(driver);
