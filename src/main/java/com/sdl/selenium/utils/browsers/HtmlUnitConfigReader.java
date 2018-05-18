@@ -40,6 +40,6 @@ public class HtmlUnitConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public boolean isSilentDownload() {
-        return !"".equals(getProperty("browser.download.dir"));
+        return "silent".equals(getProperty("browser.download.dir")) || !"".equals(getProperty("browser.download.dir"));
     }
 }

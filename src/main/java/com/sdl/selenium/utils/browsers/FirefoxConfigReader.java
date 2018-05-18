@@ -97,9 +97,9 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
         setProfilePreferences(profile);
         File file = new File(getDownloadPath());
         String downloadDir = file.getCanonicalPath();
-        if ("".equals(downloadDir)) {
+        if ("".equals(downloadDir) && !"silent".equals(downloadDir)) {
             String profilePath = getProperty("browser.profile.path");
-            if (profilePath != null && !"".equals(profilePath)) {
+            if (profilePath != null && !"".equals(profilePath) && !"silent".equals(downloadDir)) {
                 profile = new FirefoxProfile(new File(profilePath));
                 setProfilePreferences(profile);
             }
@@ -111,7 +111,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public boolean isSilentDownload() {
-        return !"".equals(getProperty("browser.download.dir")) &&
+        return "silent".equals(getProperty("browser.download.dir")) || !"".equals(getProperty("browser.download.dir")) &&
                 !"".equals(getProperty("profile.preference.browser.helperApps.neverAsk.openFile")) &&
                 !"".equals(getProperty("profile.preference.browser.helperApps.neverAsk.saveToDisk")) &&
                 !(Boolean.valueOf(getProperty("profile.preference.browser.helperApps.alwaysAsk.force"))) &&

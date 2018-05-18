@@ -76,7 +76,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public boolean isSilentDownload() {
-        return !"".equals(getProperty("browser.download.dir"));
+        return "silent".equals(getProperty("browser.download.dir")) || !"".equals(getProperty("browser.download.dir"));
     }
 
     private void setProfilePreferences(ChromeOptions options) {
@@ -107,7 +107,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (downloadDir != null && !"".equals(downloadDir)) {
+        if (downloadDir != null && !"".equals(downloadDir) && !"silent".equals(downloadDir)) {
             prefs.put("download.default_directory", downloadDir);
         }
         String arguments = getProperty("options.arguments");
