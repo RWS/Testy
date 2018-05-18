@@ -2,6 +2,7 @@ package com.sdl.selenium.utils.browsers;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.service.DriverService;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,8 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
     public abstract WebDriver createDriver(URL remoteUrl) throws IOException;
 
     public abstract boolean isSilentDownload();
+
+    public abstract DriverService getDriveService();
 
     public String getDownloadPath() {
         File file = new File(getDownloadDir());

@@ -5,6 +5,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.service.DriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +66,11 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     @Override
     public boolean isSilentDownload() {
         return "silent".equals(getProperty("browser.download.dir")) || !"".equals(getProperty("browser.download.dir"));
+    }
+
+    @Override
+    public DriverService getDriveService() {
+        return null;
     }
 
     @Override

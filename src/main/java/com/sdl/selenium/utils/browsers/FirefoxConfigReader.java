@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.service.DriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,6 +121,11 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 (Boolean.valueOf(getProperty("profile.preference.browser.download.manager.closeWhenDone"))) &&
                 !(Boolean.valueOf(getProperty("profile.preference.browser.download.manager.showWhenStarting"))) &&
                 (Integer.valueOf(getProperty("profile.preference.browser.download.folderList")) == 2);
+    }
+
+    @Override
+    public DriverService getDriveService() {
+        return null;
     }
 
     private void setProfilePreferences(FirefoxProfile profile) {

@@ -5,6 +5,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.service.DriverService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,5 +42,10 @@ public class HtmlUnitConfigReader extends AbstractBrowserConfigReader {
     @Override
     public boolean isSilentDownload() {
         return "silent".equals(getProperty("browser.download.dir")) || !"".equals(getProperty("browser.download.dir"));
+    }
+
+    @Override
+    public DriverService getDriveService() {
+        return null;
     }
 }

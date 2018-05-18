@@ -1,5 +1,7 @@
 package com.sdl.selenium.utils.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opera.core.systems.OperaDesktopDriver;
 import com.sdl.selenium.utils.browsers.*;
 import com.sdl.selenium.web.Browser;
@@ -7,14 +9,20 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.service.DriverService;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +30,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
@@ -38,6 +45,8 @@ public class WebDriverConfig {
     private static boolean isChrome;
     private static boolean isFireFox;
     private static boolean isSilentDownload;
+    private static boolean isHeadless;
+    private static DriverService driverService;
     private static String downloadPath;
 
     /**
@@ -67,7 +76,7 @@ public class WebDriverConfig {
         return isFireFox;
     }
 
-    public static void init(WebDriver driver) {
+    public static void init(WebDriver driver) throws IOException {
         if (driver != null) {
             LOGGER.info("===============================================================");
             LOGGER.info("|          Open Selenium Web Driver ");
@@ -86,11 +95,26 @@ public class WebDriverConfig {
                 isOpera = true;
             }
 
-            if(!SystemUtils.IS_OS_LINUX){
+            if (!SystemUtils.IS_OS_LINUX) {
                 driver.manage().window().maximize();
             }
             driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
-
+            if (isHeadless() && SystemUtils.IS_OS_LINUX && isChrome) {
+                Map<String, Object> commandParams = new HashMap<>();
+                commandParams.put("cmd", "Page.setDownloadBehavior");
+                Map<String, String> params = new HashMap<>();
+                params.put("behavior", "allow");
+                params.put("downloadPath", WebDriverConfig.getDownloadPath());
+                commandParams.put("params", params);
+                ObjectMapper objectMapper = new ObjectMapper();
+                HttpClient httpClient = HttpClientBuilder.create().build();
+                String command = objectMapper.writeValueAsString(commandParams);
+                String u = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
+                HttpPost request = new HttpPost(u);
+                request.addHeader("content-type", "application/json");
+                request.setEntity(new StringEntity(command));
+                httpClient.execute(request);
+            }
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     if (WebLocatorConfig.getBoolean("driver.autoClose")) {
@@ -123,6 +147,22 @@ public class WebDriverConfig {
 
     private static void setSilentDownload(boolean isSalientDownload) {
         WebDriverConfig.isSilentDownload = isSalientDownload;
+    }
+
+    public static boolean isHeadless() {
+        return isHeadless;
+    }
+
+    public static void setHeadless(boolean isHeadless) {
+        WebDriverConfig.isHeadless = isHeadless;
+    }
+
+    public static DriverService getDriverService() {
+        return driverService;
+    }
+
+    public static void setDriverService(DriverService driverService) {
+        WebDriverConfig.driverService = driverService;
     }
 
     public static String getDownloadPath() {
@@ -205,6 +245,8 @@ public class WebDriverConfig {
             driver = properties.createDriver(remoteUrl);
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
+            WebDriverConfig.setHeadless(properties.getProperty("options.arguments").contains("headless"));
+            WebDriverConfig.setDriverService(properties.getDriveService());
         }
         init(driver);
         return driver;
