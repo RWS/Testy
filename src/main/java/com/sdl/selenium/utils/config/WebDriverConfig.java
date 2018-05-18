@@ -99,22 +99,6 @@ public class WebDriverConfig {
                 driver.manage().window().maximize();
             }
             driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
-            if (isHeadless() && SystemUtils.IS_OS_LINUX && isChrome) {
-                Map<String, Object> commandParams = new HashMap<>();
-                commandParams.put("cmd", "Page.setDownloadBehavior");
-                Map<String, String> params = new HashMap<>();
-                params.put("behavior", "allow");
-                params.put("downloadPath", WebDriverConfig.getDownloadPath());
-                commandParams.put("params", params);
-                ObjectMapper objectMapper = new ObjectMapper();
-                HttpClient httpClient = HttpClientBuilder.create().build();
-                String command = objectMapper.writeValueAsString(commandParams);
-                String u = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
-                HttpPost request = new HttpPost(u);
-                request.addHeader("content-type", "application/json");
-                request.setEntity(new StringEntity(command));
-                httpClient.execute(request);
-            }
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     if (WebLocatorConfig.getBoolean("driver.autoClose")) {

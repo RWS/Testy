@@ -551,8 +551,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 HttpClient httpClient = HttpClientBuilder.create().build();
                 try {
                     String command = objectMapper.writeValueAsString(commandParams);
-                    String u = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
-                    HttpPost request = new HttpPost(u);
+                    String uri = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
+                    HttpPost request = new HttpPost(uri);
                     request.addHeader("content-type", "application/json");
                     request.setEntity(new StringEntity(command));
                     httpClient.execute(request);
