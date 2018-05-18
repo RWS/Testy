@@ -1,10 +1,12 @@
 package com.sdl.selenium.web.utils;
 
+import com.google.common.base.Charsets;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -39,9 +41,13 @@ public class FileUtils {
     }
 
     public static String getTextFromFile(String pathFile) {
+        return getTextFromFile(pathFile, Charsets.UTF_8);
+    }
+
+    public static String getTextFromFile(String pathFile, Charset cs) {
         String strLine = "";
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathFile), "UTF8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathFile), cs));
             String tmp;
             while ((tmp = br.readLine()) != null) {
                 strLine += tmp;
