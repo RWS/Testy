@@ -540,7 +540,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public boolean download(String fileName, long timeoutMillis) {
         if (WebDriverConfig.isSilentDownload()) {
-            if (WebDriverConfig.isHeadless() && SystemUtils.IS_OS_LINUX && WebDriverConfig.isChrome()) {
+            if (WebDriverConfig.isHeadless() && WebDriverConfig.isChrome()) {
                 Map<String, Object> commandParams = new HashMap<>();
                 commandParams.put("cmd", "Page.setDownloadBehavior");
                 Map<String, String> params = new HashMap<>();
