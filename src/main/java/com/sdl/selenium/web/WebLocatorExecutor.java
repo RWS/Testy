@@ -6,6 +6,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface WebLocatorExecutor {
@@ -76,7 +77,7 @@ public interface WebLocatorExecutor {
 
     boolean highlight = WebLocatorConfig.isHighlight();
 
-    boolean download(String fileName, long timeoutMillis);
+    boolean download(String fileName, long timeoutMillis) throws IOException;
 
     boolean browse(WebLocator el);
 

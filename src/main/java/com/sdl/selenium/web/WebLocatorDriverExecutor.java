@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.selenium.WebLocatorSuggestions;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
@@ -8,6 +9,11 @@ import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -24,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -531,8 +538,24 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         highlightElementWithDriver(el.currentElement);
     }
 
-    public boolean download(String fileName, long timeoutMillis) {
+    public boolean download(String fileName, long timeoutMillis) throws IOException {
         if (WebDriverConfig.isSilentDownload()) {
+            if (WebDriverConfig.isHeadless() && SystemUtils.IS_OS_LINUX && WebDriverConfig.isChrome()) {
+                Map<String, Object> commandParams = new HashMap<>();
+                commandParams.put("cmd", "Page.setDownloadBehavior");
+                Map<String, String> params = new HashMap<>();
+                params.put("behavior", "allow");
+                params.put("downloadPath", WebDriverConfig.getDownloadPath());
+                commandParams.put("params", params);
+                ObjectMapper objectMapper = new ObjectMapper();
+                HttpClient httpClient = HttpClientBuilder.create().build();
+                String command = objectMapper.writeValueAsString(commandParams);
+                String u = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
+                HttpPost request = new HttpPost(u);
+                request.addHeader("content-type", "application/json");
+                request.setEntity(new StringEntity(command));
+                httpClient.execute(request);
+            }
             fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
             File file = new File(fileName);
             return FileUtils.waitFileIfIsEmpty(file, timeoutMillis) && fileName.equals(file.getAbsolutePath());
