@@ -77,7 +77,7 @@ public interface WebLocatorExecutor {
 
     boolean highlight = WebLocatorConfig.isHighlight();
 
-    boolean download(String fileName, long timeoutMillis) throws IOException;
+    boolean download(String fileName, long timeoutMillis);
 
     boolean browse(WebLocator el);
 

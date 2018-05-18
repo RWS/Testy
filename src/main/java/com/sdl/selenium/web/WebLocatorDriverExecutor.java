@@ -538,7 +538,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         highlightElementWithDriver(el.currentElement);
     }
 
-    public boolean download(String fileName, long timeoutMillis) throws IOException {
+    public boolean download(String fileName, long timeoutMillis) {
         if (WebDriverConfig.isSilentDownload()) {
             if (WebDriverConfig.isHeadless() && SystemUtils.IS_OS_LINUX && WebDriverConfig.isChrome()) {
                 Map<String, Object> commandParams = new HashMap<>();
@@ -549,12 +549,16 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 commandParams.put("params", params);
                 ObjectMapper objectMapper = new ObjectMapper();
                 HttpClient httpClient = HttpClientBuilder.create().build();
-                String command = objectMapper.writeValueAsString(commandParams);
-                String u = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
-                HttpPost request = new HttpPost(u);
-                request.addHeader("content-type", "application/json");
-                request.setEntity(new StringEntity(command));
-                httpClient.execute(request);
+                try {
+                    String command = objectMapper.writeValueAsString(commandParams);
+                    String u = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
+                    HttpPost request = new HttpPost(u);
+                    request.addHeader("content-type", "application/json");
+                    request.setEntity(new StringEntity(command));
+                    httpClient.execute(request);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
             File file = new File(fileName);
