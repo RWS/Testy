@@ -8,7 +8,7 @@ public interface ICondition {
 
     boolean execute();
 
-    public boolean equals(String message);
+    boolean equals(String message);
 
     String getMessage();
 
@@ -17,5 +17,4 @@ public interface ICondition {
     void setPriority(int priority);
 
     String getResultMessage();
-
 }

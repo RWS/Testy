@@ -49,5 +49,4 @@ public class RenderFailCondition extends FailCondition implements RenderConditio
     public String getResultMessage() {
         return component.getText();
     }
-
 }

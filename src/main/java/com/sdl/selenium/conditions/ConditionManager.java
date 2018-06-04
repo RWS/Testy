@@ -4,6 +4,7 @@ import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -12,58 +13,69 @@ import java.util.List;
 /**
  * Example how to add conditions to ConditionManager:
  * <pre>
-ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
-    public boolean execute() {
-        return logoutButton.isElementPresent();
-    }
-});
+    ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
+        public boolean execute() {
+            return logoutButton.isElementPresent();
+        }
+    });
  * </pre>
  * OR more specific cases:
  * <pre>
- ConditionManager manager = new ConditionManager();
- manager.add(
-     new MessageBoxFailCondition("Wrong email or password.")).add(
-     new RenderSuccessCondition(logoutButton)
- );
- Condition condition = manager.execute();
- logged = condition.isSuccess();
+     ConditionManager manager = new ConditionManager();
+     manager.add(
+         new MessageBoxFailCondition("Wrong email or password.")).add(
+         new RenderSuccessCondition(logoutButton)
+     );
+     Condition condition = manager.execute();
+     logged = condition.isSuccess();
  </pre>
  */
-public class ConditionManager  {
+public class ConditionManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManager.class);
 
-    public static int SLEEP_INTERVAL = 50;
+    public static int SLEEP_INTERVAL = 20;
 
     private long timeout = 10000;
+    private Duration duration = Duration.ofSeconds(10);
 
     private long startTime;
 
     private List<Condition> conditionList = new ArrayList<>();
 
     /**
-     * default timeout in milliseconds is 10000.
+     * default duration is in 10 seconds.
      */
     public ConditionManager() {
         this.add(new FailCondition("TimeoutCondition@") {
             public boolean execute() {
-                return new Date().getTime() - startTime > timeout;
+                Duration duration = getDuration().minusMillis(new Date().getTime() - startTime);
+                return duration.isZero() || duration.isNegative();
             }
+
             @Override
-            public boolean isTimeout(){
+            public boolean isTimeout() {
                 return true;
             }
+
             public String toString() {
-                return getMessage() + timeout;
+                return getMessage() + duration.toMillis() + " ms";
             }
         });
     }
 
     /**
      * @param timeout milliseconds
+     * @deprecated use {@link #ConditionManager(Duration)}
      */
+    @Deprecated
     public ConditionManager(long timeout) {
         this();
-        this.timeout = timeout;
+        this.duration = Duration.ofMillis(timeout);
+    }
+
+    public ConditionManager(Duration duration) {
+        this();
+        this.duration = duration;
     }
 
     public List<Condition> getConditionList() {
@@ -80,17 +92,17 @@ public class ConditionManager  {
         return this;
     }
 
-    public ConditionManager removeConditions(String... messages){
-        for (String message : messages){
+    public ConditionManager removeConditions(String... messages) {
+        for (String message : messages) {
             removeCondition(message);
         }
         return this;
     }
 
-    public ConditionManager removeCondition(String message){
-        if(message != null && message.length() > 0){
+    public ConditionManager removeCondition(String message) {
+        if (message != null && message.length() > 0) {
             for (Condition condition : conditionList) {
-                if(condition.equals(message)){
+                if (condition.equals(message)) {
                     conditionList.remove(condition);
                     break;
                 }
@@ -99,21 +111,25 @@ public class ConditionManager  {
         return this;
     }
 
-    public long getTimeout() {
-        return timeout;
+    public Duration getDuration() {
+        return duration;
     }
 
     /**
-     *
      * @param timeout milliseconds
      */
     public void setTimeout(long timeout) {
-        this.timeout = timeout;
+        this.duration = Duration.ofMillis(timeout);
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
     /**
      * <p>Iterates through conditions list until one of the conditions is met or the method times out</p>
      * <p>in case of timeout a FailCondition("@TimeoutCondition@") will be returned</p>
+     *
      * @return the executed Condition, unless the method times out
      */
     public Condition execute() {
@@ -121,7 +137,7 @@ public class ConditionManager  {
         Collections.sort(conditionList);
         while (true) {
             Condition condition = findCondition();
-            if(condition != null){
+            if (condition != null) {
                 LOGGER.debug("{} - executed in ({}ms)", condition, new Date().getTime() - startTime);
                 return condition;
             }
@@ -129,7 +145,7 @@ public class ConditionManager  {
         }
     }
 
-    protected Condition findCondition(){
+    protected Condition findCondition() {
         for (Condition condition : getConditionList()) {
             if (condition.execute()) {
                 return condition;

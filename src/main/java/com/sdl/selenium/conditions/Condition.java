@@ -21,9 +21,7 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
         return !isSuccess();
     }
 
-    public Condition() {
-
-    }
+    public Condition() {}
 
     public Condition(String message) {
         this.message = message;
@@ -37,7 +35,7 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
     @Override
     public String toString() {
         String msg = getClass().getSimpleName();
-        if(msg == null || "".equals(msg)) {
+        if("".equals(msg)) {
             msg = "Condition@" +  getMessage();
         } else {
             msg += "@";

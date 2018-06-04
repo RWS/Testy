@@ -4,9 +4,7 @@ import com.sdl.selenium.web.WebLocator;
 
 public abstract class FailCondition extends Condition {
 
-    public FailCondition(){
-
-    }
+    public FailCondition(){}
 
     public FailCondition(String message){
         super(message);
