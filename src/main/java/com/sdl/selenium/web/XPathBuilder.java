@@ -39,7 +39,7 @@ public class XPathBuilder implements Cloneable {
     private String title;
     private Map<String, String> templates = new LinkedHashMap<>();
     private Map<String, WebLocator> templateTitle = new LinkedHashMap<>();
-    private Map<String, String> templatesValues = new LinkedHashMap<>();
+    private Map<String, String[]> templatesValues = new LinkedHashMap<>();
     private Map<String, String> elPathSuffix = new LinkedHashMap<>();
 
     private String infoMessage;
@@ -294,7 +294,7 @@ public class XPathBuilder implements Cloneable {
 
     public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
         if (childNodes != null) {
-            this.childNodes =  Arrays.asList(childNodes);
+            this.childNodes = Arrays.asList(childNodes);
         }
         return (T) this;
     }
@@ -537,7 +537,7 @@ public class XPathBuilder implements Cloneable {
         return elPathSuffix;
     }
 
-    public Map<String, String> getTemplatesValues() {
+    public Map<String, String[]> getTemplatesValues() {
         return templatesValues;
     }
 
@@ -553,7 +553,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends XPathBuilder> T setTemplateValue(final String key, final String value) {
+    public <T extends XPathBuilder> T setTemplateValue(final String key, final String... value) {
         if (value == null) {
             this.templatesValues.remove(key);
         } else {
@@ -1048,7 +1048,7 @@ public class XPathBuilder implements Cloneable {
                 selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));
             }
         }
-        for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
+        for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
             addTemplate(selector, entry.getKey(), entry.getValue());
         }
         selector.addAll(elPathSuffix.values().stream().collect(Collectors.toList()));
@@ -1445,11 +1445,11 @@ public class XPathBuilder implements Cloneable {
 
         LinkedHashMap<String, String> templates = (LinkedHashMap<String, String>) builder.templates;
         LinkedHashMap<String, WebLocator> templateTitle = (LinkedHashMap<String, WebLocator>) builder.templateTitle;
-        LinkedHashMap<String, String> templatesValues = (LinkedHashMap<String, String>) builder.templatesValues;
+        LinkedHashMap<String, String[]> templatesValues = (LinkedHashMap<String, String[]>) builder.templatesValues;
         LinkedHashMap<String, String> elPathSuffix = (LinkedHashMap<String, String>) builder.elPathSuffix;
 
         builder.templates = (Map<String, String>) templates.clone();
-        builder.templatesValues = (Map<String, String>) templatesValues.clone();
+        builder.templatesValues = (Map<String, String[]>) templatesValues.clone();
         builder.elPathSuffix = (Map<String, String>) elPathSuffix.clone();
 
         builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();

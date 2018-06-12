@@ -22,7 +22,7 @@ public abstract class WebLocatorAbstractBuilder {
         return pathBuilder;
     }
 
-    public <T extends WebLocatorAbstractBuilder> T  setPathBuilder(XPathBuilder pathBuilder) {
+    public <T extends WebLocatorAbstractBuilder> T setPathBuilder(XPathBuilder pathBuilder) {
         this.pathBuilder = pathBuilder;
         return (T) this;
     }
@@ -88,7 +88,7 @@ public abstract class WebLocatorAbstractBuilder {
      * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
      * @param elCssSelector absolute way (css selectors) to identify element
-     * @param <T>    the element which calls this method
+     * @param <T>           the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
@@ -150,9 +150,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     *
      * @param childNodes list of WebLocators
-     * @param <T> the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
@@ -175,9 +174,9 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param text       with which to identify the item
+     * @param text        with which to identify the item
      * @param searchTypes type search text element: see more details see {@link SearchType}
-     * @param <T>        the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setText(String text, final SearchType... searchTypes) {
@@ -190,7 +189,7 @@ public abstract class WebLocatorAbstractBuilder {
      * This method reset searchTextType and set to new searchTextType.
      *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
-     * @param <T>            the element which calls this method
+     * @param <T>             the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextTypes) {
@@ -202,7 +201,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchLabelTypes accepted values are: {@link SearchType}
-     * @param <T>             the element which calls this method
+     * @param <T>              the element which calls this method
      * @return this element
      */
     private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
@@ -214,7 +213,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchTitleTypes accepted values are: {@link SearchType}
-     * @param <T>             the element which calls this method
+     * @param <T>              the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setSearchTitleType(SearchType... searchTitleTypes) {
@@ -237,9 +236,9 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param title of element
+     * @param title       of element
      * @param searchTypes see {@link SearchType}
-     * @param <T>   the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title, SearchType... searchTypes) {
@@ -248,9 +247,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     *
      * @param titleEl title element
-     * @param <T> the element which calls this method
+     * @param <T>     the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setTemplateTitle(WebLocator titleEl) {
@@ -279,7 +277,9 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Example:</p>
      * <pre>
-     *     TODO
+     *  WebLocator child = new WebLocator().setTemplate("custom", "%1$s = %2$s");
+     *  child.setTemplateValue("custom", "a", "b");
+     *  assertThat(child.getXPath(), equalTo("//*[a = b]"));
      * </pre>
      *
      * @param key   identify key
@@ -287,7 +287,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setTemplateValue(final String key, final String value) {
+    public <T extends WebLocatorAbstractBuilder> T setTemplateValue(final String key, final String... value) {
         pathBuilder.setTemplateValue(key, value);
         return (T) this;
     }
@@ -325,7 +325,7 @@ public abstract class WebLocatorAbstractBuilder {
      * </pre>
      *
      * @param visibility true or false
-     * @param <T> the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
@@ -334,9 +334,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     *
      * @param renderMillis true or false
-     * @param <T> the element which calls this method
+     * @param <T>          the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
@@ -345,9 +344,8 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     *
      * @param activateSeconds true or false
-     * @param <T> the element which calls this method
+     * @param <T>             the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
@@ -370,9 +368,9 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
-     * @param label      text label element
+     * @param label       text label element
      * @param searchTypes type search text element: see more details see {@link SearchType}
-     * @param <T>        the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchTypes) {
@@ -492,13 +490,13 @@ public abstract class WebLocatorAbstractBuilder {
      *     //*[@placeholder='Search']
      * </pre>
      *
-     * @param attribute eg. placeholder
-     * @param value     eg. Search
+     * @param attribute   eg. placeholder
+     * @param value       eg. Search
      * @param searchTypes see {@link SearchType}
-     * @param <T>       the element which calls this method
+     * @param <T>         the element which calls this method
      * @return this element
      */
-    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, String value, final SearchType ... searchTypes) {
+    public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, String value, final SearchType... searchTypes) {
         pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
     }
@@ -508,7 +506,7 @@ public abstract class WebLocatorAbstractBuilder {
      * This method add new searchTextType to existing searchTextType.
      *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}
-     * @param <T>            the element which calls this method
+     * @param <T>             the element which calls this method
      * @return this element
      */
     public <T extends WebLocatorAbstractBuilder> T addSearchTextType(SearchType... searchTextTypes) {
@@ -524,8 +522,10 @@ public abstract class WebLocatorAbstractBuilder {
     // =========================================
     // =============== Methods =================
     // =========================================
+
     /**
      * <p>Used only to identify class type of current object</p>
+     *
      * @param className className
      */
     protected void setClassName(final String className) {

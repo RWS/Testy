@@ -269,4 +269,12 @@ public class WebLocatorTest {
 
         assertEquals(parent.getXPath(), "//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(text(),'child')][position() = 1]) > 0 and count(.//*[contains(text(),'childFirst')][position() = first()]) > 0]");
     }
+
+    @Test
+    public void setTemplate() {
+        WebLocator child = new WebLocator().setTemplate("custom", "%1$s = %2$s");
+        child.setTemplateValue("custom", "a", "b");
+
+        assertThat(child.getXPath(), equalTo("//*[a = b]"));
+    }
 }

@@ -35,8 +35,8 @@ public class DeployTesty extends TestBase {
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "vculea";
-    private static final String DOMAIN_PASS = "VCinit*%";
+    private static final String DOMAIN_USER = "user";
+    private static final String DOMAIN_PASS = "pass";
 
     private static final String JENKINS_JOB_URL = "https://cluj-jenkins02.global.sdl.corp:8443/job/testy/";
 
@@ -101,7 +101,11 @@ public class DeployTesty extends TestBase {
         Utils.sleep(1000);
         logInNexus.click();
         Utils.sleep(1000);
-        userName.ready(10);
+        boolean ready = userName.ready(10);
+        if(!ready){
+            logInNexus.click();
+            Utils.sleep(1000);
+        }
         userName.setValue(DOMAIN_USER);
         password.setValue(DOMAIN_PASS);
         logIn.click();

@@ -68,7 +68,7 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setElPathSuffix(final String key, final String elPathSuffix);
 
-    <T extends WebLocatorAbstractBuilder> T setTemplateValue(final String key, final String value);
+    <T extends WebLocatorAbstractBuilder> T setTemplateValue(final String key, final String... value);
 
     <T extends WebLocatorAbstractBuilder> T setTemplate(final String key, final String value);
 
