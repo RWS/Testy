@@ -33,6 +33,12 @@ public class Menu extends WebLocator {
         link.click();
     }
 
+    public boolean doClickOnMenu(String option, SearchType... searchTypes) {
+        ready();
+        WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        return link.doClick();
+    }
+
     public List<String> getMenuValues() {
         WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setVisibility(true).setInfoMessage(this + " -> x-menu-body");
         menuList.assertReady();
