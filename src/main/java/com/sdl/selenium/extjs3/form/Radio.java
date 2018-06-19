@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +14,11 @@ public class Radio extends ExtJsComponent {
         setTag("input");
         setBaseCls("x-form-radio");
         setLabelPosition("/../");
-        setTemplate("text", "@value='%s'");
     }
 
     public Radio(String value) {
         this();
-        setText(value);
+        setAttribute("value", value, SearchType.EQUALS);
     }
 
     public Radio(WebLocator container) {

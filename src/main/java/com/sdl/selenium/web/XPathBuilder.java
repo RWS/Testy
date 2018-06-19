@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
@@ -70,8 +71,12 @@ public class XPathBuilder implements Cloneable {
         setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
         setTemplate("type", "@type='%s'");
-        setTemplate("title", "@title='%s'");
+        setTemplate("title", "@title=%s");
         setTemplate("titleEl", "count(.%s) > 0");
+        setTemplate("DEEP_CHILD_NODE_OR_SELF", "(%1$s or count(*//text()[%1$s]) > 0)");
+        setTemplate("DEEP_CHILD_NODE", "count(*//text()[%s]) > 0");
+        setTemplate("CHILD_NODE", "count(text()[%s]) > 0");
+        setTemplate("HTML_NODE", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)");
     }
 
     // =========================================
@@ -96,6 +101,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setRoot(final String root) {
         this.root = root;
         return (T) this;
@@ -119,6 +125,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T> the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setTag(final String tag) {
         this.tag = tag;
         return (T) this;
@@ -140,6 +147,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T> the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setId(final String id) {
         this.id = id;
         return (T) this;
@@ -163,6 +171,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>    the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setElPath(final String elPath) {
         this.elPath = elPath;
         return (T) this;
@@ -186,6 +195,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>           the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setElCssSelector(final String elCssSelector) {
         this.elCssSelector = elCssSelector;
         return (T) this;
@@ -207,6 +217,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setBaseCls(final String baseCls) {
         this.baseCls = baseCls;
         return (T) this;
@@ -229,6 +240,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T> the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setCls(final String cls) {
         this.cls = cls;
         return (T) this;
@@ -258,6 +270,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setClasses(final String... classes) {
         if (classes != null) {
             this.classes = Arrays.asList(classes);
@@ -281,6 +294,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>            the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setExcludeClasses(final String... excludeClasses) {
         if (excludeClasses != null) {
             this.excludeClasses = Arrays.asList(excludeClasses);
@@ -292,6 +306,7 @@ public class XPathBuilder implements Cloneable {
         return childNodes;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
         if (childNodes != null) {
             this.childNodes = Arrays.asList(childNodes);
@@ -315,6 +330,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setName(final String name) {
         this.name = name;
         return (T) this;
@@ -337,6 +353,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setText(final String text, final SearchType... searchTypes) {
         this.text = text;
 //        notSupportedForCss(text, "text");
@@ -371,6 +388,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setSearchTextType(SearchType... searchTextTypes) {
         if (searchTextTypes == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
@@ -391,6 +409,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T addSearchTextType(SearchType... searchTextTypes) {
         if (searchTextTypes != null) {
             Collections.addAll(this.searchTextType, searchTextTypes);
@@ -425,6 +444,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>              the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
         this.searchLabelType = new ArrayList<>();
         if (searchLabelTypes != null) {
@@ -450,6 +470,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setStyle(final String style) {
         this.style = style;
         return (T) this;
@@ -473,6 +494,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setTitle(final String title, final SearchType... searchTypes) {
         this.title = title;
         if (searchTypes != null && searchTypes.length > 0) {
@@ -483,6 +505,7 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setSearchTitleType(SearchType... searchTitleTypes) {
         if (searchTitleTypes == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
@@ -499,6 +522,7 @@ public class XPathBuilder implements Cloneable {
         return searchTitleType;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setTemplateTitle(WebLocator titleEl) {
         if (titleEl == null) {
             templateTitle.remove("title");
@@ -524,6 +548,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>          the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setElPathSuffix(final String key, final String elPathSuffix) {
         if (elPathSuffix == null || "".equals(elPathSuffix)) {
             this.elPathSuffix.remove(key);
@@ -553,6 +578,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setTemplateValue(final String key, final String... value) {
         if (value == null) {
             this.templatesValues.remove(key);
@@ -570,6 +596,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setTemplate(final String key, final String value) {
         if (value == null) {
             templates.remove(key);
@@ -579,6 +606,7 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T addToTemplate(final String key, final String value) {
         String template = getTemplate(key);
         if (StringUtils.isNotEmpty(template)) {
@@ -610,6 +638,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setInfoMessage(final String infoMessage) {
         this.infoMessage = infoMessage;
         return (T) this;
@@ -624,6 +653,7 @@ public class XPathBuilder implements Cloneable {
         return visibility;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setVisibility(final boolean visibility) {
         this.visibility = visibility;
         return (T) this;
@@ -633,6 +663,7 @@ public class XPathBuilder implements Cloneable {
         return renderMillis;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setRenderMillis(final long renderMillis) {
         this.renderMillis = renderMillis;
         return (T) this;
@@ -642,6 +673,7 @@ public class XPathBuilder implements Cloneable {
         return activateSeconds;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setActivateSeconds(final int activateSeconds) {
         this.activateSeconds = activateSeconds;
         return (T) this;
@@ -659,6 +691,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
         return (T) this;
@@ -681,6 +714,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setLabel(final String label, final SearchType... searchTypes) {
         this.label = label;
         if (searchTypes != null && searchTypes.length > 0) {
@@ -705,6 +739,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setLabelTag(final String labelTag) {
         this.labelTag = labelTag;
         return (T) this;
@@ -727,6 +762,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setLabelPosition(final String labelPosition) {
         this.labelPosition = labelPosition;
         return (T) this;
@@ -752,6 +788,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setPosition(final int position) {
         this.position = position + "";
         return (T) this;
@@ -768,6 +805,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setPosition(final Position position) {
         this.position = position.getValue();
         return (T) this;
@@ -794,6 +832,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setResultIdx(final int resultIdx) {
         this.resultIdx = resultIdx + "";
         return (T) this;
@@ -811,6 +850,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setResultIdx(final Position resultIdx) {
         this.resultIdx = resultIdx.getValue();
         return (T) this;
@@ -836,6 +876,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setType(final String type) {
         this.type = type;
         return (T) this;
@@ -854,6 +895,7 @@ public class XPathBuilder implements Cloneable {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setAttribute(final String attribute, String value, final SearchType... searchTypes) {
         if (attribute != null) {
             if (value == null) {
@@ -951,7 +993,7 @@ public class XPathBuilder implements Cloneable {
         } catch (NumberFormatException e) {
             anInt = 1;
         }
-        return position != null && !"".equals(position) && anInt > 0;
+        return !Strings.isNullOrEmpty(position) && anInt > 0;
     }
 
     protected boolean hasResultIdx() {
@@ -961,7 +1003,7 @@ public class XPathBuilder implements Cloneable {
         } catch (NumberFormatException e) {
             anInt = 1;
         }
-        return resultIdx != null && !"".equals(resultIdx) && anInt > 0;
+        return !Strings.isNullOrEmpty(resultIdx) && anInt > 0;
     }
 
     protected boolean hasType() {
@@ -980,9 +1022,8 @@ public class XPathBuilder implements Cloneable {
     protected String getBasePathSelector() {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
-        List<String> selector = new ArrayList<String>();
+        List<String> selector = new ArrayList<>();
         CollectionUtils.addIgnoreNull(selector, getBasePath());
-        CollectionUtils.addIgnoreNull(selector, getItemPathText());
 
         if (!WebDriverConfig.isIE()) {
             if (hasStyle()) {
@@ -999,7 +1040,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     public String getBasePath() {
-        List<String> selector = new ArrayList<String>();
+        List<String> selector = new ArrayList<>();
         if (hasId()) {
             selector.add(applyTemplate("id", getId()));
         }
@@ -1020,21 +1061,15 @@ public class XPathBuilder implements Cloneable {
         }
         if (hasTitle()) {
             String title = getTitle();
-            if (!searchTitleType.contains(SearchType.NOT_INTERNATIONALIZED)) {
-                title = InternationalizationUtils.getInternationalizedText(title);
-            }
-
             WebLocator titleTplEl = templateTitle.get("title");
             if (titleTplEl != null) {
                 titleTplEl.setText(title, searchTitleType.toArray(new SearchType[searchTitleType.size()]));
-                //setTemplate("title", "count(.%s) > 0");
                 addTemplate(selector, "titleEl", titleTplEl.getXPath());
-            } else if (!searchTitleType.isEmpty()) {
-                boolean hasContainsAll = searchTitleType.contains(SearchType.CONTAINS_ALL);
-                title = getTextAfterEscapeQuotes(hasContainsAll, title, searchTitleType);
-                selector.add(getTextSearchTypePath(searchTitleType, title, hasContainsAll, "@title"));
-            } else {
+            } else if (searchTitleType.isEmpty()) {
+                title = getTextAfterEscapeQuotes(title, searchTitleType);
                 addTemplate(selector, "title", title);
+            } else {
+                addTextInPath(selector, title, "@title", searchTitleType);
             }
         }
         if (hasType()) {
@@ -1043,10 +1078,12 @@ public class XPathBuilder implements Cloneable {
         if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
                 List<SearchType> searchType = entry.getValue().getSearchTypes();
-                boolean hasContainsAll = searchType.contains(SearchType.CONTAINS_ALL);
-                String text = getTextAfterEscapeQuotes(hasContainsAll, entry.getValue().getValue(), searchType);
-                selector.add(getTextSearchTypePath(searchType, text, hasContainsAll, "@" + entry.getKey()));
+                String text = entry.getValue().getValue();
+                addTextInPath(selector, text, "@" + entry.getKey(), searchType);
             }
+        }
+        if (hasText()) {
+            addTextInPath(selector, getText(), ".", searchTextType);
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
             addTemplate(selector, entry.getKey(), entry.getValue());
@@ -1056,6 +1093,42 @@ public class XPathBuilder implements Cloneable {
         return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
     }
 
+    public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType) {
+        text = getTextAfterEscapeQuotes(text, searchTextType);
+        boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
+        if (!Strings.isNullOrEmpty(getTemplate("text"))) {
+            selector.add(String.format(templates.get("text"), text));
+        } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+            addTemplate(selector, "DEEP_CHILD_NODE_OR_SELF", selfPath);
+        } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE)) {
+            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+            addTemplate(selector, "DEEP_CHILD_NODE", selfPath);
+        } else if (searchTextType.contains(SearchType.CHILD_NODE)) {
+            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+            addTemplate(selector, "CHILD_NODE", selfPath);
+        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+            String splitChar = String.valueOf(text.charAt(0));
+            String[] strings = Pattern.compile(Pattern.quote(splitChar)).split(text.substring(1));
+            for (int i = 0; i < strings.length; i++) {
+                String escapeQuotesText = Utils.getEscapeQuotesText(strings[i]);
+                if (searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
+                    if (searchTextType.contains(SearchType.CASE_INSENSITIVE)) {
+                        strings[i] = "count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0";
+                    } else {
+                        strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
+                    }
+                } else {
+                    strings[i] = "contains(" + (".".equals(pattern) ? "." : pattern) + "," + escapeQuotesText + ")";
+                }
+            }
+            selector.add(hasContainsAll ? StringUtils.join(strings, " and ") : "(" + StringUtils.join(strings, " or ") + ")");
+        } else if (searchTextType.contains(SearchType.HTML_NODE)) {
+            addTemplate(selector, "HTML_NODE", text);
+        } else {
+            selector.add(getTextWithSearchType(searchTextType, text, ".".equals(pattern) ? "text()" : pattern));
+        }
+    }
 
     private List<String> getChildNodesToSelector() {
         List<String> selector = new ArrayList<>();
@@ -1125,95 +1198,26 @@ public class XPathBuilder implements Cloneable {
         return selector;
     }
 
-    /**
-     * Construct selector if WebLocator has text
-     *
-     * @return String
-     */
-    protected String getItemPathText() {
-        String selector = null;
-        if (hasText()) {
-            selector = "";
-            String text = getText();
-            if (!searchTextType.contains(SearchType.NOT_INTERNATIONALIZED)) {
-                text = InternationalizationUtils.getInternationalizedText(text);
-            }
-
-            if (templates.get("text") != null) {
-                return String.format(templates.get("text"), text);
-            }
-            boolean isDeepSearch = searchTextType.contains(SearchType.DEEP_CHILD_NODE) || searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF);
-            boolean useChildNodesSearch = isDeepSearch || searchTextType.contains(SearchType.CHILD_NODE);
-            String pathText = "text()";
-            if (useChildNodesSearch) {
-                selector += "count(" + (isDeepSearch ? "*//" : "") + pathText + "[";
-                pathText = ".";
-            }
-            boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
-            text = getTextAfterEscapeQuotes(hasContainsAll, text, searchTextType);
-            selector += getTextSearchTypePath(searchTextType, text, hasContainsAll, pathText);
-
-            if (useChildNodesSearch) {
-                selector += "]) > 0";
-            }
-
-            if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
-                String selfPath = getTextSearchTypePath(searchTextType, text, hasContainsAll, ".");
-                selector = "(" + selfPath + " or " + selector + ")";
-            }
-
-            if (searchTextType.contains(SearchType.HTML_NODE)) {
-                String a = "normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=" + text;
-                String b = "normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=" + text;
-
-                selector = "(" + a + " or " + b + ")";
-            }
-        }
-        return selector;
-    }
-
-    private String getTextSearchTypePath(List<SearchType> searchType, String text, boolean hasContainsAll, String pathText) {
-        String selector;
+    private String getTextWithSearchType(List<SearchType> searchType, String text, String pattern) {
         if (searchType.contains(SearchType.TRIM)) {
-            pathText = "normalize-space(" + pathText + ")";
+            pattern = "normalize-space(" + pattern + ")";
         }
         if (searchType.contains(SearchType.CASE_INSENSITIVE)) {
-            pathText = "translate(" + pathText + "," + text.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + text.toLowerCase() + ")";
+            pattern = "translate(" + pattern + "," + text.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + text.toLowerCase() + ")";
             text = text.toLowerCase();
         }
-
-        if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
-            String splitChar = String.valueOf(text.charAt(0));
-            Pattern pattern = Pattern.compile(Pattern.quote(splitChar));
-            String[] strings = pattern.split(text.substring(1));
-            for (int i = 0; i < strings.length; i++) {
-                String escapeQuotesText = Utils.getEscapeQuotesText(strings[i]);
-                if (searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
-                    if (searchType.contains(SearchType.CASE_INSENSITIVE)) {
-                        strings[i] = "count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0";
-//                        strings[i] = "(count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0 or count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0)";
-                    } else {
-                        strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
-//                        strings[i] = "(count(*//text()[contains(.," + escapeQuotesText + ")]) > 0 or count(..//text()[contains(.," + escapeQuotesText + ")]) > 0)";
-                    }
-                } else {
-                    strings[i] = "contains(" + pathText + "," + escapeQuotesText + ")";
-                }
-            }
-            String operator = hasContainsAll ? " and " : " or ";
-            selector = hasContainsAll ? StringUtils.join(strings, operator) : "(" + StringUtils.join(strings, operator) + ")";
-        } else if (searchType.contains(SearchType.EQUALS)) {
-            selector = pathText + "=" + text;
+        if (searchType.contains(SearchType.EQUALS)) {
+            text = pattern + "=" + text;
         } else if (searchType.contains(SearchType.STARTS_WITH)) {
-            selector = "starts-with(" + pathText + "," + text + ")";
+            text = "starts-with(" + pattern + "," + text + ")";
         } else {
-            selector = "contains(" + pathText + "," + text + ")";
+            text = "contains(" + pattern + "," + text + ")";
         }
-        return selector;
+        return text;
     }
 
-    private String getTextAfterEscapeQuotes(boolean hasContainsAll, String text, List<SearchType> searchType) {
-        if (hasContainsAll || searchType.contains(SearchType.CONTAINS_ANY)) {
+    private String getTextAfterEscapeQuotes(String text, List<SearchType> searchType) {
+        if (searchType.contains(SearchType.CONTAINS_ALL) || searchType.contains(SearchType.CONTAINS_ANY) || searchType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
             return text;
         }
         return Utils.getEscapeQuotesText(text);
@@ -1224,7 +1228,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     private String getItemCssSelector() {
-        List<String> selector = new ArrayList<String>();
+        List<String> selector = new ArrayList<>();
         if (hasTag()) {
             selector.add(getTag());
         }
@@ -1295,12 +1299,12 @@ public class XPathBuilder implements Cloneable {
                         }
                     }
                 }
-            } else {
+            } //else {
 //            String baseCssSelector = getItemCssSelector();
 //            if (StringUtils.isNotEmpty(baseCssSelector)) {
 //                 TODO "inject" baseItemPath to elPath
 //            }
-            }
+//            }
         }
         // add container path
         if (cssSelector != null && getContainer() != null) {
@@ -1339,10 +1343,10 @@ public class XPathBuilder implements Cloneable {
         if (hasElPath()) {
             returnPath = getElPath();
 
-            String baseItemPath = getBaseItemPath();
-            if (baseItemPath != null && !baseItemPath.equals("")) {
-                // TODO "inject" baseItemPath to elPath
-            }
+//            String baseItemPath = getBaseItemPath();
+//            if (!Strings.isNullOrEmpty(baseItemPath)) {
+            // TODO "inject" baseItemPath to elPath
+//            }
         } else {
             returnPath = getItemPath(disabled);
         }
@@ -1366,7 +1370,7 @@ public class XPathBuilder implements Cloneable {
     @Override
     public String toString() {
         String info = getInfoMessage();
-        if (info == null || "".equals(info)) {
+        if (Strings.isNullOrEmpty(info)) {
             info = itemToString();
         }
         if (WebLocatorConfig.isLogUseClassName() && !getClassName().equals(info)) {
@@ -1383,20 +1387,20 @@ public class XPathBuilder implements Cloneable {
         String info = "";
         if (hasText()) {
             info = getText();
+        } else if (hasTitle()) {
+            info = getTitle();
         } else if (hasId()) {
             info = getId();
         } else if (hasName()) {
             info = getName();
+        } else if (hasBaseCls()) {
+            info = getBaseCls();
         } else if (hasClasses()) {
             info = classes.size() == 1 ? classes.get(0) : classes.toString();
         } else if (hasCls()) {
             info = getCls();
         } else if (hasLabel()) {
             info = getLabel();
-        } else if (hasTitle()) {
-            info = getTitle();
-        } else if (hasBaseCls()) {
-            info = getBaseCls();
         } else if (hasElPath()) {
             info = getElPath();
         } else if (!attribute.isEmpty()) {
@@ -1440,6 +1444,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Object clone() throws CloneNotSupportedException {
         XPathBuilder builder = (XPathBuilder) super.clone();
 

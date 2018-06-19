@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.menu;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
@@ -48,7 +49,7 @@ public class Menu extends WebLocator {
 
     public boolean showMenu(WebLocator parent) {
         final String id = parent.getAttributeId();
-        if (id != null && !"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b.menu.isHidden()) {b.showMenu();} return !b.menu.isHidden();})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
             return (Boolean) object;
@@ -58,7 +59,7 @@ public class Menu extends WebLocator {
 
     public boolean hideMenu(WebLocator parent) {
         final String id = parent.getAttributeId();
-        if (id != null && !"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(!b.menu.isHidden()) {b.hideMenu();} return b.menu.isHidden();})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
             return (Boolean) object;

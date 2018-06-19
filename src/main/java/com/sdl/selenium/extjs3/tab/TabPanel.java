@@ -66,6 +66,11 @@ public class TabPanel extends ExtJsComponent {
                         "/*[not(contains(@class, 'x-hide-display'))]"; // "/" is because is first element after -body
                 return selector;
             }
+
+            @Override
+            public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTypes){
+
+            }
         };
     }
 

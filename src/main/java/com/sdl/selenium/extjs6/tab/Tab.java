@@ -70,6 +70,10 @@ public class Tab extends WebLocator implements ITab {
                 WebLocator tab = new WebLocator(body).setRoot("/").setExcludeClasses("x-hidden-offsets").setClasses("x-tabpanel-child");
                 return getBaseTabPanelPath() + tab.getXPath();
             }
+            @Override
+            public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTypes){
+
+            }
         };
     }
 

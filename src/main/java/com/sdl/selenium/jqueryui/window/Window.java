@@ -8,7 +8,7 @@ public class Window extends WebLocator {
         setClassName("Window");
         setBaseCls("ui-dialog ui-widget ui-widget-content");
         setStyle("display: block;");
-        setTemplate("title", "count(.//*[text()='%s']) > 0");
+        setTemplate("title", "count(.//*[text()=%s]) > 0");
     }
 
     public Window(String title) {

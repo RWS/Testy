@@ -22,6 +22,7 @@ public abstract class WebLocatorAbstractBuilder {
         return pathBuilder;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setPathBuilder(XPathBuilder pathBuilder) {
         this.pathBuilder = pathBuilder;
         return (T) this;
@@ -41,6 +42,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setRoot(final String root) {
         pathBuilder.setRoot(root);
         return (T) this;
@@ -53,6 +55,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setTag(final String tag) {
         pathBuilder.setTag(tag);
         return (T) this;
@@ -65,6 +68,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setId(final String id) {
         pathBuilder.setId(id);
         return (T) this;
@@ -78,6 +82,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>    the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setElPath(final String elPath) {
         pathBuilder.setElPath(elPath);
         return (T) this;
@@ -91,6 +96,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>           the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setElCssSelector(final String elCssSelector) {
         pathBuilder.setElCssSelector(elCssSelector);
         return (T) this;
@@ -103,6 +109,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setBaseCls(final String baseCls) {
         pathBuilder.setBaseCls(baseCls);
         return (T) this;
@@ -116,6 +123,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T> the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setCls(final String cls) {
         pathBuilder.setCls(cls);
         return (T) this;
@@ -132,6 +140,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setClasses(final String... classes) {
         pathBuilder.setClasses(classes);
         return (T) this;
@@ -144,6 +153,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>            the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setExcludeClasses(final String... excludeClasses) {
         pathBuilder.setExcludeClasses(excludeClasses);
         return (T) this;
@@ -154,6 +164,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
         pathBuilder.setChildNodes(childNodes);
         return (T) this;
@@ -166,6 +177,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setName(final String name) {
         pathBuilder.setName(name);
         return (T) this;
@@ -179,6 +191,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setText(String text, final SearchType... searchTypes) {
         pathBuilder.setText(text, searchTypes);
         return (T) this;
@@ -192,6 +205,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextTypes) {
         pathBuilder.setSearchTextType(searchTextTypes);
         return (T) this;
@@ -204,6 +218,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>              the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
         pathBuilder.setSearchTextType(searchLabelTypes);
         return (T) this;
@@ -216,6 +231,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>              the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setSearchTitleType(SearchType... searchTitleTypes) {
         pathBuilder.setSearchTitleType(searchTitleTypes);
         return (T) this;
@@ -228,6 +244,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setStyle(final String style) {
         pathBuilder.setStyle(style);
         return (T) this;
@@ -241,6 +258,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setTitle(String title, SearchType... searchTypes) {
         pathBuilder.setTitle(title, searchTypes);
         return (T) this;
@@ -251,6 +269,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>     the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setTemplateTitle(WebLocator titleEl) {
         pathBuilder.setTemplateTitle(titleEl);
         return (T) this;
@@ -268,6 +287,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>          the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setElPathSuffix(final String key, final String elPathSuffix) {
         pathBuilder.setElPathSuffix(key, elPathSuffix);
         return (T) this;
@@ -287,6 +307,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setTemplateValue(final String key, final String... value) {
         pathBuilder.setTemplateValue(key, value);
         return (T) this;
@@ -300,6 +321,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>   the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setTemplate(final String key, final String value) {
         pathBuilder.setTemplate(key, value);
         return (T) this;
@@ -312,6 +334,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setInfoMessage(final String infoMessage) {
         pathBuilder.setInfoMessage(infoMessage);
         return (T) this;
@@ -328,6 +351,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>        the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility) {
         pathBuilder.setVisibility(visibility);
         return (T) this;
@@ -338,6 +362,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>          the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
         pathBuilder.setRenderMillis(renderMillis);
         return (T) this;
@@ -348,6 +373,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
         pathBuilder.setActivateSeconds(activateSeconds);
         return (T) this;
@@ -360,6 +386,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
         pathBuilder.setContainer(container);
         return (T) this;
@@ -373,6 +400,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setLabel(String label, final SearchType... searchTypes) {
         pathBuilder.setLabel(label, searchTypes);
         return (T) this;
@@ -385,6 +413,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setLabelTag(final String labelTag) {
         pathBuilder.setLabelTag(labelTag);
         return (T) this;
@@ -398,6 +427,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      * @see <a href="http://www.w3schools.com/xpath/xpath_axes.asp">http://www.w3schools.com/xpath/xpath_axes.asp"</a>
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setLabelPosition(final String labelPosition) {
         pathBuilder.setLabelPosition(labelPosition);
         return (T) this;
@@ -414,6 +444,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setPosition(final int position) {
         pathBuilder.setPosition(position);
         return (T) this;
@@ -430,6 +461,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>      the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setPosition(final Position position) {
         pathBuilder.setPosition(position);
         return (T) this;
@@ -446,6 +478,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setResultIdx(final int resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
@@ -462,6 +495,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>       the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setResultIdx(final Position resultIdx) {
         pathBuilder.setResultIdx(resultIdx);
         return (T) this;
@@ -478,6 +512,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>  the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setType(final String type) {
         pathBuilder.setType(type);
         return (T) this;
@@ -496,6 +531,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>         the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, String value, final SearchType... searchTypes) {
         pathBuilder.setAttribute(attribute, value, searchTypes);
         return (T) this;
@@ -509,11 +545,13 @@ public abstract class WebLocatorAbstractBuilder {
      * @param <T>             the element which calls this method
      * @return this element
      */
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T addSearchTextType(SearchType... searchTextTypes) {
         pathBuilder.addSearchTextType(searchTextTypes);
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T addToTemplate(final String key, final String value) {
         pathBuilder.addToTemplate(key, value);
         return (T) this;

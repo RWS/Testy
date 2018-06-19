@@ -11,10 +11,10 @@ public class TabTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Tab("Tab"),                      "//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
-                {new Tab(container, "Tab"),          "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
-                {new Tab(container, "Tab").setId("IdTab"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[@id='IdTab' and contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
-                {new Tab(container, "Tab").setClasses("Class"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and contains(concat(' ', @class, ' '), ' Class ') and count(.//li[@class='active']//a[text()='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
+                {new Tab("Tab"),                      "//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
+                {new Tab(container, "Tab"),          "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
+                {new Tab(container, "Tab").setId("IdTab"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[@id='IdTab' and contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//a[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
+                {new Tab(container, "Tab").setClasses("Class"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and contains(concat(' ', @class, ' '), ' Class ') and count(.//li[@class='active']//a[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
         };
     }
 

@@ -10,7 +10,7 @@ public class InputButton extends WebLocator implements IButton {
     public InputButton() {
         setClassName("InputButton");
         setTag("input");
-        setTemplate("text", "@value='%s'");
+        setTemplate("text", "@value=%s");
     }
 
     /**
