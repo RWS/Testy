@@ -420,9 +420,9 @@ public class XPathBuilder implements Cloneable {
 
     protected List<SearchType> cleanUpSearchType(List<SearchType> searchTextTypes) {
         if (searchTextTypes.size() > 1) {
-            Set<String> duplicated = new HashSet<>();
+            Set<String> unique = new HashSet<>();
             return searchTextTypes.stream()
-                    .filter(c -> duplicated.add(c.getGroup()))
+                    .filter(c -> unique.add(c.getGroup()))
                     .collect(Collectors.toList());
         }
         return searchTextTypes;
@@ -1098,15 +1098,6 @@ public class XPathBuilder implements Cloneable {
         boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
         if (!Strings.isNullOrEmpty(getTemplate("text"))) {
             selector.add(String.format(templates.get("text"), text));
-        } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
-            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
-            addTemplate(selector, "DEEP_CHILD_NODE_OR_SELF", selfPath);
-        } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE)) {
-            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
-            addTemplate(selector, "DEEP_CHILD_NODE", selfPath);
-        } else if (searchTextType.contains(SearchType.CHILD_NODE)) {
-            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
-            addTemplate(selector, "CHILD_NODE", selfPath);
         } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             String[] strings = Pattern.compile(Pattern.quote(splitChar)).split(text.substring(1));
@@ -1123,6 +1114,15 @@ public class XPathBuilder implements Cloneable {
                 }
             }
             selector.add(hasContainsAll ? StringUtils.join(strings, " and ") : "(" + StringUtils.join(strings, " or ") + ")");
+        } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+            addTemplate(selector, "DEEP_CHILD_NODE_OR_SELF", selfPath);
+        } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE)) {
+            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+            addTemplate(selector, "DEEP_CHILD_NODE", selfPath);
+        } else if (searchTextType.contains(SearchType.CHILD_NODE)) {
+            String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+            addTemplate(selector, "CHILD_NODE", selfPath);
         } else if (searchTextType.contains(SearchType.HTML_NODE)) {
             addTemplate(selector, "HTML_NODE", text);
         } else {

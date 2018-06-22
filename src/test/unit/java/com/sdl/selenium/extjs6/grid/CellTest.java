@@ -24,6 +24,7 @@ public class CellTest {
                 {new Grid().getCell(1, new Cell("Text")),                        "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0]//td[1]"},
                 {new Grid().getCell(1, "Test", new Cell(2, "Text")),             "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[2][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0]//td[1][(.='Test' or count(*//text()[.='Test']) > 0)]"},
                 {new Grid(container).getRow(1).getCell(2),                       "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[position() = 1]//td[2]"},
+                {new Grid().getCell(1, new Cell(1, "&Text&Test", SearchType.CONTAINS_ALL_CHILD_NODES)), "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[1][count(*//text()[contains(.,'Text')]) > 0 and count(*//text()[contains(.,'Test')]) > 0]) > 0]//td[1]"},
         };
     }
 

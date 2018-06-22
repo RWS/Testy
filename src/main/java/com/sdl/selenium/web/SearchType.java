@@ -141,7 +141,7 @@ public enum SearchType {
      * WebLocator cancelBtn = new WebLocator().setClasses("btn").setText("Get an instant Quote", SearchType.HTML_NODE);
      * }</pre>
      */
-    HTML_NODE("child"),
+    HTML_NODE("advance"),
 
     /**
      * <p>For finding elements that contain all text segments.</p>
