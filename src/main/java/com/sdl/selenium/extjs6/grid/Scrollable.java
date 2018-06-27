@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
@@ -8,7 +9,7 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollTop() {
         String id = getAttributeId();
-        return (id != null && !"".equals(id)) && scrollTop(id);
+        return !Strings.isNullOrEmpty(id) && scrollTop(id);
     }
 
     default boolean scrollTop(String id) {
@@ -20,7 +21,7 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollBottom() {
         String id = getAttributeId();
-        if (id != null && !"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function(c){var b=c.view.scrollable.getMaxUserPosition().y;c.view.scrollBy(0, b);setTimeout(function(){c.view.scrollBy(0, 1000);},50);return true})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
@@ -29,7 +30,7 @@ public interface Scrollable extends IWebLocator {
 
     default boolean isScrollTop() {
         String id = getAttributeId();
-        if (id != null && !"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function (c){return c.view.scrollable._scrollElement.dom.scrollTop == 0;})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
@@ -38,7 +39,7 @@ public interface Scrollable extends IWebLocator {
 
     default boolean isScrollBottom() {
         String id = getAttributeId();
-        if (id != null && !"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function (c){var a=c.view.scrollable,b=a._scrollElement;return Math.round(b.dom.scrollTop) >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
@@ -53,7 +54,7 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollPageUp() {
         String id = getAttributeId();
-        if (id != null && !"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function(c){var a=c.view,b=a.getScrollable()._scrollElement;if(b.dom.scrollTop>0){b.dom.scrollTop-=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
@@ -67,7 +68,7 @@ public interface Scrollable extends IWebLocator {
      */
     default boolean scrollPageDown() {
         String id = getAttributeId();
-        return (id != null && !"".equals(id)) && scrollPageDown(id);
+        return !Strings.isNullOrEmpty(id) && scrollPageDown(id);
     }
 
     default boolean scrollPageDown(String id) {
@@ -77,8 +78,8 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollPageDownInTree() {
         String id = getAttributeId();
-        if (id != null && !"".equals(id)) {
-            String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement,d=a.body.dom.firstChild.scrollHeight;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=(a.body.dom.childElementCount*d)-d;setTimeout(function(){b.dom.scrollTop+=1;},1);return true}return false})(window.Ext.getCmp('" + id + "'))";
+        if (!Strings.isNullOrEmpty(id)) {
+            String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement,d=a.body.dom.firstChild.scrollHeight;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += (a.body.dom.childElementCount - 2) * d;setTimeout(function(){b.dom.scrollTop += 1;},2);return true}return false})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
