@@ -38,7 +38,7 @@ var c = Ext.getCmp('terminologylanguagesgrid-1243');
         b = a.scrollable._scrollElement,
         d = a.body.dom.firstChild.scrollHeight;
     if (b.dom.scrollTop < a.scrollable.getMaxPosition().y) {
-        b.dom.scrollTop += (a.body.dom.childElementCount - 1.5) * d;
+        b.dom.scrollTop += (a.body.dom.childElementCount - 3) * d;
         setTimeout(function () {
             b.dom.scrollTop += 1;
         }, 1);
