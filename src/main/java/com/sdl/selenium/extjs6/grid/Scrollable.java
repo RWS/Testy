@@ -14,7 +14,6 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollTop(String id) {
         String script = "return (function(c){var a = c.view.getScrollable()._scrollElement;if(a.dom.scrollTop != 0){a.dom.scrollTop = 0;return true}return false})(window.Ext.getCmp('" + id + "'))";
-//        return executeScrollScript("scrollTop", script);
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
@@ -72,7 +71,7 @@ public interface Scrollable extends IWebLocator {
     }
 
     default boolean scrollPageDown(String id) {
-        String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop+=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += a.getHeight() - 13;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
@@ -93,11 +92,13 @@ public interface Scrollable extends IWebLocator {
     default boolean scrollPageDownTo(WebLocator el) {
         el.setVisibility(true);
         boolean scroll = true;
-        while (!el.waitToRender(100)) {
+        int timeout = 0;
+        while (!el.waitToRender(100L, false) && timeout < 100) {
             scroll = scrollPageDown();
             if (!scroll) {
                 break;
             }
+            timeout++;
         }
         return scroll;
     }
