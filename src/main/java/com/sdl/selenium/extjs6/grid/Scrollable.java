@@ -93,7 +93,7 @@ public interface Scrollable extends IWebLocator {
         el.setVisibility(true);
         boolean scroll = true;
         int timeout = 0;
-        while (!el.waitToRender(100L, false) && timeout < 100) {
+        while (!el.waitToRender(100L, false) && timeout < 50) {
             scroll = scrollPageDown();
             if (!scroll) {
                 break;
