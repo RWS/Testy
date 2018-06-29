@@ -26,6 +26,8 @@ public interface IWebLocator {
 
     boolean waitToRender(final long millis);
 
+    boolean waitToRender(final long millis, boolean showXPathLog);
+
     boolean ready();
 
     boolean ready(int seconds);
@@ -96,6 +98,5 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setType(final String type);
 
-    <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType ...searchTypes);
-
+    <T extends WebLocatorAbstractBuilder> T setAttribute(final String attribute, final String value, final SearchType... searchTypes);
 }
