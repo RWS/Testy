@@ -4,6 +4,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +113,12 @@ public class TagField extends ComboBox {
         for (String value : values) {
             WebLocator item = new WebLocator(this).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
             WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-            removed = removed && closeEl.doClick();
+            try {
+                removed = removed && closeEl.doClick();
+            } catch (WebDriverException e) {
+                Utils.sleep(1000);
+                removed = removed && closeEl.doClick();
+            }
         }
         return removed;
     }
