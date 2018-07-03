@@ -13,6 +13,7 @@ public class Button extends WebLocator {
         setClassName("Button");
         setBaseCls("x-btn");
         setTag("a");
+        setTemplate("icon-cls", "count(.//*[contains(concat(' ', @class, ' '), ' %s ')]) > 0");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
@@ -24,6 +25,19 @@ public class Button extends WebLocator {
     public Button(WebLocator container, String text) {
         this(container);
         setText(text, SearchType.EQUALS);
+    }
+
+    private String iconCls;
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public <T extends Button> T setIconCls(final String iconCls) {
+        this.iconCls = iconCls;
+        String key = "icon-cls";
+        setTemplateValue(key, iconCls);
+        return (T) this;
     }
 
     public boolean showMenu() {
