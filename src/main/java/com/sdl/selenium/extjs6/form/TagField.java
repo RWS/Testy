@@ -107,6 +107,16 @@ public class TagField extends ComboBox {
         return removed;
     }
 
+    public boolean doRemove(String... values) {
+        boolean removed = true;
+        for (String value : values) {
+            WebLocator item = new WebLocator(this).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
+            WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
+            removed = removed && closeEl.doClick();
+        }
+        return removed;
+    }
+
     public boolean setValue(String value) {
         assertReady();
         WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
