@@ -1,5 +1,7 @@
 package com.sdl.selenium.web.utils;
 
+import org.openqa.selenium.WebDriverException;
+
 public class RetryUtils {
 //    private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
 
@@ -50,7 +52,7 @@ public class RetryUtils {
             try {
                 t.run();
                 return true;
-            } catch (AssertionError e) {
+            } catch (WebDriverException e) {
                 if (++count >= maxRetries)
                     return false;
             }
