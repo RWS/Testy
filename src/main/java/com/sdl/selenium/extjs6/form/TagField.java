@@ -124,7 +124,7 @@ public class TagField extends ComboBox {
     }
 
     public boolean setValue(String value) {
-        assertReady();
+        assertReady(value);
         WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
         boolean setValue = executor.setValue(input, value);
         Utils.sleep(300);

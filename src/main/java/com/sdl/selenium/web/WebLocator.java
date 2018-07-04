@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -359,6 +360,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
 
     /**
      * driver.findElements(xpath).size()
+     *
      * @return the number of elements in this list
      */
     public int size() {
@@ -382,7 +384,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     /**
      * @return The location and size of the rendered element
      */
-    public Rectangle getRect(){
+    public Rectangle getRect() {
         return executor.getRect(this);
     }
 
@@ -490,9 +492,13 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return waitToRender() && waitToActivate();
     }
 
-    public boolean assertReady() {
+    public boolean assertReady(String... values) {
         boolean ready = ready();
-        assertThat("Element is not ready: " + this, ready);
+        if (values.length == 0) {
+            assertThat("Element is not ready: '" + this + "'", ready);
+        } else {
+            assertThat("Element is not ready: '" + this + "' for values: " + Arrays.toString(values), ready);
+        }
         return ready;
     }
 
