@@ -28,6 +28,17 @@ public class TagFieldIntegrationTest extends TestBase {
         Utils.sleep(2000);
     }
 
+//    @Test
+//    public void testException() {
+//        selectTagField.setBaseCls("blalala");
+//        Utils.sleep(1);
+//
+////        Utils.retry(10, () -> {
+////            selectTagField.setValue("test");
+////        });
+//        RetryUtils.retry(2, () -> selectTagField.setValue("test"));
+//    }
+
     @Test
     public void tagTest() {
         assertThat(tagField.remove("California"), is(true));
