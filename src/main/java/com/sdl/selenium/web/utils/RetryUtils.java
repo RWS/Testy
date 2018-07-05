@@ -52,9 +52,9 @@ public class RetryUtils {
             try {
                 t.run();
                 return true;
-            } catch (WebDriverException e) {
+            } catch (WebDriverException | AssertionError e) {
                 if (++count >= maxRetries)
-                    return false;
+                    throw e;
             }
         }
         return false;
