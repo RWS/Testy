@@ -81,12 +81,13 @@ public class RetryUtils {
             try {
                 isSuccess = t.run();
             } catch (WebDriverException | AssertionError e) {
-                if (++count >= maxRetries)
+                if (count >= maxRetries)
                     throw e;
             }
             if (!isSuccess) {
                 LOGGER.info("Retry {}", count - 1);
             }
+            count++;
         } while (!isSuccess && count < maxRetries);
         return isSuccess;
     }
