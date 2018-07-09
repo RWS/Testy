@@ -21,6 +21,11 @@ public class RetryUtils {
         String run() throws AssertionError;
     }
 
+    @FunctionalInterface
+    public interface RunnableWithSuccess {
+        boolean run() throws AssertionError;
+    }
+
 //    public static <V> V retry(int maxRetries, Callable<V> callable, Throwable throwable) {
 //        RETRY = maxRetries;
 //        return retryLogics(callable, throwable);
@@ -67,6 +72,22 @@ public class RetryUtils {
             }
         }
         return false;
+    }
+
+    public static boolean retryWithSuccess(int maxRetries, RunnableWithSuccess t) {
+        int count = 0;
+        boolean isSuccess = false;
+        do {
+            try {
+                isSuccess = t.run();
+            } catch (WebDriverException | AssertionError e) {
+                if (count >= maxRetries)
+                    throw e;
+            }
+            LOGGER.info("Retry {}", count);
+            count++;
+        } while (!isSuccess && count < maxRetries);
+        return isSuccess;
     }
 
     public static String waitIfIsNullOrEmpty(int maxRetries, WaitIfIsNullOrEmpty t) {
