@@ -1,9 +1,12 @@
 package com.sdl.selenium.web.utils;
 
+import com.google.common.base.Strings;
 import org.openqa.selenium.WebDriverException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RetryUtils {
-//    private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
 
 //    private static int RETRY = 3;
 //    private static final long DELAY = 1000L;
@@ -11,6 +14,11 @@ public class RetryUtils {
     @FunctionalInterface
     public interface RunnableWithException {
         void run() throws AssertionError;
+    }
+
+    @FunctionalInterface
+    public interface WaitIfIsNullOrEmpty {
+        String run() throws AssertionError;
     }
 
 //    public static <V> V retry(int maxRetries, Callable<V> callable, Throwable throwable) {
@@ -53,10 +61,21 @@ public class RetryUtils {
                 t.run();
                 return true;
             } catch (WebDriverException | AssertionError e) {
+                LOGGER.info("Retry {} for '{}'", count, e.getClass());
                 if (++count >= maxRetries)
                     throw e;
             }
         }
         return false;
+    }
+
+    public static String waitIfIsNullOrEmpty(int maxRetries, WaitIfIsNullOrEmpty t) {
+        int count = 0;
+        String text;
+        do {
+            text = t.run();
+            count++;
+        } while (Strings.isNullOrEmpty(text) && count < maxRetries);
+        return text;
     }
 }

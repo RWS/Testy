@@ -13,10 +13,10 @@ import java.util.Map;
  *
  */
 public class PropertiesReader extends OrderedProperties {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesReader.class);
+
     public static String RESOURCES_PATH = "src/test/resources/";
     public static String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesReader.class);
 
     public PropertiesReader() {
     }

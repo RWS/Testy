@@ -36,9 +36,8 @@ public class TagFieldIntegrationTest extends TestBase {
 ////        Utils.retry(10, () -> {
 ////            selectTagField.setValue("test");
 ////        });
-//        RetryUtils.retry(2, () -> {
-//            selectTagField.setValue("test");
-//        });
+//        RetryUtils.waitIfIsNullOrEmpty(2, () -> selectTagField.getValue());
+//        Utils.sleep(1);
 //    }
 
     @Test
