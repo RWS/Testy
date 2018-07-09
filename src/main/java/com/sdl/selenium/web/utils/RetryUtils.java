@@ -85,7 +85,7 @@ public class RetryUtils {
                     throw e;
             }
             if (!isSuccess) {
-                LOGGER.info("Retry {}", count - 1);
+                LOGGER.info("Retry {}", count);
             }
             count++;
         } while (!isSuccess && count < maxRetries);
