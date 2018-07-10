@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,10 +134,7 @@ public class Grid extends Table implements Scrollable {
     public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = header.getText();
-        if (headerText == null || "".equals(headerText)) {
-            headerText = header.getText(true);
-        }
+        String headerText = RetryUtils.waitIfIsNullOrEmpty(4, header::getText);
         Collections.addAll(headers, headerText.trim().split("\n"));
         return headers;
     }
