@@ -5,11 +5,11 @@ import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.concurrent.Callable;
+
 public class RetryUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
-
-//    private static int RETRY = 3;
-//    private static final long DELAY = 1000L;
 
     @FunctionalInterface
     public interface RunnableWithException {
@@ -21,44 +21,7 @@ public class RetryUtils {
         String run() throws AssertionError;
     }
 
-    @FunctionalInterface
-    public interface RunnableWithSuccess {
-        boolean run() throws AssertionError;
-    }
-
-//    public static <V> V retry(int maxRetries, Callable<V> callable, Throwable throwable) {
-//        RETRY = maxRetries;
-//        return retryLogics(callable, throwable);
-//    }
-//
-//    public static boolean retry(RunnableWithException runnable, Throwable throwable) {
-//        return retryLogics(() -> {
-//            runnable.run();
-//            return false;
-//        }, throwable);
-//    }
-//
-//    private static <T> T retryLogics(Callable<T> callable, Throwable throwable) {
-//        int counter = 0;
-//
-//        while (counter < RETRY) {
-//            try {
-//                return callable.call();
-//            } catch (Throwable e) {
-//                counter++;
-//                LOGGER.error("retry {}: {}", counter, RETRY, e);
-//
-//                try {
-//                    Thread.sleep(DELAY);
-//                } catch (InterruptedException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        throw new RuntimeException(throwable);
-//    }
-
+    @Deprecated
     public static boolean retry(int maxRetries, RunnableWithException t) {
         int count = 0;
         while (count < maxRetries) {
@@ -74,24 +37,39 @@ public class RetryUtils {
         return false;
     }
 
-    public static boolean retryWithSuccess(int maxRetries, RunnableWithSuccess t) {
-        int count = 0;
-        boolean isSuccess = false;
+    public static <V> V retryWithSuccess(int maxRetries, Callable<V> t) {
+        int count = 1;
+        long wait = 10;
+        V execute = null;
         do {
+            Utils.sleep(wait);
             try {
-                isSuccess = t.run();
-            } catch (WebDriverException | AssertionError e) {
+                execute = t.call();
+            } catch (Throwable e) {
                 if (count >= maxRetries)
-                    throw e;
+                    throw new RuntimeException(e.getMessage(), e);
             }
-            if (!isSuccess) {
-                LOGGER.info("Retry {}", count);
+            if (execute == null) {
+                LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
             }
             count++;
-        } while (!isSuccess && count < maxRetries);
-        return isSuccess;
+            wait = wait * 2;
+        } while ((execute == null || isNotExpected(execute)) && count >= maxRetries);
+        return execute;
     }
 
+    private static <V> boolean isNotExpected(V execute) {
+        if (execute instanceof Boolean) {
+            return !(Boolean) execute;
+        } else if (execute instanceof String) {
+            return Strings.isNullOrEmpty((String) execute);
+        } else if (execute instanceof List) {
+            return ((List) execute).isEmpty();
+        }
+        return execute == null;
+    }
+
+    @Deprecated
     public static String waitIfIsNullOrEmpty(int maxRetries, WaitIfIsNullOrEmpty t) {
         int count = 0;
         String text;

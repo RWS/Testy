@@ -3,6 +3,8 @@ package com.sdl.selenium.utils.browsers;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.service.DriverService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class AbstractBrowserConfigReader extends PropertiesReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBrowserConfigReader.class);
 
     public AbstractBrowserConfigReader(String defaults, String resourcePath) {
         super(defaults, resourcePath);
@@ -33,6 +36,7 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
     public String getDownloadDir() {
         String downloadDir = getProperty("browser.download.dir");
         String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+        LOGGER.info("pid:{}", pid);
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MMM-dd");
         String date = sdf.format(new Date());
 

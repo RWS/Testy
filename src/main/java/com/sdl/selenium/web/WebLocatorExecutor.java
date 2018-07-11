@@ -6,7 +6,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 
 public interface WebLocatorExecutor {
@@ -45,7 +45,10 @@ public interface WebLocatorExecutor {
 
     List<WebElement> findElements(WebLocator webLocator);
 
+    @Deprecated
     WebElement waitElement(WebLocator el, final long millis, boolean showXPathLog);
+
+    WebElement waitElement(WebLocator el, Duration duration, boolean showXPathLog);
 
     int size(WebLocator el);
 

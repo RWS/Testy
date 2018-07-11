@@ -134,7 +134,7 @@ public class Grid extends Table implements Scrollable {
     public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = RetryUtils.waitIfIsNullOrEmpty(4, header::getText);
+        String headerText = RetryUtils.retryWithSuccess(4, header::getText);
         Collections.addAll(headers, headerText.trim().split("\n"));
         return headers;
     }

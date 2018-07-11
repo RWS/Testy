@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -426,12 +427,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     public boolean waitToRender(final long millis) {
-        executor.waitElement(this, millis, true);
+        executor.waitElement(this, Duration.ofMillis(millis), true);
         return currentElement != null;
     }
 
     public boolean waitToRender(final long millis, boolean showXPathLog) {
-        executor.waitElement(this, millis, showXPathLog);
+        executor.waitElement(this, Duration.ofMillis(millis), showXPathLog);
         return currentElement != null;
     }
 

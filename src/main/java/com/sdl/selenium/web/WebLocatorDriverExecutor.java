@@ -1,6 +1,7 @@
 package com.sdl.selenium.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorSuggestions;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
@@ -9,7 +10,6 @@ import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -18,11 +18,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
-import org.openqa.selenium.remote.Command;
-import org.openqa.selenium.remote.CommandInfo;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.http.HttpMethod;
-import org.openqa.selenium.remote.service.DriverCommandExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -31,10 +26,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorDriverExecutor.class);
@@ -269,7 +264,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private String getLogValue(WebLocator el, String value) {
         String info = el.getPathBuilder().getInfoMessage();
-        if (info == null || "".equals(info)) {
+        if (Strings.isNullOrEmpty(info)) {
             info = el.getPathBuilder().itemToString();
         }
         info = info.toLowerCase();
@@ -381,7 +376,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //            LOGGER.debug("currentElement already found one time: " + el);
         //return el.currentElement;
 //        }
-        doWaitElement(el, 0);
+        doWaitElement(el, Duration.ZERO);
         el.setCurrentElementPath(path);
         return el.currentElement;
     }
@@ -392,9 +387,14 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public WebElement waitElement(final WebLocator el, final long millis, boolean showXPathLog) {
-        doWaitElement(el, millis);
+        return waitElement(el, Duration.ofMillis(millis), showXPathLog);
+    }
+
+    @Override
+    public WebElement waitElement(final WebLocator el, Duration duration, boolean showXPathLog) {
+        doWaitElement(el, duration);
         if (el.currentElement == null && showXPathLog) {
-            LOGGER.warn("Element not found after " + millis + " millis; {}", el);
+            LOGGER.warn("Element not found after {} seconds; {}", duration.getSeconds(), el);
             logDetails(el);
         }
         return el.currentElement;
@@ -409,10 +409,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         }
     }
 
-    private WebElement doWaitElement(final WebLocator el, final long millis) {
+    private WebElement doWaitElement(final WebLocator el, Duration duration) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(millis, TimeUnit.MILLISECONDS)
-                .pollingEvery(1, TimeUnit.MILLISECONDS)
+                .withTimeout(duration)
+                .pollingEvery(Duration.ofMillis(1))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(ElementNotVisibleException.class)
                 .ignoring(WebDriverException.class);

@@ -36,9 +36,9 @@ public class TagFieldIntegrationTest extends TestBase {
 ////        Utils.retry(10, () -> {
 ////            selectTagField.setValue("test");
 ////        });
-//        boolean withSuccess = RetryUtils.retryWithSuccess(2, () -> {
+//        List<String> strings = RetryUtils.retryWithSuccess(2, () -> {
 //            selectTagField.click();
-//            return selectTagField.getAllSelectedValues().contains("Kansas");
+//            return selectTagField.getAllSelectedValues();
 //        });
 //        Utils.sleep(1);
 //    }
