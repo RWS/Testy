@@ -44,23 +44,17 @@ public class RetryUtils {
         do {
             Utils.sleep(wait);
             try {
-                try {
-                    execute = t.call();
-                } catch (NullPointerException e) {
-                    LOGGER.warn("Null: {}", e.getMessage());
-                    execute = t.call();
-                }
+                execute = t.call();
             } catch (Exception | AssertionError e) {
-                if (count >= maxRetries)
+                if (count >= maxRetries) {
+                    LOGGER.error("{}", e);
                     throw new RuntimeException(e.getMessage(), e);
-                LOGGER.warn("Run: {}, {}", e.getMessage(), e);
-            }
-            if (execute == null) {
-                LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
+                }
             }
             count++;
             wait = wait * 2;
         } while ((execute == null || isNotExpected(execute)) && count >= maxRetries);
+        LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
         return execute;
     }
 

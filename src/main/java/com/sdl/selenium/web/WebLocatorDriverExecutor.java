@@ -8,6 +8,7 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
@@ -50,27 +51,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //        if (highlight) {
 //            doHighlight();
 //        }
-        boolean clicked = false;
-        if (ensureExists(el)) {
-            try {
-                el.currentElement.click();
-                clicked = true;
-            } catch (StaleElementReferenceException e) {
-                clicked = tryAgainDoClick(el);
-            } catch (InvalidElementStateException e) {
-                LOGGER.error("InvalidElementStateException in doClick: {}", el);
-                clicked = tryAgainDoClick(el);
-            } catch (MoveTargetOutOfBoundsException e) {
-                LOGGER.error("MoveTargetOutOfBoundsException in doClick: {}", el);
-                clicked = tryAgainDoClick(el);
-            } catch (WebDriverException e) {
-                LOGGER.error("WebDriverException in doClick: {}", el);
-                clicked = tryAgainDoClick(el);
-            } catch (Exception e) {
-                LOGGER.error("Exception in doClick: {} - {}", el, e);
-            }
-        }
-        return clicked;
+        Boolean click = RetryUtils.retryWithSuccess(6, () -> {
+            el.getWebElement().click();
+            return el.getWebElement() != null;
+        });
+        return click == null ? false : click;
     }
 
     private boolean tryAgainDoClick(WebLocator el) {
