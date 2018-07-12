@@ -54,7 +54,9 @@ public class RetryUtils {
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && count <= maxRetries);
-        LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
+        if (count > 1) {
+            LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
+        }
         return execute;
     }
 
