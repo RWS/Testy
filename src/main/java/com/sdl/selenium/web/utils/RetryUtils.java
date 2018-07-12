@@ -53,7 +53,7 @@ public class RetryUtils {
                     throw new RuntimeException(e.getMessage(), e);
                 }
             }
-        } while ((execute == null || isNotExpected(execute)) && count >= maxRetries);
+        } while ((execute == null || isNotExpected(execute)) && count <= maxRetries);
         LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
         return execute;
     }
