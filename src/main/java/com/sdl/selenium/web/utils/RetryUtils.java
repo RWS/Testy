@@ -50,7 +50,7 @@ public class RetryUtils {
                     LOGGER.warn("Null: {}", e.getMessage());
                     execute = t.call();
                 }
-            } catch (Throwable e) {
+            } catch (Exception | AssertionError e) {
                 if (count >= maxRetries)
                     throw new RuntimeException(e.getMessage(), e);
                 LOGGER.warn("Run: {}, {}", e.getMessage(), e);
