@@ -62,12 +62,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private boolean tryAgainDoClick(WebLocator el) {
         boolean doClick;
         if (findAgain(el)) {
-            try {
-                el.currentElement.click(); // not sure it will click now
-                doClick = true;
-            } catch (NullPointerException e) {
-                return false;
-            }
+            el.getWebElement().click(); // not sure it will click now
+            doClick = true;
         } else {
             LOGGER.error("currentElement is null after to try currentElement: {}", el);
             doClick = false;
