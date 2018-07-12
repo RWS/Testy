@@ -46,12 +46,14 @@ public class RetryUtils {
             try {
                 try {
                     execute = t.call();
-                } catch (NullPointerException e){
+                } catch (NullPointerException e) {
+                    LOGGER.warn("{}", e.getMessage());
                     execute = t.call();
                 }
             } catch (Throwable e) {
                 if (count >= maxRetries)
                     throw new RuntimeException(e.getMessage(), e);
+                LOGGER.warn("{}", e.getCause());
             }
             if (execute == null) {
                 LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
