@@ -52,7 +52,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //            doHighlight();
 //        }
         try {
-            return RetryUtils.retryWithSuccess(3, () -> tryAgainDoClick(el));
+            return RetryUtils.retryWithSuccess(5, () -> tryAgainDoClick(el));
         } catch (NullPointerException e) {
             Utils.sleep(1);
             return false;
@@ -61,7 +61,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private boolean tryAgainDoClick(WebLocator el) {
         boolean doClick;
-        if (isElementPresent(el)) {
+        if (findAgain(el)) {
             el.currentElement.click(); // not sure it will click now
             doClick = true;
         } else {
