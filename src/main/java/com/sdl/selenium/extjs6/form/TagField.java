@@ -113,7 +113,7 @@ public class TagField extends ComboBox {
         for (String value : values) {
             WebLocator item = new WebLocator(this).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
             WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-            removed = removed && RetryUtils.retry(20, closeEl::doClick);
+            removed = removed && RetryUtils.retryWithSuccess(15, closeEl::doClick);
         }
         return removed;
     }
