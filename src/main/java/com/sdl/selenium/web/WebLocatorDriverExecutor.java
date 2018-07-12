@@ -52,7 +52,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //            doHighlight();
 //        }
         try {
-            return RetryUtils.retryWithSuccess(5, () -> tryAgainDoClick(el));
+            return RetryUtils.retryWithSuccess(5, () -> {
+                el.getWebElement().click();
+                return el.getWebElement() != null;
+            });
         } catch (NullPointerException e) {
             Utils.sleep(1);
             return false;
