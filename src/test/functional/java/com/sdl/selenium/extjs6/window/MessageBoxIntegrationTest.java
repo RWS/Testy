@@ -10,6 +10,8 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -27,8 +29,8 @@ public class MessageBoxIntegrationTest extends TestBase {
 
     @Test
     void messageBoxTest() {
-        MessageBox messageBox = new MessageBox("Confirmh", "Are you sure you want to do that?");
-        ConditionManager conditionManager = new ConditionManager(10000);
+        MessageBox messageBox = new MessageBox("Confirm", "Are you sure you want to do that?");
+        ConditionManager conditionManager = new ConditionManager(Duration.ofSeconds(10));
         conditionManager.add(new RenderSuccessCondition(messageBox));
 
         assertThat(conditionManager.execute().isSuccess(), is(true));

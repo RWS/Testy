@@ -18,7 +18,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.MoveTargetOutOfBoundsException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -51,30 +50,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //        if (highlight) {
 //            doHighlight();
 //        }
-        Boolean click = RetryUtils.retryWithSuccess(6, () -> {
+        Boolean click = RetryUtils.retry(6, () -> {
             el.getWebElement().click();
-            return el.getWebElement() != null;
+            return el.currentElement != null;
         });
         return click == null ? false : click;
     }
 
-    private boolean tryAgainDoClick(WebLocator el) {
-        boolean doClick;
-        if (findAgain(el)) {
-            el.getWebElement().click(); // not sure it will click now
-            doClick = true;
-        } else {
-            LOGGER.error("currentElement is null after to try currentElement: {}", el);
-            doClick = false;
-        }
-        return doClick;
-    }
-
     @Override
     public boolean clickAt(WebLocator el) {
-//        if (highlight) {
-//            doHighlight(el);
-//        }
         focus(el);
         return click(el);
     }
@@ -97,54 +81,20 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
-        boolean submit = false;
-        if (ensureExists(el)) {
-            try {
-                el.currentElement.submit();
-                submit = true;
-            } catch (StaleElementReferenceException e) {
-                submit = tryAgainDoSubmit(el);
-            } catch (InvalidElementStateException e) {
-                LOGGER.error("InvalidElementStateException in doClick: {}", el);
-                submit = tryAgainDoSubmit(el);
-            } catch (MoveTargetOutOfBoundsException e) {
-                LOGGER.error("MoveTargetOutOfBoundsException in doClick: {}", el);
-                submit = tryAgainDoSubmit(el);
-            } catch (WebDriverException e) {
-                LOGGER.error("WebDriverException in doClick: {}", el);
-                submit = tryAgainDoSubmit(el);
-            } catch (Exception e) {
-                LOGGER.error("Exception in doClick: {}", el, e);
-            }
-        }
-        return submit;
-    }
-
-    private boolean tryAgainDoSubmit(WebLocator el) {
-        boolean submit;
-        if (findAgain(el)) {
-            el.currentElement.submit(); // not sure it will click now
-            submit = true;
-        } else {
-            LOGGER.error("currentElement is null after to try currentElement: {}", el);
-            submit = false;
-        }
-        return submit;
+        Boolean submit = RetryUtils.retry(6, () -> {
+            el.getWebElement().submit();
+            return el.currentElement != null;
+        });
+        return submit == null ? false : submit;
     }
 
     @Override
     public boolean clear(WebLocator el) {
-        boolean clear = false;
-        if (ensureExists(el)) {
-            try {
-                el.currentElement.clear();
-                clear = true;
-            } catch (InvalidElementStateException e) {
-                LOGGER.warn("InvalidElementStateException clear: {}", el);
-                clear = false;
-            }
-        }
-        return clear;
+        Boolean clear = RetryUtils.retry(4, () -> {
+            el.getWebElement().clear();
+            return el.currentElement != null;
+        });
+        return clear == null ? false : clear;
     }
 
     @Override
