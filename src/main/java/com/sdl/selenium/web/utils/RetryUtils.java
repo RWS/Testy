@@ -44,7 +44,11 @@ public class RetryUtils {
         do {
             Utils.sleep(wait);
             try {
-                execute = t.call();
+                try {
+                    execute = t.call();
+                } catch (NullPointerException e){
+                    execute = t.call();
+                }
             } catch (Throwable e) {
                 if (count >= maxRetries)
                     throw new RuntimeException(e.getMessage(), e);
