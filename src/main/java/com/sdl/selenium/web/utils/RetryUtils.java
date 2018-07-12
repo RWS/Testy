@@ -38,10 +38,12 @@ public class RetryUtils {
     }
 
     public static <V> V retryWithSuccess(int maxRetries, Callable<V> t) {
-        int count = 1;
-        long wait = 10;
+        int count = 0;
+        long wait = 0;
         V execute = null;
         do {
+            count++;
+            wait = wait == 0 ? 10 : wait * 2;
             Utils.sleep(wait);
             try {
                 execute = t.call();
@@ -51,8 +53,6 @@ public class RetryUtils {
                     throw new RuntimeException(e.getMessage(), e);
                 }
             }
-            count++;
-            wait = wait * 2;
         } while ((execute == null || isNotExpected(execute)) && count >= maxRetries);
         LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
         return execute;
