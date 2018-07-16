@@ -28,7 +28,8 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
         assertThat(locator.isElementPresent(), is(true));
         assertThat(locator.getText(true), equalTo("Login"));
         startTests();
-        assertThat(locator.getText(true), equalTo("Login"));
+        String text = locator.getText(true);
+        assertThat(text, equalTo("Login"));
     }
 
     @Test
@@ -59,7 +60,7 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
     @Test
     public void sendKeysTest() {
         String mail = "eu@fast.com";
-        assertThat((TextField) email.sendKeys(mail), is(email));
+        assertThat(email.sendKeys(mail), is(email));
         assertThat(email.getValue(), equalTo(mail));
     }
 
@@ -103,12 +104,12 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void getLocationTest() {
-        assertThat(locator.getLocation(), WebDriverConfig.isChrome() ? is(new Point(136, 177)) : is(new Point(136, 162)));
+        assertThat(locator.getLocation(), WebDriverConfig.isChrome() ? is(new Point(136, 176)) : is(new Point(136, 162)));
     }
 
     @Test
     public void getSizeTest() {
-        assertThat(locator.getSize(), is(new Dimension(60, 30)));
+        assertThat(locator.getSize(), is(new Dimension(61, 30)));
     }
 
     @Test

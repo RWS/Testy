@@ -100,7 +100,7 @@ public class DatePicker extends WebLocator {
      */
     public boolean select(String date, String format, Locale locale) {
         SimpleDateFormat inDateFormat = new SimpleDateFormat(format, locale);
-        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy");
+        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy", locale);
         try {
             Date fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);

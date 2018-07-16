@@ -1,9 +1,11 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 public class RadioTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
@@ -22,6 +24,6 @@ public class RadioTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Radio radio, String expectedXpath) {
-        Assert.assertEquals(radio.getXPath(), expectedXpath);
+        assertThat(radio.getXPath(), equalTo(expectedXpath));
     }
 }

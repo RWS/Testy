@@ -14,11 +14,12 @@ public class Radio extends ExtJsComponent {
         setTag("input");
         setBaseCls("x-form-radio");
         setLabelPosition("/../");
+        setTemplate("text", "@value=%s");
     }
 
     public Radio(String value) {
         this();
-        setAttribute("value", value, SearchType.EQUALS);
+        setText(value, SearchType.EQUALS);
     }
 
     public Radio(WebLocator container) {

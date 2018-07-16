@@ -11,11 +11,6 @@ public class RetryUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
 
     @FunctionalInterface
-    public interface RunnableWithException {
-        void run() throws AssertionError;
-    }
-
-    @FunctionalInterface
     public interface WaitIfIsNullOrEmpty {
         String run() throws AssertionError;
     }
@@ -42,7 +37,7 @@ public class RetryUtils {
                     }
                 }
             }
-        } while ((execute == null || isNotExpected(execute)) && count <= maxRetries);
+        } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
         if (count > 1) {
             LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
         }

@@ -9,7 +9,6 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.RetryUtils;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -137,49 +136,16 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         }
     }
 
-    private boolean setValue(WebLocator el, String value, int retries) {
-        boolean executed = false;
-        if (retries >= 0 && value != null) {
-            retries--;
-            // TODO Find Solution for cases where element does not exist so we can improve cases when element is not changed
-            //if (executor.isSamePath(this, this.getXPath()) || ready()) {
-            if (ensureExists(el)) {
-                try {
-                    executed = doSetValue(el, value);
-                } catch (ElementNotVisibleException exception) {
-                    LOGGER.error("ElementNotVisibleException in setValue: {}", el, exception);
-                    throw exception;
-                } catch (InvalidElementStateException ex) {
-                    invalidateCache(el);
-                    if (WebLocatorConfig.isLogRetryException()) {
-                        LOGGER.debug("Exception in setValue: {}. {}", el, ex);
-                    }
-                    if (retries >= 0) {
-                        LOGGER.debug("Exception in setValue: {}. Wait {} ms before retry", el, RETRY_MS);
-                        Utils.sleep(RETRY_MS);
-                    }
-                    executed = setValue(el, value, retries);
-                } catch (StaleElementReferenceException ex) {
-                    invalidateCache(el);
-                    if (retries >= 0) {
-                        Utils.sleep(RETRY_MS);
-                    }
-                    executed = setValue(el, value, retries);
-                }
-            }
-        }
-        return executed;
-    }
-
     @Override
     public boolean setValue(WebLocator el, String value) {
-        return setValue(el, value, 1);
+        Boolean retry = RetryUtils.retry(6, () -> doSetValue(el, value));
+        return retry == null ? false : retry;
     }
 
     private boolean doSetValue(WebLocator el, String value) {
         int lengthVal = WebLocatorConfig.getMinCharsToType();
         int length = value.length();
-        el.currentElement.clear();
+        el.getWebElement().clear();
         if (lengthVal == -1 || length <= lengthVal) {
             el.currentElement.sendKeys(value);
             LOGGER.info("Set value({}): '{}'", el, getLogValue(el, value));
@@ -244,38 +210,18 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
-        String attributeValue = null;
-        try {
-            if (ensureExists(el)) {
-                attributeValue = el.currentElement.getAttribute(attribute);
-            }
-        } catch (StaleElementReferenceException e) {
-            if (findAgain(el)) {
-                attributeValue = el.currentElement.getAttribute(attribute);
-            } else {
-                LOGGER.error("StaleElementReferenceException in getCurrentElementAttribute (second try): {}: {} - {}", attribute, el, e);
-            }
-        } catch (WebDriverException e) {
-            LOGGER.error("WebDriverException in getCurrentElementAttribute({}): {} - {}", attribute, el, e);
-        }
-        return attributeValue;
+        return RetryUtils.retrySafe(3, () -> {
+            findAgain(el);
+            return el.currentElement.getAttribute(attribute);
+        });
     }
 
     @Override
     public String getText(WebLocator el) {
-        String text = null;
-        if (ensureExists(el)) {
-            try {
-                text = el.currentElement.getText();
-            } catch (StaleElementReferenceException e) {
-                if (findAgain(el)) {
-                    text = el.currentElement.getText();
-                }
-            } catch (WebDriverException e) {
-                LOGGER.error("element has vanished meanwhile: " + getSelector(el), e);
-            }
-        }
-        return text;
+        return RetryUtils.retrySafe(3, () -> {
+            findAgain(el);
+            return el.currentElement.getText();
+        });
     }
 
     private String getSelector(WebLocator el) {
