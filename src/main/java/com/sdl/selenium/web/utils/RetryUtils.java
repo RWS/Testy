@@ -32,7 +32,7 @@ public class RetryUtils {
             } catch (Exception | AssertionError e) {
                 if (!safe) {
                     if (count >= maxRetries) {
-                        LOGGER.error("{}", e);
+                        LOGGER.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }
