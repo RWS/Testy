@@ -81,7 +81,7 @@ public class RetryUtils {
         do {
             text = t.run();
             count++;
-        } while (Strings.isNullOrEmpty(text) && expected.equals(text) && count < maxRetries);
+        } while (Strings.isNullOrEmpty(text) && !expected.equals(text) && count < maxRetries);
         return text;
     }
 }
