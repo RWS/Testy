@@ -2,7 +2,7 @@ package com.sdl.selenium.extjs6.notification;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
+import com.sdl.selenium.web.utils.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,6 @@ public class Notification extends WebLocator {
 
     public void close() {
         WebLocator close = new WebLocator(this).setClasses("x-tool-close");
-        Utils.sleep(450);
-        close.click();
+        RetryUtils.retrySafe(5, close::click);
     }
 }
