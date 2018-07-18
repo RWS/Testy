@@ -101,22 +101,19 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
-        boolean sendKeys = false;
-        if (ensureExists(el)) {
-            try {
-                sendKeys = RetryUtils.retry(4, () -> {
-                    el.currentElement.sendKeys(charSequences);
-                    return el.currentElement != null;
-                });
-            } catch (WebDriverException e) {
-                //TODO this fix is for Chrome
-                Actions builder = new Actions(driver);
-                builder.click(el.currentElement);
-                builder.sendKeys(charSequences);
-                sendKeys = true;
-            }
+        try {
+            return RetryUtils.retry(4, () -> {
+                findAgain(el);
+                el.currentElement.sendKeys(charSequences);
+                return el.currentElement != null;
+            });
+        } catch (WebDriverException e) {
+            //TODO this fix is for Chrome
+            Actions builder = new Actions(driver);
+            builder.click(el.currentElement);
+            builder.sendKeys(charSequences);
+            return true;
         }
-        return sendKeys;
     }
 
     private boolean tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
