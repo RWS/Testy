@@ -74,4 +74,14 @@ public class RetryUtils {
         } while (Strings.isNullOrEmpty(text) && count < maxRetries);
         return text;
     }
+
+    public static String retryIfNotSame(int maxRetries, String expected, WaitIfIsNullOrEmpty t) {
+        int count = 0;
+        String text;
+        do {
+            text = t.run();
+            count++;
+        } while (Strings.isNullOrEmpty(text) && expected.equals(text) && count < maxRetries);
+        return text;
+    }
 }
