@@ -49,8 +49,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //        if (highlight) {
 //            doHighlight();
 //        }
-        Boolean click = RetryUtils.retry(6, () -> {
-            el.getWebElement().click();
+        Boolean click = RetryUtils.retry(8, () -> {
+            findAgain(el);
+            el.currentElement.click();
             return el.currentElement != null;
         });
         return click == null ? false : click;
@@ -80,8 +81,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
-        Boolean submit = RetryUtils.retry(6, () -> {
-            el.getWebElement().submit();
+        Boolean submit = RetryUtils.retry(8, () -> {
+            findAgain(el);
+            el.currentElement.submit();
             return el.currentElement != null;
         });
         return submit == null ? false : submit;
@@ -89,8 +91,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean clear(WebLocator el) {
-        Boolean clear = RetryUtils.retry(4, () -> {
-            el.getWebElement().clear();
+        Boolean clear = RetryUtils.retry(6, () -> {
+            findAgain(el);
+            el.currentElement.clear();
             return el.currentElement != null;
         });
         return clear == null ? false : clear;
@@ -101,20 +104,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         boolean sendKeys = false;
         if (ensureExists(el)) {
             try {
-                el.currentElement.sendKeys(charSequences);
-                sendKeys = true;
-            } catch (ElementNotVisibleException e) {
-                try {
-                    sendKeys = tryAgainDoSendKeys(el, charSequences);
-                } catch (ElementNotVisibleException ex) {
-                    try {
-                        mouseOver(el);
-                        sendKeys = tryAgainDoSendKeys(el, charSequences);
-                    } catch (ElementNotVisibleException exc) {
-                        LOGGER.error("final ElementNotVisibleException in sendKeys: {}", el, exc);
-                        throw exc;
-                    }
-                }
+                sendKeys = RetryUtils.retry(4, () -> {
+                    el.currentElement.sendKeys(charSequences);
+                    return el.currentElement != null;
+                });
             } catch (WebDriverException e) {
                 //TODO this fix is for Chrome
                 Actions builder = new Actions(driver);
@@ -138,7 +131,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean setValue(WebLocator el, String value) {
-        Boolean retry = RetryUtils.retry(6, () -> doSetValue(el, value));
+        Boolean retry = RetryUtils.retry(8, () -> doSetValue(el, value));
         return retry == null ? false : retry;
     }
 
@@ -210,7 +203,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
-        return RetryUtils.retrySafe(3, () -> {
+        return RetryUtils.retrySafe(5, () -> {
             findAgain(el);
             return el.currentElement.getAttribute(attribute);
         });
@@ -218,7 +211,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getText(WebLocator el) {
-        return RetryUtils.retrySafe(3, () -> {
+        return RetryUtils.retrySafe(6, () -> {
             findAgain(el);
             return el.currentElement.getText();
         });
