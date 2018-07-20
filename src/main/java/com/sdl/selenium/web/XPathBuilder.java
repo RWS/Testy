@@ -935,11 +935,11 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasId() {
-        return id != null && !"".equals(id);
+        return !Strings.isNullOrEmpty(id);
     }
 
     protected boolean hasCls() {
-        return cls != null && !"".equals(cls);
+        return !Strings.isNullOrEmpty(cls);
     }
 
     protected boolean hasClasses() {
@@ -975,7 +975,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasTag() {
-        return !Strings.isNullOrEmpty(tag);
+        return tag != null && !"*".equals(tag);
     }
 
     protected boolean hasLabel() {
@@ -1274,7 +1274,7 @@ public class XPathBuilder implements Cloneable {
 
     public final By getSelector() {
         String cssSelector = getCssSelector();
-        return StringUtils.isNotEmpty(cssSelector) ? By.cssSelector(cssSelector) : By.xpath(getXPath());
+        return !Strings.isNullOrEmpty(cssSelector) ? By.cssSelector(cssSelector) : By.xpath(getXPath());
     }
 
     private boolean isCssSelectorSupported() {
