@@ -1,5 +1,6 @@
 package com.sdl.selenium.utils.config;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import org.slf4j.Logger;
@@ -139,7 +140,7 @@ public class WebLocatorConfig {
     }
 
     public static void convertAndSetSearchTextType(String searchTextType) {
-        if (searchTextType != null && !"".equals(searchTextType)) {
+        if (Strings.isNullOrEmpty(searchTextType)) {
             searchTextType = searchTextType.toUpperCase();
             String[] searchTypes = searchTextType.split("\\s*,\\s*");
             ArrayList<SearchType> list = new ArrayList<>();

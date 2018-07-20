@@ -404,7 +404,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 "}";
         String id = getAttributeId(el);
         String cls;
-        if (!"".equals(id)) {
+        if (!Strings.isNullOrEmpty(id)) {
             script = "var fireOnThis = document.getElementById('" + id + "');\n" + script;
         } else if (!"".equals(cls = getAttribute(el, "class"))) {
             script = "var fireOnThis = document.getElementsByClassName('" + cls + "')[0];\n" + script;

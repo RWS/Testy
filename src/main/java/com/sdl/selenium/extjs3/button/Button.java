@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.button;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.utils.config.WebDriverConfig;
@@ -123,7 +124,7 @@ public class Button extends ExtJsComponent implements IButton {
     }
 
     public boolean hasId(String id) {
-        return id != null && !"".equals(id);
+        return !Strings.isNullOrEmpty(id);
     }
 
     public boolean showMenu() {

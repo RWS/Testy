@@ -1,7 +1,6 @@
 package com.sdl.selenium.utils.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import com.opera.core.systems.OperaDesktopDriver;
 import com.sdl.selenium.utils.browsers.*;
 import com.sdl.selenium.web.Browser;
@@ -9,14 +8,9 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -30,9 +24,10 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
@@ -311,7 +306,7 @@ public class WebDriverConfig {
 
             driver.switchTo().window(tabID);
             String title = driver.getTitle();
-            if (title == null || "".equals(title)) {
+            if (Strings.isNullOrEmpty(title)) {
                 Utils.sleep(200);
                 driver.switchTo().window(tabID);
                 title = driver.getTitle();

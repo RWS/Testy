@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.utils;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
@@ -81,7 +79,7 @@ public class FileUtils {
         try {
             long startMs = System.currentTimeMillis();
             //create output directory if doesn't exists
-            if (outputFolderPath == null || "".equals(outputFolderPath)) {
+            if (Strings.isNullOrEmpty(outputFolderPath)) {
                 // unzip in same folder as zip file
                 outputFolderPath = new File(zipFilePath).getParent();
             }

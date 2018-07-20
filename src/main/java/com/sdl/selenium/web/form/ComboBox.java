@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.form;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
@@ -50,7 +51,7 @@ public class ComboBox extends WebLocator implements ICombo {
         value = InternationalizationUtils.getInternationalizedText(value, isInternationalized);
         boolean selected;
         ready();
-        if ("".equals(value)) {
+        if (Strings.isNullOrEmpty(value)) {
             LOGGER.warn("value is empty");
             selected = false;
         } else {

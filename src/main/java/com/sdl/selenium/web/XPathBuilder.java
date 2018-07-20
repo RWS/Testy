@@ -550,7 +550,7 @@ public class XPathBuilder implements Cloneable {
      */
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setElPathSuffix(final String key, final String elPathSuffix) {
-        if (elPathSuffix == null || "".equals(elPathSuffix)) {
+        if (Strings.isNullOrEmpty(elPathSuffix)) {
             this.elPathSuffix.remove(key);
         } else {
             this.elPathSuffix.put(key, elPathSuffix);
@@ -955,35 +955,35 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasBaseCls() {
-        return baseCls != null && !"".equals(baseCls);
+        return !Strings.isNullOrEmpty(baseCls);
     }
 
     protected boolean hasName() {
-        return name != null && !"".equals(name);
+        return !Strings.isNullOrEmpty(name);
     }
 
     protected boolean hasText() {
-        return text != null && !"".equals(text);
+        return !Strings.isNullOrEmpty(text);
     }
 
     protected boolean hasStyle() {
-        return style != null && !"".equals(style);
+        return !Strings.isNullOrEmpty(style);
     }
 
     protected boolean hasElPath() {
-        return elPath != null && !"".equals(elPath);
+        return !Strings.isNullOrEmpty(elPath);
     }
 
     protected boolean hasTag() {
-        return tag != null && !"*".equals(tag);
+        return !Strings.isNullOrEmpty(tag);
     }
 
     protected boolean hasLabel() {
-        return label != null && !"".equals(label);
+        return !Strings.isNullOrEmpty(label);
     }
 
     protected boolean hasTitle() {
-        return title != null && !"".equals(title);
+        return !Strings.isNullOrEmpty(title);
     }
 
     protected boolean hasPosition() {
@@ -1007,7 +1007,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasType() {
-        return type != null && !"".equals(type);
+        return !Strings.isNullOrEmpty(type);
     }
 
     // =========================================

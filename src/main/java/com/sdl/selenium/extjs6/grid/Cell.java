@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
@@ -64,7 +65,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
             return null;
         }
         String attributeClass = checkBox.getAttributeClass();
-        if (attributeClass == null || "".equals(attributeClass)) {
+        if (Strings.isNullOrEmpty(attributeClass)) {
             attributeClass = checkBox.getAttributeClass();
         }
         return attributeClass.contains("x-grid-checkcolumn-checked");
