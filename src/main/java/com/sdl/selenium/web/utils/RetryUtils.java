@@ -32,14 +32,14 @@ public class RetryUtils {
             } catch (Exception | AssertionError e) {
                 if (!safe) {
                     if (count >= maxRetries) {
-                        LOGGER.error("For {} retry {} and wait {} milliseconds ->{}", t.getClass().getCanonicalName(), count, wait, e);
+                        LOGGER.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
         if (count > 1) {
-            LOGGER.info("For {} retry {} and wait {} milliseconds", t.getClass().getCanonicalName(), count, wait);
+            LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
         }
         return execute;
     }
@@ -75,13 +75,17 @@ public class RetryUtils {
         return text;
     }
 
-    public static String retryIfNotSame(int maxRetries, String expected, WaitIfIsNullOrEmpty t) {
-        int count = 0;
-        String text;
-        do {
-            text = t.run();
-            count++;
-        } while (Strings.isNullOrEmpty(text) && !expected.equals(text) && count < maxRetries);
-        return text;
+    public static <V> V retryIfNotSame(int maxRetries, String expected, Callable<V> t) {
+        return retry(maxRetries, () -> {
+            V text = t.call();
+            return expected.equals(text) ? text : null;
+        });
+    }
+
+    public static <V> V retryIfNotContains(int maxRetries, String expected, Callable<V> t) {
+        return retry(maxRetries, () -> {
+            V text = t.call();
+            return text instanceof String && ((String) text).contains(expected) ? text : null;
+        });
     }
 }
