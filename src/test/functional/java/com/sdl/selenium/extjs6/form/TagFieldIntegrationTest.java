@@ -30,13 +30,13 @@ public class TagFieldIntegrationTest extends TestBase {
 
 //    @Test
 //    public void testException() {
-////        selectTagField.setBaseCls("blalala");
+//        selectTagField.setBaseCls("blalala");
 //        Utils.sleep(1);
 //
 ////        Utils.retry(10, () -> {
 ////            selectTagField.setValue("test");
 ////        });
-//        List<String> strings = RetryUtils.retryWithSuccess(2, () -> {
+//        List<String> strings = RetryUtils.retry(2, () -> {
 //            selectTagField.click();
 //            return selectTagField.getAllSelectedValues();
 //        });

@@ -28,6 +28,6 @@ public class Notification extends WebLocator {
 
     public void close() {
         WebLocator close = new WebLocator(this).setClasses("x-tool-close");
-        RetryUtils.retrySafe(5, close::click);
+        RetryUtils.retry(5, close::click);
     }
 }

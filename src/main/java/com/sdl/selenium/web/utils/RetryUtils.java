@@ -32,14 +32,14 @@ public class RetryUtils {
             } catch (Exception | AssertionError e) {
                 if (!safe) {
                     if (count >= maxRetries) {
-                        LOGGER.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
+                        LOGGER.error("For {} retry {} and wait {} milliseconds ->{}", t.getClass().getCanonicalName(), count, wait, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
         if (count > 1) {
-            LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
+            LOGGER.info("For {} retry {} and wait {} milliseconds", t.getClass().getCanonicalName(), count, wait);
         }
         return execute;
     }
