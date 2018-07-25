@@ -78,7 +78,8 @@ public class Group extends Row {
         int size = group.size() + 1;
         ArrayList<Row> rows = new ArrayList<>();
         for (int i = 1; i < size; i++) {
-            Row row = new Row().setElPath("(" + group.getXPath() + ")[" + i + "]");
+            Row rowTemp = new Row().setElPath("(" + group.getXPath() + ")[" + i + "]");
+            Row row = new Row(rowTemp).setTag("tr").setBaseCls("x-grid-row");
             rows.add(row);
         }
         return rows;
