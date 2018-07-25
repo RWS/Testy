@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class GroupedGridIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GroupedGridIntegrationTest.class);
+public class GroupIntegrationTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroupIntegrationTest.class);
 
     private Grid grid = new Grid().setTitle("Restaurants").setVisibility(true);
 
@@ -24,8 +26,8 @@ public class GroupedGridIntegrationTest extends TestBase {
 
     @Test
     void rowTest() {
-        GroupRow groupRow = new GroupRow(grid, "Cuisine: American");
-        Row row = groupRow.getRowSiblings().setResultIdx(1);
-        assertThat(row.getCell(1).getText(), equalTo("Cuisine: American (9 Items)"));
+        Group group = new Group(grid, "Cuisine: American");
+        List<Row> rows = group.getRows();
+        assertThat(rows.get(0).getCell(1).getText(), equalTo("Cuisine: American (9 Items)"));
     }
 }

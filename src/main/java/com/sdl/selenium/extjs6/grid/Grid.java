@@ -53,6 +53,14 @@ public class Grid extends Table implements Scrollable {
         return new Row(this, rowIndex).setInfoMessage("-Row");
     }
 
+    public Group getGroup(String groupName) {
+        return new Group(this, groupName).setInfoMessage("-Group");
+    }
+
+    public Group getGroup(int rowIndex) {
+        return new Group(this, rowIndex).setInfoMessage("-Group");
+    }
+
     @Override
     public Row getRow(String searchElement) {
         return new Row(this, searchElement, SearchType.EQUALS).setInfoMessage("-Row");
