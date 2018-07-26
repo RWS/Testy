@@ -44,8 +44,8 @@ public class Group extends Row {
     public Group(WebLocator container, String groupName, AbstractCell... cells) {
         this(null, groupName);
         List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
-        WebLocator xPath = new WebLocator().setChildNodes(collect.toArray(new AbstractCell[collect.size()])).setRoot("").setTag("");
-        setElPath("(" + container.getXPath() + getXPath() + ")" + xPath.getXPath());
+        WebLocator xPath = new WebLocator().setChildNodes(collect.toArray(new AbstractCell[collect.size()])).setRoot("/").setTag("following-sibling::table");
+        setElPath(container.getXPath() + getXPath() + xPath.getXPath());
     }
 
     public Group(WebLocator container, int indexRow, AbstractCell... cells) {
@@ -102,7 +102,7 @@ public class Group extends Row {
     }
 
     public static void main(String[] args) {
-        Group group = new Group(null, "Cuisine: Coffee");
+        Group group = new Group(null, "Cuisine: Coffee", new Cell("Test"));
         List<Row> rows = group.getRows();
         LOGGER.info("{}", rows.get(0).getXPath());
     }
