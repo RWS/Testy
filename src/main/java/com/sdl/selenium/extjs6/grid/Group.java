@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import org.slf4j.Logger;
@@ -89,7 +90,7 @@ public class Group extends Row {
         if (!expand()) {
             return null;
         }
-        Row group = new Row(this).setTag("").setRoot(" | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table[following::table[.//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')] and count(.//text()[contains(.,'" + toGroup + "')]) > 0]]");
+        Row group = new Row(this).setTag("").setRoot(" | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table" + (Strings.isNullOrEmpty(toGroup) ? "" : "[following::table[.//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')] and count(.//text()[contains(.,'" + toGroup + "')]) > 0]]"));
         int size = group.size() + 1;
         ArrayList<Row> rows = new ArrayList<>();
         for (int i = 1; i < size; i++) {
