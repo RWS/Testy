@@ -85,6 +85,21 @@ public class Group extends Row {
         return rows;
     }
 
+    public List<Row> getRows(String toGroup) {
+        if (!expand()) {
+            return null;
+        }
+        Row group = new Row(this).setTag("").setRoot(" | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table[following::table[.//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')] and count(.//text()[contains(.,'" + toGroup + "')]) > 0]]");
+        int size = group.size() + 1;
+        ArrayList<Row> rows = new ArrayList<>();
+        for (int i = 1; i < size; i++) {
+            Row rowTemp = new Row().setElPath("(" + group.getXPath() + ")[" + i + "]");
+            Row row = new Row(rowTemp).setTag("tr").setBaseCls("x-grid-row");
+            rows.add(row);
+        }
+        return rows;
+    }
+
     public static void main(String[] args) {
         Group group = new Group(null, "Cuisine: Coffee");
         List<Row> rows = group.getRows();
