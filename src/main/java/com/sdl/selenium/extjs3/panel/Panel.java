@@ -16,7 +16,7 @@ public class Panel extends ExtJsComponent {
         setBaseCls("x-panel");
         setHeaderBaseCls(getPathBuilder().getBaseCls());
         setElPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
-        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()=%s]) > 0");
+        setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
     public Panel(String title) {

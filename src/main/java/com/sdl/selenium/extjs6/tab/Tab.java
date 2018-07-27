@@ -10,6 +10,7 @@ import com.sdl.selenium.web.tab.ITab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class Tab extends WebLocator implements ITab {
 
     @Override
     public boolean isActive() {
-        return new ConditionManager(200).add(new RenderSuccessCondition(this)).execute().isSuccess();
+        return new ConditionManager(Duration.ofMillis(200)).add(new RenderSuccessCondition(this)).execute().isSuccess();
     }
 
     public boolean isTabDisplayed() {

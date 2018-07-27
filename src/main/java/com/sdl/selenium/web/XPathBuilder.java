@@ -71,7 +71,7 @@ public class XPathBuilder implements Cloneable {
         setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
         setTemplate("type", "@type='%s'");
-        setTemplate("title", "@title=%s");
+        setTemplate("title", "@title='%s'");
         setTemplate("titleEl", "count(.%s) > 0");
         setTemplate("DEEP_CHILD_NODE_OR_SELF", "(%1$s or count(*//text()[%1$s]) > 0)");
         setTemplate("DEEP_CHILD_NODE", "count(*//text()[%s]) > 0");
@@ -1066,7 +1066,7 @@ public class XPathBuilder implements Cloneable {
                 titleTplEl.setText(title, searchTitleType.toArray(new SearchType[searchTitleType.size()]));
                 addTemplate(selector, "titleEl", titleTplEl.getXPath());
             } else if (searchTitleType.isEmpty()) {
-                title = getTextAfterEscapeQuotes(title, searchTitleType);
+//                title = getTextAfterEscapeQuotes(title, searchTitleType);
                 addTemplate(selector, "title", title);
             } else {
                 addTextInPath(selector, title, "@title", searchTitleType);
