@@ -10,11 +10,6 @@ import java.util.concurrent.Callable;
 public class RetryUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
 
-    @FunctionalInterface
-    public interface WaitIfIsNullOrEmpty {
-        String run() throws AssertionError;
-    }
-
     public static <V> V retry(int maxRetries, Callable<V> t) {
         return retry(maxRetries, t, false);
     }
@@ -25,7 +20,7 @@ public class RetryUtils {
         V execute = null;
         do {
             count++;
-            wait = wait == 0 ? 10 : wait * 2;
+            wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
             Utils.sleep(wait);
             try {
                 execute = t.call();
@@ -64,17 +59,6 @@ public class RetryUtils {
         return execute == null;
     }
 
-    @Deprecated
-    public static String waitIfIsNullOrEmpty(int maxRetries, WaitIfIsNullOrEmpty t) {
-        int count = 0;
-        String text;
-        do {
-            text = t.run();
-            count++;
-        } while (Strings.isNullOrEmpty(text) && count < maxRetries);
-        return text;
-    }
-
     public static <V> V retryIfNotSame(int maxRetries, String expected, Callable<V> t) {
         return retry(maxRetries, () -> {
             V text = t.call();
@@ -83,9 +67,16 @@ public class RetryUtils {
     }
 
     public static <V> V retryIfNotContains(int maxRetries, String expected, Callable<V> t) {
-        return retry(maxRetries, () -> {
+        retry(maxRetries, () -> {
             V text = t.call();
-            return text instanceof String && ((String) text).contains(expected) ? text : null;
+            return text instanceof String && ((String) text).contains(expected);
         });
+        V call;
+        try {
+            call = t.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        return call;
     }
 }
