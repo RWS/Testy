@@ -49,7 +49,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //        if (highlight) {
 //            doHighlight();
 //        }
-        Boolean click = RetryUtils.retry(8, () -> {
+        Boolean click = RetryUtils.retrySafe(8, () -> {
             findAgain(el);
             el.currentElement.click();
             return el.currentElement != null;
