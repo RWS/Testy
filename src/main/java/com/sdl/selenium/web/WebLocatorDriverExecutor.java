@@ -49,7 +49,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //        if (highlight) {
 //            doHighlight();
 //        }
-        Boolean click = RetryUtils.retrySafe(8, () -> {
+        Boolean click = RetryUtils.retrySafe(6, () -> {
             findAgain(el);
             el.currentElement.click();
             return el.currentElement != null;
@@ -81,7 +81,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
-        Boolean submit = RetryUtils.retry(8, () -> {
+        Boolean submit = RetryUtils.retry(6, () -> {
             findAgain(el);
             el.currentElement.submit();
             return el.currentElement != null;
@@ -141,7 +141,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean setValue(WebLocator el, String value) {
-        Boolean retry = RetryUtils.retry(8, () -> doSetValue(el, value));
+        Boolean retry = RetryUtils.retry(6, () -> doSetValue(el, value));
         return retry == null ? false : retry;
     }
 

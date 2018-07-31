@@ -36,7 +36,7 @@ public class TagFieldIntegrationTest extends TestBase {
 ////        Utils.retry(10, () -> {
 ////            selectTagField.setValue("test");
 ////        });
-//        String strings = RetryUtils.retryIfNotContains(3, "Kansa", () -> {
+//        String strings = RetryUtils.retryIfNotContains(0, "Kansasd", () -> {
 //            selectTagField.click();
 //            return selectTagField.getValue();
 //        });

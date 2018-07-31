@@ -60,23 +60,18 @@ public class RetryUtils {
     }
 
     public static <V> V retryIfNotSame(int maxRetries, String expected, Callable<V> t) {
-        return retry(maxRetries, () -> {
+        V result = retry(maxRetries, () -> {
             V text = t.call();
             return expected.equals(text) ? text : null;
         });
+        return result == null ? retry(0, t) : result;
     }
 
     public static <V> V retryIfNotContains(int maxRetries, String expected, Callable<V> t) {
-        retry(maxRetries, () -> {
+        V result = retry(maxRetries, () -> {
             V text = t.call();
-            return text instanceof String && ((String) text).contains(expected);
+            return text instanceof String && ((String) text).contains(expected) ? text : null;
         });
-        V call;
-        try {
-            call = t.call();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-        return call;
+        return result == null ? retry(0, t) : result;
     }
 }
