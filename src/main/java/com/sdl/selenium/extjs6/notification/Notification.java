@@ -10,6 +10,7 @@ public class Notification extends WebLocator {
 
     public Notification() {
         setClasses("msg", "x-border-box");
+        setVisibility(true);
         WebLocator c = new WebLocator().setClasses("msg-container");
         setContainer(c);
     }
