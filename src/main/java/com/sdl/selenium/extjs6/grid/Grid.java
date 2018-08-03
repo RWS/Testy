@@ -44,7 +44,7 @@ public class Grid extends Table implements Scrollable {
                     setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
             list.add(headerEL);
         }
-        setChildNodes(list.toArray(new WebLocator[list.size()]));
+        setChildNodes(list.stream().toArray(WebLocator[]::new));
         return (T) this;
     }
 

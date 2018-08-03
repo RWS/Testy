@@ -510,7 +510,6 @@ public class XPathBuilder implements Cloneable {
         if (searchTitleTypes == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTitleType = new ArrayList<>();
             Collections.addAll(this.searchTitleType, searchTitleTypes);
         }
         this.searchTitleType.addAll(defaultSearchTextType);
@@ -528,6 +527,7 @@ public class XPathBuilder implements Cloneable {
             templateTitle.remove("title");
         } else {
             templateTitle.put("title", titleEl);
+            setSearchTitleType(titleEl.getPathBuilder().getSearchTitleType().stream().toArray(SearchType[]::new));
         }
         return (T) this;
     }
@@ -1063,7 +1063,7 @@ public class XPathBuilder implements Cloneable {
             String title = getTitle();
             WebLocator titleTplEl = templateTitle.get("title");
             if (titleTplEl != null) {
-                titleTplEl.setText(title, searchTitleType.toArray(new SearchType[searchTitleType.size()]));
+                titleTplEl.setText(title, searchTitleType.stream().toArray(SearchType[]::new));
                 addTemplate(selector, "titleEl", titleTplEl.getXPath());
             } else if (searchTitleType.isEmpty()) {
 //                title = getTextAfterEscapeQuotes(title, searchTitleType);
@@ -1439,7 +1439,7 @@ public class XPathBuilder implements Cloneable {
         if (searchLabelType.size() == 0) {
             searchLabelType.add(SearchType.EQUALS);
         }
-        SearchType[] st = searchLabelType.toArray(new SearchType[searchLabelType.size()]);
+        SearchType[] st = searchLabelType.stream().toArray(SearchType[]::new);
         return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getXPath();
     }
 

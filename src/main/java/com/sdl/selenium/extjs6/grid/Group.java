@@ -44,7 +44,7 @@ public class Group extends Row {
     public Group(WebLocator container, String groupName, AbstractCell... cells) {
         this(null, groupName);
         List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
-        WebLocator xPath = new WebLocator().setChildNodes(collect.toArray(new AbstractCell[collect.size()])).setRoot("/").setTag("following-sibling::table");
+        WebLocator xPath = new WebLocator().setChildNodes(collect.stream().toArray(AbstractCell[]::new)).setRoot("/").setTag("following-sibling::table");
         setElPath(container.getXPath() + getXPath() + xPath.getXPath());
     }
 

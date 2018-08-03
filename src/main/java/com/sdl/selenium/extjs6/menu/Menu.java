@@ -23,7 +23,7 @@ public class Menu extends WebLocator {
 
     public Menu(String title, SearchType... searchTypes) {
         this();
-        WebLocator titleEL = new WebLocator().setClasses("x-menu-item-plain").setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        WebLocator titleEL = new WebLocator().setClasses("x-menu-item-plain").setSearchTitleType(SearchType.DEEP_CHILD_NODE_OR_SELF);
         setTemplateTitle(titleEL);
         setTitle(title, searchTypes);
     }
