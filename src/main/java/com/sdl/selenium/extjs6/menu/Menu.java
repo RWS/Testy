@@ -21,11 +21,11 @@ public class Menu extends WebLocator {
         setVisibility(true);
     }
 
-    public Menu(String title) {
+    public Menu(String title, SearchType... searchTypes) {
         this();
         WebLocator titleEL = new WebLocator().setClasses("x-menu-item-plain").setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
         setTemplateTitle(titleEL);
-        setTitle(title);
+        setTitle(title, searchTypes);
     }
 
     public void clickOnMenu(String option, SearchType... searchTypes) {
