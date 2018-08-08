@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
@@ -68,7 +69,8 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public boolean isSelected() {
-        return getAttributeClass().contains("x-grid-item-selected");
+        String aClass = getAttributeClass();
+        return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-item-selected");
     }
 
     public boolean scrollTo() {
