@@ -4,7 +4,6 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.tab.ITab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ public class Tab extends WebLocator implements ITab {
         setClassName("Tab");
         setBaseCls("nav nav-tabs");
         setTag("ul");
-        setTemplate("text", "count(.//li[@class='active']//a[.=%s]) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active'");
+        setTemplate("text", "count(.//li[@class='active']//*[.=%s]) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active'");
     }
 
     public Tab(String title) {
@@ -32,7 +31,7 @@ public class Tab extends WebLocator implements ITab {
     }
 
     private String getTitlePath(boolean active) {
-        WebLink link = new WebLink().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        WebLocator link = new WebLocator().setText(getPathBuilder().getText(), SearchType.EQUALS);
         String isActive = active ? "@class='active'" : "not(@class='active')";
         WebLocator el = new WebLocator().setTag("ul").setClasses(getPathBuilder().getBaseCls());
         return el.getXPath() + "//li[" + isActive + "]" + link.getXPath();
