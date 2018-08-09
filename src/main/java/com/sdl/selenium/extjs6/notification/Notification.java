@@ -30,7 +30,7 @@ public class Notification extends WebLocator {
 
     public void close() {
         WebLocator close = new WebLocator(this).setClasses("x-tool-close");
-        Utils.sleep(10);
+        Utils.sleep(50);
         RetryUtils.retry(3, () -> {
             this.waitToRender(300L, false);
             return close.click() || !this.waitToRender(100L, false);
