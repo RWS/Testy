@@ -13,6 +13,6 @@ public class Window extends com.sdl.selenium.extjs4.window.Window {
 
     public Window(String title, SearchType... searchTypes) {
         this();
-        setTitle(title, searchTypes);
+        setTitle(title, searchTypes.length == 0 ? new SearchType[]{SearchType.EQUALS} : searchTypes);
     }
 }
