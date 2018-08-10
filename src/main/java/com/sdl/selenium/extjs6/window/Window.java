@@ -11,10 +11,6 @@ public class Window extends com.sdl.selenium.extjs4.window.Window {
         super();
     }
 
-    public Window(String title) {
-        super(title);
-    }
-
     public Window(String title, SearchType... searchTypes) {
         this();
         setTitle(title, searchTypes);

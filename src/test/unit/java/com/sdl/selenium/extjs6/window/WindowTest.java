@@ -15,6 +15,7 @@ public class WindowTest {
                 {new Window(),                             "//*[contains(concat(' ', @class, ' '), ' x-window ')]"},
                 {new Window("Title"),                      "//*[contains(concat(' ', @class, ' '), ' x-window ') and count(.//*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='Title']) > 0]"},
                 {new Window("Title", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' x-window ') and count(.//*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[contains(text(),'Title')]) > 0]"},
+                {new Window("Title").setTitle("Contains", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' x-window ') and count(.//*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[contains(text(),'Contains')]) > 0]"},
         };
     }
 

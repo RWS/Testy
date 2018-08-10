@@ -18,9 +18,9 @@ public class Window extends WebLocator {
 //        setTemplate("title", "count(*[contains(@class,'x-window-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
 
-    public Window(String title) {
+    public Window(String title, SearchType... searchTypes) {
         this();
-        setTitle(title, SearchType.EQUALS);
+        setTitle(title, searchTypes.length == 0 ? new SearchType[]{SearchType.EQUALS} : searchTypes);
     }
 
     public String getTitleWindow() {

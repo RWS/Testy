@@ -393,7 +393,11 @@ public class XPathBuilder implements Cloneable {
         if (searchTextTypes == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            this.searchTextType = new ArrayList<>();
+            if (!this.searchTextType.isEmpty()) {
+                for (SearchType st : searchTextTypes) {
+                    this.searchTextType.removeIf(s -> s.getGroup().equals(st.getGroup()));
+                }
+            }
             Collections.addAll(this.searchTextType, searchTextTypes);
         }
         this.searchTextType.addAll(defaultSearchTextType);
@@ -448,6 +452,11 @@ public class XPathBuilder implements Cloneable {
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
         this.searchLabelType = new ArrayList<>();
         if (searchLabelTypes != null) {
+            if (!this.searchLabelType.isEmpty()) {
+                for (SearchType st : searchLabelTypes) {
+                    this.searchLabelType.removeIf(s -> s.getGroup().equals(st.getGroup()));
+                }
+            }
             Collections.addAll(this.searchLabelType, searchLabelTypes);
         }
         this.searchLabelType = cleanUpSearchType(this.searchLabelType);
@@ -510,6 +519,11 @@ public class XPathBuilder implements Cloneable {
         if (searchTitleTypes == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {
+            if (!this.searchTitleType.isEmpty()) {
+                for (SearchType st : searchTitleTypes) {
+                    this.searchTitleType.removeIf(s -> s.getGroup().equals(st.getGroup()));
+                }
+            }
             Collections.addAll(this.searchTitleType, searchTitleTypes);
         }
         this.searchTitleType.addAll(defaultSearchTextType);
@@ -1242,15 +1256,11 @@ public class XPathBuilder implements Cloneable {
             selector.add("[class=" + getCls() + "]");
         }
         if (hasClasses()) {
-            for (String cls : getClasses()) {
-                selector.add("." + cls);
-            }
+            selector.addAll(getClasses().stream().map(cls -> "." + cls).collect(Collectors.toList()));
         }
         if (hasExcludeClasses()) {
 //            LOGGER.warn("excludeClasses is not supported yet");
-            for (String excludeClass : getExcludeClasses()) {
-                selector.add(":not(." + excludeClass + ")");
-            }
+            selector.addAll(getExcludeClasses().stream().map(excludeClass -> ":not(." + excludeClass + ")").collect(Collectors.toList()));
         }
         if (hasName()) {
             selector.add("[name='" + getName() + "']");
