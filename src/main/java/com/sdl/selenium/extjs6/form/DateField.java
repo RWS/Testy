@@ -5,6 +5,7 @@ import com.sdl.selenium.extjs6.slider.Slider;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        String fullDate = monthYearButton.getText().trim();
+        String fullDate = RetryUtils.retry(4, () -> monthYearButton.getText()).trim();
         if (!fullDate.contains(month) || !fullDate.contains(year)) {
             monthYearButton.click();
             if (!yearAndMonth.ready()) {
