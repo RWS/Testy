@@ -136,22 +136,26 @@ public class FileUtils {
 
     }
 
+    @Deprecated
     public static boolean compareFiles(String currentFilePath, String expectedFilePath) {
+        return compare(currentFilePath, expectedFilePath).isResult();
+    }
+
+    public static ContentFiles compare(String currentFilePath, String expectedFilePath) {
+        String currentFileContent = null;
+        String expectedFileContent = null;
         try {
             File currentFile = new File(currentFilePath);
             File expectedFile = new File(expectedFilePath);
             FileUtils.waitFileIfIsEmpty(currentFile, 10000);
             FileUtils.waitFileIfIsEmpty(expectedFile, 10000);
-            String currentFileContent = formatToSystemLineSeparator(convertStreamToString(new FileInputStream(currentFile)));
-            String expectedFileContent = formatToSystemLineSeparator(convertStreamToString(new FileInputStream(expectedFile)));
+            currentFileContent = formatToSystemLineSeparator(convertStreamToString(new FileInputStream(currentFile)));
+            expectedFileContent = formatToSystemLineSeparator(convertStreamToString(new FileInputStream(expectedFile)));
             boolean equals = currentFileContent.equals(expectedFileContent);
-            if (!equals) {
-                LOGGER.debug("Expected: \"{}\" \n But was \"{}\" ", currentFileContent, expectedFileContent);
-            }
-            return equals;
+            return new ContentFiles(currentFileContent, expectedFileContent, equals);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return new ContentFiles(currentFileContent, expectedFileContent, false);
         }
     }
 
