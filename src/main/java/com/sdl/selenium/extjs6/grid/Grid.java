@@ -190,6 +190,49 @@ public class Grid extends Table implements Scrollable {
         }
     }
 
+    public List<List<String>> getCellsText(String group, int... excludedColumns) {
+        Group groupEl = getGroup(group);
+        groupEl.expand();
+        List<Row> groupElRows = groupEl.getRows();
+        Cell columnsEl = new Cell(groupElRows.get(1));
+        int rows = groupElRows.size();
+        int columns = columnsEl.size();
+        List<Integer> columnsList = getColumns(columns, excludedColumns);
+
+        if (rows <= 0) {
+            return null;
+        } else {
+            List<List<String>> listOfList = new ArrayList<>();
+            boolean canRead = true;
+            String id = "";
+            int timeout = 0;
+            do {
+                for (int i = 0; i < rows; ++i) {
+                    if (canRead) {
+                        List<String> list = new ArrayList<>();
+                        for (int j : columnsList) {
+                            list.add(groupElRows.get(i).getCell(j).getText(true));
+                        }
+                        listOfList.add(list);
+                    } else {
+                        String currentId = new Row(this, i + 1).getAttributeId();
+                        if (!"".equals(id) && id.equals(currentId)) {
+                            canRead = true;
+                        }
+                    }
+                }
+                if (isScrollBottom() || listOfList.size() >= rows) {
+                    break;
+                }
+                id = new Row(this, rows).getAttributeId();
+                scrollPageDownInTree();
+                canRead = false;
+                timeout++;
+            } while (listOfList.size() < rows && timeout < 30);
+            return listOfList;
+        }
+    }
+
     @Override
     public int getCount() {
         if (ready(true)) {

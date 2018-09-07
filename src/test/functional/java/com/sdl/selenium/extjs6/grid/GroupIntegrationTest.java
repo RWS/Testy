@@ -7,9 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GroupIntegrationTest extends TestBase {
@@ -29,5 +32,22 @@ public class GroupIntegrationTest extends TestBase {
         Group group = new Group(grid, "Cuisine: American");
         List<Row> rows = group.getRows("Asian");
         assertThat(rows.get(0).getCell(1).getText(), equalTo("Cuisine: American (9 Items)"));
+    }
+
+    @Test
+    void rowTest2() {
+        List<List<String>> cellsText = grid.getCellsText("Cuisine: American");
+        List<List<String>> lists = Arrays.asList(
+                Collections.singletonList("Cheesecake Factory"),
+                Collections.singletonList("Creamery"),
+                Collections.singletonList("Crepevine"),
+                Collections.singletonList("Gordon Biersch"),
+                Collections.singletonList("MacArthur Park"),
+                Collections.singletonList("Old Pro"),
+                Collections.singletonList("Shokolaat"),
+                Collections.singletonList("Slider Bar"),
+                Collections.singletonList("University Cafe")
+        );
+        assertThat(cellsText, contains(lists.toArray()));
     }
 }
