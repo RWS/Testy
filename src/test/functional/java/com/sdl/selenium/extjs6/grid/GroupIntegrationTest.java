@@ -30,8 +30,8 @@ public class GroupIntegrationTest extends TestBase {
     @Test
     void rowTest() {
         Group group = new Group(grid, "Cuisine: American");
-        List<Row> rows = group.getRows("Asian");
-        assertThat(rows.get(0).getCell(1).getText(), equalTo("Cuisine: American (9 Items)"));
+        List<Row> rows = group.getRows();
+        assertThat(rows.get(0).getCell(1).getText(), equalTo("Cheesecake Factory"));
     }
 
     @Test

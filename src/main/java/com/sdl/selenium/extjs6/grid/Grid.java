@@ -193,8 +193,7 @@ public class Grid extends Table implements Scrollable {
     public List<List<String>> getCellsText(String group, int... excludedColumns) {
         Group groupEl = getGroup(group);
         groupEl.expand();
-        String nextGroup = getNextGroupName(group);
-        List<Row> groupElRows = groupEl.getRows(nextGroup);
+        List<Row> groupElRows = groupEl.getRows();
         Cell columnsEl = new Cell(groupElRows.get(1));
         int rows = groupElRows.size();
         int columns = columnsEl.size();

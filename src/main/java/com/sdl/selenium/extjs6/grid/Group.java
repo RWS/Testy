@@ -72,21 +72,8 @@ public class Group extends Row {
     }
 
     public List<Row> getRows() {
-        if (!expand()) {
-            return null;
-        }
-        Row group = new Row(this).setTag("").setRoot(" | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0]/following-sibling::table[following-sibling::table//tr//td[not(contains(concat(' ', @class, ' '), ' x-group-hd-container '))] | self::table//tr//td[not(contains(concat(' ', @class, ' '), ' x-group-hd-container '))]]");
-        int size = group.size() + 1;
-        ArrayList<Row> rows = new ArrayList<>();
-        for (int i = 1; i < size; i++) {
-            Row rowTemp = new Row().setElPath("(" + group.getXPath() + ")[" + i + "]");
-            Row row = new Row(rowTemp).setTag("tr").setBaseCls("x-grid-row");
-            rows.add(row);
-        }
-        return rows;
-    }
-
-    public List<Row> getRows(String toGroup) {
+        Grid grid = (Grid) getPathBuilder().getContainer();
+        String toGroup = grid.getNextGroupName(nameGroup);
         if (!expand()) {
             return null;
         }
@@ -106,9 +93,9 @@ public class Group extends Row {
         return groupName.getText();
     }
 
-    public static void main(String[] args) {
-        Group group = new Group(null, "Cuisine: Coffee", new Cell("Test"));
-        List<Row> rows = group.getRows();
-        LOGGER.info("{}", rows.get(0).getXPath());
-    }
+//    public static void main(String[] args) {
+//        Group group = new Group(null, "Cuisine: Coffee", new Cell("Test"));
+//        List<Row> rows = group.getRows();
+//        LOGGER.info("{}", rows.get(0).getXPath());
+//    }
 }
