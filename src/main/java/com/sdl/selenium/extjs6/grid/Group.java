@@ -90,7 +90,7 @@ public class Group extends Row {
 
     public String getNameGroup() {
         WebLocator groupName = new WebLocator(this).setClasses("x-grid-group-title");
-        return groupName.getText();
+        return groupName.getText().split(" \\(")[0];
     }
 
 //    public static void main(String[] args) {
