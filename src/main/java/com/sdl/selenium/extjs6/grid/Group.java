@@ -101,6 +101,11 @@ public class Group extends Row {
         return rows;
     }
 
+    public String getNameGroup() {
+        WebLocator groupName = new WebLocator(this).setClasses("x-grid-group-title");
+        return groupName.getText();
+    }
+
     public static void main(String[] args) {
         Group group = new Group(null, "Cuisine: Coffee", new Cell("Test"));
         List<Row> rows = group.getRows();

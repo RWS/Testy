@@ -142,7 +142,7 @@ public class Grid extends Table implements Scrollable {
     public List<String> getHeaders() {
         List<String> headers = new ArrayList<>();
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = RetryUtils.retryWithSuccess(4, header::getText);
+        String headerText = RetryUtils.retrySafe(4, header::getText);
         Collections.addAll(headers, headerText.trim().split("\n"));
         return headers;
     }
@@ -193,7 +193,8 @@ public class Grid extends Table implements Scrollable {
     public List<List<String>> getCellsText(String group, int... excludedColumns) {
         Group groupEl = getGroup(group);
         groupEl.expand();
-        List<Row> groupElRows = groupEl.getRows();
+        String nextGroup = getNextGroupName(group);
+        List<Row> groupElRows = groupEl.getRows(nextGroup);
         Cell columnsEl = new Cell(groupElRows.get(1));
         int rows = groupElRows.size();
         int columns = columnsEl.size();
@@ -240,5 +241,29 @@ public class Grid extends Table implements Scrollable {
         } else {
             return -1;
         }
+    }
+
+    public List<String> getGroupsName() {
+        Group group = new Group(this);
+        int size = group.size();
+        List<String> list = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            group.setResultIdx(i);
+            list.add(group.getNameGroup());
+        }
+        return list;
+    }
+
+    public String getNextGroupName(String groupName) {
+        Group group = new Group(this);
+        int size = group.size();
+        for (int i = 1; i <= size; i++) {
+            group.setResultIdx(i);
+            if (group.getNameGroup().contains(groupName)) {
+                group.setResultIdx(i + 1);
+                return group.getNameGroup();
+            }
+        }
+        return null;
     }
 }

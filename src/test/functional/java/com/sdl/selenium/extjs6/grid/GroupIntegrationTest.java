@@ -50,4 +50,11 @@ public class GroupIntegrationTest extends TestBase {
         );
         assertThat(cellsText, contains(lists.toArray()));
     }
+
+    @Test
+    void rowTest3() {
+        List<String> groupsName = grid.getGroupsName();
+        List<String> lists = Arrays.asList("Cuisine: American (9 Items)", "Cuisine: Asian (1 Item)");
+        assertThat(groupsName, contains(lists.toArray()));
+    }
 }
