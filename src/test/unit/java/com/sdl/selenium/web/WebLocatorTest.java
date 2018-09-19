@@ -4,7 +4,11 @@ import com.sdl.selenium.extjs3.ExtJsComponent;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.testng.Assert.assertEquals;
 
@@ -58,9 +62,9 @@ public class WebLocatorTest {
                 {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
 
-                {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(text(),'" + text + "')]"},
-                {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
-                {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type')='weblocator text for search type']"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH, SearchType.CASE_SENSITIVE).addSearchTextType(SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
 
                 {new WebLocator().setClasses(cls).setText(text, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS, SearchType.CASE_INSENSITIVE), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(translate(text(),'WEBLOCATOR TEXT FOR SEARCH TYPE','weblocator text for search type'),'weblocator text for search type')]"},
@@ -280,5 +284,19 @@ public class WebLocatorTest {
         child.setTemplateValue("custom", "a", "b");
 
         assertThat(child.getXPath(), equalTo("//*[a = b]"));
+    }
+
+    @Test
+    public void setSometimes() {
+        WebLocator child = new WebLocator().setText("a", SearchType.CONTAINS, SearchType.DEEP_CHILD_NODE);
+        child.setSearchTextType(SearchType.EQUALS);
+        child.setSearchTextType(SearchType.STARTS_WITH);
+
+        List<SearchType> types = new ArrayList<>();
+        types.add(SearchType.STARTS_WITH);
+        types.add(SearchType.DEEP_CHILD_NODE);
+        List<SearchType> searchTextType = child.getPathBuilder().getSearchTextType();
+
+        assertThat(searchTextType, contains(types.toArray()));
     }
 }

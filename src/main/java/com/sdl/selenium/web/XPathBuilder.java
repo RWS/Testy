@@ -362,12 +362,7 @@ public class XPathBuilder implements Cloneable {
 //        } else {
 //            xpath.add("text");
 //        }
-        if (searchTypes != null && searchTypes.length > 0) {
-            setSearchTextType(searchTypes);
-        } else {
-            this.searchTextType.addAll(defaultSearchTextType);
-            this.searchTextType = cleanUpSearchType(this.searchTextType);
-        }
+        setSearchTextType(searchTypes);
         return (T) this;
     }
 
@@ -393,12 +388,7 @@ public class XPathBuilder implements Cloneable {
         if (searchTextTypes == null) {
             this.searchTextType = WebLocatorConfig.getSearchTextType();
         } else {
-            if (!this.searchTextType.isEmpty()) {
-                for (SearchType st : searchTextTypes) {
-                    this.searchTextType.removeIf(s -> s.getGroup().equals(st.getGroup()));
-                }
-            }
-            Collections.addAll(this.searchTextType, searchTextTypes);
+            this.searchTextType.addAll(0, Arrays.asList(searchTextTypes));
         }
         this.searchTextType.addAll(defaultSearchTextType);
         this.searchTextType = cleanUpSearchType(this.searchTextType);
@@ -416,20 +406,21 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T addSearchTextType(SearchType... searchTextTypes) {
         if (searchTextTypes != null) {
-            Collections.addAll(this.searchTextType, searchTextTypes);
+            this.searchTextType.addAll(0, Arrays.asList(searchTextTypes));
         }
         this.searchTextType = cleanUpSearchType(this.searchTextType);
         return (T) this;
     }
 
     protected List<SearchType> cleanUpSearchType(List<SearchType> searchTextTypes) {
+        List<SearchType> searchTypes = searchTextTypes;
         if (searchTextTypes.size() > 1) {
             Set<String> unique = new HashSet<>();
-            return searchTextTypes.stream()
+            searchTypes = searchTextTypes.stream()
                     .filter(c -> unique.add(c.getGroup()))
                     .collect(Collectors.toList());
         }
-        return searchTextTypes;
+        return searchTypes;
     }
 
     /**
@@ -452,12 +443,7 @@ public class XPathBuilder implements Cloneable {
     private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
         this.searchLabelType = new ArrayList<>();
         if (searchLabelTypes != null) {
-            if (!this.searchLabelType.isEmpty()) {
-                for (SearchType st : searchLabelTypes) {
-                    this.searchLabelType.removeIf(s -> s.getGroup().equals(st.getGroup()));
-                }
-            }
-            Collections.addAll(this.searchLabelType, searchLabelTypes);
+            this.searchLabelType.addAll(0, Arrays.asList(searchLabelTypes));
         }
         this.searchLabelType = cleanUpSearchType(this.searchLabelType);
         return (T) this;
@@ -519,12 +505,7 @@ public class XPathBuilder implements Cloneable {
         if (searchTitleTypes == null) {
             this.searchTitleType = WebLocatorConfig.getSearchTextType();
         } else {
-            if (!this.searchTitleType.isEmpty()) {
-                for (SearchType st : searchTitleTypes) {
-                    this.searchTitleType.removeIf(s -> s.getGroup().equals(st.getGroup()));
-                }
-            }
-            Collections.addAll(this.searchTitleType, searchTitleTypes);
+            this.searchTitleType.addAll(0, Arrays.asList(searchTitleTypes));
         }
         this.searchTitleType.addAll(defaultSearchTextType);
         this.searchTitleType = cleanUpSearchType(this.searchTitleType);
