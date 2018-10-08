@@ -3,8 +3,6 @@ package com.sdl.selenium.extjs6.grid;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Group extends Row {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Group.class);
 
     private WebLocator group = new WebLocator().setClasses("x-group-hd-container").setTag("td");
     private static String nameGroup = null;
@@ -92,10 +89,4 @@ public class Group extends Row {
         WebLocator groupName = new WebLocator(this).setClasses("x-grid-group-title");
         return groupName.getText().split(" \\(")[0];
     }
-
-//    public static void main(String[] args) {
-//        Group group = new Group(null, "Cuisine: Coffee", new Cell("Test"));
-//        List<Row> rows = group.getRows();
-//        LOGGER.info("{}", rows.get(0).getXPath());
-//    }
 }

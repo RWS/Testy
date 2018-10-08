@@ -4,11 +4,8 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Button extends WebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     public Button() {
         setClassName("Button");

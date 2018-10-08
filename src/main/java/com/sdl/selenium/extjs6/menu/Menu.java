@@ -5,14 +5,11 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Menu extends WebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Menu.class);
 
     public Menu() {
         setClassName("Menu");

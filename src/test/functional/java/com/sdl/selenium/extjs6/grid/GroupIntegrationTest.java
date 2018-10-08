@@ -1,9 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -16,13 +13,13 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GroupIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GroupIntegrationTest.class);
 
     private Grid grid = new Grid().setTitle("Restaurants").setVisibility(true);
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
+//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
+        driver.get("http://examples.sencha.com/extjs/6.6.0/examples/kitchensink/?classic#grouped-grid");
         grid.ready(10);
         grid.ready(true);
     }
@@ -56,5 +53,11 @@ public class GroupIntegrationTest extends TestBase {
         List<String> groupsName = grid.getGroupsName();
         List<String> lists = Arrays.asList("Cuisine: American (9 Items)", "Cuisine: Asian (1 Item)");
         assertThat(groupsName, contains(lists.toArray()));
+    }
+
+    @Test
+    void rowTest4() {
+        Group group = grid.getGroup(2);
+        assertThat(group.getNameGroup(), equalTo(""));
     }
 }

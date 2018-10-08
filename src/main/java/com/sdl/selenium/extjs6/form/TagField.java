@@ -4,9 +4,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +14,8 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+@Slf4j
 public class TagField extends ComboBox {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TagField.class);
 
     public TagField() {
         setClassName("TagField");
@@ -75,9 +74,9 @@ public class TagField extends ComboBox {
                     WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                     selected = selected && option.doClick();
                     if (selected) {
-                        LOGGER.info("Set value(" + info + "): " + value);
+                        log.info("Set value(" + info + "): " + value);
                     } else {
-                        LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+                        log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
                     }
                 }
                 clickIcon("trigger"); // to close combo
@@ -88,9 +87,9 @@ public class TagField extends ComboBox {
                 WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                 selected = selected && option.doClick();
                 if (selected) {
-                    LOGGER.info("Set value(" + info + "): " + value);
+                    log.info("Set value(" + info + "): " + value);
                 } else {
-                    LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+                    log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
                     clickIcon("trigger");
                 }
             }
@@ -118,6 +117,7 @@ public class TagField extends ComboBox {
         return removed;
     }
 
+    @Override
     public boolean setValue(String value) {
         assertReady(value);
         WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
@@ -145,6 +145,7 @@ public class TagField extends ComboBox {
         return new ArrayList<>();
     }
 
+    @Override
     public WebLocator getTriggerEl(String icon) {
         return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
     }

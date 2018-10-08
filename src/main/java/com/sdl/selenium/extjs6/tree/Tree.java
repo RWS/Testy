@@ -39,7 +39,7 @@ public class Tree extends WebLocator implements Scrollable {
                 nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
             }
             if (doScroll) {
-                scrollTo(nodeEl);
+                scrollPageDownTo(nodeEl);
             }
             Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");

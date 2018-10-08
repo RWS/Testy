@@ -4,11 +4,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Notification extends WebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Notification.class);
 
     public Notification() {
         setClasses("msg", "x-border-box");

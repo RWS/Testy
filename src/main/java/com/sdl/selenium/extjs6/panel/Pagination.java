@@ -4,11 +4,8 @@ import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.extjs6.form.TextField;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Pagination extends ToolBar {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Pagination.class);
 
     public Pagination() {
         setClassName("Pagination");

@@ -2,12 +2,11 @@ package com.sdl.selenium.extjs6.slider;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.interactions.Actions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class Slider extends WebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Slider.class);
 
     public Slider() {
         setClassName("Slider");
@@ -74,7 +73,7 @@ public class Slider extends WebLocator {
                 }
             } while (!done);
         } else {
-            LOGGER.warn("The slider for " + getPathBuilder().getLabel() + " has not been selected or is missing");
+            log.warn("The slider for " + getPathBuilder().getLabel() + " has not been selected or is missing");
             exists = false;
         }
         return exists;

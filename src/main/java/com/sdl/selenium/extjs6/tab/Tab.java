@@ -7,15 +7,14 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.tab.ITab;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class Tab extends WebLocator implements ITab {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Tab.class);
 
     public Tab() {
         setClassName("TabPanel");
@@ -88,7 +87,7 @@ public class Tab extends WebLocator implements ITab {
         WebLocator inactiveTab = getTitleInactiveEl().setExcludeClasses("x-tab-active");
         boolean activated = isActive() || inactiveTab.click();
         if (activated) {
-            LOGGER.info("setActive : " + toString());
+            log.info("setActive : " + toString());
         }
         return activated;
     }

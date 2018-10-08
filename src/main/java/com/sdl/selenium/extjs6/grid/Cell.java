@@ -4,11 +4,8 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Cell extends com.sdl.selenium.web.table.Cell {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Cell.class);
 
     public Cell() {
         setRenderMillis(200);

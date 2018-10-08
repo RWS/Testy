@@ -7,17 +7,16 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriverException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+@Slf4j
 public class DateField extends TextField {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateField.class);
 
     private WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
     private WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
@@ -126,10 +125,10 @@ public class DateField extends TextField {
             fromDate = inDateFormat.parse(date);
             date = outDateForm.format(fromDate);
         } catch (ParseException e) {
-            LOGGER.error("ParseException: {}", e);
+            log.error("ParseException: {}", e);
         }
 
-        LOGGER.debug("select: " + date);
+        log.debug("select: " + date);
         String[] dates = date.split("/");
         trigger.click();
         String[] extraDates = dates[2].split(" ");

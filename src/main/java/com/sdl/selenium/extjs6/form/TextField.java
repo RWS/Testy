@@ -2,14 +2,13 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+@Slf4j
 public class TextField extends com.sdl.selenium.web.form.TextField {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
         setLabelPosition("//following-sibling::*//");
@@ -44,11 +43,11 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
             try {
                 return iconLocator.click();
             } catch (Exception e) {
-                LOGGER.error("Exception on clickIcon: " + e.getMessage());
+                log.error("Exception on clickIcon: " + e.getMessage());
                 return false;
             }
         } else {
-            LOGGER.warn("clickIcon : field is not ready for use: " + this);
+            log.warn("clickIcon : field is not ready for use: " + this);
         }
         return false;
     }

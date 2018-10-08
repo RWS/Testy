@@ -6,15 +6,12 @@ import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Row.class);
 
     public Row() {
         super();

@@ -3,11 +3,8 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CheckBox extends WebLocator implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
         setClassName("CheckBox");

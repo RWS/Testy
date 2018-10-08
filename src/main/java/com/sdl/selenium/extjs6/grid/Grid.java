@@ -5,15 +5,14 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class Grid extends Table implements Scrollable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Grid.class);
 
     public Grid() {
         setClassName("Grid");
@@ -120,7 +119,7 @@ public class Grid extends Table implements Scrollable {
         boolean hasMask;
         while ((hasMask = hasMask()) && (count < seconds)) {
             count++;
-            LOGGER.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
+            log.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
             Utils.sleep(900);
         }
         return !hasMask;

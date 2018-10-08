@@ -3,8 +3,7 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -17,8 +16,8 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+@Slf4j
 public class GridIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GridIntegrationTest.class);
 
     private Grid grid = new Grid().setTitle("Array Grid").setVisibility(true);
 
@@ -176,6 +175,6 @@ public class GridIntegrationTest extends TestBase {
             cell.isChecked();
         }
         long endMs = System.currentTimeMillis();
-        LOGGER.info("performanceIsCheckedTest took {} ms", endMs - startMs);
+        log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
     }
 }

@@ -5,17 +5,16 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Slf4j
 public class ComboBox extends TextField implements ICombo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
     private static String listClass = "x-list-plain";
     private WebLocator boundList = new WebLocator("x-boundlist").setVisibility(true);
     private Pagination paginationEl = new Pagination(boundList).setRenderMillis(300);
@@ -50,7 +49,7 @@ public class ComboBox extends TextField implements ICombo {
         try {
             trigger = boundList.isDisplayed() || clickIcon("trigger");
         } catch (StaleElementReferenceException e) {
-            LOGGER.debug("StaleElementReferenceException1");
+            log.debug("StaleElementReferenceException1");
             trigger = clickIcon("trigger");
         }
         if (trigger) {
@@ -64,7 +63,7 @@ public class ComboBox extends TextField implements ICombo {
                 selected = option.doClick();
             }
             if (selected) {
-                LOGGER.info("Set value(" + info + "): " + value);
+                log.info("Set value(" + info + "): " + value);
                 Utils.sleep(20);
                 return true;
             }
@@ -73,11 +72,11 @@ public class ComboBox extends TextField implements ICombo {
                     clickIcon("trigger"); // to close combo
                 }
             } catch (StaleElementReferenceException e) {
-                LOGGER.debug("StaleElementReferenceException2");
+                log.debug("StaleElementReferenceException2");
             }
-            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+            log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
-            LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
+            log.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return false;
     }
@@ -136,7 +135,7 @@ public class ComboBox extends TextField implements ICombo {
         try {
             boolean trigger = boundList.isDisplayed() || clickIcon("trigger");
         } catch (StaleElementReferenceException e) {
-            LOGGER.debug("StaleElementReferenceException1");
+            log.debug("StaleElementReferenceException1");
             clickIcon("trigger");
         }
         WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
@@ -150,7 +149,7 @@ public class ComboBox extends TextField implements ICombo {
                 clickIcon("trigger"); // to close combo
             }
         } catch (StaleElementReferenceException e) {
-            LOGGER.debug("StaleElementReferenceException2");
+            log.debug("StaleElementReferenceException2");
         }
         return Arrays.asList(comboValues);
     }

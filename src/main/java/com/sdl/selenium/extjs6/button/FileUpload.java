@@ -4,11 +4,8 @@ import com.sdl.selenium.bootstrap.button.Upload;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FileUpload extends TextField implements Upload {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUpload.class);
 
     public FileUpload() {
         setClassName("FileUpload");
