@@ -167,7 +167,7 @@ public class Grid extends Table implements Scrollable {
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            list.add(this.getCell(i, j).getText(true));
+                            list.add(this.getCell(i, j).getText(true).trim());
                         }
                         listOfList.add(list);
                     } else {
@@ -210,7 +210,7 @@ public class Grid extends Table implements Scrollable {
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            list.add(groupElRows.get(i).getCell(j).getText(true));
+                            list.add(groupElRows.get(i).getCell(j).getText(true).trim());
                         }
                         listOfList.add(list);
                     } else {
