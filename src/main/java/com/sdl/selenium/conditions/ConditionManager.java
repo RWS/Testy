@@ -1,8 +1,8 @@
 package com.sdl.selenium.conditions;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -13,26 +13,25 @@ import java.util.List;
 /**
  * Example how to add conditions to ConditionManager:
  * <pre>
-    ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
-        public boolean execute() {
-            return logoutButton.isElementPresent();
-        }
-    });
+ * ConditionManager manager = new ConditionManager().add(new SuccessCondition() {
+ * public boolean execute() {
+ * return logoutButton.isElementPresent();
+ * }
+ * });
  * </pre>
  * OR more specific cases:
  * <pre>
-     ConditionManager manager = new ConditionManager();
-     manager.add(
-         new MessageBoxFailCondition("Wrong email or password.")).add(
-         new RenderSuccessCondition(logoutButton)
-     );
-     Condition condition = manager.execute();
-     logged = condition.isSuccess();
- </pre>
+ * ConditionManager manager = new ConditionManager();
+ * manager.add(
+ * new MessageBoxFailCondition("Wrong email or password.")).add(
+ * new RenderSuccessCondition(logoutButton)
+ * );
+ * Condition condition = manager.execute();
+ * logged = condition.isSuccess();
+ * </pre>
  */
+@Slf4j
 public class ConditionManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManager.class);
-
     public static int SLEEP_INTERVAL = 20;
 
     private long timeout = 10000;
@@ -88,7 +87,7 @@ public class ConditionManager {
     }
 
     public ConditionManager remove(Condition condition) {
-        conditionList.remove(condition);
+        conditionList.removeIf(i -> i.getMessage().equals(condition.getMessage()));
         return this;
     }
 
@@ -100,13 +99,8 @@ public class ConditionManager {
     }
 
     public ConditionManager removeCondition(String message) {
-        if (message != null && message.length() > 0) {
-            for (Condition condition : conditionList) {
-                if (condition.equals(message)) {
-                    conditionList.remove(condition);
-                    break;
-                }
-            }
+        if (!Strings.isNullOrEmpty(message)) {
+            conditionList.removeIf(c -> c.getMessage().equals(message));
         }
         return this;
     }
@@ -138,7 +132,7 @@ public class ConditionManager {
         while (true) {
             Condition condition = findCondition();
             if (condition != null) {
-                LOGGER.debug("{} - executed in ({}ms)", condition, new Date().getTime() - startTime);
+                log.debug("{} - executed in ({}ms)", condition, new Date().getTime() - startTime);
                 return condition;
             }
             Utils.sleep(SLEEP_INTERVAL);

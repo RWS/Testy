@@ -12,15 +12,17 @@ import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.form.TextField;
 import com.sdl.selenium.web.link.WebLink;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import java.time.Duration;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+@Slf4j
 public class ConditionManagerIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConditionManagerIntegrationTest.class);
 
     private Panel panel = new Panel("Condition Manager");
     private Button expect1Button = new Button(panel, "Expect1");
@@ -43,7 +45,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
     private Condition doClick(Button button) {
         button.click();
 
-        ConditionManager conditionManager = new ConditionManager(10000);
+        ConditionManager conditionManager = new ConditionManager();
         conditionManager.add(new MessageBoxSuccessCondition("Expect1 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect2 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
@@ -59,9 +61,9 @@ public class ConditionManagerIntegrationTest extends TestBase {
         Condition condition = doClick(expect1Button);
 
         if (condition.isFail()) {
-            LOGGER.warn(condition.getResultMessage());
+            log.warn(condition.getResultMessage());
         }
-        assertTrue(condition.isSuccess());
+        assertThat(condition.isSuccess(), is(true));
 
         MessageBox.pressOK();
     }
@@ -69,30 +71,34 @@ public class ConditionManagerIntegrationTest extends TestBase {
     @Test
     public void conditionManagerTest1() {
         expect2Button.click();
-        ConditionManager conditionManager = new ConditionManager(10000);
+        ConditionManager conditionManager = new ConditionManager();
         conditionManager.add(new MessageBoxSuccessCondition("Expect2 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect1 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
-        assertTrue(conditionManager.execute().isSuccess());
+        conditionManager.add(new RenderSuccessCondition(expect3Button));
+        assertThat(conditionManager.execute().isSuccess(), is(true));
+
         MessageBox.pressOK();
+        conditionManager.remove(new RenderSuccessCondition(expect3Button));
+        assertThat(conditionManager.getConditionList().size(), is(4));
     }
 
     @Test
     public void conditionManagerTest2() {
         expect3Button.click();
-        ConditionManager conditionManager = new ConditionManager(10000);
+        ConditionManager conditionManager = new ConditionManager();
         conditionManager.add(new MessageBoxSuccessCondition("Are you sure you want to do that?"));
         conditionManager.add(new MessageBoxFailCondition("Expect2 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect1 button was pressed"));
-        assertTrue(conditionManager.execute().isSuccess()); //&& new MessageBox("Are you sure you want to do that?").pressYES());
+        assertThat(conditionManager.execute().isSuccess(), is(true)); //&& new MessageBox("Are you sure you want to do that?").pressYES());
         MessageBox.pressYes();
     }
 
     @Test
     public void conditionManagerTest3() {
-        ConditionManager conditionManager = new ConditionManager(100);
+        ConditionManager conditionManager = new ConditionManager(Duration.ofMillis(100));
         conditionManager.add(new RenderSuccessCondition(new Button(null, "Test")));
-        assertTrue(conditionManager.execute().isTimeout());
+        assertThat(conditionManager.execute().isTimeout(), is(true));
     }
 
     /*@Test
