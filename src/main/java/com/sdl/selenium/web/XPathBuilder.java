@@ -5,11 +5,11 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
 import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
+@Getter
+@Slf4j
 public class XPathBuilder implements Cloneable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(XPathBuilder.class);
     public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private String className = "WebLocator";
     private String root = "//";
@@ -48,6 +49,7 @@ public class XPathBuilder implements Cloneable {
     private String label;
     private String labelTag = "label";
     private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
+    private boolean labelBeforeField;
 
     private String position;
     private String resultIdx;
@@ -84,17 +86,6 @@ public class XPathBuilder implements Cloneable {
     // =========================================
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setRoot(String)}
-     * <p>root </p>
-     * <pre>default to "//"</pre>
-     */
-    public String getRoot() {
-        return root;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param root If the path starts with // then all elements in the document which fulfill following criteria are selected. eg. // or /
@@ -105,17 +96,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setRoot(final String root) {
         this.root = root;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setTag(String)}
-     * <p>tag (type of DOM element)</p>
-     * <pre>default to "*"</pre>
-     */
-    public String getTag() {
-        return tag;
     }
 
     /**
@@ -132,15 +112,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setId(String)}
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param id  eg. id="buttonSubmit"
@@ -151,16 +122,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setId(final String id) {
         this.id = id;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setElPath(String)}
-     * <p>returned value does not include containers path</p>
-     */
-    public String getElPath() {
-        return elPath;
     }
 
     /**
@@ -178,16 +139,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate css selectors address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setElCssSelector(String)}
-     * <p>returned value does not include containers path</p>
-     */
-    public String getElCssSelector() {
-        return elCssSelector;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate css selectors address)</b></p>
      * Once used all other attributes will be ignored. Try using this class to a minimum!
      *
@@ -202,15 +153,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setBaseCls(String)}
-     */
-    public String getBaseCls() {
-        return baseCls;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param baseCls base class
@@ -221,15 +163,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setBaseCls(final String baseCls) {
         this.baseCls = baseCls;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setCls(String)}
-     */
-    public String getCls() {
-        return cls;
     }
 
     /**
@@ -247,21 +180,12 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Use it when element must have all specified css classes (order is not important).</p>
      * <p>Example:</p>
      * <pre>
      *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
      * </pre>
-     *
-     * @return value that has been set in {@link #setClasses(String...)}
-     */
-    public List<String> getClasses() {
-        return classes;
-    }
-
-    /**
-     * <p><b>Used for finding element process (to generate xpath address)</b></p>
-     * <p>Use it when element must have all specified css classes (order is not important).</p>
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
      * </ul>
@@ -279,15 +203,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setExcludeClasses(String...)}
-     */
-    public List<String> getExcludeClasses() {
-        return excludeClasses;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param excludeClasses list of class to be excluded
@@ -302,25 +217,12 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
-    public List<WebLocator> getChildNodes() {
-        return childNodes;
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
         if (childNodes != null) {
             this.childNodes = Arrays.asList(childNodes);
         }
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setName(String)}
-     */
-    public String getName() {
-        return name;
     }
 
     /**
@@ -334,15 +236,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setName(final String name) {
         this.name = name;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setText(String, SearchType...)}
-     */
-    public String getText() {
-        return text;
     }
 
     /**
@@ -364,15 +257,6 @@ public class XPathBuilder implements Cloneable {
 //        }
         setSearchTextType(searchTypes);
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setSearchTextType(SearchType...)}
-     */
-    public List<SearchType> getSearchTextType() {
-        return searchTextType;
     }
 
     /**
@@ -424,15 +308,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setSearchLabelType(SearchType...)}
-     */
-    public List<SearchType> getSearchLabelType() {
-        return searchLabelType;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param searchLabelTypes accepted values are: {@link SearchType}
@@ -450,15 +325,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setStyle(String)}
-     */
-    public String getStyle() {
-        return style;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param style of element
@@ -472,17 +338,8 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
-     *
-     * @return value that has been set in {@link #setTitle(String, SearchType...)}
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p><b>Title only applies to Panel, and if you set the item "setTemplate("title", "@title='%s'")" a template.</b></p>
      *
      * @param title       of element
      * @param searchTypes see {@link SearchType}
@@ -512,10 +369,6 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
-    public List<SearchType> getSearchTitleType() {
-        return searchTitleType;
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setTemplateTitle(WebLocator titleEl) {
         if (titleEl == null) {
@@ -525,10 +378,6 @@ public class XPathBuilder implements Cloneable {
             setSearchTitleType(titleEl.getPathBuilder().getSearchTitleType().stream().toArray(SearchType[]::new));
         }
         return (T) this;
-    }
-
-    public Map<String, WebLocator> getTemplatesTitle() {
-        return templateTitle;
     }
 
     /**
@@ -551,10 +400,6 @@ public class XPathBuilder implements Cloneable {
             this.elPathSuffix.put(key, elPathSuffix);
         }
         return (T) this;
-    }
-
-    public Map<String, String> getElsPathSuffix() {
-        return elPathSuffix;
     }
 
     public Map<String, String[]> getTemplatesValues() {
@@ -620,15 +465,6 @@ public class XPathBuilder implements Cloneable {
     /**
      * <p><b><i>Used in logging process</i></b></p>
      *
-     * @return value that has been set in {@link #setInfoMessage(String)}
-     */
-    public String getInfoMessage() {
-        return infoMessage;
-    }
-
-    /**
-     * <p><b><i>Used in logging process</i></b></p>
-     *
      * @param infoMessage info Message
      * @param <T>         the element which calls this method
      * @return this element
@@ -639,23 +475,10 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setVisibility(boolean)}
-     */
-    public boolean isVisibility() {
-        return visibility;
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setVisibility(final boolean visibility) {
         this.visibility = visibility;
         return (T) this;
-    }
-
-    public long getRenderMillis() {
-        return renderMillis;
     }
 
     @SuppressWarnings("unchecked")
@@ -664,19 +487,10 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
-    public int getActivateSeconds() {
-        return activateSeconds;
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setActivateSeconds(final int activateSeconds) {
         this.activateSeconds = activateSeconds;
         return (T) this;
-    }
-
-    // TODO verify what type must return
-    public WebLocator getContainer() {
-        return container;
     }
 
     /**
@@ -690,15 +504,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setLabel(String, SearchType...)}
-     */
-    public String getLabel() {
-        return label;
     }
 
     /**
@@ -719,15 +524,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setLabel(String, SearchType...)}
-     */
-    public String getLabelTag() {
-        return labelTag;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param labelTag label tag element
@@ -738,15 +534,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setLabelTag(final String labelTag) {
         this.labelTag = labelTag;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setLabelPosition(String)}
-     */
-    public String getLabelPosition() {
-        return labelPosition;
     }
 
     /**
@@ -761,15 +548,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setLabelPosition(final String labelPosition) {
         this.labelPosition = labelPosition;
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in @{link #setPosition(int)} or @{link #setPosition(Position)}
-     */
-    public String getPosition() {
-        return position;
     }
 
     /**
@@ -807,15 +585,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setResultIdx(int)} or {@link #setResultIdx(Position)}
-     */
-    public String getResultIdx() {
-        return resultIdx;
-    }
-
-    /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
@@ -849,15 +618,6 @@ public class XPathBuilder implements Cloneable {
     public <T extends XPathBuilder> T setResultIdx(final Position resultIdx) {
         this.resultIdx = resultIdx.getValue();
         return (T) this;
-    }
-
-    /**
-     * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
-     *
-     * @return value that has been set in {@link #setType(String)}
-     */
-    public String getType() {
-        return type;
     }
 
     /**
@@ -907,23 +667,9 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
-    public Map<String, SearchText> getAttributes() {
-        return attribute;
-    }
-
     // =========================================
     // =============== Methods =================
     // =========================================
-
-    /**
-     * <p>Used only to identify class type of current object</p>
-     * <p> Not used for css class!</p>
-     *
-     * @return string
-     */
-    public String getClassName() {
-        return className;
-    }
 
     protected void setClassName(final String className) {
         this.className = className;
@@ -1301,7 +1047,7 @@ public class XPathBuilder implements Cloneable {
         if (cssSelector != null && getContainer() != null) {
             String parentCssSelector = getContainer().getCssSelector();
             if (StringUtils.isEmpty(parentCssSelector)) {
-                LOGGER.warn("Can't generate css selector for parent: {}", getContainer());
+                log.warn("Can't generate css selector for parent: {}", getContainer());
                 cssSelector = null;
             } else {
                 String root = getRoot();
@@ -1312,7 +1058,7 @@ public class XPathBuilder implements Cloneable {
                     } else if (root.equals("//")) {
                         deep = " ";
                     } else {
-                        LOGGER.warn("this root ({}) is no implemented in css selector: ", root);
+                        log.warn("this root ({}) is no implemented in css selector: ", root);
                     }
                 }
                 cssSelector = parentCssSelector + deep + cssSelector;
@@ -1405,7 +1151,6 @@ public class XPathBuilder implements Cloneable {
         }
         return info;
     }
-
 
     protected String afterItemPathCreated(String itemPath) {
         if (hasLabel()) {
