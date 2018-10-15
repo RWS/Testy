@@ -1,8 +1,10 @@
 package com.sdl.selenium.utils.config;
 
 import com.google.common.base.Strings;
-import com.opera.core.systems.OperaDesktopDriver;
-import com.sdl.selenium.utils.browsers.*;
+import com.sdl.selenium.utils.browsers.AbstractBrowserConfigReader;
+import com.sdl.selenium.utils.browsers.ChromeConfigReader;
+import com.sdl.selenium.utils.browsers.FirefoxConfigReader;
+import com.sdl.selenium.utils.browsers.IExplorerConfigReader;
 import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
@@ -86,8 +88,6 @@ public class WebDriverConfig {
                 isFireFox = true;
             } else if (driver instanceof SafariDriver) {
                 isSafari = true;
-            } else if (driver instanceof OperaDesktopDriver) {
-                isOpera = true;
             }
 
             if (!SystemUtils.IS_OS_LINUX) {
@@ -209,8 +209,6 @@ public class WebDriverConfig {
             properties = new IExplorerConfigReader();
         } else if (browser == Browser.CHROME) {
             properties = new ChromeConfigReader();
-        } else if (browser == Browser.HTMLUNIT) {
-            properties = new HtmlUnitConfigReader();
         } else {
             LOGGER.error("Browser not supported {}", browser);
             driver = null;

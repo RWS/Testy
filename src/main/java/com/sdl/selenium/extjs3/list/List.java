@@ -8,11 +8,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class List extends GridPanel {
-    private static final Logger LOGGER = LoggerFactory.getLogger(List.class);
 
     public List() {
         setClassName("List");

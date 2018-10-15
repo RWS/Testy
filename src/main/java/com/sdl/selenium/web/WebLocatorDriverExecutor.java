@@ -9,7 +9,6 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.RetryUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -154,10 +153,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             LOGGER.info("Set value({}): '{}'", el, getLogValue(el, value));
         } else {
             try {
-                MultiThreadClipboardUtils.copyString(StringUtils.chop(value));
+                MultiThreadClipboardUtils.copyString(value);
             } catch (IllegalStateException e) {
                 LOGGER.debug("IllegalStateException: cannot open system clipboard - try again.");
-                MultiThreadClipboardUtils.copyString(StringUtils.chop(value));
+                MultiThreadClipboardUtils.copyString(value);
             }
             MultiThreadClipboardUtils.pasteString(el);
             el.currentElement.sendKeys(value.substring(length - 1));
@@ -229,7 +228,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private String getSelector(WebLocator el) {
         String css = el.getCssSelector();
-        return StringUtils.isEmpty(css) ? el.getXPath() : css;
+        return Strings.isNullOrEmpty(css) ? el.getXPath() : css;
     }
 
     private boolean findAgain(WebLocator el) {
