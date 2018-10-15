@@ -6,5 +6,4 @@ import com.sdl.selenium.web.IWebLocator;
 public interface ICheck extends Clickable, IWebLocator {
 
     boolean isSelected();
-
 }

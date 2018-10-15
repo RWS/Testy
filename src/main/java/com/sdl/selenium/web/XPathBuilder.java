@@ -49,7 +49,6 @@ public class XPathBuilder implements Cloneable {
     private String label;
     private String labelTag = "label";
     private String labelPosition = WebLocatorConfig.getDefaultLabelPosition();
-    private boolean labelBeforeField;
 
     private String position;
     private String resultIdx;
