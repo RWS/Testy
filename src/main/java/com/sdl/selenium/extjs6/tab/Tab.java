@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.tab;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.web.SearchType;
@@ -41,10 +42,16 @@ public class Tab extends WebLocator implements ITab {
 
     public WebLocator getTitleInactiveEl() {
         WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
-        List<SearchType> ts = getPathBuilder().getSearchTitleType();
-        Collections.addAll(ts, SearchType.DEEP_CHILD_NODE, SearchType.EQUALS);
-        return new WebLink(container).setClasses("x-tab").setText(getPathBuilder().getTitle(), ts.stream().toArray(SearchType[]::new))
-                .setInfoMessage(getPathBuilder().getTitle() + " Tab");
+        WebLink link = new WebLink(container).setClasses("x-tab");
+        if (!Strings.isNullOrEmpty(getPathBuilder().getTitle())) {
+            List<SearchType> ts = getPathBuilder().getSearchTitleType();
+            Collections.addAll(ts, SearchType.DEEP_CHILD_NODE, SearchType.EQUALS);
+            link.setText(getPathBuilder().getTitle(), ts.stream().toArray(SearchType[]::new));
+        }
+        if (getPathBuilder().getChildNodes() != null && !getPathBuilder().getChildNodes().isEmpty()) {
+            link.setChildNodes(getPathBuilder().getChildNodes().stream().toArray(WebLocator[]::new));
+        }
+        return link.setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
     /**
@@ -70,8 +77,9 @@ public class Tab extends WebLocator implements ITab {
                 WebLocator tab = new WebLocator(body).setRoot("/").setExcludeClasses("x-hidden-offsets").setClasses("x-tabpanel-child");
                 return getBaseTabPanelPath() + tab.getXPath();
             }
+
             @Override
-            public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTypes){
+            public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTypes) {
 
             }
         };
