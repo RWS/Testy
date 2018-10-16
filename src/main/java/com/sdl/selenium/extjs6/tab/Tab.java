@@ -69,7 +69,7 @@ public class Tab extends WebLocator implements ITab {
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
         WebLocator child = new WebLocator().setClasses(iconCls);
-        WebLink activeTab = new WebLink().setTemplate("childNodes", "count(%s) > 0").setClasses("x-tab-active").setChildNodes(child);
+        WebLink activeTab = new WebLink().setClasses("x-tab-active").setChildNodes(child);
         selector = selector + (Strings.isNullOrEmpty(iconCls) ? "" : " and count(." + activeTab.getXPath() + ") > 0");
         return getPathBuilder().getRoot() + getPathBuilder().getTag() + "[" + selector + "]";
     }
