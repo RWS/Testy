@@ -723,7 +723,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasTitle() {
-        return !Strings.isNullOrEmpty(title) || !templateTitle.isEmpty();
+        return !Strings.isNullOrEmpty(title) /*|| !templateTitle.isEmpty()*/;
     }
 
     protected boolean hasPosition() {

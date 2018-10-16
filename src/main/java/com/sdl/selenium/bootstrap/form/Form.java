@@ -3,8 +3,6 @@ package com.sdl.selenium.bootstrap.form;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  */
 public class Form extends WebLocator implements IWebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Form.class);
 
     public Form() {
         setClassName("Form");
