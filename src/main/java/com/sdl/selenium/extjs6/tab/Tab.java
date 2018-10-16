@@ -11,7 +11,8 @@ import com.sdl.selenium.web.tab.ITab;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
@@ -21,13 +22,14 @@ public class Tab extends WebLocator implements ITab {
         setClassName("TabPanel");
         setBaseCls("x-tab-bar");
         WebLink activeTab = new WebLink().setClasses("x-tab-active");
-        setTemplateTitle(new WebLocator(activeTab));
+        setTemplateTitle(activeTab);
     }
 
     public Tab(String title, SearchType... searchTypes) {
         this();
-        setSearchTitleType(SearchType.EQUALS, SearchType.DEEP_CHILD_NODE);
-        setTitle(title, searchTypes);
+        List<SearchType> types = new LinkedList<>(Arrays.asList(searchTypes));
+        types.addAll(Arrays.asList(SearchType.EQUALS, SearchType.DEEP_CHILD_NODE));
+        setTitle(title, types.stream().toArray(SearchType[]::new));
     }
 
     public Tab(WebLocator container) {
@@ -35,8 +37,8 @@ public class Tab extends WebLocator implements ITab {
         setContainer(container);
     }
 
-    public Tab(WebLocator container, String title) {
-        this(title);
+    public Tab(WebLocator container, String title, SearchType... searchTypes) {
+        this(title, searchTypes);
         setContainer(container);
     }
 
@@ -45,7 +47,6 @@ public class Tab extends WebLocator implements ITab {
         WebLink link = new WebLink(container).setClasses("x-tab");
         if (!Strings.isNullOrEmpty(getPathBuilder().getTitle())) {
             List<SearchType> ts = getPathBuilder().getSearchTitleType();
-            Collections.addAll(ts, SearchType.DEEP_CHILD_NODE, SearchType.EQUALS);
             link.setText(getPathBuilder().getTitle(), ts.stream().toArray(SearchType[]::new));
         }
         if (getPathBuilder().getChildNodes() != null && !getPathBuilder().getChildNodes().isEmpty()) {

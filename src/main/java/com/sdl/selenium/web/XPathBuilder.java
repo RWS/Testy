@@ -723,7 +723,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasTitle() {
-        return !Strings.isNullOrEmpty(title);
+        return !Strings.isNullOrEmpty(title) || !templateTitle.isEmpty();
     }
 
     protected boolean hasPosition() {
@@ -850,7 +850,13 @@ public class XPathBuilder implements Cloneable {
                         strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
                     }
                 } else {
-                    strings[i] = "contains(" + (".".equals(pattern) ? "." : pattern) + "," + escapeQuotesText + ")";
+                    if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
+                        strings[i] = applyTemplate("DEEP_CHILD_NODE_OR_SELF", escapeQuotesText);
+                    } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE)) {
+                        strings[i] = applyTemplate("DEEP_CHILD_NODE", escapeQuotesText);
+                    } else {
+                        strings[i] = "contains(" + (".".equals(pattern) ? "." : pattern) + "," + escapeQuotesText + ")";
+                    }
                 }
             }
             selector.add(hasContainsAll ? StringUtils.join(strings, " and ") : "(" + StringUtils.join(strings, " or ") + ")");
