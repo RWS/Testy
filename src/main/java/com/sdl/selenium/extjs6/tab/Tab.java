@@ -17,6 +17,7 @@ import java.util.List;
 
 @Slf4j
 public class Tab extends WebLocator implements ITab {
+    private String iconCls;
 
     public Tab() {
         setClassName("TabPanel");
@@ -42,6 +43,11 @@ public class Tab extends WebLocator implements ITab {
         setContainer(container);
     }
 
+    public <T extends Tab> T setIconCls(final String iconCls) {
+        this.iconCls = iconCls;
+        return (T) this;
+    }
+
     public WebLocator getTitleInactiveEl() {
         WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
         WebLink link = new WebLink(container).setClasses("x-tab");
@@ -62,6 +68,9 @@ public class Tab extends WebLocator implements ITab {
      */
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
+        WebLocator child = new WebLocator().setClasses(iconCls);
+        WebLink activeTab = new WebLink().setTemplate("childNodes", "count(%s) > 0").setClasses("x-tab-active").setChildNodes(child);
+        selector = selector + (Strings.isNullOrEmpty(iconCls) ? "" : " and count(." + activeTab.getXPath() + ") > 0");
         return getPathBuilder().getRoot() + getPathBuilder().getTag() + "[" + selector + "]";
     }
 

@@ -78,6 +78,7 @@ public class XPathBuilder implements Cloneable {
         setTemplate("DEEP_CHILD_NODE", "count(*//text()[%s]) > 0");
         setTemplate("CHILD_NODE", "count(text()[%s]) > 0");
         setTemplate("HTML_NODE", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)");
+        setTemplate("childNodes", "count(.%s) > 0");
     }
 
     // =========================================
@@ -902,7 +903,7 @@ public class XPathBuilder implements Cloneable {
             }
         }
 
-        String selector = "count(." + child.getXPath() + ") > 0";
+        String selector = applyTemplate("childNodes", child.getXPath());
         if (breakElement != null) {
             breakElement.setContainer(parentElement);
         }
