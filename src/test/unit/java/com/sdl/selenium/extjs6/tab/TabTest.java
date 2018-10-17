@@ -2,7 +2,6 @@ package com.sdl.selenium.extjs6.tab;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.link.WebLink;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -12,8 +11,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class TabTest {
     private static WebLocator container = new WebLocator("container");
 
-    private static WebLink link = new WebLink().setClasses("x-tab-active");
-    private static WebLocator child = new WebLocator(link).setClasses("fa-globe");
+    private static WebLocator child = new WebLocator().setClasses("fa-globe");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -24,7 +22,7 @@ public class TabTest {
                 {new Tab("/Title/Text", SearchType.CONTAINS_ANY), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ') and count(.//a[contains(concat(' ', @class, ' '), ' x-tab-active ') and (count(*//text()['Title']) > 0 or count(*//text()['Text']) > 0)]) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' x-panel-body ')]/*[contains(concat(' ', @class, ' '), ' x-tabpanel-child ') and not(contains(@class, 'x-hidden-offsets'))]"},
                 {new Tab(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//following-sibling::*[contains(concat(' ', @class, ' '), ' x-panel-body ')]/*[contains(concat(' ', @class, ' '), ' x-tabpanel-child ') and not(contains(@class, 'x-hidden-offsets'))]"},
                 {new Tab(container, "Title"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ') and count(.//a[contains(concat(' ', @class, ' '), ' x-tab-active ') and count(*//text()[.='Title']) > 0]) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' x-panel-body ')]/*[contains(concat(' ', @class, ' '), ' x-tabpanel-child ') and not(contains(@class, 'x-hidden-offsets'))]"},
-                {new Tab(container).setChildNodes(child), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ') and count(.//a[contains(concat(' ', @class, ' '), ' x-tab-active ')]//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' x-panel-body ')]/*[contains(concat(' ', @class, ' '), ' x-tabpanel-child ') and not(contains(@class, 'x-hidden-offsets'))]"},
+                {new Tab(container).setChildNodes(child), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ') and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' x-panel-body ')]/*[contains(concat(' ', @class, ' '), ' x-tabpanel-child ') and not(contains(@class, 'x-hidden-offsets'))]"},
         };
     }
 
@@ -36,8 +34,8 @@ public class TabTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider1() {
         return new Object[][]{
-                {((Tab) new Tab(container).setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(.//a[contains(concat(' ', @class, ' '), ' x-tab-active ')]//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
-                {((Tab) new Tab("Test").setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0 and count(.//a[contains(concat(' ', @class, ' '), ' x-tab-active ')]//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
+                {((Tab) new Tab(container).setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
+                {((Tab) new Tab("Test").setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0 and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
                 {new Tab("Test").getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0]"}
         };
     }
