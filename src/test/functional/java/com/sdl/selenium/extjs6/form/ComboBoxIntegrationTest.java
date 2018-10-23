@@ -20,6 +20,7 @@ public class ComboBoxIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#simple-combo");
+        driver.switchTo().frame("examples-iframe");
         comboBox.ready(20);
         Utils.sleep(2000);
     }

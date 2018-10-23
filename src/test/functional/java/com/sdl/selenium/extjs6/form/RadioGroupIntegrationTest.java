@@ -7,7 +7,8 @@ import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class RadioGroupIntegrationTest extends TestBase {
 
@@ -17,6 +18,7 @@ public class RadioGroupIntegrationTest extends TestBase {
     @BeforeClass
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-radiogroup");
+        driver.switchTo().frame("examples-iframe");
         radioGroup.ready(20);
     }
 

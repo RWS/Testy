@@ -150,10 +150,10 @@ public class ComboBox extends TextField implements ICombo {
     }
 
     public boolean expand() {
-        return boundList.isDisplayed() || clickIcon("trigger");
+        return "true".equals(getAttribute("aria-expanded")) || clickIcon("trigger");
     }
 
     public boolean collapse() {
-        return "true".equals(getAttribute("aria-expanded")) || expand();
+        return "false".equals(getAttribute("aria-expanded")) || clickIcon("trigger");
     }
 }

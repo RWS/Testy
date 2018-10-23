@@ -18,6 +18,7 @@ public class TextAriaIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
+        driver.switchTo().frame("examples-iframe");
         area.ready(20);
     }
 

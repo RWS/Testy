@@ -16,6 +16,7 @@ public class DisplayFieldIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
+        driver.switchTo().frame("examples-iframe");
         field.ready(20);
     }
 

@@ -17,6 +17,7 @@ public class FieldSetIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldcontainer");
+        driver.switchTo().frame("examples-iframe");
         field.ready(20);
     }
 
