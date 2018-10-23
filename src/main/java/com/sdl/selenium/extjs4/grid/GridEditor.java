@@ -78,7 +78,7 @@ public class GridEditor extends Grid {
             }
         }else if ("CustomComboBox".equals(editor.getClass().getSimpleName())) {
             CustomComboBox ed = (CustomComboBox) editor;
-            success = ed.clickIcon();
+            success = ed.expand();
         }
         return success;
     }

@@ -6,15 +6,12 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Slf4j
 public class ComboBox extends TextField implements ICombo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
-
-    private static String listClass = "x-combo-list";
 
     //TODO change the way comboBox is identified, without using cls
     // (create baseCls and if there is no cls, label then take first combo by baseCls)
@@ -57,10 +54,10 @@ public class ComboBox extends TextField implements ICombo {
         String componentId;
         String info = toString();
 
-        WebLocator comboListElement = new WebLocator().setClasses(listClass).setStyle("visibility: visible;").setInfoMessage(this + " -> " + listClass);
+        WebLocator comboListElement = new WebLocator().setClasses("x-combo-list").setStyle("visibility: visible;").setInfoMessage(this + " -> combo-list");
         WebLocator option = new WebLocator(comboListElement).setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
 
-        if (clickIcon("arrow")) {
+        if (expand()) {
             try {
                 // TODO temporary try this solution for IE because is too slow
 //                if (isIE()) {
@@ -74,22 +71,22 @@ public class ComboBox extends TextField implements ICombo {
                 }
                 selected = option.click();
             } catch (Exception e) {
-//                LOGGER.error(e);
+//                log.error(e);
                 ready();
                 componentId = getAttributeId();
                 selected = setValueWithJs(componentId, value);
             }
 
             if (selected) {
-                LOGGER.info("Set value(" + info + "): " + value);
+                log.info("Set value(" + info + "): " + value);
                 Utils.sleep(200);
                 return true;
             } else {
-                clickIcon("arrow"); // to close combo
+                collapse(); // to close combo
             }
-            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+            log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
-            LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
+            log.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return false;
     }
@@ -105,9 +102,9 @@ public class ComboBox extends TextField implements ICombo {
         ready();
         componentId = getAttributeId();
         String getListIdScript = "return Ext.getCmp('" + componentId + "').list.id;";
-        LOGGER.debug("script:" + getListIdScript);
+        log.debug("script:" + getListIdScript);
         String listId = (String) WebLocatorUtils.doExecuteScript(getListIdScript);
-        LOGGER.debug("listId:" + listId);
+        log.debug("listId:" + listId);
         return listId;
     }
 
@@ -122,14 +119,24 @@ public class ComboBox extends TextField implements ICombo {
         boolean selected;
         String script = "return (function(){var c  = Ext.getCmp('" + componentId + "'); var record = c.findRecord(c.displayField, '" + value + "');" +
                 "if(record){c.onSelect(record, c.store.indexOf(record)); return true;} return false;})()";
-        LOGGER.warn("force ComboBox Value with js: " + script);
+        log.warn("force ComboBox Value with js: " + script);
         selected = (Boolean) WebLocatorUtils.doExecuteScript(script);
-        LOGGER.warn("force ComboBox select result: " + selected);
+        log.warn("force ComboBox select result: " + selected);
         return selected;
     }
 
     @Override
     public boolean select(String value) {
         return select(value, SearchType.EQUALS);
+    }
+
+    @Override
+    public boolean expand() {
+        return  clickIcon("arrow");
+    }
+
+    @Override
+    public boolean collapse() {
+        return  clickIcon("arrow");
     }
 }

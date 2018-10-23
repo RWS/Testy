@@ -15,7 +15,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @Slf4j
 public class ComboBox extends TextField implements ICombo {
-    private static String listClass = "x-list-plain";
     private WebLocator boundList = new WebLocator("x-boundlist").setVisibility(true);
     private Pagination paginationEl = new Pagination(boundList).setRenderMillis(300);
 
@@ -47,10 +46,10 @@ public class ComboBox extends TextField implements ICombo {
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
         boolean trigger;
         try {
-            trigger = boundList.isDisplayed() || clickIcon("trigger");
+            trigger = expand();
         } catch (StaleElementReferenceException e) {
             log.debug("StaleElementReferenceException1");
-            trigger = clickIcon("trigger");
+            trigger = expand();
         }
         if (trigger) {
             if (pagination) {
@@ -68,9 +67,7 @@ public class ComboBox extends TextField implements ICombo {
                 return true;
             }
             try {
-                if (boundList.isDisplayed()) {
-                    clickIcon("trigger"); // to close combo
-                }
+                collapse();
             } catch (StaleElementReferenceException e) {
                 log.debug("StaleElementReferenceException2");
             }
@@ -133,24 +130,30 @@ public class ComboBox extends TextField implements ICombo {
     public List<String> getAllValues() {
         waitToRender(300L);
         try {
-            boolean trigger = boundList.isDisplayed() || clickIcon("trigger");
+            expand();
         } catch (StaleElementReferenceException e) {
             log.debug("StaleElementReferenceException1");
-            clickIcon("trigger");
+            expand();
         }
-        WebLocator comboList = new WebLocator(boundList).setClasses(listClass).setVisibility(true);
+        WebLocator comboList = new WebLocator(boundList).setClasses("x-list-plain").setVisibility(true);
         String text = comboList.getText();
         String[] comboValues = new String[0];
         if (text != null) {
             comboValues = text.split("\\n");
         }
         try {
-            if (boundList.isDisplayed()) {
-                clickIcon("trigger"); // to close combo
-            }
+            collapse();
         } catch (StaleElementReferenceException e) {
             log.debug("StaleElementReferenceException2");
         }
         return Arrays.asList(comboValues);
+    }
+
+    public boolean expand() {
+        return boundList.isDisplayed() || clickIcon("trigger");
+    }
+
+    public boolean collapse() {
+        return "true".equals(getAttribute("aria-expanded")) || expand();
     }
 }

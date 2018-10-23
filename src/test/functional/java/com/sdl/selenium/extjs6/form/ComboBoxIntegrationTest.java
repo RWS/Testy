@@ -10,9 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class ComboBoxIntegrationTest extends TestBase {
 
@@ -27,8 +26,8 @@ public class ComboBoxIntegrationTest extends TestBase {
 
     @Test
     public void comboBoxTest() {
-        assertTrue(comboBox.select("New York"));
-        assertEquals(comboBox.getValue(), "New York");
+        assertThat(comboBox.select("New York"), is(true));
+        assertThat(comboBox.getValue(), equalTo("New York"));
     }
 
     @Test

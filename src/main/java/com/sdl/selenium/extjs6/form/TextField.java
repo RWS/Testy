@@ -40,12 +40,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         if (ready()) {
             WebLocator iconLocator = getTriggerEl(icon);
             iconLocator.setRenderMillis(500);
-            try {
-                return iconLocator.click();
-            } catch (Exception e) {
-                log.error("Exception on clickIcon: " + e.getMessage());
-                return false;
-            }
+            return iconLocator.click();
         } else {
             log.warn("clickIcon : field is not ready for use: " + this);
         }
@@ -70,7 +65,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         return !"true".equals(getAttribute("disabled"));
     }
 
-    public String getError(){
+    public String getError() {
         WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");
         return error.getText();
     }

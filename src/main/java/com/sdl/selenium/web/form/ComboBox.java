@@ -4,14 +4,13 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.ui.Select;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Slf4j
 public class ComboBox extends WebLocator implements ICombo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
 
     public ComboBox() {
         setClassName("ComboBox");
@@ -43,7 +42,7 @@ public class ComboBox extends WebLocator implements ICombo {
     private boolean doSelect(int index) {
         ready();
         new Select(getWebElement()).selectByIndex(index);
-        LOGGER.info("Set value(" + this + "): " + index);
+        log.info("Set value(" + this + "): " + index);
         return true;
     }
 
@@ -52,14 +51,14 @@ public class ComboBox extends WebLocator implements ICombo {
         boolean selected;
         ready();
         if (Strings.isNullOrEmpty(value)) {
-            LOGGER.warn("value is empty");
+            log.warn("value is empty");
             selected = false;
         } else {
             new Select(getWebElement()).selectByVisibleText(value);
             selected = true;
         }
         if (selected) {
-            LOGGER.info("Set value(" + this + "): " + value);
+            log.info("Set value(" + this + "): " + value);
         }
         return selected;
     }
@@ -73,5 +72,15 @@ public class ComboBox extends WebLocator implements ICombo {
         String value = this.getAttribute("value");
         WebLocator el = new WebLocator(this).setTag("option").setAttribute("value", value, SearchType.CONTAINS);
         return el.getText();
+    }
+
+    @Override
+    public boolean expand() {
+        return false;
+    }
+
+    @Override
+    public boolean collapse() {
+        return false;
     }
 }

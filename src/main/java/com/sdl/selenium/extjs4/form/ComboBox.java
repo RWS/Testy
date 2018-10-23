@@ -4,13 +4,12 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Slf4j
 public class ComboBox extends TextField implements ICombo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComboBox.class);
 
     public ComboBox() {
         setClassName("ComboBox");
@@ -48,18 +47,18 @@ public class ComboBox extends TextField implements ICombo {
         String info = toString();
         WebLocator option = getComboEl(value, searchType, optionRenderMillis);
 
-        if (clickIcon("arrow")) {
+        if (expand()) {
             selected = option.click();
             if (selected) {
-                LOGGER.info("Set value(" + info + "): " + value);
+                log.info("Set value(" + info + "): " + value);
                 Utils.sleep(20);
                 return true;
             } else {
-                clickIcon("arrow"); // to close combo
+                collapse(); // to close combo
             }
-            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+            log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
-            LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
+            log.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return false;
     }
@@ -84,13 +83,23 @@ public class ComboBox extends TextField implements ICombo {
     @Override
     public String getValue() {
         String value = null;
-        if (clickIcon("arrow")) {
+        if (expand()) {
             WebLocator option = getComboEl(null, SearchType.CONTAINS, 300).setClasses("x-boundlist-selected");
             value = option.getText();
-            clickIcon("arrow"); // to close combo
+            collapse(); // to close combo
         } else {
-            LOGGER.debug("(" + this + ") The combo or arrow could not be located.");
+            log.debug("(" + this + ") The combo or arrow could not be located.");
         }
         return value;
+    }
+
+    @Override
+    public boolean expand() {
+        return clickIcon("arrow");
+    }
+
+    @Override
+    public boolean collapse() {
+        return clickIcon("arrow");
     }
 }

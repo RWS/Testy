@@ -9,4 +9,7 @@ public interface ICombo extends IWebLocator, Editable {
 
     String getValue();
 
+    boolean expand();
+
+    boolean collapse();
 }

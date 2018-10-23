@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @Slf4j
-public class TagField extends ComboBox {
+public class TagField extends ComboBox implements ICombo {
 
     public TagField() {
         setClassName("TagField");
@@ -69,7 +70,7 @@ public class TagField extends ComboBox {
         boolean selected = true;
         String info = toString();
         if (holdOpen) {
-            if (clickIcon("trigger")) {
+            if (expand()) {
                 for (String value : values) {
                     WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                     selected = selected && option.doClick();
@@ -79,18 +80,18 @@ public class TagField extends ComboBox {
                         log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
                     }
                 }
-                clickIcon("trigger"); // to close combo
+                collapse(); // to close combo
             }
         } else {
             for (String value : values) {
-                clickIcon("trigger");
+                expand();
                 WebLocator option = getComboEl(value, optionRenderMillis, searchType);
                 selected = selected && option.doClick();
                 if (selected) {
                     log.info("Set value(" + info + "): " + value);
                 } else {
                     log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
-                    clickIcon("trigger");
+                    collapse();
                 }
             }
         }
@@ -148,5 +149,13 @@ public class TagField extends ComboBox {
     @Override
     public WebLocator getTriggerEl(String icon) {
         return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
+    }
+
+    public boolean expand() {
+        return clickIcon("trigger");
+    }
+
+    public boolean collapse() {
+        return expand();
     }
 }

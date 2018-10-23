@@ -3,14 +3,11 @@ package com.sdl.selenium.web.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultipleSelect extends ComboBox {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleSelect.class);
 
     public MultipleSelect() {
         setClassName("MultipleSelect");

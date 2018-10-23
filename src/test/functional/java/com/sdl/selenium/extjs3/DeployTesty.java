@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
@@ -20,23 +21,23 @@ import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.interactions.Actions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 
+@Slf4j
 public class DeployTesty extends TestBase {
-    private static final Logger logger = LoggerFactory.getLogger(DeployTesty.class);
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
 
-    private static final String DOMAIN_USER = "user";
-    private static final String DOMAIN_PASS = "pass";
+    private static final String DOMAIN_USER = "vculea";
+    private static final String DOMAIN_PASS = "VCinit**";
 
     private static final String JENKINS_JOB_URL = "https://cluj-jenkins02.global.sdl.corp:8443/job/testy/";
 
@@ -78,7 +79,7 @@ public class DeployTesty extends TestBase {
     public void loginJenkins() {
         loginEl.click();
         loginForm.ready(10);
-        WebLocator.getExecutor().executeScript("arguments[0].scrollIntoView(true);", loginForm.currentElement);
+        WebLocatorUtils.scrollToWebLocator(loginForm);
         login.setValue(DOMAIN_USER);
         pass.setValue(DOMAIN_PASS);
         logInButton.click();
@@ -90,8 +91,8 @@ public class DeployTesty extends TestBase {
         buildNow.click();
         String testyDir = System.getProperty("user.home") + "\\.m2\\repository\\com\\sdl\\lt\\Testy";
         cleanDir(testyDir);
-        waitRenderEl(buildNowEl, 5000);
-        waitRemovedEl(buildNowEl, 720000);
+        waitRenderEl(buildNowEl, Duration.ofSeconds(5));
+        waitRemovedEl(buildNowEl, Duration.ofSeconds(750));
     }
 
     @Test(dependsOnMethods = "deployOnJenkins")
@@ -130,21 +131,21 @@ public class DeployTesty extends TestBase {
         try {
             FileUtils.cleanDirectory(new File(path));
         } catch (IllegalArgumentException | IOException e) {
-            logger.debug("not found " + path);
+            log.debug("not found " + path);
         }
     }
 
-    private boolean waitRemovedEl(WebLocator el, long time) {
-        return new ConditionManager(time).add(new ElementRemovedSuccessCondition(el)).execute().isSuccess();
+    private boolean waitRemovedEl(WebLocator el, Duration duration) {
+        return new ConditionManager(duration).add(new ElementRemovedSuccessCondition(el)).execute().isSuccess();
     }
 
-    private boolean waitRenderEl(WebLocator el, long time) {
-        return new ConditionManager(time).add(new RenderSuccessCondition(el)).execute().isSuccess();
+    private boolean waitRenderEl(WebLocator el, Duration duration) {
+        return new ConditionManager(duration).add(new RenderSuccessCondition(el)).execute().isSuccess();
     }
 
     private boolean confirmYesMSG(String msg) {
         boolean success = false;
-        Condition condition = new ConditionManager(16000).add(new MessageBoxSuccessCondition(msg)).execute();
+        Condition condition = new ConditionManager(Duration.ofSeconds(16)).add(new MessageBoxSuccessCondition(msg)).execute();
         if (condition.isSuccess()) {
             MessageBox.pressYes();
             success = true;

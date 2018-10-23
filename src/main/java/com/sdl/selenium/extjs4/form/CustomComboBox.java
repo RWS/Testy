@@ -4,12 +4,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class CustomComboBox extends TextField implements ICombo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomComboBox.class);
 
     public CustomComboBox() {
         setClassName("CustomComboBox");
@@ -29,10 +28,6 @@ public class CustomComboBox extends TextField implements ICombo {
         return "/parent::*/parent::*//*[contains(@class,'x-form-trigger-" + icon + "')]";
     }
 
-    public boolean clickIcon(){
-        return super.clickIcon("more");
-    }
-
     /**
      * @param value value
      * @param startWith true or false
@@ -46,15 +41,15 @@ public class CustomComboBox extends TextField implements ICombo {
         if (click()) {
             selected = option.click();
             if (selected) {
-                LOGGER.info("Set value(" + info + "): " + value);
+                log.info("Set value(" + info + "): " + value);
                 Utils.sleep(20);
                 return true;
             } else {
                 sendKeys(Keys.ESCAPE); // to close combo
             }
-            LOGGER.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+            log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
-            LOGGER.debug("(" + info + ") The combo or arrow could not be located.");
+            log.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return false;
     }
@@ -82,8 +77,18 @@ public class CustomComboBox extends TextField implements ICombo {
             value = option.getText();
             sendKeys(Keys.ESCAPE); // to close combo
         } else {
-            LOGGER.debug("(" + this + ") The combo or arrow could not be located.");
+            log.debug("(" + this + ") The combo or arrow could not be located.");
         }
         return value;
+    }
+
+    @Override
+    public boolean expand() {
+        return super.clickIcon("more");
+    }
+
+    @Override
+    public boolean collapse() {
+        return super.clickIcon("more");
     }
 }
