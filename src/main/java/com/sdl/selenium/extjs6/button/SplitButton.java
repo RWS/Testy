@@ -29,15 +29,8 @@ public class SplitButton extends Button {
         setText(text);
     }
 
-    public boolean clickOnMenu(String option) {
-        return clickOnMenu(new String[]{option});
-    }
-
-    public boolean clickOnMenu(String[] menuOptions) {
-        int n = menuOptions.length;
+    public void clickOnMenu(String... menuOptions) {
         assertReady();
-        log.debug("clickOnMenu : " + menuOptions[n - 1]);
-        boolean selected = true;
         Menu menu = new Menu();
         if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String val : menuOptions) {
@@ -45,9 +38,7 @@ public class SplitButton extends Button {
             }
         } else {
             log.debug("(" + toString() + ") The element arrow could not be located.");
-            selected = false;
         }
-        return selected;
     }
 
     public List<String> getAllMenuValues() {
