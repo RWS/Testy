@@ -29,12 +29,12 @@ public class SplitButton extends Button {
         setText(text);
     }
 
-    public void clickOnMenu(String... menuOptions) {
+    public void clickOnMenu(String... options) {
         assertReady();
         Menu menu = new Menu();
         if (menu.showMenu(this) || menu.showMenu(this)) {
-            for (String val : menuOptions) {
-                menu.clickOnMenu(val);
+            for (String option : options) {
+                menu.clickOnMenu(option);
             }
         } else {
             log.debug("(" + toString() + ") The element arrow could not be located.");
