@@ -82,15 +82,16 @@ public class DateField extends TextField {
     private void goToYear(String year, String fullDate) {
         int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
         int yearInt = Integer.parseInt(year);
-        WebLocator btn = yearInt > currentYear ? nextYears : prevYears;
-        WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setVisibility(true).setInfoMessage("year " + year);
-        boolean render;
+        boolean goNext = yearInt > currentYear;
+        WebLocator btn = goNext ? nextYears : prevYears;
+        WebLink yearEl = new WebLink(yearContainer).setText(year, SearchType.EQUALS).setVisibility(true).setInfoMessage("year " + year);
+        boolean found;
         do {
-            render = yearEl.waitToRender(100L, false);
-            if (!render) {
+            found = yearEl.waitToRender(150L, false);
+            if (!found) {
                 btn.click();
             }
-        } while (!render);
+        } while (!found && !foundYear(yearInt, goNext));
         try {
             yearEl.click();
         } catch (WebDriverException e) {
@@ -101,6 +102,12 @@ public class DateField extends TextField {
             }
             yearEl.click();
         }
+    }
+
+    private boolean foundYear(int yearInt, boolean goNext) {
+        WebLink yearEl = new WebLink(yearContainer).setResultIdx(12);
+        int actualYear = Integer.parseInt(yearEl.getText());
+        return goNext ? yearInt <= actualYear : yearInt >= actualYear;
     }
 
     /**
