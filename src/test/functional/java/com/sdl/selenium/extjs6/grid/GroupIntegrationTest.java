@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -18,8 +19,9 @@ public class GroupIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
-        driver.get("http://examples.sencha.com/extjs/6.6.0/examples/kitchensink/?classic#grouped-grid");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
+        driver.switchTo().frame("examples-iframe");
+//        driver.get("http://examples.sencha.com/extjs/6.6.0/examples/kitchensink/?classic#grouped-grid");
         grid.ready(10);
         grid.ready(true);
     }
@@ -51,13 +53,20 @@ public class GroupIntegrationTest extends TestBase {
     @Test
     void rowTest3() {
         List<String> groupsName = grid.getGroupsName();
-        List<String> lists = Arrays.asList("Cuisine: American (9 Items)", "Cuisine: Asian (1 Item)");
-        assertThat(groupsName, contains(lists.toArray()));
+        List<String> lists = Arrays.asList("Cuisine: American", "Cuisine: Asian", "Cuisine: Bagels", "Cuisine: Cajun", "Cuisine: Californian", "Cuisine: Caribbean", "Cuisine: Chinese", "Cuisine: Coffee", "Cuisine: English", "Cuisine: French", "Cuisine: Indian", "Cuisine: Italian", "Cuisine: Mediterranean", "Cuisine: Mexican", "Cuisine: Pizza", "Cuisine: Salad", "Cuisine: Sandwiches", "Cuisine: Sushi", "Cuisine: Tapas", "Cuisine: Thai", "Cuisine: Vegan", "Cuisine: Vietnamese");
+        assertThat(lists, contains(groupsName.toArray()));
     }
 
     @Test
     void rowTest4() {
         Group group = grid.getGroup(2);
-        assertThat(group.getNameGroup(), equalTo(""));
+        assertThat(group.getNameGroup(), equalTo("Cuisine: Asian"));
+    }
+
+    @Test
+    void rowTest5() {
+        Group group = new Group(grid, "American");
+        Row old = group.getRow(new Cell(1, "Old"));
+        assertThat(old.getText(), equalTo("Old Pro"));
     }
 }

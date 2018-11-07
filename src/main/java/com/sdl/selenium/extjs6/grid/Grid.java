@@ -127,7 +127,7 @@ public class Grid extends Table implements Scrollable {
 
     private boolean hasMask() {
         WebLocator mask = new WebLocator(this).setClasses("x-mask").setElPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
-        return mask.waitToRender(500, false);
+        return mask.waitToRender(500L, false);
     }
 
     @Override
@@ -255,20 +255,12 @@ public class Grid extends Table implements Scrollable {
     public String getNextGroupName(String groupName) {
         Group group = new Group(this);
         int size = group.size();
-        List<String> list = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
             group.setResultIdx(i);
-            list.add(group.getNameGroup());
-        }
-
-        for (int i = 0; i < list.size(); i++) {
-            String g = list.get(i).substring(0, 1).toUpperCase() + list.get(i).substring(1).toLowerCase();
+            String g = group.getNameGroup();
             if (g.contains(groupName)) {
-                try {
-                    return list.get(i + 1).substring(0, 1).toUpperCase() + list.get(i + 1).substring(1).toLowerCase();
-                } catch (IndexOutOfBoundsException e) {
-                    return null;
-                }
+                group.setResultIdx(i + 1);
+                return group.getNameGroup();
             }
         }
         return null;

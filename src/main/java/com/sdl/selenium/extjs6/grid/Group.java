@@ -6,17 +6,15 @@ import com.sdl.selenium.web.table.AbstractCell;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Group extends Row {
+public class Group extends WebLocator {
 
-    private WebLocator group = new WebLocator().setClasses("x-group-hd-container").setTag("td");
     private static String nameGroup = null;
+    private WebLocator group = new WebLocator().setClasses("x-grid-group-title").setTemplate("title", "contains(.,'%s')");
 
     public Group() {
-        super();
-        group.setTemplate("groupTextRow", "count(*//text()[contains(.,'%s')]) > 0");
+        setTag("table");
+//        setTemplate("groupTextRow", "count(*//text()[contains(.,'%s')]) > 0");
         setChildNodes(group);
     }
 
@@ -33,20 +31,7 @@ public class Group extends Row {
     public Group(WebLocator container, String groupName) {
         this(container);
         nameGroup = groupName;
-        group.setTemplateValue("groupTextRow", groupName);
-//        setContainer(container);
-//        setTemplate("groupTextRow", "count(.//text()[contains(.,'%1$s')]) > 0] | //table[count(.//text()[contains(.,'%1$s')]) > 0]/following-sibling::table[following-sibling::table//tr//td[not(contains(concat(' ', @class, ' '), ' x-group-hd-container '))] | self::table//tr//td[not(contains(concat(' ', @class, ' '), ' x-group-hd-container '))]");
-    }
-
-    public Group(WebLocator container, String groupName, AbstractCell... cells) {
-        this(null, groupName);
-        List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
-        WebLocator xPath = new WebLocator().setChildNodes(collect.stream().toArray(AbstractCell[]::new)).setRoot("/").setTag("following-sibling::table");
-        setElPath(container.getXPath() + getXPath() + xPath.getXPath());
-    }
-
-    public Group(WebLocator container, int indexRow, AbstractCell... cells) {
-        super(container, indexRow, cells);
+        group.setTemplateValue("title", groupName);
     }
 
     public Group(WebLocator container, String groupName, int indexRow) {
@@ -74,10 +59,10 @@ public class Group extends Row {
         if (!expand()) {
             return null;
         }
-        Row group = new Row(this).setTag("").setRoot(" | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table" + (Strings.isNullOrEmpty(toGroup) ? "" : "[following::table[.//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')] and count(.//text()[contains(.,'" + toGroup + "')]) > 0]]"));
-        int size = group.size() + 1;
+        WebLocator group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | preceding-sibling::table//*[1][count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0]" + (Strings.isNullOrEmpty(toGroup) ? "" : " and following-sibling::table[count(.//*[@class='x-grid-group-title' and contains(.,'" + toGroup + "')]) > 0]]"));
+        int size = group.size();
         ArrayList<Row> rows = new ArrayList<>();
-        for (int i = 1; i < size; i++) {
+        for (int i = 1; i <= size; i++) {
             Row rowTemp = new Row().setElPath("(" + group.getXPath() + ")[" + i + "]");
             Row row = new Row(rowTemp).setTag("tr").setBaseCls("x-grid-row");
             rows.add(row);
@@ -85,8 +70,17 @@ public class Group extends Row {
         return rows;
     }
 
+    public Row getRow(AbstractCell ...cells){
+        Grid grid = (Grid) getPathBuilder().getContainer();
+        String toGroup = grid.getNextGroupName(nameGroup);
+        if (!expand()) {
+            return null;
+        }
+        WebLocator group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | preceding-sibling::table//*[1][count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0]" + (Strings.isNullOrEmpty(toGroup) ? "" : " and following-sibling::table[count(.//*[@class='x-grid-group-title' and contains(.,'" + toGroup + "')]) > 0]]"));
+        return new Row(group).setTag("").setRoot("").setChildNodes(cells);
+    }
+
     public String getNameGroup() {
-        WebLocator groupName = new WebLocator(this).setClasses("x-grid-group-title");
-        return groupName.getText().split(" \\(")[0];
+        return getText().split(" \\(")[0];
     }
 }

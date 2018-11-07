@@ -222,6 +222,12 @@ public class XPathBuilder implements Cloneable {
         if (childNodes != null) {
             this.childNodes = Arrays.asList(childNodes);
         }
+//        if (childNodes != null) {
+//            List<WebLocator> newList = this.childNodes == null ? new ArrayList<>() : this.childNodes;
+//            List<WebLocator> webLocators = Arrays.asList(childNodes);
+//            newList.addAll(webLocators);
+//            this.childNodes = newList;
+//        }
         return (T) this;
     }
 
