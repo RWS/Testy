@@ -16,7 +16,7 @@ public class WebLinkTest {
         return new Object[][]{
                 {new WebLink(), "//a"},
                 {new WebLink(container), CONTAINER_PATH + "//a"},
-                {new WebLink(container, "text"), CONTAINER_PATH + "//a[contains(text(),'text')]"},
+                {new WebLink(container, "text"), CONTAINER_PATH + "//a[contains(.,'text')]"},
                 {new WebLink(container, "text", SearchType.EQUALS), CONTAINER_PATH + "//a[text()='text']"},
                 {new WebLink(container, "text", SearchType.DEEP_CHILD_NODE_OR_SELF), CONTAINER_PATH + "//a[(contains(.,'text') or count(*//text()[contains(.,'text')]) > 0)]"},
         };
