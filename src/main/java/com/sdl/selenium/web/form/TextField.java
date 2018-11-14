@@ -3,11 +3,10 @@ package com.sdl.selenium.web.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TextField extends WebLocator implements ITextField {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
         setClassName("TextField");
@@ -39,7 +38,7 @@ public class TextField extends WebLocator implements ITextField {
             currentElement.clear();
             MultiThreadClipboardUtils.copyString(value);
             MultiThreadClipboardUtils.pasteString(this);
-            LOGGER.info("Set value(" +  this + "): " + value + "'");
+            log.info("Set value(" +  this + "): " + value + "'");
             return true;
         }
         return false;

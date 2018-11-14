@@ -3,8 +3,9 @@ package com.sdl.selenium.utils.config;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.PropertiesReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,9 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
 public class WebLocatorConfig {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(WebLocatorConfig.class);
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
 
@@ -40,7 +42,7 @@ public class WebLocatorConfig {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(CONFIG_FILE_NAME);
         String filePath = resource != null ? resource.getFile() : null;
         if (filePath == null) {
-            LOGGER.info("override defaults by adding them in src/main/resources/{}", CONFIG_FILE_NAME);
+            log.info("override defaults by adding them in src/main/resources/{}", CONFIG_FILE_NAME);
         }
         properties = new WebLocatorConfigReader();
         if (resource != null) {
@@ -48,7 +50,7 @@ public class WebLocatorConfig {
                 //properties = new WebLocatorConfigReader(resource.openStream());
                 properties.load(resource.openStream());
             } catch (IOException e) {
-                LOGGER.error("IOException: {}", e);
+                log.error("IOException: {}", e);
             }
         } //else {
         //properties = new WebLocatorConfigReader();
@@ -67,7 +69,7 @@ public class WebLocatorConfig {
         if (vString != null) {
             v = Boolean.valueOf(vString);
         } else {
-            LOGGER.debug("key not found:" + key);
+            log.debug("key not found:" + key);
         }
         return v;
     }
@@ -78,14 +80,14 @@ public class WebLocatorConfig {
         if (vString != null) {
             v = Integer.valueOf(vString);
         } else {
-            LOGGER.debug("key not found:" + key);
+            log.debug("key not found:" + key);
         }
         return v;
     }
 
     public static void init(WebLocatorConfigReader properties) {
         WebLocatorConfig.properties = properties;
-        LOGGER.info(properties.toString());
+        log.info(properties.toString());
 
         init();
     }
@@ -148,7 +150,7 @@ public class WebLocatorConfig {
                 try {
                     list.add(SearchType.valueOf(searchType));
                 } catch (IllegalArgumentException e) {
-                    LOGGER.error("SearchType not supported : {}. Supported SearchTypes: {}", searchType, Arrays.asList(SearchType.values()));
+                    log.error("SearchType not supported : {}. Supported SearchTypes: {}", searchType, Arrays.asList(SearchType.values()));
                 }
             }
             setSearchTextType(list);
@@ -251,7 +253,6 @@ public class WebLocatorConfig {
         return uploadExePath;
     }
 
-
     public static void setUploadExePath(String uploadExePath) {
         WebLocatorConfig.uploadExePath = uploadExePath;
     }
@@ -273,7 +274,7 @@ public class WebLocatorConfig {
         properties.keySet().retainAll(WebLocatorConfig.properties.keySet());
         if (properties.size() > 0) {
             WebLocatorConfig.properties.putAll(properties);
-            LOGGER.info("The webLocator.properties were overwritten with value from browser properties: {}", properties.toString());
+            log.info("The webLocator.properties were overwritten with value from browser properties: {}", properties.toString());
             init();
         }
     }

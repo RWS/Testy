@@ -1,14 +1,13 @@
 package com.sdl.selenium.web.utils;
 
 import com.google.common.base.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 
+@Slf4j
 public class RetryUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtils.class);
 
     public static <V> V retry(int maxRetries, Callable<V> t) {
         return retry(maxRetries, t, false);
@@ -27,14 +26,14 @@ public class RetryUtils {
             } catch (Exception | AssertionError e) {
                 if (!safe) {
                     if (count >= maxRetries) {
-                        LOGGER.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
+                        log.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
         if (count > 1) {
-            LOGGER.info("Retry {} and wait {} milliseconds", count, wait);
+            log.info("Retry {} and wait {} milliseconds", count, wait);
         }
         return execute;
     }

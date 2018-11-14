@@ -1,11 +1,8 @@
 package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class InputButton extends WebLocator implements IButton {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InputButton.class);
 
     public InputButton() {
         setClassName("InputButton");

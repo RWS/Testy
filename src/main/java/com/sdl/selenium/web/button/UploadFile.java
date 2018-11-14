@@ -2,11 +2,8 @@ package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.bootstrap.button.Upload;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class UploadFile extends WebLocator implements Upload {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFile.class);
 
     public UploadFile() {
         setClassName("UploadFile");
