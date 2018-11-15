@@ -59,7 +59,7 @@ public class Group extends WebLocator {
         if (!expand()) {
             return null;
         }
-        WebLocator group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | preceding-sibling::table//*[1][count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0]" + (Strings.isNullOrEmpty(toGroup) ? "" : " and following-sibling::table[count(.//*[@class='x-grid-group-title' and contains(.,'" + toGroup + "')]) > 0]]"));
+        WebLocator group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | preceding-sibling::table//*[1][count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0]" + (Strings.isNullOrEmpty(toGroup) ? "]" : " and following-sibling::table[count(.//*[@class='x-grid-group-title' and contains(.,'" + toGroup + "')]) > 0]]"));
         int size = group.size();
         ArrayList<Row> rows = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
@@ -76,7 +76,7 @@ public class Group extends WebLocator {
         if (!expand()) {
             return null;
         }
-        WebLocator group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | preceding-sibling::table//*[1][count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0]" + (Strings.isNullOrEmpty(toGroup) ? "" : " and following-sibling::table[count(.//*[@class='x-grid-group-title' and contains(.,'" + toGroup + "')]) > 0]]"));
+        WebLocator group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | preceding-sibling::table//*[1][count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0]" + (Strings.isNullOrEmpty(toGroup) ? "]" : " and following-sibling::table[count(.//*[@class='x-grid-group-title' and contains(.,'" + toGroup + "')]) > 0]]"));
         return new Row(group).setTag("").setRoot("").setChildNodes(cells);
     }
 
