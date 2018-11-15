@@ -33,18 +33,18 @@ public class WebLocatorTest {
                 {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block"), "//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0]"},
                 {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2), "//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
                 {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
-                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and contains(.,'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
-                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title"), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(.,'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
-                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./"), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(.,'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
-                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./").setResultIdx(2), "(//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(.,'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2])[2]"},
-                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./").setResultIdx(2).setType("type"), "(//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and @type='type' and contains(.,'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2])[2]"},
+                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and contains(text(),'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
+                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title"), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(text(),'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
+                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./"), "//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(text(),'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2]"},
+                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./").setResultIdx(2), "(//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(text(),'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2])[2]"},
+                {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./").setResultIdx(2).setType("type"), "(//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and @type='type' and contains(text(),'Text') and @value='Test' and contains(@style ,'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2])[2]"},
 
                 {new WebLocator("testcls"), "//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
                 {new WebLocator(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
                 {new WebLocator(container).setClasses("Cls"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
                 {new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
                 {new WebLocator("testcls", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
-                {new WebLocator("text", "testcls", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' testcls ') and contains(.,'text')]"},
+                {new WebLocator("text", "testcls", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]"},
                 {new WebLocator().setId("ID"), "//*[@id='ID']"},
                 {new WebLocator(container).setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea"},
                 {new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]").setTag("textarea"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"},
@@ -58,7 +58,7 @@ public class WebLocatorTest {
         String text = "WebLocator text for search type";
         String cls = "searchTextType";
         return new Object[][]{
-                {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(.,'" + text + "')]"},
+                {new WebLocator().setClasses(cls).setText(text, SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and contains(text(),'" + text + "')]"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.EQUALS), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and text()='" + text + "']"},
                 {new WebLocator().setClasses(cls).setText(text, SearchType.STARTS_WITH), "//*[contains(concat(' ', @class, ' '), ' searchTextType ') and starts-with(text(),'" + text + "')]"},
 
@@ -166,7 +166,7 @@ public class WebLocatorTest {
     public void getPathSelectorSetTagWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setTag("textarea");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[contains(concat(' ', @class, ' '), ' testcls ') and contains(.,'text')]");
+        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
     }
 
     @Test
@@ -187,15 +187,15 @@ public class WebLocatorTest {
     public void getPathSelectorSetIdWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setId("ID");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ') and contains(.,'text')]");
+        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
     }
 
     //@Test
     // TODO fix getPathSelectorSetIdWhenWebLocatorHasXPath
     public void getPathSelectorSetIdWhenWebLocatorHasXPath() {
-        WebLocator el = new WebLocator().setElPath("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls') and contains(.,'text')]");
+        WebLocator el = new WebLocator().setElPath("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls') and contains(text(),'text')]");
         el.setId("ID");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(@class, 'testcls') and contains(.,'text')]");
+        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]");
     }
 
     @Test
@@ -223,7 +223,7 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setText("text", SearchType.EQUALS);
         assertEquals(locator.getXPath(), "//*[text()='text']");
         locator.setSearchTextType(null);
-        assertEquals(locator.getXPath(), "//*[contains(.,'text')]");
+        assertEquals(locator.getXPath(), "//*[contains(text(),'text')]");
     }
 
     @Test
@@ -245,15 +245,15 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setText("text").setResultIdx(1);
         WebLocator locator1 = new WebLocator(locator).setText("text").setResultIdx(2);
         WebLocator locator2 = new WebLocator().setText("text").setResultIdx(Position.LAST);
-        assertEquals(locator2.getXPath(), "(//*[contains(.,'text')])[last()]");
-        assertEquals(locator1.getXPath(), "((//*[contains(.,'text')])[1]//*[contains(.,'text')])[2]");
+        assertEquals(locator2.getXPath(), "(//*[contains(text(),'text')])[last()]");
+        assertEquals(locator1.getXPath(), "((//*[contains(text(),'text')])[1]//*[contains(text(),'text')])[2]");
         locator1.setResultIdx(-1);
-        assertEquals(locator1.getXPath(), "(//*[contains(.,'text')])[1]//*[contains(.,'text')]");
+        assertEquals(locator1.getXPath(), "(//*[contains(text(),'text')])[1]//*[contains(text(),'text')]");
         locator.setResultIdx(-1);
-        assertEquals(locator1.getXPath(), "//*[contains(.,'text')]//*[contains(.,'text')]");
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
 
         WebLocator locator3 = new WebLocator().setText("text").setResultIdx(Position.LAST).setPosition(Position.LAST);
-        assertEquals(locator3.getXPath(), "(//*[contains(.,'text')][position() = last()])[last()]");
+        assertEquals(locator3.getXPath(), "(//*[contains(text(),'text')][position() = last()])[last()]");
     }
 
     @Test
@@ -261,12 +261,12 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setText("text").setPosition(1);
         WebLocator locator1 = new WebLocator(locator).setText("text").setPosition(2);
         WebLocator locator2 = new WebLocator().setText("text").setPosition(Position.LAST);
-        assertEquals(locator2.getXPath(), "//*[contains(.,'text')][position() = last()]");
-        assertEquals(locator1.getXPath(), "//*[contains(.,'text')][position() = 1]//*[contains(.,'text')][position() = 2]");
+        assertEquals(locator2.getXPath(), "//*[contains(text(),'text')][position() = last()]");
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')][position() = 2]");
         locator1.setPosition(-1);
-        assertEquals(locator1.getXPath(), "//*[contains(.,'text')][position() = 1]//*[contains(.,'text')]");
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')]");
         locator.setPosition(-1);
-        assertEquals(locator1.getXPath(), "//*[contains(.,'text')]//*[contains(.,'text')]");
+        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
     }
 
     @Test
@@ -275,7 +275,7 @@ public class WebLocatorTest {
         WebLocator childFirst = new WebLocator().setText("childFirst").setPosition(Position.FIRST);
         WebLocator parent = new WebLocator().setClasses("parent").setChildNodes(child, childFirst);
 
-        assertEquals(parent.getXPath(), "//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(.,'child')][position() = 1]) > 0 and count(.//*[contains(.,'childFirst')][position() = first()]) > 0]");
+        assertEquals(parent.getXPath(), "//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(text(),'child')][position() = 1]) > 0 and count(.//*[contains(text(),'childFirst')][position() = first()]) > 0]");
     }
 
     @Test

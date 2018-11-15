@@ -17,7 +17,7 @@ public class FieldContainerTest {
                 {new FieldContainer(),                   "//div[contains(concat(' ', @class, ' '), ' x-form-fieldcontainer ')]"},
                 {new FieldContainer(container),          "//*[contains(concat(' ', @class, ' '), ' container ')]//div[contains(concat(' ', @class, ' '), ' x-form-fieldcontainer ')]"},
                 {new FieldContainer(container, "Entry"), "//*[contains(concat(' ', @class, ' '), ' container ')]//div[contains(concat(' ', @class, ' '), ' x-form-fieldcontainer ')]//label[text()='Entry']//following-sibling::*"},
-                {new FieldContainer(container, "FieldSet", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//div[contains(concat(' ', @class, ' '), ' x-form-fieldcontainer ')]//label[contains(.,'FieldSet')]//following-sibling::*"},
+                {new FieldContainer(container, "FieldSet", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//div[contains(concat(' ', @class, ' '), ' x-form-fieldcontainer ')]//label[contains(text(),'FieldSet')]//following-sibling::*"},
         };
     }
 
