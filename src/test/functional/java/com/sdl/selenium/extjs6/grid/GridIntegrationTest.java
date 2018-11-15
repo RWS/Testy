@@ -24,6 +24,7 @@ public class GridIntegrationTest extends TestBase {
     @BeforeClass
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
+        driver.switchTo().frame("examples-iframe");
         grid.ready(10);
         grid.ready(true);
     }
@@ -54,6 +55,8 @@ public class GridIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "headerTest")
     void selectTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#spreadsheet-checked");
+        driver.navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "1900"));
@@ -72,6 +75,7 @@ public class GridIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "selectTest")
     void scrollToCellTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#spreadsheet-checked");
+        driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "2017"));
@@ -82,6 +86,8 @@ public class GridIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "scrollToCellTest")
     void checkCellTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#cell-editing");
+        driver.navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("Edit Plants");
         spreadsheet.ready(true);
         Cell cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
@@ -95,6 +101,8 @@ public class GridIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "checkCellTest")
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
+        driver.navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("XML Grid");
         spreadsheet.ready(true);
         List<List<String>> cellsText = spreadsheet.getCellsText();
