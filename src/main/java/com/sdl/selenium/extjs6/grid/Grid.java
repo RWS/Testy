@@ -260,7 +260,8 @@ public class Grid extends Table implements Scrollable {
             String g = group.getNameGroup().toLowerCase();
             if (g.contains(groupName.toLowerCase())) {
                 group.setResultIdx(i + 1);
-                return group.getNameGroup();
+                String nameGroup = group.getNameGroup();
+                return nameGroup.substring(0, 1).toUpperCase() + nameGroup.substring(1).toLowerCase();
             }
         }
         return null;
