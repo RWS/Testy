@@ -71,7 +71,7 @@ public class DateField extends TextField {
         }
         WebLocator dayEl = new WebLocator(dayContainer).setText(day, SearchType.EQUALS).setVisibility(true).setInfoMessage("day " + day);
         Utils.sleep(50);
-        return RetryUtils.retry(2, dayEl::click);
+        return dayEl.click();
     }
 
     private boolean setHour(String hour, String minute) {
