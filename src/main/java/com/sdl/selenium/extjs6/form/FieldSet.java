@@ -28,12 +28,14 @@ public class FieldSet extends WebLocator {
     }
 
     public boolean expand() {
-        WebLocator legendElement = new WebLocator(this).setText(getPathBuilder().getText());
-        return !isCollapsed() || legendElement.click();
+        return !isCollapsed() || getExpandEl().click();
     }
 
     public boolean collapse() {
-        WebLocator legendElement = new WebLocator(this).setText(getPathBuilder().getText());
-        return isCollapsed() || legendElement.click();
+        return isCollapsed() || getExpandEl().click();
+    }
+
+    private WebLocator getExpandEl() {
+        return new WebLocator(this).setClasses("x-fieldset-header-text").setText(getPathBuilder().getText());
     }
 }
