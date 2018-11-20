@@ -147,7 +147,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private boolean doSetValue(WebLocator el, String value) {
         int lengthVal = WebLocatorConfig.getMinCharsToType();
         int length = value.length();
-        el.getWebElement().clear();
+//        el.getWebElement().clear();
+        el.getWebElement().sendKeys(Keys.CONTROL, "a");
+        el.getWebElement().sendKeys(Keys.DELETE);
         if (lengthVal == -1 || length <= lengthVal) {
             el.currentElement.sendKeys(value);
             LOGGER.info("Set value({}): '{}'", el, getLogValue(el, value));
