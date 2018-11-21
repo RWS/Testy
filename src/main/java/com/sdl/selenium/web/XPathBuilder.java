@@ -964,7 +964,7 @@ public class XPathBuilder implements Cloneable {
         } else if (searchType.contains(SearchType.STARTS_WITH)) {
             text = "starts-with(" + pattern + "," + text + ")";
         } else {
-            text = "contains(" + ("text()".equals(pattern) ? "." : pattern) + "," + text + ")";
+            text = "contains(" + pattern + "," + text + ")";
         }
         return text;
     }
