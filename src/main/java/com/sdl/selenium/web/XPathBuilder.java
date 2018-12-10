@@ -730,7 +730,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasTitle() {
-        return !Strings.isNullOrEmpty(title) /*|| !templateTitle.isEmpty()*/;
+        return !Strings.isNullOrEmpty(title) || !templateTitle.isEmpty();
     }
 
     protected boolean hasPosition() {
@@ -809,14 +809,20 @@ public class XPathBuilder implements Cloneable {
         if (hasTitle()) {
             String title = getTitle();
             WebLocator titleTplEl = templateTitle.get("title");
-            if (titleTplEl != null) {
-                titleTplEl.setText(title, searchTitleType.stream().toArray(SearchType[]::new));
-                addTemplate(selector, "titleEl", titleTplEl.getXPath());
-            } else if (searchTitleType.isEmpty()) {
+            if (!Strings.isNullOrEmpty(title) || titleTplEl != null) {
+                if (titleTplEl != null) {
+                    if (!Strings.isNullOrEmpty(title)) {
+                        titleTplEl.setText(title, searchTitleType.stream().toArray(SearchType[]::new));
+                    }
+                    if(titleTplEl.getPathBuilder().getText() != null){
+                        addTemplate(selector, "titleEl", titleTplEl.getXPath());
+                    }
+                } else if (searchTitleType.isEmpty()) {
 //                title = getTextAfterEscapeQuotes(title, searchTitleType);
-                addTemplate(selector, "title", title);
-            } else {
-                addTextInPath(selector, title, "@title", searchTitleType);
+                    addTemplate(selector, "title", title);
+                } else {
+                    addTextInPath(selector, title, "@title", searchTitleType);
+                }
             }
         }
         if (hasType()) {
