@@ -3,7 +3,6 @@ package com.sdl.selenium.web.form;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.ui.Select;
 
@@ -22,19 +21,15 @@ public class ComboBox extends WebLocator implements ICombo {
         setContainer(container);
     }
 
-    @Override
-    public boolean select(String value) {
-        return select(value, InternationalizationUtils.isInternationalizedTestsSuite());
-    }
-
     public boolean selectByIndex(int index) {
         return doSelect(index);
     }
 
-    public boolean select(String value, boolean isInternationalized) {
+    @Override
+    public boolean select(String value) {
         boolean selected = waitToRender();
         assertThat("Element was not rendered " + toString(), selected);
-        selected = doSelect(value, isInternationalized);
+        selected = doSelect(value);
         assertThat("Could not selected value on : " + this, selected);
         return selected;
     }
@@ -46,8 +41,7 @@ public class ComboBox extends WebLocator implements ICombo {
         return true;
     }
 
-    public boolean doSelect(String value, boolean isInternationalized) {
-        value = InternationalizationUtils.getInternationalizedText(value, isInternationalized);
+    public boolean doSelect(String value) {
         boolean selected;
         ready();
         if (Strings.isNullOrEmpty(value)) {
@@ -61,10 +55,6 @@ public class ComboBox extends WebLocator implements ICombo {
             log.info("Set value(" + this + "): " + value);
         }
         return selected;
-    }
-
-    public boolean doSelect(String value) {
-        return doSelect(value, InternationalizationUtils.isInternationalizedTestsSuite());
     }
 
     @Override

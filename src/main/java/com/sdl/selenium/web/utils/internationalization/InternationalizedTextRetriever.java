@@ -1,7 +1,5 @@
 package com.sdl.selenium.web.utils.internationalization;
 
-import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -142,13 +140,13 @@ public class InternationalizedTextRetriever {
             }
 
             // Storing the actual values for text variables
-            DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
-            LinkedList<DiffMatchPatch.Diff> allDifferences = diffMatchPatch.diffMain(textWithVariables, finalTextInBaseLanguage);
-            for (DiffMatchPatch.Diff difference : allDifferences) {
-                if (difference.operation.equals(DiffMatchPatch.Operation.INSERT)) {
-                    variableValues.add(difference.text);
-                }
-            }
+//            DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
+//            LinkedList<DiffMatchPatch.Diff> allDifferences = diffMatchPatch.diffMain(textWithVariables, finalTextInBaseLanguage);
+//            for (DiffMatchPatch.Diff difference : allDifferences) {
+//                if (difference.operation.equals(DiffMatchPatch.Operation.INSERT)) {
+//                    variableValues.add(difference.text);
+//                }
+//            }
 
             // Build the final string in current language replacing variables with actual values
             matcherInTranslation = regexPattern.matcher(textWithVariables);

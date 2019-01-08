@@ -6,7 +6,6 @@ import com.sdl.selenium.extjs3.grid.GridPanel;
 import com.sdl.selenium.extjs3.grid.GridRow;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 
 public class List extends GridPanel {
@@ -38,7 +37,7 @@ public class List extends GridPanel {
 
     public boolean selectRowsWithJs(String ...values) {
         String id = getAttributeId();
-        return (Boolean) WebLocatorUtils.doExecuteScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + StringUtils.join(values, ",") + "');");
+        return (Boolean) WebLocatorUtils.doExecuteScript("return (function(m,v){m.setValue(v);return m.getValue() == v.toLowerCase()})(Ext.getCmp('" + id + "'),'" + String.join(",", values) + "');");
     }
 
     public boolean isSelectedRows(String ...values) {

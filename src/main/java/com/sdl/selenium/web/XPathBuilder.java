@@ -4,11 +4,9 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
-import com.sdl.selenium.web.utils.internationalization.InternationalizationUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 
 import java.util.*;
@@ -455,7 +453,7 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T addToTemplate(final String key, final String value) {
         String template = getTemplate(key);
-        if (StringUtils.isNotEmpty(template)) {
+        if (!Strings.isNullOrEmpty(template)) {
             template += " and ";
         } else {
             template = "";
@@ -662,11 +660,6 @@ public class XPathBuilder implements Cloneable {
             if (value == null) {
                 this.attribute.remove(attribute);
             } else {
-                if (!Arrays.asList(searchTypes).contains(SearchType.NOT_INTERNATIONALIZED)) {
-                    if (attribute.equals("placeholder") || attribute.equals("alt") || attribute.equals("title")) {
-                        value = InternationalizationUtils.getInternationalizedText(value);
-                    }
-                }
                 this.attribute.put(attribute, new SearchText(value, searchTypes));
             }
         }
@@ -783,7 +776,7 @@ public class XPathBuilder implements Cloneable {
             }
         }
 
-        return selector.isEmpty() ? "" : StringUtils.join(selector, " and ");
+        return selector.isEmpty() ? "" : String.join(" and ", selector);
     }
 
     public String getBasePath() {
@@ -843,7 +836,7 @@ public class XPathBuilder implements Cloneable {
         }
         selector.addAll(elPathSuffix.values().stream().collect(Collectors.toList()));
         selector.addAll(getChildNodesToSelector());
-        return selector.isEmpty() ? null : StringUtils.join(selector, " and ");
+        return selector.isEmpty() ? null : String.join(" and ", selector);
     }
 
     public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType) {
@@ -872,7 +865,7 @@ public class XPathBuilder implements Cloneable {
                     }
                 }
             }
-            selector.add(hasContainsAll ? StringUtils.join(strings, " and ") : "(" + StringUtils.join(strings, " or ") + ")");
+            selector.add(hasContainsAll ? String.join(" and ", strings) : "(" + String.join(" or ", strings) + ")");
         } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
             String selfPath = getTextWithSearchType(searchTextType, text, pattern);
             addTemplate(selector, "DEEP_CHILD_NODE_OR_SELF", selfPath);
@@ -924,14 +917,14 @@ public class XPathBuilder implements Cloneable {
 
     private void addTemplate(List<String> selector, String key, Object... arguments) {
         String tpl = applyTemplate(key, arguments);
-        if (StringUtils.isNotEmpty(tpl)) {
+        if (!Strings.isNullOrEmpty(tpl)) {
             selector.add(tpl);
         }
     }
 
     protected String applyTemplate(String key, Object... arguments) {
         String tpl = templates.get(key);
-        if (StringUtils.isNotEmpty(tpl)) {
+        if (!Strings.isNullOrEmpty(tpl)) {
             return String.format(tpl, arguments);
         }
         return null;
@@ -951,9 +944,9 @@ public class XPathBuilder implements Cloneable {
         String selector = getBaseItemPath();
         String subPath = applyTemplateValue(disabled ? "disabled" : "enabled");
         if (subPath != null) {
-            selector += StringUtils.isNotEmpty(selector) ? " and " + subPath : subPath;
+            selector += !Strings.isNullOrEmpty(selector) ? " and " + subPath : subPath;
         }
-        selector = getRoot() + getTag() + (StringUtils.isNotEmpty(selector) ? "[" + selector + "]" : "");
+        selector = getRoot() + getTag() + (!Strings.isNullOrEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
     }
 
@@ -1024,7 +1017,7 @@ public class XPathBuilder implements Cloneable {
 //        for (String suffix : elPathSuffix.values()) {
 //            selector.add(suffix);
 //        }
-        return selector.isEmpty() ? "*" : StringUtils.join(selector, "");
+        return selector.isEmpty() ? "*" : String.join("", selector);
     }
 
     public final By getSelector() {
@@ -1041,7 +1034,7 @@ public class XPathBuilder implements Cloneable {
 
         cssSelector = getElCssSelector();
         if (WebLocatorConfig.isGenerateCssSelector()) {
-            if (StringUtils.isEmpty(cssSelector)) {
+            if (Strings.isNullOrEmpty(cssSelector)) {
                 if (isCssSelectorSupported()) {
                     cssSelector = getItemCssSelector();
                     if (hasPosition()) {
@@ -1064,13 +1057,13 @@ public class XPathBuilder implements Cloneable {
         // add container path
         if (cssSelector != null && getContainer() != null) {
             String parentCssSelector = getContainer().getCssSelector();
-            if (StringUtils.isEmpty(parentCssSelector)) {
+            if (Strings.isNullOrEmpty(parentCssSelector)) {
                 log.warn("Can't generate css selector for parent: {}", getContainer());
                 cssSelector = null;
             } else {
                 String root = getRoot();
                 String deep = "";
-                if (StringUtils.isNotEmpty(root)) {
+                if (!Strings.isNullOrEmpty(root)) {
                     if (root.equals("/")) {
                         deep = " > ";
                     } else if (root.equals("//")) {
