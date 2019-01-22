@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.extjs6.menu.Menu;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +36,18 @@ public class SplitButton extends Button {
         if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String option : options) {
                 menu.clickOnMenu(option);
+            }
+        } else {
+            log.debug("(" + toString() + ") The element arrow could not be located.");
+        }
+    }
+
+    public void clickOnMenu(SearchType searchType, String... options) {
+        assertReady();
+        Menu menu = new Menu();
+        if (menu.showMenu(this) || menu.showMenu(this)) {
+            for (String option : options) {
+                menu.clickOnMenu(option, searchType);
             }
         } else {
             log.debug("(" + toString() + ") The element arrow could not be located.");
