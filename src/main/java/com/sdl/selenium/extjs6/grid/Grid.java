@@ -6,6 +6,7 @@ import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -167,7 +168,8 @@ public class Grid extends Table implements Scrollable {
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            list.add(this.getCell(i, j).getText(true).trim());
+                            String text = getTextNode(this.getCell(i, j));
+                            list.add(text);
                         }
                         listOfList.add(list);
                     } else {
@@ -187,6 +189,16 @@ public class Grid extends Table implements Scrollable {
             } while (timeout < 30);
             return listOfList;
         }
+    }
+
+    private String getTextNode(Cell cell) {
+        String text = cell.getText(true).trim();
+        WebLocator childs = new WebLocator().setElPath("./*");
+        List<WebElement> children = childs.findElements();
+        for (WebElement child : children) {
+            text = text.replaceFirst(child.getText(), "").trim();
+        }
+        return text;
     }
 
     public List<List<String>> getCellsText(String group, int... excludedColumns) {
@@ -210,7 +222,8 @@ public class Grid extends Table implements Scrollable {
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            list.add(groupElRows.get(i).getCell(j).getText(true).trim());
+                            String text = getTextNode(groupElRows.get(i).getCell(j));
+                            list.add(text);
                         }
                         listOfList.add(list);
                     } else {
