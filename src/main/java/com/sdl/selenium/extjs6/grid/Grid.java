@@ -193,7 +193,7 @@ public class Grid extends Table implements Scrollable {
 
     private String getTextNode(Cell cell) {
         String text = cell.getText(true).trim();
-        WebLocator childs = new WebLocator().setElPath("./*");
+        WebLocator childs = new WebLocator(cell).setExcludeClasses("x-grid-cell-inner").setResultIdx(1);
         List<WebElement> children = childs.findElements();
         for (WebElement child : children) {
             text = text.replaceFirst(child.getText(), "").trim();
