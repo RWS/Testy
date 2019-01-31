@@ -19,6 +19,7 @@ public class RetryUtils {
         V execute = null;
         do {
             count++;
+//            log.info("Retry {} and wait!!!", count);
             wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
             Utils.sleep(wait);
             try {
@@ -58,10 +59,14 @@ public class RetryUtils {
         return execute == null;
     }
 
-    public static <V> V retryIfNotSame(int maxRetries, String expected, Callable<V> t) {
+    public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> t) {
         V result = retry(maxRetries, () -> {
             V text = t.call();
-            return expected.equals(text) ? text : null;
+            if (text instanceof Integer) {
+                return expected == text ? text : null;
+            } else {
+                return expected.equals(text) ? text : null;
+            }
         });
         return result == null ? retry(0, t) : result;
     }
