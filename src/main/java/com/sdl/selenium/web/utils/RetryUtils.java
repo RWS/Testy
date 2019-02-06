@@ -19,9 +19,9 @@ public class RetryUtils {
         V execute = null;
         do {
             count++;
-//            log.info("Retry {} and wait!!!", count);
             wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
             Utils.sleep(wait);
+//            log.info("Retry {} and wait {} ->!!!", count, wait);
             try {
                 execute = t.call();
             } catch (Exception | AssertionError e) {
