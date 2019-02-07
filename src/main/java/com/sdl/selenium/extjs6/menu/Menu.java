@@ -67,7 +67,7 @@ public class Menu extends WebLocator {
     public boolean close() {
         final String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(!b.isHidden()) {b.colse();} return b.isHidden();})()";
+            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b && !b.isHidden()) {b.colse();} return b ? b.isHidden() : false})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
             return (Boolean) object;
         }
