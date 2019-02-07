@@ -63,4 +63,14 @@ public class Menu extends WebLocator {
         }
         return false;
     }
+
+    public boolean close() {
+        final String id = getAttributeId();
+        if (!Strings.isNullOrEmpty(id)) {
+            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(!b.isHidden()) {b.colse();} return b.isHidden();})()";
+            Object object = WebLocatorUtils.doExecuteScript(script);
+            return (Boolean) object;
+        }
+        return false;
+    }
 }
