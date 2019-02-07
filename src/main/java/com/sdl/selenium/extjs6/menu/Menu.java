@@ -55,19 +55,13 @@ public class Menu extends WebLocator {
     }
 
     public boolean hideMenu(WebLocator parent) {
-        final String id = parent.getAttributeId();
-        if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(!b.menu.isHidden()) {b.hideMenu();} return b.menu.isHidden();})()";
-            Object object = WebLocatorUtils.doExecuteScript(script);
-            return (Boolean) object;
-        }
-        return false;
+        final String parentId = parent.getAttributeId();
+        return hideMenu(parentId);
     }
 
-    public boolean close() {
-        final String id = getAttributeId();
-        if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b && !b.isHidden()) {b.colse();} return b ? b.isHidden() : false})()";
+    public boolean hideMenu(String parentId) {
+        if (!Strings.isNullOrEmpty(parentId)) {
+            String script = "return (function(){var b = Ext.getCmp('" + parentId + "'); if(!b.menu.isHidden()) {b.hideMenu();} return b.menu.isHidden();})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
             return (Boolean) object;
         }
