@@ -92,10 +92,10 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void getAllTextsFromRow() {
-        List<String> listOfList = Arrays.asList("", "John", "Carter", "johncarter@mail.com", "Details Remove");
+        List<String> listOfList = Arrays.asList("John", "Carter", "johncarter@mail.com", "Details Remove");
 
         Row row = table.getRow(new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
-        List<String> cellsText = row.getCellsText();
+        List<String> cellsText = row.getCellsText(1);
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("\n| ");
         for (String el : cellsText) {
