@@ -1,0 +1,16 @@
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\TestyForC.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\TestyForC.pdb
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\WebDriver.dll
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Projects\TestyForC\TestyForC\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Projects\TestyForC\TestyForC\bin\Debug\WebDriver.xml
+C:\Projects\TestyForC\TestyForC\obj\Debug\TestyForC.csprojAssemblyReference.cache
+C:\Projects\TestyForC\TestyForC\obj\Debug\TestyForC.csproj.CoreCompileInputs.cache
+C:\Projects\TestyForC\TestyForC\obj\Debug\TestyForC.csproj.CopyComplete
+C:\Projects\TestyForC\TestyForC\obj\Debug\TestyForC.dll
+C:\Projects\TestyForC\TestyForC\obj\Debug\TestyForC.pdb
