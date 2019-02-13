@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="WebLocatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\SearchText.cs" />
     <Compile Include="Web\SearchType.cs" />
     <Compile Include="Web\Type.cs" />
     <Compile Include="Web\WebLocator.cs" />

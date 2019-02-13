@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -80,5 +81,20 @@ namespace TestyForC.Web
             return new SearchType("advance", "containsAny");
         }
 
+        public override bool Equals(object obj)
+        {
+            var type = obj as SearchType;
+            return type != null &&
+                   group == type.group &&
+                   value == type.value;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1856320566;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(group);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
+            return hashCode;
+        }
     }
 }

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testy.Web;
 
 namespace TestyForC.Web
 {
     public abstract class WebLocatorBuild <T>  where T : WebLocatorBuild<T>
     {
-        //private XPathBuilder xPath = new XPathBuilder();
-
         private XPathBuilder xPath = createXPathBuilder();
 
         public static XPathBuilder createXPathBuilder()
@@ -17,11 +16,6 @@ namespace TestyForC.Web
             return new XPathBuilder();
         }
 
-        /**
-         * <p><strong><i>Used for finding element process (to generate xpath address)</i></strong></p>
-         *
-         * @return {@link XPathBuilder}
-         */
         public XPathBuilder getXPathBuilder()
         {
             return xPath;
@@ -200,9 +194,9 @@ namespace TestyForC.Web
             return (T)this;
         }
 
-        public T setAttribute(string attribute, List<SearchType> searchTypes)
+        public T setAttribute(string attribute, string value, List<SearchType> searchTypes)
         {
-            xPath.Attribute = new Dictionary<String, SearchType>() {{ attribute, searchTypes.First()}};
+            xPath.Attribute = new Dictionary<String, SearchText>() {{ attribute, new SearchText(value, searchTypes)}};
             return (T)this;
         }
 

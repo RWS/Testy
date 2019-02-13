@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testy.Web;
 
 namespace TestyForC.Web
 {
@@ -38,7 +39,7 @@ namespace TestyForC.Web
         private int position;
         private int resultIdx;
         private String type;
-        private Dictionary<String, SearchType> attribute = new Dictionary<String, SearchType>();
+        private Dictionary<String, SearchText> attribute = new Dictionary<String, SearchText>();
        
         private bool visibility;
         private long renderMillis = 5;
@@ -94,7 +95,7 @@ namespace TestyForC.Web
         public int Position { get => position; set => position = value; }
         public int ResultIdx { get => resultIdx; set => resultIdx = value; }
         public string Type { get => type; set => type = value; }
-        public Dictionary<string, SearchType> Attribute { get => attribute; set => attribute = value; }
+        public Dictionary<string, SearchText> Attribute { get => attribute; set => attribute = value; }
         public bool Visibility { get => visibility; set => visibility = value; }
         public long RenderMillis { get => renderMillis; set => renderMillis = value; }
         public int ActivateSeconds { get => activateSeconds; set => activateSeconds = value; }
@@ -195,7 +196,6 @@ namespace TestyForC.Web
 
         public string XPath()
         {
-            //return getBasePath();
             String returnPath;
             if (hasElPath())
             {
@@ -246,7 +246,6 @@ namespace TestyForC.Web
             {
                 searchLabelType.Add(new SearchType().Equals());
             }
-            //SearchType[] st = searchLabelType.stream().toArray(SearchType[]::new);
             return new WebLocator().setText(Label, searchLabelType).setTag(LabelTag).XPath();
         }
 
@@ -316,14 +315,20 @@ namespace TestyForC.Web
             {
                 selector.Add(applyTemplate("cls", Cls));
             }
-            //if (hasClasses())
-            //{
-            //    selector.addAll(getClasses().stream().map(cls->applyTemplate("class", cls)).collect(Collectors.toList()));
-            //}
-            //if (hasExcludeClasses())
-            //{
-            //    selector.addAll(getExcludeClasses().stream().map(excludeClass->applyTemplate("excludeClass", excludeClass)).collect(Collectors.toList()));
-            //}
+            if (hasClasses())
+            {
+                foreach (string cls in Classes)
+                {
+                    selector.Add(applyTemplate("class", cls));
+                }
+            }
+            if (hasExcludeClasses())
+            {
+                foreach (string cls in Classes)
+                {
+                    selector.Add(applyTemplate("excludeClass", cls));
+                }
+            }
             if (hasTitle())
             {
                 String title = Title;
@@ -343,7 +348,6 @@ namespace TestyForC.Web
                     }
                     else if (searchTitleType.Count() == 0)
                     {
-                        //                title = getTextAfterEscapeQuotes(title, searchTitleType);
                         addTemplate(selector, "title", title);
                     }
                     else
@@ -356,26 +360,75 @@ namespace TestyForC.Web
             {
                 addTemplate(selector, "type", Type);
             }
-            //if (attribute.Count != 0 )
-            //{
-            //    for (Map.Entry<String, SearchText> entry : attribute.entrySet())
-            //    {
-            //        List<SearchType> searchType = entry.getValue().getSearchTypes();
-            //        String text = entry.getValue().getValue();
-            //        addTextInPath(selector, text, "@" + entry.getKey(), searchType);
-            //    }
-            //}
+            if (attribute.Count != 0 )
+            {
+                foreach (KeyValuePair<string, SearchText> entry in Attribute)
+                {
+                    List<SearchType> searchType = entry.Value.SearchTypes;
+                    String text = entry.Value.Value;
+                    addTextInPath(selector, text, "@" + entry.Key, searchType);
+                }
+            }
             if (hasText())
             {
                 addTextInPath(selector, Text, ".", searchTextType);
             }
-            //for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet())
-            //{
-            //    addTemplate(selector, entry.getKey(), entry.getValue());
-            //}
-            //selector.AddRange(elPathSuffix.values().stream().collect(Collectors.toList()));
-            //selector.AddRange(getChildNodesToSelector());
+           
+            foreach (KeyValuePair<string, string[]> entry in TemplatesValues)
+            {
+                addTemplate(selector, entry.Key, entry.Value);
+            }
+
+            foreach (KeyValuePair<string, string> entry in ElPathSuffix)
+            {
+                selector.Add(entry.Value);
+            }
+            selector.AddRange(getChildNodesToSelector());
             return selector.Count == 0 ? null : String.Join(" and ", selector);
+        }
+
+        private List<String> getChildNodesToSelector()
+        {
+            List<String> selector = new List<String>();
+            if (hasChildNodes())
+            {
+                foreach (WebLocator child in ChildNodes)
+                {
+                    selector.Add(getChildNodeSelector(child));
+                }
+            }
+            return selector;
+        }
+
+        private String getChildNodeSelector(WebLocator child)
+        {
+            WebLocator breakElement = null;
+            WebLocator childIterator = child;
+            WebLocator parentElement = null;
+            // break parent tree if is necessary
+            while (childIterator.getXPathBuilder().Container != null && breakElement == null)
+            {
+                WebLocator parentElementIterator = childIterator.getXPathBuilder().Container;
+
+                // child element has myself as parent
+                if (parentElementIterator.getXPathBuilder() == this)
+                {
+                    childIterator.setContainer(null); // break parent tree while generating child address
+                    parentElement = parentElementIterator;
+                    breakElement = childIterator;
+                }
+                else
+                {
+                    childIterator = parentElementIterator;
+                }
+            }
+
+            String selector = applyTemplate("childNodes", child.XPath());
+            if (breakElement != null)
+            {
+                breakElement.setContainer(parentElement);
+            }
+            return selector;
         }
 
         public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType)
