@@ -13,10 +13,11 @@ namespace TestyForC
         public void TestWebLocator()
         {
             WebLocator w = new WebLocator()
-                .setRoot("//ROOT")
+                //.setRoot("//ROOT")
                 .setContainer(new WebLocator())
-                .setText("", new List<SearchType> { new SearchType().Contains() })
-                .setTag("**");
+                .setText("Test", new List<SearchType> { new SearchType().Equals() })
+                .setTag("table")
+                ;
             Console.WriteLine("XPath: " + w.XPath());
          
             //IWebDriver driver = new ChromeDriver();

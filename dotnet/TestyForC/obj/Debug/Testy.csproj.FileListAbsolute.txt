@@ -13,3 +13,4 @@ C:\Projects\TestyForC\TestyForC\bin\Debug\WebDriver.xml
 C:\Projects\TestyForC\TestyForC\obj\Debug\Testy.csproj.CopyComplete
 C:\Projects\TestyForC\TestyForC\obj\Debug\Testy.dll
 C:\Projects\TestyForC\TestyForC\obj\Debug\Testy.pdb
+C:\Projects\TestyForC\TestyForC\obj\Debug\Testy.csprojAssemblyReference.cache

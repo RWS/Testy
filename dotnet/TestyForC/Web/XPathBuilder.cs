@@ -35,8 +35,8 @@ namespace TestyForC.Web
         private String labelTag = "label";
         private String labelPosition = "//following-sibling::*//";
 
-        private String position;
-        private String resultIdx;
+        private int position;
+        private int resultIdx;
         private String type;
         private Dictionary<String, SearchType> attribute = new Dictionary<String, SearchType>();
        
@@ -48,22 +48,22 @@ namespace TestyForC.Web
         private List<WebLocator> childNodes;
 
         public XPathBuilder() {
-            templates = new Dictionary<string, string>
+            Templates = new Dictionary<string, string>
             {
                 { "visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0" },
-                {"id", "@id='%s'" },
-                { "name", "@name='%s'" },
-                { "class", "contains(concat(' ', @class, ' '), ' %s ')" },
-                { "excludeClass", "not(contains(@class, '%s'))" },
-                { "cls", "@class='%s'" },
-                { "type", "@type='%s'" },
-                { "title", "@title='%s'" },
-                { "titleEl", "count(.%s) > 0" },
-                { "DEEP_CHILD_NODE_OR_SELF", "(%1$s or count(*//text()[%1$s]) > 0)" },
-                { "DEEP_CHILD_NODE", "count(*//text()[%s]) > 0" },
-                { "CHILD_NODE", "count(text()[%s]) > 0" },
-                { "HTML_NODE", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)" },
-                { "childNodes", "count(.%s) > 0" }
+                {"id", "@id='{0}'" },
+                { "name", "@name='{0}'" },
+                { "class", "contains(concat(' ', @class, ' '), ' {0} ')" },
+                { "excludeClass", "not(contains(@class, '{0}'))" },
+                { "cls", "@class='{0}'" },
+                { "type", "@type='{0}'" },
+                { "title", "@title='{0}'" },
+                { "titleEl", "count(.{0}) > 0" },
+                { "DEEP_CHILD_NODE_OR_SELF", "({0} or count(*//text()[{0}]) > 0)" },
+                { "DEEP_CHILD_NODE", "count(*//text()[{0}]) > 0" },
+                { "CHILD_NODE", "count(text()[{0}]) > 0" },
+                { "HTML_NODE", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))={0} or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))={0})" },
+                { "childNodes", "count(.{0}) > 0" }
             };
         }
 
@@ -83,7 +83,7 @@ namespace TestyForC.Web
         public List<SearchType> SearchLabelType { get => searchLabelType; set => searchLabelType = value; }
         public string Style { get => style; set => style = value; }
         public string Title { get => title; set => title = value; }
-       
+        public Dictionary<string, string> Templates { get => templates; set => templates = value; }
         public Dictionary<string, WebLocator> TemplateTitle { get => templateTitle; set => templateTitle = value; }
         public Dictionary<string, string[]> TemplatesValues { get => templatesValues; set => templatesValues = value; }
         public Dictionary<string, string> ElPathSuffix { get => elPathSuffix; set => elPathSuffix = value; }
@@ -91,8 +91,8 @@ namespace TestyForC.Web
         public string Label { get => label; set => label = value; }
         public string LabelTag { get => labelTag; set => labelTag = value; }
         public string LabelPosition { get => labelPosition; set => labelPosition = value; }
-        public string Position { get => position; set => position = value; }
-        public string ResultIdx { get => resultIdx; set => resultIdx = value; }
+        public int Position { get => position; set => position = value; }
+        public int ResultIdx { get => resultIdx; set => resultIdx = value; }
         public string Type { get => type; set => type = value; }
         public Dictionary<string, SearchType> Attribute { get => attribute; set => attribute = value; }
         public bool Visibility { get => visibility; set => visibility = value; }
@@ -112,9 +112,405 @@ namespace TestyForC.Web
                 templates.Add(key, value);
             }
         }
+
+        protected bool hasId()
+        {
+            return Id != null && !"".Equals(Id);
+        }
+
+        protected bool hasCls()
+        {
+            return Cls != null && !"".Equals(Cls);
+        }
+
+        protected bool hasClasses()
+        {
+            return Classes != null && Classes.Count() > 0;
+        }
+
+        protected bool hasChildNodes()
+        {
+            return childNodes != null && childNodes.Count() > 0;
+        }
+
+        protected bool hasExcludeClasses()
+        {
+            return excludeClasses != null && excludeClasses.Count() > 0;
+        }
+
+        protected bool hasBaseCls()
+        {
+            return BaseCls != null && !"".Equals(BaseCls);
+        }
+
+        protected bool hasName()
+        {
+            return Name != null && !"".Equals(Name);
+        }
+
+        protected bool hasText()
+        {
+            return Text != null && !"".Equals(Text);
+        }
+
+        protected bool hasStyle()
+        {
+            return Style != null && !"".Equals(Style);
+        }
+
+        protected bool hasElPath()
+        {
+            return ElPath != null && !"".Equals(ElPath);
+        }
+
+        protected bool hasTag()
+        {
+            return Tag != null && !"*".Equals(Tag);
+        }
+
+        protected bool hasLabel()
+        {
+            return Label != null && !"".Equals(Label);
+        }
+
+        protected bool hasTitle()
+        {
+            return Title != null && !"".Equals(Title) || templateTitle.Count() != 0;
+        }
+
+        protected bool hasPosition()
+        {
+            return Position > 0;
+        }
+
+        protected bool hasResultIdx()
+        {
+            return ResultIdx > 0;
+        }
+
+        protected bool hasType()
+        {
+            return Type != null && !"".Equals(Type);
+        }
+
         public string XPath()
         {
-            return Root + Tag;
+            //return getBasePath();
+            String returnPath;
+            if (hasElPath())
+            {
+                returnPath = ElPath;
+            }
+            else
+            {
+                returnPath = getItemPath();
+            }
+
+            returnPath = afterItemPathCreated(returnPath);
+
+            // add container path
+            if (Container != null)
+            {
+                returnPath = Container.XPath() + returnPath;
+            }
+            return addResultIndexToPath(returnPath);
+        }
+
+        private String addResultIndexToPath(String xPath)
+        {
+            if (hasResultIdx())
+            {
+                xPath = "(" + xPath + ")[" + ResultIdx + "]";
+            }
+            return xPath;
+        }
+
+        protected String afterItemPathCreated(String itemPath)
+        {
+            if (hasLabel())
+            {
+                // remove '//' because labelPath already has and include
+                if (itemPath.IndexOf("//") == 0)
+                {
+                    itemPath = itemPath.Substring(2);
+                }
+                itemPath = getLabelPath() + LabelPosition + itemPath;
+            }
+            itemPath = addPositionToPath(itemPath);
+            return itemPath;
+        }
+
+        protected String getLabelPath()
+        {
+            if (searchLabelType.Count == 0)
+            {
+                searchLabelType.Add(new SearchType().Equals());
+            }
+            //SearchType[] st = searchLabelType.stream().toArray(SearchType[]::new);
+            return new WebLocator().setText(Label, searchLabelType).setTag(LabelTag).XPath();
+        }
+
+        protected String addPositionToPath(String itemPath)
+        {
+            if (hasPosition())
+            {
+                itemPath += "[position() = " + Position + "]";
+            }
+            return itemPath;
+        }
+
+        protected String getItemPath()
+        {
+            String selector = getBasePathSelector();
+            //String subPath = applyTemplateValue(disabled ? "disabled" : "enabled");
+            //if (subPath != null)
+            //{
+            //    selector += !Strings.isNullOrEmpty(selector) ? " and " + subPath : subPath;
+            //}
+            selector = Root + Tag + (selector != null && !"".Equals(selector) ? "[" + selector + "]" : "");
+            return selector;
+        }
+
+        protected String getBasePathSelector()
+        {
+            List<String> selector = new List<String>();
+            selector.Add(getBasePath());
+            return selector.Count == 0 ? "" : String.Join(" and ", selector);
+        }
+
+        protected String applyTemplate(String key, Object arguments)
+        {
+            String tpl = templates[key];
+            if (tpl != null && !"".Equals(tpl))
+            {
+                return String.Format(tpl, arguments);
+            }
+            return null;
+        }
+
+        private void addTemplate(List<String> selector, String key, Object arguments)
+        {
+            String tpl = applyTemplate(key, arguments);
+            if (tpl != null && !"".Equals(tpl))
+            {
+                selector.Add(tpl);
+            }
+        }
+
+        public String getBasePath()
+        {
+            List<String> selector = new List<String>();
+            if (hasId())
+            {
+                selector.Add(applyTemplate("id", Id));
+            }
+            if (hasName())
+            {
+                selector.Add(applyTemplate("name", Name));
+            }
+            if (hasBaseCls())
+            {
+                selector.Add(applyTemplate("class", BaseCls));
+            }
+            if (hasCls())
+            {
+                selector.Add(applyTemplate("cls", Cls));
+            }
+            //if (hasClasses())
+            //{
+            //    selector.addAll(getClasses().stream().map(cls->applyTemplate("class", cls)).collect(Collectors.toList()));
+            //}
+            //if (hasExcludeClasses())
+            //{
+            //    selector.addAll(getExcludeClasses().stream().map(excludeClass->applyTemplate("excludeClass", excludeClass)).collect(Collectors.toList()));
+            //}
+            if (hasTitle())
+            {
+                String title = Title;
+                WebLocator titleTplEl = templateTitle["title"];
+                if (title != null && !"".Equals(title) || titleTplEl != null)
+                {
+                    if (titleTplEl != null)
+                    {
+                        if (title != null && !"".Equals(title))
+                        {
+                            titleTplEl.setText(title, SearchTitleType);
+                        }
+                        if (titleTplEl.getXPathBuilder().Text != null)
+                        {
+                            addTemplate(selector, "titleEl", titleTplEl.XPath());
+                        }
+                    }
+                    else if (searchTitleType.Count() == 0)
+                    {
+                        //                title = getTextAfterEscapeQuotes(title, searchTitleType);
+                        addTemplate(selector, "title", title);
+                    }
+                    else
+                    {
+                        addTextInPath(selector, title, "@title", searchTitleType);
+                    }
+                }
+            }
+            if (hasType())
+            {
+                addTemplate(selector, "type", Type);
+            }
+            //if (attribute.Count != 0 )
+            //{
+            //    for (Map.Entry<String, SearchText> entry : attribute.entrySet())
+            //    {
+            //        List<SearchType> searchType = entry.getValue().getSearchTypes();
+            //        String text = entry.getValue().getValue();
+            //        addTextInPath(selector, text, "@" + entry.getKey(), searchType);
+            //    }
+            //}
+            if (hasText())
+            {
+                addTextInPath(selector, Text, ".", searchTextType);
+            }
+            //for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet())
+            //{
+            //    addTemplate(selector, entry.getKey(), entry.getValue());
+            //}
+            //selector.AddRange(elPathSuffix.values().stream().collect(Collectors.toList()));
+            //selector.AddRange(getChildNodesToSelector());
+            return selector.Count == 0 ? null : String.Join(" and ", selector);
+        }
+
+        public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType)
+        {
+            text = getTextAfterEscapeQuotes(text, searchTextType);
+            bool hasContainsAll = searchTextType.Contains(new SearchType().ContainsAll()) || searchTextType.Contains(new SearchType().ContainsAllChildNodes());
+            //String tpl = templates["text"];
+            string tpl;
+            Templates.TryGetValue("text", out tpl);
+            if (tpl != null && !"".Equals(tpl))
+            {
+                selector.Add(String.Format(tpl, text));
+            }
+            else if (hasContainsAll || searchTextType.Contains(new SearchType().ContainsAny()))
+            {
+                char splitChar = text[0];
+                String[] strings = text.Split(splitChar);
+                for (int i = 0; i < strings.Length; i++)
+                {
+                    String escapeQuotesText = getEscapeQuotesText(strings[i]);
+                    if (searchTextType.Contains(new SearchType().ContainsAllChildNodes()))
+                    {
+                        if (searchTextType.Contains(new SearchType().CaseInsensitive()))
+                        {
+                            strings[i] = "count(*//text()[contains(translate(.," + escapeQuotesText.ToUpper().Replace("CONCAT\\(", "concat(") + "," + escapeQuotesText.ToLower() + ")," + escapeQuotesText.ToLower() + ")]) > 0";
+                        }
+                        else
+                        {
+                            strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
+                        }
+                    }
+                    else
+                    {
+                        if (searchTextType.Contains(new SearchType().DeepChildNodeOrSelf()))
+                        {
+                            strings[i] = applyTemplate("DEEP_CHILD_NODE_OR_SELF", escapeQuotesText);
+                        }
+                        else if (searchTextType.Contains(new SearchType().DeepChildNode()))
+                        {
+                            strings[i] = applyTemplate("DEEP_CHILD_NODE", escapeQuotesText);
+                        }
+                        else
+                        {
+                            strings[i] = "contains(" + (".".Equals(pattern) ? "." : pattern) + "," + escapeQuotesText + ")";
+                        }
+                    }
+                }
+                selector.Add(hasContainsAll ? String.Join(" and ", strings) : "(" + String.Join(" or ", strings) + ")");
+            }
+            else if (searchTextType.Contains(new SearchType().DeepChildNodeOrSelf()))
+            {
+                String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+                addTemplate(selector, "DEEP_CHILD_NODE_OR_SELF", selfPath);
+            }
+            else if (searchTextType.Contains(new SearchType().DeepChildNode()))
+            {
+                String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+                addTemplate(selector, "DEEP_CHILD_NODE", selfPath);
+            }
+            else if (searchTextType.Contains(new SearchType().ChildNode()))
+            {
+                String selfPath = getTextWithSearchType(searchTextType, text, pattern);
+                addTemplate(selector, "CHILD_NODE", selfPath);
+            }
+            else if (searchTextType.Contains(new SearchType().HtmlNode()))
+            {
+                addTemplate(selector, "HTML_NODE", text);
+            }
+            else
+            {
+                selector.Add(getTextWithSearchType(searchTextType, text, ".".Equals(pattern) ? "text()" : pattern));
+            }
+        }
+
+        public static String getEscapeQuotesText(String text)
+        {
+            bool hasDoubleQuote = text.Contains("\"");
+            bool hasSingeQuote = text.Contains("'");
+            if (hasDoubleQuote && hasSingeQuote)
+            {
+                bool quoteIsLast = false;
+                if (text.LastIndexOf("\"") == text.Length - 1)
+                {
+                    quoteIsLast = true;
+                }
+                String[] substrings = text.Split(new Char[] { '\"' });
+
+                StringBuilder quoted = new StringBuilder("concat(");
+                for (int i = 0; i < substrings.Length; i++)
+                {
+                    quoted.Append("\"").Append(substrings[i]).Append("\"");
+                    quoted.Append(((i == substrings.Length - 1) ? (quoteIsLast ? ", '\"')" : ")") : ", '\"', "));
+                }
+                return quoted.ToString();
+            }
+            else if (hasDoubleQuote || !hasSingeQuote)
+            {
+                return String.Format("'{0}'", text);
+            }
+            return String.Format("\"{0}\"", text);
+        }
+
+        private String getTextAfterEscapeQuotes(String text, List<SearchType> searchType)
+        {
+            if (searchType.Contains(new SearchType().ContainsAll()) || searchType.Contains(new SearchType().ContainsAny()) || searchType.Contains(new SearchType().ContainsAllChildNodes()))
+            {
+                return text;
+            }
+            return getEscapeQuotesText(text);
+        }
+
+        private String getTextWithSearchType(List<SearchType> searchType, String text, String pattern)
+        {
+            if (searchType.Contains(new SearchType().Trim()))
+            {
+                pattern = "normalize-space(" + pattern + ")";
+            }
+            if (searchType.Contains(new SearchType().CaseInsensitive()))
+            {
+                pattern = "translate(" + pattern + "," + text.ToUpper().Replace("CONCAT\\(", "concat(") + "," + text.ToLower() + ")";
+                text = text.ToLower();
+            }
+            if (searchType.Contains(new SearchType().Equals()))
+            {
+                text = pattern + "=" + text;
+            }
+            else if (searchType.Contains(new SearchType().StartWith()))
+            {
+                text = "starts-with(" + pattern + "," + text + ")";
+            }
+            else
+            {
+                text = "contains(" + pattern + "," + text + ")";
+            }
+            return text;
         }
     }
 }

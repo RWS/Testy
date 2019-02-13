@@ -8,7 +8,31 @@ namespace TestyForC.Web
 {
     public abstract class WebLocatorBuild <T>  where T : WebLocatorBuild<T>
     {
-        private XPathBuilder xPath = new XPathBuilder();
+        //private XPathBuilder xPath = new XPathBuilder();
+
+        private XPathBuilder xPath = createXPathBuilder();
+
+        public static XPathBuilder createXPathBuilder()
+        {
+            return new XPathBuilder();
+        }
+
+        /**
+         * <p><strong><i>Used for finding element process (to generate xpath address)</i></strong></p>
+         *
+         * @return {@link XPathBuilder}
+         */
+        public XPathBuilder getXPathBuilder()
+        {
+            return xPath;
+        }
+
+      
+    public T setPathBuilder(XPathBuilder pathBuilder)
+        {
+            this.xPath = pathBuilder;
+            return (T)this;
+        }
 
 
         public T setContainer(WebLocator container)
@@ -136,6 +160,49 @@ namespace TestyForC.Web
         public T setElInfoMessage(String infoMessage)
         {
             xPath.InfoMessage = infoMessage;
+            return (T)this;
+        }
+
+        public T setLabel(string label, List<SearchType> searchTypes)
+        {
+            xPath.Label = label;
+            xPath.SearchLabelType = searchTypes;
+            return (T)this;
+        }
+
+        public T setLabelTag(string labelTag)
+        {
+            xPath.LabelTag = labelTag;
+            return (T)this;
+        }
+
+        public T setLabelPosition(string labelPosition)
+        {
+            xPath.LabelPosition = labelPosition;
+            return (T)this;
+        }
+
+        public T setPosition(int position)
+        {
+            xPath.Position = position;
+            return (T)this;
+        }
+
+        public T setResultIdx(int resultIdx)
+        {
+            xPath.ResultIdx = resultIdx;
+            return (T)this;
+        }
+
+        public T setType(String type)
+        {
+            xPath.Type = type;
+            return (T)this;
+        }
+
+        public T setAttribute(string attribute, List<SearchType> searchTypes)
+        {
+            xPath.Attribute = new Dictionary<String, SearchType>() {{ attribute, searchTypes.First()}};
             return (T)this;
         }
 
