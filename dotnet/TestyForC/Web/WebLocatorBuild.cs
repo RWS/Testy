@@ -77,13 +77,13 @@ namespace TestyForC.Web
             return (T)this;
         }
 
-        public T setClasses(string[] classes)
+        public T setClasses(params string[] classes)
         {
             xPath.Classes = new List<string>(classes);
             return (T)this;
         }
 
-        public T setExcludeClasses(string[] excludeClasses)
+        public T setExcludeClasses(params string[] excludeClasses)
         {
             xPath.ExcludeClasses = new List<string>(excludeClasses);
             return (T)this;
@@ -199,6 +199,11 @@ namespace TestyForC.Web
             xPath.Attribute = new Dictionary<String, SearchText>() {{ attribute, new SearchText(value, searchTypes)}};
             return (T)this;
         }
+
+        public T setVisibility(bool visibility) {
+                xPath.Visibility = visibility;
+                return (T) this;
+            }
 
         public String XPath()
         {

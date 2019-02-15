@@ -52,7 +52,8 @@ namespace TestyForC.Web
             Templates = new Dictionary<string, string>
             {
                 { "visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0" },
-                {"id", "@id='{0}'" },
+                { "style", "contains(@style, '{0}')" },
+                { "id", "@id='{0}'" },
                 { "name", "@name='{0}'" },
                 { "class", "contains(concat(' ', @class, ' '), ' {0} ')" },
                 { "excludeClass", "not(contains(@class, '{0}'))" },
@@ -274,6 +275,14 @@ namespace TestyForC.Web
         {
             List<String> selector = new List<String>();
             selector.Add(getBasePath());
+            if (hasStyle())
+            {
+                selector.Add(applyTemplate("style", Style));
+            }
+            if (Visibility)
+            {
+                selector.Add(applyTemplate("visibility", Visibility));
+            }
             return selector.Count == 0 ? "" : String.Join(" and ", selector);
         }
 
@@ -324,7 +333,7 @@ namespace TestyForC.Web
             }
             if (hasExcludeClasses())
             {
-                foreach (string cls in Classes)
+                foreach (string cls in ExcludeClasses)
                 {
                     selector.Add(applyTemplate("excludeClass", cls));
                 }
@@ -332,7 +341,9 @@ namespace TestyForC.Web
             if (hasTitle())
             {
                 String title = Title;
-                WebLocator titleTplEl = templateTitle["title"];
+                WebLocator titleTplEl;
+                TemplateTitle.TryGetValue("title", out titleTplEl);
+                //WebLocator titleTplEl = templateTitle["title"];
                 if (title != null && !"".Equals(title) || titleTplEl != null)
                 {
                     if (titleTplEl != null)
@@ -435,7 +446,6 @@ namespace TestyForC.Web
         {
             text = getTextAfterEscapeQuotes(text, searchTextType);
             bool hasContainsAll = searchTextType.Contains(new SearchType().ContainsAll()) || searchTextType.Contains(new SearchType().ContainsAllChildNodes());
-            //String tpl = templates["text"];
             string tpl;
             Templates.TryGetValue("text", out tpl);
             if (tpl != null && !"".Equals(tpl))
