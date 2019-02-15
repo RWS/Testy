@@ -297,7 +297,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     public WebLocator getHeader(String columnId) {
         waitToRender();
-        WebLocator headerEl = new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style ,'display: none;'))]) > 0]");
+        WebLocator headerEl = new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style, 'display: none;'))]) > 0]");
         headerEl.setInfoMessage(toString() + " Header[" + columnId + "]");
         return headerEl;
     }

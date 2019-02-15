@@ -47,6 +47,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         setText(text);
     }
 
+    public WebLocator(String tag, String baseCls) {
+        setTag(tag);
+        setBaseCls(baseCls);
+    }
+
     // getters and setters
 
     public static void setDriverExecutor(WebDriver driver) {

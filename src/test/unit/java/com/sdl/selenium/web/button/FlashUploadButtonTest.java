@@ -1,9 +1,11 @@
 package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FlashUploadButtonTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
@@ -21,7 +23,7 @@ public class FlashUploadButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(FlashUploadButton simpleTextField, String expectedXpath) {
-        Assert.assertEquals(simpleTextField.getButtonElement().getXPath(), expectedXpath);
+        assertThat(simpleTextField.getButtonElement().getXPath(), equalTo(expectedXpath));
     }
 
 }

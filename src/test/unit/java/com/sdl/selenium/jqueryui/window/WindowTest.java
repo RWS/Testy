@@ -9,9 +9,9 @@ public class WindowTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Window(), "//*[contains(concat(' ', @class, ' '), ' ui-dialog ui-widget ui-widget-content ') and contains(@style ,'display: block;')]"},
-                {new Window("text"), "//*[contains(concat(' ', @class, ' '), ' ui-dialog ui-widget ui-widget-content ') and count(.//*[text()='text']) > 0 and contains(@style ,'display: block;')]"},
-                {new Window("text").setId("ID"), "//*[@id='ID' and contains(concat(' ', @class, ' '), ' ui-dialog ui-widget ui-widget-content ') and count(.//*[text()='text']) > 0 and contains(@style ,'display: block;')]"},
+                {new Window(), "//*[contains(concat(' ', @class, ' '), ' ui-dialog ui-widget ui-widget-content ') and contains(@style, 'display: block;')]"},
+                {new Window("text"), "//*[contains(concat(' ', @class, ' '), ' ui-dialog ui-widget ui-widget-content ') and count(.//*[text()='text']) > 0 and contains(@style, 'display: block;')]"},
+                {new Window("text").setId("ID"), "//*[@id='ID' and contains(concat(' ', @class, ' '), ' ui-dialog ui-widget ui-widget-content ') and count(.//*[text()='text']) > 0 and contains(@style, 'display: block;')]"},
         };
     }
 

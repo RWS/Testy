@@ -64,6 +64,7 @@ public class XPathBuilder implements Cloneable {
 
     protected XPathBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
+        setTemplate("style", "contains(@style, '%s')");
         setTemplate("id", "@id='%s'");
         setTemplate("name", "@name='%s'");
         setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
@@ -767,7 +768,7 @@ public class XPathBuilder implements Cloneable {
 
         if (!WebDriverConfig.isIE()) {
             if (hasStyle()) {
-                selector.add("contains(@style ,'" + getStyle() + "')");
+                selector.add(applyTemplate("style", getStyle()));
             }
             // TODO make specific for WebLocator
             if (isVisibility()) {

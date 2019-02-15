@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="WebLocator Unit Test Suite" verbose="1">
-    <test name="FlashUploadButtonTest">
+<suite name="Unit Test Suite" verbose="1">
+    <test name="Unit Test">
         <classes>
             <class name="com.sdl.selenium.extjs3.ExtJsComponentTest"/>
             <class name="com.sdl.selenium.extjs3.button.ButtonTest"/>
