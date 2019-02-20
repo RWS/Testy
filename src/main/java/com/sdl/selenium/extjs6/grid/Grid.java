@@ -280,4 +280,9 @@ public class Grid extends Table implements Scrollable {
         }
         return null;
     }
+
+    public void selectAll() {
+        WebLocator checkBox = new WebLocator(this).setBaseCls("x-column-header-checkbox");
+        checkBox.click();
+    }
 }
