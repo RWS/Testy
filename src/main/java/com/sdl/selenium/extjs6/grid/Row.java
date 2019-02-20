@@ -65,6 +65,22 @@ public class Row extends com.sdl.selenium.web.table.Row {
         }
     }
 
+    public void selectNew() {
+        scrollInGrid(this);
+        if (!isSelected()) {
+            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+            checkBox.click();
+        }
+    }
+
+    public void unSelectNew() {
+        scrollInGrid(this);
+        if (isSelected()) {
+            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+            checkBox.click();
+        }
+    }
+
     public boolean isSelected() {
         String aClass = getAttributeClass();
         return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-item-selected");
