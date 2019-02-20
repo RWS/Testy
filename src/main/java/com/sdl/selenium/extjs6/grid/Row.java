@@ -68,7 +68,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public void selectNew() {
         scrollInGrid(this);
         if (!isSelected()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+            CheckBox checkBox = new CheckBox(this).setBaseCls("x-selmodel-checkbox");
             checkBox.click();
         }
     }
@@ -76,7 +76,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public void unSelectNew() {
         scrollInGrid(this);
         if (isSelected()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+            CheckBox checkBox = new CheckBox(this).setBaseCls("x-selmodel-checkbox");
             checkBox.click();
         }
     }
