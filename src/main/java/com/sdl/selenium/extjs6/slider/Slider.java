@@ -33,17 +33,32 @@ public class Slider extends WebLocator {
         if (element.ready()) {
             element.mouseOver();
             boolean done = false;
+            boolean plusOneValue = false;
+            boolean minusOneValue = false;
             int distanceTemp = distance;
             do {
                 boolean vertical = getAttributeClass().contains("x-slider-vert");
                 int value = getValue();
-                if (value > distance) {
+                log.debug("distance: {}, value: {}", distance, value);
+                if (value + 1 == distance) {
+                    plusOneValue = true;
+                    minusOneValue = false;
+                    distanceTemp = 0;
+                } else if (value - 1 == distance) {
+                    minusOneValue = true;
+                    plusOneValue = false;
+                    distanceTemp = 0;
+                } else if (value > distance) {
+                    plusOneValue = false;
+                    minusOneValue = false;
                     if (vertical) {
                         distanceTemp = value - distance;
                     } else {
                         distanceTemp = -1 * (value - distance);
                     }
                 } else if (value < distance) {
+                    plusOneValue = false;
+                    minusOneValue = false;
                     if (vertical) {
                         distanceTemp = -1 * (distance - value);
                     } else {
@@ -56,18 +71,44 @@ public class Slider extends WebLocator {
                     if (vertical) {
                         distanceTemp = distanceTemp * 2 + 4;
                     } else {
-                        if (distanceTemp == 1 || distanceTemp == 2) {
-                            distanceTemp = distanceTemp + (distanceTemp == 1 ? 5 : 2);
-                        } else if (distanceTemp == -1 || distanceTemp == -2) {
-                            distanceTemp = distanceTemp - (distanceTemp == -1 ? 5 : 2);
+                        if (distanceTemp == 1) {
+                            distanceTemp = distanceTemp + 3;
+                        } else if (distanceTemp == 2) {
+                            distanceTemp = distanceTemp + 2;
+                        } else if (distanceTemp == -1) {
+                            distanceTemp = distanceTemp - 3;
+                        } else if (distanceTemp == -2) {
+                            distanceTemp = distanceTemp - 2;
+                        } else if (plusOneValue) {
+                            if (distance > 95 || distance < 5) {
+                                if (distance % 2 == 0) {
+                                    distanceTemp = 9;
+                                } else {
+                                    distanceTemp = 5;
+                                }
+                            } else {
+                                distanceTemp = 4;
+                            }
+                        } else if (minusOneValue) {
+                            if (distance > 95 || distance < 5) {
+                                if (distance % 2 == 0) {
+                                    distanceTemp = -9;
+                                } else {
+                                    distanceTemp = -4;
+                                }
+                            } else {
+                                distanceTemp = -6;
+                            }
+                        } else if (distanceTemp < 0) {
+                            distanceTemp = distanceTemp * 2 - 4;
                         } else {
-                            distanceTemp = distanceTemp * 2 + 1;
+                            distanceTemp = distanceTemp * 2 + 2;
                         }
                     }
                     if (vertical) {
-                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).build().perform();
+                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).perform();
                     } else {
-                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).build().perform();
+                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).perform();
                     }
                     element.mouseOver();
                 }

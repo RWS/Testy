@@ -6,8 +6,8 @@ import com.sdl.selenium.extjs6.panel.Panel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class TextAriaIntegrationTest extends TestBase {
 
@@ -24,14 +24,14 @@ public class TextAriaIntegrationTest extends TestBase {
 
     @Test
     public void textAreaTest() {
-        assertTrue(area.setValue("New York"));
-        assertEquals(area.getValue(), "New York");
+        area.setValue("New York");
+        assertThat(area.getValue(), equalTo("New York"));
     }
 
     @Test
     public void comboBoxTest() {
-        assertTrue(time.setValue("2:45 AM"));
-        assertEquals(time.getValue(), "2:45 AM");
+        time.setValue("2:45 AM");
+        assertThat(time.getValue(), equalTo("2:45 AM"));
     }
 
 }

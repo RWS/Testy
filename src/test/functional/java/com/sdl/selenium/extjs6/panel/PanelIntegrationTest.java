@@ -15,6 +15,7 @@ public class PanelIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-panels");
+        driver.switchTo().frame("examples-iframe");
         collapsiblePanel.ready(20);
     }
 

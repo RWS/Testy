@@ -18,6 +18,7 @@ public class FileUploadIntegrationTest extends TestBase {
     @BeforeClass
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
+        driver.switchTo().frame("examples-iframe");
         fileUpload.ready(20);
         Utils.sleep(2000);
     }

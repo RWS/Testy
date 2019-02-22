@@ -6,6 +6,7 @@ import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
+import com.sdl.selenium.web.utils.RetryUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,33 +53,23 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public void select() {
         scrollInGrid(this);
         if (!isSelected()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
-            checkBox.click();
+            doSelect();
         }
     }
 
     public void unSelect() {
         scrollInGrid(this);
         if (isSelected()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
-            checkBox.click();
+            doSelect();
         }
     }
 
-    public void selectNew() {
-        scrollInGrid(this);
-        if (!isSelected()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-selmodel-checkbox");
-            checkBox.click();
+    protected void doSelect() {
+        CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
+        if (!checkBox.waitToRender(500L, false)) {
+            checkBox.setBaseCls("x-grid-checkcolumn");
         }
-    }
-
-    public void unSelectNew() {
-        scrollInGrid(this);
-        if (isSelected()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-selmodel-checkbox");
-            checkBox.click();
-        }
+        checkBox.click();
     }
 
     public boolean isSelected() {
@@ -87,13 +78,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public boolean scrollTo() {
-        while (!isElementPresent()) {
+        return RetryUtils.retryIfNotSame(70, true, () -> {
             WebLocator container = getPathBuilder().getContainer();
             int lastRowVisibleIndex = new Row(container).findElements().size() - 1;
             Row row = new Row(container, lastRowVisibleIndex);
             WebLocatorUtils.scrollToWebLocator(row);
-        }
-        return isElementPresent();
+            return isElementPresent();
+        });
     }
 
     private void scrollInGrid(Row row) {

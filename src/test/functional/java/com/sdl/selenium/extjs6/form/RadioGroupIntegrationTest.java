@@ -7,8 +7,9 @@ import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class RadioGroupIntegrationTest extends TestBase {
 
@@ -24,19 +25,19 @@ public class RadioGroupIntegrationTest extends TestBase {
 
     @Test
     public void selectRadioGroup() {
-        assertTrue(radioGroup.selectByLabel("Item 2"));
-        assertTrue(radioGroup.isSelectedByLabel("Item 2"));
-        assertTrue(radioGroup.selectByLabel("5", SearchType.CONTAINS));
-        assertTrue(radioGroup.isSelectedByLabel("Item 5"));
-        assertTrue(radioGroup.selectByLabel("Item 4"));
-        assertTrue(radioGroup.isSelectedByLabel("Item 4"));
-        assertTrue(radioGroup.selectByLabel("Item 1"));
-        assertTrue(radioGroup.isSelectedByLabel("Item 1"));
+        assertThat(radioGroup.selectByLabel("Item 2"), is(true));
+        assertThat(radioGroup.isSelectedByLabel("Item 2"), is(true));
+        assertThat(radioGroup.selectByLabel("5", SearchType.CONTAINS), is(true));
+        assertThat(radioGroup.isSelectedByLabel("Item 5"), is(true));
+        assertThat(radioGroup.selectByLabel("Item 4"), is(true));
+        assertThat(radioGroup.isSelectedByLabel("Item 4"), is(true));
+        assertThat(radioGroup.selectByLabel("Item 1"), is(true));
+        assertThat(radioGroup.isSelectedByLabel("Item 1"), is(true));
     }
 
     @Test
     public void getLabelNameRadioGroup() {
-        assertEquals(radioGroup.getLabelName("1"), "Item 1");
-        assertEquals(radioGroup.getLabelName("1"), "Item 1");
+        assertThat(radioGroup.getLabelName("1"), equalTo("Item 1"));
+        assertThat(radioGroup.getLabelName("1"), equalTo("Item 1"));
     }
 }

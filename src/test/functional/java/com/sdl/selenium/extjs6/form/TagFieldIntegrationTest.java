@@ -3,8 +3,6 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -16,7 +14,6 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringContains.containsString;
 
 public class TagFieldIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TagFieldIntegrationTest.class);
 
     private TagField tagField = new TagField(null, "Select a state:");
     private TagField selectTagField = new TagField(null, "Select/add location:");
@@ -78,6 +75,6 @@ public class TagFieldIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "getAllValuesTagTest")
     public void addTagTest() {
         assertThat(selectTagField.setValue("test"), is(true));
-        assertThat(selectTagField.getAllSelectedValues(), is(Arrays.asList("Kansas", "test")));
+        assertThat(selectTagField.getAllSelectedValues(), is(Arrays.asList("test")));
     }
 }

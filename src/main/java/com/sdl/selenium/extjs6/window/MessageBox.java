@@ -19,7 +19,7 @@ public class MessageBox extends WebLocator {
         setExcludeClasses("x-hidden-offsets");
         WebLocator header = new WebLocator().setClasses("x-header");
         setTemplateTitle(new WebLocator(header));
-        setTemplate("msg", "count(*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
+        setTemplate("msg", "count(//*[contains(concat(' ', @class, ' '), ' x-window-body ')]//*[text()='%s']) > 0");
     }
 
     public MessageBox(String title) {
@@ -27,10 +27,10 @@ public class MessageBox extends WebLocator {
         setTitle(title, SearchType.EQUALS);
     }
 
-    public MessageBox(String title, String msg, SearchType... msgSearchTypes) {
+    public MessageBox(String title, String msg, SearchType... searchTypes) {
         this(title);
-        WebLocator body = new WebLocator().setClasses("x-window-body").setRoot("");
-        WebLocator textEl = new WebLocator(body).setText(msg, msgSearchTypes);
+        WebLocator body = new WebLocator().setClasses("x-window-body");
+        WebLocator textEl = new WebLocator(body).setText(msg, searchTypes);
         setElPathSuffix("msg", "count(" + textEl.getXPath() + ") > 0");
     }
 

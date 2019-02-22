@@ -63,13 +63,14 @@
             <class name="com.sdl.selenium.extjs3.button.UploadButtonIntegrationTest"/>
         </classes>
     </test>
-    <test name="FileUploadIntegrationTest">
+
+    <test name="ButtonIntegration">
         <classes>
             <class name="com.sdl.selenium.extjs6.button.FileUploadIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.button.SplitButtonIntegrationTest"/>
         </classes>
     </test>
-    <test name="DateFieldIntegrationTest">
+    <test name="FieldIntegration">
         <classes>
             <class name="com.sdl.selenium.extjs6.form.ComboBoxIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
@@ -81,27 +82,34 @@
             <class name="com.sdl.selenium.extjs6.form.TextFieldIntegrationTest"/>
         </classes>
     </test>
-    <test name="GridIntegrationTest">
+    <test name="GridIntegration">
         <classes>
+            <!--<class name="com.sdl.selenium.extjs6.grid.GridBufferTest"/>-->
             <class name="com.sdl.selenium.extjs6.grid.GridIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.grid.GroupIntegrationTest"/>
         </classes>
     </test>
-    <test name="SliderIntegrationTest">
+    <test name="PanelIntegration">
+        <classes>
+            <class name="com.sdl.selenium.extjs6.panel.PanelIntegrationTest"/>
+        </classes>
+    </test>
+    <test name="SliderIntegration">
         <classes>
             <class name="com.sdl.selenium.extjs6.slider.SliderIntegrationTest"/>
         </classes>
     </test>
-    <test name="TabIntegrationTest">
+    <test name="TabIntegration">
         <classes>
             <class name="com.sdl.selenium.extjs6.tab.TabIntegrationTest"/>
         </classes>
     </test>
-    <test name="TreeIntegrationTest">
+    <test name="TreeIntegration">
         <classes>
             <class name="com.sdl.selenium.extjs6.tree.TreeIntegrationTest"/>
         </classes>
     </test>
-    <test name="MessageBoxIntegrationTest">
+    <test name="MessageBoxIntegration">
         <classes>
             <class name="com.sdl.selenium.extjs6.window.MessageBoxIntegrationTest"/>
         </classes>

@@ -19,8 +19,8 @@ public class Grid extends Table implements Scrollable {
         setClassName("Grid");
         setBaseCls("x-grid");
         setTag("*");
-        WebLocator header = new WebLocator().setClasses("x-title").setRoot("//");
-        setTemplateTitle(new WebLocator(header));
+        WebLocator header = new WebLocator().setClasses("x-title-text");
+        setTemplateTitle(header);
     }
 
     public Grid(WebLocator container) {

@@ -6,8 +6,8 @@ import com.sdl.selenium.extjs6.panel.Panel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class TextFieldIntegrationTest extends TestBase {
 
@@ -23,7 +23,7 @@ public class TextFieldIntegrationTest extends TestBase {
 
     @Test
     public void textFieldTest() {
-        assertTrue(field.setValue("New York"));
-        assertEquals(field.getValue(), "New York");
+        field.setValue("New York");
+        assertThat(field.getValue(), equalTo("New York"));
     }
 }

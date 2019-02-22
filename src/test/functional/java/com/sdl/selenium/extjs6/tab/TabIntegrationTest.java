@@ -19,6 +19,7 @@ public class TabIntegrationTest extends TestBase {
     @BeforeClass
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-tabs");
+        driver.switchTo().frame("examples-iframe");
         activeTab.ready(20);
     }
 

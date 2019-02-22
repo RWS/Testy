@@ -17,7 +17,7 @@ public class GridTest {
                 {new Grid().setClasses("GridClass"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and contains(concat(' ', @class, ' '), ' GridClass ')]"},
                 {new Grid(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]"},
                 {new Grid(container).setElPath("//table//tr[1]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
-                {new Grid().setTitle("Array Grid"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and count(.//*[contains(concat(' ', @class, ' '), ' x-title ')]//*[contains(text(),'Array Grid')]) > 0]"},
+                {new Grid().setTitle("Array Grid"), "//*[contains(concat(' ', @class, ' '), ' x-grid ') and count(.//*[contains(concat(' ', @class, ' '), ' x-title-text ') and contains(text(),'Array Grid')]) > 0]"},
         };
     }
 

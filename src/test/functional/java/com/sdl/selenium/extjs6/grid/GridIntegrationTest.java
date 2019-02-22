@@ -3,6 +3,8 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -12,14 +14,12 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.Matchers.*;
 
 @Slf4j
 public class GridIntegrationTest extends TestBase {
 
-    private Grid grid = new Grid().setTitle("Array Grid").setVisibility(true);
+    private Grid grid = new Grid().setTitle("Basic Grid").setVisibility(true);
 
     @BeforeClass
     public void startTests() {
@@ -29,18 +29,26 @@ public class GridIntegrationTest extends TestBase {
         grid.ready(true);
     }
 
+//    @Test
+//    void rowTest1() {
+//        long startMs = System.currentTimeMillis();
+//        String row = RetryUtils.retryIfNotSame(3, "ee", () -> grid.getRow(1).getText());
+//        long endMs = System.currentTimeMillis();
+//        log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
+//    }
+
     @Test
     void rowTest() {
-        grid.getRow(new Cell(1, "3m Co"), new Cell(2, "$71.72")).assertReady();
-        grid.getRow(1, new Cell(1, "3m Co"), new Cell(2, "$71.72")).assertReady();
-        grid.getRow("3m Co").assertReady();
+        grid.getRow(new Cell(1, "Lajo"), new Cell(2, "$65.51")).assertReady();
+        grid.getRow(1, new Cell(1, "Lajo"), new Cell(2, "$65.51")).assertReady();
+        grid.getRow("Lajo").assertReady();
         grid.getRow(2).assertReady();
     }
 
     @Test(dependsOnMethods = "rowTest")
     void cellTest() {
-        String cellValue = grid.getCell(4, new Cell(1, "3m Co"), new Cell(2, "$71.72")).getText();
-        assertThat(cellValue, equalTo("0.03%"));
+        String cellValue = grid.getCell(4, new Cell(1, "Lajo"), new Cell(2, "$65.51")).getText();
+        assertThat(cellValue, equalTo("2.31%"));
     }
 
     @Test(dependsOnMethods = "cellTest")
@@ -65,7 +73,7 @@ public class GridIntegrationTest extends TestBase {
         row.unSelect();
         assertThat(row.isSelected(), is(false));
 
-        row = spreadsheet.getRow(new Cell(3, "2017"));
+        row = spreadsheet.getRow(new Cell(3, "1901"));
         row.select();
         assertThat(row.isSelected(), is(true));
         row.unSelect();
@@ -78,7 +86,8 @@ public class GridIntegrationTest extends TestBase {
         driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
-        Row row = spreadsheet.getRow(new Cell(3, "2017"));
+        Row row = spreadsheet.getRow(new Cell(3, "2010"));
+        row.ready(10);
         boolean actual = row.scrollTo();
         assertThat(actual, is(true));
     }
@@ -88,7 +97,7 @@ public class GridIntegrationTest extends TestBase {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#cell-editing");
         driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
-        Grid spreadsheet = new Grid().setTitle("Edit Plants");
+        Grid spreadsheet = new Grid().setTitle("Cell Editing Plants");
         spreadsheet.ready(true);
         Cell cell = spreadsheet.getCell(5, new Cell(1, "Anemone", SearchType.EQUALS));
         cell.unCheck();
@@ -105,7 +114,8 @@ public class GridIntegrationTest extends TestBase {
         driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("XML Grid");
         spreadsheet.ready(true);
-        List<List<String>> cellsText = spreadsheet.getCellsText();
+        Utils.sleep(2000);
+        List<List<String>> cellsText = RetryUtils.retry(4, spreadsheet::getCellsText);
 
         List<List<String>> expectedCellsText = Arrays.asList(
                 Arrays.asList("Sidney Sheldon", "Master of the Game", "Warner Books", "Book"),

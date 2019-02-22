@@ -6,7 +6,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +20,6 @@ public class GroupIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
         driver.switchTo().frame("examples-iframe");
-//        driver.get("http://examples.sencha.com/extjs/6.6.0/examples/kitchensink/?classic#grouped-grid");
         grid.ready(10);
         grid.ready(true);
     }
@@ -37,15 +35,16 @@ public class GroupIntegrationTest extends TestBase {
     void rowTest2() {
         List<List<String>> cellsText = grid.getCellsText("Cuisine: American");
         List<List<String>> lists = Arrays.asList(
-                Collections.singletonList("Cheesecake Factory"),
-                Collections.singletonList("Creamery"),
-                Collections.singletonList("Crepevine"),
-                Collections.singletonList("Gordon Biersch"),
-                Collections.singletonList("MacArthur Park"),
-                Collections.singletonList("Old Pro"),
-                Collections.singletonList("Shokolaat"),
-                Collections.singletonList("Slider Bar"),
-                Collections.singletonList("University Cafe")
+                Arrays.asList("Cheesecake Factory", "American"),
+                Arrays.asList("Creamery", "American"),
+                Arrays.asList("Crepevine", "American"),
+                Arrays.asList("Gordon Biersch", "American"),
+                Arrays.asList("MacArthur Park", "American"),
+                Arrays.asList("Old Pro", "American"),
+                Arrays.asList("Shokolaat", "American"),
+                Arrays.asList("Slider Bar", "American"),
+                Arrays.asList("The Old Shoe", "American"),
+                Arrays.asList("University Cafe", "American")
         );
         assertThat(cellsText, contains(lists.toArray()));
     }
@@ -67,6 +66,7 @@ public class GroupIntegrationTest extends TestBase {
     void rowTest5() {
         Group group = new Group(grid, "American");
         Row old = group.getRow(new Cell(1, "Old"));
-        assertThat(old.getText(), equalTo("Old Pro"));
+        String text = old.getCell(1).getText();
+        assertThat(text, equalTo("Old Pro"));
     }
 }

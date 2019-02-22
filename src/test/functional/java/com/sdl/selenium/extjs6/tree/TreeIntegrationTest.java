@@ -16,6 +16,7 @@ public class TreeIntegrationTest extends TestBase {
     @BeforeClass
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL +"#check-tree");
+        driver.switchTo().frame("examples-iframe");
         tree.ready(20);
         Utils.sleep(1000);
     }
