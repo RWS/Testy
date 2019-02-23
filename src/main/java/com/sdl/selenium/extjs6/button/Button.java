@@ -33,8 +33,7 @@ public class Button extends WebLocator {
 
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
-        String key = "icon-cls";
-        setTemplateValue(key, iconCls);
+        setTemplateValue("icon-cls", iconCls);
         return (T) this;
     }
 
