@@ -122,7 +122,7 @@ public class TagField extends ComboBox implements ICombo {
     public boolean setValue(String value) {
         assertReady(value);
         WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
-        boolean setValue = executor.setValue(input, value);
+        boolean setValue = executor().setValue(input, value);
         Utils.sleep(300);
         return setValue && input.sendKeys(Keys.ENTER) != null;
     }

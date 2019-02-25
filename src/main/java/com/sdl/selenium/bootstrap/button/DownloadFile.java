@@ -52,11 +52,11 @@ public class DownloadFile extends WebLocator implements Download {
 
     public boolean download(String fileName, long timeoutMillis) {
         openBrowse();
-        return executor.download(fileName, timeoutMillis);
+        return executor().download(fileName, timeoutMillis);
     }
 
     public void openBrowse() {
-        executor.browse(this);
+        executor().browse(this);
     }
 
     public boolean isDisabled(){

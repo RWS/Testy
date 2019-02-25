@@ -1,11 +1,12 @@
 package com.sdl.selenium.extjs3;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ExtJsComponent extends WebLocator {
+public class ExtJsComponent extends Locator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtJsComponent.class);
 
     public ExtJsComponent() {
@@ -42,17 +43,17 @@ public class ExtJsComponent extends WebLocator {
         setText(text);
     }
 
-    @Override
-    public boolean isVisible() {
-        boolean visible = super.isVisible();
-        if (visible) {
-            String cls = getAttributeClass();
-            if (cls != null && cls.contains("x-hide-display")) {
-                visible = false;
-            }
-        }
-        return visible;
-    }
+//    @Override
+//    public boolean isVisible() {
+//        boolean visible = super.isVisible();
+//        if (visible) {
+//            String cls = getAttributeClass();
+//            if (cls != null && cls.contains("x-hide-display")) {
+//                visible = false;
+//            }
+//        }
+//        return visible;
+//    }
 
     /**
      * @return true if element has mask or some parent container has mask
@@ -61,12 +62,12 @@ public class ExtJsComponent extends WebLocator {
     public boolean hasMask() {
         // to make sure mask is for this element get his ID and start from it
 //        String id = getAttributeId();
-        String id = getCurrentElementAttribute("id");
+        String id = executor().getCurrentElementAttribute(this,"id");
         WebLocator mask = getMaskElement();
-        if ((id == null || id.equals("")) && getPathBuilder().getContainer() != null) {
-            id = getPathBuilder().getContainer().getAttributeId();
+        if ((id == null || id.equals("")) && getXPathBuilder().getContainer() != null) {
+            id = getXPathBuilder().getContainer().getAttributeId();
             if(LOGGER.isDebugEnabled()){
-                LOGGER.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getPathBuilder().getContainer().getPathBuilder().getClassName());
+                LOGGER.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getXPathBuilder().getContainer().getXPathBuilder().getClassName());
             }
         }
         if (id != null && !id.equals("")) {

@@ -1,8 +1,8 @@
 package com.sdl.selenium.web.table;
 
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.Locator;
 
-public abstract class AbstractRow extends WebLocator implements IRow {
+public abstract class AbstractRow extends Locator implements IRow {
 
     public AbstractRow() {
         setClassName("AbstractRow");

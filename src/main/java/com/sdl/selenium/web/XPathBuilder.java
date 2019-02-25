@@ -14,13 +14,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * This class is used to simple construct xpath for WebLocator's
+ * This class is used to simple construct xpath for Locator's
  */
 @Getter
 @Slf4j
 public class XPathBuilder implements Cloneable {
     public List<SearchType> defaultSearchTextType = new ArrayList<>();
-    private String className = "WebLocator";
+    private String className = "Locator";
     private String root = "//";
     private String tag = "*";
     private String id;
@@ -38,7 +38,7 @@ public class XPathBuilder implements Cloneable {
     private String style;
     private String title;
     private Map<String, String> templates = new LinkedHashMap<>();
-    private Map<String, WebLocator> templateTitle = new LinkedHashMap<>();
+    private Map<String, Locator> templateTitle = new LinkedHashMap<>();
     private Map<String, String[]> templatesValues = new LinkedHashMap<>();
     private Map<String, String> elPathSuffix = new LinkedHashMap<>();
 
@@ -59,8 +59,8 @@ public class XPathBuilder implements Cloneable {
     private long renderMillis = WebLocatorConfig.getDefaultRenderMillis();
     private int activateSeconds = 60;
 
-    private WebLocator container;
-    private List<WebLocator> childNodes;
+    private Locator container;
+    private List<Locator> childNodes;
 
     protected XPathBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
@@ -183,7 +183,7 @@ public class XPathBuilder implements Cloneable {
      * <p>Use it when element must have all specified css classes (order is not important).</p>
      * <p>Example:</p>
      * <pre>
-     *     WebLocator element = new WebLocator().setClasses("bg-btn", "new-btn");
+     *     Locator element = new Locator().setClasses("bg-btn", "new-btn");
      * </pre>
      * <ul>
      * <li>Provided classes must be conform css rules.</li>
@@ -217,13 +217,13 @@ public class XPathBuilder implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
+    public <T extends XPathBuilder> T setChildNodes(final Locator... childNodes) {
         if (childNodes != null) {
             this.childNodes = Arrays.asList(childNodes);
         }
 //        if (childNodes != null) {
-//            List<WebLocator> newList = this.childNodes == null ? new ArrayList<>() : this.childNodes;
-//            List<WebLocator> webLocators = Arrays.asList(childNodes);
+//            List<Locator> newList = this.childNodes == null ? new ArrayList<>() : this.childNodes;
+//            List<Locator> webLocators = Arrays.asList(childNodes);
 //            newList.addAll(webLocators);
 //            this.childNodes = newList;
 //        }
@@ -375,12 +375,12 @@ public class XPathBuilder implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setTemplateTitle(WebLocator titleEl) {
+    public <T extends XPathBuilder> T setTemplateTitle(Locator titleEl) {
         if (titleEl == null) {
             templateTitle.remove("title");
         } else {
             templateTitle.put("title", titleEl);
-            setSearchTitleType(titleEl.getPathBuilder().getSearchTitleType().stream().toArray(SearchType[]::new));
+            setSearchTitleType(titleEl.getXPathBuilder().getSearchTitleType().stream().toArray(SearchType[]::new));
         }
         return (T) this;
     }
@@ -506,7 +506,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setContainer(WebLocator container) {
+    public <T extends XPathBuilder> T setContainer(Locator container) {
         this.container = container;
         return (T) this;
     }
@@ -770,7 +770,7 @@ public class XPathBuilder implements Cloneable {
             if (hasStyle()) {
                 selector.add(applyTemplate("style", getStyle()));
             }
-            // TODO make specific for WebLocator
+            // TODO make specific for Locator
             if (isVisibility()) {
 //               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
                 CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", isVisibility()));
@@ -802,13 +802,13 @@ public class XPathBuilder implements Cloneable {
         }
         if (hasTitle()) {
             String title = getTitle();
-            WebLocator titleTplEl = templateTitle.get("title");
+            Locator titleTplEl = templateTitle.get("title");
             if (!Strings.isNullOrEmpty(title) || titleTplEl != null) {
                 if (titleTplEl != null) {
                     if (!Strings.isNullOrEmpty(title)) {
                         titleTplEl.setText(title, searchTitleType.stream().toArray(SearchType[]::new));
                     }
-                    if(titleTplEl.getPathBuilder().getText() != null){
+                    if(titleTplEl.getXPathBuilder().getText() != null){
                         addTemplate(selector, "titleEl", titleTplEl.getXPath());
                     }
                 } else if (searchTitleType.isEmpty()) {
@@ -891,16 +891,16 @@ public class XPathBuilder implements Cloneable {
         return selector;
     }
 
-    private String getChildNodeSelector(WebLocator child) {
-        WebLocator breakElement = null;
-        WebLocator childIterator = child;
-        WebLocator parentElement = null;
+    private String getChildNodeSelector(Locator child) {
+        Locator breakElement = null;
+        Locator childIterator = child;
+        Locator parentElement = null;
         // break parent tree if is necessary
-        while (childIterator.getPathBuilder().getContainer() != null && breakElement == null) {
-            WebLocator parentElementIterator = childIterator.getPathBuilder().getContainer();
+        while (childIterator.getXPathBuilder().getContainer() != null && breakElement == null) {
+            Locator parentElementIterator = childIterator.getXPathBuilder().getContainer();
 
             // child element has myself as parent
-            if (parentElementIterator.getPathBuilder() == this) {
+            if (parentElementIterator.getXPathBuilder() == this) {
                 childIterator.setContainer(null); // break parent tree while generating child address
                 parentElement = parentElementIterator;
                 breakElement = childIterator;
@@ -1197,7 +1197,7 @@ public class XPathBuilder implements Cloneable {
         XPathBuilder builder = (XPathBuilder) super.clone();
 
         LinkedHashMap<String, String> templates = (LinkedHashMap<String, String>) builder.templates;
-        LinkedHashMap<String, WebLocator> templateTitle = (LinkedHashMap<String, WebLocator>) builder.templateTitle;
+        LinkedHashMap<String, Locator> templateTitle = (LinkedHashMap<String, Locator>) builder.templateTitle;
         LinkedHashMap<String, String[]> templatesValues = (LinkedHashMap<String, String[]>) builder.templatesValues;
         LinkedHashMap<String, String> elPathSuffix = (LinkedHashMap<String, String>) builder.elPathSuffix;
 
@@ -1205,13 +1205,13 @@ public class XPathBuilder implements Cloneable {
         builder.templatesValues = (Map<String, String[]>) templatesValues.clone();
         builder.elPathSuffix = (Map<String, String>) elPathSuffix.clone();
 
-        builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
-        WebLocator titleTplEl = templateTitle.get("title");
-        if (titleTplEl != null) {
-            XPathBuilder titleTplElBuilder = (XPathBuilder) titleTplEl.getPathBuilder().clone();
-            WebLocator titleTplElCloned = new WebLocator().setPathBuilder(titleTplElBuilder);
-            builder.templateTitle.put("title", titleTplElCloned);
-        }
+        builder.templateTitle = (Map<String, Locator>) templateTitle.clone();
+//        Locator titleTplEl = templateTitle.get("title");
+//        if (titleTplEl != null) {
+//            XPathBuilder titleTplElBuilder = (XPathBuilder) titleTplEl.getXPathBuilder().clone();
+//            Locator titleTplElCloned = new WebLocator().setPathBuilder(titleTplElBuilder);
+//            builder.templateTitle.put("title", titleTplElCloned);
+//        }
 
         return builder;
     }

@@ -2,8 +2,8 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.form.CheckBox;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 
 public class Cell extends com.sdl.selenium.web.table.Cell {
 
@@ -11,15 +11,15 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         setRenderMillis(200);
         setClassName("Cell");
         setTag("td");
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
-    public Cell(WebLocator container) {
+    public Cell(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Cell(WebLocator container, int columnIndex) {
+    public Cell(Locator container, int columnIndex) {
         this(container);
         setPosition(columnIndex);
     }
@@ -35,7 +35,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         setText(columnText, searchTypes);
     }
 
-    public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
+    public Cell(Locator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
         setText(columnText, searchTypes);
     }
@@ -72,9 +72,9 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         while (!cell.waitToRender(100)) {
             Grid grid;
             try {
-                grid = (Grid) getPathBuilder().getContainer();
+                grid = (Grid) getXPathBuilder().getContainer();
             } catch (ClassCastException e) {
-                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
+                grid = (Grid) getXPathBuilder().getContainer().getXPathBuilder().getContainer();
             }
             if (!grid.scrollPageDown()) {
                 break;

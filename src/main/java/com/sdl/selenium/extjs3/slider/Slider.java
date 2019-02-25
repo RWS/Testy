@@ -51,7 +51,7 @@ public class Slider extends ExtJsComponent {
             element.click();
             new Actions(driver).dragAndDropBy(thumbElement, distance, 1).build().perform();
         } else {
-            LOGGER.warn("The slider for " + getPathBuilder().getLabel() + " has not been selected or is missing");
+            LOGGER.warn("The slider for " + getXPathBuilder().getLabel() + " has not been selected or is missing");
             exists = false;
         }
         return exists;

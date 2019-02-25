@@ -1,21 +1,23 @@
 package com.sdl.selenium.web.table;
 
-import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.ILocator;
 import com.sdl.selenium.web.SearchType;
 
-public interface ITable <R extends AbstractRow, C extends AbstractCell> extends IWebLocator {
+import java.time.Duration;
+
+public interface ITable<R extends AbstractRow, C extends AbstractCell> extends ILocator {
 
     /**
      * selects (clicks) on a table which contains a certain element
      *
      * @param searchText the searchText of the table element on which the search is done
-     *                  default SearchType is {@link com.sdl.selenium.web.SearchType#EQUALS}
+     *                   default SearchType is {@link com.sdl.selenium.web.SearchType#EQUALS}
      * @return true if selected
      */
     boolean rowSelect(String searchText);
 
     /**
-     * @param searchText searchText
+     * @param searchText  searchText
      * @param searchTypes searchTypes
      * @return true or false
      */
@@ -39,4 +41,8 @@ public interface ITable <R extends AbstractRow, C extends AbstractCell> extends 
     C getCell(int columnIndex, C... byRowCells);
 
     C getCell(int columnIndex, String text, C... byRowCells);
+
+    boolean ready(boolean waitRows);
+
+    boolean ready(boolean waitRows, Duration duration);
 }

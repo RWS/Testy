@@ -28,9 +28,9 @@ public class ButtonIntegrationTest extends TestBase {
     public void verifyIsDisabled() {
         assertTrue(disableBtn.isDisabled());
         assertTrue(disableBtnCls.isDisabled());
-        assertEquals(disableBtnCls.currentElement.getTagName(), "button");
-        assertEquals(disableBtnCls.currentElement.getLocation(), new Point(166, 519));
-        assertEquals(disableBtnCls.currentElement.getSize(), new Dimension(114, 30));
+        assertEquals(disableBtnCls.getWebElement().getTagName(), "button");
+        assertEquals(disableBtnCls.getWebElement().getLocation(), new Point(166, 519));
+        assertEquals(disableBtnCls.getWebElement().getSize(), new Dimension(114, 30));
     }
 
     @Test

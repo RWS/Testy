@@ -1,19 +1,21 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.Position;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.CheckBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.toIntExact;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Table extends WebLocator implements ITable<Row, Cell> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
+@Slf4j
+public class Table extends Locator implements ITable<Row, Cell> {
 
     private int timeout = 30;
 
@@ -55,7 +57,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
             selected = cell.click();
         }
         if (!selected) {
-            LOGGER.warn("The element '{}' is not present in the list.", cell);
+            log.warn("The element '{}' is not present in the list.", cell);
         }
         return selected;
     }
@@ -88,7 +90,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
             WebLocator body = new WebLocator(this).setTag("tbody");
             return new Row(body).size();
         } else {
-            LOGGER.warn("table is not ready to be used");
+            log.warn("table is not ready to be used");
             // TODO could try to verify row count with mask on table or when is disabled also.
             return -1;
         }
@@ -190,7 +192,8 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
             for (int i = 1; i < rows; i++) {
                 List<String> list = new ArrayList<>();
                 for (int j : columnsList) {
-                    list.add(getCell(i, j).getText(true));
+//                    list.add(getCell(i, j).getText(true));
+                    list.add(getCell(i, j).getText());
                 }
                 listOfList.add(list);
             }
@@ -221,7 +224,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         if (row.ready()) {
             text = new Cell(row, columnId).getText();
         } else {
-            LOGGER.warn("searchText was not found in table: " + searchText);
+            log.warn("searchText was not found in table: " + searchText);
         }
         return text;
     }
@@ -267,5 +270,9 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     public boolean ready(boolean waitRows) {
         return ready() && (!waitRows || waitToPopulate());
+    }
+
+    public boolean ready(boolean waitRows, Duration duration) {
+        return ready() && (!waitRows || waitToPopulate(toIntExact(duration.getSeconds())));
     }
 }

@@ -2,10 +2,10 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.IActions;
 import com.sdl.selenium.web.WebLocator;
 
-public interface Scrollable extends IWebLocator {
+public interface Scrollable extends IActions {
 
     default boolean scrollTop() {
         String id = getAttributeId();

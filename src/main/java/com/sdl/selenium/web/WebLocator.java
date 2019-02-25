@@ -1,27 +1,18 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.openqa.selenium.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
 
-import java.time.Duration;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class WebLocator extends WebLocatorAbstractBuilder {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
-
-    private String currentElementPath = "";
-    public WebElement currentElement;
-
-    public static WebLocatorExecutor getExecutor() {
-        return executor;
-    }
-
-    protected static WebLocatorExecutor executor;
+@Slf4j
+public class WebLocator extends Locator implements ILocator, IActions, Clickable, Editable {
 
     public WebLocator() {
     }
@@ -33,7 +24,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         setClasses(cls);
     }
 
-    public WebLocator(WebLocator container) {
+    public WebLocator(Locator container) {
         setContainer(container);
     }
 
@@ -53,67 +44,8 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     }
 
     // getters and setters
-
-    public static void setDriverExecutor(WebDriver driver) {
-        executor = new WebLocatorDriverExecutor(driver);
-    }
-
-    /**
-     * @param propertyName property name
-     * @return Element value of css property
-     */
-    public String getCssValue(String propertyName) {
-        return executor.getCssValue(this, propertyName);
-    }
-
-    /**
-     * @return The tag name of this element.
-     */
-    public String getTagName() {
-        return executor.getTagName(this);
-    }
-
-    /**
-     * @return The id of this element.
-     */
-    public String getAttributeId() {
-        return getAttribute("id");
-    }
-
-    /**
-     * @return The classes of this element.
-     */
-    public String getAttributeClass() {
-        return getAttribute("class");
-    }
-
-    public String getCurrentElementPath() {
-        return currentElementPath;
-    }
-
-    public void setCurrentElementPath(String currentElementPath) {
-        this.currentElementPath = currentElementPath;
-    }
-
-    /**
-     * @return This method return the WebElement
-     */
-    public WebElement getWebElement() {
-        return currentElement != null ? currentElement : findElement();
-    }
-
-    /**
-     * Use xPath only
-     *
-     * @param attribute eg "id" or "class"
-     * @return String attribute, if element not exist return null.
-     */
-    public String getAttribute(String attribute) {
-        return executor.getAttribute(this, attribute);
-    }
-
     protected String getCurrentElementAttribute(String attribute) {
-        return executor.getCurrentElementAttribute(this, attribute);
+        return executor().getCurrentElementAttribute(this, attribute);
     }
 
     /**
@@ -129,7 +61,7 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public String getText(boolean instant) {
         if (instant || ready()) {
-            return executor.getText(this);
+            return executor().getText(this);
         }
         return null;
     }
@@ -137,9 +69,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean clickAt() {
         boolean clickAt = waitToRender();
         assertThat("Element was not rendered " + toString(), clickAt);
-        clickAt = executor.clickAt(this);
+        clickAt = executor().clickAt(this);
         assertThat("Could not clickAt " + toString(), clickAt);
-        LOGGER.info("clickAt on {}", toString());
+        log.info("clickAt on {}", toString());
         return clickAt;
     }
 
@@ -151,11 +83,11 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean doClickAt() {
         boolean doClick = waitToRender();
         if (doClick) {
-            doClick = executor.clickAt(this);
+            doClick = executor().clickAt(this);
             if (doClick) {
-                LOGGER.info("clickAt on {}", toString());
+                log.info("clickAt on {}", toString());
             } else {
-                LOGGER.info("Could not clickAt {}", toString());
+                log.info("Could not clickAt {}", toString());
             }
         }
         return doClick;
@@ -169,9 +101,9 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean click() {
         boolean click = waitToRender();
         assertThat("Element was not rendered " + toString(), click);
-        click = executor.click(this);
+        click = executor().click(this);
         assertThat("Could not click " + toString(), click);
-        LOGGER.info("click on {}", toString());
+        log.info("click on {}", toString());
         return click;
     }
 
@@ -183,49 +115,39 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean doClick() {
         boolean doClick = waitToRender();
         if (doClick) {
-            doClick = executor.click(this);
+            doClick = executor().click(this);
             if (doClick) {
-                LOGGER.info("click on {}", toString());
+                log.info("click on {}", toString());
             } else {
-                LOGGER.info("Could not click {}", toString());
+                log.info("Could not click {}", toString());
             }
         }
         return doClick;
     }
 
-    public void highlight() {
-        if (isElementPresent()) {
-            doHighlight();
-        }
-    }
-
-    private void doHighlight() {
-        executor.highlight(this);
-    }
-
-    public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
+    public WebLocator sendKeys(CharSequence... charSequences) {
         boolean sendKeys = waitToRender();
         assertThat("Element was not rendered " + toString(), sendKeys);
-        sendKeys = executor.sendKeys(this, charSequences);
+        sendKeys = executor().sendKeys(this, charSequences);
         assertThat("Could not sendKeys " + toString(), sendKeys);
-        LOGGER.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
+        log.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
         return this;
     }
 
-    public WebLocator doSendKeys(java.lang.CharSequence... charSequences) {
+    public WebLocator doSendKeys(CharSequence... charSequences) {
         boolean doSendKeys = waitToRender();
         if (doSendKeys) {
-            doSendKeys = executor.sendKeys(this, charSequences);
+            doSendKeys = executor().sendKeys(this, charSequences);
             if (doSendKeys) {
-                LOGGER.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
+                log.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
             } else {
-                LOGGER.info("Could not sendKeys {}", toString());
+                log.info("Could not sendKeys {}", toString());
             }
         }
         return doSendKeys ? this : null;
     }
 
-    private String getKeysName(java.lang.CharSequence... charSequences) {
+    private String getKeysName(CharSequence... charSequences) {
         StringBuilder builder = new StringBuilder();
         int i = 0;
         for (CharSequence ch : charSequences) {
@@ -241,20 +163,20 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean clear() {
         boolean clear = waitToRender();
         assertThat("Element was not rendered " + toString(), clear);
-        clear = executor.clear(this);
+        clear = executor().clear(this);
         assertThat("Could not clear " + toString(), clear);
-        LOGGER.info("clear on {}", toString());
+        log.info("clear on {}", toString());
         return clear;
     }
 
     public boolean doClear() {
         boolean doClear = waitToRender();
         if (doClear) {
-            doClear = executor.clear(this);
+            doClear = executor().clear(this);
             if (doClear) {
-                LOGGER.info("clear on {}", toString());
+                log.info("clear on {}", toString());
             } else {
-                LOGGER.info("Could not clear {}", toString());
+                log.info("Could not clear {}", toString());
             }
         }
         return doClear;
@@ -263,20 +185,20 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean mouseOver() {
         boolean mouseOver = waitToRender();
         assertThat("Element was not rendered " + toString(), mouseOver);
-        mouseOver = executor.mouseOver(this);
+        mouseOver = executor().mouseOver(this);
         assertThat("Could not mouse over " + toString(), mouseOver);
-        LOGGER.info("mouse over on {}", toString());
+        log.info("mouse over on {}", toString());
         return mouseOver;
     }
 
     public boolean doMouseOver() {
         boolean doMouseOver = waitToRender();
         if (doMouseOver) {
-            doMouseOver = executor.mouseOver(this);
+            doMouseOver = executor().mouseOver(this);
             if (doMouseOver) {
-                LOGGER.info("mouse over on {}", toString());
+                log.info("mouse over on {}", toString());
             } else {
-                LOGGER.info("Could not mouse over {}", toString());
+                log.info("Could not mouse over {}", toString());
             }
         }
         return doMouseOver;
@@ -285,20 +207,20 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean blur() {
         boolean blur = waitToRender();
         assertThat("Element was not rendered " + toString(), blur);
-        blur = executor.blur(this);
+        blur = executor().blur(this);
         assertThat("Could not blur " + toString(), blur);
-        LOGGER.info("blur on {}", toString());
+        log.info("blur on {}", toString());
         return blur;
     }
 
     public boolean doBlur() {
         boolean doBlur = waitToRender();
         if (doBlur) {
-            doBlur = executor.blur(this);
+            doBlur = executor().blur(this);
             if (doBlur) {
-                LOGGER.info("blur on {}", toString());
+                log.info("blur on {}", toString());
             } else {
-                LOGGER.info("Could not blur {}", toString());
+                log.info("Could not blur {}", toString());
             }
         }
         return doBlur;
@@ -312,20 +234,20 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public WebLocator focus() {
         boolean focus = waitToRender();
         assertThat("Element was not rendered " + toString(), focus);
-        focus = executor.focus(this);
+        focus = executor().focus(this);
         assertThat("Could not focus " + toString(), focus);
-        LOGGER.info("focus on {}", toString());
+        log.info("focus on {}", toString());
         return this;
     }
 
     public WebLocator doFocus() {
         boolean doFocus = waitToRender();
         if (doFocus) {
-            doFocus = executor.focus(this);
+            doFocus = executor().focus(this);
             if (doFocus) {
-                LOGGER.info("focus on {}", toString());
+                log.info("focus on {}", toString());
             } else {
-                LOGGER.info("Could not focus {}", toString());
+                log.info("Could not focus {}", toString());
             }
         }
         return doFocus ? this : null;
@@ -337,72 +259,56 @@ public class WebLocator extends WebLocatorAbstractBuilder {
     public boolean doubleClickAt() {
         boolean doubleClickAt = waitToRender();
         assertThat("Element was not rendered " + toString(), doubleClickAt);
-        doubleClickAt = executor.doubleClickAt(this);
+        doubleClickAt = executor().doubleClickAt(this);
         assertThat("Could not Double ClickAt " + toString(), doubleClickAt);
-        LOGGER.info("Double ClickAt on {}", toString());
+        log.info("Double ClickAt on {}", toString());
         return doubleClickAt;
     }
 
     public boolean doDoubleClickAt() {
         boolean doClick = waitToRender();
         if (doClick) {
-            doClick = executor.doubleClickAt(this);
+            doClick = executor().doubleClickAt(this);
             if (doClick) {
-                LOGGER.info("Double click on {}", toString());
+                log.info("Double click on {}", toString());
             } else {
-                LOGGER.info("Could not double click {}", toString());
+                log.info("Could not double click {}", toString());
             }
         }
         return doClick;
     }
 
     /**
-     * @return true | false
-     */
-    public boolean isElementPresent() {
-        return executor.isElementPresent(this);
-    }
-
-    /**
-     * driver.findElements(xpath).size()
-     *
-     * @return the number of elements in this list
-     */
-    public int size() {
-        return executor.size(this);
-    }
-
-    /**
      * @return A point, containing the location of the top left-hand corner of the element
      */
     public Point getLocation() {
-        return executor.getLocation(this);
+        return executor().getLocation(this);
     }
 
     /**
      * @return The size of the element on the page.
      */
     public Dimension getSize() {
-        return executor.getSize(this);
+        return executor().getSize(this);
     }
 
     /**
      * @return The location and size of the rendered element
      */
     public Rectangle getRect() {
-        return executor.getRect(this);
+        return executor().getRect(this);
     }
 
     // TODO see where is used and if is necessary to be public
-    public WebElement findElement() {
-        return executor.findElement(this);
-    }
+//    public WebElement findElement() {
+//        return executor().findElement(this);
+//    }
 
-    public List<WebElement> findElements() {
-        boolean findElements = waitToRender();
-        assertThat("Elements were not rendered " + toString(), findElements);
-        return executor.findElements(this);
-    }
+//    public List<WebElement> findElements() {
+//        boolean findElements = waitToRender();
+//        assertThat("Elements were not rendered " + toString(), findElements);
+//        return executor().findElements(this);
+//    }
 
     public boolean isVisible() {
         boolean visible = isElementPresent();
@@ -419,25 +325,6 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             }*/
         }
         return visible;
-    }
-
-    /**
-     * wait 5 seconds (or specified value for renderSeconds)
-     *
-     * @return true | false
-     */
-    public boolean waitToRender() {
-        return waitToRender(getPathBuilder().getRenderMillis());
-    }
-
-    public boolean waitToRender(final long millis) {
-        executor.waitElement(this, Duration.ofMillis(millis), true);
-        return currentElement != null;
-    }
-
-    public boolean waitToRender(final long millis, boolean showXPathLog) {
-        executor.waitElement(this, Duration.ofMillis(millis), showXPathLog);
-        return currentElement != null;
     }
 
     /**
@@ -468,30 +355,12 @@ public class WebLocator extends WebLocatorAbstractBuilder {
             }
             if (i == 0) {
                 // log only fist time
-                LOGGER.debug("waitTextToRender");
+                log.debug("waitTextToRender");
             }
             Utils.sleep(200);
         }
-        LOGGER.warn("No text was found for Element after " + seconds + " sec; " + this);
+        log.warn("No text was found for Element after " + seconds + " sec; " + this);
         return excludeText.equals(text) ? null : text;
-    }
-
-    public boolean waitToActivate() {
-        return waitToActivate(getPathBuilder().getActivateSeconds());
-    }
-
-    /**
-     * Wait for the element to be activated when there is deactivation mask on top of it
-     *
-     * @param seconds time in seconds
-     * @return true | false
-     */
-    public boolean waitToActivate(int seconds) {
-        return true;
-    }
-
-    public boolean ready() {
-        return waitToRender() && waitToActivate();
     }
 
     public boolean assertReady(String... values) {
@@ -504,35 +373,22 @@ public class WebLocator extends WebLocatorAbstractBuilder {
         return ready;
     }
 
-    public boolean ready(int seconds) {
-        return waitToRender(seconds * 1000) && waitToActivate(seconds);
-    }
-
-    /**
-     * @return True if the element is disabled, false otherwise.
-     * @deprecated use {@link #isEnabled}
-     */
-    @Deprecated
-    public boolean isDisabled() {
-        return !executor.isEnabled(this);
-    }
-
     /**
      * @return True if the element is enable, false otherwise.
      */
     public boolean isEnabled() {
-        return executor.isEnabled(this);
+        return executor().isEnabled(this);
     }
 
     /**
      * @return Whether or not the element is displayed
      */
     public boolean isDisplayed() {
-        return executor.isDisplayed(this);
+        return executor().isDisplayed(this);
     }
 
     @Override
     public String toString() {
-        return getPathBuilder().toString();
+        return getXPathBuilder().toString();
     }
 }

@@ -114,7 +114,7 @@ public class Slider extends WebLocator {
                 }
             } while (!done);
         } else {
-            log.warn("The slider for " + getPathBuilder().getLabel() + " has not been selected or is missing");
+            log.warn("The slider for " + getXPathBuilder().getLabel() + " has not been selected or is missing");
             exists = false;
         }
         return exists;

@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.form;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Slf4j
-public class ComboBox extends WebLocator implements ICombo {
+public class ComboBox extends Locator implements ICombo {
 
     public ComboBox() {
         setClassName("ComboBox");
@@ -71,6 +72,16 @@ public class ComboBox extends WebLocator implements ICombo {
 
     @Override
     public boolean collapse() {
+        return false;
+    }
+
+    @Override
+    public boolean clear() {
+        return false;
+    }
+
+    @Override
+    public boolean doClear() {
         return false;
     }
 }

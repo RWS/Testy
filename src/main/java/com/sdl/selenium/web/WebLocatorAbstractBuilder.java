@@ -18,7 +18,7 @@ public abstract class WebLocatorAbstractBuilder {
      *
      * @return {@link XPathBuilder}
      */
-    public XPathBuilder getPathBuilder() {
+    public XPathBuilder getXPathBuilder() {
         return pathBuilder;
     }
 
@@ -560,15 +560,6 @@ public abstract class WebLocatorAbstractBuilder {
     // =========================================
     // =============== Methods =================
     // =========================================
-
-    /**
-     * <p>Used only to identify class type of current object</p>
-     *
-     * @param className className
-     */
-    protected void setClassName(final String className) {
-        pathBuilder.setClassName(className);
-    }
 
     protected boolean hasId() {
         return pathBuilder.hasId();

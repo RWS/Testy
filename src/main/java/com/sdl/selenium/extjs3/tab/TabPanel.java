@@ -33,8 +33,8 @@ public class TabPanel extends ExtJsComponent {
 
     private String getTitlePath() {
         WebLocator header = new WebLocator().setClasses("x-tab-panel-header");
-        WebLocator locator = new WebLocator().setText(getPathBuilder().getText()).setContainer(header);
-        locator.setSearchTextType(getPathBuilder().getSearchTextType().stream().toArray(SearchType[]::new));
+        WebLocator locator = new WebLocator().setText(getXPathBuilder().getText()).setContainer(header);
+        locator.setSearchTextType(getXPathBuilder().getSearchTextType().stream().toArray(SearchType[]::new));
         return locator.getXPath();
     }
 
@@ -44,9 +44,9 @@ public class TabPanel extends ExtJsComponent {
      * @return the path of the main TabPanel
      */
     private String getBaseTabPanelPath() {
-        String selector = getPathBuilder().getBasePath();
-        WebLocator el = new WebLocator().setText(getPathBuilder().getText(), SearchType.EQUALS);
-        el.setSearchTextType(getPathBuilder().getSearchTextType().stream().toArray(SearchType[]::new));
+        String selector = getXPathBuilder().getBasePath();
+        WebLocator el = new WebLocator().setText(getXPathBuilder().getText(), SearchType.EQUALS);
+        el.setSearchTextType(getXPathBuilder().getSearchTextType().stream().toArray(SearchType[]::new));
         selector += (selector.length() > 0 ? " and " : "") + "not(contains(@class, 'x-masked')) and count(*[contains(@class,'x-tab-panel-header')]//*[contains(@class, 'x-tab-strip-active')]" + el.getXPath() + ") > 0";
         return "//*[" + selector + "]";
     }
@@ -80,9 +80,9 @@ public class TabPanel extends ExtJsComponent {
      * @return true or false
      */
     public boolean setActive() {
-        String baseTabPath = "//*[" + getPathBuilder().getBasePath() + "]";
+        String baseTabPath = "//*[" + getXPathBuilder().getBasePath() + "]";
         String titlePath = baseTabPath + getTitlePath();
-        WebLocator titleElement = new WebLocator(getPathBuilder().getContainer()).setElPath(titlePath).setInfoMessage(getPathBuilder().getText() + " Tab");
+        WebLocator titleElement = new WebLocator(getXPathBuilder().getContainer()).setElPath(titlePath).setInfoMessage(getXPathBuilder().getText() + " Tab");
         LOGGER.info("setActive : " + toString());
         boolean activated;
         try {
@@ -103,11 +103,11 @@ public class TabPanel extends ExtJsComponent {
      * @return true or false
      */
     public boolean setActiveWithExtJS() {
-        String baseTabPath = "//*[" + getPathBuilder().getBasePath() + "]";
-        WebLocator tabElement = new WebLocator(getPathBuilder().getContainer()).setElPath(baseTabPath);
+        String baseTabPath = "//*[" + getXPathBuilder().getBasePath() + "]";
+        WebLocator tabElement = new WebLocator(getXPathBuilder().getContainer()).setElPath(baseTabPath);
         String id = tabElement.getAttributeId();
         String path = "//*[@id='" + id + "']//*[contains(@class, 'x-tab-strip-inner')]";
-        int tabIndex = getTabIndex(getPathBuilder().getText(), path);
+        int tabIndex = getTabIndex(getXPathBuilder().getText(), path);
         String script = "return Ext.getCmp('" + id + "').setActiveTab(" + tabIndex + ");";
         LOGGER.warn("force TabPanel setActive with js: " + script);
         WebLocatorUtils.doExecuteScript(script);

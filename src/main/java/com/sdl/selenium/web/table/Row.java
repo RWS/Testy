@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
@@ -13,30 +14,30 @@ public class Row extends AbstractRow {
         setRenderMillis(200);
         setClassName("Row");
         setTag("tr");
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
-    public Row(WebLocator container) {
+    public Row(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Row(WebLocator container, int indexRow) {
+    public Row(Locator container, int indexRow) {
         this(container);
         setPosition(indexRow);
     }
 
-    public Row(WebLocator table, String searchElement, SearchType... searchTypes) {
+    public Row(Locator table, String searchElement, SearchType... searchTypes) {
         this(table);
         setText(searchElement, searchTypes);
     }
 
-    public Row(WebLocator table, AbstractCell... cells) {
+    public Row(Locator table, AbstractCell... cells) {
         this(table);
-        setChildNodes(Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
+        setChildNodes(Stream.of(cells).filter(t -> t.getXPathBuilder().getText() != null).toArray(AbstractCell[]::new));
     }
 
-    public Row(WebLocator table, int indexRow, AbstractCell... cells) {
+    public Row(Locator table, int indexRow, AbstractCell... cells) {
         this(table, cells);
         setPosition(indexRow);
     }
@@ -69,5 +70,10 @@ public class Row extends AbstractRow {
             }
         }
         return columnsList;
+    }
+
+    @Override
+    public String getText() {
+        return null;
     }
 }

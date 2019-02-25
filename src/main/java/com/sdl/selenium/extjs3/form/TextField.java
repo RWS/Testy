@@ -65,7 +65,7 @@ public class TextField extends ExtJsComponent implements ITextField {
 
     public boolean setValue(String value) {
         assertReady();
-        boolean setted = executor.setValue(this, value);
+        boolean setted = executor().setValue(this, value);
         assertThat("Could not setValue on : " + this, setted);
         return true;
     }
@@ -73,7 +73,7 @@ public class TextField extends ExtJsComponent implements ITextField {
     public boolean doSetValue(String value) {
         boolean setted = false;
         if (ready()) {
-            setted = executor.setValue(this, value);
+            setted = executor().setValue(this, value);
             if (!setted) {
                 LOGGER.warn("Could not setValue on {}", this);
             }
@@ -90,7 +90,7 @@ public class TextField extends ExtJsComponent implements ITextField {
      */
     public String getValue() {
         assertReady();
-        return executor.getValue(this);
+        return executor().getValue(this);
     }
 
     public String getTriggerPath(String icon) {
@@ -123,5 +123,15 @@ public class TextField extends ExtJsComponent implements ITextField {
 
     public boolean isEnabled() {
         return !"true".equals(getAttribute("disabled"));
+    }
+
+    @Override
+    public WebLocator sendKeys() {
+        return null;
+    }
+
+    @Override
+    public WebLocator doSendKeys() {
+        return null;
     }
 }

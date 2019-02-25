@@ -35,7 +35,7 @@ public class TextField extends WebLocator implements ITextField {
     public boolean pasteInValue(String value) {
         assertReady();
         if (value != null) {
-            currentElement.clear();
+            getWebElement().clear();
             MultiThreadClipboardUtils.copyString(value);
             MultiThreadClipboardUtils.pasteString(this);
             log.info("Set value(" +  this + "): " + value + "'");
@@ -46,11 +46,11 @@ public class TextField extends WebLocator implements ITextField {
 
     public boolean setValue(String value) {
         assertReady();
-        return executor.setValue(this, value);
+        return executor().setValue(this, value);
     }
 
     public String getValue() {
         assertReady();
-        return executor.getValue(this);
+        return executor().getValue(this);
     }
 }

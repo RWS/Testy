@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.bootstrap.button.Upload;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 
 public class UploadButton extends Button implements Upload {
 
@@ -10,12 +10,12 @@ public class UploadButton extends Button implements Upload {
         setClassName("UploadButton");
     }
 
-    public UploadButton(WebLocator container) {
+    public UploadButton(Locator container) {
         this();
         setContainer(container);
     }
 
-    public UploadButton(WebLocator container, String text) {
+    public UploadButton(Locator container, String text) {
         this(container);
         setText(text, SearchType.EQUALS);
     }
@@ -40,7 +40,7 @@ public class UploadButton extends Button implements Upload {
      * @param filePath e.g. "C:\\text.txt"
      * @return true | false
      */
-    private boolean upload(WebLocator el, String filePath) {
-        return executor.browse(el) && executor.upload(filePath);
+    private boolean upload(Locator el, String filePath) {
+        return executor().browse(el) && executor().upload(filePath);
     }
 }

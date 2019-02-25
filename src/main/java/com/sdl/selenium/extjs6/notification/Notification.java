@@ -18,7 +18,7 @@ public class Notification extends WebLocator {
 
     public Notification(String msg) {
         this();
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
         setText(msg);
     }
 

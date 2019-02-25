@@ -3,9 +3,6 @@ package com.sdl.selenium.bootstrap.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
-import com.sdl.selenium.web.form.TextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -21,11 +18,11 @@ import org.slf4j.LoggerFactory;
  * checkBox.click();
  * }</pre>
  */
-public class CheckBox extends TextField implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
+public class CheckBox extends WebLocator implements ICheck {
 
     public CheckBox() {
         setClassName("CheckBox");
+        setTag("input");
         setType("checkbox");
     }
 
@@ -47,13 +44,7 @@ public class CheckBox extends TextField implements ICheck {
 
     @Override
     public boolean isSelected() {
-        return isElementPresent() && executor.isSelected(this);
-    }
-
-    @Override
-    public boolean isDisabled() {
-        String cls = getAttributeClass();
-        return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
+        return isElementPresent() && executor().isSelected(this);
     }
 
     @Override

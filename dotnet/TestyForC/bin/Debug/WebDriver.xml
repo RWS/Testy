@@ -2066,7 +2066,7 @@
         </member>
         <member name="P:OpenQA.Selenium.Remote.DriverServiceCommandExecutor.CommandInfoRepository">
             <summary>
-            Gets the <see cref="P:OpenQA.Selenium.Remote.DriverServiceCommandExecutor.CommandInfoRepository" /> object associated with this executor.
+            Gets the <see cref="P:OpenQA.Selenium.Remote.DriverServiceCommandExecutor.CommandInfoRepository" /> object associated with this executor().
             </summary>
         </member>
         <member name="P:OpenQA.Selenium.Remote.DriverServiceCommandExecutor.HttpExecutor">
@@ -3197,7 +3197,7 @@
         </member>
         <member name="P:OpenQA.Selenium.Remote.RemoteWebDriver.IsActionExecutor">
             <summary>
-            Gets a value indicating whether this object is a valid action executor.
+            Gets a value indicating whether this object is a valid action executor().
             </summary>
         </member>
         <member name="P:OpenQA.Selenium.Remote.RemoteWebDriver.IsSpecificationCompliant">
@@ -3515,13 +3515,13 @@
         </member>
         <member name="M:OpenQA.Selenium.Remote.RemoteWebDriver.PerformActions(System.Collections.Generic.IList{OpenQA.Selenium.Interactions.ActionSequence})">
             <summary>
-            Performs the specified list of actions with this action executor.
+            Performs the specified list of actions with this action executor().
             </summary>
             <param name="actionSequenceList">The list of action sequences to perform.</param>
         </member>
         <member name="M:OpenQA.Selenium.Remote.RemoteWebDriver.ResetInputState">
             <summary>
-            Resets the input state of the action executor.
+            Resets the input state of the action executor().
             </summary>
         </member>
         <member name="M:OpenQA.Selenium.Remote.RemoteWebDriver.EscapeCssSelector(System.String)">
@@ -8458,7 +8458,7 @@
         </member>
         <member name="P:OpenQA.Selenium.Internal.AsyncJavaScriptExecutor.Timeout">
             <summary>
-            Gets or sets the timeout for the script executor.
+            Gets or sets the timeout for the script executor().
             </summary>
         </member>
         <member name="M:OpenQA.Selenium.Internal.AsyncJavaScriptExecutor.ExecuteScript(System.String,System.Object[])">
@@ -8527,18 +8527,18 @@
         </member>
         <member name="P:OpenQA.Selenium.Internal.IActionExecutor.IsActionExecutor">
             <summary>
-            Gets a value indicating whether this object is a valid action executor.
+            Gets a value indicating whether this object is a valid action executor().
             </summary>
         </member>
         <member name="M:OpenQA.Selenium.Internal.IActionExecutor.PerformActions(System.Collections.Generic.IList{OpenQA.Selenium.Interactions.ActionSequence})">
             <summary>
-            Performs the specified list of actions with this action executor.
+            Performs the specified list of actions with this action executor().
             </summary>
             <param name="actionSequenceList">The list of action sequences to perform.</param>
         </member>
         <member name="M:OpenQA.Selenium.Internal.IActionExecutor.ResetInputState">
             <summary>
-            Resets the input state of the action executor.
+            Resets the input state of the action executor().
             </summary>
         </member>
         <member name="T:OpenQA.Selenium.Internal.IFindsByClassName">

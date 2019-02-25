@@ -124,7 +124,7 @@ public class ComboBox extends TextField implements ICombo {
     @Override
     public String getValue() {
         ready();
-        return executor.getValue(this);
+        return executor().getValue(this);
     }
 
     public List<String> getAllValues() {

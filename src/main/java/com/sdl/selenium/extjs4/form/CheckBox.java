@@ -31,6 +31,6 @@ public class CheckBox extends WebLocator implements ICheck {
 
     @Override
     public boolean isSelected(){
-        return isElementPresent() && executor.isSelected(this);
+        return isElementPresent() && executor().isSelected(this);
     }
 }

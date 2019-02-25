@@ -14,7 +14,7 @@ public class Panel extends ExtJsComponent {
     public Panel() {
         setClassName("Panel");
         setBaseCls("x-panel");
-        setHeaderBaseCls(getPathBuilder().getBaseCls());
+        setHeaderBaseCls(getXPathBuilder().getBaseCls());
         setElPathSuffix("exclude-hide-cls", "not(contains(@class, 'x-hide-display')) and not(contains(@class, 'x-masked'))");
         setTemplate("title", "count(*[contains(@class,'" + getHeaderBaseCls() + "-header') or contains(@class, '-tl')]//*[text()='%s']) > 0");
     }
@@ -49,7 +49,7 @@ public class Panel extends ExtJsComponent {
     }
 
     public ExtJsComponent getBodyComponent() {
-        return new ExtJsComponent(this, "//*[contains(@class, '" + getPathBuilder().getBaseCls() + "-body')]");
+        return new ExtJsComponent(this, "//*[contains(@class, '" + getXPathBuilder().getBaseCls() + "-body')]");
     }
 
     /**

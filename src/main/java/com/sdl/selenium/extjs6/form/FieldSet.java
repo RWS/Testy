@@ -36,6 +36,6 @@ public class FieldSet extends WebLocator {
     }
 
     private WebLocator getExpandEl() {
-        return new WebLocator(this).setClasses("x-fieldset-header-text").setText(getPathBuilder().getText());
+        return new WebLocator(this).setClasses("x-fieldset-header-text").setText(getXPathBuilder().getText());
     }
 }

@@ -71,7 +71,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     // TODO find better solution for GridPanel that is used in TabPanel
     public static GridPanel getInstanceByTabPanel(TabPanel tabPanel, String searchColumnId) {
         GridPanel gridPanel = new GridPanel();
-        WebLocator container = tabPanel.getPathBuilder().getContainer();
+        WebLocator container = tabPanel.getXPathBuilder().getContainer();
         gridPanel.setContainer(container);
 
         tabPanel.setContainer(null); // hack to have path without container
@@ -147,7 +147,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      */
     protected String getAttrId() {
         String id = getAttributeId();
-        assertThat(MessageFormat.format("{0} id is null. The path is: {1}", getPathBuilder().getClassName(), getXPath()), id, notNullValue());
+        assertThat(MessageFormat.format("{0} id is null. The path is: {1}", getXPathBuilder().getClassName(), getXPath()), id, notNullValue());
         return id;
     }
 
@@ -396,8 +396,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (ready()) {
             String path = getGridCell(startRowIndex).getXPath();
             WebLocator currentElement = new WebLocator().setElPath(path);
-            while (currentElement.isElementPresent()) {
-                String option = currentElement.getText();
+            while (getWebElement().isElementPresent()) {
+                String option = getWebElement().getText();
                 //LOGGER.debug("row[" + i + "]" + option);
                 if (option != null && option.contains(searchElement)) {
                     LOGGER.debug("The '" + searchElement + "' element index is " + startRowIndex);
@@ -406,7 +406,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 }
                 startRowIndex++;
                 path = getGridCell(startRowIndex).getXPath();
-                currentElement.setElPath(path);
+                getWebElement().setElPath(path);
             }
             if (index == -1) {
                 LOGGER.warn("The element '" + searchElement + "' was not found.");

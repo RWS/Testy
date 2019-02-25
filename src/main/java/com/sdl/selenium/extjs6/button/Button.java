@@ -12,7 +12,7 @@ public class Button extends WebLocator {
         setBaseCls("x-btn");
         setTag("a");
         setTemplate("icon-cls", "count(.//*[contains(concat(' ', @class, ' '), ' %s ')]) > 0");
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public Button(WebLocator container) {

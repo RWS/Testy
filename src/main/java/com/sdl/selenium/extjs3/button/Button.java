@@ -2,18 +2,15 @@ package com.sdl.selenium.extjs3.button;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.button.IButton;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class Button extends ExtJsComponent implements IButton {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
+@Slf4j
+public class Button extends com.sdl.selenium.web.button.Button {
 
     public String getIconCls() {
         return iconCls;
@@ -22,7 +19,7 @@ public class Button extends ExtJsComponent implements IButton {
     public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
         String key = "icon-cls";
-        setElPathSuffix(key, applyTemplate(key, iconCls));
+        setElPathSuffix(key, setTemplate(key, iconCls));
         return (T) this;
     }
 
@@ -35,7 +32,7 @@ public class Button extends ExtJsComponent implements IButton {
         setVisibility(true);
         setTemplate("enabled", "not(contains(@class, 'x-item-disabled'))");
         setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
+        getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE);
     }
 
     /**
@@ -55,19 +52,19 @@ public class Button extends ExtJsComponent implements IButton {
     @Override
     public boolean click() {
         // to scroll to this element (if element is not visible)
-        WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(getPathBuilder().itemToString() + "//button");
+        WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(getXPathBuilder().itemToString() + "//button");
         // TODO try to click on button that has mask - with first solution is not saying that has mask
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
-        buttonEl.setRenderMillis(getPathBuilder().getRenderMillis());
+        buttonEl.setRenderMillis(getXPathBuilder().getRenderMillis());
         boolean buttonExist;
         buttonEl.sendKeys(Keys.TAB);
-        buttonExist = buttonEl.currentElement != null;
+        buttonExist = buttonEl.getWebElement() != null;
         boolean clicked = buttonExist && isElementPresent() && super.doClick();
         if (clicked) {
-            LOGGER.info("Click on {} ", toString());
+            log.info("Click on {} ", toString());
             Utils.sleep(50);
         } else {
-            LOGGER.error("({}) doesn't exists or is disabled {}.", toString(), getXPath());
+            log.error("({}) doesn't exists or is disabled {}.", toString(), getXPath());
         }
         return clicked;
     }
@@ -92,10 +89,10 @@ public class Button extends ExtJsComponent implements IButton {
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.onClick({preventDefault:function(){},button:0}); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            LOGGER.info("clickWithExtJS on {}; result: {}", toString(), object);
+            log.info("clickWithExtJS on {}; result: {}", toString(), object);
             return (Boolean) object;
         }
-        LOGGER.debug("id is: " + id);
+        log.debug("id is: " + id);
         return false;
     }
 
@@ -103,7 +100,7 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean isDisabled() {
-        WebLocator disabledLocator = new WebLocator().setElPath(getXPath(true));
+        WebLocator disabledLocator = new WebLocator().setElPath(getXPath());
         return disabledLocator.size() > 0;
     }
 
@@ -119,7 +116,7 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean isEnabled() {
-        WebLocator disabledLocator = new WebLocator().setElPath(getXPath(false));
+        WebLocator disabledLocator = new WebLocator().setElPath(getXPath());
         return disabledLocator.size() > 0;
     }
 
@@ -133,11 +130,11 @@ public class Button extends ExtJsComponent implements IButton {
         if (hasId(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b) {b.showMenu(); return true;} return false;})()";
             Object object = WebLocatorUtils.doExecuteScript(script);
-            LOGGER.info("showMenu for {}; result: {}", toString(), object);
+            log.info("showMenu for {}; result: {}", toString(), object);
             Utils.sleep(200);
             return (Boolean) object;
         }
-        LOGGER.debug("id is: " + id);
+        log.debug("id is: " + id);
         return false;
     }
 
@@ -148,22 +145,22 @@ public class Button extends ExtJsComponent implements IButton {
      * @return true or false
      */
     public boolean clickOnMenu(String[] menuOptions) {
-        LOGGER.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
+        log.debug("clickOnMenu : " + menuOptions[menuOptions.length - 1]);
         if (click()) {
             String info = toString();
-//            LOGGER.info("Click on button " + info);
+//            log.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
             WebLocator menu = new WebLocator("x-menu-floating");
             if (WebDriverConfig.isIE()) {
                 // menu.isVisible is not considered but is executed and is just consuming time.
 //                if(menu.isVisible()){
-//                    LOGGER.info("In IE is visible");
+//                    log.info("In IE is visible");
 //                }
             } else {
                 menu.setStyle("visibility: visible;");
             }
             menu.setInfoMessage("active menu");
-            ExtJsComponent option = new ExtJsComponent(menu);
+            WebLocator option = new WebLocator(menu);
             for (String menuOption : menuOptions) {
                 option.setText(menuOption);
                 if (!option.mouseOver()) {
@@ -173,7 +170,7 @@ public class Button extends ExtJsComponent implements IButton {
             if (option.clickAt()) {
                 return true;
             } else {
-                LOGGER.warn("Could not locate option '" + option.getPathBuilder().getText() + "'. Performing simple click on button : " + info);
+                log.warn("Could not locate option '" + option.getXPathBuilder().getText() + "'. Performing simple click on button : " + info);
                 doClickAt();
             }
         }

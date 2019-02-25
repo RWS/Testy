@@ -38,6 +38,6 @@ public class UploadFile extends WebLocator implements Upload {
      * @return true | false
      */
     public boolean upload(WebLocator el, String filePath) {
-        return executor.browse(el) && executor.upload(filePath);
+        return executor().browse(el) && executor().upload(filePath);
     }
 }

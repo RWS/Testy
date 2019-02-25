@@ -49,16 +49,16 @@ public class Tab extends WebLocator implements ITab {
     }
 
     public WebLocator getTitleInactiveEl() {
-        WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
+        WebLocator container = new WebLocator(getXPathBuilder().getContainer()).setClasses(getXPathBuilder().getBaseCls()).setTag(getXPathBuilder().getTag());
         WebLink link = new WebLink(container).setClasses("x-tab");
-        if (!Strings.isNullOrEmpty(getPathBuilder().getTitle())) {
-            List<SearchType> ts = getPathBuilder().getSearchTitleType();
-            link.setText(getPathBuilder().getTitle(), ts.stream().toArray(SearchType[]::new));
+        if (!Strings.isNullOrEmpty(getXPathBuilder().getTitle())) {
+            List<SearchType> ts = getXPathBuilder().getSearchTitleType();
+            link.setText(getXPathBuilder().getTitle(), ts.stream().toArray(SearchType[]::new));
         }
-        if (getPathBuilder().getChildNodes() != null && !getPathBuilder().getChildNodes().isEmpty()) {
-            link.setChildNodes(getPathBuilder().getChildNodes().stream().toArray(WebLocator[]::new));
+        if (getXPathBuilder().getChildNodes() != null && !getXPathBuilder().getChildNodes().isEmpty()) {
+            link.setChildNodes(getXPathBuilder().getChildNodes().stream().toArray(WebLocator[]::new));
         }
-        return link.setInfoMessage(getPathBuilder().getTitle() + " Tab");
+        return link.setInfoMessage(getXPathBuilder().getTitle() + " Tab");
     }
 
     /**
@@ -67,11 +67,11 @@ public class Tab extends WebLocator implements ITab {
      * @return the path of the main TabPanel
      */
     private String getBaseTabPanelPath() {
-        String selector = getPathBuilder().getBasePath();
+        String selector = getXPathBuilder().getBasePath();
         WebLocator child = new WebLocator().setClasses(iconCls);
         WebLink activeTab = new WebLink().setClasses("x-tab-active").setChildNodes(child);
         selector = selector + (Strings.isNullOrEmpty(iconCls) ? "" : " and count(." + activeTab.getXPath() + ") > 0");
-        return getPathBuilder().getRoot() + getPathBuilder().getTag() + "[" + selector + "]";
+        return getXPathBuilder().getRoot() + getXPathBuilder().getTag() + "[" + selector + "]";
     }
 
     protected XPathBuilder createXPathBuilder() {

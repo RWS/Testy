@@ -38,7 +38,7 @@ public class FieldSet extends WebLocator {
     }
 
     public boolean expand() {
-        WebLocator legendElement = new WebLocator(this).setText(getPathBuilder().getText());
+        WebLocator legendElement = new WebLocator(this).setText(getXPathBuilder().getText());
         boolean expanded = !isCollapsed() || legendElement.click();
         if (expanded) {
             Utils.sleep(500);

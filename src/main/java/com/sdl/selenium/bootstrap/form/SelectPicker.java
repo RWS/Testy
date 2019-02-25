@@ -78,4 +78,14 @@ public class SelectPicker extends WebLocator implements ICombo {
         String cls = getAttributeClass();
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
     }
+
+    @Override
+    public WebLocator sendKeys() {
+        return null;
+    }
+
+    @Override
+    public WebLocator doSendKeys() {
+        return null;
+    }
 }

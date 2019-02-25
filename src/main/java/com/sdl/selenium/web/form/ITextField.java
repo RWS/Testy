@@ -1,10 +1,10 @@
 package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.Editable;
-import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.ILocator;
 import com.sdl.selenium.web.SearchType;
 
-public interface ITextField extends IWebLocator, Editable {
+public interface ITextField extends ILocator, Editable {
 
     /**
      * Set value to DOM element

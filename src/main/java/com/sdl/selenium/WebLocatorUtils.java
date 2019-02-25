@@ -1,22 +1,24 @@
 package com.sdl.selenium;
 
+import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.Locator;
+import com.sdl.selenium.web.NewWebLocatorExecutor;
 import com.sdl.selenium.web.WebLocator;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
-public final class WebLocatorUtils extends WebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
+@Slf4j
+public final class WebLocatorUtils extends Locator {
 
     private WebLocatorUtils() {
     }
 
     public static Object doExecuteScript(String script, Object... objects) {
-        return executor.executeScript(script, objects);
+        return new NewWebLocatorExecutor(WebDriverConfig.getDriver()).executeScript(script, objects);
     }
 
     /**
@@ -24,7 +26,7 @@ public final class WebLocatorUtils extends WebLocator {
      *
      * @param element type WebLocator
      */
-    public static void scrollToWebLocator(WebLocator element) {
+    public static void scrollToWebLocator(Locator element) {
         if (element.isElementPresent()) {
             doExecuteScript("arguments[0].scrollIntoView(true);", element.getWebElement());
 //            doExecuteScript("var e = arguments[0]; e.scrollIntoView(); var rect = e.getBoundingClientRect(); return {'x': rect.left, 'y': rect.top};", element.getWebElement());
@@ -61,9 +63,9 @@ public final class WebLocatorUtils extends WebLocator {
         }
 
         builder.append("\n");
-        String log = builder.toString();
-        LOGGER.info(log);
-        return log;
+        String logString = builder.toString();
+        log.info(logString);
+        return logString;
     }
 
     // TODO add in anonymous function and simplify var names
@@ -116,9 +118,9 @@ public final class WebLocatorUtils extends WebLocator {
     public static String getHtmlTree(WebLocator webLocator) {
         String result = "";
 
-        if (webLocator.currentElement != null || webLocator.isElementPresent()) {
+        if (webLocator.getWebElement() != null || webLocator.isElementPresent()) {
 
-            WebElement parent = webLocator.currentElement;
+            WebElement parent = webLocator.getWebElement();
 
             List<String> elements = new LinkedList<>();
 

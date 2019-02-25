@@ -223,21 +223,21 @@ public class WebLocatorTest {
     @Test
     public void createInstancesWithBuilders() {
         WebLocator locatorBuilder1 = new WebLocator().setTag("div").setId("ID1");
-        assertEquals(locatorBuilder1.getPathBuilder().getTag(), "div");
-        assertEquals(locatorBuilder1.getPathBuilder().getId(), "ID1");
-        assertEquals(locatorBuilder1.getPathBuilder().getClassName(), "WebLocator");
+        assertEquals(locatorBuilder1.getXPathBuilder().getTag(), "div");
+        assertEquals(locatorBuilder1.getXPathBuilder().getId(), "ID1");
+        assertEquals(locatorBuilder1.getXPathBuilder().getClassName(), "WebLocator");
     }
 
     @Test
     public void shouldShowClassInToStringWhenHasOneClass() {
         WebLocator locator = new WebLocator().setClasses("cls1");
-        assertEquals(locator.getPathBuilder().toString(), "cls1");
+        assertEquals(locator.getXPathBuilder().toString(), "cls1");
     }
 
     @Test
     public void shouldShowClassesInToStringWhenHasManyClass() {
         WebLocator locator = new WebLocator().setClasses("cls1", "cls2");
-        assertEquals(locator.getPathBuilder().toString(), "[cls1, cls2]");
+        assertEquals(locator.getXPathBuilder().toString(), "[cls1, cls2]");
     }
 
     @Test
@@ -259,7 +259,7 @@ public class WebLocatorTest {
     @Test
     public void setSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.STARTS_WITH);
-        assertEquals(locator.getPathBuilder().getSearchTextType().size(), 1);
+        assertEquals(locator.getXPathBuilder().getSearchTextType().size(), 1);
     }
 
     @Test
@@ -317,7 +317,7 @@ public class WebLocatorTest {
         List<SearchType> types = new ArrayList<>();
         types.add(SearchType.STARTS_WITH);
         types.add(SearchType.DEEP_CHILD_NODE);
-        List<SearchType> searchTextType = child.getPathBuilder().getSearchTextType();
+        List<SearchType> searchTextType = child.getXPathBuilder().getSearchTextType();
 
         assertThat(searchTextType, contains(types.toArray()));
     }

@@ -31,7 +31,7 @@ public class DownloadButton extends SplitButton implements Download {
     @Override
     public boolean download(String fileName) {
         openBrowse();
-        return executor.download(fileName, 10000L);
+        return executor().download(fileName, 10000L);
     }
 
     /**
@@ -42,10 +42,10 @@ public class DownloadButton extends SplitButton implements Download {
      */
     public boolean downloadFromMenu(String name, String fileName) {
         clickOnMenu(name);
-        return executor.download(fileName, 10000L);
+        return executor().download(fileName, 10000L);
     }
 
     private void openBrowse() {
-        executor.browse(this);
+        executor().browse(this);
     }
 }

@@ -31,9 +31,9 @@ public class Tab extends WebLocator implements ITab {
     }
 
     private String getTitlePath(boolean active) {
-        WebLocator link = new WebLocator().setText(getPathBuilder().getText(), SearchType.EQUALS);
+        WebLocator link = new WebLocator().setText(getXPathBuilder().getText(), SearchType.EQUALS);
         String isActive = active ? "@class='active'" : "not(@class='active')";
-        WebLocator el = new WebLocator().setTag("ul").setClasses(getPathBuilder().getBaseCls());
+        WebLocator el = new WebLocator().setTag("ul").setClasses(getXPathBuilder().getBaseCls());
         return el.getXPath() + "//li[" + isActive + "]" + link.getXPath();
     }
 
@@ -46,8 +46,8 @@ public class Tab extends WebLocator implements ITab {
     public boolean setActive() {
         boolean activated = isActive();
         if (!activated) {
-            WebLocator locator1 = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(false));
-            WebLocator titleElement = locator1.setInfoMessage(getPathBuilder().getText() + " Tab");
+            WebLocator locator1 = new WebLocator(getXPathBuilder().getContainer()).setElPath(getTitlePath(false));
+            WebLocator titleElement = locator1.setInfoMessage(getXPathBuilder().getText() + " Tab");
             activated = titleElement.click();
         }
         if (activated) {
@@ -58,7 +58,7 @@ public class Tab extends WebLocator implements ITab {
 
     @Override
     public boolean isActive() {
-        WebLocator locator = new WebLocator(getPathBuilder().getContainer()).setElPath(getTitlePath(true));
+        WebLocator locator = new WebLocator(getXPathBuilder().getContainer()).setElPath(getTitlePath(true));
         return new ConditionManager(Duration.ofMillis(200)).add(new RenderSuccessCondition(locator)).execute().isSuccess();
     }
 }

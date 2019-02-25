@@ -1,14 +1,13 @@
 package com.sdl.selenium.extjs3.button;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SplitButton extends Button {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SplitButton.class);
 
     public SplitButton() {
         setClassName("SplitButton");
@@ -16,12 +15,12 @@ public class SplitButton extends Button {
         setVisibility(true);
     }
 
-    public SplitButton(ExtJsComponent container) {
+    public SplitButton(Locator container) {
         this();
         setContainer(container);
     }
 
-    public SplitButton(ExtJsComponent container, String text) {
+    public SplitButton(Locator container, String text) {
         this(container);
         setText(text);
     }
@@ -32,29 +31,29 @@ public class SplitButton extends Button {
 
     public boolean clickOnMenu(String[] menuOptions) {
         int n = menuOptions.length;
-        LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
+        log.debug("clickOnMenu : " + menuOptions[n - 1]);
         ready();
         String info = toString();
         if (isDisabled()) {
             // waiting period for some buttons to become enabled (monitor valid)
-            LOGGER.debug("Button is disabled. Waiting ...");
+            log.debug("Button is disabled. Waiting ...");
             Utils.sleep(1000);
         }
         if (isEnabled()) {
-            LOGGER.info("Click on button " + info);
+            log.info("Click on button " + info);
             // TODO try to use Menu class for implementing select item
 //            click();
             showMenu();
             WebLocator menu = new WebLocator("x-menu-floating");
             if (WebDriverConfig.isIE()) {
                 if (menu.isVisible()) {
-                    LOGGER.info("In IE is visible");
+                    log.info("In IE is visible");
                 }
             } else {
                 menu.setStyle("visibility: visible;");
             }
             menu.setInfoMessage("active menu");
-            ExtJsComponent option = new ExtJsComponent(menu);
+            WebLocator option = new WebLocator(menu);
             for (String menuOption : menuOptions) {
                 option.setText(menuOption);
                 if (!option.mouseOver()) {
@@ -62,14 +61,14 @@ public class SplitButton extends Button {
                 }
             }
             if (option.clickAt()) {
-                LOGGER.info("Button Select menu option : " + option.getPathBuilder().getText());
+                log.info("Button Select menu option : " + option.getXPathBuilder().getText());
                 return true;
             } else {
-                LOGGER.warn("Could not locate option '" + option.getPathBuilder().getText() + "'. Performing simple click on button : " + info);
+                log.warn("Could not locate option '" + option.getXPathBuilder().getText() + "'. Performing simple click on button : " + info);
                 clickAt();
             }
         } else {
-            LOGGER.error("(" + info + ") doesn't exists or is disabled. " + getXPath());
+            log.error("(" + info + ") doesn't exists or is disabled. " + getXPath());
         }
         return false;
     }

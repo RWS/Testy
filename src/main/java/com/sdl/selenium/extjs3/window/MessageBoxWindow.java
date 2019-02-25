@@ -103,7 +103,7 @@ public class MessageBoxWindow extends Window {
         }
         String msg = getMessage();
         if (msg != null) {
-            LOGGER.info("Click on button " + button.getPathBuilder().getText() + " in the window with message: " + msg);
+            LOGGER.info("Click on button " + button.getXPathBuilder().getText() + " in the window with message: " + msg);
             button.click();
         } else {
             LOGGER.warn("There is no Message or Dialog");

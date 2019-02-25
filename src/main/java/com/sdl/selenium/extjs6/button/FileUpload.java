@@ -43,6 +43,6 @@ public class FileUpload extends TextField implements Upload {
      * @return true | false
      */
     private boolean upload(WebLocator el, String filePath) {
-        return executor.browse(el) && executor.upload(filePath);
+        return executor().browse(el) && executor().upload(filePath);
     }
 }

@@ -1,27 +1,24 @@
 package com.sdl.selenium.web.table;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Cell extends AbstractCell {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Cell.class);
 
     public Cell() {
         setRenderMillis(200);
         setClassName("Cell");
         setTag("td");
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
-    public Cell(WebLocator container) {
+    public Cell(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Cell(WebLocator container, int columnIndex) {
+    public Cell(Locator container, int columnIndex) {
         this(container);
         setPosition(columnIndex);
     }
@@ -37,12 +34,12 @@ public class Cell extends AbstractCell {
         setText(columnText, searchTypes);
     }
 
-    public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
+    public Cell(Locator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
         setText(columnText, searchTypes);
     }
 
-    protected XPathBuilder createXPathBuilder() {
+    public XPathBuilder createXPathBuilder() {
         return new XPathBuilder() {
             @Override
             protected String addPositionToPath(String itemPath) {

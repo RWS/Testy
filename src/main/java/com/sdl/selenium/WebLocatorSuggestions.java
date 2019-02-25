@@ -101,7 +101,7 @@ public class WebLocatorSuggestions {
         }
 
         if (webLocator.currentElement != null || webLocator.isElementPresent()) {
-            if (webLocator.currentElement.isDisplayed()) {
+            if (webLocator.getWebElement().isDisplayed()) {
                 LOGGER.debug("The element already exists: {}", WebLocatorUtils.getHtmlTree(webLocator));
             } else {
                 LOGGER.info("The element already exists but it is not visible: {}", WebLocatorUtils.getHtmlTree(webLocator));
@@ -109,14 +109,14 @@ public class WebLocatorSuggestions {
             return webLocator;
         }
 
-        WebLocator parent = webLocator.getPathBuilder().getContainer();
+        WebLocator parent = webLocator.getXPathBuilder().getContainer();
         if (parent != null && !parent.isElementPresent()) {
             LOGGER.warn("The container ({}) of this webLocator ({}) was not found.", parent.getXPath(), webLocator.getXPath());
             return null;
         }
 
         //if the WebLocator should have a label check that it actually exists and try to offer suggestions if it doesn't.
-        if (webLocator.getPathBuilder().getLabel() != null) {
+        if (webLocator.getXPathBuilder().getLabel() != null) {
             WebLocator result = suggestLabelCorrections(webLocator);
             if (result != null) {
 //                return getElementSuggestion(result);
@@ -153,7 +153,7 @@ public class WebLocatorSuggestions {
     private static WebLocator getClone(WebLocator originalWebLocator) {
         try {
             WebLocator webLocator = originalWebLocator.getClass().newInstance();
-            XPathBuilder builder = (XPathBuilder) originalWebLocator.getPathBuilder().clone();
+            XPathBuilder builder = (XPathBuilder) originalWebLocator.getXPathBuilder().clone();
             webLocator.setPathBuilder(builder);
             return webLocator;
         } catch (IllegalAccessException | InstantiationException | CloneNotSupportedException e) {
@@ -167,7 +167,7 @@ public class WebLocatorSuggestions {
      */
     private static WebLocator suggestLabelCorrections(WebLocator webLocator) {
 
-        XPathBuilder xPathBuilder = webLocator.getPathBuilder();
+        XPathBuilder xPathBuilder = webLocator.getXPathBuilder();
 
         String label = xPathBuilder.getLabel();
 
@@ -188,7 +188,7 @@ public class WebLocatorSuggestions {
 
             LOGGER.info("Found the label: {}", getMatchedElementsHtml(labelLocator));
 
-            String tag = webLocator.getPathBuilder().getTag();
+            String tag = webLocator.getXPathBuilder().getTag();
 
             WebLocator labelPosition = new WebLocator(labelLocator)
                     .setElPath(xPathBuilder.getLabelPosition() + tag);
@@ -288,7 +288,7 @@ public class WebLocatorSuggestions {
 
     private static WebLocator suggestAttributeSubsets(WebLocator view) {
 
-        List<String> nonNullFields = getNonNullFields(view.getPathBuilder());
+        List<String> nonNullFields = getNonNullFields(view.getXPathBuilder());
 
         String[] originalFields = new String[nonNullFields.size()];
         nonNullFields.toArray(originalFields);
@@ -378,7 +378,7 @@ public class WebLocatorSuggestions {
         //all changes will be kept here and restored after the xPath is generated.
         Map<String, Object> backup = new HashMap<>();
 
-        XPathBuilder builder = webLocator.getPathBuilder();
+        XPathBuilder builder = webLocator.getXPathBuilder();
 
         for (String fieldName : differences) {
             try {

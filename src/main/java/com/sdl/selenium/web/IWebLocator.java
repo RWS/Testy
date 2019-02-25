@@ -1,5 +1,7 @@
 package com.sdl.selenium.web;
 
+import org.openqa.selenium.WebElement;
+
 public interface IWebLocator {
 
     String getCssValue(String propertyName);
@@ -9,6 +11,8 @@ public interface IWebLocator {
     String getAttributeClass();
 
     String getCurrentElementPath();
+
+    WebElement getWebElement();
 
     /**
      * @param attribute e.g. class, id
