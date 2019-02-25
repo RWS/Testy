@@ -67,7 +67,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     protected void doSelect() {
         CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
         if (!checkBox.waitToRender(500L, false)) {
-            checkBox.setBaseCls("x-grid-checkcolumn");
+            checkBox.setBaseCls("x-selmodel-checkbox");
         }
         checkBox.click();
     }
