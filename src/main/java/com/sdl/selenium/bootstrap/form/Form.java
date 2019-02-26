@@ -1,6 +1,6 @@
 package com.sdl.selenium.bootstrap.form;
 
-import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
@@ -18,7 +18,7 @@ import com.sdl.selenium.web.WebLocator;
  * form.ready();
  * }</pre>
  */
-public class Form extends WebLocator implements IWebLocator {
+public class Form extends Locator {
 
     public Form() {
         setClassName("Form");
@@ -27,7 +27,7 @@ public class Form extends WebLocator implements IWebLocator {
         setTemplateTitle(e);
     }
 
-    public Form(WebLocator container) {
+    public Form(Locator container) {
         this();
         setContainer(container);
     }
@@ -36,7 +36,7 @@ public class Form extends WebLocator implements IWebLocator {
         this(null, title);
     }
 
-    public Form(WebLocator container, String title) {
+    public Form(Locator container, String title) {
         this(container);
         setTitle(title, SearchType.EQUALS);
     }

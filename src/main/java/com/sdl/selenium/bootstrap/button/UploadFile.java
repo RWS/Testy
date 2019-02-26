@@ -31,12 +31,12 @@ public class UploadFile extends WebLocator implements Upload {
     /**
      * @param container parent
      */
-    public UploadFile(WebLocator container) {
+    public UploadFile(Locator container) {
         this();
         setContainer(container);
     }
 
-    public UploadFile(WebLocator container, String label) {
+    public UploadFile(Locator container, String label) {
         this(container);
         setLabel(label);
     }

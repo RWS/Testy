@@ -1,15 +1,13 @@
 package com.sdl.selenium.extjs3.form;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICheck;
+import com.sdl.selenium.web.Locator;
 
 /**
  * defaults:
  *    - tag      : input
  *    - baseCls  : x-form-checkbox
  */
-public class CheckBox extends ExtJsComponent implements ICheck {
+public class CheckBox extends com.sdl.selenium.web.form.CheckBox {
 
     public CheckBox() {
         setClassName("CheckBox");
@@ -17,18 +15,13 @@ public class CheckBox extends ExtJsComponent implements ICheck {
         setBaseCls("x-form-checkbox");
     }
 
-    public CheckBox(WebLocator container) {
+    public CheckBox(Locator container) {
         this();
         setContainer(container);
     }
 
-    public CheckBox(WebLocator container, String name) {
+    public CheckBox(Locator container, String name) {
         this(container);
         setName(name);
-    }
-
-    @Override
-    public boolean isSelected(){
-        return isElementPresent() && executor().isSelected(this);
     }
 }

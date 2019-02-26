@@ -1,7 +1,6 @@
 package com.sdl.selenium.web.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,8 +11,8 @@ import java.util.Map;
  * This class will load properties from System properties first, if not found then will load them from loaded file
  *
  */
+@Slf4j
 public class PropertiesReader extends OrderedProperties {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesReader.class);
 
     public static String RESOURCES_PATH = "src/test/resources/";
     public static String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
@@ -41,7 +40,7 @@ public class PropertiesReader extends OrderedProperties {
             try {
                 load(inputStream);
             } catch (IOException e) {
-                LOGGER.error("IOException: {}", e);
+                log.error("IOException: {}", e);
             }
         }
     }
@@ -52,7 +51,7 @@ public class PropertiesReader extends OrderedProperties {
             try {
                 fileInputStream = new FileInputStream(resourcePath);
             } catch (IOException e) {
-                LOGGER.error("IOException reading resource {}; {}", resourcePath, e);
+                log.error("IOException reading resource {}; {}", resourcePath, e);
             }
         }
         return fileInputStream;
@@ -64,7 +63,7 @@ public class PropertiesReader extends OrderedProperties {
         try {
             load(stream);
         } catch (IOException e) {
-            LOGGER.error("IOException: {}", e);
+            log.error("IOException: {}", e);
         }
     }
 

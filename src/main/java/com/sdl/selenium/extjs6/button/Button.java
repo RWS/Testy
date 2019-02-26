@@ -2,39 +2,30 @@ package com.sdl.selenium.extjs6.button;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 
-public class Button extends WebLocator {
+public class Button extends com.sdl.selenium.web.button.Button {
 
     public Button() {
         setClassName("Button");
         setBaseCls("x-btn");
         setTag("a");
-        setTemplate("icon-cls", "count(.//*[contains(concat(' ', @class, ' '), ' %s ')]) > 0");
         getXPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
-    public Button(WebLocator container) {
+    public Button(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Button(WebLocator container, String text) {
+    public Button(Locator container, String text) {
+        this(container, text, SearchType.EQUALS);
+    }
+
+    public Button(Locator container, String text, SearchType ... searchTypes) {
         this(container);
-        setText(text, SearchType.EQUALS);
-    }
-
-    private String iconCls;
-
-    public String getIconCls() {
-        return iconCls;
-    }
-
-    public <T extends Button> T setIconCls(final String iconCls) {
-        this.iconCls = iconCls;
-        setTemplateValue("icon-cls", iconCls);
-        return (T) this;
+        setText(text, searchTypes);
     }
 
     public boolean showMenu() {

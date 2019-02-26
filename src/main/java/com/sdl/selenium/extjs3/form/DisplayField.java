@@ -1,6 +1,6 @@
 package com.sdl.selenium.extjs3.form;
 
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.Locator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,17 +13,17 @@ public class DisplayField extends TextField {
         setTag("*");
     }
 
-    public DisplayField(WebLocator container) {
+    public DisplayField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DisplayField(WebLocator container, String label) {
+    public DisplayField(Locator container, String label) {
         this(container);
         setLabel(label);
     }
 
-    public DisplayField(String name, WebLocator container) {
+    public DisplayField(String name, Locator container) {
         this(container);
         setName(name);
     }

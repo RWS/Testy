@@ -10,14 +10,14 @@ import org.openqa.selenium.support.ui.Select;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Slf4j
-public class ComboBox extends Locator implements ICombo {
+public class ComboBox extends TextField implements ICombo {
 
     public ComboBox() {
         setClassName("ComboBox");
         setTag("select");
     }
 
-    public ComboBox(WebLocator container) {
+    public ComboBox(Locator container) {
         this();
         setContainer(container);
     }
@@ -72,16 +72,6 @@ public class ComboBox extends Locator implements ICombo {
 
     @Override
     public boolean collapse() {
-        return false;
-    }
-
-    @Override
-    public boolean clear() {
-        return false;
-    }
-
-    @Override
-    public boolean doClear() {
         return false;
     }
 }

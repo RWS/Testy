@@ -1,8 +1,8 @@
 package com.sdl.selenium.web.button;
 
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.Locator;
 
-public class InputButton extends WebLocator implements IButton {
+public class InputButton extends Button {
 
     public InputButton() {
         setClassName("InputButton");
@@ -13,7 +13,7 @@ public class InputButton extends WebLocator implements IButton {
     /**
      * @param container is parent of item
      */
-    public InputButton(WebLocator container) {
+    public InputButton(Locator container) {
         this();
         setContainer(container);
     }
@@ -22,7 +22,7 @@ public class InputButton extends WebLocator implements IButton {
      * @param container is parent of item
      * @param text      is value from input item
      */
-    public InputButton(WebLocator container, String text) {
+    public InputButton(Locator container, String text) {
         this(container);
         setText(text);
     }

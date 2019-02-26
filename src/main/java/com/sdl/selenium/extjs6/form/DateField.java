@@ -39,12 +39,12 @@ public class DateField extends TextField {
         setClassName("DateField");
     }
 
-    public DateField(WebLocator container) {
+    public DateField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DateField(WebLocator container, String label) {
+    public DateField(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
@@ -105,7 +105,7 @@ public class DateField extends TextField {
     }
 
     private boolean foundYear(int yearInt, boolean goNext) {
-        WebLink yearEl = new WebLink(yearContainer).setResultIdx(12);
+        WebLocator yearEl = new WebLocator(yearContainer).setTag("a").setResultIdx(12);
         int actualYear = Integer.parseInt(yearEl.getText());
         return goNext ? yearInt <= actualYear : yearInt >= actualYear;
     }

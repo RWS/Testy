@@ -2,8 +2,6 @@ package com.sdl.selenium.bootstrap.button;
 
 import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.button.IButton;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -17,19 +15,7 @@ import com.sdl.selenium.web.button.IButton;
  * saveButton.click();
  * }</pre>
  */
-public class Button extends Locator implements IButton {
-
-    private String iconCls;
-
-    public String getIconCls() {
-        return iconCls;
-    }
-
-    public <T extends Button> T setIconCls(final String iconCls) {
-        this.iconCls = iconCls;
-        setTemplateValue("icon-cls", iconCls);
-        return (T) this;
-    }
+public class Button extends com.sdl.selenium.web.button.Button {
 
     public Button() {
         setClassName("Button");
@@ -38,12 +24,12 @@ public class Button extends Locator implements IButton {
         setTemplate("icon-cls", "count(.//*[contains(@class, '%s')]) > 0");
     }
 
-    public Button(WebLocator container) {
+    public Button(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Button(WebLocator container, String text) {
+    public Button(Locator container, String text) {
         this(container);
         setText(text);
         setSearchTextType(SearchType.EQUALS);
@@ -65,35 +51,5 @@ public class Button extends Locator implements IButton {
     public boolean isEnabled() {
         String cls = getAttributeClass();
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
-    }
-
-    @Override
-    public boolean clickAt() {
-        return false;
-    }
-
-    @Override
-    public boolean doClickAt() {
-        return false;
-    }
-
-    @Override
-    public boolean click() {
-        return false;
-    }
-
-    @Override
-    public boolean doClick() {
-        return false;
-    }
-
-    @Override
-    public boolean doubleClickAt() {
-        return false;
-    }
-
-    @Override
-    public boolean doDoubleClickAt() {
-        return false;
     }
 }

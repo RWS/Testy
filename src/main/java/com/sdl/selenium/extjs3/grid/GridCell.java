@@ -1,7 +1,7 @@
 package com.sdl.selenium.extjs3.grid;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.table.AbstractCell;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class GridCell extends AbstractCell {
         setInfoMessage("td[" + columnIndex + "]//x-grid3-cell-inner");
     }
 
-    public GridCell(String text, WebLocator container) {
+    public GridCell(String text, Locator container) {
         this();
         setContainer(container);
         setText(text);
@@ -34,7 +34,7 @@ public class GridCell extends AbstractCell {
         setClasses("x-grid3-cell-inner");
     }
 
-    public GridCell(WebLocator container, String text, SearchType... searchTypes) {
+    public GridCell(Locator container, String text, SearchType... searchTypes) {
         this();
         setContainer(container);
         setText(text, searchTypes);
@@ -47,7 +47,7 @@ public class GridCell extends AbstractCell {
         setText(columnText, searchTypes);
     }
 
-    protected XPathBuilder createXPathBuilder() {
+    public XPathBuilder createXPathBuilder() {
         return new XPathBuilder() {
             @Override
             protected String addPositionToPath(String itemPath) {

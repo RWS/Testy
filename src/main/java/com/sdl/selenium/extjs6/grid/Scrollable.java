@@ -3,7 +3,7 @@ package com.sdl.selenium.extjs6.grid;
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.IActions;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.Locator;
 
 public interface Scrollable extends IActions {
 
@@ -85,11 +85,11 @@ public interface Scrollable extends IActions {
     }
 
     @Deprecated
-    default boolean scrollTo(WebLocator el) {
+    default boolean scrollTo(Locator el) {
         return scrollPageDownTo(el);
     }
 
-    default boolean scrollPageDownTo(WebLocator el) {
+    default boolean scrollPageDownTo(Locator el) {
         el.setVisibility(true);
         boolean scroll = true;
         int timeout = 0;

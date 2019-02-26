@@ -1,7 +1,8 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICombo;
+import com.sdl.selenium.web.form.ComboBox;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -23,7 +24,7 @@ import com.sdl.selenium.web.form.ICombo;
  * selectPicker.select("Manual");
  * }</pre>
  */
-public class SelectPicker extends WebLocator implements ICombo {
+public class SelectPicker extends ComboBox {
 
     public SelectPicker() {
         setClassName("SelectPicker");
@@ -31,12 +32,12 @@ public class SelectPicker extends WebLocator implements ICombo {
         setTag("button");
     }
 
-    public SelectPicker(WebLocator container) {
+    public SelectPicker(Locator container) {
         this();
         setContainer(container);
     }
 
-    public SelectPicker(WebLocator container, String label) {
+    public SelectPicker(Locator container, String label) {
         this(container);
         setLabel(label);
     }
@@ -77,15 +78,5 @@ public class SelectPicker extends WebLocator implements ICombo {
     public boolean isEnabled() {
         String cls = getAttributeClass();
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
-    }
-
-    @Override
-    public WebLocator sendKeys() {
-        return null;
-    }
-
-    @Override
-    public WebLocator doSendKeys() {
-        return null;
     }
 }

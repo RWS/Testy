@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs3.tab;
 
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
@@ -26,7 +27,7 @@ public class TabPanel extends ExtJsComponent {
         setText(text, SearchType.EQUALS);
     }
 
-    public TabPanel(WebLocator container, String text) {
+    public TabPanel(Locator container, String text) {
         this(text);
         setContainer(container);
     }
@@ -51,7 +52,7 @@ public class TabPanel extends ExtJsComponent {
         return "//*[" + selector + "]";
     }
 
-    protected XPathBuilder createXPathBuilder() {
+    public XPathBuilder createXPathBuilder() {
         return new XPathBuilder() {
             /**
              * this method return the path of only one visible div from the main TabPanel

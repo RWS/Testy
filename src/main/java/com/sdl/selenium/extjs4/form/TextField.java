@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs4.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
@@ -13,12 +14,12 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         setLabelPosition("//following-sibling::*//");
     }
 
-    public TextField(WebLocator container){
+    public TextField(Locator container){
         this();
         setContainer(container);
     }
 
-    public TextField(WebLocator container, String label) {
+    public TextField(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE);
     }

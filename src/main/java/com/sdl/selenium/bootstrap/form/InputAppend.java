@@ -1,5 +1,6 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
 import org.slf4j.Logger;
@@ -13,12 +14,12 @@ public class InputAppend extends TextField {
         setType("text");
     }
 
-    public InputAppend(WebLocator container) {
+    public InputAppend(Locator container) {
         this();
         setContainer(container);
     }
 
-    public InputAppend(WebLocator container, String label) {
+    public InputAppend(Locator container, String label) {
         this(container);
         setLabel(label);
     }

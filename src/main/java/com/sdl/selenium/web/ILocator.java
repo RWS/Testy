@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
@@ -7,6 +8,7 @@ import org.openqa.selenium.By;
 public interface ILocator {
 
     @Slf4j
+    @Setter
     class Builder {
         private static XPathBuilder xpath;
 
@@ -18,8 +20,16 @@ public interface ILocator {
 
         private static XPathBuilder get() {
             log.info("{}", "get");
-            return xpath == null ? Builder.create() : xpath;
+            return Builder.xpath == null ? create() : xpath;
         }
+
+        private static XPathBuilder set(final XPathBuilder xPathBuilder) {
+            return Builder.xpath = xPathBuilder;
+        }
+    }
+
+    default  void setXPathBuilder(final XPathBuilder pathBuilder) {
+        Builder.set(pathBuilder);
     }
 
     default XPathBuilder createXPathBuilder() {
@@ -112,15 +122,20 @@ public interface ILocator {
         return (T) this;
     }
 
-//   default <T extends ILocator> T setSearchLabelType(SearchType... searchLabelType){Builder.get().setId(id);return (T) this; }
-
     default <T extends ILocator> T setStyle(final String style) {
         Builder.get().setStyle(style);
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     default <T extends ILocator> T setTitle(final String title, SearchType... searchTypes) {
         Builder.get().setTitle(title, searchTypes);
+        return (T) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    default <T extends ILocator> T setSearchTitleType(SearchType... searchTitleTypes) {
+        Builder.get().setSearchTitleType(searchTitleTypes);
         return (T) this;
     }
 

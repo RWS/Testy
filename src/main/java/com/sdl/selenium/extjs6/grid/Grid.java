@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
@@ -23,7 +24,7 @@ public class Grid extends Table implements Scrollable {
         setTemplateTitle(header);
     }
 
-    public Grid(WebLocator container) {
+    public Grid(Locator container) {
         this();
         setContainer(container);
     }

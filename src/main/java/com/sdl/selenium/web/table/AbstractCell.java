@@ -38,4 +38,8 @@ public abstract class AbstractCell extends Locator implements ICell {
     public boolean doDoubleClickAt() {
         return executor().doubleClickAt(this);
     }
+
+    public boolean sendKeys(CharSequence... charSequences) {
+        return executor().sendKeys(this, charSequences);
+    }
 }

@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs6.tab;
 import com.google.common.base.Strings;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
@@ -16,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
-public class Tab extends WebLocator implements ITab {
+public class Tab extends Locator implements ITab {
     private String iconCls;
 
     public Tab() {
@@ -33,12 +34,12 @@ public class Tab extends WebLocator implements ITab {
         setTitle(title, types.stream().toArray(SearchType[]::new));
     }
 
-    public Tab(WebLocator container) {
+    public Tab(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Tab(WebLocator container, String title, SearchType... searchTypes) {
+    public Tab(Locator container, String title, SearchType... searchTypes) {
         this(title, searchTypes);
         setContainer(container);
     }
@@ -74,7 +75,7 @@ public class Tab extends WebLocator implements ITab {
         return getXPathBuilder().getRoot() + getXPathBuilder().getTag() + "[" + selector + "]";
     }
 
-    protected XPathBuilder createXPathBuilder() {
+    public XPathBuilder createXPathBuilder() {
         return new XPathBuilder() {
             /**
              * this method return the path of only one visible div from the main TabPanel
@@ -115,13 +116,45 @@ public class Tab extends WebLocator implements ITab {
         return new ConditionManager(Duration.ofMillis(200)).add(new RenderSuccessCondition(this)).execute().isSuccess();
     }
 
+    @Override
     public boolean isTabDisplayed() {
         return getTitleInactiveEl().ready();
     }
 
+    @Override
     public boolean close() {
         WebLocator titleEl = getTitleInactiveEl().setClasses("x-tab-active");
         WebLocator closeEl = new WebLocator(titleEl).setClasses("x-tab-close-btn");
         return closeEl.click();
+    }
+
+    @Override
+    public boolean clickAt() {
+        return false;
+    }
+
+    @Override
+    public boolean doClickAt() {
+        return false;
+    }
+
+    @Override
+    public boolean click() {
+        return false;
+    }
+
+    @Override
+    public boolean doClick() {
+        return false;
+    }
+
+    @Override
+    public boolean doubleClickAt() {
+        return false;
+    }
+
+    @Override
+    public boolean doDoubleClickAt() {
+        return false;
     }
 }

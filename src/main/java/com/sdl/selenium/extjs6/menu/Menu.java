@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.menu;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
@@ -9,7 +10,7 @@ import com.sdl.selenium.web.link.WebLink;
 import java.util.Arrays;
 import java.util.List;
 
-public class Menu extends WebLocator {
+public class Menu extends Locator {
 
     public Menu() {
         setClassName("Menu");
@@ -44,7 +45,7 @@ public class Menu extends WebLocator {
         return Arrays.asList(menuValues);
     }
 
-    public boolean showMenu(WebLocator parent) {
+    public boolean showMenu(Locator parent) {
         final String id = parent.getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
             String script = "return (function(){var b = Ext.getCmp('" + id + "'); if(b.menu.isHidden()) {b.showMenu();} return !b.menu.isHidden();})()";
@@ -54,7 +55,7 @@ public class Menu extends WebLocator {
         return false;
     }
 
-    public boolean hideMenu(WebLocator parent) {
+    public boolean hideMenu(Locator parent) {
         final String parentId = parent.getAttributeId();
         return hideMenu(parentId);
     }

@@ -74,6 +74,6 @@ public class Row extends AbstractRow {
 
     @Override
     public String getText() {
-        return null;
+        return executor().getText(this);
     }
 }

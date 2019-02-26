@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.notification;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
@@ -7,7 +8,7 @@ import com.sdl.selenium.web.utils.Utils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Notification extends WebLocator {
+public class Notification extends Locator {
 
     public Notification() {
         setClasses("msg", "x-border-box");

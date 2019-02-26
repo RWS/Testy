@@ -13,12 +13,12 @@ public class MultipleSelect extends ComboBox {
         setClassName("MultipleSelect");
     }
 
-    public MultipleSelect(WebLocator container) {
+    public MultipleSelect(Locator container) {
         this();
         setContainer(container);
     }
 
-    public MultipleSelect(WebLocator container, String label) {
+    public MultipleSelect(Locator container, String label) {
         this(container);
         setLabel(label);
     }

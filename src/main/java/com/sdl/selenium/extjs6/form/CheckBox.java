@@ -3,9 +3,8 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICheck;
 
-public class CheckBox extends Locator implements ICheck {
+public class CheckBox extends com.sdl.selenium.web.form.CheckBox {
 
     public CheckBox() {
         setClassName("CheckBox");
@@ -39,35 +38,5 @@ public class CheckBox extends Locator implements ICheck {
     public boolean isEnabled() {
         String cls = getAttributeClass();
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
-    }
-
-    @Override
-    public boolean clickAt() {
-        return false;
-    }
-
-    @Override
-    public boolean doClickAt() {
-        return false;
-    }
-
-    @Override
-    public boolean click() {
-        return false;
-    }
-
-    @Override
-    public boolean doClick() {
-        return false;
-    }
-
-    @Override
-    public boolean doubleClickAt() {
-        return false;
-    }
-
-    @Override
-    public boolean doDoubleClickAt() {
-        return false;
     }
 }

@@ -1,21 +1,19 @@
 package com.sdl.selenium.conditions;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 // TODO is possible that ElementRemovedSuccessCondition is executed because some error messages have been arrived
 // think about some solutions to fix this.
 public class ElementRemovedSuccessCondition extends SuccessCondition implements RenderCondition {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ElementRemovedSuccessCondition.class);
 
-    private WebLocator component;
+    private Locator component;
 
     private ElementRemovedSuccessCondition(String message) {
         super(message);
     }
 
-    public ElementRemovedSuccessCondition(WebLocator component) {
+    public ElementRemovedSuccessCondition(Locator component) {
         this(component.toString());
         this.component = component;
     }
@@ -30,7 +28,7 @@ public class ElementRemovedSuccessCondition extends SuccessCondition implements 
     }
 
     @Override
-    public WebLocator getComponent() {
+    public Locator getComponent() {
         return component;
     }
 
@@ -39,7 +37,7 @@ public class ElementRemovedSuccessCondition extends SuccessCondition implements 
      */
     @Override
     public String getResultMessage() {
-        return component.getText();
+        return component.getXPathBuilder().getText();
     }
 
     public String toString() {

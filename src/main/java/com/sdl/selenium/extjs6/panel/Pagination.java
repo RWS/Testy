@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.panel;
 
 import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.extjs6.form.TextField;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
@@ -11,7 +12,7 @@ public class Pagination extends ToolBar {
         setClassName("Pagination");
     }
 
-    public Pagination(WebLocator container) {
+    public Pagination(Locator container) {
         this();
         setContainer(container);
     }

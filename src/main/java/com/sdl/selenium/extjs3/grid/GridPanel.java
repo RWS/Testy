@@ -4,9 +4,9 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
-import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.extjs3.panel.Panel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractRow;
@@ -43,7 +43,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         setClasses(cls);
     }
 
-    public GridPanel(WebLocator container) {
+    public GridPanel(Locator container) {
         this();
         setContainer(container);
     }
@@ -53,25 +53,25 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         this.searchColumnId = searchColumnId;
     }
 
-    public GridPanel(WebLocator container, String searchColumnId) {
+    public GridPanel(Locator container, String searchColumnId) {
         this(container);
         setSearchColumnId(searchColumnId);
     }
 
-    public GridPanel(WebLocator container, String cls, String searchColumnId) {
+    public GridPanel(Locator container, String cls, String searchColumnId) {
         this(container);
         setClasses(cls);
         setSearchColumnId(searchColumnId);
     }
 
-    public static GridPanel getInstance(WebLocator container, String searchColumnId) {
+    public static GridPanel getInstance(Locator container, String searchColumnId) {
         return new GridPanel(container, searchColumnId);
     }
 
     // TODO find better solution for GridPanel that is used in TabPanel
     public static GridPanel getInstanceByTabPanel(TabPanel tabPanel, String searchColumnId) {
         GridPanel gridPanel = new GridPanel();
-        WebLocator container = tabPanel.getXPathBuilder().getContainer();
+        Locator container = tabPanel.getXPathBuilder().getContainer();
         gridPanel.setContainer(container);
 
         tabPanel.setContainer(null); // hack to have path without container
@@ -112,7 +112,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     }
 
     public boolean waitToLoad(int seconds) {
-        ExtJsComponent mask = new ExtJsComponent("x-mask-loading", this);
+        WebLocator mask = new WebLocator("x-mask-loading", this);
         Condition condition = new ConditionManager(seconds * 1000).add(new ElementRemovedSuccessCondition(mask)).execute();
         isLoaded = condition.isSuccess();
         if (!isLoaded) {
@@ -198,12 +198,10 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return executeScrollScript("scrollPageDown", script);
     }
 
-    @Override
     public boolean rowSelect(String searchText) {
         return rowSelect(searchText, SearchType.EQUALS);
     }
 
-    @Override
     public boolean rowSelect(String searchText, SearchType... searchTypes) {
         ready(true);
         GridCell cell = getCell(searchText, searchTypes);
@@ -396,8 +394,8 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (ready()) {
             String path = getGridCell(startRowIndex).getXPath();
             WebLocator currentElement = new WebLocator().setElPath(path);
-            while (getWebElement().isElementPresent()) {
-                String option = getWebElement().getText();
+            while (currentElement.isElementPresent()) {
+                String option = currentElement.getText();
                 //LOGGER.debug("row[" + i + "]" + option);
                 if (option != null && option.contains(searchElement)) {
                     LOGGER.debug("The '" + searchElement + "' element index is " + startRowIndex);
@@ -406,7 +404,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 }
                 startRowIndex++;
                 path = getGridCell(startRowIndex).getXPath();
-                getWebElement().setElPath(path);
+                currentElement.setElPath(path);
             }
             if (index == -1) {
                 LOGGER.warn("The element '" + searchElement + "' was not found.");

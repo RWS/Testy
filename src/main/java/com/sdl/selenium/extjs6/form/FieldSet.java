@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 
 public class FieldSet extends WebLocator {
@@ -12,12 +13,12 @@ public class FieldSet extends WebLocator {
         setTemplate("text", "count(.//*[normalize-space(.)=%s]) > 0");
     }
 
-    public FieldSet(WebLocator container) {
+    public FieldSet(Locator container) {
         this();
         setContainer(container);
     }
 
-    public FieldSet(WebLocator container, String text) {
+    public FieldSet(Locator container, String text) {
         this(container);
         setText(text);
     }

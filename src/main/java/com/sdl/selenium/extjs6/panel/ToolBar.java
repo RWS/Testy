@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.panel;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 
 public class ToolBar extends WebLocator {
@@ -9,7 +10,7 @@ public class ToolBar extends WebLocator {
         setBaseCls("x-toolbar");
     }
 
-    public ToolBar(WebLocator container) {
+    public ToolBar(Locator container) {
         this();
         setContainer(container);
     }

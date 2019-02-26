@@ -1,13 +1,12 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
+@Slf4j
 public class RunExe {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RunExe.class);
 
     private static RunExe instance = new RunExe();
 
@@ -33,7 +32,7 @@ public class RunExe {
     private boolean doRun(String filePath) {
         try {
             Process process = Runtime.getRuntime().exec(filePath);
-            LOGGER.debug(filePath);
+            log.debug(filePath);
             if (0 == process.waitFor()) {
                 return true;
             }

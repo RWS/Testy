@@ -19,7 +19,7 @@ public class TreePanel extends ExtJsComponent {
         setClasses(cls);
     }
 
-    public TreePanel(WebLocator container){
+    public TreePanel(Locator container){
         this();
         setContainer(container);
     }

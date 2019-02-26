@@ -36,12 +36,12 @@ public class MultiSelect extends SelectPicker {
         super.setClassName("MultiSelect");
     }
 
-    public MultiSelect(WebLocator container) {
+    public MultiSelect(Locator container) {
         this();
         setContainer(container);
     }
 
-    public MultiSelect(WebLocator container, String label) {
+    public MultiSelect(Locator container, String label) {
         this(container);
         setLabel(label);
     }

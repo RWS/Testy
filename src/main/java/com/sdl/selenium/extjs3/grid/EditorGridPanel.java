@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.grid;
 import com.sdl.selenium.extjs3.form.ComboBox;
 import com.sdl.selenium.extjs3.form.TextArea;
 import com.sdl.selenium.extjs3.form.TextField;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
@@ -19,7 +20,7 @@ public class EditorGridPanel extends GridPanel {
         setClassName("EditorGridPanel");
     }
 
-    public EditorGridPanel(WebLocator container) {
+    public EditorGridPanel(Locator container) {
         this();
         setContainer(container);
     }
@@ -34,17 +35,17 @@ public class EditorGridPanel extends GridPanel {
         setSearchColumnId(searchColumnId);
     }
 
-    public EditorGridPanel(WebLocator container, String searchColumnId) {
+    public EditorGridPanel(Locator container, String searchColumnId) {
         this(container);
         setSearchColumnId(searchColumnId);
     }
 
-    public EditorGridPanel(WebLocator container, String searchColumnId, int clicksToEdit) {
+    public EditorGridPanel(Locator container, String searchColumnId, int clicksToEdit) {
         this(container, searchColumnId);
         this.clicksToEdit = clicksToEdit;
     }
 
-    public EditorGridPanel(WebLocator container, int clicksToEdit) {
+    public EditorGridPanel(Locator container, int clicksToEdit) {
         this(container);
         this.clicksToEdit = clicksToEdit;
     }
@@ -114,7 +115,7 @@ public class EditorGridPanel extends GridPanel {
         boolean selected;
         scrollTop();
         do {
-            selected = cell.sendKeys(Keys.TAB) != null;
+            selected = cell.sendKeys(Keys.TAB);
         } while (!selected && scrollPageDown());
         return startEdit(cell);
     }
@@ -123,7 +124,7 @@ public class EditorGridPanel extends GridPanel {
         boolean selected;
         scrollTop();
         do {
-            selected = cell.sendKeys(Keys.TAB) != null;
+            selected = cell.sendKeys(Keys.TAB);
         } while (!selected && scrollPageDown());
         return startEdit(cell, milliseconds);
     }

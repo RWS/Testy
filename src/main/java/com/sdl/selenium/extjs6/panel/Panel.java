@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.panel;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
@@ -13,12 +14,12 @@ public class Panel extends WebLocator {
         setTemplateTitle(new WebLocator(header));
     }
 
-    public Panel(WebLocator container) {
+    public Panel(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Panel(WebLocator container, String title) {
+    public Panel(Locator container, String title) {
         this(container);
         setTitle(title, SearchType.EQUALS);
     }

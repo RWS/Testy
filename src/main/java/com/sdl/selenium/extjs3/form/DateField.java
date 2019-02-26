@@ -29,17 +29,17 @@ public class DateField extends TextField {
         setClassName("DateField");
     }
 
-    public DateField(WebLocator container) {
+    public DateField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DateField(WebLocator container, String cls) {
+    public DateField(Locator container, String cls) {
         this(container);
         setClasses(cls);
     }
 
-    public DateField(String name, WebLocator container) {
+    public DateField(String name, Locator container) {
         this(container);
         setName(name);
     }

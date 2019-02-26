@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 
 public class Radio extends WebLocator {
@@ -12,12 +13,12 @@ public class Radio extends WebLocator {
         setLabelPosition("/../");
     }
 
-    public Radio(WebLocator container) {
+    public Radio(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Radio(WebLocator container, String label) {
+    public Radio(Locator container, String label) {
         this(container);
         setLabel(label);
     }

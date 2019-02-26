@@ -61,7 +61,7 @@ public class SelectFilesHandler {
         buttonElement.focus();
 //        buttonElement.sendKeys(Keys.TAB);
         Actions builder = new Actions(driver);
-        builder.moveToElement(buttonElement.currentElement).build().perform();
+        builder.moveToElement(buttonElement.getWebElement()).build().perform();
         builder.click().build().perform();
         driver.switchTo().defaultContent();
     }

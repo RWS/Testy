@@ -28,6 +28,8 @@ public interface IActions {
 
     boolean isEnabled();
 
+    boolean isDisplayed();
+
     boolean waitToRender();
 
     boolean waitToRender(final long millis);

@@ -24,42 +24,21 @@ public class Table extends Locator implements ITable<Row, Cell> {
         setTag("table");
     }
 
-    public Table(WebLocator container) {
+    public Table(Locator container) {
         this();
         setContainer(container);
     }
 
-    @Override
+    @Deprecated
     public boolean rowSelect(String searchText) {
         return rowSelect(searchText, SearchType.EQUALS);
     }
 
-    @Override
+    @Deprecated
     public boolean rowSelect(String searchText, SearchType... searchTypes) {
         ready(true);
         Cell cell = getCell(searchText, searchTypes);
-        return doCellSelect(cell);
-    }
-
-    private boolean doCellSelect(Cell cell) {
-        return doCellAction(cell, null);
-    }
-
-    private boolean doCellDoubleClickAt(Cell cell) {
-        return doCellAction(cell, "doubleClickAt");
-    }
-
-    private boolean doCellAction(Cell cell, String action) {
-        boolean selected;
-        if ("doubleClickAt".equals(action)) {
-            selected = cell.doubleClickAt();
-        } else {
-            selected = cell.click();
-        }
-        if (!selected) {
-            log.warn("The element '{}' is not present in the list.", cell);
-        }
-        return selected;
+        return cell.click();
     }
 
     /**
@@ -68,18 +47,21 @@ public class Table extends Locator implements ITable<Row, Cell> {
      * @param searchElement the searchElement of the table element on which the search is done
      * @return if a table contains a certain element
      */
+    @Deprecated
     public boolean isRowPresent(String searchElement) {
         ready();
         Cell cell = getCell(searchElement);
         return cell.isElementPresent();
     }
 
+    @Deprecated
     public Number getRowCount(String searchElement, SearchType... searchTypes) {
         ready();
         Cell cell = getCell(searchElement, searchTypes);
         return cell.size();
     }
 
+    @Deprecated
     public Number getRowCount(String searchElement) {
         return getRowCount(searchElement, SearchType.STARTS_WITH);
     }
@@ -218,6 +200,7 @@ public class Table extends Locator implements ITable<Row, Cell> {
         return columnsList;
     }
 
+    @Deprecated
     public String getText(String searchText, int columnId) {
         String text = null;
         Row row = new Row(this, searchText, SearchType.EQUALS);
@@ -229,6 +212,7 @@ public class Table extends Locator implements ITable<Row, Cell> {
         return text;
     }
 
+    @Deprecated
     public String getText(int rowIndex, int columnIndex) {
         return getCell(rowIndex, columnIndex).getText();
     }

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Slf4j
-public class WebLocator extends Locator implements ILocator, IActions, Clickable, Editable {
+public class WebLocator extends Locator implements Clickable, Editable, IText {
 
     public WebLocator() {
     }
@@ -28,12 +28,12 @@ public class WebLocator extends Locator implements ILocator, IActions, Clickable
         setContainer(container);
     }
 
-    public WebLocator(String cls, WebLocator container) {
+    public WebLocator(String cls, Locator container) {
         this(container);
         setClasses(cls);
     }
 
-    public WebLocator(String text, String cls, WebLocator container) {
+    public WebLocator(String text, String cls, Locator container) {
         this(cls, container);
         setText(text);
     }
@@ -125,16 +125,40 @@ public class WebLocator extends Locator implements ILocator, IActions, Clickable
         return doClick;
     }
 
-    public WebLocator sendKeys(CharSequence... charSequences) {
+    /**
+     * @return true | false
+     */
+    public boolean doubleClickAt() {
+        boolean doubleClickAt = waitToRender();
+        assertThat("Element was not rendered " + toString(), doubleClickAt);
+        doubleClickAt = executor().doubleClickAt(this);
+        assertThat("Could not Double ClickAt " + toString(), doubleClickAt);
+        log.info("Double ClickAt on {}", toString());
+        return doubleClickAt;
+    }
+
+    public boolean doDoubleClickAt() {
+        boolean doClick = waitToRender();
+        if (doClick) {
+            doClick = executor().doubleClickAt(this);
+            if (doClick) {
+                log.info("Double click on {}", toString());
+            } else {
+                log.info("Could not double click {}", toString());
+            }
+        }
+        return doClick;
+    }
+
+    public void sendKeys(CharSequence... charSequences) {
         boolean sendKeys = waitToRender();
         assertThat("Element was not rendered " + toString(), sendKeys);
         sendKeys = executor().sendKeys(this, charSequences);
         assertThat("Could not sendKeys " + toString(), sendKeys);
         log.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
-        return this;
     }
 
-    public WebLocator doSendKeys(CharSequence... charSequences) {
+    public boolean doSendKeys(CharSequence... charSequences) {
         boolean doSendKeys = waitToRender();
         if (doSendKeys) {
             doSendKeys = executor().sendKeys(this, charSequences);
@@ -144,7 +168,7 @@ public class WebLocator extends Locator implements ILocator, IActions, Clickable
                 log.info("Could not sendKeys {}", toString());
             }
         }
-        return doSendKeys ? this : null;
+        return doSendKeys;
     }
 
     private String getKeysName(CharSequence... charSequences) {
@@ -254,31 +278,6 @@ public class WebLocator extends Locator implements ILocator, IActions, Clickable
     }
 
     /**
-     * @return true | false
-     */
-    public boolean doubleClickAt() {
-        boolean doubleClickAt = waitToRender();
-        assertThat("Element was not rendered " + toString(), doubleClickAt);
-        doubleClickAt = executor().doubleClickAt(this);
-        assertThat("Could not Double ClickAt " + toString(), doubleClickAt);
-        log.info("Double ClickAt on {}", toString());
-        return doubleClickAt;
-    }
-
-    public boolean doDoubleClickAt() {
-        boolean doClick = waitToRender();
-        if (doClick) {
-            doClick = executor().doubleClickAt(this);
-            if (doClick) {
-                log.info("Double click on {}", toString());
-            } else {
-                log.info("Could not double click {}", toString());
-            }
-        }
-        return doClick;
-    }
-
-    /**
      * @return A point, containing the location of the top left-hand corner of the element
      */
     public Point getLocation() {
@@ -371,20 +370,6 @@ public class WebLocator extends Locator implements ILocator, IActions, Clickable
             assertThat("Element is not ready: '" + this + "' for values: " + Arrays.toString(values), ready);
         }
         return ready;
-    }
-
-    /**
-     * @return True if the element is enable, false otherwise.
-     */
-    public boolean isEnabled() {
-        return executor().isEnabled(this);
-    }
-
-    /**
-     * @return Whether or not the element is displayed
-     */
-    public boolean isDisplayed() {
-        return executor().isDisplayed(this);
     }
 
     @Override

@@ -1,24 +1,21 @@
 package com.sdl.selenium.conditions;
 
-import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.sdl.selenium.web.Locator;
 
 public class RenderSuccessCondition extends SuccessCondition implements RenderCondition {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RenderSuccessCondition.class);
 
-    private WebLocator component;
+    private Locator component;
 
     private RenderSuccessCondition(String message) {
         super(message);
     }
 
-    public RenderSuccessCondition(WebLocator component){
+    public RenderSuccessCondition(Locator component){
         this(component.toString());
         this.component = component;
     }
 
-    public RenderSuccessCondition(WebLocator component, int priority){
+    public RenderSuccessCondition(Locator component, int priority){
         this(component);
         setPriority(priority);
     }
@@ -34,7 +31,7 @@ public class RenderSuccessCondition extends SuccessCondition implements RenderCo
     }
 
     @Override
-    public WebLocator getComponent(){
+    public Locator getComponent(){
          return component;
     }
 
@@ -44,6 +41,6 @@ public class RenderSuccessCondition extends SuccessCondition implements RenderCo
      */
     @Override
     public String getResultMessage() {
-        return component.getText();
+        return component.getXPathBuilder().getText();
     }
 }

@@ -1,12 +1,10 @@
 package com.sdl.selenium.extjs3.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FieldSet extends WebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FieldSet.class);
 
     public FieldSet() {
         setClassName("FieldSet");
@@ -16,17 +14,17 @@ public class FieldSet extends WebLocator {
         setTemplate("text", "count(.//*[normalize-space(.)=%s]) > 0");
     }
 
-    public FieldSet(WebLocator container) {
+    public FieldSet(Locator container) {
         this();
         setContainer(container);
     }
 
-    public FieldSet(WebLocator container, String text) {
+    public FieldSet(Locator container, String text) {
         this(container);
         setText(text);
     }
 
-    public FieldSet(WebLocator container, String cls, String text) {
+    public FieldSet(Locator container, String cls, String text) {
         this(container, text);
         setClasses(cls);
     }

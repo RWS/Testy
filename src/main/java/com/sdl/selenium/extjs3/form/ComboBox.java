@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
@@ -19,17 +20,17 @@ public class ComboBox extends TextField implements ICombo {
         setClassName("ComboBox");
     }
 
-    public ComboBox(WebLocator container) {
+    public ComboBox(Locator container) {
         this();
         setContainer(container);
     }
 
-    public ComboBox(WebLocator container, String label) {
+    public ComboBox(Locator container, String label) {
         this(container);
         setLabel(label);
     }
 
-    public ComboBox(String name, WebLocator container) {
+    public ComboBox(String name, Locator container) {
         this(container);
         setName(name);
     }

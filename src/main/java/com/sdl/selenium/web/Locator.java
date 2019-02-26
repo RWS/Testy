@@ -84,6 +84,13 @@ public abstract class Locator implements ILocator, IActions {
     }
 
     /**
+     * @return Whether or not the element is displayed
+     */
+    public boolean isDisplayed() {
+        return executor().isDisplayed(this);
+    }
+
+    /**
      * wait 5 seconds (or specified value for renderSeconds)
      *
      * @return true | false

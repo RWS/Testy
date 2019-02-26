@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -28,7 +29,7 @@ public class MultiThreadClipboardUtils {
     /***
      * Correlates the given String with the current WebDriver instance and stores it so it can be pasted somewhere else.
      * Note that at this point the value is not added to the system clipboard, but only stored in the application memory,
-     * so it can only be pasted using the {@link #pasteString(WebLocator) pasteString} method.
+     * so it can only be pasted using the {@link #pasteString(Locator) pasteString} method.
      * <p>
      * This implementation is useful for avoiding mixing clipboard values from one WebDriver instance to another
      *
@@ -47,7 +48,7 @@ public class MultiThreadClipboardUtils {
      *
      * @param locator WebLocator where the value from clipboard corresponding to the current WebDriver instance should be pasted
      */
-    public static void pasteString(WebLocator locator) {
+    public static void pasteString(Locator locator) {
         waitForUnlockedClipboard();
         lockClipboard();
         String value = clipboardContents.get(((RemoteWebDriver) WebDriverConfig.getDriver()).getSessionId().toString());
@@ -59,7 +60,8 @@ public class MultiThreadClipboardUtils {
                     }
                 });
         try {
-            locator.sendKeys(Keys.CONTROL, "v");
+            WebLocator curentEl = new WebLocator().setElPath(locator.getXPath());
+            curentEl.sendKeys(Keys.CONTROL, "v");
         } catch (Throwable throwable) {
             // Making sure clipboard would not unexpectedly remain locked
             unlockClipboard();

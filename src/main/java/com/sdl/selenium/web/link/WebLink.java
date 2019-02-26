@@ -1,11 +1,12 @@
 package com.sdl.selenium.web.link;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.button.Button;
 import org.openqa.selenium.WebDriver;
 
-public class WebLink extends WebLocator {
+public class WebLink extends Button {
 
     private String oldTab;
 
@@ -14,12 +15,12 @@ public class WebLink extends WebLocator {
         setTag("a");
     }
 
-    public WebLink(WebLocator container) {
+    public WebLink(Locator container) {
         this();
         setContainer(container);
     }
 
-    public WebLink(WebLocator container, String text, SearchType... searchTypes) {
+    public WebLink(Locator container, String text, SearchType... searchTypes) {
         this(container);
         setText(text, searchTypes);
     }

@@ -23,22 +23,22 @@ public class ExtJsComponent extends Locator {
         setClasses(cls);
     }
 
-    public ExtJsComponent(WebLocator container) {
+    public ExtJsComponent(Locator container) {
         this();
         setContainer(container);
     }
 
-    public ExtJsComponent(WebLocator container, String elPath) {
+    public ExtJsComponent(Locator container, String elPath) {
         this(container);
         setElPath(elPath);
     }
 
-    public ExtJsComponent(String cls, WebLocator container) {
+    public ExtJsComponent(String cls, Locator container) {
         this(container);
         setClasses(cls);
     }
 
-    public ExtJsComponent(String text, String cls, WebLocator container) {
+    public ExtJsComponent(String text, String cls, Locator container) {
         this(cls, container);
         setText(text);
     }

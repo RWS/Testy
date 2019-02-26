@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs3.window;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +69,7 @@ public class MessageBoxWindow extends Window {
     
     public String getMessage(int waitSeconds) {
         // TODO verify if can be be simplified using WebLocator instead of ExtJsComponent
-        ExtJsComponent mbTextElement = new ExtJsComponent("ext-mb-text", this);
+        WebLocator mbTextElement = new WebLocator("ext-mb-text", this);
         mbTextElement.setInfoMessage("MessageBox ext-mb-text");
         String msg;
         if (waitSeconds == 0) {
@@ -97,7 +97,7 @@ public class MessageBoxWindow extends Window {
     }
 
     private String press(final Button button) {
-        if (WebDriverConfig.isIE() && !isVisible()) {
+        if (WebDriverConfig.isIE()) {
             LOGGER.warn("messageBoxWindow is not visible");
             return null;
         }

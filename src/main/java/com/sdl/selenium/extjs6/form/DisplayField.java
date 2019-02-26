@@ -1,9 +1,10 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.TextField;
 
-public class DisplayField extends WebLocator {
+public class DisplayField extends TextField {
 
     public DisplayField() {
         setClassName("DisplayField");
@@ -11,12 +12,12 @@ public class DisplayField extends WebLocator {
         setTag("div");
     }
 
-    public DisplayField(WebLocator container) {
+    public DisplayField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DisplayField(WebLocator container, String label) {
+    public DisplayField(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }

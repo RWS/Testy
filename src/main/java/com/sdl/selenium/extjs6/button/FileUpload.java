@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.bootstrap.button.Upload;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
 
 public class FileUpload extends TextField implements Upload {
@@ -12,12 +12,12 @@ public class FileUpload extends TextField implements Upload {
         setType("file");
     }
 
-    public FileUpload(WebLocator container) {
+    public FileUpload(Locator container) {
         this();
         setContainer(container);
     }
 
-    public FileUpload(WebLocator container, String label) {
+    public FileUpload(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
@@ -42,7 +42,7 @@ public class FileUpload extends TextField implements Upload {
      * @param filePath e.g. "C:\\text.txt"
      * @return true | false
      */
-    private boolean upload(WebLocator el, String filePath) {
+    private boolean upload(Locator el, String filePath) {
         return executor().browse(el) && executor().upload(filePath);
     }
 }

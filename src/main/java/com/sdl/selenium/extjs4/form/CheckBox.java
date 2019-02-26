@@ -19,12 +19,12 @@ public class CheckBox extends WebLocator implements ICheck {
         setBaseCls("x-form-checkbox");
     }
 
-    public CheckBox(WebLocator container) {
+    public CheckBox(Locator container) {
         this();
         setContainer(container);
     }
 
-    public CheckBox(WebLocator container, String name) {
+    public CheckBox(Locator container, String name) {
         this(container);
         setName(name);
     }

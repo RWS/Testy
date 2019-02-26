@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.button;
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
@@ -11,19 +12,6 @@ import org.openqa.selenium.Keys;
 
 @Slf4j
 public class Button extends com.sdl.selenium.web.button.Button {
-
-    public String getIconCls() {
-        return iconCls;
-    }
-
-    public <T extends Button> T setIconCls(final String iconCls) {
-        this.iconCls = iconCls;
-        String key = "icon-cls";
-        setElPathSuffix(key, setTemplate(key, iconCls));
-        return (T) this;
-    }
-
-    private String iconCls;
 
     public Button() {
         setClassName("Button");
@@ -38,12 +26,12 @@ public class Button extends com.sdl.selenium.web.button.Button {
     /**
      * @param container parent
      */
-    public Button(WebLocator container) {
+    public Button(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Button(WebLocator container, String text) {
+    public Button(Locator container, String text) {
         this(container);
         setText(text, SearchType.EQUALS);
     }
@@ -175,14 +163,5 @@ public class Button extends com.sdl.selenium.web.button.Button {
             }
         }
         return false;
-    }
-
-
-    /**
-     * @param option new String[]{"option1", "option2", "option3-click"}
-     * @return true or false
-     */
-    public boolean clickOnMenu(String option) {
-        return clickOnMenu(new String[]{option});
     }
 }

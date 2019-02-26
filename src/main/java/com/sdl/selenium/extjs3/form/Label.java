@@ -1,7 +1,6 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,12 +18,12 @@ public class Label extends ExtJsComponent {
         setText(text);
     }
 
-    public Label(WebLocator container) {
+    public Label(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Label(WebLocator container, String text) {
+    public Label(Locator container, String text) {
         this(text);
         setContainer(container);
     }

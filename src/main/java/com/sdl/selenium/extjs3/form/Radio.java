@@ -1,13 +1,9 @@
 package com.sdl.selenium.extjs3.form;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class Radio extends ExtJsComponent {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Radio.class);
+public class Radio extends Locator {
 
     public Radio() {
         setClassName("Radio");
@@ -22,17 +18,17 @@ public class Radio extends ExtJsComponent {
         setText(value, SearchType.EQUALS);
     }
 
-    public Radio(WebLocator container) {
+    public Radio(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Radio(WebLocator container, String name) {
+    public Radio(Locator container, String name) {
         this(container);
         setName(name);
     }
 
-    public Radio(String label, WebLocator container) {
+    public Radio(String label, Locator container) {
         this(container);
         setLabel(label);
     }

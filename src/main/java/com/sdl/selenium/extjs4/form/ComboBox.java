@@ -15,12 +15,12 @@ public class ComboBox extends TextField implements ICombo {
         setClassName("ComboBox");
     }
 
-    public ComboBox(WebLocator container) {
+    public ComboBox(Locator container) {
         this();
         setContainer(container);
     }
 
-    public ComboBox(WebLocator container, String label) {
+    public ComboBox(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }

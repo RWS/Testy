@@ -1,6 +1,7 @@
 package com.sdl.selenium;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
@@ -100,7 +101,7 @@ public class WebLocatorSuggestions {
             return null;
         }
 
-        if (webLocator.currentElement != null || webLocator.isElementPresent()) {
+        if (webLocator.getWebElement() != null || webLocator.isElementPresent()) {
             if (webLocator.getWebElement().isDisplayed()) {
                 LOGGER.debug("The element already exists: {}", WebLocatorUtils.getHtmlTree(webLocator));
             } else {
@@ -109,7 +110,7 @@ public class WebLocatorSuggestions {
             return webLocator;
         }
 
-        WebLocator parent = webLocator.getXPathBuilder().getContainer();
+        Locator parent = webLocator.getXPathBuilder().getContainer();
         if (parent != null && !parent.isElementPresent()) {
             LOGGER.warn("The container ({}) of this webLocator ({}) was not found.", parent.getXPath(), webLocator.getXPath());
             return null;
@@ -154,7 +155,7 @@ public class WebLocatorSuggestions {
         try {
             WebLocator webLocator = originalWebLocator.getClass().newInstance();
             XPathBuilder builder = (XPathBuilder) originalWebLocator.getXPathBuilder().clone();
-            webLocator.setPathBuilder(builder);
+            webLocator.setXPathBuilder(builder);
             return webLocator;
         } catch (IllegalAccessException | InstantiationException | CloneNotSupportedException e) {
             LOGGER.error("Error while cloning the WebLocator: " + e.getMessage());

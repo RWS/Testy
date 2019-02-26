@@ -1,11 +1,10 @@
 package com.sdl.selenium.web.utils;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -16,8 +15,8 @@ import java.util.Date;
 /**
  * TODO Sa fie o metoda de Utils care sa poti seta din WebLocator path-ul unde sa salveze imaginile in dependenta de WebDriver ori Selenium
  */
+@Slf4j
 public class Utils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     public static void sleep(long milliseconds) {
         try {
@@ -25,7 +24,7 @@ public class Utils {
                 Thread.sleep(milliseconds);
             }
         } catch (InterruptedException e) {
-            LOGGER.error("InterruptedException: {}", e);
+            log.error("InterruptedException: {}", e);
         }
     }
 
@@ -60,7 +59,7 @@ public class Utils {
         try {
             File screensDir = new File(screensPath);
             screensDir.mkdirs();
-            LOGGER.info("Screenshot: " + filePath);
+            log.info("Screenshot: " + filePath);
 
             TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
             File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
@@ -68,7 +67,7 @@ public class Utils {
             File file = new File(filePath);
             screenShot.renameTo(file);
         } catch (Exception e) {
-            LOGGER.error("Failed to capture screenshot: ", e);
+            log.error("Failed to capture screenshot: ", e);
         }
         return fileName;
     }
@@ -76,7 +75,7 @@ public class Utils {
     public static boolean eq(Object a, Object b) {
         boolean equals = a == b || (a != null && a.equals(b));
         if (!equals) {
-            LOGGER.debug("'" + a + "' is not equals with '" + b + "'");
+            log.debug("'" + a + "' is not equals with '" + b + "'");
         }
         return equals;
     }
@@ -86,6 +85,6 @@ public class Utils {
     }
 
     public static void deprecated() {
-        LOGGER.warn("= = = = = @Deprecated = = = = =");
+        log.warn("= = = = = @Deprecated = = = = =");
     }
 }

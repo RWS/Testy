@@ -1,7 +1,7 @@
 package com.sdl.selenium.bootstrap.button;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 
 public class ButtonLink extends Button {
 
@@ -14,12 +14,12 @@ public class ButtonLink extends Button {
     /**
      * @param container parent's element
      */
-    public ButtonLink(WebLocator container) {
+    public ButtonLink(Locator container) {
         this();
         setContainer(container);
     }
 
-    public ButtonLink(WebLocator container, String text) {
+    public ButtonLink(Locator container, String text) {
         this(container);
         setText(text);
         setSearchTextType(SearchType.EQUALS);

@@ -1,14 +1,11 @@
 package com.sdl.selenium.conditions;
 
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * When specified element has been rendered, but it was considered as a fail result (instance of FailCondition)
  */
 public class RenderFailCondition extends FailCondition implements RenderCondition {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RenderFailCondition.class);
 
     private WebLocator component;
 

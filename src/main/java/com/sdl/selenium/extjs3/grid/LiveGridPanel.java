@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class LiveGridPanel extends GridPanel {
         setClasses(cls);
     }
 
-    public LiveGridPanel(WebLocator container) {
+    public LiveGridPanel(Locator container) {
         this();
         setContainer(container);
     }
@@ -29,12 +30,12 @@ public class LiveGridPanel extends GridPanel {
         setSearchColumnId(searchColumnId);
     }
 
-    public LiveGridPanel(WebLocator container, String searchColumnId) {
+    public LiveGridPanel(Locator container, String searchColumnId) {
         this(container);
         setSearchColumnId(searchColumnId);
     }
 
-    public LiveGridPanel(WebLocator container, String cls, String searchColumnId) {
+    public LiveGridPanel(Locator container, String cls, String searchColumnId) {
         this(container);
         setClasses(cls);
         setSearchColumnId(searchColumnId);

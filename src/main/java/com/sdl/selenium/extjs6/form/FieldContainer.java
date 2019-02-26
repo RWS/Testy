@@ -12,17 +12,17 @@ public class FieldContainer extends WebLocator {
         setTag("div");
     }
 
-    public FieldContainer(WebLocator container) {
+    public FieldContainer(Locator container) {
         this();
         setContainer(container);
     }
 
-    public FieldContainer(WebLocator container, String label, SearchType... searchTypes) {
+    public FieldContainer(Locator container, String label, SearchType... searchTypes) {
         this(container);
         setLabel(label, searchTypes);
     }
 
-    protected XPathBuilder createXPathBuilder() {
+    public XPathBuilder createXPathBuilder() {
         return new XPathBuilder() {
             @Override
             protected String afterItemPathCreated(String itemPath) {

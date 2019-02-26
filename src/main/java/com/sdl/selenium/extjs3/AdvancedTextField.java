@@ -22,18 +22,18 @@ public class AdvancedTextField extends TextField {
         setClasses(cls);
     }
 
-    public AdvancedTextField(WebLocator container) {
+    public AdvancedTextField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public AdvancedTextField(WebLocator container, String label) {
+    public AdvancedTextField(Locator container, String label) {
         this();
         setContainer(container);
         setLabel(label);
     }
 
-    public AdvancedTextField(String cls, WebLocator container) {
+    public AdvancedTextField(String cls, Locator container) {
         this();
         setContainer(container);
         setClasses(cls);

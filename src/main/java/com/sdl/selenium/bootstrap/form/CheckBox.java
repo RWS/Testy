@@ -1,8 +1,7 @@
 package com.sdl.selenium.bootstrap.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICheck;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -18,7 +17,7 @@ import com.sdl.selenium.web.form.ICheck;
  * checkBox.click();
  * }</pre>
  */
-public class CheckBox extends WebLocator implements ICheck {
+public class CheckBox extends com.sdl.selenium.web.form.CheckBox {
 
     public CheckBox() {
         setClassName("CheckBox");
@@ -26,25 +25,20 @@ public class CheckBox extends WebLocator implements ICheck {
         setType("checkbox");
     }
 
-    public CheckBox(WebLocator container) {
+    public CheckBox(Locator container) {
         this();
         setContainer(container);
     }
 
-    public CheckBox(WebLocator container, String label) {
+    public CheckBox(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.CONTAINS);
         setLabelPosition("//");
     }
 
-    public CheckBox(String boxLabel, WebLocator container) {
+    public CheckBox(String boxLabel, Locator container) {
         this(container);
         setLabel(boxLabel);
-    }
-
-    @Override
-    public boolean isSelected() {
-        return isElementPresent() && executor().isSelected(this);
     }
 
     @Override

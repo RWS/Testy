@@ -1,9 +1,9 @@
 package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.bootstrap.button.Upload;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.Locator;
 
-public class UploadFile extends WebLocator implements Upload {
+public class UploadFile extends Locator implements Upload {
 
     public UploadFile() {
         setClassName("UploadFile");
@@ -12,7 +12,7 @@ public class UploadFile extends WebLocator implements Upload {
     /**
      * @param container parent
      */
-    public UploadFile(WebLocator container) {
+    public UploadFile(Locator container) {
         this();
         setContainer(container);
     }
@@ -37,7 +37,7 @@ public class UploadFile extends WebLocator implements Upload {
      * @param filePath e.g. "C:\\text.txt"
      * @return true | false
      */
-    public boolean upload(WebLocator el, String filePath) {
+    public boolean upload(Locator el, String filePath) {
         return executor().browse(el) && executor().upload(filePath);
     }
 }

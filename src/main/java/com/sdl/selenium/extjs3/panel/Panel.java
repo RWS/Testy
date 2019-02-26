@@ -1,13 +1,10 @@
 package com.sdl.selenium.extjs3.panel;
 
-import com.sdl.selenium.extjs3.ExtJsComponent;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class Panel extends ExtJsComponent {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Panel.class);
+public class Panel extends Locator {
 
     private String headerBaseCls;
 
@@ -24,17 +21,17 @@ public class Panel extends ExtJsComponent {
         setTitle(title);
     }
 
-    public Panel(WebLocator container) {
+    public Panel(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Panel(WebLocator container, String title) {
+    public Panel(Locator container, String title) {
         this(container);
         setTitle(title);
     }
 
-    public Panel(String cls, WebLocator container, String excludeClass) {
+    public Panel(String cls, Locator container, String excludeClass) {
         this(container);
         setClasses(cls);
         setExcludeClasses(excludeClass);
@@ -48,8 +45,8 @@ public class Panel extends ExtJsComponent {
         this.headerBaseCls = headerBaseCls;
     }
 
-    public ExtJsComponent getBodyComponent() {
-        return new ExtJsComponent(this, "//*[contains(@class, '" + getXPathBuilder().getBaseCls() + "-body')]");
+    public Locator getBodyComponent() {
+        return new WebLocator(this).setElPath("//*[contains(@class, '" + getXPathBuilder().getBaseCls() + "-body')]");
     }
 
     /**
@@ -58,7 +55,7 @@ public class Panel extends ExtJsComponent {
      * @return true | false
      */
     public boolean clickOnTool(String id) {
-        ExtJsComponent toolElement = getToolElement(id).setVisibility(true);
+        WebLocator toolElement = getToolElement(id).setVisibility(true);
         return toolElement.click();
     }
 
@@ -80,12 +77,12 @@ public class Panel extends ExtJsComponent {
     }
 
     public boolean isMaximized() {
-        ExtJsComponent maximizeTool = getToolElement("maximize");
+        WebLocator maximizeTool = getToolElement("maximize");
         return !maximizeTool.isVisible();
     }
 
-    private ExtJsComponent getToolElement(String id) {
-        return new ExtJsComponent(this).setClasses("x-tool-" + id);
+    private WebLocator getToolElement(String id) {
+        return new WebLocator(this).setClasses("x-tool-" + id);
     }
 
     public boolean restore() {

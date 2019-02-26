@@ -22,7 +22,7 @@ public class CheckBox extends Locator implements ICheck {
 
     @Override
     public boolean isSelected() {
-        return ready() && executor().isSelected(this);
+        return waitToRender(300L) && executor().isSelected(this);
     }
 
     @Override

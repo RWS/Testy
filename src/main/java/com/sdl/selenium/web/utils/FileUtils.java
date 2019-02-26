@@ -3,8 +3,7 @@ package com.sdl.selenium.web.utils;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -13,8 +12,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Slf4j
 public class FileUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
     private static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\r\\n|\\r|\\n");
 
@@ -30,7 +29,7 @@ public class FileUtils {
         do {
             isNotEmpty = file.length() > 0;
             if (!isNotEmpty) {
-                LOGGER.debug("File exist: '" + file.exists() + "' and content file is empty in: " + timeoutMillis);
+                log.debug("File exist: '" + file.exists() + "' and content file is empty in: " + timeoutMillis);
                 Utils.sleep(300);
             }
             timeoutMillis -= 300;
@@ -50,10 +49,10 @@ public class FileUtils {
             while ((tmp = br.readLine()) != null) {
                 strLine += tmp;
             }
-            LOGGER.debug("length {}", strLine.length());
+            log.debug("length {}", strLine.length());
             br.close();
         } catch (Exception e) {
-            LOGGER.debug("Error: {}", e.getMessage());
+            log.debug("Error: {}", e.getMessage());
         }
         return strLine;
     }
@@ -99,7 +98,7 @@ public class FileUtils {
                 String fileName = ze.getName();
                 File newFile = new File(outputFolderPath + File.separator + fileName);
 
-                LOGGER.info("file unzip : " + newFile.getAbsoluteFile());
+                log.info("file unzip : " + newFile.getAbsoluteFile());
 
                 //create all non exists folders
                 //else you will hit FileNotFoundException for compressed folder
@@ -119,9 +118,9 @@ public class FileUtils {
             zis.closeEntry();
             zis.close();
 
-            LOGGER.info("Unzip Done: " + zipFilePath);
+            log.info("Unzip Done: " + zipFilePath);
             long endMs = System.currentTimeMillis();
-            LOGGER.debug(String.format("unzip took %s ms", endMs - startMs));
+            log.debug(String.format("unzip took %s ms", endMs - startMs));
         } catch (IOException ex) {
             ex.printStackTrace();
             return false;
@@ -189,8 +188,8 @@ public class FileUtils {
         boolean equal = false;
         File file1 = new File(filePath1);
         File file2 = new File(filePath2);
-        LOGGER.info("file1.length = " + file1.length());
-        LOGGER.info("file2.length = " + file2.length());
+        log.info("file1.length = " + file1.length());
+        log.info("file2.length = " + file2.length());
         if (file1.length() == file2.length()) {
             equal = true;
         }
@@ -221,9 +220,9 @@ public class FileUtils {
     public static void cleanDownloadDir() {
         try {
             org.apache.commons.io.FileUtils.cleanDirectory(new File(WebDriverConfig.getDownloadPath()));
-            LOGGER.debug("Clean download directory with success.");
+            log.debug("Clean download directory with success.");
         } catch (IOException e) {
-            LOGGER.debug("Clean Download Dir with error {}", e.getMessage());
+            log.debug("Clean Download Dir with error {}", e.getMessage());
         }
     }
 }

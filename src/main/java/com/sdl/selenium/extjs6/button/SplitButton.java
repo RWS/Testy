@@ -1,8 +1,8 @@
 package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.extjs6.menu.Menu;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -20,18 +20,18 @@ public class SplitButton extends Button {
         setClassName("SplitButton");
     }
 
-    public SplitButton(WebLocator container) {
+    public SplitButton(Locator container) {
         this();
         setContainer(container);
     }
 
-    public SplitButton(WebLocator container, String text) {
+    public SplitButton(Locator container, String text) {
         this(container);
         setText(text);
     }
 
     public void clickOnMenu(String... options) {
-        assertReady();
+        ready();
         Menu menu = new Menu();
         if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String option : options) {
@@ -43,7 +43,7 @@ public class SplitButton extends Button {
     }
 
     public void clickOnMenu(SearchType searchType, String... options) {
-        assertReady();
+        ready();
         Menu menu = new Menu();
         if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String option : options) {

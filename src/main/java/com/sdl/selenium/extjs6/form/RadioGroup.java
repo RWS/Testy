@@ -1,9 +1,10 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
-public class RadioGroup extends WebLocator {
+public class RadioGroup extends Locator {
 
     private Radio radio = new Radio(this);
 
@@ -12,12 +13,12 @@ public class RadioGroup extends WebLocator {
         setBaseCls("x-form-checkboxgroup");
     }
 
-    public RadioGroup(WebLocator container) {
+    public RadioGroup(Locator container) {
         this();
         setContainer(container);
     }
 
-    public RadioGroup(WebLocator container, String label, SearchType... searchTypes) {
+    public RadioGroup(Locator container, String label, SearchType... searchTypes) {
         this(container);
 //        List<SearchType> search = Arrays.asList(searchTypes);
 //        Collections.addAll(search, SearchType.DEEP_CHILD_NODE_OR_SELF);
@@ -48,9 +49,4 @@ public class RadioGroup extends WebLocator {
         WebLocator locator = new WebLocator(radio).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
         return locator.getText();
     }
-
-//    public boolean isDisabled() {
-//        WebLocator locator = new WebLocator().setElPath(radio.getXPath(true));
-//        return locator.exists();
-//    }
 }

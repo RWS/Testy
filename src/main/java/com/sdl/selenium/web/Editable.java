@@ -6,7 +6,7 @@ public interface Editable {
 
     boolean doClear();
 
-    WebLocator sendKeys(CharSequence... charSequences);
+    void sendKeys(CharSequence... charSequences);
 
-    WebLocator doSendKeys(CharSequence... charSequences);
+    boolean doSendKeys(CharSequence... charSequences);
 }

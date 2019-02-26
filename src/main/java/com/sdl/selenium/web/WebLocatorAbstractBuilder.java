@@ -9,7 +9,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     private XPathBuilder pathBuilder = createXPathBuilder();
 
-    protected XPathBuilder createXPathBuilder() {
+    public XPathBuilder createXPathBuilder() {
         return new XPathBuilder();
     }
 
@@ -387,7 +387,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
+    public <T extends WebLocatorAbstractBuilder> T setContainer(Locator container) {
         pathBuilder.setContainer(container);
         return (T) this;
     }

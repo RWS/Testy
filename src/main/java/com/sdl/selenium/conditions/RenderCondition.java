@@ -1,6 +1,6 @@
 package com.sdl.selenium.conditions;
 
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.Locator;
 
 /**
  * Usage:
@@ -13,5 +13,5 @@ import com.sdl.selenium.web.WebLocator;
  </pre>
  */
 public interface RenderCondition extends ICondition {
-    WebLocator getComponent();
+    Locator getComponent();
 }

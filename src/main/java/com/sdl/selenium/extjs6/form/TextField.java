@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +16,12 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         setBaseCls("x-form-text");
     }
 
-    public TextField(WebLocator container) {
+    public TextField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public TextField(WebLocator container, String label) {
+    public TextField(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE);
     }
@@ -45,20 +46,6 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
             log.warn("clickIcon : field is not ready for use: " + this);
         }
         return false;
-    }
-
-    /**
-     * @return true is the element doesn't have attribute readonly
-     */
-    public boolean isEditable() {
-        return !"true".equals(getAttribute("readonly"));
-    }
-
-    /**
-     * @return true is the element does have attribute disabled
-     */
-    public boolean isDisabled() {
-        return "true".equals(getAttribute("disabled"));
     }
 
     public boolean isEnabled() {

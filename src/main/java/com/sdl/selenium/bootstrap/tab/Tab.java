@@ -25,7 +25,7 @@ public class Tab extends WebLocator implements ITab {
         setText(title, SearchType.EQUALS);
     }
 
-    public Tab(WebLocator container, String text) {
+    public Tab(Locator container, String text) {
         this(text);
         setContainer(container);
     }

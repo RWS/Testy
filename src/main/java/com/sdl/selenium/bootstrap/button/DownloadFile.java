@@ -27,12 +27,12 @@ public class DownloadFile extends WebLocator implements Download {
     /**
      * @param container parent
      */
-    public DownloadFile(WebLocator container) {
+    public DownloadFile(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DownloadFile(WebLocator container, String label) {
+    public DownloadFile(Locator container, String label) {
         this(container);
         setLabel(label);
     }

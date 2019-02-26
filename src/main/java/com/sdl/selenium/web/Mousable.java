@@ -2,9 +2,9 @@ package com.sdl.selenium.web;
 
 public interface Mousable {
 
-    WebLocator focus();
+    boolean focus();
 
-    WebLocator doFocus();
+    boolean doFocus();
 
     boolean blur();
 

@@ -29,7 +29,7 @@ namespace TestyForC.Web
         }
 
 
-        public T setContainer(WebLocator container)
+        public T setContainer(Locator container)
         {
             xPath.Container = container;
             return (T)this;

@@ -13,6 +13,7 @@ import com.sdl.selenium.extjs3.grid.GridPanel;
 import com.sdl.selenium.extjs3.tab.TabPanel;
 import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.extjs3.window.Window;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
@@ -121,7 +122,7 @@ public class DeployTesty extends TestBase {
         testyDir.ready(10);
         Utils.sleep(1000);
         Actions action = new Actions(driver);
-        action.contextClick(testyDir.currentElement).perform();
+        action.contextClick(testyDir.getWebElement()).perform();
         deleteEl.click();
         confirmYesMSG("Delete the selected \"/com/sdl/lt/Testy/\" folder?");
         Utils.sleep(1000);
@@ -135,11 +136,11 @@ public class DeployTesty extends TestBase {
         }
     }
 
-    private boolean waitRemovedEl(WebLocator el, Duration duration) {
+    private boolean waitRemovedEl(Locator el, Duration duration) {
         return new ConditionManager(duration).add(new ElementRemovedSuccessCondition(el)).execute().isSuccess();
     }
 
-    private boolean waitRenderEl(WebLocator el, Duration duration) {
+    private boolean waitRenderEl(Locator el, Duration duration) {
         return new ConditionManager(duration).add(new RenderSuccessCondition(el)).execute().isSuccess();
     }
 

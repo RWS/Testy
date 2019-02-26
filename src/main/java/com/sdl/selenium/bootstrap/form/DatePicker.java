@@ -70,12 +70,12 @@ public class DatePicker extends WebLocator {
         setClasses("date");
     }
 
-    public DatePicker(WebLocator container) {
+    public DatePicker(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DatePicker(WebLocator container, String id) {
+    public DatePicker(Locator container, String id) {
         this(container);
         setId(id);
     }

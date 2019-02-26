@@ -2,7 +2,6 @@ package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.bootstrap.button.Download;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 
 public class DownloadButton extends SplitButton implements Download {
 
@@ -10,12 +9,12 @@ public class DownloadButton extends SplitButton implements Download {
         setClassName("DownloadButton");
     }
 
-    public DownloadButton(WebLocator container) {
+    public DownloadButton(Locator container) {
         this();
         setContainer(container);
     }
 
-    public DownloadButton(WebLocator container, String text) {
+    public DownloadButton(Locator container, String text) {
         this(container);
         setText(text, SearchType.EQUALS);
     }

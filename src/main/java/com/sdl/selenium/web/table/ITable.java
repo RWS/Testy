@@ -8,22 +8,6 @@ import java.time.Duration;
 public interface ITable<R extends AbstractRow, C extends AbstractCell> extends ILocator {
 
     /**
-     * selects (clicks) on a table which contains a certain element
-     *
-     * @param searchText the searchText of the table element on which the search is done
-     *                   default SearchType is {@link com.sdl.selenium.web.SearchType#EQUALS}
-     * @return true if selected
-     */
-    boolean rowSelect(String searchText);
-
-    /**
-     * @param searchText  searchText
-     * @param searchTypes searchTypes
-     * @return true or false
-     */
-    boolean rowSelect(String searchText, SearchType... searchTypes);
-
-    /**
      * @return row count. -1 if not table not ready to be used or not found
      */
     int getCount();

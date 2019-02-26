@@ -14,12 +14,12 @@ public class CustomComboBox extends TextField implements ICombo {
         setClassName("CustomComboBox");
     }
 
-    public CustomComboBox(WebLocator container) {
+    public CustomComboBox(Locator container) {
         this();
         setContainer(container);
     }
 
-    public CustomComboBox(WebLocator container, String label) {
+    public CustomComboBox(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }

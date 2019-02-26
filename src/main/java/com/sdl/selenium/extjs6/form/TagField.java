@@ -24,12 +24,12 @@ public class TagField extends ComboBox implements ICombo {
         setTag("ul");
     }
 
-    public TagField(WebLocator container) {
+    public TagField(Locator container) {
         this();
         setContainer(container);
     }
 
-    public TagField(WebLocator container, String label) {
+    public TagField(Locator container, String label) {
         this(container);
         setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
@@ -124,7 +124,7 @@ public class TagField extends ComboBox implements ICombo {
         WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
         boolean setValue = executor().setValue(input, value);
         Utils.sleep(300);
-        return setValue && input.sendKeys(Keys.ENTER) != null;
+        return setValue && input.doSendKeys(Keys.ENTER);
     }
 
     @Override

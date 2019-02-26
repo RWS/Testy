@@ -13,7 +13,7 @@ public class HtmlFileUploadButton extends SelectFilesHandler {
         //logger.debug(getClassName() + "() constructor");
     }
 
-    public HtmlFileUploadButton(WebLocator container, String text) {
+    public HtmlFileUploadButton(Locator container, String text) {
         this();
         //setContainer(container);
         WebLocator button = new Button(container, text);

@@ -10,7 +10,9 @@ import org.openqa.selenium.Point;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.testng.Assert.assertTrue;
 
 public class ButtonIntegrationTest extends TestBase {
@@ -26,11 +28,11 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test
     public void verifyIsDisabled() {
-        assertTrue(disableBtn.isDisabled());
-        assertTrue(disableBtnCls.isDisabled());
-        assertEquals(disableBtnCls.getWebElement().getTagName(), "button");
-        assertEquals(disableBtnCls.getWebElement().getLocation(), new Point(166, 519));
-        assertEquals(disableBtnCls.getWebElement().getSize(), new Dimension(114, 30));
+        assertThat(disableBtn.isEnabled(), is(false));
+        assertThat(disableBtnCls.isEnabled(), is(false));
+        assertThat(disableBtnCls.getWebElement().getTagName(), equalTo("button"));
+        assertThat(disableBtnCls.getWebElement().getLocation(), is(new Point(166, 519)));
+        assertThat(disableBtnCls.getWebElement().getSize(), is(new Dimension(114, 30)));
     }
 
     @Test

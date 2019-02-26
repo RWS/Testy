@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs4.grid;
 
 import com.sdl.selenium.extjs4.form.*;
 import com.sdl.selenium.extjs6.grid.Grid;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class GridEditor extends Grid {
         setTag("*");
     }
 
-    public GridEditor(WebLocator container) {
+    public GridEditor(Locator container) {
         this();
         setContainer(container);
     }
@@ -50,7 +51,7 @@ public class GridEditor extends Grid {
         return editor;
     }
 
-    public boolean setValue(WebLocator editor, int columnIndex, String value){
+    public boolean setValue(WebLocator editor, int columnIndex, String value) {
         Table table = new Table(gridEditor).setPosition(columnIndex);
         editor.setContainer(table);
         return doSetValue(editor, value);
@@ -76,7 +77,7 @@ public class GridEditor extends Grid {
             } else if ("false".equals(value)) {
                 success = !ed.isSelected() || ed.click();
             }
-        }else if ("CustomComboBox".equals(editor.getClass().getSimpleName())) {
+        } else if ("CustomComboBox".equals(editor.getClass().getSimpleName())) {
             CustomComboBox ed = (CustomComboBox) editor;
             success = ed.expand();
         }

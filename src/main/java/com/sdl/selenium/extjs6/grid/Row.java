@@ -3,8 +3,8 @@ package com.sdl.selenium.extjs6.grid;
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.form.CheckBox;
+import com.sdl.selenium.web.Locator;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
 
@@ -19,28 +19,28 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setTag("table");
     }
 
-    public Row(WebLocator container) {
+    public Row(Locator container) {
         this();
         setContainer(container);
     }
 
-    public Row(WebLocator container, int indexRow) {
+    public Row(Locator container, int indexRow) {
         this(container);
         setPosition(indexRow);
     }
 
-    public Row(WebLocator table, String searchElement, SearchType... searchTypes) {
+    public Row(Locator table, String searchElement, SearchType... searchTypes) {
         this(table);
         setText(searchElement, searchTypes);
     }
 
-    public Row(WebLocator table, AbstractCell... cells) {
+    public Row(Locator table, AbstractCell... cells) {
         this(table);
-        List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
+        List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getXPathBuilder().getText() != null).collect((Collectors.toList()));
         setChildNodes(collect.stream().toArray(AbstractCell[]::new));
     }
 
-    public Row(WebLocator table, int indexRow, AbstractCell... cells) {
+    public Row(Locator table, int indexRow, AbstractCell... cells) {
         this(table, cells);
         setPosition(indexRow);
     }
@@ -79,7 +79,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public boolean scrollTo() {
         return RetryUtils.retryIfNotSame(70, true, () -> {
-            WebLocator container = getPathBuilder().getContainer();
+            Locator container = getXPathBuilder().getContainer();
             int lastRowVisibleIndex = new Row(container).findElements().size() - 1;
             Row row = new Row(container, lastRowVisibleIndex);
             WebLocatorUtils.scrollToWebLocator(row);
@@ -90,13 +90,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
     private void scrollInGrid(Row row) {
         while (!row.waitToRender(100L, false)) {
             Grid grid;
-            if (getPathBuilder().getContainer() instanceof Grid) {
-                grid = (Grid) getPathBuilder().getContainer();
+            if (getXPathBuilder().getContainer() instanceof Grid) {
+                grid = (Grid) getXPathBuilder().getContainer();
             } else {
-                if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
-                    grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
+                if (getXPathBuilder().getContainer().getXPathBuilder().getContainer() instanceof Grid) {
+                    grid = (Grid) getXPathBuilder().getContainer().getXPathBuilder().getContainer();
                 } else {
-                    grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
+                    grid = (Grid) getXPathBuilder().getContainer().getXPathBuilder().getContainer().getXPathBuilder().getContainer();
                 }
             }
             if (!grid.scrollPageDown()) {

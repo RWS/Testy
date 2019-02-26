@@ -16,7 +16,7 @@ public class List extends GridPanel {
         setElPathSuffix("exclude-hide-cls", null);
     }
 
-    public List(WebLocator container) {
+    public List(Locator container) {
         this();
         setContainer(container);
     }
