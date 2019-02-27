@@ -166,7 +166,7 @@ public class Grid extends Table implements Scrollable {
 
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
-        Row rowsEl = new Row(this);
+        Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();
@@ -185,12 +185,15 @@ public class Grid extends Table implements Scrollable {
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            String text = getTextNode(this.getCell(i, j));
+                            Row row = new Row(this).setTag("tr").setResultIdx(i);
+                            Cell cell = new Cell(row, j);
+                            String text = getTextNode(cell);
                             list.add(text);
                         }
                         listOfList.add(list);
                     } else {
-                        String currentId = new Row(this, i).getAttributeId();
+                        Row row = new Row(this, i).setTag("tr");
+                        String currentId = row.getAttributeId();
                         if (!"".equals(id) && id.equals(currentId)) {
                             canRead = true;
                         }
@@ -199,7 +202,8 @@ public class Grid extends Table implements Scrollable {
                 if (isScrollBottom()) {
                     break;
                 }
-                id = new Row(this, rows).getAttributeId();
+                Row row = new Row(this, rows).setTag("tr");
+                id = row.getAttributeId();
                 scrollPageDownInTree();
                 canRead = false;
                 timeout++;
