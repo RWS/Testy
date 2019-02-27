@@ -13,6 +13,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.*;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "editGridPanelAndScrollClearCell")
     public void assertRowEditorGridPanel() {
-        ConditionManager conditionManager = new ConditionManager(1000);
+        ConditionManager conditionManager = new ConditionManager(Duration.ofSeconds(1));
         conditionManager.add(new RenderSuccessCondition(editorGridPanel.getRow(new GridCell(1, "Adder's-Tongue", SearchType.EQUALS), new GridCell(2, "Erythronium americanum", SearchType.EQUALS))));
         assertTrue(conditionManager.execute().isSuccess());
     }

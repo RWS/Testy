@@ -3,7 +3,6 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
@@ -110,13 +109,35 @@ public class GridIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "checkCellTest")
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
-        driver.navigate().refresh();
+//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
+//        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("XML Grid");
+//        Grid spreadsheet = new Grid().setTitle("Basic Grid");
+        Utils.sleep(1000);
+        spreadsheet.ready(20);
         spreadsheet.ready(true);
-        Utils.sleep(2000);
-        List<List<String>> cellsText = RetryUtils.retry(4, spreadsheet::getCellsText);
+        Utils.sleep(5000);
+        long startMs = System.currentTimeMillis();
+        List<List<String>> cellsText = spreadsheet.getCellsText();
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.debug("performanceIsCheckedTest took {} ms", rez);
 
+        driver.navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
+        Utils.sleep(1000);
+        spreadsheet.ready(20);
+        spreadsheet.ready(true);
+        Utils.sleep(5000);
+//        spreadsheet.scrollTop();
+        long startMs2 = System.currentTimeMillis();
+        List<List<String>> cellsText1 = spreadsheet.getCellsText();
+        long endMs2 = System.currentTimeMillis();
+        long rez2 = endMs2 - startMs2;
+        log.debug("performanceIsCheckedTest1 took {} ms", rez2);
+        long o = rez2 - rez;
+        log.debug("performanceIsCheckedTestFinal took {} ms", o);
         List<List<String>> expectedCellsText = Arrays.asList(
                 Arrays.asList("Sidney Sheldon", "Master of the Game", "Warner Books", "Book"),
                 Arrays.asList("Sidney Sheldon", "Are You Afraid of the Dark?", "Warner Books", "Book"),

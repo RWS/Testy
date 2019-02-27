@@ -6,11 +6,14 @@ import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @Slf4j
 public class Grid extends Table implements Scrollable {
@@ -47,8 +50,8 @@ public class Grid extends Table implements Scrollable {
      * }</pre>
      *
      * @param strictPosition true if grid's headers is order
-     * @param headers grid's headers in order, if grid has no header put empty string
-     * @param <T>     element which extended the Table
+     * @param headers        grid's headers in order, if grid has no header put empty string
+     * @param <T>            element which extended the Table
      * @return this Grid
      */
     public <T extends Table> T setHeaders(boolean strictPosition, final String... headers) {
@@ -164,6 +167,42 @@ public class Grid extends Table implements Scrollable {
         return headers;
     }
 
+    private List<List<String>> getLists(int rows, List<Integer> columnsList) {
+        List<List<String>> listOfList = new ArrayList<>();
+        boolean canRead = true;
+        String id = "";
+        int timeout = 0;
+        do {
+            for (int i = 1; i <= rows; ++i) {
+                if (canRead) {
+                    List<String> list = new ArrayList<>();
+                    for (int j : columnsList) {
+                        Row row = new Row(this).setTag("tr").setResultIdx(i);
+                        Cell cell = new Cell(row, j);
+                        String text = cell.getText(true).trim();
+                        list.add(text);
+                    }
+                    listOfList.add(list);
+                } else {
+                    Row row = new Row(this, i);
+                    String currentId = row.getAttributeId();
+                    if (!"".equals(id) && id.equals(currentId)) {
+                        canRead = true;
+                    }
+                }
+            }
+            if (isScrollBottom()) {
+                break;
+            }
+            Row row = new Row(this, rows);
+            id = row.getAttributeId();
+            scrollPageDownInTree();
+            canRead = false;
+            timeout++;
+        } while (timeout < 30);
+        return listOfList;
+    }
+
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
@@ -171,56 +210,71 @@ public class Grid extends Table implements Scrollable {
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();
         int columns = columnsEl.size();
-        List<Integer> columnsList = getColumns(columns, excludedColumns);
-
+        final List<Integer> columnsList = getColumns(columns, excludedColumns);
         if (rows <= 0) {
             return null;
         } else {
-            List<List<String>> listOfList = new ArrayList<>();
-            boolean canRead = true;
-            String id = "";
-            int timeout = 0;
-            do {
-                for (int i = 1; i <= rows; ++i) {
-                    if (canRead) {
+            return getListsParallel(rows, columnsList);
+        }
+    }
+
+    private List<List<String>> getListsParallel(int rows, List<Integer> columnsList) {
+        List<List<String>> listOfList = new ArrayList<>();
+        boolean canRead = true;
+        String id = "";
+        int timeout = 0;
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        do {
+            List<Future<List<String>>> futures = new ArrayList<>();
+            for (int i = 1; i <= rows; ++i) {
+                if (canRead) {
+                    final int fi = i;
+                    futures.add(executorService.submit(() -> {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            Row row = new Row(this).setTag("tr").setResultIdx(i);
+                            Row row = new Row(this).setTag("tr").setResultIdx(fi);
                             Cell cell = new Cell(row, j);
-                            String text = getTextNode(cell);
+                            String text = cell.getText(true).trim();
                             list.add(text);
                         }
-                        listOfList.add(list);
-                    } else {
-                        Row row = new Row(this, i).setTag("tr");
-                        String currentId = row.getAttributeId();
-                        if (!"".equals(id) && id.equals(currentId)) {
-                            canRead = true;
-                        }
+                        return list;
+                    }));
+                } else {
+                    Row row = new Row(this, i);
+                    String currentId = row.getAttributeId();
+                    if (!"".equals(id) && id.equals(currentId)) {
+                        canRead = true;
                     }
                 }
-                if (isScrollBottom()) {
-                    break;
+            }
+            for (Future<List<String>> future : futures) {
+                try {
+                    listOfList.add(future.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    log.debug("{}", e);
                 }
-                Row row = new Row(this, rows).setTag("tr");
-                id = row.getAttributeId();
-                scrollPageDownInTree();
-                canRead = false;
-                timeout++;
-            } while (timeout < 30);
-            return listOfList;
-        }
+            }
+            if (isScrollBottom()) {
+                break;
+            }
+            Row row = new Row(this, rows);
+            id = row.getAttributeId();
+            scrollPageDownInTree();
+            canRead = false;
+            timeout++;
+        } while (timeout < 30);
+        return listOfList;
     }
 
     private String getTextNode(Cell cell) {
         String text = cell.getText(true).trim();
-        WebLocator childs = new WebLocator(cell).setClasses("user-avatar");
-        if (childs.waitToRender(150L, false)) {
-            List<WebElement> children = childs.findElements();
-            for (WebElement child : children) {
-                text = text.replaceFirst(child.getText(), "").trim();
-            }
-        }
+//        WebLocator childs = new WebLocator(cell).setClasses("user-avatar");
+//        if (childs.waitToRender(150L, false)) {
+//            List<WebElement> children = childs.findElements();
+//            for (WebElement child : children) {
+//                text = text.replaceFirst(child.getText(), "").trim();
+//            }
+//        }
         return text;
     }
 
