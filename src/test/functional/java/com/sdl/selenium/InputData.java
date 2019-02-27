@@ -1,16 +1,15 @@
 package com.sdl.selenium;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+@Slf4j
 public class InputData extends PropertiesReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InputData.class);
 
     public static final String ENV_PROPERTY = "env";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
@@ -20,7 +19,7 @@ public class InputData extends PropertiesReader {
 
     public InputData() {
         String testEnvironment = System.getProperty(ENV_PROPERTY, ENV_PROPERTY_DEFAULT);
-        LOGGER.info("test.environment : " + testEnvironment);
+        log.info("test.environment : " + testEnvironment);
 
 //        FileInputStream inputStream = getFileAsStream(RESOURCES_PATH + testEnvironment + ".properties");
         URL resource = Thread.currentThread().getContextClassLoader().getResource(testEnvironment + ".properties");
@@ -30,12 +29,12 @@ public class InputData extends PropertiesReader {
         try {
             inputStream = resource != null ? resource.openStream() : null;
         } catch (IOException e) {
-            LOGGER.error("IOException: {}", e);
+            log.error("IOException: {}", e);
         }
 
         init(null, inputStream);
 
-        LOGGER.info(toString());
+        log.info(toString());
     }
 
     // ==============================

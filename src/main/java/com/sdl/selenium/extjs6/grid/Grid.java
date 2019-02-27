@@ -33,19 +33,41 @@ public class Grid extends Table implements Scrollable {
      * Grid grid = new Grid().setHeaders("Company", "Price", "Change");
      * }</pre>
      *
-     * @param headers grid's headers in order
+     * @param headers grid's headers in any order
      * @param <T>     element which extended the Grid
      * @return this Grid
      */
     public <T extends Table> T setHeaders(final String... headers) {
+        return setHeaders(false, headers);
+    }
+
+    /**
+     * <pre>{@code
+     * Grid grid = new Grid().setHeaders(true, "Company", "Price", "Change");
+     * }</pre>
+     *
+     * @param strictPosition true if grid's headers in order
+     * @param headers grid's headers in order
+     * @param <T>     element which extended the Table
+     * @return this Grid
+     */
+    public <T extends Table> T setHeaders(boolean strictPosition, final String... headers) {
         List<WebLocator> list = new ArrayList<>();
         for (int i = 0; i < headers.length; i++) {
-            WebLocator headerEL = new WebLocator(this).setTag("*[" + (i + 1) + "]").setClasses("x-column-header").
+            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").
                     setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
+            if (strictPosition) {
+                headerEL.setTag("*[" + (i + 1) + "]");
+            }
             list.add(headerEL);
         }
-        setChildNodes(list.stream().toArray(WebLocator[]::new));
+        setChildNodes(list.toArray(new WebLocator[0]));
         return (T) this;
+    }
+
+    public static void main(String[] args) {
+        Grid g = new Grid().setHeaders(true, "Year", "Jan");
+        log.debug("{}", g.getXPath());
     }
 
     @Override

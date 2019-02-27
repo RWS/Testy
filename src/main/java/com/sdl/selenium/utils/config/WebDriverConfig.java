@@ -72,7 +72,7 @@ public class WebDriverConfig {
         return isFireFox;
     }
 
-    public static void init(WebDriver driver) throws IOException {
+    public static void init(WebDriver driver) {
         if (driver != null) {
             log.info("===============================================================");
             log.info("|          Open Selenium Web Driver ");
@@ -193,7 +193,7 @@ public class WebDriverConfig {
         return getDriver(browser, null);
     }
 
-    public static WebDriver getWebDriver(URL remoteUrl, DesiredCapabilities capabilities) throws IOException {
+    public static WebDriver getWebDriver(URL remoteUrl, DesiredCapabilities capabilities) {
         driver = new RemoteWebDriver(remoteUrl, capabilities);
         ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
         init(driver);
