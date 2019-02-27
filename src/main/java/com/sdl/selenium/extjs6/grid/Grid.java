@@ -46,8 +46,8 @@ public class Grid extends Table implements Scrollable {
      * Grid grid = new Grid().setHeaders(true, "Company", "Price", "Change");
      * }</pre>
      *
-     * @param strictPosition true if grid's headers in order
-     * @param headers grid's headers in order
+     * @param strictPosition true if grid's headers is order
+     * @param headers grid's headers in order, if grid has no header put empty string
      * @param <T>     element which extended the Table
      * @return this Grid
      */
@@ -63,11 +63,6 @@ public class Grid extends Table implements Scrollable {
         }
         setChildNodes(list.toArray(new WebLocator[0]));
         return (T) this;
-    }
-
-    public static void main(String[] args) {
-        Grid g = new Grid().setHeaders(true, "Year", "Jan");
-        log.debug("{}", g.getXPath());
     }
 
     @Override
