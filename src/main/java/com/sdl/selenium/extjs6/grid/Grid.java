@@ -205,6 +205,10 @@ public class Grid extends Table implements Scrollable {
 
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
+        return getCellsText(false, excludedColumns);
+    }
+
+    public List<List<String>> getCellsText(boolean parallel, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
@@ -214,7 +218,7 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return getLists(rows, columnsList);
+            return parallel ? getListsParallel(rows, columnsList): getLists(rows, columnsList);
         }
     }
 
@@ -223,7 +227,7 @@ public class Grid extends Table implements Scrollable {
         boolean canRead = true;
         String id = "";
         int timeout = 0;
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
         do {
             List<Future<List<String>>> futures = new ArrayList<>();
             for (int i = 1; i <= rows; ++i) {

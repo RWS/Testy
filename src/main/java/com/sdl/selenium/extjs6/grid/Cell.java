@@ -8,35 +8,27 @@ import com.sdl.selenium.web.WebLocator;
 public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public Cell() {
-        setRenderMillis(200);
-        setClassName("Cell");
-        setTag("td");
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        super();
     }
 
     public Cell(WebLocator container) {
-        this();
-        setContainer(container);
+        super(container);
     }
 
     public Cell(WebLocator container, int columnIndex) {
-        this(container);
-        setPosition(columnIndex);
+        super(container, columnIndex);
     }
 
     public Cell(String columnText, SearchType... searchTypes) {
-        this();
-        setText(columnText, searchTypes);
+        super(columnText, searchTypes);
     }
 
     public Cell(int columnIndex, String columnText, SearchType... searchTypes) {
-        this();
-        setPosition(columnIndex);
-        setText(columnText, searchTypes);
+        super(columnIndex, columnText, searchTypes);
     }
 
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
-        this(container, columnIndex);
+        super(container, columnIndex);
         setText(columnText, searchTypes);
     }
 

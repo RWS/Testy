@@ -66,6 +66,8 @@ public class XPathBuilder implements Cloneable {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
         setTemplate("style", "contains(@style, '%s')");
         setTemplate("id", "@id='%s'");
+        setTemplate("position", "[position() = %s]");
+        setTemplate("tagAndPosition", "%1$s[%2$s]");
         setTemplate("name", "@name='%s'");
         setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
         setTemplate("excludeClass", "not(contains(@class, '%s'))");
@@ -808,7 +810,7 @@ public class XPathBuilder implements Cloneable {
                     if (!Strings.isNullOrEmpty(title)) {
                         titleTplEl.setText(title, searchTitleType.stream().toArray(SearchType[]::new));
                     }
-                    if(titleTplEl.getPathBuilder().getText() != null){
+                    if (titleTplEl.getPathBuilder().getText() != null) {
                         addTemplate(selector, "titleEl", titleTplEl.getXPath());
                     }
                 } else if (searchTitleType.isEmpty()) {
@@ -833,7 +835,9 @@ public class XPathBuilder implements Cloneable {
             addTextInPath(selector, getText(), ".", searchTextType);
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
-            addTemplate(selector, entry.getKey(), entry.getValue());
+            if (!"tagAndPosition".equals(entry.getKey())) {
+                addTemplate(selector, entry.getKey(), entry.getValue());
+            }
         }
         selector.addAll(elPathSuffix.values().stream().collect(Collectors.toList()));
         selector.addAll(getChildNodesToSelector());
@@ -947,7 +951,20 @@ public class XPathBuilder implements Cloneable {
         if (subPath != null) {
             selector += !Strings.isNullOrEmpty(selector) ? " and " + subPath : subPath;
         }
-        selector = getRoot() + getTag() + (!Strings.isNullOrEmpty(selector) ? "[" + selector + "]" : "");
+        Map<String, String[]> templatesValues = getTemplatesValues();
+        String[] tagAndPositions = templatesValues.get("tagAndPosition");
+        List<String> tagAndPosition = new ArrayList<>();
+        if (tagAndPositions != null) {
+            tagAndPosition.addAll(Arrays.asList(tagAndPositions));
+            tagAndPosition.add(0, getTag());
+        }
+        String tag;
+        if (!tagAndPosition.isEmpty()) {
+            tag = applyTemplate("tagAndPosition", tagAndPosition.toArray());
+        } else {
+            tag = getTag();
+        }
+        selector = getRoot() + tag + (!Strings.isNullOrEmpty(selector) ? "[" + selector + "]" : "");
         return selector;
     }
 
@@ -1178,7 +1195,7 @@ public class XPathBuilder implements Cloneable {
 
     protected String addPositionToPath(String itemPath) {
         if (hasPosition()) {
-            itemPath += "[position() = " + getPosition() + "]";
+            itemPath += applyTemplate("position", getPosition());
         }
         return itemPath;
     }
