@@ -214,7 +214,7 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return getListsParallel(rows, columnsList);
+            return getLists(rows, columnsList);
         }
     }
 
