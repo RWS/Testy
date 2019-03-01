@@ -808,13 +808,12 @@ public class XPathBuilder implements Cloneable {
             if (!Strings.isNullOrEmpty(title) || titleTplEl != null) {
                 if (titleTplEl != null) {
                     if (!Strings.isNullOrEmpty(title)) {
-                        titleTplEl.setText(title, searchTitleType.stream().toArray(SearchType[]::new));
+                        titleTplEl.setText(title, searchTitleType.toArray(new SearchType[0]));
                     }
                     if (titleTplEl.getPathBuilder().getText() != null) {
                         addTemplate(selector, "titleEl", titleTplEl.getXPath());
                     }
                 } else if (searchTitleType.isEmpty()) {
-//                title = getTextAfterEscapeQuotes(title, searchTitleType);
                     addTemplate(selector, "title", title);
                 } else {
                     addTextInPath(selector, title, "@title", searchTitleType);
@@ -832,7 +831,11 @@ public class XPathBuilder implements Cloneable {
             }
         }
         if (hasText()) {
-            addTextInPath(selector, getText(), ".", searchTextType);
+            if (!Strings.isNullOrEmpty(getTemplate("text"))) {
+                selector.add(applyTemplate("text", Utils.getEscapeQuotesText(getText())));
+            } else {
+                addTextInPath(selector, getText(), ".", searchTextType);
+            }
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
             if (!"tagAndPosition".equals(entry.getKey())) {
@@ -847,9 +850,7 @@ public class XPathBuilder implements Cloneable {
     public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType) {
         text = getTextAfterEscapeQuotes(text, searchTextType);
         boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
-        if (!Strings.isNullOrEmpty(getTemplate("text"))) {
-            selector.add(String.format(templates.get("text"), text));
-        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+        if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             String[] strings = Pattern.compile(Pattern.quote(splitChar)).split(text.substring(1));
             for (int i = 0; i < strings.length; i++) {
