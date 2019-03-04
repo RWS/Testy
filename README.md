@@ -98,7 +98,7 @@ This project is optimized for:
 <dependency>
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
-    <version>2.11.1</version>
+    <version>2.11.0</version>
 </dependency>
 ```
 
@@ -152,7 +152,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.11.1**
+**Release Notes for Testy 2.11.0**
 - added setHeaders(boolean strictPosition, final String... headers) method
 - added selectAll() method in Grid
 - improvement retryIfNotSame(...) accept integer parameter

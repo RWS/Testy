@@ -3,7 +3,7 @@ RELEASE NOTES
 **Release Notes for Testy 2.12.0-SNAPSHOT**
 -
 
-**Release Notes for Testy 2.11.1**
+**Release Notes for Testy 2.11.0**
 - added setHeaders(boolean strictPosition, final String... headers) method
 - added selectAll() method in Grid
 - improvement retryIfNotSame(...) accept integer parameter
