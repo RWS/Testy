@@ -20,9 +20,12 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         setContainer(container);
     }
 
-    public TextField(WebLocator container, String label) {
+    public TextField(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE};
+        }
+        setLabel(label, searchTypes);
     }
 
     // methods
@@ -52,13 +55,6 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
      */
     public boolean isEditable() {
         return !"true".equals(getAttribute("readonly"));
-    }
-
-    /**
-     * @return true is the element does have attribute disabled
-     */
-    public boolean isDisabled() {
-        return "true".equals(getAttribute("disabled"));
     }
 
     public boolean isEnabled() {

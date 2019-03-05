@@ -15,8 +15,20 @@ public class Button extends WebLocator implements IButton {
         setContainer(container);
     }
 
-    public Button(WebLocator container, String text, final SearchType... searchTypes) {
+    public Button(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
         setText(text, searchTypes);
+    }
+
+    private String iconCls;
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public <T extends com.sdl.selenium.extjs6.button.Button> T setIconCls(final String iconCls) {
+        this.iconCls = iconCls;
+        setTemplateValue("icon-cls", iconCls);
+        return (T) this;
     }
 }

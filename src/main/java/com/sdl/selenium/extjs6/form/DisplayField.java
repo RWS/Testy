@@ -16,8 +16,11 @@ public class DisplayField extends WebLocator {
         setContainer(container);
     }
 
-    public DisplayField(WebLocator container, String label) {
+    public DisplayField(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        }
+        setLabel(label, searchTypes);
     }
 }

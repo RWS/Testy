@@ -16,9 +16,12 @@ public class CheckBox extends WebLocator implements ICheck {
         setContainer(container);
     }
 
-    public CheckBox(WebLocator container, String label) {
+    public CheckBox(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, SearchType.CONTAINS);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.CONTAINS};
+        }
+        setLabel(label, searchTypes);
     }
 
     public CheckBox(String boxLabel, WebLocator container) {
@@ -32,12 +35,6 @@ public class CheckBox extends WebLocator implements ICheck {
         WebLocator el = new WebLocator(this).setElPath("/../input");
         String select = el.getAttribute("aria-checked");
         return select != null && select.contains("true");
-    }
-
-    @Override
-    public boolean isDisabled() {
-        String cls = getAttributeClass();
-        return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
     }
 
     @Override

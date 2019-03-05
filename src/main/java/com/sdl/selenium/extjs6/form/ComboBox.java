@@ -27,9 +27,12 @@ public class ComboBox extends TextField implements ICombo {
         setContainer(container);
     }
 
-    public ComboBox(WebLocator container, String label) {
+    public ComboBox(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        }
+        setLabel(label, searchTypes);
     }
 
     /**

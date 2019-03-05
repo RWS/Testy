@@ -5,7 +5,7 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
-public class Button extends WebLocator {
+public class Button extends com.sdl.selenium.web.button.Button {
 
     public Button() {
         setClassName("Button");
@@ -20,21 +20,12 @@ public class Button extends WebLocator {
         setContainer(container);
     }
 
-    public Button(WebLocator container, String text) {
+    public Button(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
-        setText(text, SearchType.EQUALS);
-    }
-
-    private String iconCls;
-
-    public String getIconCls() {
-        return iconCls;
-    }
-
-    public <T extends Button> T setIconCls(final String iconCls) {
-        this.iconCls = iconCls;
-        setTemplateValue("icon-cls", iconCls);
-        return (T) this;
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
+        setText(text, searchTypes);
     }
 
     public boolean showMenu() {

@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
 public class Radio extends WebLocator {
@@ -17,9 +18,9 @@ public class Radio extends WebLocator {
         setContainer(container);
     }
 
-    public Radio(WebLocator container, String label) {
+    public Radio(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label);
+        setLabel(label, searchTypes);
     }
 
     public boolean isSelected() {

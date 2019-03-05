@@ -25,9 +25,12 @@ public class SplitButton extends Button {
         setContainer(container);
     }
 
-    public SplitButton(WebLocator container, String text) {
+    public SplitButton(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
-        setText(text);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
+        setText(text, searchTypes);
     }
 
     public void clickOnMenu(String... options) {

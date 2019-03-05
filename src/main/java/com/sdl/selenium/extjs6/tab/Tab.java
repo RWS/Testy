@@ -30,7 +30,7 @@ public class Tab extends WebLocator implements ITab {
         this();
         List<SearchType> types = new LinkedList<>(Arrays.asList(searchTypes));
         types.addAll(Arrays.asList(SearchType.EQUALS, SearchType.DEEP_CHILD_NODE));
-        setTitle(title, types.stream().toArray(SearchType[]::new));
+        setTitle(title, types.toArray(new SearchType[0]));
     }
 
     public Tab(WebLocator container) {
@@ -53,10 +53,10 @@ public class Tab extends WebLocator implements ITab {
         WebLink link = new WebLink(container).setClasses("x-tab");
         if (!Strings.isNullOrEmpty(getPathBuilder().getTitle())) {
             List<SearchType> ts = getPathBuilder().getSearchTitleType();
-            link.setText(getPathBuilder().getTitle(), ts.stream().toArray(SearchType[]::new));
+            link.setText(getPathBuilder().getTitle(), ts.toArray(new SearchType[0]));
         }
         if (getPathBuilder().getChildNodes() != null && !getPathBuilder().getChildNodes().isEmpty()) {
-            link.setChildNodes(getPathBuilder().getChildNodes().stream().toArray(WebLocator[]::new));
+            link.setChildNodes(getPathBuilder().getChildNodes().toArray(new WebLocator[0]));
         }
         return link.setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }

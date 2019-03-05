@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
 public class FieldSet extends WebLocator {
@@ -17,9 +18,9 @@ public class FieldSet extends WebLocator {
         setContainer(container);
     }
 
-    public FieldSet(WebLocator container, String text) {
+    public FieldSet(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
-        setText(text);
+        setText(text, searchTypes);
     }
 
     public boolean isCollapsed() {

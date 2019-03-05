@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.slider;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.interactions.Actions;
@@ -18,9 +19,9 @@ public class Slider extends WebLocator {
         setContainer(container);
     }
 
-    public Slider(WebLocator container, String label) {
+    public Slider(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label);
+        setLabel(label, searchTypes);
     }
 
     public int getValue() {

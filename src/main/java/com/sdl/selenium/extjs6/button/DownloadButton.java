@@ -15,9 +15,12 @@ public class DownloadButton extends SplitButton implements Download {
         setContainer(container);
     }
 
-    public DownloadButton(WebLocator container, String text) {
+    public DownloadButton(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
-        setText(text, SearchType.EQUALS);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
+        setText(text, searchTypes);
     }
 
     /**
@@ -36,7 +39,8 @@ public class DownloadButton extends SplitButton implements Download {
 
     /**
      * if WebDriverConfig.isSilentDownload() is true, se face silentDownload, is is false se face download with AutoIT.
-     * @param name e.g. TBX
+     *
+     * @param name     e.g. TBX
      * @param fileName e.g. "TestSet.tmx"
      * @return true if the downloaded file is the same one that is meant to be downloaded, otherwise returns false.
      */

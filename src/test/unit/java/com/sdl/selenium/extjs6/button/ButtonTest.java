@@ -2,8 +2,6 @@ package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -11,10 +9,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class ButtonTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ButtonTest.class);
 
     public static WebLocator container = new WebLocator("container");
-    public static String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
+    private static String CONTAINER_PATH = "//*[contains(concat(' ', @class, ' '), ' container ')]";
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

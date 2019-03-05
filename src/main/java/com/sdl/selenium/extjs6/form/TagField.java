@@ -29,9 +29,12 @@ public class TagField extends ComboBox implements ICombo {
         setContainer(container);
     }
 
-    public TagField(WebLocator container, String label) {
+    public TagField(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        }
+        setLabel(label, searchTypes);
     }
 
     @Override
