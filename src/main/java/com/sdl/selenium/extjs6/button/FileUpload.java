@@ -17,9 +17,12 @@ public class FileUpload extends TextField implements Upload {
         setContainer(container);
     }
 
-    public FileUpload(WebLocator container, String label) {
+    public FileUpload(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, SearchType.DEEP_CHILD_NODE_OR_SELF);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        }
+        setLabel(label, searchTypes);
     }
 
     /**
@@ -38,7 +41,7 @@ public class FileUpload extends TextField implements Upload {
      * Upload file with AutoIT.
      * Use only this: button.upload(this, "C:\\text.txt");
      *
-     * @param el the item that you click to open upload window
+     * @param el       the item that you click to open upload window
      * @param filePath e.g. "C:\\text.txt"
      * @return true | false
      */

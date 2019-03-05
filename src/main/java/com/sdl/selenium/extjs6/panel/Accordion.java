@@ -17,8 +17,11 @@ public class Accordion extends Panel {
         setContainer(container);
     }
 
-    public Accordion(WebLocator container, String title) {
+    public Accordion(WebLocator container, String title, SearchType... searchTypes) {
         this(container);
-        setTitle(title, SearchType.EQUALS);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
+        setTitle(title, searchTypes);
     }
 }

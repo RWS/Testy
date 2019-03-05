@@ -18,9 +18,12 @@ public class Panel extends WebLocator {
         setContainer(container);
     }
 
-    public Panel(WebLocator container, String title) {
+    public Panel(WebLocator container, String title, SearchType... searchTypes) {
         this(container);
-        setTitle(title, SearchType.EQUALS);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
+        setTitle(title, searchTypes);
     }
 
     private WebLocator getCollapseEl(String type) {
