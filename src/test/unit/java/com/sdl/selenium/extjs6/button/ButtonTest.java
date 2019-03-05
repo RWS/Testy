@@ -21,6 +21,7 @@ public class ButtonTest {
                 {new Button(container), CONTAINER_PATH + "//a[contains(concat(' ', @class, ' '), ' x-btn ')]"},
                 {new Button(container, "ButtonText"), CONTAINER_PATH + "//a[contains(concat(' ', @class, ' '), ' x-btn ') and (.='ButtonText' or count(*//text()[.='ButtonText']) > 0)]"},
                 {new Button(container, "ButtonText").setSearchTextType(SearchType.CONTAINS), CONTAINER_PATH + "//a[contains(concat(' ', @class, ' '), ' x-btn ') and (contains(.,'ButtonText') or count(*//text()[contains(.,'ButtonText')]) > 0)]"},
+                {new Button(container, "ButtonText", SearchType.CONTAINS), CONTAINER_PATH + "//a[contains(concat(' ', @class, ' '), ' x-btn ') and (contains(.,'ButtonText') or count(*//text()[contains(.,'ButtonText')]) > 0)]"},
                 {new Button(container).setId("ID"), CONTAINER_PATH + "//a[@id='ID' and contains(concat(' ', @class, ' '), ' x-btn ')]"},
                 {new Button(container).setIconCls("swap-filters"), CONTAINER_PATH + "//a[contains(concat(' ', @class, ' '), ' x-btn ') and count(.//*[contains(concat(' ', @class, ' '), ' swap-filters ')]) > 0]"},
 
