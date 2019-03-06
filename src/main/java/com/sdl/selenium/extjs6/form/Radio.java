@@ -1,6 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.google.common.base.Strings;
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
@@ -24,14 +24,15 @@ public class Radio extends WebLocator {
     }
 
     public boolean isSelected() {
-        WebLocator input = new WebLocator(this).setElPath("/../input");
-        String areaChecked = input.getAttribute("aria-checked");
-        if (Strings.isNullOrEmpty(areaChecked)) {
+        WebLocator input = new WebLocator(this);
+        String checked;
+        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
             input.setElPath("//input");
-            String checked = input.getAttribute("checked");
-            return checked != null && "true".equals(checked);
+            checked = input.getAttribute("checked");
         } else {
-            return "true".equals(areaChecked);
+            input.setElPath("/../input");
+            checked = input.getAttribute("aria-checked");
         }
+        return checked != null && "true".equals(checked);
     }
 }
