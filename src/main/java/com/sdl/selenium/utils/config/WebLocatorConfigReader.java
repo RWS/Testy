@@ -22,6 +22,7 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "\n weblocator.min.chars.toType=-1" +
             "\n driver.autoClose=true" +
             "\n driver.implicitlyWait=100" +
+            "\n extjs.version=6.7.0" +
             "\n upload.exe.path=src\\\\test\\\\resources\\\\upload\\\\upload.exe" +
             "\n weblocator.log.params.exclude=Password,Current Password,New Password";
 

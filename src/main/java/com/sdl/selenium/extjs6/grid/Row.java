@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs6.grid;
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.form.CheckBox;
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
@@ -65,9 +66,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     protected void doSelect() {
-        CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-row-checker");
-        if (!checkBox.waitToRender(500L, false)) {
+        CheckBox checkBox = new CheckBox(this);
+        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
             checkBox.setBaseCls("x-selmodel-column");
+        } else {
+            checkBox.setBaseCls("x-grid-row-checker");
         }
         checkBox.click();
     }

@@ -3,8 +3,6 @@ package com.sdl.selenium.utils.config;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.PropertiesReader;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -14,8 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-@Getter
-@Setter
 public class WebLocatorConfig {
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
@@ -31,12 +27,13 @@ public class WebLocatorConfig {
     private static ArrayList<SearchType> searchTextType = new ArrayList<SearchType>() {{
         add(SearchType.CONTAINS);
     }};
-    public static String defaultLabelPosition;
-    public static int minCharsToType;
-    public static String uploadExePath;
-    public static ArrayList<String> logParamsExclude;
+    private static String defaultLabelPosition;
+    private static int minCharsToType;
+    private static String uploadExePath;
+    private static String extJsVersion;
+    private static ArrayList<String> logParamsExclude;
 
-    private static WebLocatorConfigReader properties = null;
+    private static WebLocatorConfigReader properties;
 
     static {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(CONFIG_FILE_NAME);
@@ -136,6 +133,7 @@ public class WebLocatorConfig {
 
         setMinCharsToType(getInt("weblocator.min.chars.toType"));
 
+        setExtJsVersion(getProperty("extjs.version"));
         setUploadExePath(getProperty("upload.exe.path"));
 
         setLogParamsExclude(getProperty("weblocator.log.params.exclude"));
@@ -247,6 +245,14 @@ public class WebLocatorConfig {
 
     public static void setMinCharsToType(int minCharsToType) {
         WebLocatorConfig.minCharsToType = minCharsToType;
+    }
+
+    public static void setExtJsVersion(String extJsVersion) {
+        WebLocatorConfig.extJsVersion = extJsVersion;
+    }
+
+    public static String getExtJsVersion(){
+        return WebLocatorConfig.extJsVersion;
     }
 
     public static String getUploadExePath() {
