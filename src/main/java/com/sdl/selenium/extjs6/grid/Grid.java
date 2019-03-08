@@ -209,7 +209,7 @@ public class Grid extends Table implements Scrollable {
     }
 
     public List<List<String>> getCellsText(boolean parallel, int... excludedColumns) {
-        Row rowsEl = new Row(this).setBaseCls("x-grid-row").setTag("tr");
+        Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();
