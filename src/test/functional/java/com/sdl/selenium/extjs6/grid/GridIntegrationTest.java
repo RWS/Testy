@@ -120,6 +120,17 @@ public class GridIntegrationTest extends TestBase {
     }
 
     @Test(dependsOnMethods = "checkExpandedRowTest")
+    void getCellTextForRowExpanderTest() {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#row-widget-grid");
+        driver.switchTo().frame("examples-iframe");
+        Grid spreadsheet = new Grid().setTitle("Expander rows to show company orders");
+        spreadsheet.ready(true);
+        spreadsheet.ready(true);
+        List<List<String>> cellsText = spreadsheet.getCellsText(true);
+        assertThat(cellsText.size(), is(100));
+    }
+
+    @Test(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
 //        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
@@ -145,7 +156,7 @@ public class GridIntegrationTest extends TestBase {
         Utils.sleep(5000);
 //        spreadsheet.scrollTop();
         long startMs2 = System.currentTimeMillis();
-        List<List<String>> cellsText1 = spreadsheet.getCellsText(true);
+        List<List<String>> cellsText1 = spreadsheet.getCellsText(true, false);
         long endMs2 = System.currentTimeMillis();
         long rez2 = endMs2 - startMs2;
         log.debug("performanceIsCheckedTest1 took {} ms", rez2);

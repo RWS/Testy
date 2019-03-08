@@ -165,7 +165,7 @@ public class Grid extends Table implements Scrollable {
         return new ArrayList<>(Arrays.asList(headerText.trim().split("\n")));
     }
 
-    private List<List<String>> getLists(int rows, List<Integer> columnsList) {
+    private List<List<String>> getLists(int rows, boolean rowExpand, List<Integer> columnsList) {
         List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
         String id = "";
@@ -176,6 +176,9 @@ public class Grid extends Table implements Scrollable {
                     List<String> list = new ArrayList<>();
                     for (int j : columnsList) {
                         Row row = new Row(this).setTag("tr").setResultIdx(i);
+                        if (rowExpand) {
+                            row.setExcludeClasses("x-grid-rowbody-tr");
+                        }
                         Cell cell = new Cell(row, j);
                         String text = cell.getText(true).trim();
                         list.add(text);
@@ -203,12 +206,20 @@ public class Grid extends Table implements Scrollable {
 
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
-        return getCellsText(false, excludedColumns);
+        return getCellsText(false, false, excludedColumns);
     }
 
-    public List<List<String>> getCellsText(boolean parallel, int... excludedColumns) {
+    public List<List<String>> getCellsText(boolean rowExpand, int... excludedColumns) {
+        return getCellsText(false, rowExpand, excludedColumns);
+    }
+
+    public List<List<String>> getCellsText(boolean parallel, boolean rowExpand, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
+        if (rowExpand) {
+            rowsEl.setExcludeClasses("x-grid-rowbody-tr");
+            rowEl = new Row(this).setTag("tr").setExcludeClasses("x-grid-rowbody-tr").setResultIdx(1);
+        }
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();
         int columns = columnsEl.size();
@@ -216,11 +227,11 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return parallel ? getListsParallel(rows, columnsList): getLists(rows, columnsList);
+            return parallel ? getListsParallel(rows, rowExpand, columnsList) : getLists(rows, rowExpand, columnsList);
         }
     }
 
-    private List<List<String>> getListsParallel(int rows, List<Integer> columnsList) {
+    private List<List<String>> getListsParallel(int rows, boolean rowExpand, List<Integer> columnsList) {
         List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
         String id = "";
@@ -235,6 +246,9 @@ public class Grid extends Table implements Scrollable {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
                             Row row = new Row(this).setTag("tr").setResultIdx(fi);
+                            if (rowExpand) {
+                                row.setExcludeClasses("x-grid-rowbody-tr");
+                            }
                             Cell cell = new Cell(row, j);
                             String text = cell.getText(true).trim();
                             list.add(text);
