@@ -80,6 +80,33 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-item-selected");
     }
 
+    public void expand() {
+        scrollInGrid(this);
+        if (isCollapsed()) {
+            doExpanded();
+        }
+    }
+
+    public void collapse() {
+        scrollInGrid(this);
+        if (!isCollapsed()) {
+            doExpanded();
+        }
+    }
+
+    protected void doExpanded() {
+        CheckBox checkBox = new CheckBox(this);
+        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+            checkBox.setBaseCls("x-grid-row-expander");
+        }
+        checkBox.click();
+    }
+
+    public boolean isCollapsed() {
+        String aClass = getAttributeClass();
+        return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-row-collapsed");
+    }
+
     public boolean scrollTo() {
         return RetryUtils.retryIfNotSame(70, true, () -> {
             WebLocator container = getPathBuilder().getContainer();

@@ -107,6 +107,19 @@ public class GridIntegrationTest extends TestBase {
     }
 
     @Test(dependsOnMethods = "checkCellTest")
+    void checkExpandedRowTest() {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#row-expander-grid");
+        driver.switchTo().frame("examples-iframe");
+        Grid spreadsheet = new Grid().setTitle("Expander Rows to show extra data");
+        spreadsheet.ready(true);
+        Row row = spreadsheet.getRow(new Cell(2, "Roodel"));
+        row.expand();
+        assertThat(row.isCollapsed(), is(false));
+        row.collapse();
+        assertThat(row.isCollapsed(), is(true));
+    }
+
+    @Test(dependsOnMethods = "checkExpandedRowTest")
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
 //        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
