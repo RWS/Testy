@@ -9,7 +9,12 @@ public class CheckBox extends WebLocator implements ICheck {
 
     public CheckBox() {
         setClassName("CheckBox");
-        setBaseCls("x-form-checkbox");
+        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+            setTag("input");
+            setType("checkbox");
+        } else {
+            setBaseCls("x-form-checkbox");
+        }
     }
 
     public CheckBox(WebLocator container) {
@@ -20,7 +25,7 @@ public class CheckBox extends WebLocator implements ICheck {
     public CheckBox(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
         if (searchTypes.length == 0) {
-            searchTypes = new SearchType[]{SearchType.CONTAINS};
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
         }
         setLabel(label, searchTypes);
     }
@@ -28,14 +33,17 @@ public class CheckBox extends WebLocator implements ICheck {
     public CheckBox(String boxLabel, WebLocator container) {
         this(container);
         setLabel(boxLabel);
-        setLabelPosition("/../");
+        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+            setLabelPosition("/..//");
+        } else {
+            setLabelPosition("/../");
+        }
     }
 
     @Override
     public boolean isSelected() {
         if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
-            String aClass = getAttributeClass();
-            return aClass != null && aClass.contains("x-form-cb-checked");
+            return executor.isSelected(this);
         } else {
             WebLocator el = new WebLocator(this).setElPath("/../input");
             String select = el.getAttribute("aria-checked");

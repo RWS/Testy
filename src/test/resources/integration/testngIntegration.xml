@@ -73,6 +73,7 @@
     </test>
     <test name="FieldIntegration">
         <classes>
+            <class name="com.sdl.selenium.extjs6.form.CheckBoxIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.ComboBoxIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.DateFieldIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.form.DisplayFieldIntegrationTest"/>
