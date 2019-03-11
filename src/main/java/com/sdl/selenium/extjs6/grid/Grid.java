@@ -245,12 +245,18 @@ public class Grid extends Table implements Scrollable {
                     futures.add(executorService.submit(() -> {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            Row row = new Row(this).setTag("tr").setResultIdx(fi);
+                            Grid parent = (Grid) clone();
+                            Row row = new Row(parent).setTag("tr").setResultIdx(fi);
                             if (rowExpand) {
                                 row.setExcludeClasses("x-grid-rowbody-tr");
                             }
-                            Cell cell = new Cell(row, j);
-                            String text = cell.getText(true).trim();
+                            Cell cell = new Cell(row.clone(), j);
+                            String text = "";
+                            try {
+                                text = cell.getText(true).trim();
+                            } catch (NullPointerException e){
+                                Utils.sleep(1);
+                            }
                             list.add(text);
                         }
                         return list;
@@ -279,6 +285,7 @@ public class Grid extends Table implements Scrollable {
             canRead = false;
             timeout++;
         } while (timeout < 30);
+        executorService.shutdown();
         return listOfList;
     }
 

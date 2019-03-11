@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class WebLocator extends WebLocatorAbstractBuilder {
+public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
 
     private String currentElementPath = "";
@@ -529,6 +529,10 @@ public class WebLocator extends WebLocatorAbstractBuilder {
      */
     public boolean isDisplayed() {
         return executor.isDisplayed(this);
+    }
+
+    public WebLocator clone() throws CloneNotSupportedException {
+        return (WebLocator) super.clone();
     }
 
     @Override
