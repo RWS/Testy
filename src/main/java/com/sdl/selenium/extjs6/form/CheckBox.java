@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
@@ -32,9 +33,14 @@ public class CheckBox extends WebLocator implements ICheck {
 
     @Override
     public boolean isSelected() {
-        WebLocator el = new WebLocator(this).setElPath("/../input");
-        String select = el.getAttribute("aria-checked");
-        return select != null && select.contains("true");
+        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+            String aClass = getAttributeClass();
+            return aClass != null && aClass.contains("x-form-cb-checked");
+        } else {
+            WebLocator el = new WebLocator(this).setElPath("/../input");
+            String select = el.getAttribute("aria-checked");
+            return select != null && select.contains("true");
+        }
     }
 
     @Override
