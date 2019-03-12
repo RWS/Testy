@@ -30,6 +30,7 @@
 
             <class name="com.sdl.selenium.extjs6.button.ButtonTest"/>
             <class name="com.sdl.selenium.extjs6.form.ComboBoxTest"/>
+            <class name="com.sdl.selenium.extjs6.form.CheckBoxTest"/>
             <class name="com.sdl.selenium.extjs6.form.FieldContainerTest"/>
             <class name="com.sdl.selenium.extjs6.form.FieldSetTest"/>
             <class name="com.sdl.selenium.extjs6.form.RadioGroupTest"/>

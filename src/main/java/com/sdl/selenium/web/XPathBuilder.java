@@ -673,6 +673,7 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setExtJsVersion(final String version) {
         this.extJsVersion = version;
+        WebLocatorConfig.setExtJsVersion(version);
         return (T) this;
     }
 
