@@ -160,8 +160,8 @@ public class GridIntegrationTest extends TestBase {
         long endMs2 = System.currentTimeMillis();
         long rez2 = endMs2 - startMs2;
         log.debug("performanceIsCheckedTest1 took {} ms", rez2);
-        long o = rez2 - rez;
-        log.debug("performanceIsCheckedTestFinal took {} ms", o);
+        long o = (rez - rez2)/1000;
+        log.debug("performanceIsCheckedTestFinal took {} s", o);
         List<List<String>> expectedCellsText = Arrays.asList(
                 Arrays.asList("Sidney Sheldon", "Master of the Game", "Warner Books", "Book"),
                 Arrays.asList("Sidney Sheldon", "Are You Afraid of the Dark?", "Warner Books", "Book"),
