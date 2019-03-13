@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -53,12 +54,16 @@ public class CheckBoxTest {
     }
 
     @Version(version = "6.0.2")
-    private CheckBox checkBox  = new CheckBox();
+    private CheckBox checkBox = new CheckBox(new XPathBuilder().with(b -> {
+        b.setRoot("r");
+        b.setTag("t");
+    }));
+//    private CheckBox checkBox = new CheckBox( Bys.with().name(""));
 
     @Test
     public void test() {
-        showAnnotation(this);
-        checkBox = new CheckBox();
+//        showAnnotation(this);
+//        checkBox = new CheckBox();
         log.debug("{}", checkBox.getXPath());
     }
 

@@ -10,6 +10,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class XPathBuilder implements Cloneable {
     private WebLocator container;
     private List<WebLocator> childNodes;
 
-    protected XPathBuilder() {
+    public XPathBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
         setTemplate("style", "contains(@style, '%s')");
         setTemplate("id", "@id='%s'");
@@ -80,6 +81,11 @@ public class XPathBuilder implements Cloneable {
         setTemplate("CHILD_NODE", "count(text()[%s]) > 0");
         setTemplate("HTML_NODE", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)");
         setTemplate("childNodes", "count(.%s) > 0");
+    }
+
+    public <T extends XPathBuilder> T with(Consumer<XPathBuilder> builderFunction) {
+        builderFunction.accept(this);
+        return (T)this;
     }
 
     // =========================================

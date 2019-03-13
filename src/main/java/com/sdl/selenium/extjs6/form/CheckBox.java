@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.extjs6.BysN;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
@@ -14,19 +15,42 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 public class CheckBox extends WebLocator implements ICheck {
 
+    protected static BysN b = new BysN();
+
     public CheckBox() {
-        applyVersion();
-        setClassName("CheckBox");
-        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
-            setTag("input");
-            setType("checkbox");
-        } else {
-            setBaseCls("x-form-checkbox");
-        }
+        b.with(b -> {
+            b.setTag("tag");
+            b.setId("id");
+            if ("6.7.0".equals(b.getVersion())) {
+                setTag("input");
+                setType("checkbox");
+            } else {
+                setBaseCls("x-form-checkbox");
+            }
+        });
+//        applyVersion();
+//        setClassName("CheckBox");
+//        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+//            setTag("input");
+//            setType("checkbox");
+//        } else {
+//            setBaseCls("x-form-checkbox");
+//        }
+    }
+
+//    public String getXpath(){
+//        Bys build = b.build();
+//        return new Bys(b).getXPath();
+//    }
+
+    public CheckBox(Consumer<BysN> bys) {
+        this();
+        b.with(bys);
     }
 
     public CheckBox(WebLocator container) {
