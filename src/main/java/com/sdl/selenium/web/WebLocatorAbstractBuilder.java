@@ -537,12 +537,6 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setExtJsVersion(final String version) {
-        pathBuilder.setExtJsVersion(version);
-        return (T) this;
-    }
-
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method add new searchTextType to existing searchTextType.

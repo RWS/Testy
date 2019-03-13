@@ -61,7 +61,6 @@ public class XPathBuilder implements Cloneable {
 
     private WebLocator container;
     private List<WebLocator> childNodes;
-    private String extJsVersion = WebLocatorConfig.getExtJsVersion();
 
     protected XPathBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
@@ -667,13 +666,6 @@ public class XPathBuilder implements Cloneable {
                 this.attribute.put(attribute, new SearchText(value, searchTypes));
             }
         }
-        return (T) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setExtJsVersion(final String version) {
-        this.extJsVersion = version;
-        WebLocatorConfig.setExtJsVersion(version);
         return (T) this;
     }
 
