@@ -1,56 +1,25 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.extjs6.BysN;
+import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.form.ICheck;
-import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 @Slf4j
 public class CheckBox extends WebLocator implements ICheck {
 
-    protected static BysN b = new BysN();
+    private String version;
+    private boolean isBoxLabel = false;
 
     public CheckBox() {
-        b.with(b -> {
-            b.setTag("tag");
-            b.setId("id");
-            if ("6.7.0".equals(b.getVersion())) {
-                setTag("input");
-                setType("checkbox");
-            } else {
-                setBaseCls("x-form-checkbox");
-            }
-        });
-//        applyVersion();
-//        setClassName("CheckBox");
-//        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
-//            setTag("input");
-//            setType("checkbox");
-//        } else {
-//            setBaseCls("x-form-checkbox");
-//        }
-    }
-
-//    public String getXpath(){
-//        Bys build = b.build();
-//        return new Bys(b).getXPath();
-//    }
-
-    public CheckBox(Consumer<BysN> bys) {
-        this();
-        b.with(bys);
+        setClassName("CheckBox");
     }
 
     public CheckBox(WebLocator container) {
@@ -73,11 +42,12 @@ public class CheckBox extends WebLocator implements ICheck {
     public CheckBox(String boxLabel, WebLocator container) {
         this(container);
         setLabel(boxLabel);
-        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
-            setLabelPosition("/..//");
-        } else {
-            setLabelPosition("/../");
-        }
+        isBoxLabel = true;
+    }
+
+    public <T extends CheckBox> T setVersion(String version) {
+        this.version = version;
+        return (T) this;
     }
 
     @Override
@@ -97,59 +67,22 @@ public class CheckBox extends WebLocator implements ICheck {
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
     }
 
-    public void applyVersion() {
-        Class<?> clazz = this.getClass();
-        Annotation[] annotations = clazz.getDeclaredAnnotations();
-        for (Annotation a : annotations) {
-            if (a.annotationType().isAnnotation()) {
-                Utils.sleep(1);
-            }
-        }
-        if (clazz.isAnnotationPresent(Version.class)) {
-            Version annotation = clazz.getAnnotation(Version.class);
-        }
-        for (Constructor c : clazz.getDeclaredConstructors()) {
-            if (c.isAnnotationPresent(Version.class)) {
-                c.setAccessible(true);
-                Annotation annotation1 = c.getAnnotation(Version.class);
-                Version annotation = (Version) annotation1;
-                String version = annotation.version();
-                log.debug("{}", version);
-                WebLocatorConfig.setExtJsVersion(version);
-            }
-        }
-
-        for (Method m : clazz.getDeclaredMethods()) {
-            if (m.isAnnotationPresent(Version.class)) {
-                m.setAccessible(true);
-            }
-        }
-
-        for (Class c : clazz.getDeclaredClasses()) {
-            for (Field f : c.getDeclaredFields()) {
-                if (f.isAnnotationPresent(Version.class)) {
-                    f.setAccessible(true);
+    public String getXPath() {
+        XPathBuilder pathBuilder = getPathBuilder();
+        if (!Strings.isNullOrEmpty(version)) {
+            if ("6.7.0".equals(version)) {
+                pathBuilder.setTag("*".equals(pathBuilder.getTag()) ? "input" : pathBuilder.getTag());
+                pathBuilder.setType("checkbox");
+                if (isBoxLabel) {
+                    pathBuilder.setLabelPosition(WebLocatorConfig.getDefaultLabelPosition().equals(pathBuilder.getLabelPosition()) ? "/..//" : pathBuilder.getLabelPosition());
+                }
+            } else {
+                pathBuilder.setBaseCls("x-form-checkbox");
+                if (isBoxLabel) {
+                    pathBuilder.setLabelPosition(WebLocatorConfig.getDefaultLabelPosition().equals(pathBuilder.getLabelPosition()) ? "/../" : pathBuilder.getLabelPosition());
                 }
             }
         }
-
-        for (Field f : clazz.getDeclaredFields()) {
-            if (f.isAnnotationPresent(Version.class)) {
-//                f.setAccessible(true);
-                Version annotation = f.getAnnotation(Version.class);
-                String version = annotation.version();
-                log.debug("{}", version);
-                WebLocatorConfig.setExtJsVersion(version);
-            }
-        }
+        return super.getXPath();
     }
-
-//    @Version(version = "6.0.2")
-//    static CheckBox c = new CheckBox();
-
-//    public static void main(String[] args) {
-////        @Version(version = "6.0.2")
-//        CheckBox c = new CheckBox().setVersion("6.0.2");
-//        log.debug("{}", c.getXPath());
-//    }
 }

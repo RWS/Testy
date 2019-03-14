@@ -605,7 +605,7 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * @return final xpath (including containers xpath), used for interacting with browser
      */
-    public final String getXPath() {
+    public String getXPath() {
         return pathBuilder.getXPath();
     }
 
