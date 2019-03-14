@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
@@ -17,6 +18,7 @@ import java.util.concurrent.Future;
 
 @Slf4j
 public class Grid extends Table implements Scrollable {
+    private String version;
 
     public Grid() {
         setClassName("Grid");
@@ -132,6 +134,15 @@ public class Grid extends Table implements Scrollable {
 
     public Cell getCell(int columnIndex, String text, Cell... byCells) {
         return new Cell(getRow(byCells), columnIndex, text, SearchType.EQUALS);
+    }
+
+    protected String getVersion() {
+        return version == null ? WebLocatorConfig.getExtJsVersion() : version;
+    }
+
+    public <T extends Grid> T setVersion(String version) {
+        this.version = version;
+        return (T) this;
     }
 
     public boolean waitToActivate(int seconds) {
@@ -254,7 +265,7 @@ public class Grid extends Table implements Scrollable {
                             String text = "";
                             try {
                                 text = cell.getText(true).trim();
-                            } catch (NullPointerException e){
+                            } catch (NullPointerException e) {
                                 Utils.sleep(1);
                             }
                             list.add(text);

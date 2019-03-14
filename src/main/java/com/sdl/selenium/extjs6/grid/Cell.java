@@ -1,9 +1,8 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.google.common.base.Strings;
-import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.RetryUtils;
 
 public class Cell extends com.sdl.selenium.web.table.Cell {
 
@@ -35,7 +34,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     public void check() {
         scrollInGrid(this);
         if (!isChecked()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+            WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
             checkBox.click();
         }
     }
@@ -43,20 +42,14 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     public void unCheck() {
         scrollInGrid(this);
         if (isChecked()) {
-            CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
+            WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
             checkBox.click();
         }
     }
 
     public Boolean isChecked() {
-        CheckBox checkBox = new CheckBox(this).setBaseCls("x-grid-checkcolumn");
-        if (!checkBox.waitToRender(500L, false)) {
-            return null;
-        }
-        String attributeClass = checkBox.getAttributeClass();
-        if (Strings.isNullOrEmpty(attributeClass)) {
-            attributeClass = checkBox.getAttributeClass();
-        }
+        WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
+        String attributeClass = RetryUtils.retry(4, checkBox::getAttributeClass);
         return attributeClass.contains("x-grid-checkcolumn-checked");
     }
 

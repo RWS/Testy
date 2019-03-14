@@ -2,18 +2,15 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.extjs6.form.CheckBox;
-import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
+    private String version;
 
     public Row() {
         super();
@@ -37,8 +34,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
-        List<AbstractCell> collect = Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).collect((Collectors.toList()));
-        setChildNodes(collect.stream().toArray(AbstractCell[]::new));
+        setChildNodes(Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
     }
 
     public Row(WebLocator table, int indexRow, AbstractCell... cells) {
@@ -49,6 +45,19 @@ public class Row extends com.sdl.selenium.web.table.Row {
     @Override
     public Cell getCell(int columnIndex) {
         return new Cell(this, columnIndex);
+    }
+
+    private String getVersion() {
+        Grid grid = (Grid) getPathBuilder().getContainer();
+        if (grid != null) {
+            this.version = grid.getVersion();
+        }
+        return version;
+    }
+
+    public <T extends Row> T setVersion(String version) {
+        this.version = version;
+        return (T) this;
     }
 
     public void select() {
@@ -66,8 +75,8 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     protected void doSelect() {
-        CheckBox checkBox = new CheckBox(this);
-        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+        WebLocator checkBox = new WebLocator(this);
+        if ("6.7.0".equals(getVersion())) {
             checkBox.setBaseCls("x-selmodel-column");
         } else {
             checkBox.setBaseCls("x-grid-row-checker");
@@ -95,11 +104,8 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     protected void doExpanded() {
-        CheckBox checkBox = new CheckBox(this);
-        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
-            checkBox.setBaseCls("x-grid-row-expander");
-        }
-        checkBox.click();
+        WebLocator expander = new WebLocator(this).setBaseCls("x-grid-row-expander");
+        expander.click();
     }
 
     public boolean isCollapsed() {
