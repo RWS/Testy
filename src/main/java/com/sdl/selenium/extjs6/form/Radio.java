@@ -5,6 +5,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
 public class Radio extends WebLocator {
+    private String version;
 
     public Radio() {
         setClassName("Radio");
@@ -23,10 +24,19 @@ public class Radio extends WebLocator {
         setLabel(label, searchTypes);
     }
 
+    private String getVersion() {
+        return version == null ? WebLocatorConfig.getExtJsVersion() : version;
+    }
+
+    public <T extends Radio> T setVersion(String version) {
+        this.version = version;
+        return (T) this;
+    }
+
     public boolean isSelected() {
         WebLocator input = new WebLocator(this);
         String checked;
-        if ("6.7.0".equals(WebLocatorConfig.getExtJsVersion())) {
+        if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
             input.setElPath("//input");
             checked = input.getAttribute("checked");
         } else {

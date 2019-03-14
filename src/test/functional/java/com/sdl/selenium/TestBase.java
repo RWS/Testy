@@ -15,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class TestBase {
@@ -23,9 +25,21 @@ public class TestBase {
 
     public static int TEST_RUNS = 0;
     public static int TEST_FAILED = 0;
+    public static String version;
 
     static {
         startSuite();
+        version = getVersion();
+    }
+
+    public static String getVersion() {
+        String version = null;
+        Pattern pattern = Pattern.compile("(\\d\\.\\d\\.\\d)");
+        Matcher matcher = pattern.matcher(InputData.EXTJS_EXAMPLE_URL);
+        if (matcher.find()) {
+            version = matcher.group(1);
+        }
+        return version;
     }
 
     @BeforeClass(alwaysRun = true)
@@ -81,7 +95,7 @@ public class TestBase {
         log.info("|          Browser: " + InputData.BROWSER_CONFIG);
         log.info("|          AUT URL: " + InputData.LOGIN_URL);
         log.info("===============================================================\n");
-        
+
         try {
             driver = WebDriverConfig.getWebDriver(InputData.BROWSER_CONFIG);
             if (driver != null) {

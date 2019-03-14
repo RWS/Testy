@@ -169,7 +169,7 @@ public class GridIntegrationTest extends TestBase {
         }
     }
 
-    //@Test(dependsOnMethods = "getCellTextForRowExpanderTest")
+    @Test(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
 //        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");

@@ -1,11 +1,13 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
 public class RadioGroup extends WebLocator {
 
     private Radio radio = new Radio(this);
+    private String version;
 
     public RadioGroup() {
         setClassName("RadioGroup");
@@ -26,6 +28,15 @@ public class RadioGroup extends WebLocator {
         setChildNodes(labelEl);
     }
 
+    private String getVersion() {
+        return version == null ? WebLocatorConfig.getExtJsVersion() : version;
+    }
+
+    public <T extends RadioGroup> T setVersion(String version) {
+        this.version = version;
+        return (T) this;
+    }
+
     public boolean selectByLabel(String label) {
         return selectByLabel(label, SearchType.EQUALS);
     }
@@ -38,6 +49,7 @@ public class RadioGroup extends WebLocator {
     }
 
     public boolean isSelectedByLabel(String label, SearchType... searchType) {
+        radio.setVersion(getVersion());
         radio.setLabel(label, searchType);
         boolean selected = radio.isSelected();
         radio.setLabel(null);

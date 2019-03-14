@@ -20,8 +20,10 @@ public class CheckBoxIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
-        boxLabel.ready(20);
-        Utils.sleep(1000);
+        checkBox.setVersion(version);
+        boxLabel.setVersion(version);
+        boxLabel.ready(10);
+        Utils.sleep(1);
     }
 
     @Test

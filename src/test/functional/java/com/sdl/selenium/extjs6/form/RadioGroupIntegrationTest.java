@@ -20,6 +20,7 @@ public class RadioGroupIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-radiogroup");
         driver.switchTo().frame("examples-iframe");
+        radioGroup.setVersion(version);
         radioGroup.ready(20);
     }
 

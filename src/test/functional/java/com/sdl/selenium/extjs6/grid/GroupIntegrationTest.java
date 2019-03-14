@@ -34,18 +34,33 @@ public class GroupIntegrationTest extends TestBase {
     @Test
     void rowTest2() {
         List<List<String>> cellsText = grid.getCellsText("Cuisine: American");
-        List<List<String>> lists = Arrays.asList(
-                Arrays.asList("Cheesecake Factory", "American"),
-                Arrays.asList("Creamery", "American"),
-                Arrays.asList("Crepevine", "American"),
-                Arrays.asList("Gordon Biersch", "American"),
-                Arrays.asList("MacArthur Park", "American"),
-                Arrays.asList("Old Pro", "American"),
-                Arrays.asList("Shokolaat", "American"),
-                Arrays.asList("Slider Bar", "American"),
-                Arrays.asList("The Old Shoe", "American"),
-                Arrays.asList("University Cafe", "American")
-        );
+        List<List<String>> lists;
+        if ("6.0.2".equals(version)) {
+            lists = Arrays.asList(
+                    Arrays.asList("Cheesecake Factory"),
+                    Arrays.asList("Creamery"),
+                    Arrays.asList("Crepevine"),
+                    Arrays.asList("Gordon Biersch"),
+                    Arrays.asList("MacArthur Park"),
+                    Arrays.asList("Old Pro"),
+                    Arrays.asList("Shokolaat"),
+                    Arrays.asList("Slider Bar"),
+                    Arrays.asList("University Cafe")
+            );
+        } else {
+            lists = Arrays.asList(
+                    Arrays.asList("Cheesecake Factory", "American"),
+                    Arrays.asList("Creamery", "American"),
+                    Arrays.asList("Crepevine", "American"),
+                    Arrays.asList("Gordon Biersch", "American"),
+                    Arrays.asList("MacArthur Park", "American"),
+                    Arrays.asList("Old Pro", "American"),
+                    Arrays.asList("Shokolaat", "American"),
+                    Arrays.asList("Slider Bar", "American"),
+                    Arrays.asList("The Old Shoe", "American"),
+                    Arrays.asList("University Cafe", "American")
+            );
+        }
         assertThat(cellsText, contains(lists.toArray()));
     }
 

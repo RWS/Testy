@@ -52,7 +52,7 @@ public class CheckBox extends WebLocator implements ICheck {
 
     @Override
     public boolean isSelected() {
-        if ("6.7.0".equals(version)) {
+        if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
             return executor.isSelected(this);
         } else {
             WebLocator el = new WebLocator(this).setElPath("/../input");
@@ -70,7 +70,7 @@ public class CheckBox extends WebLocator implements ICheck {
     public String getXPath() {
         XPathBuilder pathBuilder = getPathBuilder();
         if (!Strings.isNullOrEmpty(version)) {
-            if ("6.7.0".equals(version)) {
+            if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
                 pathBuilder.setTag("*".equals(pathBuilder.getTag()) ? "input" : pathBuilder.getTag());
                 pathBuilder.setType("checkbox");
                 if (isBoxLabel) {
