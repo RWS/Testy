@@ -87,6 +87,7 @@
     <test name="GridIntegration">
         <classes>
             <!--<class name="com.sdl.selenium.extjs6.grid.GridBufferTest"/>-->
+            <class name="com.sdl.selenium.extjs6.grid.CellEditingIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.grid.GridIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.grid.GroupIntegrationTest"/>
         </classes>
