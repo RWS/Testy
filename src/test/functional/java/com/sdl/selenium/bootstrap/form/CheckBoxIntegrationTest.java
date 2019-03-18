@@ -3,15 +3,12 @@ package com.sdl.selenium.bootstrap.form;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class CheckBoxIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBoxIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private CheckBox checkBox = new CheckBox(form);

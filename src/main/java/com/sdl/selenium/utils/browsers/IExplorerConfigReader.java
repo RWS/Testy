@@ -9,18 +9,17 @@ import org.openqa.selenium.remote.service.DriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
 public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(IExplorerConfigReader.class);
 
-    private static final String DEFAULT_CONFIG =
-            "\n browser=iexplore" +
-            "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\IEDriverServer.exe" +
-            "\n desired.capabilities.ignoreProtectedModeSettings=true" +
-            "\n desired.capabilities.javascriptEnabled=true";
+    private static final String DEFAULT_CONFIG = String.join("\n", "##IExplorer defaults \n",
+            "browser=iexplore",
+            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\IEDriverServer.exe",
+            "desired.capabilities.ignoreProtectedModeSettings=true",
+            "desired.capabilities.javascriptEnabled=true");
 
     public IExplorerConfigReader() {
         this(null);
@@ -31,7 +30,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     }
 
     @Override
-    public WebDriver createDriver() throws IOException {
+    public WebDriver createDriver() {
         return new InternetExplorerDriver(getOptions());
     }
 
@@ -52,7 +51,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     }
 
     @Override
-    public WebDriver createDriver(URL remoteUrl) throws IOException {
+    public WebDriver createDriver(URL remoteUrl) {
         InternetExplorerOptions capabilities = getOptions();
         if (isRemoteDriver()) {
             RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);

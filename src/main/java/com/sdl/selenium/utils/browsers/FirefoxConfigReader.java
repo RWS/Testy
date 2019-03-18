@@ -1,5 +1,6 @@
 package com.sdl.selenium.utils.browsers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -8,45 +9,43 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+@Slf4j
 public class FirefoxConfigReader extends AbstractBrowserConfigReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FirefoxConfigReader.class);
 
-    private static final String DEFAULT_CONFIG =
-            "\n browser=firefox" +
-            "\n browser.version=" +
-            "\n browser.profile.name=default" +
-            "\n browser.profile.path=" +
-            "\n browser.binary.path=" +
-            "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\geckodriver.exe" +
-            "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
-            "\n profile.preference.dom.max_script_run_time=500" +
-            "\n profile.preference.browser.download.folderList=2" +
-            "\n profile.preference.browser.download.manager.showWhenStarting=false" +
-            "\n profile.preference.browser.download.manager.closeWhenDone=true" +
-            "\n profile.preference.browser.download.manager.showAlertOnComplete=false" +
-            "\n profile.preference.browser.helperApps.neverAsk.openFile=text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document" +
-            "\n profile.preference.browser.helperApps.neverAsk.saveToDisk=text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document" +
-            "\n profile.preference.browser.helperApps.alwaysAsk.force=false" +
-            "\n profile.preference.browser.download.panel.shown=false" +
-            "\n profile.preference.security.warn_entering_secure=false" +
-            "\n profile.preference.security.warn_entering_secure.show_once=false" +
-            "\n profile.preference.security.warn_entering_weak=false" +
-            "\n profile.preference.security.warn_entering_weak.show_once=false" +
-            "\n profile.preference.security.warn_leaving_secure=false" +
-            "\n profile.preference.security.warn_leaving_secure.show_once=false" +
-            "\n profile.preference.security.warn_submit_insecure=false" +
-            "\n profile.preference.security.warn_submit_insecure.show_once=false" +
-            "\n profile.preference.security.warn_viewing_mixed=false" +
-            "\n profile.preference.security.warn_viewing_mixed.show_once=false" +
-            "\n profile.preference.dom.disable_beforeunload = true";
+    private static final String DEFAULT_CONFIG = String.join("\n", "##Firefox defaults \n",
+            "browser=firefox",
+            "browser.version=",
+            "browser.profile.name=default",
+            "browser.profile.path=",
+            "browser.binary.path=",
+            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\geckodriver.exe",
+            "browser.download.dir=src\\\\test\\\\resources\\\\download\\\\",
+            "profile.preference.dom.max_script_run_time=500",
+            "profile.preference.browser.download.folderList=2",
+            "profile.preference.browser.download.manager.showWhenStarting=false",
+            "profile.preference.browser.download.manager.closeWhenDone=true",
+            "profile.preference.browser.download.manager.showAlertOnComplete=false",
+            "profile.preference.browser.helperApps.neverAsk.openFile=text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "profile.preference.browser.helperApps.neverAsk.saveToDisk=text/csv,application/csv,text/apex,application/apex,application/pdf,application/vnd.ms-excel,application/x-xpinstall,application/x-zip,application/x-zip-compressed,application/zip,application/octet-stream,application/msword,text/plain,application/octet,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "profile.preference.browser.helperApps.alwaysAsk.force=false",
+            "profile.preference.browser.download.panel.shown=false",
+            "profile.preference.security.warn_entering_secure=false",
+            "profile.preference.security.warn_entering_secure.show_once=false",
+            "profile.preference.security.warn_entering_weak=false",
+            "profile.preference.security.warn_entering_weak.show_once=false",
+            "profile.preference.security.warn_leaving_secure=false",
+            "profile.preference.security.warn_leaving_secure.show_once=false",
+            "profile.preference.security.warn_submit_insecure=false",
+            "profile.preference.security.warn_submit_insecure.show_once=false",
+            "profile.preference.security.warn_viewing_mixed=false",
+            "profile.preference.security.warn_viewing_mixed.show_once=false",
+            "profile.preference.dom.disable_beforeunload = true");
 
     public FirefoxConfigReader() {
         this(null);
@@ -147,6 +146,6 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
                 }
             }
         }
-        LOGGER.info("The properties was load with success: {}", toString());
+        log.info("The properties was load with success: {}", toString());
     }
 }

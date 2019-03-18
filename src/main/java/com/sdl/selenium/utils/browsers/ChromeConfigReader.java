@@ -1,5 +1,6 @@
 package com.sdl.selenium.utils.browsers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -7,8 +8,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,21 +15,21 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class ChromeConfigReader extends AbstractBrowserConfigReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChromeConfigReader.class);
 
-    private static final String DEFAULT_CONFIG =
-            "\n browser=chrome" +
-                    "\n browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe" +
-                    "\n browser.download.dir=src\\\\test\\\\resources\\\\download\\\\" +
-                    "\n options.arguments=--disable-infobars --lang=en --use-simple-cache-backend --allow-running-insecure-content --enable-logging --v=1 --test-type" +
-                    "\n options.experimental.profile.default_content_setting_values.automatic_downloads=1" +
-                    "\n options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1" +
-                    "\n options.experimental.profile.default_content_settings.popups=0" +
-                    "\n options.experimental.download.prompt_for_download=1" +
-                    "\n options.experimental.credentials_enable_service=false" +
-                    "\n options.experimental.profile.password_manager_enabled=false" +
-                    "\n options.experimental.safebrowsing.enabled=true";
+    private static final String DEFAULT_CONFIG = String.join("\n", "##Chrome defaults \n",
+            "browser=chrome",
+            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe",
+            "browser.download.dir=src\\\\test\\\\resources\\\\download\\\\",
+            "options.arguments=--disable-infobars --lang=en --use-simple-cache-backend --allow-running-insecure-content --enable-logging --v=1 --test-type",
+            "options.experimental.profile.default_content_setting_values.automatic_downloads=1",
+            "options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1",
+            "options.experimental.profile.default_content_settings.popups=0",
+            "options.experimental.download.prompt_for_download=1",
+            "options.experimental.credentials_enable_service=false",
+            "options.experimental.profile.password_manager_enabled=false",
+            "options.experimental.safebrowsing.enabled=true");
 
 
     private DriverService driverService;
@@ -61,13 +60,13 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
     }
 
     @Override
-    public WebDriver createDriver() throws IOException {
+    public WebDriver createDriver() {
         driverService = ChromeDriverService.createDefaultService();
         return new ChromeDriver((ChromeDriverService) driverService, getChromeOptions());
     }
 
     @Override
-    public WebDriver createDriver(URL remoteUrl) throws IOException {
+    public WebDriver createDriver(URL remoteUrl) {
         ChromeOptions options = getChromeOptions();
         if (isRemoteDriver()) {
             RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, options);
@@ -122,6 +121,6 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         String arguments = getProperty("options.arguments");
         options.addArguments(arguments.split(" "));
         options.setExperimentalOption("prefs", prefs);
-        LOGGER.debug("The properties was load with success: {}", toString());
+        log.debug("The properties was load with success: {}", toString());
     }
 }

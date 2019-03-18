@@ -4,6 +4,10 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -24,6 +28,10 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         this(container);
         if (searchTypes.length == 0) {
             searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE};
+        } else {
+            List<SearchType> types = new ArrayList<>(Arrays.asList(searchTypes));
+            types.add(SearchType.DEEP_CHILD_NODE);
+            searchTypes = types.toArray(new SearchType[0]);
         }
         setLabel(label, searchTypes);
     }

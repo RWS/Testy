@@ -2,7 +2,10 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.XPathBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FieldContainer extends WebLocator {
 
@@ -19,19 +22,14 @@ public class FieldContainer extends WebLocator {
 
     public FieldContainer(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-        setLabel(label, searchTypes);
-    }
-
-    protected XPathBuilder createXPathBuilder() {
-        return new XPathBuilder() {
-            @Override
-            protected String afterItemPathCreated(String itemPath) {
-                if (hasLabel()) {
-                    itemPath = itemPath + getLabelPath() + getLabelPosition().substring(0, getLabelPosition().lastIndexOf("//"));
-                }
-                itemPath = addPositionToPath(itemPath);
-                return itemPath;
-            }
-        };
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE};
+        } else {
+            List<SearchType> types = new ArrayList<>(Arrays.asList(searchTypes));
+            types.add(SearchType.DEEP_CHILD_NODE);
+            searchTypes = types.toArray(new SearchType[0]);
+        }
+        WebLocator labelEl = new WebLocator().setTag("label").setText(label, searchTypes);
+        setChildNodes(labelEl);
     }
 }

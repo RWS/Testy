@@ -13,6 +13,9 @@ public class FieldSetIntegrationTest extends TestBase {
 
     private Panel form = new Panel(null, "Employee Information");
     private FieldSet field = new FieldSet(form, "Details");
+    private FieldContainer fieldContainer = new FieldContainer(form, "Availability:");
+    private DateField dateField1 = new DateField(fieldContainer).setResultIdx(1);
+    private DateField dateField2 = new DateField(fieldContainer).setResultIdx(2);
 
     @BeforeClass
     public void startTest() {
@@ -28,5 +31,11 @@ public class FieldSetIntegrationTest extends TestBase {
         assertTrue(field.isCollapsed());
         assertTrue(field.expand());
         assertFalse(field.isCollapsed());
+    }
+
+    @Test
+    public void fieldContainerTest() {
+        assertTrue(dateField1.isElementPresent());
+        assertTrue(dateField2.isElementPresent());
     }
 }

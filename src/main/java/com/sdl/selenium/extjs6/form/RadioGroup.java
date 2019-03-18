@@ -21,9 +21,6 @@ public class RadioGroup extends WebLocator {
 
     public RadioGroup(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
-//        List<SearchType> search = Arrays.asList(searchTypes);
-//        Collections.addAll(search, SearchType.DEEP_CHILD_NODE_OR_SELF);
-//        SearchType[] types = search.toArray(new SearchType[search.size()]);
         WebLocator labelEl = new WebLocator().setTag("label").setText(label, searchTypes);
         setChildNodes(labelEl);
     }

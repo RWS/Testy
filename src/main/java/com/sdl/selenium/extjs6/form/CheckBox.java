@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.WebLocatorAbstractBuilder;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.form.ICheck;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +16,12 @@ import java.util.List;
 @Slf4j
 public class CheckBox extends WebLocator implements ICheck {
 
-    private String version = WebLocatorConfig.getExtJsVersion();
+    private String version;
     private boolean isBoxLabel = false;
 
     public CheckBox() {
         setClassName("CheckBox");
+        setVersion(WebLocatorConfig.getExtJsVersion());
     }
 
     public CheckBox(WebLocator container) {
@@ -45,9 +47,27 @@ public class CheckBox extends WebLocator implements ICheck {
         isBoxLabel = true;
     }
 
-    public <T extends CheckBox> T setVersion(String version) {
+    public <T extends WebLocatorAbstractBuilder> T setVersion(String version) {
         this.version = version;
+        if (isBoxLabel) {
+            setLabelPosition(getProp("checkbox.boxLabel"));
+        }
+        setTag(getProp("checkbox.tag"));
+        setType(getProp("checkbox.type"));
+        setBaseCls(getProp("checkbox.baseCls"));
         return (T) this;
+    }
+
+    public String getProp(String prop) {
+        prop = "Ext." + prop;
+        String property = WebLocatorConfig.getProperty(prop + "." + version);
+        // TODO find closest preview version
+        //String closestVersion = "";
+
+        if (property == null) {
+            property = WebLocatorConfig.getProperty(prop);
+        }
+        return property;
     }
 
     @Override
@@ -67,7 +87,7 @@ public class CheckBox extends WebLocator implements ICheck {
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
     }
 
-    public String getXPath() {
+    public String _getXPath() {
         XPathBuilder pathBuilder = getPathBuilder();
         if (!Strings.isNullOrEmpty(version)) {
             if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
