@@ -12,6 +12,8 @@ import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class Grid extends Table implements Scrollable {
@@ -358,6 +361,41 @@ public class Grid extends Table implements Scrollable {
             } while (listOfList.size() < rows && timeout < 30);
             return listOfList;
         }
+    }
+
+
+    public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
+        Class<?> newclazz = null;
+        int s = 0;
+        Class[] parameterTypes = null;
+        try {
+            newclazz = Class.forName(type.getTypeName());
+            s = newclazz.getDeclaredFields().length;
+            Constructor[] constructors = newclazz.getConstructors();
+            for (Constructor c : constructors) {
+                if (s == c.getParameterCount()) {
+                    parameterTypes = c.getParameterTypes();
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Class<?> finalNewclazz = newclazz;
+        int finalS = s;
+        Class[] finalParameterTypes = parameterTypes;
+        return getCellsText(excludedColumns).stream().map(t -> {
+            List<Object> arr = new ArrayList<>();
+            try {
+                for (int i = 0; i < finalS; i++) {
+                    arr.add(t.get(i));
+                }
+                Constructor<V> constructor = (Constructor<V>) finalNewclazz.getConstructor(finalParameterTypes);
+                return constructor.newInstance(arr.toArray(new Object[0]));
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 
     @Override

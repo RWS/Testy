@@ -279,4 +279,25 @@ public class GridIntegrationTest extends TestBase {
         long endMs = System.currentTimeMillis();
         log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
     }
+
+   // @Test
+//(dependsOnMethods = "getCellTextForRowExpanderTest")
+    void getCellsTest1() {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
+//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
+//        driver.navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
+        Grid spreadsheet = new Grid().setTitle("XML Grid");
+//        Grid spreadsheet = new Grid().setTitle("Basic Grid");
+        Utils.sleep(1000);
+        spreadsheet.ready(20);
+        spreadsheet.ready(true);
+        Utils.sleep(5000);
+        long startMs = System.currentTimeMillis();
+        List<Author> cellsText1 = spreadsheet.getCellsText(Author.class);
+        assertThat(cellsText1.size(), is(10));
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.debug("performanceIsCheckedTest took {} ms", rez);
+    }
 }
