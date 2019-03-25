@@ -45,4 +45,21 @@ public class CheckBoxTest {
     public void getPathSelectorCorrectlyFromConstructors1(CheckBox checkBox, String expectedXpath) {
         assertThat(checkBox.getXPath(), equalTo(expectedXpath));
     }
+
+    @DataProvider
+    public static Object[][] testConstructorPathDataProvider2() {
+        return new Object[][]{
+                {new CheckBox(), "//input[@type='checkbox']"},
+                {new CheckBox().setClasses("CheckBoxClass"), "//input[contains(concat(' ', @class, ' '), ' CheckBoxClass ') and @type='checkbox']"},
+                {new CheckBox(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//input[@type='checkbox']"},
+                {new CheckBox(container).setElPath("//table//tr[1]"), "//*[contains(concat(' ', @class, ' '), ' container ')]//table//tr[1]"},
+                {new CheckBox(container, "CheckBox"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'CheckBox') or count(*//text()[contains(.,'CheckBox')]) > 0)]//following-sibling::*//input[@type='checkbox']"},
+                {new CheckBox("BoxLabel", container), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='BoxLabel']/..//input[@type='checkbox']"},
+        };
+    }
+
+    @Test(dataProvider = "testConstructorPathDataProvider2")
+    public void getPathSelectorCorrectlyFromConstructors2(CheckBox checkBox, String expectedXpath) {
+        assertThat(checkBox.getXPath(), equalTo(expectedXpath));
+    }
 }

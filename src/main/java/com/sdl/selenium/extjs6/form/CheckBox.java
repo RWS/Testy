@@ -21,7 +21,7 @@ public class CheckBox extends WebLocator implements ICheck {
 
     public CheckBox() {
         setClassName("CheckBox");
-        setVersion(WebLocatorConfig.getExtJsVersion());
+        setVersion(getVersion());
     }
 
     public CheckBox(WebLocator container) {
@@ -45,6 +45,11 @@ public class CheckBox extends WebLocator implements ICheck {
         this(container);
         setLabel(boxLabel);
         isBoxLabel = true;
+        setVersion(getVersion());
+    }
+
+    public String getVersion() {
+        return version == null ? WebLocatorConfig.getExtJsVersion() : version;
     }
 
     public <T extends WebLocatorAbstractBuilder> T setVersion(String version) {
@@ -72,7 +77,7 @@ public class CheckBox extends WebLocator implements ICheck {
 
     @Override
     public boolean isSelected() {
-        if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
+        if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
             return executor.isSelected(this);
         } else {
             WebLocator el = new WebLocator(this).setElPath("/../input");
