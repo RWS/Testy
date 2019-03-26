@@ -1,11 +1,9 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.WebLocatorAbstractBuilder;
-import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.form.ICheck;
 import lombok.extern.slf4j.Slf4j;
 
@@ -90,24 +88,5 @@ public class CheckBox extends WebLocator implements ICheck {
     public boolean isEnabled() {
         String cls = getAttributeClass();
         return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
-    }
-
-    public String _getXPath() {
-        XPathBuilder pathBuilder = getPathBuilder();
-        if (!Strings.isNullOrEmpty(version)) {
-            if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
-                pathBuilder.setTag("*".equals(pathBuilder.getTag()) ? "input" : pathBuilder.getTag());
-                pathBuilder.setType("checkbox");
-                if (isBoxLabel) {
-                    pathBuilder.setLabelPosition(WebLocatorConfig.getDefaultLabelPosition().equals(pathBuilder.getLabelPosition()) ? "/..//" : pathBuilder.getLabelPosition());
-                }
-            } else {
-                pathBuilder.setBaseCls("x-form-checkbox");
-                if (isBoxLabel) {
-                    pathBuilder.setLabelPosition(WebLocatorConfig.getDefaultLabelPosition().equals(pathBuilder.getLabelPosition()) ? "/../" : pathBuilder.getLabelPosition());
-                }
-            }
-        }
-        return super.getXPath();
     }
 }
