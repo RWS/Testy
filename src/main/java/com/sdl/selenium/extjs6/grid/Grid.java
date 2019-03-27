@@ -205,6 +205,9 @@ public class Grid extends Table implements Scrollable {
                     }
                     listOfList.add(list);
                 } else {
+                    if (size == i + 1) {
+                        break;
+                    }
                     Row row = new Row(this, i);
                     String currentId = row.getAttributeId();
                     if (!"".equals(id) && id.equals(currentId)) {
