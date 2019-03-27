@@ -184,6 +184,8 @@ public class Grid extends Table implements Scrollable {
     }
 
     private List<List<String>> getLists(int rows, boolean rowExpand, List<Integer> columnsList) {
+        Row rowsEl = new Row(this);
+        int size = rowsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
         String id = "";
@@ -213,7 +215,7 @@ public class Grid extends Table implements Scrollable {
             if (isScrollBottom()) {
                 break;
             }
-            Row row = new Row(this, rows);
+            Row row = new Row(this, size);
             id = row.getAttributeId();
             scrollPageDownInTree();
             canRead = false;
