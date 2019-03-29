@@ -48,9 +48,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private String getVersion() {
-        Grid grid = (Grid) getPathBuilder().getContainer();
-        if (grid != null) {
-            this.version = grid.getVersion();
+        if (version == null) {
+            Grid grid = (Grid) getPathBuilder().getContainer();
+            if (grid != null) {
+                this.version = grid.getVersion();
+            }
         }
         return version;
     }
