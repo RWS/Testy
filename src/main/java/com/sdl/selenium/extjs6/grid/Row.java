@@ -17,28 +17,28 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setTag("table");
     }
 
-    public Row(WebLocator container) {
+    public Row(WebLocator grid) {
         this();
-        setContainer(container);
+        setContainer(grid);
     }
 
-    public Row(WebLocator container, int indexRow) {
-        this(container);
+    public Row(WebLocator grid, int indexRow) {
+        this(grid);
         setPosition(indexRow);
     }
 
-    public Row(WebLocator table, String searchElement, SearchType... searchTypes) {
-        this(table);
+    public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
+        this(grid);
         setText(searchElement, searchTypes);
     }
 
-    public Row(WebLocator table, AbstractCell... cells) {
-        this(table);
+    public Row(WebLocator grid, AbstractCell... cells) {
+        this(grid);
         setChildNodes(Stream.of(cells).filter(t -> t != null && t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
     }
 
-    public Row(WebLocator table, int indexRow, AbstractCell... cells) {
-        this(table, cells);
+    public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
+        this(grid, cells);
         setPosition(indexRow);
     }
 

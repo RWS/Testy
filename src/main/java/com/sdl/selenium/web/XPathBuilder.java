@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -221,7 +222,7 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
         if (childNodes != null) {
-            this.childNodes = Arrays.asList(childNodes);
+            this.childNodes = Stream.of(childNodes).filter(Objects::nonNull).collect(Collectors.toList());
         }
 //        if (childNodes != null) {
 //            List<WebLocator> newList = this.childNodes == null ? new ArrayList<>() : this.childNodes;
@@ -842,7 +843,7 @@ public class XPathBuilder implements Cloneable {
                 addTemplate(selector, entry.getKey(), entry.getValue());
             }
         }
-        selector.addAll(elPathSuffix.values().stream().collect(Collectors.toList()));
+        selector.addAll(new ArrayList<>(elPathSuffix.values()));
         selector.addAll(getChildNodesToSelector());
         return selector.isEmpty() ? null : String.join(" and ", selector);
     }

@@ -25,7 +25,7 @@ public class RowTest {
                 {new Row(container),                        "//*[contains(concat(' ', @class, ' '), ' container ')]//table"},
                 {new Row(container, 2),                     "//*[contains(concat(' ', @class, ' '), ' container ')]//table[position() = 2]"},
                 {new Row(container, "Text"),                "//*[contains(concat(' ', @class, ' '), ' container ')]//table[(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
-                {new Row(container, new Cell("Text")),      "//*[contains(concat(' ', @class, ' '), ' container ')]//table[count(.//td[(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0]"},
+                {new Row(container, new Cell("Text"), null),      "//*[contains(concat(' ', @class, ' '), ' container ')]//table[count(.//td[(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0]"},
                 {new Row(container, 2, new Cell("Text")),   "//*[contains(concat(' ', @class, ' '), ' container ')]//table[count(.//td[(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0][position() = 2]"},
         };
     }
