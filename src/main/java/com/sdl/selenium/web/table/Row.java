@@ -33,7 +33,7 @@ public class Row extends AbstractRow {
 
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
-        setChildNodes(Stream.of(cells).filter(t -> t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
+        setChildNodes(Stream.of(cells).filter(t -> t != null && t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
     }
 
     public Row(WebLocator table, int indexRow, AbstractCell... cells) {
