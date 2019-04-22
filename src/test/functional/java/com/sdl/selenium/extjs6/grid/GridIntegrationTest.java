@@ -48,6 +48,7 @@ public class GridIntegrationTest extends TestBase {
             grid.getRow(1, new Cell(1, "Lajo"), new Cell(2, "$65.51")).assertReady();
             grid.getRow("Lajo").assertReady();
             grid.getRow(2).assertReady();
+            grid.getRow(new Cell("Price", "$89.96")).assertReady();
         } else {
             grid.getRow(new Cell(1, "Altria Group Inc"), new Cell(2, "$83.81")).assertReady();
             grid.getRow(1, new Cell(1, "Altria Group Inc"), new Cell(2, "$83.81")).assertReady();
@@ -280,7 +281,7 @@ public class GridIntegrationTest extends TestBase {
         log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
     }
 
-   // @Test
+    // @Test
 //(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest1() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
