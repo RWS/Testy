@@ -26,6 +26,12 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         super(columnIndex, columnText, searchTypes);
     }
 
+    public Cell(String header, String cellText, SearchType... searchTypes) {
+        super();
+        setTag(getPathBuilder().getTag() + "[count(//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*) + number(boolean(//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*))]");
+        setText(cellText, searchTypes);
+    }
+
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         super(container, columnIndex);
         setText(columnText, searchTypes);

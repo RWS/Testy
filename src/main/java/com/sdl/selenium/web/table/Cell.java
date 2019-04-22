@@ -33,6 +33,12 @@ public class Cell extends AbstractCell {
         setText(columnText, searchTypes);
     }
 
+    public Cell(String header, String cellText, SearchType... searchTypes) {
+        this();
+        setTag(getPathBuilder().getTag() + "[count(//th[text()='" + header + "']/preceding-sibling::*) + number(boolean(//th[text()='" + header + "']/preceding-sibling::*))]");
+        setText(cellText, searchTypes);
+    }
+
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
         setText(columnText, searchTypes);

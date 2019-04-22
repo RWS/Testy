@@ -24,6 +24,7 @@ public class CellTest {
                 {new Cell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS), "//td[1][count(*//text()[.='Text']) > 0]"},
                 {new Cell(1, "Text", SearchType.DEEP_CHILD_NODE, SearchType.EQUALS, SearchType.CASE_INSENSITIVE), "//td[1][count(*//text()[translate(.,'TEXT','text')='text']) > 0]"},
                 {new Cell("Text", SearchType.EQUALS), "//td[(.='Text' or count(*//text()[.='Text']) > 0)]"},
+                {new Cell("Header", "Cell", SearchType.EQUALS), "//td[count(//th[text()='Header']/preceding-sibling::*) + number(boolean(//th[text()='Header']/preceding-sibling::*))][(.='Cell' or count(*//text()[.='Cell']) > 0)]"},
         };
     }
 
