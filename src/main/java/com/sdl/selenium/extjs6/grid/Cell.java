@@ -4,7 +4,9 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public Cell() {
@@ -30,9 +32,14 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     public Cell(String header, String cellText, SearchType... searchTypes) {
         super();
         if(!Strings.isNullOrEmpty(cellText)){
-            setTag(getPathBuilder().getTag() + "[count(//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*) + number(boolean(//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*))]");
+            setTag(getPathBuilder().getTag() + "[count(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*) + number(boolean(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*))]");
         }
         setText(cellText, searchTypes);
+    }
+
+    public static void main(String[] args) {
+        Cell c = new Cell("Name", "advanced template");
+        log.info("{}", c.getXPath());
     }
 
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
