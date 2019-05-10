@@ -26,7 +26,7 @@ public class Panel extends WebLocator {
         setTitle(title, searchTypes);
     }
 
-    private WebLocator getCollapseEl(String type) {
+    protected WebLocator getCollapseEl(String type) {
         return new WebLocator(this).setCls("x-tool-" + type).setTemplate("cls", "contains(@class,'%s')");
     }
 

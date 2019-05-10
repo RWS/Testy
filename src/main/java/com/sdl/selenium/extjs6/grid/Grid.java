@@ -1,9 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.sdl.selenium.extjs6.form.ComboBox;
-import com.sdl.selenium.extjs6.form.DateField;
-import com.sdl.selenium.extjs6.form.TextArea;
-import com.sdl.selenium.extjs6.form.TextField;
+import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
@@ -445,8 +442,8 @@ public class Grid extends Table implements Scrollable {
     public <T extends TextField> T getEditor() {
         TextField editor;
         WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl1 = new WebLocator(container).setTag("input");
-        String type = editableEl1.getAttribute("data-componentid");
+        WebLocator editableEl = new WebLocator(container).setTag("input");
+        String type = editableEl.getAttribute("data-componentid");
         log.debug("active editor type: {}", type);
         if (type.contains("combo")) {
             editor = new ComboBox();
@@ -454,6 +451,8 @@ public class Grid extends Table implements Scrollable {
             editor = new TextArea();
         } else if (type.contains("datefield")) {
             editor = new DateField();
+        }else if (type.contains("tagfield")) {
+            editor = new TagField();
         } else {
             editor = new TextField();
         }
