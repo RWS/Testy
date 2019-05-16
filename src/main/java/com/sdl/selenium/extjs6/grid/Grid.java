@@ -451,7 +451,7 @@ public class Grid extends Table implements Scrollable {
             editor = new TextArea();
         } else if (type.contains("datefield")) {
             editor = new DateField();
-        }else if (type.contains("tagfield")) {
+        } else if (type.contains("tag")) {
             editor = new TagField();
         } else {
             editor = new TextField();
