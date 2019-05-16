@@ -18,10 +18,11 @@ import static org.hamcrest.core.Is.is;
 @Slf4j
 public class TagField extends ComboBox implements ICombo {
 
+    private WebLocator list = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield-list ')]");
+
     public TagField() {
         setClassName("TagField");
-        setBaseCls("x-tagfield-list");
-        setTag("ul");
+        setBaseCls("x-tagfield-input-field");
     }
 
     public TagField(WebLocator container) {
@@ -104,7 +105,7 @@ public class TagField extends ComboBox implements ICombo {
     public boolean remove(String... values) {
         boolean removed = true;
         for (String value : values) {
-            WebLocator item = new WebLocator(this).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
+            WebLocator item = new WebLocator(list).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
             WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
             removed = removed && RetryUtils.retry(14, closeEl::click);
         }
@@ -114,7 +115,7 @@ public class TagField extends ComboBox implements ICombo {
     public boolean doRemove(String... values) {
         boolean removed = true;
         for (String value : values) {
-            WebLocator item = new WebLocator(this).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
+            WebLocator item = new WebLocator(list).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
             WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
             removed = removed && RetryUtils.retry(15, closeEl::doClick);
         }
@@ -124,22 +125,20 @@ public class TagField extends ComboBox implements ICombo {
     @Override
     public boolean setValue(String value) {
         assertReady(value);
-        WebLocator input = new WebLocator(this).setClasses("x-tagfield-input-field ").setTag("input");
-        boolean setValue = executor.setValue(input, value);
-        Utils.sleep(300);
-        return setValue && input.sendKeys(Keys.ENTER) != null;
+        boolean setValue = executor.setValue(this, value);
+        Utils.sleep(200);
+        return setValue && sendKeys(Keys.ENTER) != null;
     }
 
     @Override
     public String getValue() {
-        return getText();
+        return list.getText();
     }
 
     public List<String> getAllSelectedValues() {
-        String text = getText();
+        String text = list.getText();
         if (text != null) {
             boolean isEmpty = false;
-
             String[] comboValues = text.split("\\n");
             if (comboValues.length == 1) {
                 isEmpty = "".equals(comboValues[0]);
@@ -151,7 +150,7 @@ public class TagField extends ComboBox implements ICombo {
 
     @Override
     public WebLocator getTriggerEl(String icon) {
-        return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
+        return new WebLocator(this).setRoot("/").setTag("/parent::*/parent::*/parent::*/parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
     }
 
     public boolean expand() {

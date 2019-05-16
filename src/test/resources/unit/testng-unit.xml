@@ -34,6 +34,7 @@
             <class name="com.sdl.selenium.extjs6.form.FieldContainerTest"/>
             <class name="com.sdl.selenium.extjs6.form.FieldSetTest"/>
             <class name="com.sdl.selenium.extjs6.form.RadioGroupTest"/>
+            <class name="com.sdl.selenium.extjs6.form.TagFieldTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextFieldTest"/>
             <class name="com.sdl.selenium.extjs6.grid.CellTest"/>
             <class name="com.sdl.selenium.extjs6.grid.GridTest"/>
