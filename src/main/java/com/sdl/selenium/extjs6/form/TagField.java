@@ -130,7 +130,7 @@ public class TagField extends ComboBox implements ICombo {
     public boolean setValue(String value) {
         assertReady(value);
         boolean setValue = executor.setValue(this, value);
-        Utils.sleep(200);
+        Utils.sleep(50);
         return setValue && sendKeys(Keys.ENTER) != null;
     }
 
@@ -152,13 +152,8 @@ public class TagField extends ComboBox implements ICombo {
         return new ArrayList<>();
     }
 
-    @Override
-    public WebLocator getTriggerEl(String icon) {
-        return new WebLocator(this).setRoot("/").setTag("/parent::*/parent::*/parent::*/parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
-    }
-
     public boolean expand() {
-        return clickIcon("trigger");
+        return clickIcon("arrow-trigger");
     }
 
     public boolean collapse() {

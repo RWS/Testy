@@ -44,7 +44,9 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
     }
 
     public WebLocator getTriggerEl(String icon) {
-        return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
+        WebLocator ancestor = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-form-trigger-wrap ')]");
+        return new WebLocator(ancestor).setRoot("/").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
+//        return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
     }
 
     public boolean clickIcon(String icon) {
