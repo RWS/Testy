@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,10 +14,11 @@ public class TagFieldTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new TagField(),                             "//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
-                {new TagField().setClasses("ComboBoxClass"), "//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ') and contains(concat(' ', @class, ' '), ' ComboBoxClass ')]"},
-                {new TagField(container),                    "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
-                {new TagField(container, "ComboBoxText"),"//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'ComboBoxText') or count(*//text()[contains(.,'ComboBoxText')]) > 0)]//following-sibling::*//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
+                {new TagField(),                         "//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
+                {new TagField().setClasses("TagClass"),  "//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ') and contains(concat(' ', @class, ' '), ' TagClass ')]"},
+                {new TagField(container),                "//*[contains(concat(' ', @class, ' '), ' container ')]//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
+                {new TagField(container, "TagText"),"//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'TagText') or count(*//text()[contains(.,'TagText')]) > 0)]//following-sibling::*//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
+                {new TagField(container, "TagText", SearchType.EQUALS),"//*[contains(concat(' ', @class, ' '), ' container ')]//label[(.='TagText' or count(*//text()[.='TagText']) > 0)]//following-sibling::*//input[contains(concat(' ', @class, ' '), ' x-tagfield-input-field ')]"},
         };
     }
 

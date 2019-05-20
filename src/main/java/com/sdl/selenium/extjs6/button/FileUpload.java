@@ -5,6 +5,10 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.TextField;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class FileUpload extends TextField implements Upload {
 
     public FileUpload() {
@@ -21,6 +25,10 @@ public class FileUpload extends TextField implements Upload {
         this(container);
         if (searchTypes.length == 0) {
             searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        } else {
+            List<SearchType> types = new ArrayList<>(Arrays.asList(searchTypes));
+            types.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+            searchTypes = types.toArray(new SearchType[0]);
         }
         setLabel(label, searchTypes);
     }

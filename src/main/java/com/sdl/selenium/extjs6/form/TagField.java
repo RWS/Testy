@@ -34,6 +34,10 @@ public class TagField extends ComboBox implements ICombo {
         this(container);
         if (searchTypes.length == 0) {
             searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        } else {
+            List<SearchType> types = new ArrayList<>(Arrays.asList(searchTypes));
+            types.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+            searchTypes = types.toArray(new SearchType[0]);
         }
         setLabel(label, searchTypes);
     }

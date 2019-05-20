@@ -12,8 +12,7 @@ import org.openqa.selenium.WebDriverException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 @Slf4j
 public class DateField extends TextField {
@@ -48,6 +47,10 @@ public class DateField extends TextField {
         this(container);
         if (searchTypes.length == 0) {
             searchTypes = new SearchType[]{SearchType.DEEP_CHILD_NODE_OR_SELF};
+        } else {
+            List<SearchType> types = new ArrayList<>(Arrays.asList(searchTypes));
+            types.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
+            searchTypes = types.toArray(new SearchType[0]);
         }
         setLabel(label, searchTypes);
     }
