@@ -50,15 +50,17 @@ public class SplitButton extends Button {
         }
     }
 
-    public void doClickOnMenu(SearchType searchType, String... options) {
+    public boolean doClickOnMenu(SearchType searchType, String... options) {
+        boolean success = true;
         Menu menu = new Menu();
         if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String option : options) {
-                menu.doClickOnMenu(option, searchType);
+                success = success && menu.doClickOnMenu(option, searchType);
             }
         } else {
             log.debug("(" + toString() + ") The element arrow could not be located.");
         }
+        return success;
     }
 
     public List<String> getAllMenuValues() {
