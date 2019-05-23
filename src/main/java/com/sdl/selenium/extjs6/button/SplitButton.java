@@ -59,6 +59,7 @@ public class SplitButton extends Button {
             }
         } else {
             log.debug("(" + toString() + ") The element arrow could not be located.");
+            success = false;
         }
         return success;
     }
