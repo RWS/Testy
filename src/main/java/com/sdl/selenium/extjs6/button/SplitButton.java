@@ -35,14 +35,7 @@ public class SplitButton extends Button {
 
     public void clickOnMenu(String... options) {
         assertReady();
-        Menu menu = new Menu();
-        if (menu.showMenu(this) || menu.showMenu(this)) {
-            for (String option : options) {
-                menu.clickOnMenu(option);
-            }
-        } else {
-            log.debug("(" + toString() + ") The element arrow could not be located.");
-        }
+        doClickOnMenu(SearchType.CONTAINS, options);
     }
 
     public void clickOnMenu(SearchType searchType, String... options) {
@@ -51,6 +44,17 @@ public class SplitButton extends Button {
         if (menu.showMenu(this) || menu.showMenu(this)) {
             for (String option : options) {
                 menu.clickOnMenu(option, searchType);
+            }
+        } else {
+            log.debug("(" + toString() + ") The element arrow could not be located.");
+        }
+    }
+
+    public void doClickOnMenu(SearchType searchType, String... options) {
+        Menu menu = new Menu();
+        if (menu.showMenu(this) || menu.showMenu(this)) {
+            for (String option : options) {
+                menu.doClickOnMenu(option, searchType);
             }
         } else {
             log.debug("(" + toString() + ") The element arrow could not be located.");
