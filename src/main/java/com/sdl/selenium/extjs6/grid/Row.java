@@ -7,6 +7,8 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
@@ -45,6 +47,25 @@ public class Row extends com.sdl.selenium.web.table.Row {
     @Override
     public Cell getCell(int columnIndex) {
         return new Cell(this, columnIndex);
+    }
+
+    public List<String> getCellsText(int... excludedColumns) {
+        return getCellsText((short) 0, excludedColumns);
+    }
+
+    public List<String> getCellsText(short columnLanguages, int... excludedColumns) {
+        WebLocator columnsEl = new WebLocator(this).setTag("td");
+        List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
+        List<String> list = new ArrayList<>();
+        for (int j : columns) {
+            Cell cell = new Cell(this, j);
+            if (columnLanguages == j) {
+                list.add(cell.getLanguages());
+            } else {
+                list.add(cell.getText().trim());
+            }
+        }
+        return list;
     }
 
     private String getVersion() {

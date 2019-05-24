@@ -82,4 +82,24 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
             }
         }
     }
+
+    protected String getLanguages() {
+        StringBuilder flags = new StringBuilder();
+        WebLocator flagEl = new WebLocator(this).setTag("i").setClasses("flag");
+        int sizeLangs = flagEl.size();
+        for (int k = 1; k <= sizeLangs; k++) {
+            flagEl.setResultIdx(k);
+            String aClass = flagEl.getAttributeClass();
+            String l = aClass.replace("flag ", "").trim();
+            if (k == 1) {
+                flags.append(l).append(">");
+            } else {
+                flags.append(l);
+                if (k > 2) {
+                    flags.append(",");
+                }
+            }
+        }
+        return flags.toString();
+    }
 }
