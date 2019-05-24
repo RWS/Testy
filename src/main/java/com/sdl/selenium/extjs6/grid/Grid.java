@@ -205,7 +205,7 @@ public class Grid extends Table implements Scrollable {
                             for (int k = 1; k <= sizeLangs; k++) {
                                 flagEl.setResultIdx(k);
                                 String aClass = flagEl.getAttributeClass();
-                                String l = aClass.replace("flag ", "");
+                                String l = aClass.replace("flag ", "").trim();
                                 if (k == 1) {
                                     flags.append(l).append(">");
                                 } else {
