@@ -398,8 +398,11 @@ public class Grid extends Table implements Scrollable {
         }
     }
 
-
     public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
+        return getCellsText(type, (short) 0, excludedColumns);
+    }
+
+    public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
         Class<?> newclazz = null;
         int s = 0;
         Class[] parameterTypes = null;
@@ -418,7 +421,7 @@ public class Grid extends Table implements Scrollable {
         Class<?> finalNewclazz = newclazz;
         int finalS = s;
         Class[] finalParameterTypes = parameterTypes;
-        return getCellsText(excludedColumns).stream().map(t -> {
+        return getCellsText(columnLanguages, excludedColumns).stream().map(t -> {
             List<Object> arr = new ArrayList<>();
             try {
                 for (int i = 0; i < finalS; i++) {
