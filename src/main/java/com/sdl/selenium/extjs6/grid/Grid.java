@@ -180,7 +180,7 @@ public class Grid extends Table implements Scrollable {
         return new ArrayList<>(Arrays.asList(headerText.trim().split("\n")));
     }
 
-    private List<List<String>> getLists(int rows, boolean rowExpand, List<Integer> columnsList) {
+    private List<List<String>> getLists(int rows, boolean rowExpand, short columnLanguages, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         int size = rowsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
@@ -197,7 +197,28 @@ public class Grid extends Table implements Scrollable {
                             row.setExcludeClasses("x-grid-rowbody-tr");
                         }
                         Cell cell = new Cell(row, j);
-                        String text = cell.getText(true).trim();
+                        String text;
+                        if (columnLanguages == j) {
+                            StringBuilder flags = new StringBuilder();
+                            WebLocator el = new WebLocator(this).setTag("i").setClasses("flag");
+                            int sizeLangs = el.size();
+                            for (int k = 1; k <= sizeLangs; k++) {
+                                el.setResultIdx(k);
+                                String aClass = el.getAttributeClass();
+                                String l = aClass.replace("flag ", "");
+                                if (k == 1) {
+                                    flags.append(l).append(">");
+                                } else {
+                                    flags.append(l);
+                                    if (k > 2) {
+                                        flags.append(",");
+                                    }
+                                }
+                            }
+                            text = flags.toString();
+                        } else {
+                            text = cell.getText(true).trim();
+                        }
                         list.add(text);
                     }
                     listOfList.add(list);
@@ -226,14 +247,26 @@ public class Grid extends Table implements Scrollable {
 
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
-        return getCellsText(false, false, excludedColumns);
+        return getCellsText(false, false, (short) 0, excludedColumns);
+    }
+
+    public List<List<String>> getCellsText(short columnLanguages, int... excludedColumns) {
+        return getCellsText(false, false, columnLanguages, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, int... excludedColumns) {
-        return getCellsText(false, rowExpand, excludedColumns);
+        return getCellsText(false, rowExpand, (short) 0, excludedColumns);
+    }
+
+    public List<List<String>> getCellsText(boolean rowExpand, short columnLanguages, int... excludedColumns) {
+        return getCellsText(false, rowExpand, columnLanguages, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean parallel, boolean rowExpand, int... excludedColumns) {
+        return getCellsText(parallel, rowExpand, (short) 0, excludedColumns);
+    }
+
+    public List<List<String>> getCellsText(boolean parallel, boolean rowExpand, short columnLanguages, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         if (rowExpand) {
@@ -247,7 +280,7 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return parallel ? getListsParallel(rows, rowExpand, columnsList) : getLists(rows, rowExpand, columnsList);
+            return parallel ? getListsParallel(rows, rowExpand, columnsList) : getLists(rows, rowExpand, columnLanguages, columnsList);
         }
     }
 
