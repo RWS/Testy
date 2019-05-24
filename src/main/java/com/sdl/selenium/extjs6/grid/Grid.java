@@ -200,11 +200,11 @@ public class Grid extends Table implements Scrollable {
                         String text;
                         if (columnLanguages == j) {
                             StringBuilder flags = new StringBuilder();
-                            WebLocator el = new WebLocator(this).setTag("i").setClasses("flag");
-                            int sizeLangs = el.size();
+                            WebLocator flagEl = new WebLocator(cell).setTag("i").setClasses("flag");
+                            int sizeLangs = flagEl.size();
                             for (int k = 1; k <= sizeLangs; k++) {
-                                el.setResultIdx(k);
-                                String aClass = el.getAttributeClass();
+                                flagEl.setResultIdx(k);
+                                String aClass = flagEl.getAttributeClass();
                                 String l = aClass.replace("flag ", "");
                                 if (k == 1) {
                                     flags.append(l).append(">");
