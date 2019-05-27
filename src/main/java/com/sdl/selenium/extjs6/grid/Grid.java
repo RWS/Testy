@@ -465,16 +465,20 @@ public class Grid extends Table implements Scrollable {
         WebLocator editableEl = new WebLocator(container).setTag("input");
         String type = editableEl.getAttribute("data-componentid");
         log.debug("active editor type: {}", type);
-        if (type.contains("combo")) {
-            editor = new ComboBox();
-        } else if (type.contains("textarea")) {
-            editor = new TextArea();
-        } else if (type.contains("datefield")) {
-            editor = new DateField();
-        } else if (type.contains("tag")) {
-            editor = new TagField();
-        } else {
+        if (type == null) {
             editor = new TextField();
+        } else {
+            if (type.contains("combo")) {
+                editor = new ComboBox();
+            } else if (type.contains("textarea")) {
+                editor = new TextArea();
+            } else if (type.contains("datefield")) {
+                editor = new DateField();
+            } else if (type.contains("tag")) {
+                editor = new TagField();
+            } else {
+                editor = new TextField();
+            }
         }
         editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
         return (T) editor;
