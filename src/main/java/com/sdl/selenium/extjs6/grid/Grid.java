@@ -387,13 +387,13 @@ public class Grid extends Table implements Scrollable {
     }
 
     public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        Class<?> newclazz = null;
+        Class<?> newClazz = null;
         int s = 0;
         Class[] parameterTypes = null;
         try {
-            newclazz = Class.forName(type.getTypeName());
-            s = newclazz.getDeclaredFields().length;
-            Constructor[] constructors = newclazz.getConstructors();
+            newClazz = Class.forName(type.getTypeName());
+            s = newClazz.getDeclaredFields().length;
+            Constructor[] constructors = newClazz.getConstructors();
             for (Constructor c : constructors) {
                 if (s == c.getParameterCount()) {
                     parameterTypes = c.getParameterTypes();
@@ -402,7 +402,7 @@ public class Grid extends Table implements Scrollable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Class<?> finalNewclazz = newclazz;
+        Class<?> finalNewClazz = newClazz;
         int finalS = s;
         Class[] finalParameterTypes = parameterTypes;
         return getCellsText(columnLanguages, excludedColumns).stream().map(t -> {
@@ -411,7 +411,7 @@ public class Grid extends Table implements Scrollable {
                 for (int i = 0; i < finalS; i++) {
                     arr.add(t.get(i));
                 }
-                Constructor<V> constructor = (Constructor<V>) finalNewclazz.getConstructor(finalParameterTypes);
+                Constructor<V> constructor = (Constructor<V>) finalNewClazz.getConstructor(finalParameterTypes);
                 return constructor.newInstance(arr.toArray(new Object[0]));
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

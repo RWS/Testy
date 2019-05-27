@@ -37,11 +37,6 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         setText(cellText, searchTypes);
     }
 
-    public static void main(String[] args) {
-        Cell c = new Cell("Name", "advanced template");
-        log.info("{}", c.getXPath());
-    }
-
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         super(container, columnIndex);
         setText(columnText, searchTypes);

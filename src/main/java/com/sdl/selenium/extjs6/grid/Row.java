@@ -7,6 +7,8 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -51,6 +53,39 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public List<String> getCellsText(int... excludedColumns) {
         return getCellsText((short) 0, excludedColumns);
+    }
+
+    public <V> V getCellsText(Class<V> type, int... excludedColumns) {
+        return getCellsText(type, (short) 0, excludedColumns);
+    }
+
+    public <V> V getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
+        Class<?> newClazz = null;
+        int fieldsCount;
+        Class[] parameterTypes = null;
+        try {
+            newClazz = Class.forName(type.getTypeName());
+            fieldsCount = newClazz.getDeclaredFields().length;
+            Constructor[] constructors = newClazz.getConstructors();
+            for (Constructor c : constructors) {
+                if (fieldsCount == c.getParameterCount()) {
+                    parameterTypes = c.getParameterTypes();
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Class<?> finalNewClazz = newClazz;
+        Class[] finalParameterTypes = parameterTypes;
+        List<String> cellsText = columnLanguages == 0 ? getCellsText(excludedColumns) : getCellsText(columnLanguages, excludedColumns);
+        List<Object> arr = new ArrayList<>(cellsText);
+        try {
+            Constructor<V> constructor = (Constructor<V>) finalNewClazz.getConstructor(finalParameterTypes);
+            return constructor.newInstance(arr.toArray(new Object[0]));
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<String> getCellsText(short columnLanguages, int... excludedColumns) {
