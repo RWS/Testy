@@ -90,7 +90,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
                 flags.append(l).append(">");
             } else {
                 flags.append(l);
-                if (k > 2) {
+                if (k > 2 && k < sizeLangs) {
                     flags.append(",");
                 }
             }
