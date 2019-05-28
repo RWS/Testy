@@ -281,7 +281,7 @@ public class GridIntegrationTest extends TestBase {
         log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
     }
 
-     @Test
+//     @Test
 //(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest1() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");

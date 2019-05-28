@@ -38,7 +38,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public Row(WebLocator grid, AbstractCell... cells) {
         this(grid);
-        setChildNodes(Stream.of(cells).filter(t -> t != null && t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
+        setChildNodes(Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || !t.getPathBuilder().getChildNodes().isEmpty())).toArray(AbstractCell[]::new));
     }
 
     public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
