@@ -29,13 +29,15 @@
             <class name="com.sdl.selenium.extjs3.window.WindowTest"/>
 
             <class name="com.sdl.selenium.extjs6.button.ButtonTest"/>
-            <class name="com.sdl.selenium.extjs6.form.ComboBoxTest"/>
             <class name="com.sdl.selenium.extjs6.form.CheckBoxTest"/>
+            <class name="com.sdl.selenium.extjs6.form.ComboBoxTest"/>
+            <class name="com.sdl.selenium.extjs6.form.DisplayFieldTest"/>
             <class name="com.sdl.selenium.extjs6.form.FieldContainerTest"/>
             <class name="com.sdl.selenium.extjs6.form.FieldSetTest"/>
             <class name="com.sdl.selenium.extjs6.form.RadioGroupTest"/>
             <class name="com.sdl.selenium.extjs6.form.TagFieldTest"/>
             <class name="com.sdl.selenium.extjs6.form.TextFieldTest"/>
+
             <class name="com.sdl.selenium.extjs6.grid.CellTest"/>
             <class name="com.sdl.selenium.extjs6.grid.GridTest"/>
             <class name="com.sdl.selenium.extjs6.grid.GroupTest"/>
