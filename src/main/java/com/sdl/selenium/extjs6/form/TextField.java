@@ -69,7 +69,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public boolean isEnabled() {
         String aClass = getAttributeClass();
-        return !aClass.contains("x-item-disabled") && !"true".equals(getAttribute("disabled"));
+        return (aClass != null && !aClass.contains("x-item-disabled")) || getAttribute("disabled") == null;
     }
 
     public String getError() {
