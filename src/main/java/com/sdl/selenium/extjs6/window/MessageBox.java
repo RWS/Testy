@@ -45,6 +45,7 @@ public class MessageBox extends WebLocator {
     }
 
     private boolean press(final Button button) {
+        button.setVisibility(true);
         return button.click();
     }
 
