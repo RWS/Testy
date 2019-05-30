@@ -1,6 +1,5 @@
 package com.sdl.selenium.utils.config;
 
-import com.google.common.base.Strings;
 import com.sdl.selenium.utils.browsers.AbstractBrowserConfigReader;
 import com.sdl.selenium.utils.browsers.ChromeConfigReader;
 import com.sdl.selenium.utils.browsers.FirefoxConfigReader;
@@ -8,6 +7,7 @@ import com.sdl.selenium.utils.browsers.IExplorerConfigReader;
 import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.SystemUtils;
@@ -296,13 +296,11 @@ public class WebDriverConfig {
 
             List<String> winList = new ArrayList<>(driver.getWindowHandles());
             String tabID = winList.get(index);
-            driver.switchTo().window(tabID);
-            String title = driver.getTitle();
-            if (Strings.isNullOrEmpty(title)) {
-                Utils.sleep(200);
+            String title = RetryUtils.retry(3, () -> {
                 driver.switchTo().window(tabID);
-                title = driver.getTitle();
-            }
+                Utils.sleep(100);
+                return driver.getTitle();
+            });
             log.info("Current tab id: {}, title: {}", tabID, title);
         } catch (NoSuchWindowException e) {
             log.error("NoSuchWindowException", e);
