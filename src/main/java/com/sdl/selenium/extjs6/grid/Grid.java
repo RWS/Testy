@@ -405,7 +405,8 @@ public class Grid extends Table implements Scrollable {
         Class<?> finalNewClazz = newClazz;
         int finalS = s;
         Class[] finalParameterTypes = parameterTypes;
-        return getCellsText(columnLanguages, excludedColumns).stream().map(t -> {
+        List<List<String>> cellsText = RetryUtils.retry(2, () -> getCellsText(columnLanguages, excludedColumns));
+        return cellsText.stream().map(t -> {
             List<Object> arr = new ArrayList<>();
             try {
                 for (int i = 0; i < finalS; i++) {
