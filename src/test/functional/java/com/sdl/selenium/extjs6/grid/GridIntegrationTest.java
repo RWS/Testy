@@ -196,7 +196,7 @@ public class GridIntegrationTest extends TestBase {
         Utils.sleep(5000);
 //        spreadsheet.scrollTop();
         long startMs2 = System.currentTimeMillis();
-        List<List<String>> cellsText1 = spreadsheet.getCellsText(true, false);
+        List<List<String>> cellsText1 = spreadsheet.getCellsText(false);
         long endMs2 = System.currentTimeMillis();
         long rez2 = endMs2 - startMs2;
         log.debug("performanceIsCheckedTest1 took {} ms", rez2);

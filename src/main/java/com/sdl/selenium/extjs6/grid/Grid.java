@@ -14,10 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -231,26 +227,18 @@ public class Grid extends Table implements Scrollable {
 
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
-        return getCellsText(false, false, (short) 0, excludedColumns);
+        return getCellsText(false, (short) 0, excludedColumns);
     }
 
     public List<List<String>> getCellsText(short columnLanguages, int... excludedColumns) {
-        return getCellsText(false, false, columnLanguages, excludedColumns);
+        return getCellsText(false, columnLanguages, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, int... excludedColumns) {
-        return getCellsText(false, rowExpand, (short) 0, excludedColumns);
+        return getCellsText(rowExpand, (short) 0, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, short columnLanguages, int... excludedColumns) {
-        return getCellsText(false, rowExpand, columnLanguages, excludedColumns);
-    }
-
-    public List<List<String>> getCellsText(boolean parallel, boolean rowExpand, int... excludedColumns) {
-        return getCellsText(parallel, rowExpand, (short) 0, excludedColumns);
-    }
-
-    public List<List<String>> getCellsText(boolean parallel, boolean rowExpand, short columnLanguages, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         if (rowExpand) {
@@ -264,78 +252,8 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return parallel ? getListsParallel(rows, rowExpand, columnsList) : getLists(rows, rowExpand, columnLanguages, columnsList);
+            return getLists(rows, rowExpand, columnLanguages, columnsList);
         }
-    }
-
-    private List<List<String>> getListsParallel(int rows, boolean rowExpand, List<Integer> columnsList) {
-        List<List<String>> listOfList = new ArrayList<>();
-        boolean canRead = true;
-        String id = "";
-        int timeout = 0;
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        do {
-            List<Future<List<String>>> futures = new ArrayList<>();
-            for (int i = 1; i <= rows; ++i) {
-                if (canRead) {
-                    final int fi = i;
-                    futures.add(executorService.submit(() -> {
-                        List<String> list = new ArrayList<>();
-                        for (int j : columnsList) {
-                            Grid parent = (Grid) clone();
-                            Row row = new Row(parent).setTag("tr").setResultIdx(fi);
-                            if (rowExpand) {
-                                row.setExcludeClasses("x-grid-rowbody-tr");
-                            }
-                            Cell cell = new Cell(row.clone(), j);
-                            String text = "";
-                            try {
-                                text = cell.getText(true).trim();
-                            } catch (NullPointerException e) {
-                                Utils.sleep(1);
-                            }
-                            list.add(text);
-                        }
-                        return list;
-                    }));
-                } else {
-                    Row row = new Row(this, i);
-                    String currentId = row.getAttributeId();
-                    if (!"".equals(id) && id.equals(currentId)) {
-                        canRead = true;
-                    }
-                }
-            }
-            for (Future<List<String>> future : futures) {
-                try {
-                    listOfList.add(future.get());
-                } catch (InterruptedException | ExecutionException e) {
-                    log.debug("{}", e);
-                }
-            }
-            if (isScrollBottom()) {
-                break;
-            }
-            Row row = new Row(this, rows);
-            id = row.getAttributeId();
-            scrollPageDownInTree();
-            canRead = false;
-            timeout++;
-        } while (timeout < 30);
-        executorService.shutdown();
-        return listOfList;
-    }
-
-    private String getTextNode(Cell cell) {
-        String text = cell.getText(true).trim();
-//        WebLocator childs = new WebLocator(cell).setClasses("user-avatar");
-//        if (childs.waitToRender(150L, false)) {
-//            List<WebElement> children = childs.findElements();
-//            for (WebElement child : children) {
-//                text = text.replaceFirst(child.getText(), "").trim();
-//            }
-//        }
-        return text;
     }
 
     public List<List<String>> getCellsText(String group, int... excludedColumns) {
@@ -359,7 +277,7 @@ public class Grid extends Table implements Scrollable {
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            String text = getTextNode(groupElRows.get(i).getCell(j));
+                            String text = groupElRows.get(i).getCell(j).getText(true).trim();
                             list.add(text);
                         }
                         listOfList.add(list);
@@ -405,7 +323,10 @@ public class Grid extends Table implements Scrollable {
         Class<?> finalNewClazz = newClazz;
         int finalS = s;
         Class[] finalParameterTypes = parameterTypes;
-        List<List<String>> cellsText = RetryUtils.retry(2, () -> getCellsText(columnLanguages, excludedColumns));
+        List<List<String>> cellsText = getCellsText(columnLanguages, excludedColumns);
+        if (cellsText == null) {
+            return null;
+        }
         return cellsText.stream().map(t -> {
             List<Object> arr = new ArrayList<>();
             try {
