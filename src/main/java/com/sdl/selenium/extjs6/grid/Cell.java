@@ -31,7 +31,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public Cell(String header, String cellText, SearchType... searchTypes) {
         super();
-        if(!Strings.isNullOrEmpty(cellText)){
+        if (!Strings.isNullOrEmpty(cellText)) {
             setTag(getPathBuilder().getTag() + "[count(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*) + number(boolean(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*))]");
         }
         setText(cellText, searchTypes);
@@ -87,7 +87,10 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
             String aClass = flagEl.getAttributeClass();
             String l = aClass.replace("flag ", "").trim();
             if (k == 1) {
-                flags.append(l).append(">");
+                flags.append(l);
+                if (sizeLangs > 1) {
+                    flags.append(">");
+                }
             } else {
                 flags.append(l);
                 if (k > 2 && k < sizeLangs) {
