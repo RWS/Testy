@@ -69,17 +69,13 @@ public class MultiThreadClipboardUtils {
 
     public static void waitForUnlockedClipboard(long lockTimeoutMillis) {
         long remainingMillis = lockTimeoutMillis;
-        long waitMillis = 50;
         File lockFile = new File(LOCK_FILE_NAME);
         while (lockFile.exists() && remainingMillis > 0) {
-            try {
-                Thread.sleep(waitMillis);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.sleep(50);
             remainingMillis -= 50;
         }
         if (lockFile.exists()) {
+            unlockClipboard();
             throw new RuntimeException("Clipboard was not unlocked after " + lockTimeoutMillis / 1000 + " second(s).");
         }
     }
