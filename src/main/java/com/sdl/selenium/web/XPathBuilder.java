@@ -851,7 +851,9 @@ public class XPathBuilder implements Cloneable {
     public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType) {
         text = getTextAfterEscapeQuotes(text, searchTextType);
         boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
-        if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
+        if (searchTextType.contains(SearchType.HTML_NODE)) {
+            addTemplate(selector, "HTML_NODE", text);
+        } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             String[] strings = Pattern.compile(Pattern.quote(splitChar)).split(text.substring(1));
             for (int i = 0; i < strings.length; i++) {
@@ -882,8 +884,6 @@ public class XPathBuilder implements Cloneable {
         } else if (searchTextType.contains(SearchType.CHILD_NODE)) {
             String selfPath = getTextWithSearchType(searchTextType, text, pattern);
             addTemplate(selector, "CHILD_NODE", selfPath);
-        } else if (searchTextType.contains(SearchType.HTML_NODE)) {
-            addTemplate(selector, "HTML_NODE", text);
         } else {
             selector.add(getTextWithSearchType(searchTextType, text, ".".equals(pattern) ? "text()" : pattern));
         }
