@@ -79,7 +79,8 @@ public class XPathBuilder implements Cloneable {
         setTemplate("DEEP_CHILD_NODE_OR_SELF", "(%1$s or count(*//text()[%1$s]) > 0)");
         setTemplate("DEEP_CHILD_NODE", "count(*//text()[%s]) > 0");
         setTemplate("CHILD_NODE", "count(text()[%s]) > 0");
-        setTemplate("HTML_NODE", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)");
+        setTemplate("HTML_NODE", "%s");
+        setTemplate("HTML_NODES", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)");
         setTemplate("childNodes", "count(.%s) > 0");
     }
 
@@ -852,7 +853,10 @@ public class XPathBuilder implements Cloneable {
         text = getTextAfterEscapeQuotes(text, searchTextType);
         boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
         if (searchTextType.contains(SearchType.HTML_NODE)) {
-            addTemplate(selector, "HTML_NODE", text);
+            String selfPath = getTextWithSearchType(searchTextType, text, ".");
+            addTemplate(selector, "HTML_NODE", selfPath);
+        } else if (searchTextType.contains(SearchType.HTML_NODES)) {
+            addTemplate(selector, "HTML_NODES", text);
         } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             String[] strings = Pattern.compile(Pattern.quote(splitChar)).split(text.substring(1));

@@ -66,7 +66,6 @@ public enum SearchType {
     CASE_SENSITIVE("sensitive"),
 
 
-
     //FIRST_CHILD_NODE,
 
     /**
@@ -142,6 +141,8 @@ public enum SearchType {
      * }</pre>
      */
     HTML_NODE("advance"),
+
+    HTML_NODES("advance"),
 
     /**
      * <p>For finding elements that contain all text segments.</p>
