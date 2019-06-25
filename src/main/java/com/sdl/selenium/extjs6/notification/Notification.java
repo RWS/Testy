@@ -14,17 +14,16 @@ public class Notification extends WebLocator {
         setVisibility(true);
         WebLocator c = new WebLocator().setClasses("msg-container");
         setContainer(c);
+        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public Notification(String msg) {
-        this();
-        getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
-        setText(msg);
+        this(msg, SearchType.CONTAINS);
     }
 
     public Notification(String msg, SearchType... searchTypes) {
-        this(msg);
-        setSearchTextType(searchTypes);
+        this();
+        setText(msg, searchTypes);
     }
 
     public void close() {
