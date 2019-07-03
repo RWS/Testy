@@ -3,7 +3,7 @@ package com.sdl.selenium.web.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
-public class Field extends WebLocator implements IField {
+public abstract class Field extends WebLocator implements IField {
 
     /**
      * @param value       value
@@ -13,6 +13,11 @@ public class Field extends WebLocator implements IField {
     public <T extends IField> T setPlaceholder(String value, SearchType... searchTypes) {
         setAttribute("placeholder", value, searchTypes);
         return (T) this;
+    }
+
+    public String getError() {
+        WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");
+        return error.getText();
     }
 
     /**

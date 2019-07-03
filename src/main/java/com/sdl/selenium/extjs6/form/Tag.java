@@ -68,8 +68,7 @@ public abstract class Tag extends Field implements ITag {
 
     public boolean clickIcon(String icon) {
         if (ready()) {
-            TextField textField = new TextField();
-            WebLocator iconLocator = textField.getTriggerEl(this, icon);
+            WebLocator iconLocator = getTriggerEl(this, icon);
             iconLocator.setRenderMillis(500);
             return iconLocator.click();
         } else {

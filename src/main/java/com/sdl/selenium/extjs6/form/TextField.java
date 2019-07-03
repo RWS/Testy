@@ -42,37 +42,4 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         assertThat(setted, is(true));
         return true;
     }
-
-    public WebLocator getTriggerEl(WebLocator container, String icon) {
-        WebLocator ancestor = new WebLocator(container).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-form-trigger-wrap ')]");
-        return new WebLocator(ancestor).setRoot("/").setClasses("x-form-" + icon).setInfoMessage(container + " -> " + icon);
-//        return new WebLocator(this).setRoot("/").setTag("parent::*/parent::*/*").setClasses("x-form-" + icon).setInfoMessage(this + " -> " + icon);
-    }
-
-    public boolean clickIcon(String icon) {
-        if (ready()) {
-            WebLocator iconLocator = getTriggerEl(this, icon);
-            iconLocator.setRenderMillis(500);
-            return iconLocator.click();
-        } else {
-            log.warn("clickIcon : field is not ready for use: " + this);
-        }
-        return false;
-    }
-
-    /**
-     * @return true is the element doesn't have attribute readonly
-     */
-    public boolean isEditable() {
-        return !"true".equals(getAttribute("readonly"));
-    }
-
-    public boolean isEnabled() {
-        return !"true".equals(getAttribute("disabled"));
-    }
-
-    public String getError() {
-        WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");
-        return error.getText();
-    }
 }
