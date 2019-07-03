@@ -125,4 +125,8 @@ public class ComboBox extends Combo {
     public boolean select(String value) {
         return select(value, SearchType.EQUALS);
     }
+
+    public boolean setValue(String value) {
+        return executor.setValue(this, value);
+    }
 }
