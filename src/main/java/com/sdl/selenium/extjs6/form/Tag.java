@@ -66,18 +66,11 @@ public abstract class Tag extends Field implements ITag {
         return new ArrayList<>();
     }
 
-    public boolean clickIcon(String icon) {
-        if (ready()) {
-            WebLocator iconLocator = getTriggerEl(this, icon);
-            iconLocator.setRenderMillis(500);
-            return iconLocator.click();
-        } else {
-            log.warn("clickIcon : field is not ready for use: " + this);
-        }
-        return false;
+    public boolean expand() {
+        return "true".equals(getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
     }
 
-    public boolean expand() {
-        return clickIcon("arrow-trigger");
+    public boolean collapse() {
+        return "false".equals(getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
     }
 }

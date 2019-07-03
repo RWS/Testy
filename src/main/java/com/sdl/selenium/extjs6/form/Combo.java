@@ -52,15 +52,4 @@ public abstract class Combo extends Field implements ICombo {
     public boolean collapse() {
         return "false".equals(getAttribute("aria-expanded")) || clickIcon("trigger");
     }
-
-    public boolean clickIcon(String icon) {
-        if (ready()) {
-            WebLocator iconLocator = getTriggerEl(this, icon);
-            iconLocator.setRenderMillis(500);
-            return iconLocator.click();
-        } else {
-            log.warn("clickIcon : field is not ready for use: " + this);
-        }
-        return false;
-    }
 }
