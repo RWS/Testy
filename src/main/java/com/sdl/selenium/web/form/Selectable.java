@@ -14,11 +14,6 @@ public interface Selectable extends IField {
 
     boolean expand();
 
-    default WebLocator getTriggerEl(WebLocator container, String icon) {
-        WebLocator ancestor = new WebLocator(container).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-form-trigger-wrap ')]");
-        return new WebLocator(ancestor).setRoot("/").setClasses("x-form-" + icon).setInfoMessage(container + " -> " + icon);
-    }
-
     default boolean collapse() {
         return expand();
     }

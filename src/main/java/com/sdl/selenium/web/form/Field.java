@@ -2,7 +2,9 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class Field extends WebLocator implements IField {
 
     /**
@@ -18,6 +20,17 @@ public abstract class Field extends WebLocator implements IField {
     public String getError() {
         WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");
         return error.getText();
+    }
+
+    public boolean clickIcon(String icon) {
+        if (ready()) {
+            WebLocator iconLocator = getTriggerEl(this, icon);
+            iconLocator.setRenderMillis(500);
+            return iconLocator.click();
+        } else {
+            log.warn("clickIcon : field is not ready for use: " + this);
+        }
+        return false;
     }
 
     /**
