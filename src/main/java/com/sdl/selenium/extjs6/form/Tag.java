@@ -15,6 +15,7 @@ import java.util.List;
 public abstract class Tag extends Field implements ITag {
 
     private WebLocator list = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield-list ')]");
+    private WebLocator aria = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield ') and contains(concat(' ', @class, ' '), ' x-form-field ')]");
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
         return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
@@ -67,10 +68,10 @@ public abstract class Tag extends Field implements ITag {
     }
 
     public boolean expand() {
-        return "true".equals(getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
+        return "true".equals(aria.getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
     }
 
     public boolean collapse() {
-        return "false".equals(getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
+        return "false".equals(aria.getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
     }
 }
