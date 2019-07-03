@@ -7,6 +7,8 @@ import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 
+import java.util.List;
+
 @Slf4j
 public class CustomComboBox extends TextField implements ICombo {
 
@@ -80,6 +82,11 @@ public class CustomComboBox extends TextField implements ICombo {
             log.debug("(" + this + ") The combo or arrow could not be located.");
         }
         return value;
+    }
+
+    @Override
+    public List<String> getAllValues() {
+        return null;
     }
 
     @Override

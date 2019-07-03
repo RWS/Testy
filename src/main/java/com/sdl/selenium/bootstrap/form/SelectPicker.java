@@ -1,7 +1,10 @@
 package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICombo;
+
+import java.util.List;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -23,7 +26,7 @@ import com.sdl.selenium.web.form.ICombo;
  * selectPicker.select("Manual");
  * }</pre>
  */
-public class SelectPicker extends WebLocator implements ICombo {
+public class SelectPicker extends Field implements ICombo {
 
     public SelectPicker() {
         setClassName("SelectPicker");
@@ -57,6 +60,11 @@ public class SelectPicker extends WebLocator implements ICombo {
     @Override
     public String getValue() {
         return getText().trim();
+    }
+
+    @Override
+    public List<String> getAllValues() {
+        return null;
     }
 
     @Override

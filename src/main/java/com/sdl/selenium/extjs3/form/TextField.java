@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs3.form;
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.IField;
 import com.sdl.selenium.web.form.ITextField;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import org.slf4j.Logger;
@@ -45,7 +46,7 @@ public class TextField extends ExtJsComponent implements ITextField {
      * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
      * @return current element
      */
-    public <T extends ITextField> T setPlaceholder(String value, SearchType... searchTypes) {
+    public <T extends IField> T setPlaceholder(String value, SearchType... searchTypes) {
         setAttribute("placeholder", value, searchTypes);
         return (T) this;
     }

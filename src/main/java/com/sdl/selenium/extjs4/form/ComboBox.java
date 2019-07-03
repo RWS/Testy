@@ -1,15 +1,15 @@
 package com.sdl.selenium.extjs4.form;
 
+import com.sdl.selenium.extjs6.form.Combo;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Slf4j
-public class ComboBox extends TextField implements ICombo {
+public class ComboBox extends Combo {
 
     public ComboBox() {
         setClassName("ComboBox");

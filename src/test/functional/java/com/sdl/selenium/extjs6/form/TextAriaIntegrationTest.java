@@ -30,7 +30,7 @@ public class TextAriaIntegrationTest extends TestBase {
 
     @Test
     public void comboBoxTest() {
-        time.setValue("2:45 AM");
+        time.select("2:45 AM");
         assertThat(time.getValue(), equalTo("2:45 AM"));
     }
 

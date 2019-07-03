@@ -6,10 +6,12 @@ import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Slf4j
-public class ComboBox extends WebLocator implements ICombo {
+public class ComboBox extends Field implements ICombo {
 
     public ComboBox() {
         setClassName("ComboBox");
@@ -65,12 +67,12 @@ public class ComboBox extends WebLocator implements ICombo {
     }
 
     @Override
-    public boolean expand() {
-        return false;
+    public List<String> getAllValues() {
+        return null;
     }
 
     @Override
-    public boolean collapse() {
+    public boolean expand() {
         return false;
     }
 }

@@ -13,7 +13,7 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         setLabelPosition("//following-sibling::*//");
     }
 
-    public TextField(WebLocator container){
+    public TextField(WebLocator container) {
         this();
         setContainer(container);
     }
@@ -23,10 +23,12 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
         setLabel(label, SearchType.DEEP_CHILD_NODE);
     }
 
+    @Deprecated
     public String getTriggerPath(String icon) {
         return "/parent::*/parent::*//*[contains(@class,'x-form-" + icon + "-trigger')]";
     }
 
+    @Deprecated
     public boolean clickIcon(String icon) {
         if (ready()) {
             WebLocator iconLocator = new WebLocator(this).setElPath(getTriggerPath(icon));
@@ -42,23 +44,5 @@ public class TextField extends com.sdl.selenium.web.form.TextField {
             LOGGER.warn("clickIcon : field is not ready for use: " + this);
         }
         return false;
-    }
-
-    /**
-     * @return true is the element doesn't have attribute readonly
-     */
-    public boolean isEditable() {
-        return !"true".equals(getAttribute("readonly"));
-    }
-
-    /**
-     * @return true is the element does have attribute disabled
-     */
-    public boolean isDisabled() {
-        return "true".equals(getAttribute("disabled"));
-    }
-
-    public boolean isEnabled() {
-        return !"true".equals(getAttribute("disabled"));
     }
 }

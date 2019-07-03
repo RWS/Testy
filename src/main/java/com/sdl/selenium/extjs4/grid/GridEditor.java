@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs4.grid;
 import com.sdl.selenium.extjs4.form.*;
 import com.sdl.selenium.extjs6.grid.Grid;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.table.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ public class GridEditor extends Grid {
     private static final Logger LOGGER = LoggerFactory.getLogger(GridEditor.class);
 
     private WebLocator gridEditor = new WebLocator().setBaseCls("x-grid-editor").setExcludeClasses("x-hide-offsets");
-
 
     public GridEditor() {
         setClassName("Grid");
@@ -24,8 +24,8 @@ public class GridEditor extends Grid {
         setContainer(container);
     }
 
-    public TextField getActiveEditor() {
-        TextField editor;
+    public <T extends Field> T getActiveEditor() {
+        Field editor;
         WebLocator container = new WebLocator().setBaseCls("x-grid-editor").setExcludeClasses("x-hide-offsets");
         WebLocator editableEl = new WebLocator(container).setElPath("//*[contains(@class, '-focus')]");
         String stringClass = editableEl.getAttributeClass();
@@ -47,7 +47,7 @@ public class GridEditor extends Grid {
             editor = new TextField();
         }
         editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
-        return editor;
+        return (T) editor;
     }
 
     public boolean setValue(WebLocator editor, int columnIndex, String value){
