@@ -8,6 +8,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.tab.ITab;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
@@ -16,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
+@Getter
 public class Tab extends WebLocator implements ITab {
     private String iconCls;
 
