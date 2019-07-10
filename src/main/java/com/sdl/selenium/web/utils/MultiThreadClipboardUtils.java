@@ -76,7 +76,9 @@ public class MultiThreadClipboardUtils {
         }
         if (lockFile.exists()) {
             unlockClipboard();
-            throw new RuntimeException("Clipboard was not unlocked after " + lockTimeoutMillis / 1000 + " second(s).");
+            if (lockFile.exists()) {
+                throw new RuntimeException("Clipboard was not unlocked after " + lockTimeoutMillis / 1000 + " second(s).");
+            }
         }
     }
 
@@ -94,7 +96,7 @@ public class MultiThreadClipboardUtils {
 
     private static void unlockClipboard() {
         boolean lockRemoved = !lockFile.exists() || lockFile.delete();
-        if (!lockRemoved) {
+        if (lockFile.exists()) {
             throw new RuntimeException("Failed to remove clipboard lock");
         }
     }
