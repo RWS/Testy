@@ -382,6 +382,13 @@ public class Grid extends Table implements Scrollable {
         checkBox.click();
     }
 
+    public <T extends Field> T getEditor(Cell cell) {
+        return RetryUtils.retry(3, () -> {
+            cell.click();
+            return getEditor();
+        });
+    }
+
     public <T extends Field> T getEditor() {
         Field editor;
         WebLocator container = new WebLocator("x-editor", this);
@@ -399,8 +406,10 @@ public class Grid extends Table implements Scrollable {
                 editor = new DateField();
             } else if (type.contains("tag")) {
                 editor = new TagField();
-            } else {
+            } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
+            } else {
+                return null;
             }
         }
         editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");

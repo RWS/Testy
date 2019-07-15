@@ -26,32 +26,28 @@ public class CellEditingIntegrationTest extends TestBase {
 
     @Test
     void cellEditingTest() {
-        grid.getRow(1).getCell(1).click();
-        TextField textField = grid.getEditor();
+        TextField textField = grid.getEditor(grid.getRow(1).getCell(1));
         textField.setValue("test");
         textField.sendKeys(Keys.ENTER);
     }
 
     @Test
     void cellEditingComboBoxTest() {
-        grid.getRow(1).getCell(2).click();
-        ComboBox comboBox = grid.getEditor();
+        ComboBox comboBox = grid.getEditor(grid.getRow(1).getCell(2));
         comboBox.select("Sunny");
         comboBox.sendKeys(Keys.ENTER);
     }
 
     @Test
     void cellEditingNumberFieldTest() {
-        grid.getRow(1).getCell(3).click();
-        TextField textField = grid.getEditor();
+        TextField textField = grid.getEditor(grid.getRow(1).getCell(3));
         textField.setValue("19");
         textField.sendKeys(Keys.ENTER);
     }
 
     @Test
     void cellEditingDateFieldTest() {
-        grid.getRow(1).getCell(4).click();
-        DateField textField = grid.getEditor();
+        DateField textField = grid.getEditor(grid.getRow(1).getCell(4));
         textField.select("19/03/2019");
         textField.sendKeys(Keys.ENTER);
     }
