@@ -5,9 +5,9 @@ import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,11 +32,11 @@ import java.util.List;
  */
 @Slf4j
 public class ConditionManager {
-    public static int SLEEP_INTERVAL = 20;
+    public static int SLEEP_INTERVAL = 10;
 
     private Duration duration = Duration.ofSeconds(10);
 
-    private long startTime;
+    private Instant startTime;
 
     private List<Condition> conditionList = new ArrayList<>();
 
@@ -44,21 +44,6 @@ public class ConditionManager {
      * default duration is in 10 seconds.
      */
     public ConditionManager() {
-        this.add(new FailCondition("TimeoutCondition@") {
-            public boolean execute() {
-                Duration duration = getDuration().minusMillis(new Date().getTime() - startTime);
-                return duration.isZero() || duration.isNegative();
-            }
-
-            @Override
-            public boolean isTimeout() {
-                return true;
-            }
-
-            public String toString() {
-                return super.toString() + "---Retry---" + duration.toMillis() + " ms";
-            }
-        });
     }
 
     /**
@@ -126,15 +111,36 @@ public class ConditionManager {
      * @return the executed Condition, unless the method times out
      */
     public Condition execute() {
-        startTime = new Date().getTime();
+        startTime = Instant.now();
+        Instant now = Instant.now();
         Collections.sort(conditionList);
         while (true) {
             Condition condition = findCondition();
             if (condition != null) {
-                log.debug("{} - executed in ({}ms)", condition, new Date().getTime() - startTime);
+                log.debug("{} - executed in ({}ms)", condition, Instant.now().toEpochMilli() - startTime.toEpochMilli());
                 return condition;
             }
             Utils.sleep(SLEEP_INTERVAL);
+            long millis = Instant.now().toEpochMilli() - now.toEpochMilli();
+            setDuration(getDuration().minusMillis(millis));
+            if (getDuration().isZero() || getDuration().isNegative()) {
+                FailCondition failCondition = new FailCondition("TimeoutCondition@") {
+                    public boolean execute() {
+                        return true;
+                    }
+                    @Override
+                    public boolean isTimeout() {
+                        return true;
+                    }
+                    public String toString() {
+                        Condition cond = conditionList.get(0);
+                        return (cond.getClassName() == null ? "" : cond.getClassName() + ":") + "TimeoutCondition@" + cond.getMessage();
+                    }
+                };
+                log.debug("{} - executed in ({}ms)", failCondition.toString(), Instant.now().toEpochMilli() - startTime.toEpochMilli());
+                return failCondition;
+            }
+            now = Instant.now();
         }
     }
 

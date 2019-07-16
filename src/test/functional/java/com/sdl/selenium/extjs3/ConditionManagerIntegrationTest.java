@@ -80,16 +80,16 @@ public class ConditionManagerIntegrationTest extends TestBase {
 
         MessageBox.pressOK();
         conditionManager.remove(new RenderSuccessCondition(expect3Button));
-        assertThat(conditionManager.getConditionList().size(), is(4));
+        assertThat(conditionManager.getConditionList().size(), is(3));
     }
 
     @Test
     public void conditionManagerTest2() {
         expect3Button.click();
         ConditionManager conditionManager = new ConditionManager();
-        conditionManager.add(new MessageBoxSuccessCondition("Are you sure you want to do that?"));
-        conditionManager.add(new MessageBoxFailCondition("Expect2 button was pressed"));
-        conditionManager.add(new MessageBoxFailCondition("Expect1 button was pressed"));
+        conditionManager.add(new MessageBoxSuccessCondition("Are you sure you want to do that?", "ConditionManagerIntegrationTest"));
+        conditionManager.add(new MessageBoxFailCondition("Expect2 button was pressed", "ConditionManagerIntegrationTest"));
+        conditionManager.add(new MessageBoxFailCondition("Expect1 button was pressed", "ConditionManagerIntegrationTest"));
         assertThat(conditionManager.execute().isSuccess(), is(true)); //&& new MessageBox("Are you sure you want to do that?").pressYES());
         MessageBox.pressYes();
     }
@@ -98,6 +98,13 @@ public class ConditionManagerIntegrationTest extends TestBase {
     public void conditionManagerTest3() {
         ConditionManager conditionManager = new ConditionManager(Duration.ofMillis(100));
         conditionManager.add(new RenderSuccessCondition(new Button(null, "Test")));
+        assertThat(conditionManager.execute().isTimeout(), is(true));
+    }
+
+    @Test
+    public void conditionManagerTest4() {
+        ConditionManager conditionManager = new ConditionManager(Duration.ofMillis(10));
+        conditionManager.add(new RenderSuccessCondition(new Button(null, "Test"), "ConditionManagerIntegrationTest"));
         assertThat(conditionManager.execute().isTimeout(), is(true));
     }
 
