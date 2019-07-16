@@ -1,9 +1,12 @@
 package com.sdl.selenium.conditions;
 
+import com.google.common.base.Strings;
+
 public abstract class Condition implements Comparable<Condition>, ICondition {
 
     private String message;
     private String resultMessage;
+    private String className;
 
     private int priority = 5;
 
@@ -21,10 +24,16 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
         return !isSuccess();
     }
 
-    public Condition() {}
+    public Condition() {
+    }
 
     public Condition(String message) {
         this.message = message;
+    }
+
+    public Condition(String message, String className) {
+        this.message = message;
+        this.className = className;
     }
 
     public Condition(String message, int priority) {
@@ -32,13 +41,19 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
         this.priority = priority;
     }
 
+    public Condition(String message, int priority, String className) {
+        this(message);
+        this.priority = priority;
+        this.className = className;
+    }
+
     @Override
     public String toString() {
-        String msg = getClass().getSimpleName();
-        if("".equals(msg)) {
-            msg = "Condition@" +  getMessage();
+        String msg = getClassName();
+        if (Strings.isNullOrEmpty(msg)) {
+            msg = "Condition@" + getMessage();
         } else {
-            msg += "@";
+            msg += ":Condition@" + getMessage();
         }
         return msg;
     }
@@ -51,6 +66,10 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
     @Override
     public String getMessage() {
         return message;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     @Override

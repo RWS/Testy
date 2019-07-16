@@ -46,7 +46,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
         button.click();
 
         ConditionManager conditionManager = new ConditionManager();
-        conditionManager.add(new MessageBoxSuccessCondition("Expect1 button was pressed"));
+        conditionManager.add(new MessageBoxSuccessCondition("Expect1 button was pressed", "ConditionManagerIntegrationTest"));
         conditionManager.add(new MessageBoxFailCondition("Expect2 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
 

@@ -4,18 +4,23 @@ import com.sdl.selenium.web.WebLocator;
 
 public abstract class FailCondition extends Condition {
 
-    public FailCondition(){}
+    public FailCondition() {
+    }
 
-    public FailCondition(String message){
+    public FailCondition(String message) {
         super(message);
     }
 
+    public FailCondition(String message, String className) {
+        super(message, className);
+    }
+
     @Override
-    public boolean isSuccess(){
+    public boolean isSuccess() {
         return false;
     }
 
-    public static FailCondition fail(){
+    public static FailCondition fail() {
         return new FailCondition() {
             @Override
             public boolean execute() {
@@ -24,7 +29,7 @@ public abstract class FailCondition extends Condition {
         };
     }
 
-    public static FailCondition fail(String message){
+    public static FailCondition fail(String message) {
         return new FailCondition(message) {
             @Override
             public boolean execute() {
@@ -35,10 +40,11 @@ public abstract class FailCondition extends Condition {
 
     /**
      * Return new FailCondition with message: Could not click on {WebLocator}
+     *
      * @param element element
      * @return <code>FailCondition</code>
      */
-    public static FailCondition clickFail(WebLocator element){
+    public static FailCondition clickFail(WebLocator element) {
         return fail("Could not click on " + element);
     }
 }

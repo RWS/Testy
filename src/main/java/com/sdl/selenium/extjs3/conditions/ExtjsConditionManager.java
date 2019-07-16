@@ -4,8 +4,6 @@ import com.sdl.selenium.conditions.Condition;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.MessageBoxCondition;
 import com.sdl.selenium.extjs3.window.MessageBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -30,7 +28,6 @@ import java.time.Duration;
  * </pre>
  */
 public class ExtjsConditionManager extends ConditionManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExtjsConditionManager.class);
 
     /**
      * default timeout in milliseconds is 10000.

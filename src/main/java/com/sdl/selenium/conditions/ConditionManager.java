@@ -34,7 +34,6 @@ import java.util.List;
 public class ConditionManager {
     public static int SLEEP_INTERVAL = 20;
 
-    private long timeout = 10000;
     private Duration duration = Duration.ofSeconds(10);
 
     private long startTime;
@@ -57,7 +56,7 @@ public class ConditionManager {
             }
 
             public String toString() {
-                return getMessage() + duration.toMillis() + " ms";
+                return super.toString() + "---Retry---" + duration.toMillis() + " ms";
             }
         });
     }

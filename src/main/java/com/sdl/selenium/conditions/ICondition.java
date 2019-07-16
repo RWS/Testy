@@ -12,6 +12,8 @@ public interface ICondition {
 
     String getMessage();
 
+    String getClassName();
+
     int getPriority();
 
     void setPriority(int priority);

@@ -1,18 +1,21 @@
 package com.sdl.selenium.extjs3.conditions;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.conditions.MessageBoxCondition;
 import com.sdl.selenium.conditions.SuccessCondition;
 import com.sdl.selenium.extjs3.window.MessageBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MessageBoxSuccessCondition extends SuccessCondition implements MessageBoxCondition {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBoxSuccessCondition.class);
-    
+
     private boolean contains = false;
 
     public MessageBoxSuccessCondition(String message) {
         super(message);
+        setPriority(3);
+    }
+
+    public MessageBoxSuccessCondition(String message, String className) {
+        super(message, className);
         setPriority(3);
     }
 
@@ -21,13 +24,28 @@ public class MessageBoxSuccessCondition extends SuccessCondition implements Mess
         setPriority(priority);
     }
 
+    public MessageBoxSuccessCondition(String message, int priority, String className) {
+        this(message, className);
+        setPriority(priority);
+    }
+
     public MessageBoxSuccessCondition(String message, boolean contains) {
         this(message);
         this.contains = contains;
     }
 
+    public MessageBoxSuccessCondition(String message, boolean contains, String className) {
+        this(message, className);
+        this.contains = contains;
+    }
+
     public MessageBoxSuccessCondition(String message, boolean contains, int priority) {
         this(message, contains);
+        setPriority(priority);
+    }
+
+    public MessageBoxSuccessCondition(String message, boolean contains, int priority, String className) {
+        this(message, contains, className);
         setPriority(priority);
     }
 
@@ -53,6 +71,12 @@ public class MessageBoxSuccessCondition extends SuccessCondition implements Mess
     }
 
     public String toString() {
-        return super.toString() + getMessage();
+        String msg = getClassName();
+        if (Strings.isNullOrEmpty(msg)) {
+            msg = "MessageBoxSuccessCondition@" + getMessage();
+        } else {
+            msg += ":MessageBoxSuccessCondition@" + getMessage();
+        }
+        return msg;
     }
 }

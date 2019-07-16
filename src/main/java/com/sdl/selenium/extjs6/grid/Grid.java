@@ -396,7 +396,7 @@ public class Grid extends Table implements Scrollable {
         String type = editableEl.getAttribute("data-componentid");
         log.debug("active editor type: {}", type);
         if (type == null) {
-            editor = new TextField();
+            return null;
         } else {
             if (type.contains("combo")) {
                 editor = new ComboBox();
