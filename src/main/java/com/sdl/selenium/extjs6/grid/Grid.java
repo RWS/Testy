@@ -382,7 +382,7 @@ public class Grid extends Table implements Scrollable {
         checkBox.click();
     }
 
-    public <T extends Field> T getEditor(Cell cell) {
+    public <T extends Field> T getEditor(WebLocator cell) {
         return RetryUtils.retry(3, () -> {
             cell.click();
             return getEditor();
@@ -393,9 +393,9 @@ public class Grid extends Table implements Scrollable {
         Field editor;
         WebLocator container = new WebLocator("x-editor", this);
         WebLocator editableEl = new WebLocator(container).setTag("input");
-        String type = editableEl.getAttribute("data-componentid");
-        log.debug("active editor type: {}", type);
+        String type = RetryUtils.retry(2, () -> editableEl.getAttribute("data-componentid"));
         if (type == null) {
+            log.error("active editor type: 'null'");
             return null;
         } else {
             if (type.contains("combo")) {
@@ -409,6 +409,7 @@ public class Grid extends Table implements Scrollable {
             } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
             } else {
+                log.warn("active editor type: {}", type);
                 return null;
             }
         }
