@@ -69,6 +69,7 @@ public class TagField extends Tag {
     public boolean doSelect(SearchType searchType, long optionRenderMillis, boolean holdOpen, String... values) {
         boolean selected = true;
         String info = toString();
+        ready();
         if (holdOpen) {
             if (expand()) {
                 for (String value : values) {
