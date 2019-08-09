@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -173,7 +174,7 @@ public class Grid extends Table implements Scrollable {
 
     public List<String> getHeaders() {
         WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = RetryUtils.retrySafe(4, header::getText);
+        String headerText = RetryUtils.retrySafe(4, (Callable<String>) header::getText);
         return new ArrayList<>(Arrays.asList(headerText.trim().split("\n")));
     }
 

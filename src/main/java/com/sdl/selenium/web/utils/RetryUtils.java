@@ -13,11 +13,11 @@ public class RetryUtils {
         return retry(maxRetries, t, false);
     }
 
-    public static boolean retry(int maxRetries, Runnable r) {
+    public static boolean retryRunnable(int maxRetries, Runnable r) {
         return retry(maxRetries, r, false);
     }
 
-    public static boolean retrySafe(int maxRetries, Runnable r) {
+    public static boolean retryRunnableSafe(int maxRetries, Runnable r) {
         return retry(maxRetries, r, true);
     }
 

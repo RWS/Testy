@@ -45,9 +45,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean click(WebLocator el) {
-        boolean click = RetryUtils.retrySafe(1, () -> el.getWebElement().click());
+        boolean click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
         if (!click) {
-            click = RetryUtils.retry(3, () -> {
+            click = RetryUtils.retryRunnable(3, () -> {
                 findAgain(el);
                 el.getWebElement().click();
             });
@@ -79,9 +79,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
-        boolean submit = RetryUtils.retrySafe(1, () -> el.getWebElement().submit());
+        boolean submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
         if (!submit) {
-            submit = RetryUtils.retry(3, () -> {
+            submit = RetryUtils.retryRunnable(3, () -> {
                 findAgain(el);
                 el.getWebElement().submit();
             });
@@ -91,12 +91,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean clear(WebLocator el) {
-        boolean clear = RetryUtils.retrySafe(1, () -> el.getWebElement().clear());
+        boolean clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
         if (!clear) {
-            clear = RetryUtils.retry(3, () -> {
+            clear = RetryUtils.retryRunnable(3, () -> {
                 findAgain(el);
                 el.getWebElement().clear();
-                return el.currentElement != null;
             });
         }
         return clear;
