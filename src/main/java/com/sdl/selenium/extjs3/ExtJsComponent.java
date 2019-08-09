@@ -61,7 +61,7 @@ public class ExtJsComponent extends WebLocator {
     public boolean hasMask() {
         // to make sure mask is for this element get his ID and start from it
 //        String id = getAttributeId();
-        String id = getCurrentElementAttribute("id");
+        String id = getAttribute("id");
         WebLocator mask = getMaskElement();
         if ((id == null || id.equals("")) && getPathBuilder().getContainer() != null) {
             id = getPathBuilder().getContainer().getAttributeId();

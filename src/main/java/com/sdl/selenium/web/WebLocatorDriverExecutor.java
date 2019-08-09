@@ -45,15 +45,14 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean click(WebLocator el) {
-//        if (highlight) {
-//            doHighlight();
-//        }
-        Boolean click = RetryUtils.retrySafe(6, () -> {
-            findAgain(el);
-            el.currentElement.click();
-            return el.currentElement != null;
-        });
-        return click == null ? false : click;
+        boolean click = RetryUtils.retrySafe(1, () -> el.getWebElement().click());
+        if (!click) {
+            click = RetryUtils.retry(3, () -> {
+                findAgain(el);
+                el.getWebElement().click();
+            });
+        }
+        return click;
     }
 
     @Override
@@ -65,10 +64,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     @Override
     public boolean doubleClickAt(WebLocator el) {
         boolean clicked = false;
-        if (ensureExists(el)) {
+        if (findAgain(el)) {
             try {
                 Actions builder = new Actions(driver);
-                builder.doubleClick(el.currentElement).perform();
+                builder.doubleClick(el.getWebElement()).perform();
                 clicked = true;
             } catch (Exception e) {
                 // http://code.google.com/p/selenium/issues/detail?id=244
@@ -80,22 +79,27 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
-        Boolean submit = RetryUtils.retry(6, () -> {
-            findAgain(el);
-            el.currentElement.submit();
-            return el.currentElement != null;
-        });
-        return submit == null ? false : submit;
+        boolean submit = RetryUtils.retrySafe(1, () -> el.getWebElement().submit());
+        if (!submit) {
+            submit = RetryUtils.retry(3, () -> {
+                findAgain(el);
+                el.getWebElement().submit();
+            });
+        }
+        return submit;
     }
 
     @Override
     public boolean clear(WebLocator el) {
-        Boolean clear = RetryUtils.retry(6, () -> {
-            findAgain(el);
-            el.currentElement.clear();
-            return el.currentElement != null;
-        });
-        return clear == null ? false : clear;
+        boolean clear = RetryUtils.retrySafe(1, () -> el.getWebElement().clear());
+        if (!clear) {
+            clear = RetryUtils.retry(3, () -> {
+                findAgain(el);
+                el.getWebElement().clear();
+                return el.currentElement != null;
+            });
+        }
+        return clear;
     }
 
     @Override
@@ -179,29 +183,50 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getCssValue(final WebLocator el, final String propertyName) {
-        return ensureExists(el) ? el.currentElement.getCssValue(propertyName) : null;
+        String cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
+        if (cssValue == null) {
+            return RetryUtils.retry(3, () -> {
+                findAgain(el);
+                return el.getWebElement().getCssValue(propertyName);
+            });
+        }
+        return cssValue;
     }
 
     @Override
     public String getTagName(final WebLocator el) {
-        return ensureExists(el) ? el.currentElement.getTagName() : null;
+        String tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
+        if (tagName == null) {
+            return RetryUtils.retry(3, () -> {
+                findAgain(el);
+                return el.getWebElement().getTagName();
+            });
+        }
+        return tagName;
     }
 
     @Override
     public String getAttribute(final WebLocator el, final String attribute) {
-        return ensureExists(el) ? getCurrentElementAttribute(el, attribute) : null;
+        String attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
+        if (attributeValue == null) {
+            return RetryUtils.retry(3, () -> {
+                findAgain(el);
+                return el.getWebElement().getAttribute(attribute);
+            });
+        }
+        return attributeValue;
     }
 
     public String getAttributeId(WebLocator el) {
-        String pathId = getAttribute(el, "id");
+        String id = getAttribute(el, "id");
         if (el.hasId()) {
-            final String id = el.getPathBuilder().getId();
+            final String pathId = el.getPathBuilder().getId();
             if (!id.equals(pathId)) {
                 LOGGER.warn("id is not same as pathId:{} - {}", id, pathId);
             }
             return id;
         }
-        return pathId;
+        return id;
     }
 
     private boolean ensureExists(final WebLocator el) {
@@ -213,19 +238,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
-    public String getCurrentElementAttribute(final WebLocator el, final String attribute) {
-        return RetryUtils.retrySafe(5, () -> {
-            findAgain(el);
-            return el.currentElement.getAttribute(attribute);
-        });
-    }
-
-    @Override
     public String getText(WebLocator el) {
-        return RetryUtils.retrySafe(6, () -> {
-            findAgain(el);
-            return el.currentElement.getText();
-        });
+        String text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
+        if (text == null) {
+            return RetryUtils.retry(3, () -> {
+                findAgain(el);
+                return el.getWebElement().getText();
+            });
+        }
+        return text;
     }
 
     private String getSelector(WebLocator el) {
@@ -343,9 +364,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean mouseOver(WebLocator el) {
         boolean mouseOver;
         try {
-            if (ensureExists(el)) {
+            if (findAgain(el)) {
                 Actions builder = new Actions(driver);
-                builder.moveToElement(el.currentElement).perform();
+                builder.moveToElement(el.getWebElement()).perform();
                 mouseOver = true;
             } else {
                 mouseOver = false;
@@ -364,15 +385,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean isSelected(WebLocator el) {
-        return ensureExists(el) && el.currentElement.isSelected();
+        return findAgain(el) && el.currentElement.isSelected();
     }
 
     public boolean isDisplayed(WebLocator el) {
-        return ensureExists(el) && el.currentElement.isDisplayed();
+        return findAgain(el) && el.currentElement.isDisplayed();
     }
 
     public boolean isEnabled(WebLocator el) {
-        return ensureExists(el) && el.currentElement.isEnabled();
+        return findAgain(el) && el.currentElement.isEnabled();
     }
 
     public boolean isSamePath(WebLocator el, String path) {

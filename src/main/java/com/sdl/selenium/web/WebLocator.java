@@ -112,10 +112,6 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         return executor.getAttribute(this, attribute);
     }
 
-    protected String getCurrentElementAttribute(String attribute) {
-        return executor.getCurrentElementAttribute(this, attribute);
-    }
-
     /**
      * @return The text of this element.
      */

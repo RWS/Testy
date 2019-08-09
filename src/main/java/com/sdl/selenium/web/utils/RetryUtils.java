@@ -13,6 +13,40 @@ public class RetryUtils {
         return retry(maxRetries, t, false);
     }
 
+    public static boolean retry(int maxRetries, Runnable r) {
+        return retry(maxRetries, r, false);
+    }
+
+    public static boolean retrySafe(int maxRetries, Runnable r) {
+        return retry(maxRetries, r, true);
+    }
+
+    private static boolean retry(int maxRetries, Runnable r, boolean safe) {
+        int count = 0;
+        long wait = 0;
+        do {
+            count++;
+            wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
+            Utils.sleep(wait);
+            try {
+                r.run();
+            } catch (Exception | AssertionError e) {
+                if (safe) {
+                    return false;
+                } else {
+                    if (count >= maxRetries) {
+                        log.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                }
+            }
+        } while (count < maxRetries);
+        if (count > 1) {
+            log.info("Retry {} and wait {} milliseconds", count, wait);
+        }
+        return true;
+    }
+
     private static <V> V retry(int maxRetries, Callable<V> t, boolean safe) {
         int count = 0;
         long wait = 0;

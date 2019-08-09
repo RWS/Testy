@@ -33,8 +33,6 @@ public interface WebLocatorExecutor {
 
     String getAttributeId(final WebLocator el);
 
-    String getCurrentElementAttribute(final WebLocator el, final String attribute);
-
     String getText(WebLocator el);
 
     String getValue(WebLocator el);
