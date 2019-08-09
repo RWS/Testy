@@ -140,7 +140,7 @@ public class DateField extends TextField {
         } catch (ParseException e) {
             log.error("ParseException: {}", e);
         }
-
+        ready();
         log.debug("select: " + date);
         String[] dates = date.split("/");
         trigger.click();
