@@ -5,6 +5,9 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 @Slf4j
 public class Cell extends com.sdl.selenium.web.table.Cell {
@@ -81,22 +84,24 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     protected String getLanguages() {
         StringBuilder flags = new StringBuilder();
         WebLocator flagEl = new WebLocator(this).setTag("i").setClasses("flag");
-        int sizeLangs = flagEl.size();
-        for (int k = 1; k <= sizeLangs; k++) {
-            flagEl.setResultIdx(k);
-            String aClass = flagEl.getAttributeClass();
-            String l = aClass.replace("flag ", "").trim();
-            if (k == 1) {
-                flags.append(l);
+        List<WebElement> elements = flagEl.findElements();
+        int count = 1;
+        int sizeLangs = elements.size();
+        for (WebElement el : elements) {
+            String aClass = el.getAttribute("class");
+            String lang = aClass.replace("flag", "").trim();
+            if (count == 1) {
+                flags.append(lang);
                 if (sizeLangs > 1) {
                     flags.append(">");
                 }
             } else {
-                flags.append(l);
-                if (k > 1 && k < sizeLangs) {
+                flags.append(lang);
+                if (count > 1 && count < sizeLangs) {
                     flags.append(",");
                 }
             }
+            count++;
         }
         return flags.toString();
     }
