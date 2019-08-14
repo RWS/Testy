@@ -14,14 +14,14 @@ public class RetryUtils {
     }
 
     public static boolean retryRunnable(int maxRetries, Runnable r) {
-        return retry(maxRetries, r, false);
+        return retryRunnable(maxRetries, r, false);
     }
 
     public static boolean retryRunnableSafe(int maxRetries, Runnable r) {
-        return retry(maxRetries, r, true);
+        return retryRunnable(maxRetries, r, true);
     }
 
-    private static boolean retry(int maxRetries, Runnable r, boolean safe) {
+    private static boolean retryRunnable(int maxRetries, Runnable r, boolean safe) {
         int count = 0;
         long wait = 0;
         do {
@@ -30,6 +30,7 @@ public class RetryUtils {
             Utils.sleep(wait);
             try {
                 r.run();
+                return true;
             } catch (Exception | AssertionError e) {
                 if (safe) {
                     return false;
