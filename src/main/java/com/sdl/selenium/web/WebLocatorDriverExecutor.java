@@ -143,8 +143,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean setValue(WebLocator el, String value) {
-        Boolean retry = RetryUtils.retry(6, () -> doSetValue(el, value));
-        return retry == null ? false : retry;
+        return doSetValue(el, value);
     }
 
     private boolean doSetValue(WebLocator el, String value) {
