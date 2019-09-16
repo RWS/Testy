@@ -218,6 +218,10 @@ public class WebDriverConfig {
             }
             log.debug(properties.toString());
 
+            if (System.getProperty("RUNNER_NAME") != null && properties.get("options.arguments") != null) {
+                properties.setProperty("options.arguments", properties.get("options.arguments").replace("Default", System.getProperty("RUNNER_NAME")));
+            }
+
             driver = properties.createDriver(remoteUrl);
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
