@@ -218,8 +218,9 @@ public class WebDriverConfig {
             }
             log.debug(properties.toString());
 
-            if (System.getProperty("RUNNER_NAME") != null && properties.get("options.arguments") != null) {
-                properties.setProperty("options.arguments", properties.get("options.arguments").replace("Default", System.getProperty("RUNNER_NAME")));
+            if (System.getProperty("RUNNER_NAME") != null) {
+                String userData = "user-data-dir=" + System.getProperty("user.home") + "\\AppData\\Local\\Google\\Chrome\\" + System.getProperty("RUNNER_NAME");
+                properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
             driver = properties.createDriver(remoteUrl);
