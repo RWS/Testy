@@ -1,11 +1,11 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.StaleElementReferenceException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,16 +50,10 @@ public class ComboBox extends Combo {
      */
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
         waitToRender(300L);
-        boolean selected;
+        boolean selected = false;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
-        boolean trigger;
-        try {
-            trigger = expand();
-        } catch (StaleElementReferenceException e) {
-            log.debug("StaleElementReferenceException1");
-            trigger = expand();
-        }
+        boolean trigger = expand();
         if (trigger) {
             if (pagination) {
                 do {
@@ -68,18 +62,21 @@ public class ComboBox extends Combo {
                     }
                 } while (paginationEl.goToNextPage());
             } else {
-                selected = option.doClick();
+                try {
+                    selected = option.doClick();
+                } catch (RuntimeException e) {
+                    if (option.isElementPresent()) {
+                        WebLocatorUtils.scrollToWebLocator(option);
+                        selected = option.doClick();
+                    }
+                }
             }
             if (selected) {
                 log.info("Set value(" + info + "): " + value);
                 Utils.sleep(20);
                 return true;
             }
-            try {
-                collapse();
-            } catch (StaleElementReferenceException e) {
-                log.debug("StaleElementReferenceException2");
-            }
+            collapse();
             log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
         } else {
             log.debug("(" + info + ") The combo or arrow could not be located.");
