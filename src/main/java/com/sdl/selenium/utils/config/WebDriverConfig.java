@@ -219,7 +219,7 @@ public class WebDriverConfig {
             log.debug(properties.toString());
 
             if (System.getProperty("RUNNER_NAME") != null) {
-                String userData = "user-data-dir=" + System.getProperty("user.home") + "\\AppData\\Local\\Google\\Chrome\\" + System.getProperty("RUNNER_NAME");
+                String userData = "user-data-dir=" + System.getProperty("user.home") + "\\AppData\\Local\\Temp\\" + System.getProperty("RUNNER_NAME");
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
