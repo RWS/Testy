@@ -29,6 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -201,6 +202,7 @@ public class WebDriverConfig {
     }
 
     private static WebDriver getDriver(Browser browser, InputStream inputStream, URL remoteUrl) throws IOException {
+        Random random = new Random();
         AbstractBrowserConfigReader properties = null;
         if (browser == Browser.FIREFOX) {
             properties = new FirefoxConfigReader();
@@ -219,7 +221,9 @@ public class WebDriverConfig {
             log.debug(properties.toString());
 
             if (System.getProperty("RUNNER_NAME") != null) {
-                String userData = "user-data-dir=" + System.getProperty("user.home") + "\\AppData\\Local\\Temp\\" + System.getProperty("RUNNER_NAME");
+                String userData = "user-data-dir=" + System.getProperty("user.home") + "\\AppData\\Local\\Google\\Chrome\\" +
+                        System.getProperty("RUNNER_NAME") + Math.abs(random.nextInt());
+
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
