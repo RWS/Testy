@@ -9,6 +9,7 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.RetryUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -19,8 +20,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorDriverExecutor.class);
 
     private WebDriver driver;
 
@@ -47,7 +46,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean click(WebLocator el) {
         boolean click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
         if (!click) {
-            click = RetryUtils.retryRunnable(4, () -> {
+            click = RetryUtils.retryRunnableSafe(4, () -> {
                 findAgain(el);
                 el.getWebElement().click();
             });
@@ -71,7 +70,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 clicked = true;
             } catch (Exception e) {
                 // http://code.google.com/p/selenium/issues/detail?id=244
-                LOGGER.info("Exception in doubleClickAt {}", e);
+                log.info("Exception in doubleClickAt {}", e);
                 clicked = fireEventWithJS(el, "dblclick") != null;
             }
         }
@@ -81,7 +80,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean submit(WebLocator el) {
         boolean submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
         if (!submit) {
-            submit = RetryUtils.retryRunnable(4, () -> {
+            submit = RetryUtils.retryRunnableSafe(4, () -> {
                 findAgain(el);
                 el.getWebElement().submit();
             });
@@ -93,7 +92,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean clear(WebLocator el) {
         boolean clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
         if (!clear) {
-            clear = RetryUtils.retryRunnable(4, () -> {
+            clear = RetryUtils.retryRunnableSafe(4, () -> {
                 findAgain(el);
                 el.getWebElement().clear();
             });
@@ -116,7 +115,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                         mouseOver(el);
                         sendKeys = tryAgainDoSendKeys(el, charSequences);
                     } catch (ElementNotVisibleException exc) {
-                        LOGGER.error("final ElementNotVisibleException in sendKeys: {}", el, exc);
+                        log.error("final ElementNotVisibleException in sendKeys: {}", el, exc);
                         throw exc;
                     }
                 }
@@ -136,7 +135,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             el.currentElement.sendKeys(charSequences); // not sure it will click now
             return true;
         } else {
-            LOGGER.error("currentElement is null after to try currentElement: {}", el);
+            log.error("currentElement is null after to try currentElement: {}", el);
             return false;
         }
     }
@@ -154,17 +153,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         el.getWebElement().sendKeys(Keys.DELETE);
         if (lengthVal == -1 || length <= lengthVal) {
             el.currentElement.sendKeys(value);
-            LOGGER.info("Set value({}): '{}'", el, getLogValue(el, value));
+            log.info("Set value({}): '{}'", el, getLogValue(el, value));
         } else {
             try {
                 MultiThreadClipboardUtils.copyString(value);
             } catch (IllegalStateException e) {
-                LOGGER.debug("IllegalStateException: cannot open system clipboard - try again.");
+                log.debug("IllegalStateException: cannot open system clipboard - try again.");
                 MultiThreadClipboardUtils.copyString(value);
             }
             MultiThreadClipboardUtils.pasteString(el);
             el.currentElement.sendKeys(value.substring(length - 1));
-            LOGGER.info("Paste value({}): string with size: '{}'", el, length);
+            log.info("Paste value({}): string with size: '{}'", el, length);
         }
         return true;
     }
@@ -183,7 +182,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCssValue(final WebLocator el, final String propertyName) {
         String cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
         if (cssValue == null) {
-            return RetryUtils.retry(4, () -> {
+            return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
                 return el.getWebElement().getCssValue(propertyName);
             });
@@ -195,7 +194,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getTagName(final WebLocator el) {
         String tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
         if (tagName == null) {
-            return RetryUtils.retry(4, () -> {
+            return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
                 return el.getWebElement().getTagName();
             });
@@ -207,7 +206,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getAttribute(final WebLocator el, final String attribute) {
         String attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
         if (attributeValue == null) {
-            return RetryUtils.retry(4, () -> {
+            return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
                 return el.getWebElement().getAttribute(attribute);
             });
@@ -220,7 +219,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (el.hasId()) {
             final String pathId = el.getPathBuilder().getId();
             if (!id.equals(pathId)) {
-                LOGGER.warn("id is not same as pathId:{} - {}", id, pathId);
+                log.warn("id is not same as pathId:{} - {}", id, pathId);
             }
             return id;
         }
@@ -230,7 +229,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     private boolean ensureExists(final WebLocator el) {
         boolean present = el.currentElement != null || isElementPresent(el);
         if (!present) {
-            LOGGER.debug("Element not found: {}", el);
+            log.debug("Element not found: {}", el);
         }
         return present;
     }
@@ -239,7 +238,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getText(WebLocator el) {
         String text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
         if (text == null) {
-            return RetryUtils.retry(4, () -> {
+            return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
                 return el.getWebElement().getText();
             });
@@ -277,7 +276,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public WebElement findElement(WebLocator el) {
         final String path = getSelector(el);
 //        if (isSamePath(el, path)) {
-//            LOGGER.debug("currentElement already found one time: " + el);
+//            log.debug("currentElement already found one time: " + el);
         //return el.currentElement;
 //        }
         doWaitElement(el, Duration.ZERO);
@@ -298,7 +297,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public WebElement waitElement(final WebLocator el, Duration duration, boolean showXPathLog) {
         doWaitElement(el, duration);
         if (el.currentElement == null && showXPathLog) {
-            LOGGER.warn("Element not found after {} seconds; {}", duration.getSeconds(), el);
+            log.warn("Element not found after {} seconds; {}", duration.getSeconds(), el);
             logDetails(el);
         }
         return el.currentElement;
@@ -306,7 +305,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private void logDetails(WebLocator el) {
         if (WebLocatorConfig.isLogXPath()) {
-            LOGGER.debug("\t" + WebLocatorUtils.getFirebugXPath(el));
+            log.debug("\t" + WebLocatorUtils.getFirebugXPath(el));
         }
         if (WebLocatorConfig.isLogSuggestions()) {
             WebLocatorSuggestions.getSuggestion(el);
@@ -370,7 +369,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 mouseOver = false;
             }
         } catch (WebDriverException e) {
-            LOGGER.error("Could not mouse over {}, {}", el, e);
+            log.error("Could not mouse over {}, {}", el, e);
             mouseOver = false;
         }
         return mouseOver;
@@ -409,7 +408,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             return javascriptExecutor.executeScript(script, objects);
         } catch (WebDriverException e) {
-            LOGGER.error("WebDriverException in executeScript: " + script, e);
+            log.error("WebDriverException in executeScript: " + script, e);
             return null;
         }
     }
@@ -480,7 +479,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             builder.click().perform();
             return true;
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return false;
         }
     }

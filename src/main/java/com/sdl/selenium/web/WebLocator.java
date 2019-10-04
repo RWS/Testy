@@ -1,9 +1,8 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -11,8 +10,8 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Slf4j
 public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator.class);
 
     private String currentElementPath = "";
     public WebElement currentElement;
@@ -135,7 +134,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         assertThat("Element was not rendered " + toString(), clickAt);
         clickAt = executor.clickAt(this);
         assertThat("Could not clickAt " + toString(), clickAt);
-        LOGGER.info("clickAt on {}", toString());
+        log.info("clickAt on {}", toString());
         return clickAt;
     }
 
@@ -149,9 +148,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         if (doClick) {
             doClick = executor.clickAt(this);
             if (doClick) {
-                LOGGER.info("clickAt on {}", toString());
+                log.info("clickAt on {}", toString());
             } else {
-                LOGGER.info("Could not clickAt {}", toString());
+                log.info("Could not clickAt {}", toString());
             }
         }
         return doClick;
@@ -163,11 +162,17 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
      * @return true | false
      */
     public boolean click() {
+        return click(true);
+    }
+
+    public boolean click(boolean showLog) {
         boolean click = waitToRender();
         assertThat("Element was not rendered " + toString(), click);
         click = executor.click(this);
         assertThat("Could not click " + toString(), click);
-        LOGGER.info("click on {}", toString());
+        if (showLog) {
+            log.info("click on {}", toString());
+        }
         return click;
     }
 
@@ -177,13 +182,19 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
      * @return true | false
      */
     public boolean doClick() {
+        return doClick(true);
+    }
+
+    public boolean doClick(boolean showLog) {
         boolean doClick = waitToRender();
         if (doClick) {
             doClick = executor.click(this);
-            if (doClick) {
-                LOGGER.info("click on {}", toString());
-            } else {
-                LOGGER.info("Could not click {}", toString());
+            if (showLog) {
+                if (doClick) {
+                    log.info("click on {}", toString());
+                } else {
+                    log.info("Could not click {}", toString());
+                }
             }
         }
         return doClick;
@@ -200,22 +211,34 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
     }
 
     public WebLocator sendKeys(java.lang.CharSequence... charSequences) {
+        return sendKeys(true, charSequences);
+    }
+
+    public WebLocator sendKeys(boolean showLog, java.lang.CharSequence... charSequences) {
         boolean sendKeys = waitToRender();
         assertThat("Element was not rendered " + toString(), sendKeys);
         sendKeys = executor.sendKeys(this, charSequences);
         assertThat("Could not sendKeys " + toString(), sendKeys);
-        LOGGER.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
+        if (showLog) {
+            log.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
+        }
         return this;
     }
 
     public WebLocator doSendKeys(java.lang.CharSequence... charSequences) {
+        return doSendKeys(true, charSequences);
+    }
+
+    public WebLocator doSendKeys(boolean showLog, java.lang.CharSequence... charSequences) {
         boolean doSendKeys = waitToRender();
         if (doSendKeys) {
             doSendKeys = executor.sendKeys(this, charSequences);
-            if (doSendKeys) {
-                LOGGER.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
-            } else {
-                LOGGER.info("Could not sendKeys {}", toString());
+            if (showLog) {
+                if (doSendKeys) {
+                    log.info("sendKeys value({}): '{}'", toString(), getKeysName(charSequences));
+                } else {
+                    log.info("Could not sendKeys {}", toString());
+                }
             }
         }
         return doSendKeys ? this : null;
@@ -239,7 +262,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         assertThat("Element was not rendered " + toString(), clear);
         clear = executor.clear(this);
         assertThat("Could not clear " + toString(), clear);
-        LOGGER.info("clear on {}", toString());
+        log.info("clear on {}", toString());
         return clear;
     }
 
@@ -248,9 +271,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         if (doClear) {
             doClear = executor.clear(this);
             if (doClear) {
-                LOGGER.info("clear on {}", toString());
+                log.info("clear on {}", toString());
             } else {
-                LOGGER.info("Could not clear {}", toString());
+                log.info("Could not clear {}", toString());
             }
         }
         return doClear;
@@ -261,7 +284,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         assertThat("Element was not rendered " + toString(), mouseOver);
         mouseOver = executor.mouseOver(this);
         assertThat("Could not mouse over " + toString(), mouseOver);
-        LOGGER.info("mouse over on {}", toString());
+        log.info("mouse over on {}", toString());
         return mouseOver;
     }
 
@@ -270,9 +293,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         if (doMouseOver) {
             doMouseOver = executor.mouseOver(this);
             if (doMouseOver) {
-                LOGGER.info("mouse over on {}", toString());
+                log.info("mouse over on {}", toString());
             } else {
-                LOGGER.info("Could not mouse over {}", toString());
+                log.info("Could not mouse over {}", toString());
             }
         }
         return doMouseOver;
@@ -283,7 +306,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         assertThat("Element was not rendered " + toString(), blur);
         blur = executor.blur(this);
         assertThat("Could not blur " + toString(), blur);
-        LOGGER.info("blur on {}", toString());
+        log.info("blur on {}", toString());
         return blur;
     }
 
@@ -292,9 +315,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         if (doBlur) {
             doBlur = executor.blur(this);
             if (doBlur) {
-                LOGGER.info("blur on {}", toString());
+                log.info("blur on {}", toString());
             } else {
-                LOGGER.info("Could not blur {}", toString());
+                log.info("Could not blur {}", toString());
             }
         }
         return doBlur;
@@ -310,7 +333,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         assertThat("Element was not rendered " + toString(), focus);
         focus = executor.focus(this);
         assertThat("Could not focus " + toString(), focus);
-        LOGGER.info("focus on {}", toString());
+        log.info("focus on {}", toString());
         return this;
     }
 
@@ -319,9 +342,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         if (doFocus) {
             doFocus = executor.focus(this);
             if (doFocus) {
-                LOGGER.info("focus on {}", toString());
+                log.info("focus on {}", toString());
             } else {
-                LOGGER.info("Could not focus {}", toString());
+                log.info("Could not focus {}", toString());
             }
         }
         return doFocus ? this : null;
@@ -335,7 +358,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         assertThat("Element was not rendered " + toString(), doubleClickAt);
         doubleClickAt = executor.doubleClickAt(this);
         assertThat("Could not Double ClickAt " + toString(), doubleClickAt);
-        LOGGER.info("Double ClickAt on {}", toString());
+        log.info("Double ClickAt on {}", toString());
         return doubleClickAt;
     }
 
@@ -344,9 +367,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
         if (doClick) {
             doClick = executor.doubleClickAt(this);
             if (doClick) {
-                LOGGER.info("Double click on {}", toString());
+                log.info("Double click on {}", toString());
             } else {
-                LOGGER.info("Could not double click {}", toString());
+                log.info("Could not double click {}", toString());
             }
         }
         return doClick;
@@ -464,11 +487,11 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
             }
             if (i == 0) {
                 // log only fist time
-                LOGGER.debug("waitTextToRender");
+                log.debug("waitTextToRender");
             }
             Utils.sleep(200);
         }
-        LOGGER.warn("No text was found for Element after " + seconds + " sec; " + this);
+        log.warn("No text was found for Element after " + seconds + " sec; " + this);
         return excludeText.equals(text) ? null : text;
     }
 
