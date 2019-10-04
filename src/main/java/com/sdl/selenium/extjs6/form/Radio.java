@@ -36,7 +36,7 @@ public class Radio extends WebLocator {
     public boolean isSelected() {
         WebLocator input = new WebLocator(this);
         String checked;
-        if ("6.7.0".equals(version) || "6.6.0".equals(version)) {
+        if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
             input.setElPath("//input");
             checked = input.getAttribute("checked");
         } else {
