@@ -262,7 +262,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         Row row = getRow(1).setVisibility(true).setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
         row.setContainer(body);
-        return row.waitToRender(seconds * 1000L);
+        return row.waitToRender(seconds * 1000L, false);
     }
 
     public boolean ready(boolean waitRows) {

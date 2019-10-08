@@ -147,13 +147,14 @@ public class Grid extends Table implements Scrollable {
     }
 
     public boolean waitToActivate(int seconds) {
-        String info = toString();
         int count = 0;
         boolean hasMask;
+        long startMs = System.currentTimeMillis();
         while ((hasMask = hasMask()) && (count < seconds)) {
             count++;
-            log.info("waitToActivate:" + (seconds - count) + " seconds; " + info);
-            Utils.sleep(900);
+            long endMs = System.currentTimeMillis();
+            log.info("waitToActivate:" + (endMs - startMs) + " milliseconds; " + this);
+            Utils.sleep(500);
         }
         return !hasMask;
     }
@@ -168,7 +169,7 @@ public class Grid extends Table implements Scrollable {
         Row row = getRow(1).setVisibility(true).setRoot("//..//").setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct"); // TODO see if must add for all rows
         row.setContainer(body);
-        return row.waitToRender(seconds * 1000L);
+        return row.waitToRender(seconds * 1000L, false);
     }
 
     public List<String> getHeaders() {
