@@ -39,9 +39,9 @@ public class CheckBox extends WebLocator implements ICheck {
         setLabel(label, searchTypes);
     }
 
-    public CheckBox(String boxLabel, WebLocator container) {
+    public CheckBox(String boxLabel, WebLocator container, SearchType... searchTypes) {
         this(container);
-        setLabel(boxLabel);
+        setLabel(boxLabel, searchTypes);
         isBoxLabel = true;
         setVersion(getVersion());
     }

@@ -324,7 +324,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    private <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
+    public <T extends XPathBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
         this.searchLabelType = new ArrayList<>();
         if (searchLabelTypes != null) {
             this.searchLabelType.addAll(0, Arrays.asList(searchLabelTypes));

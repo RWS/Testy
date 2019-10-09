@@ -220,7 +220,7 @@ public abstract class WebLocatorAbstractBuilder {
      */
     @SuppressWarnings("unchecked")
     private <T extends WebLocatorAbstractBuilder> T setSearchLabelType(SearchType... searchLabelTypes) {
-        pathBuilder.setSearchTextType(searchLabelTypes);
+        pathBuilder.setSearchLabelType(searchLabelTypes);
         return (T) this;
     }
 
