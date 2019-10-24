@@ -37,14 +37,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         this.driver = driver;
     }
 
-    private String currentElementPath = "";
-
-    // animations or other Exception
-    private static long RETRY_MS = 500;
-
     @Override
     public boolean click(WebLocator el) {
-        boolean click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
+        boolean click = false;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
+        }
         if (!click) {
             click = RetryUtils.retryRunnableSafe(4, () -> {
                 findAgain(el);
@@ -78,7 +76,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
-        boolean submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
+        boolean submit = false;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
+        }
         if (!submit) {
             submit = RetryUtils.retryRunnableSafe(4, () -> {
                 findAgain(el);
@@ -90,7 +91,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean clear(WebLocator el) {
-        boolean clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
+        boolean clear = false;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
+        }
         if (!clear) {
             clear = RetryUtils.retryRunnableSafe(4, () -> {
                 findAgain(el);
@@ -180,7 +184,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getCssValue(final WebLocator el, final String propertyName) {
-        String cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
+        String cssValue = null;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
+        }
         if (cssValue == null) {
             return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
@@ -192,7 +199,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getTagName(final WebLocator el) {
-        String tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
+        String tagName = null;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
+        }
         if (tagName == null) {
             return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
@@ -204,7 +214,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getAttribute(final WebLocator el, final String attribute) {
-        String attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
+        String attributeValue = null;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
+        }
         if (attributeValue == null) {
             return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
@@ -236,7 +249,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getText(WebLocator el) {
-        String text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
+        String text = null;
+        if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
+        }
         if (text == null) {
             return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
