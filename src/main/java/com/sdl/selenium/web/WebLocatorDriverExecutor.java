@@ -41,6 +41,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean click(WebLocator el) {
         boolean click = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
         }
         if (!click) {
@@ -78,6 +79,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean submit(WebLocator el) {
         boolean submit = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
         }
         if (!submit) {
@@ -93,6 +95,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean clear(WebLocator el) {
         boolean clear = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
         }
         if (!clear) {
@@ -186,6 +189,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCssValue(final WebLocator el, final String propertyName) {
         String cssValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
         }
         if (cssValue == null) {
@@ -201,6 +205,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getTagName(final WebLocator el) {
         String tagName = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
         }
         if (tagName == null) {
@@ -216,6 +221,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
         }
         if (attributeValue == null) {
@@ -251,6 +257,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getText(WebLocator el) {
         String text = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
+            isElementPresent(el);
             text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
         }
         if (text == null) {
