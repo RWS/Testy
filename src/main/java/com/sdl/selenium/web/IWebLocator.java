@@ -16,7 +16,10 @@ public interface IWebLocator {
      */
     String getAttribute(String attribute);
 
+    @Deprecated
     boolean isElementPresent();
+
+    boolean isPresent();
 
     int size();
 

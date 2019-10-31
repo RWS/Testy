@@ -5,12 +5,10 @@ import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.form.ComboBox;
 import com.sdl.selenium.extjs6.form.DateField;
 import com.sdl.selenium.extjs6.form.TextField;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-@Slf4j
 public class CellEditingIntegrationTest extends TestBase {
 
     private Grid grid;

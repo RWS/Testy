@@ -1,8 +1,8 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
+import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -10,9 +10,9 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@Slf4j
 public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebLocator.class);
     private String currentElementPath = "";
     public WebElement currentElement;
 
@@ -201,7 +201,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
     }
 
     public void highlight() {
-        if (isElementPresent()) {
+        if (isPresent()) {
             doHighlight();
         }
     }
@@ -378,8 +378,16 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
     /**
      * @return true | false
      */
+    @Deprecated
     public boolean isElementPresent() {
         return executor.isElementPresent(this);
+    }
+
+    /**
+     * @return true | false
+     */
+    public boolean isPresent() {
+        return executor.isPresent(this);
     }
 
     /**
@@ -424,7 +432,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
     }
 
     public boolean isVisible() {
-        boolean visible = isElementPresent();
+        boolean visible = isPresent();
         if (visible) {
             String style = getAttribute("style");
             style = style == null ? "" : style.toLowerCase();
@@ -450,19 +458,22 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
     }
 
     public boolean waitToRender(final long millis) {
-        executor.waitElement(this, Duration.ofMillis(millis), true);
-        return currentElement != null;
+        return executor.waitElement(this, Duration.ofMillis(millis), true) != null;
     }
 
     public boolean waitToRender(final long millis, boolean showXPathLog) {
-        executor.waitElement(this, Duration.ofMillis(millis), showXPathLog);
-        return currentElement != null;
+        return executor.waitElement(this, Duration.ofMillis(millis), showXPathLog) != null;
+    }
+
+    public boolean waitToRender(Duration duration, boolean showXPathLog) {
+        return executor.waitElement(this, duration, showXPathLog) != null;
     }
 
     /**
      * @param seconds time in seconds
      * @return String
      */
+    @Deprecated
     public String waitTextToRender(int seconds) {
         return waitTextToRender(seconds, "");
     }
@@ -475,6 +486,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
      * @param excludeText exclude text
      * @return string
      */
+    @Deprecated
     public String waitTextToRender(int seconds, String excludeText) {
         String text = null;
         if (seconds == 0 && ((text = getText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {

@@ -9,7 +9,6 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.RetryUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -20,6 +19,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebLocatorDriverExecutor.class);
     private WebDriver driver;
 
     public WebLocatorDriverExecutor(WebDriver driver) {
@@ -41,7 +41,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean click(WebLocator el) {
         boolean click = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
         }
         if (!click) {
@@ -69,7 +68,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 clicked = true;
             } catch (Exception e) {
                 // http://code.google.com/p/selenium/issues/detail?id=244
-                log.info("Exception in doubleClickAt {}", e);
+//                log.warn("Exception in doubleClickAt {}", e);
                 clicked = fireEventWithJS(el, "dblclick") != null;
             }
         }
@@ -79,7 +78,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean submit(WebLocator el) {
         boolean submit = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
         }
         if (!submit) {
@@ -95,7 +93,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public boolean clear(WebLocator el) {
         boolean clear = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
         }
         if (!clear) {
@@ -112,7 +109,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         boolean sendKeys = false;
         if (ensureExists(el)) {
             try {
-                el.currentElement.sendKeys(charSequences);
+                el.getWebElement().sendKeys(charSequences);
                 sendKeys = true;
             } catch (ElementNotVisibleException e) {
                 try {
@@ -129,7 +126,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             } catch (WebDriverException e) {
                 //TODO this fix is for Chrome
                 Actions builder = new Actions(driver);
-                builder.click(el.currentElement);
+                builder.click(el.getWebElement());
                 builder.sendKeys(charSequences);
                 sendKeys = true;
             }
@@ -139,7 +136,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private boolean tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         if (findAgain(el)) {
-            el.currentElement.sendKeys(charSequences); // not sure it will click now
+            el.getWebElement().sendKeys(charSequences); // not sure it will click now
             return true;
         } else {
             log.error("currentElement is null after to try currentElement: {}", el);
@@ -165,7 +162,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 MultiThreadClipboardUtils.copyString(value);
             } catch (IllegalStateException e) {
-                log.debug("IllegalStateException: cannot open system clipboard - try again.");
+                log.warn("IllegalStateException: cannot open system clipboard - try again.");
                 MultiThreadClipboardUtils.copyString(value);
             }
             MultiThreadClipboardUtils.pasteString(el);
@@ -189,7 +186,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getCssValue(final WebLocator el, final String propertyName) {
         String cssValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
         }
         if (cssValue == null) {
@@ -205,7 +201,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getTagName(final WebLocator el) {
         String tagName = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
         }
         if (tagName == null) {
@@ -221,7 +216,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getAttribute(final WebLocator el, final String attribute) {
         String attributeValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
         }
         if (attributeValue == null) {
@@ -246,7 +240,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private boolean ensureExists(final WebLocator el) {
-        boolean present = el.currentElement != null || isElementPresent(el);
+        boolean present = el.getWebElement() != null || isElementPresent(el);
         if (!present) {
             log.debug("Element not found: {}", el);
         }
@@ -257,7 +251,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     public String getText(WebLocator el) {
         String text = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            isElementPresent(el);
             text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
         }
         if (text == null) {
@@ -290,9 +283,14 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    @Deprecated
     public boolean isElementPresent(WebLocator el) {
-        findElement(el);
-        return el.currentElement != null;
+        return findElement(el) != null;
+    }
+
+    @Override
+    public boolean isPresent(WebLocator el) {
+        return findElement(el) != null;
     }
 
     @Override
@@ -302,9 +300,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //            log.debug("currentElement already found one time: " + el);
         //return el.currentElement;
 //        }
-        doWaitElement(el, Duration.ZERO);
+        WebElement webElement = doWaitElement(el, Duration.ZERO);
         el.setCurrentElementPath(path);
-        return el.currentElement;
+        return webElement;
     }
 
     public List<WebElement> findElements(WebLocator el) {
@@ -312,18 +310,19 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    @Deprecated
     public WebElement waitElement(final WebLocator el, final long millis, boolean showXPathLog) {
         return waitElement(el, Duration.ofMillis(millis), showXPathLog);
     }
 
     @Override
     public WebElement waitElement(final WebLocator el, Duration duration, boolean showXPathLog) {
-        doWaitElement(el, duration);
-        if (el.currentElement == null && showXPathLog) {
-            log.warn("Element not found after {} seconds; {}", duration.getSeconds(), el);
+        WebElement webElement = doWaitElement(el, duration);
+        if (webElement == null && showXPathLog) {
+            log.warn("Element not found after {} seconds; {}", duration.getSeconds(), el.toString());
             logDetails(el);
         }
-        return el.currentElement;
+        return webElement;
     }
 
     private void logDetails(WebLocator el) {
@@ -336,23 +335,23 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private WebElement doWaitElement(final WebLocator el, Duration duration) {
+        WebElement webElement;
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(duration)
                 .pollingEvery(Duration.ofMillis(1))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(ElementNotVisibleException.class)
                 .ignoring(WebDriverException.class);
-
         try {
             if (el.getPathBuilder().isVisibility()) {
-                el.currentElement = wait.until(ExpectedConditions.visibilityOfElementLocated(el.getSelector()));
+                webElement = wait.until(ExpectedConditions.visibilityOfElementLocated(el.getSelector()));
             } else {
-                el.currentElement = wait.until(d -> d.findElement(el.getSelector()));
+                webElement = wait.until(d -> d.findElement(el.getSelector()));
             }
         } catch (TimeoutException e) {
-            el.currentElement = null;
+            webElement = null;
         }
-        return el.currentElement;
+        return el.currentElement = webElement;
     }
 
     @Override
@@ -417,7 +416,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean isSamePath(WebLocator el, String path) {
-        return el.currentElement != null && (el.getCurrentElementPath().equals(path));
+        return el.getWebElement() != null && (el.getCurrentElementPath().equals(path));
     }
 
     private boolean isCached(WebLocator el) {
@@ -498,7 +497,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             el.focus();
             Actions builder = new Actions(driver);
-            builder.moveToElement(el.currentElement).perform();
+            builder.moveToElement(el.getWebElement()).perform();
             builder.click().perform();
             return true;
         } catch (Exception e) {

@@ -1,13 +1,14 @@
 package com.sdl.selenium.web.utils;
 
 import com.google.common.base.Strings;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 
-@Slf4j
 public class RetryUtils {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(RetryUtils.class);
 
     public static <V> V retry(int maxRetries, Callable<V> t) {
         return retry(maxRetries, t, false);

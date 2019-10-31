@@ -35,7 +35,7 @@ public class FieldSetIntegrationTest extends TestBase {
 
     @Test
     public void fieldContainerTest() {
-        assertTrue(dateField1.isElementPresent());
-        assertTrue(dateField2.isElementPresent());
+        assertTrue(dateField1.isPresent());
+        assertTrue(dateField2.isPresent());
     }
 }

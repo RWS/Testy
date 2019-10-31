@@ -3,8 +3,8 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +13,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@Slf4j
 public class TagField extends Tag {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(TagField.class);
 
     public TagField() {
         setClassName("TagField");

@@ -8,7 +8,7 @@ import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,8 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class Grid extends Table implements Scrollable {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
     private String version;
 
     public Grid() {

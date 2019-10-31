@@ -2,7 +2,7 @@ package com.sdl.selenium.conditions;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -30,8 +30,8 @@ import java.util.List;
  * logged = condition.isSuccess();
  * </pre>
  */
-@Slf4j
 public class ConditionManager {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ConditionManager.class);
     public static int SLEEP_INTERVAL = 10;
 
     private Duration duration = Duration.ofSeconds(10);

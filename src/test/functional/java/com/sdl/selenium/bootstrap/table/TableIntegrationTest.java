@@ -39,13 +39,13 @@ public class TableIntegrationTest extends TestBase {
     @Test
     public void verifyIfCheckBoxIsPresent() {
         Cell cell = table.getCell(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
-        assertTrue(new CheckBox(cell).isElementPresent());
+        assertTrue(new CheckBox(cell).isPresent());
     }
 
     @Test
     public void verifyIfCellByTextIsPresent() {
         Row row = table.getRow(new Cell("Carter", SearchType.EQUALS));
-        assertTrue(row.isElementPresent());
+        assertTrue(row.isPresent());
     }
 
     @Test
@@ -53,8 +53,8 @@ public class TableIntegrationTest extends TestBase {
         Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         Button first = new Button(row).setText("Details", SearchType.CONTAINS);
         Button second = new Button(row, "Remove");
-        assertTrue(first.isElementPresent());
-        assertTrue(second.isElementPresent());
+        assertTrue(first.isPresent());
+        assertTrue(second.isPresent());
     }
 
     @Test

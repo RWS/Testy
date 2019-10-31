@@ -37,7 +37,10 @@ public interface WebLocatorExecutor {
 
     String getValue(WebLocator el);
 
+    @Deprecated
     boolean isElementPresent(WebLocator el);
+
+    boolean isPresent(WebLocator el);
 
     WebElement findElement(WebLocator el);
 

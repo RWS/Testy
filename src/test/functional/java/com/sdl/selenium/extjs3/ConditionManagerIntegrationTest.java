@@ -12,7 +12,7 @@ import com.sdl.selenium.extjs3.window.MessageBox;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.form.TextField;
 import com.sdl.selenium.web.link.WebLink;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -21,9 +21,9 @@ import java.time.Duration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-@Slf4j
 public class ConditionManagerIntegrationTest extends TestBase {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ConditionManagerIntegrationTest.class);
     private Panel panel = new Panel("Condition Manager");
     private Button expect1Button = new Button(panel, "Expect1");
     private Button expect2Button = new Button(panel, "Expect2");

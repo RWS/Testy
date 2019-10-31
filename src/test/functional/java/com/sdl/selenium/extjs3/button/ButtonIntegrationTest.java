@@ -83,27 +83,27 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "performanceTestClick")
     public void findButtonWithQuotes() {
-        assertThat(dontAcceptButton.isElementPresent(), is(true));
-        assertThat(dontAcceptButton1.isElementPresent(), is(true));
-        assertThat(dontAcceptButton2.isElementPresent(), is(true));
-        assertThat(dontAcceptButton3.isElementPresent(), is(true));
-        assertThat(dontAcceptItButton.isElementPresent(), is(true));
-        assertThat(dontAcceptButton4.isElementPresent(), is(true));
-        assertThat(dontAcceptButton5.isElementPresent(), is(true));
-        assertThat(dontAcceptButton6.isElementPresent(), is(true));
-        assertThat(dontAcceptButton7.isElementPresent(), is(true));
-        assertThat(dontAcceptButton8.isElementPresent(), is(true));
-        assertThat(dontAcceptButton9.isElementPresent(), is(true));
-        assertThat(dontAcceptButton10.isElementPresent(), is(true));
-        assertThat(dontAcceptButton11.isElementPresent(), is(true));
-        assertThat(dontAcceptButton12.isElementPresent(), is(true));
-        assertThat(dontAcceptButton13.isElementPresent(), is(true));
-        assertThat(dontAcceptButton14.isElementPresent(), is(true));
-        assertThat(dontAcceptButton15.isElementPresent(), is(true));
-        assertThat(dontAcceptButton16.isElementPresent(), is(true));
-        assertThat(dontAcceptButton17.isElementPresent(), is(true));
-        assertThat(dontAcceptButton18.isElementPresent(), is(true));
-        assertThat(dontAcceptButton19.isElementPresent(), is(true));
+        assertThat(dontAcceptButton.isPresent(), is(true));
+        assertThat(dontAcceptButton1.isPresent(), is(true));
+        assertThat(dontAcceptButton2.isPresent(), is(true));
+        assertThat(dontAcceptButton3.isPresent(), is(true));
+        assertThat(dontAcceptItButton.isPresent(), is(true));
+        assertThat(dontAcceptButton4.isPresent(), is(true));
+        assertThat(dontAcceptButton5.isPresent(), is(true));
+        assertThat(dontAcceptButton6.isPresent(), is(true));
+        assertThat(dontAcceptButton7.isPresent(), is(true));
+        assertThat(dontAcceptButton8.isPresent(), is(true));
+        assertThat(dontAcceptButton9.isPresent(), is(true));
+        assertThat(dontAcceptButton10.isPresent(), is(true));
+        assertThat(dontAcceptButton11.isPresent(), is(true));
+        assertThat(dontAcceptButton12.isPresent(), is(true));
+        assertThat(dontAcceptButton13.isPresent(), is(true));
+        assertThat(dontAcceptButton14.isPresent(), is(true));
+        assertThat(dontAcceptButton15.isPresent(), is(true));
+        assertThat(dontAcceptButton16.isPresent(), is(true));
+        assertThat(dontAcceptButton17.isPresent(), is(true));
+        assertThat(dontAcceptButton18.isPresent(), is(true));
+        assertThat(dontAcceptButton19.isPresent(), is(true));
     }
 
     @DataProvider

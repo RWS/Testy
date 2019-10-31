@@ -269,7 +269,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         GridCell cell = new GridCell(columnId, searchElement, searchTypes).setContainer(this);
         boolean selected;
         do {
-            selected = cell.isElementPresent();
+            selected = cell.isPresent();
         } while (!selected && scrollPageDown());
         return selected;
     }
@@ -320,7 +320,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 //        scrollTop(); // make sure always start from top then scroll down till the end of the page
 //        do {
         // if the row is not in visible (need to scroll down - errors when used BufferView in grid)
-        found = cell.isElementPresent();
+        found = cell.isPresent();
 //        } while(!found && scrollPageDown());
 
         return found;
@@ -329,7 +329,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public boolean isRowPresent(String searchElement, boolean containsText) {
         ready();
         GridCell cell = getCell(searchElement, containsText ? SearchType.CONTAINS : SearchType.EQUALS);
-        return cell.isElementPresent();
+        return cell.isPresent();
     }
 
     public Number getRowCount(String searchElement, Boolean startWith) {
@@ -396,7 +396,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         if (ready()) {
             String path = getGridCell(startRowIndex).getXPath();
             WebLocator currentElement = new WebLocator().setElPath(path);
-            while (currentElement.isElementPresent()) {
+            while (currentElement.isPresent()) {
                 String option = currentElement.getText();
                 //LOGGER.debug("row[" + i + "]" + option);
                 if (option != null && option.contains(searchElement)) {

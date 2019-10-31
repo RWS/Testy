@@ -8,17 +8,15 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.tab.ITab;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-@Slf4j
-@Getter
 public class Tab extends WebLocator implements ITab {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Tab.class);
     private String iconCls;
 
     public Tab() {
@@ -125,5 +123,9 @@ public class Tab extends WebLocator implements ITab {
         WebLocator titleEl = getTitleInactiveEl().setClasses("x-tab-active");
         WebLocator closeEl = new WebLocator(titleEl).setClasses("x-tab-close-btn");
         return closeEl.click();
+    }
+
+    public String getIconCls() {
+        return this.iconCls;
     }
 }

@@ -2,10 +2,11 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
 public class TextField extends Field {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(TextField.class);
 
     public TextField() {
         setClassName("TextField");

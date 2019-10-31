@@ -47,7 +47,7 @@ public class CheckBox extends TextField implements ICheck {
 
     @Override
     public boolean isSelected() {
-        return isElementPresent() && executor.isSelected(this);
+        return executor.isSelected(this);
     }
 
     @Override

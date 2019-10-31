@@ -3,7 +3,7 @@ package com.sdl.selenium.utils.config;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.PropertiesReader;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 public class WebLocatorConfig {
 
     private static final String CONFIG_FILE_NAME = "webLocator.properties";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebLocatorConfig.class);
 
     private static long defaultRenderMillis;
     private static boolean logUseClassName;

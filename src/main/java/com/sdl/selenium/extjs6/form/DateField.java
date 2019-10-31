@@ -7,16 +7,16 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriverException;
+import org.slf4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Slf4j
 public class DateField extends TextField {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DateField.class);
     private WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
     private WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
     private Button monthYearButton = new Button(calendarLayer);

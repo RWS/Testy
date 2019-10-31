@@ -74,7 +74,7 @@ public class WebLocatorSuggestions {
         for (String key : webLocatorMap.keySet()) {
 
             WebLocator webLocator = webLocatorMap.get(key);
-            if (!webLocator.isElementPresent()) {
+            if (!webLocator.isPresent()) {
                 allElementsExist = false;
                 LOGGER.info("{} not found in page.", key);
                 getPageSuggestions(webLocator);
@@ -100,7 +100,7 @@ public class WebLocatorSuggestions {
             return null;
         }
 
-        if (webLocator.currentElement != null || webLocator.isElementPresent()) {
+        if (webLocator.currentElement != null || webLocator.isPresent()) {
             if (webLocator.currentElement.isDisplayed()) {
                 LOGGER.debug("The element already exists: {}", WebLocatorUtils.getHtmlTree(webLocator));
             } else {
@@ -110,7 +110,7 @@ public class WebLocatorSuggestions {
         }
 
         WebLocator parent = webLocator.getPathBuilder().getContainer();
-        if (parent != null && !parent.isElementPresent()) {
+        if (parent != null && !parent.isPresent()) {
             LOGGER.warn("The container ({}) of this webLocator ({}) was not found.", parent.getXPath(), webLocator.getXPath());
             return null;
         }
@@ -184,7 +184,7 @@ public class WebLocatorSuggestions {
                 .setText(label, labelSearchTypes)
                 .setTag(xPathBuilder.getLabelTag());
 
-        if (labelLocator.isElementPresent()) {
+        if (labelLocator.isPresent()) {
 
             LOGGER.info("Found the label: {}", getMatchedElementsHtml(labelLocator));
 
@@ -193,13 +193,13 @@ public class WebLocatorSuggestions {
             WebLocator labelPosition = new WebLocator(labelLocator)
                     .setElPath(xPathBuilder.getLabelPosition() + tag);
 
-            if (labelPosition.isElementPresent()) {
+            if (labelPosition.isPresent()) {
                 LOGGER.info("'{}' elements found at the specified label position: {}", tag, getMatchedElementsHtml(labelPosition));
             } else {
                 LOGGER.info("No '{}' elements found at the specified label position: {}", tag, xPathBuilder.getLabelPosition());
 
                 labelPosition.setElPath(xPathBuilder.getLabelPosition() + "*");
-                if (labelPosition.isElementPresent()) {
+                if (labelPosition.isPresent()) {
                     LOGGER.warn("All elements found at the specified label position: {}", getMatchedElementsHtml(labelPosition));
                     webLocator.setTag("*");
                     return webLocator;
@@ -217,7 +217,7 @@ public class WebLocatorSuggestions {
                 return webLocator;
             } else {
                 labelLocator.setTag("*");
-                if(labelLocator.isElementPresent()) {
+                if(labelLocator.isPresent()) {
                     LOGGER.warn("But found it using tag *.");
                     webLocator.setLabelTag("*");
                     return webLocator;
@@ -243,7 +243,7 @@ public class WebLocatorSuggestions {
             SearchType[] solution1 = {textSearchType, SearchType.TRIM};
             webLocator.setSearchTextType(solution1);
 
-            if (webLocator.isElementPresent()) {
+            if (webLocator.isPresent()) {
                 return solution1;
             }
 
@@ -252,7 +252,7 @@ public class WebLocatorSuggestions {
                 SearchType[] solution2 = {textSearchType, childSearchType, SearchType.TRIM};
                 webLocator.setSearchTextType(solution2);
 
-                if (webLocator.isElementPresent()) {
+                if (webLocator.isPresent()) {
                     return solution2;
                 }
             }
@@ -268,7 +268,7 @@ public class WebLocatorSuggestions {
             SearchType[] solution1 = {textSearchType, SearchType.TRIM};
             webLocator.setSearchTitleType(solution1);
 
-            if (webLocator.isElementPresent()) {
+            if (webLocator.isPresent()) {
                 return solution1;
             }
 
@@ -277,7 +277,7 @@ public class WebLocatorSuggestions {
                 SearchType[] solution2 = {textSearchType, childSearchType, SearchType.TRIM};
                 webLocator.setSearchTitleType(solution2);
 
-                if (webLocator.isElementPresent()) {
+                if (webLocator.isPresent()) {
                     return solution2;
                 }
             }

@@ -31,11 +31,11 @@ public class Panel extends WebLocator {
     }
 
     public boolean collapse() {
-        return !getCollapseEl("collapse").isElementPresent() || getCollapseEl("collapse").click();
+        return !getCollapseEl("collapse").isPresent() || getCollapseEl("collapse").click();
     }
 
     public boolean expand() {
-        return !getCollapseEl("expand").isElementPresent() || getCollapseEl("expand").click();
+        return !getCollapseEl("expand").isPresent() || getCollapseEl("expand").click();
     }
 
     @Override

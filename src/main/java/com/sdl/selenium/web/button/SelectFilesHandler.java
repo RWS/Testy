@@ -51,8 +51,8 @@ public class SelectFilesHandler {
         return RunExe.getInstance().upload(filePath);
     }
 
-    public boolean isElementPresent() {
-        return getButtonElement().isElementPresent();
+    public boolean isPresent() {
+        return getButtonElement().isPresent();
     }
 
     public void openBrowseWindow() {

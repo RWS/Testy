@@ -51,12 +51,12 @@ public class TreeGrid extends WebLocator implements Scrollable {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
                     WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
                     try {
-                        selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
+                        selected = checkTree.isPresent() ? checkTree.click() : nodeTree.click();
                     } catch (WebDriverException e) {
                         if (doScroll) {
                             scrollPageDown();
                         }
-                        selected = checkTree.isElementPresent() ? checkTree.click() : nodeTree.click();
+                        selected = checkTree.isPresent() ? checkTree.click() : nodeTree.click();
                     }
                 }
             }

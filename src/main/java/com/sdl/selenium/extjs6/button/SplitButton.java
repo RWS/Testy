@@ -3,15 +3,16 @@ package com.sdl.selenium.extjs6.button;
 import com.sdl.selenium.extjs6.menu.Menu;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 /**
  * See split button examples <a href="http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons">here</a>
  */
-@Slf4j
 public class SplitButton extends Button {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(SplitButton.class);
 
     /**
      * See split button examples <a href="http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons">here</a>

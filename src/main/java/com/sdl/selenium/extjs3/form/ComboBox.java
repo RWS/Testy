@@ -6,14 +6,15 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@Slf4j
 public class ComboBox extends TextField implements ICombo {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ComboBox.class);
 
     //TODO change the way comboBox is identified, without using cls
     // (create baseCls and if there is no cls, label then take first combo by baseCls)

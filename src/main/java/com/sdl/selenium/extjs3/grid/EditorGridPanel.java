@@ -152,7 +152,7 @@ public class EditorGridPanel extends GridPanel {
     public boolean isCellEditable(int rowIndex, int colIndex) {
         if (startEdit(rowIndex, colIndex)) {
             TextField editor = getActiveEditor();
-            return editor.isElementPresent();
+            return editor.isPresent();
         }
         return false;
     }

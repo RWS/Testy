@@ -4,14 +4,15 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICombo;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.slf4j.Logger;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 public abstract class Combo extends Field implements ICombo {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Combo.class);
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
         return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);

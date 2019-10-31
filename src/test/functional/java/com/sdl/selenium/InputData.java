@@ -1,19 +1,19 @@
 package com.sdl.selenium;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-@Slf4j
 public class InputData extends PropertiesReader {
 
     public static final String ENV_PROPERTY = "env";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
     public static final String FUNCTIONAL_PATH = "src/test/functional/";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(InputData.class);
 
     private static InputData properties = new InputData();
 

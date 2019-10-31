@@ -69,7 +69,7 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
     public boolean isRowPresent(String searchElement) {
         ready();
         Cell cell = getCell(searchElement);
-        return cell.isElementPresent();
+        return cell.isPresent();
     }
 
     public Number getRowCount(String searchElement, SearchType... searchTypes) {

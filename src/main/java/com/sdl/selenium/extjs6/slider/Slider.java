@@ -3,11 +3,12 @@ package com.sdl.selenium.extjs6.slider;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
 
-@Slf4j
 public class Slider extends WebLocator {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Slider.class);
 
     public Slider() {
         setClassName("Slider");

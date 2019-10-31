@@ -4,12 +4,10 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-@Slf4j
 public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public Cell() {

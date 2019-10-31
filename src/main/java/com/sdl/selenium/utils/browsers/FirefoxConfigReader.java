@@ -1,6 +1,5 @@
 package com.sdl.selenium.utils.browsers;
 
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -9,13 +8,13 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
-@Slf4j
 public class FirefoxConfigReader extends AbstractBrowserConfigReader {
 
     private static final String DEFAULT_CONFIG = String.join("\n", "##Firefox defaults \n",
@@ -46,6 +45,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             "profile.preference.security.warn_viewing_mixed=false",
             "profile.preference.security.warn_viewing_mixed.show_once=false",
             "profile.preference.dom.disable_beforeunload = true");
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(FirefoxConfigReader.class);
 
     public FirefoxConfigReader() {
         this(null);

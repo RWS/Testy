@@ -21,9 +21,9 @@ import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
-@Slf4j
 public class DeployTesty extends TestBase {
 
     // Rulati acest test dupa ce ati oprit orice test!!!!
@@ -42,6 +41,7 @@ public class DeployTesty extends TestBase {
     private static final String JENKINS_JOB_URL = "https://cluj-jenkins02.global.sdl.corp:8443/job/testy/";
 
     private static final String NEXUS_REPOSITORY_URL = "http://cljeng-nexus02:8081/nexus/#view-repositories;oss-sonatype-snapshots";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DeployTesty.class);
 
     private WebLocator loginContainer = new WebLocator().setClasses("login");
     private WebLink loginEl = new WebLink(loginContainer, "log in", SearchType.DEEP_CHILD_NODE_OR_SELF);
@@ -121,7 +121,7 @@ public class DeployTesty extends TestBase {
         testyDir.ready(10);
         Utils.sleep(1000);
         Actions action = new Actions(driver);
-        action.contextClick(testyDir.currentElement).perform();
+        action.contextClick(testyDir.getWebElement()).perform();
         deleteEl.click();
         confirmYesMSG("Delete the selected \"/com/sdl/lt/Testy/\" folder?");
         Utils.sleep(1000);

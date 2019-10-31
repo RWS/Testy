@@ -178,7 +178,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
             int lastRowVisibleIndex = new Row(container).findElements().size() - 1;
             Row row = new Row(container, lastRowVisibleIndex);
             WebLocatorUtils.scrollToWebLocator(row);
-            return isElementPresent();
+            return isPresent();
         });
     }
 

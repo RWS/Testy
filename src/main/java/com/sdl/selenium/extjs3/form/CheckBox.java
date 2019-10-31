@@ -32,6 +32,6 @@ public class CheckBox extends ExtJsComponent implements ICheck {
 
     @Override
     public boolean isSelected(){
-        return isElementPresent() && executor.isSelected(this);
+        return executor.isSelected(this);
     }
 }

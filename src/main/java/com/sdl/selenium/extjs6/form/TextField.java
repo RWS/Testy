@@ -2,7 +2,6 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@Slf4j
 public class TextField extends com.sdl.selenium.web.form.TextField {
 
     public TextField() {

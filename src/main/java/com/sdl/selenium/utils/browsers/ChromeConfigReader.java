@@ -1,6 +1,5 @@
 package com.sdl.selenium.utils.browsers;
 
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -8,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     private static final String DEFAULT_CONFIG = String.join("\n", "##Chrome defaults \n",
@@ -30,6 +29,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "options.experimental.credentials_enable_service=false",
             "options.experimental.profile.password_manager_enabled=false",
             "options.experimental.safebrowsing.enabled=true");
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ChromeConfigReader.class);
 
 
     private DriverService driverService;

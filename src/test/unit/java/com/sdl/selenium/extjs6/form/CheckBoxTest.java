@@ -1,14 +1,12 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.WebLocator;
-import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-@Slf4j
 public class CheckBoxTest {
     public static WebLocator container = new WebLocator("container");
 

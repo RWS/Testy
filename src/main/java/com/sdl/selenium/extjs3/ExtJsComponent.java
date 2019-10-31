@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
@@ -69,16 +70,11 @@ public class ExtJsComponent extends WebLocator {
                 LOGGER.debug(this + " does not have ID, try to look at container ID : " + id + " > " + getPathBuilder().getContainer().getPathBuilder().getClassName());
             }
         }
-        if (id != null && !id.equals("")) {
+        if (!Strings.isNullOrEmpty(id)) {
             WebLocator thisEl = new WebLocator().setId(id);
             mask.setContainer(thisEl);
         }
-        boolean hasMask = mask.isElementPresent();
-        if (LOGGER.isDebugEnabled() && hasMask) {
-//            LOGGER.debug("MaskXPath=" + mask.getXPath());
-            LOGGER.debug(this + " masked : " + hasMask);
-        }
-        return hasMask;
+        return mask.isPresent();
     }
 
     public WebLocator getMaskElement() {

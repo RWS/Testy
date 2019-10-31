@@ -57,6 +57,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "testSelectRow", dataProvider = "createTestDP")
     public void testEditorType(int column, Class<? extends TextField> cls) {
         editorGridPanel.startEdit(1, column);
+        Utils.sleep(1000);
         TextField textField = editorGridPanel.getActiveEditor();
         assertTrue(cls.isAssignableFrom(textField.getClass()), textField.getClass() + " is not " + cls);
     }

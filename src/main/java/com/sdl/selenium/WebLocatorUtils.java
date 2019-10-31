@@ -25,7 +25,7 @@ public final class WebLocatorUtils extends WebLocator {
      * @param element type WebLocator
      */
     public static void scrollToWebLocator(WebLocator element) {
-        if (element.isElementPresent()) {
+        if (element.isPresent()) {
             doExecuteScript("arguments[0].scrollIntoView(true);", element.getWebElement());
 //            doExecuteScript("var e = arguments[0]; e.scrollIntoView(); var rect = e.getBoundingClientRect(); return {'x': rect.left, 'y': rect.top};", element.getWebElement());
         }
@@ -116,7 +116,7 @@ public final class WebLocatorUtils extends WebLocator {
     public static String getHtmlTree(WebLocator webLocator) {
         String result = "";
 
-        if (webLocator.currentElement != null || webLocator.isElementPresent()) {
+        if (webLocator.getWebElement() != null) {
 
             WebElement parent = webLocator.currentElement;
 

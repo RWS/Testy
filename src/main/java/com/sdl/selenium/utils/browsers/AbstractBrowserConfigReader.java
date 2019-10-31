@@ -1,9 +1,9 @@
 package com.sdl.selenium.utils.browsers;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.service.DriverService;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Slf4j
 public abstract class AbstractBrowserConfigReader extends PropertiesReader {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBrowserConfigReader.class);
 
     public AbstractBrowserConfigReader(String defaults, String resourcePath) {
         super(defaults, resourcePath);

@@ -5,13 +5,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.WebLocatorAbstractBuilder;
 import com.sdl.selenium.web.form.ICheck;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 public class CheckBox extends WebLocator implements ICheck {
 
     private String version;

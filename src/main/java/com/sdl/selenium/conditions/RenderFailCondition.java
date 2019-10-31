@@ -39,7 +39,7 @@ public class RenderFailCondition extends FailCondition implements RenderConditio
 
     @Override
     public boolean execute() {
-        return component.isElementPresent();
+        return component.isPresent();
     }
 
 //    @Override

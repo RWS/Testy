@@ -38,6 +38,6 @@ public class Radio extends ExtJsComponent {
     }
 
     public boolean isSelected() {
-        return isElementPresent() && executor.isSelected(this);
+        return executor.isSelected(this);
     }
 }

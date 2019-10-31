@@ -1,12 +1,12 @@
 package com.sdl.selenium.utils;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 public class Version {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Version.class);
     private static List<Integer> versions = Arrays.asList(602, 660, 670);
 
     public static String greaterThen(String version) {

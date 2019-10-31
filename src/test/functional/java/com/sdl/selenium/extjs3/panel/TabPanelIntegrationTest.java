@@ -47,7 +47,7 @@ public class TabPanelIntegrationTest extends TestBase {
     @Test
     public void activeTab1() {
         tabPanel1.setActive();
-        assertTrue(panelWithFrame.isElementPresent());
+        assertTrue(panelWithFrame.isPresent());
         assertEquals(elTab1.getText(), "element 1");
         assertEquals(elTab11.getText(), "element 00");
         tabPanel21.setActive();
@@ -57,7 +57,7 @@ public class TabPanelIntegrationTest extends TestBase {
     @Test
     public void activeTab2() {
         tabPanel2.setActive();
-        assertTrue(panelNoWithFrame.isElementPresent());
+        assertTrue(panelNoWithFrame.isPresent());
         assertEquals(elTab12.getText(), "element 2");
     }
 }

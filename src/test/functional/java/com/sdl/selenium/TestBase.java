@@ -4,9 +4,9 @@ import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -18,9 +18,9 @@ import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Slf4j
 public class TestBase {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(TestBase.class);
     public static WebDriver driver;
 
     public static int TEST_RUNS = 0;

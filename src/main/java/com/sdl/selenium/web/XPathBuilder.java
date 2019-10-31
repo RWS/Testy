@@ -4,10 +4,9 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -17,9 +16,8 @@ import java.util.stream.Stream;
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
-@Getter
-@Slf4j
 public class XPathBuilder implements Cloneable {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(XPathBuilder.class);
     public List<SearchType> defaultSearchTextType = new ArrayList<>();
     private String className = "WebLocator";
     private String root = "//";
@@ -1237,5 +1235,141 @@ public class XPathBuilder implements Cloneable {
         }
 
         return builder;
+    }
+
+    public List<SearchType> getDefaultSearchTextType() {
+        return this.defaultSearchTextType;
+    }
+
+    public String getClassName() {
+        return this.className;
+    }
+
+    public String getRoot() {
+        return this.root;
+    }
+
+    public String getTag() {
+        return this.tag;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getElPath() {
+        return this.elPath;
+    }
+
+    public String getElCssSelector() {
+        return this.elCssSelector;
+    }
+
+    public String getBaseCls() {
+        return this.baseCls;
+    }
+
+    public String getCls() {
+        return this.cls;
+    }
+
+    public List<String> getClasses() {
+        return this.classes;
+    }
+
+    public List<String> getExcludeClasses() {
+        return this.excludeClasses;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public List<SearchType> getSearchTextType() {
+        return this.searchTextType;
+    }
+
+    public List<SearchType> getSearchTitleType() {
+        return this.searchTitleType;
+    }
+
+    public List<SearchType> getSearchLabelType() {
+        return this.searchLabelType;
+    }
+
+    public String getStyle() {
+        return this.style;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Map<String, String> getTemplates() {
+        return this.templates;
+    }
+
+    public Map<String, WebLocator> getTemplateTitle() {
+        return this.templateTitle;
+    }
+
+    public Map<String, String> getElPathSuffix() {
+        return this.elPathSuffix;
+    }
+
+    public String getInfoMessage() {
+        return this.infoMessage;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public String getLabelTag() {
+        return this.labelTag;
+    }
+
+    public String getLabelPosition() {
+        return this.labelPosition;
+    }
+
+    public String getPosition() {
+        return this.position;
+    }
+
+    public String getResultIdx() {
+        return this.resultIdx;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public Map<String, SearchText> getAttribute() {
+        return this.attribute;
+    }
+
+    public boolean isVisibility() {
+        return this.visibility;
+    }
+
+    public long getRenderMillis() {
+        return this.renderMillis;
+    }
+
+    public int getActivateSeconds() {
+        return this.activateSeconds;
+    }
+
+    public WebLocator getContainer() {
+        return this.container;
+    }
+
+    public List<WebLocator> getChildNodes() {
+        return this.childNodes;
     }
 }

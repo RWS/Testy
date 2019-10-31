@@ -2,10 +2,11 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
 public abstract class Field extends WebLocator implements IField {
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Field.class);
 
     /**
      * @param value       value

@@ -36,7 +36,7 @@ public class RenderSuccessCondition extends SuccessCondition implements RenderCo
 
     @Override
     public boolean execute() {
-        return component.isElementPresent();
+        return component.isPresent();
     }
 
 //    @Override

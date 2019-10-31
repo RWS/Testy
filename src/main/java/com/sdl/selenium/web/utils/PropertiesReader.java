@@ -1,6 +1,6 @@
 package com.sdl.selenium.web.utils;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,9 +11,9 @@ import java.util.Map;
  * This class will load properties from System properties first, if not found then will load them from loaded file
  *
  */
-@Slf4j
 public class PropertiesReader extends OrderedProperties {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(PropertiesReader.class);
     public static String RESOURCES_PATH = "src/test/resources/";
     public static String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
 

@@ -4,7 +4,7 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -15,9 +15,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-@Slf4j
 public class GridIntegrationTest extends TestBase {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(GridIntegrationTest.class);
     private Grid grid;
 
     @BeforeClass
