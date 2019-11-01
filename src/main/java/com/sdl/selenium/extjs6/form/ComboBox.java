@@ -62,13 +62,10 @@ public class ComboBox extends Combo {
                     }
                 } while (paginationEl.goToNextPage());
             } else {
-                try {
+                selected = option.doClick();
+                if (!selected && option.isPresent()) {
+                    WebLocatorUtils.scrollToWebLocator(option);
                     selected = option.doClick();
-                } catch (RuntimeException e) {
-                    if (option.isPresent()) {
-                        WebLocatorUtils.scrollToWebLocator(option);
-                        selected = option.doClick();
-                    }
                 }
             }
             if (selected) {
