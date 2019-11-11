@@ -230,7 +230,9 @@ public class WebDriverConfig {
             driver = properties.createDriver(remoteUrl);
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
-            WebDriverConfig.setHeadless(properties.getProperty("options.arguments").contains("headless"));
+            if (browser != Browser.FIREFOX) {
+                WebDriverConfig.setHeadless(properties.getProperty("options.arguments").contains("headless"));
+            }
             WebDriverConfig.setDriverService(properties.getDriveService());
         }
         init(driver);

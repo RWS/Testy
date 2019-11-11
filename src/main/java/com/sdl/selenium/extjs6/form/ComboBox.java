@@ -50,7 +50,7 @@ public class ComboBox extends Combo {
      */
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
         waitToRender(300L);
-        boolean selected = false;
+        boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
         boolean trigger = expand();
@@ -87,31 +87,31 @@ public class ComboBox extends Combo {
 
     public boolean select(String value, SearchType... searchType) {
         boolean selected = doSelect(value, 300L, false, searchType);
-        assertThat("Could not selected value on : " + this, selected);
+        assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
     public boolean select(String value, long optionRenderMillis) {
         boolean selected = doSelect(value, optionRenderMillis, false, SearchType.EQUALS);
-        assertThat("Could not selected value on : " + this, selected);
+        assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
     public boolean select(String value, boolean pagination) {
         boolean selected = doSelect(value, 300L, pagination, SearchType.EQUALS);
-        assertThat("Could not selected value on : " + this, selected);
+        assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
     public boolean select(String value, long optionRenderMillis, boolean pagination) {
         boolean selected = doSelect(value, optionRenderMillis, pagination, SearchType.EQUALS);
-        assertThat("Could not selected value on : " + this, selected);
+        assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
     public boolean select(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
         boolean selected = doSelect(value, optionRenderMillis, pagination, searchType);
-        assertThat("Could not selected value on : " + this, selected);
+        assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
