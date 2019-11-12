@@ -25,6 +25,7 @@ public class RetryUtils {
     private static boolean retryRunnable(int maxRetries, Runnable r, boolean safe) {
         int count = 0;
         long wait = 0;
+        long startMs = System.currentTimeMillis();
         do {
             count++;
             wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
@@ -37,14 +38,18 @@ public class RetryUtils {
                     return false;
                 } else {
                     if (count >= maxRetries) {
-                        log.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
+                        long endMs = System.currentTimeMillis();
+                        long duringMs = endMs - startMs;
+                        log.error("Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }
             }
         } while (count < maxRetries);
         if (count > 1) {
-            log.info("Retry {} and wait {} milliseconds", count, wait);
+            long endMs = System.currentTimeMillis();
+            long duringMs = endMs - startMs;
+            log.info("Retry {} and wait {} milliseconds", count, duringMs);
         }
         return true;
     }
@@ -52,6 +57,7 @@ public class RetryUtils {
     private static <V> V retry(int maxRetries, Callable<V> t, boolean safe) {
         int count = 0;
         long wait = 0;
+        long startMs = System.currentTimeMillis();
         V execute = null;
         do {
             count++;
@@ -63,14 +69,18 @@ public class RetryUtils {
             } catch (Exception | AssertionError e) {
                 if (!safe) {
                     if (count >= maxRetries) {
-                        log.error("Retry {} and wait {} milliseconds ->{}", count, wait, e);
+                        long endMs = System.currentTimeMillis();
+                        long duringMs = endMs - startMs;
+                        log.error("Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
         if (count > 1) {
-            log.info("Retry {} and wait {} milliseconds", count, wait);
+            long endMs = System.currentTimeMillis();
+            long duringMs = endMs - startMs;
+            log.info("Retry {} and wait {} milliseconds", count, duringMs);
         }
         return execute;
     }
