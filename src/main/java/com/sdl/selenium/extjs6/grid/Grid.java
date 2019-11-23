@@ -408,7 +408,7 @@ public class Grid extends Table implements Scrollable {
                 editor = new DateField();
             } else if (type.contains("tag")) {
                 editor = new TagField();
-            }else if (type.contains("checkbox")) {
+            } else if (type.contains("checkbox")) {
                 editor = new CheckBox();
             } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
@@ -417,7 +417,10 @@ public class Grid extends Table implements Scrollable {
                 return null;
             }
         }
-        editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
+        editor.setContainer(this).setRenderMillis(1000).setInfoMessage("active editor");
+        if (!(editor instanceof CheckBox)) {
+            editor.setClasses("x-form-focus");
+        }
         return (T) editor;
     }
 }
