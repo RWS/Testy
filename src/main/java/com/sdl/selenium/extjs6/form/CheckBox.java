@@ -4,13 +4,14 @@ import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.WebLocatorAbstractBuilder;
+import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICheck;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CheckBox extends WebLocator implements ICheck {
+public class CheckBox extends Field implements ICheck {
 
     private String version;
     private boolean isBoxLabel = false;
@@ -80,11 +81,5 @@ public class CheckBox extends WebLocator implements ICheck {
             String select = el.getAttribute("aria-checked");
             return select != null && select.contains("true");
         }
-    }
-
-    @Override
-    public boolean isEnabled() {
-        String cls = getAttributeClass();
-        return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
     }
 }

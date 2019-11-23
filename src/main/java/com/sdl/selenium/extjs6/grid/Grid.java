@@ -390,6 +390,7 @@ public class Grid extends Table implements Scrollable {
         });
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Field> T getEditor() {
         Field editor;
         WebLocator container = new WebLocator("x-editor", this);
@@ -407,6 +408,8 @@ public class Grid extends Table implements Scrollable {
                 editor = new DateField();
             } else if (type.contains("tag")) {
                 editor = new TagField();
+            }else if (type.contains("checkbox")) {
+                editor = new CheckBox();
             } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
             } else {
