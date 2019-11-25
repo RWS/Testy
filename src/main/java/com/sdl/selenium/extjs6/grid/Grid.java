@@ -307,41 +307,31 @@ public class Grid extends Table implements Scrollable {
     }
 
     public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        Class<?> newClazz = null;
-        int s = 0;
-        Class[] parameterTypes = null;
+        List<List<String>> cellsText = getCellsText(columnLanguages, excludedColumns);
+        if (cellsText == null) {
+            return null;
+        }
+        Class<?> newClazz;
+        int size = cellsText.get(0).size();
+        Constructor constructor = null;
         try {
             newClazz = Class.forName(type.getTypeName());
-            s = newClazz.getDeclaredFields().length;
             Constructor[] constructors = newClazz.getConstructors();
             for (Constructor c : constructors) {
-                if (s == c.getParameterCount()) {
-                    parameterTypes = c.getParameterTypes();
+                int parameterCount = c.getParameterCount();
+                if (size == parameterCount) {
+                    constructor = c;
                 }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Class<?> finalNewClazz = newClazz;
-        int finalS = s;
-        Class[] finalParameterTypes = parameterTypes;
-        List<List<String>> cellsText = getCellsText(columnLanguages, excludedColumns);
-        if (cellsText == null) {
-            return null;
-        }
+        Constructor finalConstructor = constructor;
         return cellsText.stream().map(t -> {
-            List<Object> arr = new ArrayList<>();
             try {
-                for (int i = 0; i < finalS; i++) {
-                    try {
-                        arr.add(t.get(i));
-                    } catch (IndexOutOfBoundsException e){
-                        // Nothing to do
-                    }
-                }
-                Constructor<V> constructor = (Constructor<V>) finalNewClazz.getConstructor(finalParameterTypes);
-                return constructor.newInstance(arr.toArray(new Object[0]));
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                Constructor<V> constructorTemp = (Constructor<V>) finalConstructor;
+                return constructorTemp.newInstance(t.toArray(new Object[0]));
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
             return null;
