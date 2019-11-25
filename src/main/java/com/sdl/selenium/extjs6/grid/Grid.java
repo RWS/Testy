@@ -333,7 +333,11 @@ public class Grid extends Table implements Scrollable {
             List<Object> arr = new ArrayList<>();
             try {
                 for (int i = 0; i < finalS; i++) {
-                    arr.add(t.get(i));
+                    try {
+                        arr.add(t.get(i));
+                    } catch (IndexOutOfBoundsException e){
+                        // Nothing to do
+                    }
                 }
                 Constructor<V> constructor = (Constructor<V>) finalNewClazz.getConstructor(finalParameterTypes);
                 return constructor.newInstance(arr.toArray(new Object[0]));
