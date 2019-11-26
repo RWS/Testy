@@ -61,29 +61,25 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public <V> V getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        Class<?> newClazz = null;
+        List<String> cellsText = columnLanguages == 0 ? getCellsText(excludedColumns) : getCellsText(columnLanguages, excludedColumns);
         int fieldsCount;
-        Class[] parameterTypes = null;
+        Constructor constructor = null;
         try {
-            newClazz = Class.forName(type.getTypeName());
-            fieldsCount = newClazz.getDeclaredFields().length;
+            Class<?> newClazz = Class.forName(type.getTypeName());
+            fieldsCount = cellsText.size();
             Constructor[] constructors = newClazz.getConstructors();
             for (Constructor c : constructors) {
                 if (fieldsCount == c.getParameterCount()) {
-                    parameterTypes = c.getParameterTypes();
+                    constructor = c;
                 }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Class<?> finalNewClazz = newClazz;
-        Class[] finalParameterTypes = parameterTypes;
-        List<String> cellsText = columnLanguages == 0 ? getCellsText(excludedColumns) : getCellsText(columnLanguages, excludedColumns);
-        List<Object> arr = new ArrayList<>(cellsText);
         try {
-            Constructor<V> constructor = (Constructor<V>) finalNewClazz.getConstructor(finalParameterTypes);
-            return constructor.newInstance(arr.toArray(new Object[0]));
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            Constructor<V> constructorTemp = (Constructor<V>) constructor;
+            return constructorTemp.newInstance(cellsText.toArray(new Object[0]));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;

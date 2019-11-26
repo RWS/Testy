@@ -284,8 +284,8 @@ public class GridIntegrationTest extends TestBase {
 //    @Test
 //(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest1() {
-//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#row-numberer");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
+//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#row-numberer");
 //        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("XML Grid");
