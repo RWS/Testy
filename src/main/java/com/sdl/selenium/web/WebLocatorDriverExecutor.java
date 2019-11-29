@@ -39,6 +39,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean click(WebLocator el) {
+        invalidateCache(el);
         boolean click = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
@@ -60,6 +61,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean doubleClickAt(WebLocator el) {
+        invalidateCache(el);
         boolean clicked = false;
         if (findAgain(el)) {
             try {
@@ -76,6 +78,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean submit(WebLocator el) {
+        invalidateCache(el);
         boolean submit = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
@@ -91,6 +94,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean clear(WebLocator el) {
+        invalidateCache(el);
         boolean clear = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
@@ -106,6 +110,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        invalidateCache(el);
         boolean sendKeys = false;
         if (ensureExists(el)) {
             try {
@@ -150,6 +155,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     private boolean doSetValue(WebLocator el, String value) {
+        invalidateCache(el);
         int lengthVal = WebLocatorConfig.getMinCharsToType();
         int length = value.length();
 //        el.getWebElement().clear();
@@ -184,6 +190,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getCssValue(final WebLocator el, final String propertyName) {
+        invalidateCache(el);
         String cssValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
@@ -199,6 +206,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getTagName(final WebLocator el) {
+        invalidateCache(el);
         String tagName = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
@@ -214,6 +222,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getAttribute(final WebLocator el, final String attribute) {
+        invalidateCache(el);
         String attributeValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
@@ -249,6 +258,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getText(WebLocator el) {
+        invalidateCache(el);
         String text = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
