@@ -180,6 +180,9 @@ public class Grid extends Table implements Scrollable {
 
     private List<List<String>> getLists(int rows, boolean rowExpand, short columnLanguages, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
+        if (!rowExpand) {
+            rowsEl.setTag("tr");
+        }
         int size = rowsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
