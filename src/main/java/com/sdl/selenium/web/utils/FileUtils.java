@@ -38,6 +38,16 @@ public class FileUtils {
         return isNotEmpty;
     }
 
+    public static boolean waitFileToHaveSize(File file, long size, int maxRetries) {
+        return RetryUtils.retry(maxRetries, () -> {
+            boolean greaterThanExpected = file.length() >= size;
+            if (!greaterThanExpected) {
+                Utils.sleep(300);
+            }
+            return greaterThanExpected;
+        });
+    }
+
     public static String getTextFromFile(String pathFile) {
         return getTextFromFile(pathFile, Charsets.UTF_8);
     }

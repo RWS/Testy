@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.window;
 
 import com.sdl.selenium.extjs6.button.Button;
+import com.sdl.selenium.extjs6.form.TextArea;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
@@ -45,6 +46,11 @@ public class MessageBox extends WebLocator {
     private boolean press(final Button button) {
         button.setVisibility(true);
         return button.click();
+    }
+
+    public boolean addComment(String comment) {
+        TextArea textArea = new TextArea(this);
+        return textArea.setValue(comment);
     }
 
     public boolean pressOK() {
