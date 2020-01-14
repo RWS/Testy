@@ -28,25 +28,21 @@ public class CheckBoxIntegrationTest extends TestBase {
 
     @Test
     public void checkedTest() {
-        boxLabel.click();
-        assertThat(boxLabel.isSelected(), is(true));
+        assertThat(boxLabel.check(true), is(true));
     }
 
     @Test(dependsOnMethods = "checkedTest")
     public void unCheckedTest() {
-        boxLabel.click();
-        assertThat(boxLabel.isSelected(), is(false));
+        assertThat(boxLabel.check(false), is(true));
     }
 
     @Test(dependsOnMethods = "unCheckedTest")
     public void checkedTest1() {
-        checkBox.click();
-        assertThat(checkBox.isSelected(), is(true));
+        assertThat(checkBox.check(true), is(true));
     }
 
     @Test(dependsOnMethods = "checkedTest1")
     public void unChecked1Test() {
-        checkBox.click();
-        assertThat(checkBox.isSelected(), is(false));
+        assertThat(checkBox.check(false), is(true));
     }
 }
