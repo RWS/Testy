@@ -4,8 +4,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.TextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -22,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  */
 public class CheckBox extends TextField implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
         setClassName("CheckBox");
@@ -45,8 +42,13 @@ public class CheckBox extends TextField implements ICheck {
         setLabel(boxLabel);
     }
 
-    @Override
+    @Deprecated
     public boolean isSelected() {
+        return isChecked();
+    }
+
+    @Override
+    public boolean isChecked() {
         return executor.isSelected(this);
     }
 

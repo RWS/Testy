@@ -3,8 +3,6 @@ package com.sdl.selenium.extjs3.form;
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * defaults:
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory;
  *    - baseCls  : x-form-checkbox
  */
 public class CheckBox extends ExtJsComponent implements ICheck {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CheckBox.class);
 
     public CheckBox() {
         setClassName("CheckBox");
@@ -30,8 +27,13 @@ public class CheckBox extends ExtJsComponent implements ICheck {
         setName(name);
     }
 
-    @Override
+    @Deprecated
     public boolean isSelected(){
+        return isChecked();
+    }
+
+    @Override
+    public boolean isChecked() {
         return executor.isSelected(this);
     }
 }

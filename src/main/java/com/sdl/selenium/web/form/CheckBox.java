@@ -20,8 +20,13 @@ public class CheckBox extends WebLocator implements ICheck {
         setId(id);
     }
 
-    @Override
+    @Deprecated
     public boolean isSelected() {
+        return isChecked();
+    }
+
+    @Override
+    public boolean isChecked() {
         return ready() && executor.isSelected(this);
     }
 }

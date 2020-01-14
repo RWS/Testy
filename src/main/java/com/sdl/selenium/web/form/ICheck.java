@@ -5,5 +5,16 @@ import com.sdl.selenium.web.IWebLocator;
 
 public interface ICheck extends Clickable, IWebLocator {
 
+    @Deprecated
     boolean isSelected();
+
+    boolean isChecked();
+
+    default boolean check(boolean checked) {
+        if (checked) {
+            return isChecked() || click();
+        } else {
+            return !isChecked() || click();
+        }
+    }
 }
