@@ -36,7 +36,13 @@ public class TabTest {
         return new Object[][]{
                 {((Tab) new Tab(container).setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
                 {((Tab) new Tab("Test").setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0 and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
-                {new Tab("Test").getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0]"}
+                {new Tab("Test").getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0]"},
+                {new Tab("|Test|New", SearchType.CONTAINS_ANY).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and (count(*//text()[.='Test']) > 0 or count(*//text()[.='New']) > 0)]"},
+                {new Tab("|Test|New", SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.CONTAINS_ANY).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and ((.='Test' or count(*//text()[.='Test']) > 0) or (.='New' or count(*//text()[.='New']) > 0))]"},
+                {new Tab("|Test|New", SearchType.CHILD_NODE, SearchType.CONTAINS_ANY).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and (contains(.,'Test') or contains(.,'New'))]"},
+                {new Tab("|Test|New", SearchType.CONTAINS_ALL).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0 and count(*//text()[.='New']) > 0]"},
+                {new Tab("|Test|New", SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.CONTAINS_ALL).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and (.='Test' or count(*//text()[.='Test']) > 0) and (.='New' or count(*//text()[.='New']) > 0)]"},
+                {new Tab("|Test|New", SearchType.CHILD_NODE, SearchType.CONTAINS_ALL).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and contains(.,'Test') and contains(.,'New')]"}
         };
     }
 

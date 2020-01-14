@@ -867,10 +867,11 @@ public class XPathBuilder implements Cloneable {
                         strings[i] = "count(*//text()[contains(.," + escapeQuotesText + ")]) > 0";
                     }
                 } else {
+                    String selfPath = getTextWithSearchType(searchTextType, escapeQuotesText, pattern);
                     if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
-                        strings[i] = applyTemplate("DEEP_CHILD_NODE_OR_SELF", escapeQuotesText);
+                        strings[i] = applyTemplate("DEEP_CHILD_NODE_OR_SELF", selfPath);
                     } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE)) {
-                        strings[i] = applyTemplate("DEEP_CHILD_NODE", escapeQuotesText);
+                        strings[i] = applyTemplate("DEEP_CHILD_NODE", selfPath);
                     } else {
                         strings[i] = "contains(" + (".".equals(pattern) ? "." : pattern) + "," + escapeQuotesText + ")";
                     }
