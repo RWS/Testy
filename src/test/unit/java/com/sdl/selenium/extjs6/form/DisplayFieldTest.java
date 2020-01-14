@@ -17,7 +17,7 @@ public class DisplayFieldTest {
                 {new DisplayField(), "//div[contains(concat(' ', @class, ' '), ' x-form-display-field ')]"},
                 {new DisplayField(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//div[contains(concat(' ', @class, ' '), ' x-form-display-field ')]"},
                 {new DisplayField(container, "Project"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'Project') or count(*//text()[contains(.,'Project')]) > 0)]//following-sibling::*//div[contains(concat(' ', @class, ' '), ' x-form-display-field ')]"},
-                {new DisplayField(container, "|File Name|Project", SearchType.CONTAINS_ANY), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(('File Name' or count(*//text()['File Name']) > 0) or ('Project' or count(*//text()['Project']) > 0))]//following-sibling::*//div[contains(concat(' ', @class, ' '), ' x-form-display-field ')]"},
+                {new DisplayField(container, "|File Name|Project", SearchType.CONTAINS_ANY), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[((contains(.,'File Name') or count(*//text()[contains(.,'File Name')]) > 0) or (contains(.,'Project') or count(*//text()[contains(.,'Project')]) > 0))]//following-sibling::*//div[contains(concat(' ', @class, ' '), ' x-form-display-field ')]"},
                 {new DisplayField(container).setLabel("|File Name|Project", SearchType.CONTAINS_ANY), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[(contains(.,'File Name') or contains(.,'Project'))]//following-sibling::*//div[contains(concat(' ', @class, ' '), ' x-form-display-field ')]"},
         };
     }
