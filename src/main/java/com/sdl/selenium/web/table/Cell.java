@@ -35,7 +35,7 @@ public class Cell extends AbstractCell {
 
     public Cell(String header, String cellText, SearchType... searchTypes) {
         this();
-        setTag(getPathBuilder().getTag() + "[count(//th[text()='" + header + "']/preceding-sibling::*[@aria-hidden='false']) + number(boolean(//th[text()='" + header + "']/preceding-sibling::*[@aria-hidden='false']))]");
+        setTag(getPathBuilder().getTag() + "[count(//th[text()='" + header + "']/preceding-sibling::*) + number(boolean(//th[text()='" + header + "']/preceding-sibling::*))]");
         setText(cellText, searchTypes);
     }
 
