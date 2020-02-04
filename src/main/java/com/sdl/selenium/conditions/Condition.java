@@ -2,6 +2,8 @@ package com.sdl.selenium.conditions;
 
 import com.google.common.base.Strings;
 
+import java.util.Objects;
+
 public abstract class Condition implements Comparable<Condition>, ICondition {
 
     private String message;
@@ -61,6 +63,19 @@ public abstract class Condition implements Comparable<Condition>, ICondition {
     @Override
     public boolean equals(String message) {
         return message != null && message.equals(getMessage());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Condition condition = (Condition) o;
+        return Objects.equals(message, condition.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(message, resultMessage, className, priority);
     }
 
     @Override

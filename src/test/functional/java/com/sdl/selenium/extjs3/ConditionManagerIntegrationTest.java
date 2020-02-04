@@ -17,8 +17,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 public class ConditionManagerIntegrationTest extends TestBase {
@@ -28,6 +31,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
     private Button expect1Button = new Button(panel, "Expect1");
     private Button expect2Button = new Button(panel, "Expect2");
     private Button expect3Button = new Button(panel, "Expect3");
+    private Button expect4Button = new Button(panel);
 
     @BeforeTest
     public void before() {
@@ -72,15 +76,23 @@ public class ConditionManagerIntegrationTest extends TestBase {
     public void conditionManagerTest1() {
         expect2Button.click();
         ConditionManager conditionManager = new ConditionManager();
+        conditionManager.add(new RenderSuccessCondition(expect3Button));
+        conditionManager.add(new RenderSuccessCondition(expect4Button));
         conditionManager.add(new MessageBoxSuccessCondition("Expect2 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect1 button was pressed"));
         conditionManager.add(new MessageBoxFailCondition("Expect3 button was pressed"));
-        conditionManager.add(new RenderSuccessCondition(expect3Button));
         assertThat(conditionManager.execute().isSuccess(), is(true));
 
         MessageBox.pressOK();
-        conditionManager.remove(new RenderSuccessCondition(expect3Button));
-        assertThat(conditionManager.getConditionList().size(), is(3));
+        conditionManager.remove(new RenderSuccessCondition(expect4Button));
+//        conditionManager.remove(new MessageBoxFailCondition("Expect3 button was pressed"));
+        List<Condition> expectedList = Arrays.asList(
+                new RenderSuccessCondition(expect3Button),
+                new MessageBoxSuccessCondition("Expect2 button was pressed"),
+                new MessageBoxFailCondition("Expect1 button was pressed"),
+                new MessageBoxFailCondition("Expect3 button was pressed")
+        );
+        assertThat(conditionManager.getConditionList(), containsInAnyOrder(expectedList.toArray()));
     }
 
     @Test
