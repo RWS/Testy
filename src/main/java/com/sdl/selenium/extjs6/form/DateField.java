@@ -10,9 +10,13 @@ import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class DateField extends TextField {
 
@@ -82,7 +86,7 @@ public class DateField extends TextField {
 
     private boolean setHour(String hour, String minute) {
         return hourSlider.move(Integer.parseInt(hour)) &&
-                minuteSlider.move(Integer.parseInt(minute));
+               minuteSlider.move(Integer.parseInt(minute));
     }
 
     private void goToYear(String year, String fullDate) {
@@ -130,39 +134,31 @@ public class DateField extends TextField {
         return select(date, format, Locale.ENGLISH);
     }
 
+    /**
+     * example new DataField().select("19/05/2013", "dd/MM/yyyy", Locale.ENGLISH);
+     * @param date in string format
+     * @param format set format date
+     * @param locale set locale
+     * @return true if is selected date, false when DataField doesn't exist
+     */
     public boolean select(String date, String format, Locale locale) {
-        SimpleDateFormat inDateFormat = new SimpleDateFormat(format, locale);
-        SimpleDateFormat outDateForm = new SimpleDateFormat("dd/MMM/yyyy H:m", locale);
-        Date fromDate;
-        try {
-            fromDate = inDateFormat.parse(date);
-            date = outDateForm.format(fromDate);
-        } catch (ParseException e) {
-            log.error("ParseException: {}", e);
-        }
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(format, locale));
+        int day = localDate.getDayOfMonth();
+        String month = localDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
+        int year = localDate.getYear();
         ready();
         log.debug("select: " + date);
-        String[] dates = date.split("/");
         trigger.click();
-        String[] extraDates = dates[2].split(" ");
-        String year = extraDates[0];
-        if (format.contains("H")) {
-            String[] hours = extraDates[1].split(":");
-            String hour = hours[0];
-            String minutes = hours[1];
-            return setHour(hour, minutes) && setDate(Integer.parseInt(dates[0]) + "", dates[1], year);
-        } else {
-            return setDate(Integer.parseInt(dates[0]) + "", dates[1], year);
-        }
-    }
-
-    public boolean select(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/YYYY");
-        String dateStr = sdf.format(date);
-        return select(dateStr);
-    }
-
-    public boolean selectToday() {
-        return select(new Date());
+//        String[] dates = date.split("/");
+//        String[] extraDates = dates[2].split(" ");
+//        String year = extraDates[0];
+//        if (format.contains("H")) {
+//            String[] hours = extraDates[1].split(":");
+//            String hour = hours[0];
+//            String minutes = hours[1];
+//            return setHour(hour, minutes) && setDate(Integer.parseInt(dates[0]) + "", dates[1], year);
+//        } else {
+        return setDate(day + "", month, year + "");
+//        }
     }
 }

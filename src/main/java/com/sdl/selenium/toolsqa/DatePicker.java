@@ -85,12 +85,11 @@ public class DatePicker extends WebLocator {
      * @return true if is selected date, false when DatePicker doesn't exist
      */
     public boolean select(String date, String format, Locale locale) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, locale);
-        dateToSelect = LocalDate.parse(date, formatter);
-        return setDate(dateToSelect.getDayOfMonth() + "", dateToSelect.getMonthValue() + "", dateToSelect.getYear() + "");
+        dateToSelect = LocalDate.parse(date, DateTimeFormatter.ofPattern(format, locale));
+        return setDate(dateToSelect.getDayOfMonth() + "", dateToSelect.getYear() + "");
     }
 
-    private boolean setDate(String day, String month, String year) {
+    private boolean setDate(String day, String year) {
         if (this.click()) {
             goToYearAndMonth(year);
             daySelect.setText(day, SearchType.EQUALS);
