@@ -79,7 +79,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         }
     }
 
-    protected String getLanguages() {
+    public String getLanguages() {
         StringBuilder flags = new StringBuilder();
         WebLocator flagEl = new WebLocator(this).setTag("i").setClasses("flag");
         List<WebElement> elements = flagEl.findElements();
@@ -88,13 +88,12 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         for (WebElement el : elements) {
             String aClass = el.getAttribute("class");
             String lang = aClass.replace("flag", "").trim();
+            flags.append(lang);
             if (count == 1) {
-                flags.append(lang);
                 if (sizeLangs > 1) {
                     flags.append(">");
                 }
             } else {
-                flags.append(lang);
                 if (count > 1 && count < sizeLangs) {
                     flags.append(",");
                 }
