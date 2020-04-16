@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable {
+public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, IWebLocator {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebLocator.class);
     private String currentElementPath = "";

@@ -6,7 +6,7 @@ import com.sdl.selenium.web.WebLocator;
 
 public class RadioGroup extends WebLocator {
 
-    private Radio radio = new Radio(this);
+    private final Radio radio = new Radio(this);
     private String version;
 
     public RadioGroup() {

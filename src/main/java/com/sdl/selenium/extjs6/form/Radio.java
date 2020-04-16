@@ -43,6 +43,6 @@ public class Radio extends WebLocator {
             input.setElPath("/../input");
             checked = input.getAttribute("aria-checked");
         }
-        return checked != null && "true".equals(checked);
+        return "true".equals(checked);
     }
 }
