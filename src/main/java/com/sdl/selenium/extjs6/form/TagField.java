@@ -40,6 +40,11 @@ public class TagField extends Tag {
         setLabel(label, searchTypes);
     }
 
+    @Override
+    public boolean select(String value) {
+        return select(SearchType.EQUALS, value);
+    }
+
     public boolean select(String... values) {
         return select(SearchType.EQUALS, values);
     }

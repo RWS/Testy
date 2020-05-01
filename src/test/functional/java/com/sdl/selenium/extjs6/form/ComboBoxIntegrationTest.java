@@ -28,7 +28,16 @@ public class ComboBoxIntegrationTest extends TestBase {
     @Test
     public void comboBoxTest() {
         assertThat(comboBox.select("New York"), is(true));
+    }
+
+    @Test(dependsOnMethods = "comboBoxTest")
+    public void verifyComboBoxValue() {
         assertThat(comboBox.getValue(), equalTo("New York"));
+    }
+
+    @Test(dependsOnMethods = "verifyComboBoxValue")
+    public void comboBoxTest2() {
+        assertThat(comboBox.select("New York"), is(true));
     }
 
     @Test

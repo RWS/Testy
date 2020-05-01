@@ -4,15 +4,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICombo;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.slf4j.Logger;
 
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class Combo extends Field implements ICombo {
-
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Combo.class);
 
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
         return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
@@ -26,23 +22,14 @@ public abstract class Combo extends Field implements ICombo {
 
     public List<String> getAllValues() {
         waitToRender(300L);
-        try {
-            expand();
-        } catch (StaleElementReferenceException e) {
-            log.debug("StaleElementReferenceException1");
-            expand();
-        }
+        expand();
         WebLocator comboList = new WebLocator(getBoundList()).setClasses("x-list-plain").setVisibility(true);
         String text = comboList.getText();
         String[] comboValues = new String[0];
         if (text != null) {
             comboValues = text.split("\\n");
         }
-        try {
-            collapse();
-        } catch (StaleElementReferenceException e) {
-            log.debug("StaleElementReferenceException2");
-        }
+        collapse();
         return Arrays.asList(comboValues);
     }
 

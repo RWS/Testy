@@ -49,7 +49,10 @@ public class ComboBox extends Combo {
      * @return true if value was selected
      */
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
-        waitToRender(300L);
+        if (value.equals(getValue())) {
+            return true;
+        }
+//        waitToRender(300L);
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);

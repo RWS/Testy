@@ -2,7 +2,6 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ITag;
 import com.sdl.selenium.web.utils.RetryUtils;
 
@@ -10,14 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Tag extends Field implements ITag {
+public abstract class Tag extends Combo implements ITag {
 
     private final WebLocator list = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield-list ')]");
     private final WebLocator aria = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield ') and contains(concat(' ', @class, ' '), ' x-form-field ')]");
-
-    protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
-        return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
-    }
 
     public boolean remove(String... values) {
         boolean removed = true;
@@ -37,19 +32,6 @@ public abstract class Tag extends Field implements ITag {
             removed = removed && RetryUtils.retry(15, closeEl::doClick);
         }
         return removed;
-    }
-
-    public List<String> getAllValues() {
-        waitToRender(400L);
-        expand();
-        WebLocator comboList = new WebLocator(getBoundList()).setClasses("x-list-plain").setVisibility(true);
-        String text = comboList.getText();
-        String[] comboValues = new String[0];
-        if (text != null) {
-            comboValues = text.split("\\n");
-        }
-        collapse();
-        return Arrays.asList(comboValues);
     }
 
     public List<String> getAllSelectedValues() {
