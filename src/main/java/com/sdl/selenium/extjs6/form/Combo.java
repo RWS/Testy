@@ -9,8 +9,12 @@ import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -34,13 +38,50 @@ public abstract class Combo extends Field implements ICombo {
         waitToRender(300L);
         expand();
         WebLocator comboList = new WebLocator(getBoundList()).setClasses("x-list-plain").setVisibility(true);
-        String text = comboList.getText();
-        String[] comboValues = new String[0];
-        if (text != null) {
-            comboValues = text.split("\\n");
+        WebLocator item = new WebLocator(comboList).setClasses("x-boundlist-item");
+        int size = item.size();
+        List<String> result = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            item.setResultIdx(i);
+            String text = item.getText();
+            result.add(text);
         }
         collapse();
-        return Arrays.asList(comboValues);
+        return result;
+    }
+
+    public <V> List<V> getAllValues(Class<V> type) {
+        List<String> values = getAllValues();
+        if (values == null) {
+            return null;
+        }
+        Class<?> newClazz;
+        int size = values.get(0).split("\\n").length;
+        Constructor constructor = null;
+        try {
+            newClazz = Class.forName(type.getTypeName());
+            Constructor[] constructors = newClazz.getConstructors();
+            for (Constructor c : constructors) {
+                int parameterCount = c.getParameterCount();
+                if (size == parameterCount) {
+                    constructor = c;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Constructor finalConstructor = constructor;
+        return values.stream().map(t -> {
+            try {
+                Constructor<V> constructorTemp = (Constructor<V>) finalConstructor;
+                String[] split = t.split("\\n");
+                List<String> list = Arrays.asList(split);
+                return constructorTemp.newInstance(list.toArray(new Object[0]));
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 
     public boolean expand() {
