@@ -103,7 +103,10 @@ public class DateField extends TextField {
             }
         } while (!found && !foundYear(yearInt, goNext));
         try {
-            yearEl.click();
+            RetryUtils.retry(3, () -> {
+                yearEl.click();
+                return yearEl.getAttributeClass().contains("-selected");
+            });
         } catch (WebDriverException e) {
             if (tooltip.waitToRender(500L, false)) {
                 WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).setInfoMessage("month Jan");
