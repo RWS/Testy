@@ -113,7 +113,6 @@ public abstract class Combo extends Field implements ICombo {
         if (value.equals(getValue())) {
             return true;
         }
-//        waitToRender(300L);
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
@@ -130,6 +129,9 @@ public abstract class Combo extends Field implements ICombo {
                 if (!selected && option.isPresent()) {
                     WebLocatorUtils.scrollToWebLocator(option);
                     selected = option.doClick();
+                    if (!selected && option.isPresent()) {
+                        WebLocatorUtils.doExecuteScript("arguments[0].click()", option.getWebElement());
+                    }
                 }
             }
             if (selected) {
