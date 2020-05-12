@@ -75,3 +75,10 @@ var c = Ext.getCmp('terminologylanguagesgrid-1243');
 (function (c) {
     c.view.scrollable._scrollElement.dom.scrollBy(0,100);
 })(c)
+
+(function (c) {
+    var top = c.scrollable._scrollElement.dom.scrollTop;
+    c.scrollBy(0,100);
+    var topTemp = c.scrollable._scrollElement.dom.scrollTop;
+    return top < topTemp;
+})(c)

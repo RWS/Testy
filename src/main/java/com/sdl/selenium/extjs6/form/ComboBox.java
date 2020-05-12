@@ -67,10 +67,9 @@ public class ComboBox extends Combo {
                 selected = option.doClick();
                 if (!selected && option.isPresent()) {
                     WebLocatorUtils.scrollToWebLocator(option);
+                    String id = getBoundList().getAttributeId();
+                    scrollBack(id);
                     selected = option.doClick();
-                    if (!selected && option.isPresent()) {
-                        WebLocatorUtils.doExecuteScript("arguments[0].click()", option.getWebElement());
-                    }
                 }
             }
             if (selected) {
@@ -84,6 +83,11 @@ public class ComboBox extends Combo {
             log.debug("(" + info + ") The combo or arrow could not be located.");
         }
         return false;
+    }
+
+    private boolean scrollBack(String id) {
+        String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,-50);var topTemp = c.scrollable._scrollElement.dom.scrollTop;return top < topTemp;})(window.Ext.getCmp('" + id + "'))";
+        return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
     public boolean doSelect(String value, long optionRenderMillis, SearchType... searchType) {
