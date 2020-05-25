@@ -115,28 +115,24 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return (T) this;
     }
 
-    public void select() {
+    public boolean select() {
         scrollInGrid(this);
-        if (!isSelected()) {
-            doSelect();
-        }
+        return isSelected() || RetryUtils.retry(2, () -> doSelect() && isSelected());
     }
 
-    public void unSelect() {
+    public boolean unSelect() {
         scrollInGrid(this);
-        if (isSelected()) {
-            doSelect();
-        }
+        return !isSelected() || RetryUtils.retry(2, () -> doSelect() && !isSelected());
     }
 
-    protected void doSelect() {
+    protected boolean doSelect() {
         WebLocator checkBox = new WebLocator(this);
         if ("6.7.0".equals(getVersion())) {
             checkBox.setBaseCls("x-selmodel-column");
         } else {
             checkBox.setBaseCls("x-grid-row-checker");
         }
-        checkBox.click();
+        return checkBox.doClick();
     }
 
     public boolean isSelected() {
@@ -144,23 +140,19 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-item-selected");
     }
 
-    public void expand() {
+    public boolean expand() {
         scrollInGrid(this);
-        if (isCollapsed()) {
-            doExpanded();
-        }
+        return !isCollapsed() || RetryUtils.retry(2, () -> doExpanded() && !isCollapsed());
     }
 
-    public void collapse() {
+    public boolean collapse() {
         scrollInGrid(this);
-        if (!isCollapsed()) {
-            doExpanded();
-        }
+        return isCollapsed() || RetryUtils.retry(2, () -> doExpanded() && isCollapsed());
     }
 
-    protected void doExpanded() {
+    protected boolean doExpanded() {
         WebLocator expander = new WebLocator(this).setBaseCls("x-grid-row-expander");
-        expander.click();
+        return expander.doClick();
     }
 
     public boolean isCollapsed() {
