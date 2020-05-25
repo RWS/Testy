@@ -151,7 +151,7 @@ public class DateField extends TextField {
         int year = localDate.getYear();
         ready();
         log.debug("select: " + date);
-        trigger.click();
+        RetryUtils.retry(2, () ->trigger.click());
 //        String[] dates = date.split("/");
 //        String[] extraDates = dates[2].split(" ");
 //        String year = extraDates[0];

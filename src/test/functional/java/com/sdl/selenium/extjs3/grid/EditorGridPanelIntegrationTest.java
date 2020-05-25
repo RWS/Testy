@@ -22,7 +22,7 @@ import static org.testng.Assert.assertTrue;
 public class EditorGridPanelIntegrationTest extends TestBase {
 
     private Window editorGridPanelWindow = new Window("EditorGridPanel Win");
-    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common").setTitle("EditableGrid");
+    private EditorGridPanel editorGridPanel = new EditorGridPanel(editorGridPanelWindow, "common", 1).setTitle("EditableGrid");
     private Button submitButton = new Button(editorGridPanelWindow, "Submit");
 
     @DataProvider
@@ -124,7 +124,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
     }
 
     @Test(dependsOnMethods = "assertRowEditorGridPanel")
-     public void rowSelect() {
+    public void rowSelect() {
         assertTrue(editorGridPanel.rowSelect("Spring-Beauty"));
     }
 
