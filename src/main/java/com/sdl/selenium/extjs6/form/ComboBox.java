@@ -70,6 +70,10 @@ public class ComboBox extends Combo {
                     String id = getBoundList().getAttributeId();
                     scrollBack(id);
                     selected = option.doClick();
+                    if (!selected && option.isPresent()) {
+                        scrollDown(id);
+                        selected = option.doClick();
+                    }
                 }
             }
             if (selected) {
@@ -87,6 +91,11 @@ public class ComboBox extends Combo {
 
     private boolean scrollBack(String id) {
         String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,-50);var topTemp = c.scrollable._scrollElement.dom.scrollTop;return top < topTemp;})(window.Ext.getCmp('" + id + "'))";
+        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    }
+
+    private boolean scrollDown(String id) {
+        String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,50);return Math.round(top) >= c.scrollable.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
