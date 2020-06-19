@@ -7,7 +7,7 @@ import java.util.List;
 public interface Selectable extends IField {
 
     default WebLocator getBoundList() {
-        return new WebLocator("x-boundlist").setVisibility(true);
+        return new WebLocator("x-boundlist").setExcludeClasses("x-masked").setVisibility(true);
     }
 
     List<String> getAllValues();
