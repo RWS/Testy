@@ -34,7 +34,18 @@ public class Menu extends WebLocator {
     public boolean doClickOnMenu(String option, SearchType... searchTypes) {
         ready();
         WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
-        return link.doClick();
+        boolean click = link.doClick();
+        if(!click){
+            String id = getAttributeId();
+            scrollDown(id);
+            click = link.doClick();
+        }
+        return click;
+    }
+
+    private boolean scrollDown(String id) {
+        String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,50);return Math.round(top) >= c.scrollable.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
+        return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
     public List<String> getMenuValues() {
