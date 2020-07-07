@@ -230,7 +230,10 @@ public class FileUtils {
 
     public static void cleanDownloadDir() {
         try {
-            org.apache.commons.io.FileUtils.cleanDirectory(new File(WebDriverConfig.getDownloadPath()));
+            File directory = new File(WebDriverConfig.getDownloadPath());
+            if (directory.exists()) {
+                org.apache.commons.io.FileUtils.cleanDirectory(directory);
+            }
             LOGGER.debug("Clean download directory with success.");
         } catch (IOException e) {
             LOGGER.debug("Clean Download Dir with error {}", e.getMessage());
