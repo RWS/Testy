@@ -431,6 +431,10 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return executor.findElements(this);
     }
 
+    public List<WebElement> doFindElements() {
+        return executor.findElements(this);
+    }
+
     public boolean isVisible() {
         boolean visible = isPresent();
         if (visible) {

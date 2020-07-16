@@ -82,24 +82,27 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     public String getLanguages() {
         StringBuilder flags = new StringBuilder();
         WebLocator flagEl = new WebLocator(this).setTag("i").setClasses("flag");
-        List<WebElement> elements = flagEl.findElements();
-        int count = 1;
-        int sizeLangs = elements.size();
-        for (WebElement el : elements) {
-            String aClass = el.getAttribute("class");
-            String lang = aClass.replace("flag", "").trim();
-            flags.append(lang);
-            if (count == 1) {
-                if (sizeLangs > 1) {
-                    flags.append(">");
+        List<WebElement> elements = flagEl.doFindElements();
+        if (elements != null && !elements.isEmpty()) {
+            int count = 1;
+            int sizeLangs = elements.size();
+            for (WebElement el : elements) {
+                String aClass = el.getAttribute("class");
+                String lang = aClass.replace("flag", "").trim();
+                flags.append(lang);
+                if (count == 1) {
+                    if (sizeLangs > 1) {
+                        flags.append(">");
+                    }
+                } else {
+                    if (count > 1 && count < sizeLangs) {
+                        flags.append(",");
+                    }
                 }
-            } else {
-                if (count > 1 && count < sizeLangs) {
-                    flags.append(",");
-                }
+                count++;
             }
-            count++;
+            return flags.toString();
         }
-        return flags.toString();
+        return "";
     }
 }
