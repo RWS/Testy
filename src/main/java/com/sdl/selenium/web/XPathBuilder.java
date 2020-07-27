@@ -856,7 +856,7 @@ public class XPathBuilder implements Cloneable {
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
             if (!"tagAndPosition".equals(entry.getKey())) {
-                addTemplate(selector, entry.getKey(), (Object) entry.getValue());
+                addTemplate(selector, entry.getKey(), entry.getValue());
             }
         }
         selector.addAll(new ArrayList<>(elPathSuffix.values()));
