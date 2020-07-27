@@ -75,7 +75,7 @@ public class MessageBoxWindow extends Window {
         if (waitSeconds == 0) {
             msg = mbTextElement.getText(true);
         } else {
-            msg = mbTextElement.waitTextToRender(waitSeconds);
+            msg = mbTextElement.getText();
         }
         return msg;
     }
@@ -97,7 +97,7 @@ public class MessageBoxWindow extends Window {
     }
 
     private String press(final Button button) {
-        if (WebDriverConfig.isIE() && !isVisible()) {
+        if (WebDriverConfig.isIE() && !isPresent()) {
             LOGGER.warn("messageBoxWindow is not visible");
             return null;
         }

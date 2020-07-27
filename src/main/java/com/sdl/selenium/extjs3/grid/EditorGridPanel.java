@@ -10,6 +10,8 @@ import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+
 public class EditorGridPanel extends GridPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditorGridPanel.class);
 
@@ -84,7 +86,7 @@ public class EditorGridPanel extends GridPanel {
             LOGGER.debug("active editor is TextField");
             editor = new TextField();
         }
-        editor.setContainer(this).setClasses("x-form-focus").setRenderMillis(1000).setInfoMessage("active editor");
+        editor.setContainer(this).setClasses("x-form-focus").setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
         return editor;
     }
 

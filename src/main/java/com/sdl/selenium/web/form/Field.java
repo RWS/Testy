@@ -4,6 +4,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 
+import java.time.Duration;
+
 public abstract class Field extends WebLocator implements IField {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Field.class);
@@ -26,7 +28,7 @@ public abstract class Field extends WebLocator implements IField {
     public boolean clickIcon(String icon) {
         if (ready()) {
             WebLocator iconLocator = getTriggerEl(this, icon);
-            iconLocator.setRenderMillis(500);
+            iconLocator.setRender(Duration.ofMillis(500));
             return iconLocator.click();
         } else {
             log.warn("clickIcon : field is not ready for use: " + this);

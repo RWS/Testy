@@ -44,6 +44,7 @@ public class ExtJsComponent extends WebLocator {
     }
 
     @Override
+    @Deprecated
     public boolean isVisible() {
         boolean visible = super.isVisible();
         if (visible) {

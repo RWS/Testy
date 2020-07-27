@@ -113,18 +113,13 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
     }
 
     @Test
-    public void isVisibleTest() {
-        assertThat(locator.isVisible(), is(true));
-    }
-
-    @Test
     public void readyTest() {
         assertThat(locator.ready(), is(true));
     }
 
     @Test
-    public void isDisabledTest() {
-        assertThat(locator.isDisabled(), is(false));
+    public void isEnabledTest() {
+        assertThat(locator.isEnabled(), is(true));
     }
 
     @Test

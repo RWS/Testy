@@ -7,6 +7,7 @@ import com.sdl.selenium.web.form.CheckBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class Table extends WebLocator implements ITable<Row, Cell> {
     private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
 
-    private int timeout = 30;
+    private Duration timeout = Duration.ofSeconds(30);
 
     public Table() {
         setClassName("Table");
@@ -232,25 +233,25 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
 
     public void select(Row row) {
         CheckBox checkBox = new CheckBox(row);
-        boolean selected = checkBox.isSelected() || checkBox.click();
+        boolean selected = checkBox.check(true);
         assertThat("Could not selected " + toString(), selected);
     }
 
     public void check(Cell... cells) {
         CheckBox checkBox = new CheckBox(getRow(cells));
-        boolean selected = checkBox.isSelected() || checkBox.click();
+        boolean selected = checkBox.check(true);
         assertThat("Could not checked " + toString(), selected);
     }
 
     public void unSelect(Row row) {
         CheckBox checkBox = new CheckBox(row);
-        boolean selected = !checkBox.isSelected() || checkBox.click();
+        boolean selected = checkBox.check(false);
         assertThat("Could not unselected " + toString(), selected);
     }
 
     public void unCheck(Cell... cells) {
         CheckBox checkBox = new CheckBox(getRow(cells));
-        boolean selected = !checkBox.isSelected() || checkBox.click();
+        boolean selected = checkBox.check(false);
         assertThat("Could not unchecked " + toString(), selected);
     }
 
@@ -258,11 +259,16 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         return waitToPopulate(timeout);
     }
 
+    @Deprecated
     public boolean waitToPopulate(int seconds) {
+        return waitToPopulate(Duration.ofSeconds(seconds * 1000L));
+    }
+
+    public boolean waitToPopulate(Duration duration) {
         Row row = getRow(1).setVisibility(true).setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setTag("tbody"); // TODO see if must add for all rows
         row.setContainer(body);
-        return row.waitToRender(seconds * 1000L, false);
+        return row.waitToRender(duration, false);
     }
 
     public boolean ready(boolean waitRows) {

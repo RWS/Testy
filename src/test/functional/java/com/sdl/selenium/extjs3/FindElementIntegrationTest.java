@@ -19,6 +19,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -32,7 +34,7 @@ public class FindElementIntegrationTest extends TestBase {
     private Panel findElementsAfterTimeoutFormPanel = new Panel("Find Elements after Timeout");
     private TextField timeOutTextField = new TextField(findElementsAfterTimeoutFormPanel, "Timeout:");
     private Button showButton = new Button(findElementsAfterTimeoutFormPanel, "Show");
-    private Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").setRenderMillis(200);
+    private Button showButton1 = new Button(findElementsAfterTimeoutFormPanel, "Show1").setRender(Duration.ofMillis(200));
     private Button showHiddenButton = new Button(findElementsAfterTimeoutFormPanel, "Show Hidden Button");
     private WebLocator hiddenElVisible = new WebLocator().setId("hiddenButton").setVisibility(true);
     private WebLocator hiddenElNotVisible = new WebLocator().setId("hiddenButton");
@@ -46,7 +48,7 @@ public class FindElementIntegrationTest extends TestBase {
     public void clickExtreme() {
         findElementButton.click();
         assertTrue(alertButton.click());
-        ConditionManager conditionManager = new ConditionManager(10000);
+        ConditionManager conditionManager = new ConditionManager(Duration.ofSeconds(10));
         conditionManager.add(new MessageBoxSuccessCondition("Alert button was pressed"));
         Assert.assertTrue(conditionManager.execute().isSuccess());
         MessageBox.pressOK();
@@ -54,7 +56,7 @@ public class FindElementIntegrationTest extends TestBase {
 
         findElementButton.click();
         assertTrue(alertButton.click());
-        ConditionManager conditionManager1 = new ConditionManager(10000);
+        ConditionManager conditionManager1 = new ConditionManager(Duration.ofSeconds(10));
         conditionManager1.add(new MessageBoxSuccessCondition("Alert button was pressed"));
         Assert.assertTrue(conditionManager1.execute().isSuccess());
         MessageBox.pressOK();
@@ -85,9 +87,9 @@ public class FindElementIntegrationTest extends TestBase {
     private <T extends WebLocator> boolean hasStatus(String status, T t) {
         boolean is = false;
         if (status.equals("disabled")) {
-            is =  t.isDisabled();
+            is =  !t.isEnabled();
         } else if (status.equals("enabled")){
-            is = !t.isDisabled();
+            is = t.isEnabled();
         }
         return is;
     }

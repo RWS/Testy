@@ -64,7 +64,7 @@ public class Window extends WebLocator {
 
     public boolean isMaximized() {
         WebLocator maximizeTool = getToolElement("maximize");
-        return !maximizeTool.isVisible();
+        return !maximizeTool.isPresent();
     }
 
     private WebLocator getToolElement(String id) {

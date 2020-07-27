@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,7 +31,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
 
     // TODO temporary solution for verification if loaded
     private boolean isLoaded = false;
-    private int timeout = 60;
+    private Duration timeout = Duration.ofSeconds(60);
 
     public GridPanel() {
         setClassName("GridPanel");
@@ -91,12 +92,12 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         this.searchColumnId = searchColumnId;
     }
 
-    public int getTimeout() {
+    public Duration getTimeout() {
         return timeout;
     }
 
-    public void setTimeout(final int timeout) {
-        this.timeout = timeout;
+    public void setTimeout(Duration duration) {
+        this.timeout = duration;
     }
 
     // Methods
@@ -111,9 +112,14 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return waitToLoad(timeout);
     }
 
+    @Deprecated
     public boolean waitToLoad(int seconds) {
+        return waitToLoad(Duration.ofSeconds(seconds));
+    }
+
+    public boolean waitToLoad(Duration duration) {
         ExtJsComponent mask = new ExtJsComponent("x-mask-loading", this);
-        Condition condition = new ConditionManager(seconds * 1000).add(new ElementRemovedSuccessCondition(mask)).execute();
+        Condition condition = new ConditionManager(duration).add(new ElementRemovedSuccessCondition(mask)).execute();
         isLoaded = condition.isSuccess();
         if (!isLoaded) {
             LOGGER.warn(this + " still has x-mask-loading");
@@ -121,11 +127,13 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return isLoaded;
     }
 
+    @Deprecated
     public boolean waitToLoad(int seconds, boolean waitRows) {
         waitToLoad(seconds);
         return waitRows ? waitToPopulate(seconds) : isLoaded;
     }
 
+    @Deprecated
     public boolean waitToLoad(boolean waitRows) {
         return waitToLoad() && (!waitRows || waitToPopulate());
     }
@@ -213,7 +221,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     /**
      * @param searchElement searchElement
      * @param columnId      1,2,3...
-     * @param searchTypes    accepted values are: SearchType.EQUALS
+     * @param searchTypes   accepted values are: SearchType.EQUALS
      * @return true or false
      */
 
@@ -261,7 +269,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
      *
      * @param searchElement searchElement
      * @param columnId      columnId
-     * @param searchTypes    SearchType.EQUALS
+     * @param searchTypes   SearchType.EQUALS
      * @return true or false
      */
     public boolean isCellPresent(String searchElement, int columnId, SearchType... searchTypes) {
@@ -777,16 +785,25 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         return waitToPopulate(timeout);
     }
 
+    @Deprecated
     public boolean waitToPopulate(int seconds) {
-        //LOGGER.debug("waitToPopulate: " + seconds + "; " + toString());
+        return waitToPopulate(Duration.ofSeconds(seconds));
+    }
+
+    public boolean waitToPopulate(Duration duration) {
         WebLocator firstRow = getRow(1).setInfoMessage("first row");
-        return firstRow.waitToRender(seconds * 1000);
+        return firstRow.waitToRender(duration);
     }
 
     public boolean ready() {
         return super.ready() && waitToLoad();
     }
 
+    public boolean ready(Duration duration) {
+        return super.ready() && waitToLoad(duration);
+    }
+
+    @Deprecated
     public boolean ready(int seconds) {
         return super.ready() && waitToLoad(seconds);
     }

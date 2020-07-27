@@ -6,6 +6,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 import java.util.List;
 
 public class Cell extends com.sdl.selenium.web.table.Cell {
@@ -66,7 +67,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     }
 
     private void scrollInGrid(Cell cell) {
-        while (!cell.waitToRender(100)) {
+        while (!cell.waitToRender(Duration.ofMillis(100))) {
             Grid grid;
             try {
                 grid = (Grid) getPathBuilder().getContainer();

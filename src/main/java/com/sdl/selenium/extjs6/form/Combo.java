@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,10 +23,15 @@ public abstract class Combo extends Field implements ICombo {
 
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Combo.class);
-    private Pagination paginationEl = new Pagination(getBoundList()).setRenderMillis(300);
+    private Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
 
+    @Deprecated
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
-        return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRenderMillis(optionRenderMillis).setInfoMessage(value);
+        return getComboEl(value, Duration.ofMillis(optionRenderMillis), searchType);
+    }
+
+    protected WebLocator getComboEl(String value, Duration duration, SearchType... searchType) {
+        return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRender(duration).setInfoMessage(value);
     }
 
     @Override
@@ -35,7 +41,7 @@ public abstract class Combo extends Field implements ICombo {
     }
 
     public List<String> getAllValues() {
-        waitToRender(300L);
+        waitToRender(Duration.ofMillis(300L));
         expand();
         WebLocator comboList = new WebLocator(getBoundList()).setClasses("x-list-plain").setVisibility(true);
         WebLocator item = new WebLocator(comboList).setClasses("x-boundlist-item");
@@ -109,13 +115,25 @@ public abstract class Combo extends Field implements ICombo {
      * @param searchType         use {@link SearchType}
      * @return true if value was selected
      */
+    @Deprecated
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
+        return doSelect(value, Duration.ofMillis(optionRenderMillis), pagination, searchType);
+    }
+
+    /**
+     * @param value              value
+     * @param duration eg. 300ms
+     * @param pagination         true | false
+     * @param searchType         use {@link SearchType}
+     * @return true if value was selected
+     */
+    public boolean doSelect(String value, Duration duration, boolean pagination, SearchType... searchType) {
         if (value.equals(getValue())) {
             return true;
         }
         boolean selected;
         String info = toString();
-        WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
+        WebLocator option = getComboEl(value, duration, searchType).setVisibility(true);
         boolean trigger = expand();
         if (trigger) {
             if (pagination) {

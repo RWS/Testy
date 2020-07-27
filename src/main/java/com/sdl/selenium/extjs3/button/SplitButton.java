@@ -47,7 +47,7 @@ public class SplitButton extends Button {
             showMenu();
             WebLocator menu = new WebLocator("x-menu-floating");
             if (WebDriverConfig.isIE()) {
-                if (menu.isVisible()) {
+                if (menu.ready()) {
                     LOGGER.info("In IE is visible");
                 }
             } else {

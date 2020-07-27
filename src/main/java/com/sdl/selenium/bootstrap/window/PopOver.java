@@ -5,6 +5,8 @@ import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.web.WebLocator;
 
+import java.time.Duration;
+
 public class PopOver extends WebLocator {
 
     private PopOver() {
@@ -24,10 +26,10 @@ public class PopOver extends WebLocator {
     }
 
     public boolean close() {
-        return new Button(this, "Close").click() && waitClose(this, 2000);
+        return new Button(this, "Close").click() && waitClose(this, Duration.ofSeconds(2));
     }
 
-    private boolean waitClose(WebLocator popOver, long time) {
-        return new ConditionManager(time).add(new ElementRemovedSuccessCondition(popOver)).execute().isSuccess();
+    private boolean waitClose(WebLocator popOver, Duration duration) {
+        return new ConditionManager(duration).add(new ElementRemovedSuccessCondition(popOver)).execute().isSuccess();
     }
 }

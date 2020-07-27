@@ -2,6 +2,8 @@ package com.sdl.selenium.web;
 
 import org.openqa.selenium.By;
 
+import java.time.Duration;
+
 /**
  * This class is used to simple construct xpath for WebLocator's
  */
@@ -358,13 +360,25 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     /**
-     * @param renderMillis true or false
+     * @param renderMillis time
      * @param <T>          the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis) {
         pathBuilder.setRenderMillis(renderMillis);
+        return (T) this;
+    }
+
+    /**
+     * @param duration time
+     * @param <T>          the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setRender(Duration duration) {
+        pathBuilder.setRender(duration);
         return (T) this;
     }
 
@@ -374,8 +388,20 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     @SuppressWarnings("unchecked")
+    @Deprecated
     public <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds) {
         pathBuilder.setActivateSeconds(activateSeconds);
+        return (T) this;
+    }
+
+    /**
+     * @param duration time
+     * @param <T>             the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setActivate(Duration duration) {
+        pathBuilder.setActivate(duration);
         return (T) this;
     }
 

@@ -3,11 +3,8 @@ package com.sdl.selenium.bootstrap.window;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Window extends WebLocator implements IWebLocator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Window.class);
 
     public Window() {
         setClassName("Window");

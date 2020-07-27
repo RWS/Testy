@@ -1,5 +1,7 @@
 package com.sdl.selenium.web;
 
+import java.time.Duration;
+
 public interface IWebLocator {
 
     String getCssValue(String propertyName);
@@ -23,17 +25,27 @@ public interface IWebLocator {
 
     int size();
 
+    @Deprecated
     boolean isVisible();
 
     boolean waitToRender();
 
+    @Deprecated
     boolean waitToRender(final long millis);
 
+    boolean waitToRender(Duration duration);
+
+    @Deprecated
     boolean waitToRender(final long millis, boolean showXPathLog);
+
+    boolean waitToRender(Duration duration, boolean showXPathLog);
 
     boolean ready();
 
+    @Deprecated
     boolean ready(int seconds);
+
+    boolean ready(Duration duration);
 
     String getXPath();
 
@@ -83,9 +95,15 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setVisibility(final boolean visibility);
 
+    @Deprecated
     <T extends WebLocatorAbstractBuilder> T setRenderMillis(final long renderMillis);
 
+    <T extends WebLocatorAbstractBuilder> T setRender(Duration duration);
+
+    @Deprecated
     <T extends WebLocatorAbstractBuilder> T setActivateSeconds(final int activateSeconds);
+
+    <T extends WebLocatorAbstractBuilder> T setActivate(Duration duration);
 
     <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container);
 

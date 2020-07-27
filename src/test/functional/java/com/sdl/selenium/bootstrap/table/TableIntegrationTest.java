@@ -172,14 +172,14 @@ public class TableIntegrationTest extends TestBase {
         }
 
         @Override
-        public Boolean call() throws Exception {
+        public Boolean call() {
             Cell cell = table.getCell(1, new Cell(2, list.get(0), SearchType.EQUALS), new Cell(3, list.get(1), SearchType.EQUALS));
             check = new CheckBox(cell);
             return check.click();
         }
 
         public Boolean isSelected() {
-            return check.isSelected();
+            return check.isChecked();
         }
     }
 }

@@ -8,6 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -56,7 +57,9 @@ public class XPathBuilder implements Cloneable {
 
     private boolean visibility;
     private long renderMillis = WebLocatorConfig.getDefaultRenderMillis();
+    private Duration render = Duration.ofMillis(WebLocatorConfig.getDefaultRenderMillis());
     private int activateSeconds = 60;
+    private Duration activate = Duration.ofSeconds(60);
 
     private WebLocator container;
     private List<WebLocator> childNodes;
@@ -382,7 +385,7 @@ public class XPathBuilder implements Cloneable {
             templateTitle.remove("title");
         } else {
             templateTitle.put("title", titleEl);
-            setSearchTitleType(titleEl.getPathBuilder().getSearchTitleType().stream().toArray(SearchType[]::new));
+            setSearchTitleType(titleEl.getPathBuilder().getSearchTitleType().toArray(new SearchType[0]));
         }
         return (T) this;
     }
@@ -489,14 +492,28 @@ public class XPathBuilder implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
+    @Deprecated
     public <T extends XPathBuilder> T setRenderMillis(final long renderMillis) {
         this.renderMillis = renderMillis;
         return (T) this;
     }
 
     @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setRender(Duration duration) {
+        this.render = duration;
+        return (T) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Deprecated
     public <T extends XPathBuilder> T setActivateSeconds(final int activateSeconds) {
         this.activateSeconds = activateSeconds;
+        return (T) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setActivate(Duration duration) {
+        this.activate = duration;
         return (T) this;
     }
 
@@ -839,7 +856,7 @@ public class XPathBuilder implements Cloneable {
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
             if (!"tagAndPosition".equals(entry.getKey())) {
-                addTemplate(selector, entry.getKey(), entry.getValue());
+                addTemplate(selector, entry.getKey(), (Object) entry.getValue());
             }
         }
         selector.addAll(new ArrayList<>(elPathSuffix.values()));
@@ -1155,35 +1172,35 @@ public class XPathBuilder implements Cloneable {
     }
 
     public String itemToString() {
-        String info = "";
+        StringBuilder info = new StringBuilder();
         if (hasText()) {
-            info = getText();
+            info.append(getText());
         } else if (hasTitle()) {
-            info = getTitle();
+            info.append(getTitle());
         } else if (hasId()) {
-            info = getId();
+            info.append(getId());
         } else if (hasName()) {
-            info = getName();
+            info.append(getName());
         } else if (hasBaseCls()) {
-            info = getBaseCls();
+            info.append(getBaseCls());
         } else if (hasClasses()) {
-            info = classes.size() == 1 ? classes.get(0) : classes.toString();
+            info.append(classes.size() == 1 ? classes.get(0) : classes.toString());
         } else if (hasCls()) {
-            info = getCls();
+            info.append(getCls());
         } else if (hasLabel()) {
-            info = getLabel();
+            info.append(getLabel());
         } else if (hasElPath()) {
-            info = getElPath();
+            info.append(getElPath());
         } else if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
-                info += "@" + entry.getKey() + "=" + entry.getValue().getValue();
+                info.append("@").append(entry.getKey()).append("=").append(entry.getValue().getValue());
             }
         } else if (hasTag()) {
-            info = getTag();
+            info.append(getTag());
         } else {
-            info = getClassName();
+            info.append(getClassName());
         }
-        return info;
+        return info.toString();
     }
 
     protected String afterItemPathCreated(String itemPath) {
@@ -1209,7 +1226,7 @@ public class XPathBuilder implements Cloneable {
         if (searchLabelType.size() == 0) {
             searchLabelType.add(SearchType.EQUALS);
         }
-        SearchType[] st = searchLabelType.stream().toArray(SearchType[]::new);
+        SearchType[] st = searchLabelType.toArray(new SearchType[0]);
         return new WebLocator().setText(getLabel(), st).setTag(getLabelTag()).getXPath();
     }
 
@@ -1358,10 +1375,20 @@ public class XPathBuilder implements Cloneable {
         return this.visibility;
     }
 
+    public Duration getRender() {
+        return this.render;
+    }
+
+    @Deprecated
     public long getRenderMillis() {
         return this.renderMillis;
     }
 
+    public Duration getActivate() {
+        return this.activate;
+    }
+
+    @Deprecated
     public int getActivateSeconds() {
         return this.activateSeconds;
     }

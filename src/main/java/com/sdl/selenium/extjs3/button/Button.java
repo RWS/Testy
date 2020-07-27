@@ -12,6 +12,8 @@ import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+
 public class Button extends ExtJsComponent implements IButton {
     private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
@@ -58,7 +60,7 @@ public class Button extends ExtJsComponent implements IButton {
         WebLocator buttonEl = new WebLocator(this).setTag("button").setInfoMessage(getPathBuilder().itemToString() + "//button");
         // TODO try to click on button that has mask - with first solution is not saying that has mask
         //ExtJsComponent buttonEl = new ExtJsComponent(this, "//button").setInfoMessage(this + "//button");
-        buttonEl.setRenderMillis(getPathBuilder().getRenderMillis());
+        buttonEl.setRender(getPathBuilder().getRender());
         buttonEl.sendKeys(Keys.TAB);
         boolean clicked = buttonEl.getWebElement() != null && isPresent() && super.doClick();
         if (clicked) {
@@ -109,8 +111,17 @@ public class Button extends ExtJsComponent implements IButton {
      * @param milliseconds milliseconds
      * @return true or false
      */
+    @Deprecated
     public boolean waitToEnable(long milliseconds) {
-        return waitToRender(milliseconds);
+        return waitToRender(Duration.ofMillis(milliseconds));
+    }
+
+    /**
+     * @param duration time
+     * @return true or false
+     */
+    public boolean waitToEnable(Duration duration) {
+        return waitToRender(duration);
     }
 
     /**

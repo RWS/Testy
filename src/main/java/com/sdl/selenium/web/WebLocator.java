@@ -435,6 +435,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return executor.findElements(this);
     }
 
+    @Deprecated
     public boolean isVisible() {
         boolean visible = isPresent();
         if (visible) {
@@ -458,13 +459,19 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
      * @return true | false
      */
     public boolean waitToRender() {
-        return waitToRender(getPathBuilder().getRenderMillis());
+        return waitToRender(getPathBuilder().getRender());
     }
 
+    @Deprecated
     public boolean waitToRender(final long millis) {
         return executor.waitElement(this, Duration.ofMillis(millis), true) != null;
     }
 
+    public boolean waitToRender(Duration duration) {
+        return executor.waitElement(this, duration, true) != null;
+    }
+
+    @Deprecated
     public boolean waitToRender(final long millis, boolean showXPathLog) {
         return executor.waitElement(this, Duration.ofMillis(millis), showXPathLog) != null;
     }
@@ -512,7 +519,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     }
 
     public boolean waitToActivate() {
-        return waitToActivate(getPathBuilder().getActivateSeconds());
+        return waitToActivate(getPathBuilder().getActivate());
     }
 
     /**
@@ -521,7 +528,18 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
      * @param seconds time in seconds
      * @return true | false
      */
+    @Deprecated
     public boolean waitToActivate(int seconds) {
+        return true;
+    }
+
+    /**
+     * Wait for the element to be activated when there is deactivation mask on top of it
+     *
+     * @param duration time
+     * @return true | false
+     */
+    public boolean waitToActivate(Duration duration) {
         return true;
     }
 
@@ -539,6 +557,11 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return ready;
     }
 
+    public boolean ready(Duration duration) {
+        return waitToRender(duration, true) && waitToActivate(duration);
+    }
+
+    @Deprecated
     public boolean ready(int seconds) {
         return waitToRender(seconds * 1000) && waitToActivate(seconds);
     }

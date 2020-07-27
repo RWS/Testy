@@ -50,7 +50,7 @@ public class GridEditor extends Grid {
         return (T) editor;
     }
 
-    public boolean setValue(WebLocator editor, int columnIndex, String value){
+    public boolean setValue(WebLocator editor, int columnIndex, String value) {
         Table table = new Table(gridEditor).setPosition(columnIndex);
         editor.setContainer(table);
         return doSetValue(editor, value);
@@ -63,22 +63,27 @@ public class GridEditor extends Grid {
 
     private boolean doSetValue(WebLocator editor, String value) {
         boolean success = false;
-        if ("ComboBox".equals(editor.getClass().getSimpleName())) {
-            ComboBox ed = (ComboBox) editor;
-            success = ed.select(value);
-        } else if ("TextField".equals(editor.getClass().getSimpleName())) {
-            TextField ed = (TextField) editor;
-            success = ed.setValue(value);
-        } else if ("CheckBox".equals(editor.getClass().getSimpleName())) {
-            CheckBox ed = (CheckBox) editor;
-            if ("true".equals(value)) {
-                success = ed.isSelected() || ed.click();
-            } else if ("false".equals(value)) {
-                success = !ed.isSelected() || ed.click();
+        switch (editor.getClass().getSimpleName()) {
+            case "ComboBox": {
+                ComboBox ed = (ComboBox) editor;
+                success = ed.select(value);
+                break;
             }
-        }else if ("CustomComboBox".equals(editor.getClass().getSimpleName())) {
-            CustomComboBox ed = (CustomComboBox) editor;
-            success = ed.expand();
+            case "TextField": {
+                TextField ed = (TextField) editor;
+                success = ed.setValue(value);
+                break;
+            }
+            case "CheckBox": {
+                CheckBox ed = (CheckBox) editor;
+                success = ed.check("true".equals(value));
+                break;
+            }
+            case "CustomComboBox": {
+                CustomComboBox ed = (CustomComboBox) editor;
+                success = ed.expand();
+                break;
+            }
         }
         return success;
     }

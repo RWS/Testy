@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Locale;
 
@@ -81,7 +82,7 @@ public class DateField extends TextField {
         int count = (int) Math.ceil((yearInt - currentYear - con) / 10);
         selectYearPage(count);
         WebLocator yearEl = new WebLocator(yearContainer).setText(year, SearchType.EQUALS).setInfoMessage("year " + year);
-        if (!yearEl.waitToRender(200)) {
+        if (!yearEl.waitToRender(Duration.ofMillis(200))) {
             selectYearPage(count > 0 ? 1 : -1);
         }
         yearEl.click();

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -146,30 +147,41 @@ public class Grid extends Table implements Scrollable {
         return (T) this;
     }
 
+    @Deprecated
     public boolean waitToActivate(int seconds) {
-        int count = 0;
+        return waitToActivate(Duration.ofSeconds(seconds));
+    }
+
+    public boolean waitToActivate(Duration duration) {
         boolean hasMask;
         long startMs = System.currentTimeMillis();
-        while ((hasMask = hasMask()) && (count < seconds)) {
-            count++;
-            long endMs = System.currentTimeMillis();
-            log.info("waitToActivate:" + (endMs - startMs) + " milliseconds; " + this);
+        long timeMs = 0L;
+        while ((hasMask = hasMask()) && (timeMs < duration.toMillis())) {
             Utils.sleep(500);
+            timeMs = System.currentTimeMillis() - startMs;
         }
+        long endMs = System.currentTimeMillis();
+        log.info("waitToActivate:" + (endMs - startMs) + " milliseconds; " + toString());
         return !hasMask;
     }
 
     private boolean hasMask() {
         WebLocator mask = new WebLocator(this).setClasses("x-mask").setElPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
-        return mask.waitToRender(500L, false);
+        return mask.waitToRender(Duration.ofMillis(500L), false);
     }
 
     @Override
+    @Deprecated
     public boolean waitToPopulate(int seconds) {
+        return waitToPopulate(Duration.ofSeconds(seconds * 1000L));
+    }
+
+    @Override
+    public boolean waitToPopulate(Duration duration) {
         Row row = getRow(1).setVisibility(true).setRoot("//..//").setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct"); // TODO see if must add for all rows
         row.setContainer(body);
-        return row.waitToRender(seconds * 1000L, false);
+        return row.waitToRender(duration, false);
     }
 
     public List<String> getHeaders() {
@@ -414,7 +426,7 @@ public class Grid extends Table implements Scrollable {
                 return null;
             }
         }
-        editor.setContainer(this).setRenderMillis(1000).setInfoMessage("active editor");
+        editor.setContainer(this).setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
         if (!(editor instanceof CheckBox)) {
             editor.setClasses("x-form-focus");
         }
