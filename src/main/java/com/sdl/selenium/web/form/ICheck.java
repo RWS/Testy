@@ -13,4 +13,8 @@ public interface ICheck extends Clickable, IWebLocator {
     default boolean check(boolean checked) {
         return checked == isChecked() || click() && (checked == isChecked());
     }
+
+    default boolean doCheck(boolean checked) {
+        return checked == isChecked() || doClick() && (checked == isChecked());
+    }
 }
