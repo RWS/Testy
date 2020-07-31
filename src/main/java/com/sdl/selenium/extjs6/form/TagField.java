@@ -6,6 +6,7 @@ import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,13 +55,13 @@ public class TagField extends Tag {
     }
 
     public boolean select(SearchType searchType, String... values) {
-        boolean selected = doSelect(searchType, 300, true, values);
+        boolean selected = doSelect(searchType, Duration.ofMillis(300), true, values);
         assertThat("Could not selected value on : " + this, selected, is(true));
         return selected;
     }
 
     public boolean select(SearchType searchType, boolean holdOpen, String... values) {
-        boolean selected = doSelect(searchType, 300, holdOpen, values);
+        boolean selected = doSelect(searchType, Duration.ofMillis(300), holdOpen, values);
         assertThat("Could not selected value on : " + this, selected, is(true));
         return selected;
     }
@@ -73,13 +74,24 @@ public class TagField extends Tag {
      * @return true if value was selected
      */
     public boolean doSelect(SearchType searchType, long optionRenderMillis, boolean holdOpen, String... values) {
+        return doSelect(searchType, Duration.ofMillis(optionRenderMillis), holdOpen, values);
+    }
+
+    /**
+     * @param searchType        use {@link SearchType}
+     * @param duration          eg. 300ms
+     * @param holdOpen          true | false
+     * @param values            values[]
+     * @return true if value was selected
+     */
+    public boolean doSelect(SearchType searchType, Duration duration, boolean holdOpen, String... values) {
         boolean selected = true;
         String info = toString();
         ready();
         if (holdOpen) {
             if (expand()) {
                 for (String value : values) {
-                    WebLocator option = getComboEl(value, optionRenderMillis, searchType);
+                    WebLocator option = getComboEl(value, duration, searchType);
                     selected = selected && option.doClick();
                     if (selected) {
                         log.info("Set value(" + info + "): " + value);
@@ -92,7 +104,7 @@ public class TagField extends Tag {
         } else {
             for (String value : values) {
                 expand();
-                WebLocator option = getComboEl(value, optionRenderMillis, searchType);
+                WebLocator option = getComboEl(value, duration, searchType);
                 selected = selected && option.doClick();
                 if (selected) {
                     log.info("Set value(" + info + "): " + value);

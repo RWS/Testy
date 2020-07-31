@@ -9,6 +9,7 @@ import com.sdl.selenium.web.utils.RetryUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -171,7 +172,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private void scrollInGrid(Row row) {
-        while (!row.waitToRender(100L, false)) {
+        while (!row.waitToRender(Duration.ofMillis(100), false)) {
             Grid grid;
             if (getPathBuilder().getContainer() instanceof Grid) {
                 grid = (Grid) getPathBuilder().getContainer();

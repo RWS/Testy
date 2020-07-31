@@ -21,7 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public abstract class Combo extends Field implements ICombo {
 
-
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Combo.class);
     private Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
 
@@ -121,10 +120,10 @@ public abstract class Combo extends Field implements ICombo {
     }
 
     /**
-     * @param value              value
-     * @param duration eg. 300ms
-     * @param pagination         true | false
-     * @param searchType         use {@link SearchType}
+     * @param value             value
+     * @param duration          eg. 300ms
+     * @param pagination        true | false
+     * @param searchType        use {@link SearchType}
      * @return true if value was selected
      */
     public boolean doSelect(String value, Duration duration, boolean pagination, SearchType... searchType) {

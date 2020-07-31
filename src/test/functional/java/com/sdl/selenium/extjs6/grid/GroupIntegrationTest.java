@@ -5,7 +5,9 @@ import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +22,7 @@ public class GroupIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
         driver.switchTo().frame("examples-iframe");
-        grid.ready(10);
+        grid.ready(Duration.ofSeconds(10));
         grid.ready(true);
     }
 
@@ -37,15 +39,15 @@ public class GroupIntegrationTest extends TestBase {
         List<List<String>> lists;
         if ("6.0.2".equals(version)) {
             lists = Arrays.asList(
-                    Arrays.asList("Cheesecake Factory"),
-                    Arrays.asList("Creamery"),
-                    Arrays.asList("Crepevine"),
-                    Arrays.asList("Gordon Biersch"),
-                    Arrays.asList("MacArthur Park"),
-                    Arrays.asList("Old Pro"),
-                    Arrays.asList("Shokolaat"),
-                    Arrays.asList("Slider Bar"),
-                    Arrays.asList("University Cafe")
+                    Collections.singletonList("Cheesecake Factory"),
+                    Collections.singletonList("Creamery"),
+                    Collections.singletonList("Crepevine"),
+                    Collections.singletonList("Gordon Biersch"),
+                    Collections.singletonList("MacArthur Park"),
+                    Collections.singletonList("Old Pro"),
+                    Collections.singletonList("Shokolaat"),
+                    Collections.singletonList("Slider Bar"),
+                    Collections.singletonList("University Cafe")
             );
         } else {
             lists = Arrays.asList(

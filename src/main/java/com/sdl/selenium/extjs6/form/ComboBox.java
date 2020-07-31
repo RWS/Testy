@@ -7,6 +7,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ComboBox extends Combo {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(ComboBox.class);
-    private Pagination paginationEl = new Pagination(getBoundList()).setRenderMillis(300);
+    private Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
 
     public ComboBox() {
         setClassName("ComboBox");
@@ -49,12 +50,23 @@ public class ComboBox extends Combo {
      * @return true if value was selected
      */
     public boolean doSelect(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
+        return doSelect(value, Duration.ofMillis(optionRenderMillis), pagination, searchType);
+    }
+
+    /**
+     * @param value             value
+     * @param duration          eg. 300ms
+     * @param pagination        true | false
+     * @param searchType        use {@link SearchType}
+     * @return true if value was selected
+     */
+    public boolean doSelect(String value, Duration duration, boolean pagination, SearchType... searchType) {
         if (value.equals(getValue())) {
             return true;
         }
         boolean selected;
         String info = toString();
-        WebLocator option = getComboEl(value, optionRenderMillis, searchType).setVisibility(true);
+        WebLocator option = getComboEl(value, duration, searchType).setVisibility(true);
         boolean trigger = expand();
         if (trigger) {
             if (pagination) {
@@ -99,36 +111,62 @@ public class ComboBox extends Combo {
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
+    @Deprecated
     public boolean doSelect(String value, long optionRenderMillis, SearchType... searchType) {
         return doSelect(value, optionRenderMillis, false, searchType);
     }
 
+    public boolean doSelect(String value, Duration duration, SearchType... searchType) {
+        return doSelect(value, duration, false, searchType);
+    }
+
     public boolean select(String value, SearchType... searchType) {
-        boolean selected = doSelect(value, 300L, false, searchType);
+        boolean selected = doSelect(value, Duration.ofMillis(300), false, searchType);
         assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
+    @Deprecated
     public boolean select(String value, long optionRenderMillis) {
-        boolean selected = doSelect(value, optionRenderMillis, false, SearchType.EQUALS);
+        boolean selected = doSelect(value, Duration.ofMillis(optionRenderMillis), false, SearchType.EQUALS);
+        assertThat("Could not selected value on: " + this, selected);
+        return selected;
+    }
+
+    public boolean select(String value, Duration duration) {
+        boolean selected = doSelect(value, duration, false, SearchType.EQUALS);
         assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
     public boolean select(String value, boolean pagination) {
-        boolean selected = doSelect(value, 300L, pagination, SearchType.EQUALS);
+        boolean selected = doSelect(value, Duration.ofMillis(300), pagination, SearchType.EQUALS);
         assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
+    @Deprecated
     public boolean select(String value, long optionRenderMillis, boolean pagination) {
         boolean selected = doSelect(value, optionRenderMillis, pagination, SearchType.EQUALS);
         assertThat("Could not selected value on: " + this, selected);
         return selected;
     }
 
+    public boolean select(String value, Duration duration, boolean pagination) {
+        boolean selected = doSelect(value, duration, pagination, SearchType.EQUALS);
+        assertThat("Could not selected value on: " + this, selected);
+        return selected;
+    }
+
+    @Deprecated
     public boolean select(String value, long optionRenderMillis, boolean pagination, SearchType... searchType) {
         boolean selected = doSelect(value, optionRenderMillis, pagination, searchType);
+        assertThat("Could not selected value on: " + this, selected);
+        return selected;
+    }
+
+    public boolean select(String value, Duration duration, boolean pagination, SearchType... searchType) {
+        boolean selected = doSelect(value, duration, pagination, searchType);
         assertThat("Could not selected value on: " + this, selected);
         return selected;
     }

@@ -341,11 +341,10 @@ public class Grid extends Table implements Scrollable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Constructor finalConstructor = constructor;
+        final Constructor <V> finalConstructor = (Constructor<V>)constructor;
         return cellsText.stream().map(t -> {
             try {
-                Constructor<V> constructorTemp = (Constructor<V>) finalConstructor;
-                return constructorTemp.newInstance(t.toArray(new Object[0]));
+                return finalConstructor.newInstance(t.toArray(new Object[0]));
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
