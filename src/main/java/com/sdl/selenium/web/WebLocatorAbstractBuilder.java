@@ -578,6 +578,24 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[@placeholder='Search']
+     * </pre>
+     *
+     * @param attribute   eg. placeholder
+     * @param value       eg. Search
+     * @param <T>         the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, String ...value) {
+        pathBuilder.setAttributes(attribute, value);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method add new searchTextType to existing searchTextType.
      *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}

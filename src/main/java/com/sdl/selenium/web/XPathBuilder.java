@@ -52,7 +52,8 @@ public class XPathBuilder implements Cloneable {
     private String resultIdx;
     private String type;
     private String localName;
-    private Map<String, SearchText> attribute = new LinkedHashMap<>();
+    private final Map<String, SearchText> attribute = new LinkedHashMap<>();
+    private final Map<String, String[]> attributes = new LinkedHashMap<>();
 
     //private int elIndex; // TODO try to find how can be used
 
@@ -85,6 +86,7 @@ public class XPathBuilder implements Cloneable {
         setTemplate("HTML_NODE", "%s");
         setTemplate("HTML_NODES", "(normalize-space(concat(./*[1]//text(), ' ', text()[1], ' ', ./*[2]//text(), ' ', text()[2], ' ', ./*[3]//text(), ' ', text()[3], ' ', ./*[4]//text(), ' ', text()[4], ' ', ./*[5]//text(), ' ', text()[5]))=%1$s or normalize-space(concat(text()[1], ' ', ./*[1]//text(), ' ', text()[2], ' ', ./*[2]//text(), ' ', text()[3], ' ', ./*[3]//text(), ' ', text()[4], ' ', ./*[4]//text(), ' ', text()[5], ' ', ./*[5]//text()))=%1$s)");
         setTemplate("childNodes", "count(.%s) > 0");
+        setTemplate("attributes", "contains(concat(' ', @%1$s, ' '), ' %2$s ')");
     }
 
     // =========================================
@@ -254,7 +256,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param localName eg. name()="svg"
-     * @param <T>  the element which calls this method
+     * @param <T>       the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
@@ -701,6 +703,30 @@ public class XPathBuilder implements Cloneable {
         return (T) this;
     }
 
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     //*[@placeholder='Search']
+     * </pre>
+     *
+     * @param attribute eg. placeholder
+     * @param value     eg. Search
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setAttributes(final String attribute, String... value) {
+        if (attribute != null) {
+            if (value == null) {
+                this.attributes.remove(attribute);
+            } else {
+                this.attributes.put(attribute, value);
+            }
+        }
+        return (T) this;
+    }
+
     // =========================================
     // =============== Methods =================
     // =========================================
@@ -867,6 +893,14 @@ public class XPathBuilder implements Cloneable {
                 List<SearchType> searchType = entry.getValue().getSearchTypes();
                 String text = entry.getValue().getValue();
                 addTextInPath(selector, text, "@" + entry.getKey(), searchType);
+            }
+        }
+        if (!attributes.isEmpty()) {
+            for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
+                String[] values = entry.getValue();
+                for (String value : values) {
+                    selector.add(applyTemplate("attributes", entry.getKey(), value));
+                }
             }
         }
         if (hasText()) {
@@ -1395,6 +1429,10 @@ public class XPathBuilder implements Cloneable {
 
     public Map<String, SearchText> getAttribute() {
         return this.attribute;
+    }
+
+    public Map<String, String[]> getAttributes() {
+        return this.attributes;
     }
 
     public boolean isVisibility() {

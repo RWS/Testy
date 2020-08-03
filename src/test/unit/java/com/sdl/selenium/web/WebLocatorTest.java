@@ -63,6 +63,8 @@ public class WebLocatorTest {
                 {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./").setResultIdx(2), "(//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and contains(text(),'Text') and @value='Test' and contains(@style, 'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2])[2]"},
                 {new WebLocator().setTag("td").setBaseCls("BaseCls").setClasses("classes").setCls("Cls").setExcludeClasses("noCls").setId("Id").setLabel("Label").setLabelTag("info").setName("Name").setElPathSuffix("elPath", "@value='Test'").setVisibility(true).setStyle("display: block").setPosition(2).setContainer(container).setText("Text").setTitle("Title").setRoot("./").setResultIdx(2).setType("type"), "(//*[contains(concat(' ', @class, ' '), ' container ')]//info[text()='Label']//following-sibling::*//./td[@id='Id' and @name='Name' and contains(concat(' ', @class, ' '), ' BaseCls ') and @class='Cls' and contains(concat(' ', @class, ' '), ' classes ') and not(contains(@class, 'noCls')) and @title='Title' and @type='type' and contains(text(),'Text') and @value='Test' and contains(@style, 'display: block') and count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0][position() = 2])[2]"},
 
+                {new WebLocator().setClasses("cls1", "cls2"), "//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
+
                 {new WebLocator("testcls"), "//*[contains(concat(' ', @class, ' '), ' testcls ')]"},
                 {new WebLocator(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
                 {new WebLocator(container).setClasses("Cls"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' Cls ')]"},
@@ -142,6 +144,9 @@ public class WebLocatorTest {
                 {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.TRIM), "//*[contains(normalize-space(@data),'value')]"},
                 {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.TRIM), "//*[normalize-space(@data)='value']"},
                 {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.TRIM), "//*[starts-with(normalize-space(@data),'value')]"},
+
+                {new WebLocator().setAttributes("data", "value"), "//*[contains(concat(' ', @data, ' '), ' value ')]"},
+                {new WebLocator().setAttributes("data", "value", "value2"), "//*[contains(concat(' ', @data, ' '), ' value ') and contains(concat(' ', @data, ' '), ' value2 ')]"},
 
 //                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.CHILD_NODE), "//*[contains(@data,'value')]"},
 //                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.CHILD_NODE), "//*[@data='value']"},
