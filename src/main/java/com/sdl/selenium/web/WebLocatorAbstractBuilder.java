@@ -188,6 +188,19 @@ public abstract class WebLocatorAbstractBuilder {
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
+     * @param localName eg. name()="svg"
+     * @param <T>  the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setLocalName(final String localName) {
+        pathBuilder.setLocalName(localName);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
      * @param text        with which to identify the item
      * @param searchTypes type search text element: see more details see {@link SearchType}
      * @param <T>         the element which calls this method

@@ -69,6 +69,8 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setName(final String name);
 
+    <T extends WebLocatorAbstractBuilder> T setLocalName(final String localName);
+
     <T extends WebLocatorAbstractBuilder> T setText(final String text, final SearchType... searchTypes);
 
     <T extends WebLocatorAbstractBuilder> T setSearchTextType(SearchType... searchTextTypes);

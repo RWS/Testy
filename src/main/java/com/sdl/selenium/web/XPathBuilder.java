@@ -51,6 +51,7 @@ public class XPathBuilder implements Cloneable {
     private String position;
     private String resultIdx;
     private String type;
+    private String localName;
     private Map<String, SearchText> attribute = new LinkedHashMap<>();
 
     //private int elIndex; // TODO try to find how can be used
@@ -71,6 +72,7 @@ public class XPathBuilder implements Cloneable {
         setTemplate("position", "[position() = %s]");
         setTemplate("tagAndPosition", "%1$s[%2$s]");
         setTemplate("name", "@name='%s'");
+        setTemplate("localName", "name()='%s'");
         setTemplate("class", "contains(concat(' ', @class, ' '), ' %s ')");
         setTemplate("excludeClass", "not(contains(@class, '%s'))");
         setTemplate("cls", "@class='%s'");
@@ -245,6 +247,19 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setName(final String name) {
         this.name = name;
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
+     * @param localName eg. name()="svg"
+     * @param <T>  the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setLocalName(final String localName) {
+        this.localName = localName;
         return (T) this;
     }
 
@@ -722,6 +737,10 @@ public class XPathBuilder implements Cloneable {
         return !Strings.isNullOrEmpty(name);
     }
 
+    protected boolean hasLocalName() {
+        return !Strings.isNullOrEmpty(localName);
+    }
+
     protected boolean hasText() {
         return !Strings.isNullOrEmpty(text);
     }
@@ -806,6 +825,9 @@ public class XPathBuilder implements Cloneable {
         }
         if (hasName()) {
             selector.add(applyTemplate("name", getName()));
+        }
+        if (hasLocalName()) {
+            selector.add(applyTemplate("localName", getLocalName()));
         }
         if (hasBaseCls()) {
             selector.add(applyTemplate("class", getBaseCls()));
@@ -1301,6 +1323,10 @@ public class XPathBuilder implements Cloneable {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getLocalName() {
+        return this.localName;
     }
 
     public String getText() {
