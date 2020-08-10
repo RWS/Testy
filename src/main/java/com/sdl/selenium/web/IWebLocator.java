@@ -1,6 +1,12 @@
 package com.sdl.selenium.web;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.WebElement;
+
 import java.time.Duration;
+import java.util.List;
 
 public interface IWebLocator {
 
@@ -25,6 +31,16 @@ public interface IWebLocator {
 
     int size();
 
+    Point getLocation();
+
+    Dimension getSize();
+
+    Rectangle getRect();
+
+    WebElement findElement();
+
+    List<WebElement> findElements();
+
     @Deprecated
     boolean isVisible();
 
@@ -46,6 +62,10 @@ public interface IWebLocator {
     boolean ready(int seconds);
 
     boolean ready(Duration duration);
+
+    boolean isEnabled();
+
+    boolean isDisplayed();
 
     String getXPath();
 
