@@ -108,7 +108,7 @@ public class Tree extends WebLocator implements Scrollable {
     }
 
     private List<List<String>> getLists(int rows, boolean rowExpand, short columnLanguages, List<Integer> columnsList) {
-       Row rowsEl = new Row(this);
+        com.sdl.selenium.extjs6.grid.Row rowsEl = new com.sdl.selenium.extjs6.grid.Row(this);
         if (!rowExpand) {
             rowsEl.setTag("tr");
         }
@@ -122,7 +122,7 @@ public class Tree extends WebLocator implements Scrollable {
                 if (canRead) {
                     List<String> list = new ArrayList<>();
                     for (int j : columnsList) {
-                        Row row = new Row(this).setTag("tr").setResultIdx(i);
+                        com.sdl.selenium.extjs6.grid.Row row = new com.sdl.selenium.extjs6.grid.Row(this).setTag("tr").setResultIdx(i);
                         if (rowExpand) {
                             row.setExcludeClasses("x-grid-rowbody-tr");
                         }
@@ -140,7 +140,7 @@ public class Tree extends WebLocator implements Scrollable {
                     if (size == i + 1) {
                         break;
                     }
-                    Row row = new Row(this).setResultIdx(i);
+                    com.sdl.selenium.extjs6.grid.Row row = new com.sdl.selenium.extjs6.grid.Row(this, i);
                     String currentId = row.getAttributeId();
                     if (!"".equals(id) && id.equals(currentId)) {
                         canRead = true;
@@ -150,7 +150,7 @@ public class Tree extends WebLocator implements Scrollable {
             if (isScrollBottom()) {
                 break;
             }
-            Row row = new Row(this).setResultIdx(size);
+            com.sdl.selenium.extjs6.grid.Row row = new com.sdl.selenium.extjs6.grid.Row(this, size);
             id = row.getAttributeId();
             scrollPageDownInTree();
             canRead = false;
