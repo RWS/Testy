@@ -9,6 +9,8 @@ import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class CellEditingIntegrationTest extends TestBase {
 
     private Grid grid;
@@ -18,7 +20,7 @@ public class CellEditingIntegrationTest extends TestBase {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#cell-editing");
         driver.switchTo().frame("examples-iframe");
         grid = new Grid().setTitle("Cell Editing Plants").setVisibility(true);
-        grid.ready(10);
+        grid.ready(Duration.ofSeconds(10));
         grid.ready(true);
     }
 

@@ -6,6 +6,8 @@ import com.sdl.selenium.web.table.Row;
 import com.sdl.selenium.web.table.Table;
 import org.openqa.selenium.WebDriverException;
 
+import java.time.Duration;
+
 public class TreeGrid extends WebLocator implements Scrollable {
 
     public TreeGrid() {
@@ -33,7 +35,7 @@ public class TreeGrid extends WebLocator implements Scrollable {
             Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected");
             Row rowSelected = nodeSelected.getRow(1).setClasses("x-grid-row");
             Table nodeEl;
-            if (parent != null && nodeSelected.waitToRender(800L, false) && rowSelected.getAttributeClass().contains("x-grid-tree-node-expanded")) {
+            if (parent != null && nodeSelected.waitToRender(Duration.ofMillis(800), false) && rowSelected.getAttributeClass().contains("x-grid-tree-node-expanded")) {
                 nodeEl = new Table(nodeSelected).setClasses("x-grid-item").setTag("following::table").setChildNodes(textEl).setVisibility(true);
             } else {
                 nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);

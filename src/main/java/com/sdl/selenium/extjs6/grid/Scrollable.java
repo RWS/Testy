@@ -5,6 +5,8 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
 
+import java.time.Duration;
+
 public interface Scrollable extends IWebLocator {
 
     default boolean scrollTop() {
@@ -93,7 +95,7 @@ public interface Scrollable extends IWebLocator {
         el.setVisibility(true);
         boolean scroll = true;
         int timeout = 0;
-        while (!el.waitToRender(100L, false) && timeout < 50) {
+        while (!el.waitToRender(Duration.ofMillis(100), false) && timeout < 50) {
             scroll = scrollPageDown();
             if (!scroll) {
                 break;

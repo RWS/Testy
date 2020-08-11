@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ public class GridIntegrationTest extends TestBase {
         } else {
             grid = new Grid().setTitle("Array Grid").setVisibility(true);
         }
-        grid.ready(10);
+        grid.ready(Duration.ofSeconds(10));
         grid.ready(true);
     }
 
