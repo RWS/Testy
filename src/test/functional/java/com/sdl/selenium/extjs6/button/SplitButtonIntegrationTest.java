@@ -37,4 +37,9 @@ public class SplitButtonIntegrationTest extends TestBase {
     public void getAllMenuValuesTest() {
         assertThat(small.getAllMenuValues(), is(Arrays.asList("Menu Item 1", "Menu Item 2", "Menu Item 3")));
     }
+
+    @Test(dependsOnMethods = "getAllMenuValuesTest")
+    public void getAllEnabledMenuValuesTest() {
+        assertThat(small.getAllEnabledValues(), is(Arrays.asList("Menu Item 1", "Menu Item 2", "Menu Item 3")));
+    }
 }

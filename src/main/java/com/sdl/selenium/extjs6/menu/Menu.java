@@ -6,6 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Menu extends WebLocator {
         ready();
         WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
         boolean click = link.doClick();
-        if(!click){
+        if (!click) {
             String id = getAttributeId();
             scrollDown(id);
             click = link.doClick();
@@ -53,6 +54,20 @@ public class Menu extends WebLocator {
         menuList.assertReady();
         String[] menuValues = menuList.getText().split("\\n");
         return Arrays.asList(menuValues);
+    }
+
+    public List<Values> getMenuValuesWithStatus() {
+        WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setVisibility(true).setInfoMessage(this + " -> x-menu-body");
+        WebLink item = new WebLink(menuList).setClasses("x-menu-item-link");
+        int size = item.size();
+        List<Values> list = new ArrayList<>();
+        for (int i = 1; i <= size ; i++) {
+            item.setResultIdx(i);
+            String disabled = item.getAttribute("aria-disabled");
+            String text = item.getText();
+            list.add(new Values(text, !"true".equalsIgnoreCase(disabled)));
+        }
+        return list;
     }
 
     public boolean showMenu(WebLocator parent) {
@@ -77,5 +92,31 @@ public class Menu extends WebLocator {
             return (Boolean) object;
         }
         return false;
+    }
+
+    public static class Values {
+        private String name;
+        private boolean enabled;
+
+        public Values(String name, boolean enabled) {
+            this.name = name;
+            this.enabled = enabled;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
     }
 }
