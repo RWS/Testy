@@ -140,7 +140,7 @@ public class Tree extends WebLocator implements Scrollable {
                     if (size == i + 1) {
                         break;
                     }
-                    Row row = new Row(this, i);
+                    Row row = new Row(this).setResultIdx(i);
                     String currentId = row.getAttributeId();
                     if (!"".equals(id) && id.equals(currentId)) {
                         canRead = true;
@@ -150,7 +150,7 @@ public class Tree extends WebLocator implements Scrollable {
             if (isScrollBottom()) {
                 break;
             }
-            Row row = new Row(this, size);
+            Row row = new Row(this).setResultIdx(size);
             id = row.getAttributeId();
             scrollPageDownInTree();
             canRead = false;
