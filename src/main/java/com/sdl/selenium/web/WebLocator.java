@@ -102,13 +102,22 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     }
 
     /**
-     * Use xPath only
      *
      * @param attribute eg "id" or "class"
      * @return String attribute, if element not exist return null.
      */
     public String getAttribute(String attribute) {
         return executor.getAttribute(this, attribute);
+    }
+
+    /**
+     *
+     * @param attribute eg "id" or "class"
+     * @param instant true or false
+     * @return String attribute, if element not exist return null.
+     */
+    public String getAttribute(String attribute, boolean instant) {
+        return executor.getAttribute(this, attribute, instant);
     }
 
     /**

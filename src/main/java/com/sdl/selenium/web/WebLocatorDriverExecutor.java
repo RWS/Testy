@@ -222,16 +222,23 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getAttribute(final WebLocator el, final String attribute) {
+        return getAttribute(el, attribute, false);
+    }
+
+    @Override
+    public String getAttribute(final WebLocator el, final String attribute, boolean instant) {
         invalidateCache(el);
         String attributeValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
         }
-        if (attributeValue == null) {
-            return RetryUtils.retrySafe(4, () -> {
-                findAgain(el);
-                return el.getWebElement().getAttribute(attribute);
-            });
+        if (instant) {
+            if (attributeValue == null) {
+                return RetryUtils.retrySafe(4, () -> {
+                    findAgain(el);
+                    return el.getWebElement().getAttribute(attribute);
+                });
+            }
         }
         return attributeValue;
     }
@@ -447,12 +454,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public Object fireEventWithJS(WebLocator el, String eventName) {
         String script = "if(document.createEvent){" +
-                "var evObj = document.createEvent('MouseEvents');\n" +
-                "evObj.initEvent('" + eventName + "', true, true);\n" +
-                "return fireOnThis.dispatchEvent(evObj);\n" +
-                "} else if(document.createEventObject) {" +
-                "return fireOnThis.fireEvent('on" + eventName + "');" +
-                "}";
+                        "var evObj = document.createEvent('MouseEvents');\n" +
+                        "evObj.initEvent('" + eventName + "', true, true);\n" +
+                        "return fireOnThis.dispatchEvent(evObj);\n" +
+                        "} else if(document.createEventObject) {" +
+                        "return fireOnThis.fireEvent('on" + eventName + "');" +
+                        "}";
         String id = getAttributeId(el);
         String cls;
         if (!Strings.isNullOrEmpty(id)) {
@@ -461,9 +468,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             script = "var fireOnThis = document.getElementsByClassName('" + cls + "')[0];\n" + script;
         } else {
             script = "var fireOnThis = document.evaluate(\"" + el.getXPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
-                    "var evObj = document.createEvent('MouseEvents');\n" +
-                    "evObj.initEvent( '" + eventName + "', true, true );\n" +
-                    "return fireOnThis.dispatchEvent(evObj);";
+                     "var evObj = document.createEvent('MouseEvents');\n" +
+                     "evObj.initEvent( '" + eventName + "', true, true );\n" +
+                     "return fireOnThis.dispatchEvent(evObj);";
         }
         return executeScript(script);
     }

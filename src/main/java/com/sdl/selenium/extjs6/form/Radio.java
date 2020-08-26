@@ -34,14 +34,18 @@ public class Radio extends WebLocator {
     }
 
     public boolean isSelected() {
+        return isSelected(false);
+    }
+
+    public boolean isSelected(boolean instant) {
         WebLocator input = new WebLocator(this);
         String checked;
         if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
             input.setElPath("//input");
-            checked = input.getAttribute("checked");
+            checked = input.getAttribute("checked", instant);
         } else {
             input.setElPath("/../input");
-            checked = input.getAttribute("aria-checked");
+            checked = input.getAttribute("aria-checked", instant);
         }
         return "true".equals(checked);
     }

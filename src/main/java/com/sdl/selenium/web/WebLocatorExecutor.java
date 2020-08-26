@@ -31,6 +31,8 @@ public interface WebLocatorExecutor {
 
     String getAttribute(final WebLocator el, final String attribute);
 
+    String getAttribute(final WebLocator el, final String attribute, boolean instant);
+
     String getAttributeId(final WebLocator el);
 
     String getText(WebLocator el);
