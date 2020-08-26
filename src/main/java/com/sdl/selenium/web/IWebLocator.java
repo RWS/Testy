@@ -1,14 +1,30 @@
 package com.sdl.selenium.web;
 
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.time.Duration;
 import java.util.List;
 
 public interface IWebLocator {
+
+    default WebLocatorExecutor getExecutor() {
+        return Hidden.getExecutor();
+    }
+
+    public static void setDriverExecutor(WebDriver driver) {
+        Hidden.setExecutor(driver);
+    }
+
+    class Hidden {
+        static WebLocatorDriverExecutor executor;
+        private static void setExecutor(WebDriver webDriver) {
+            executor = new WebLocatorDriverExecutor(webDriver);
+        }
+
+        public static WebLocatorDriverExecutor getExecutor(){
+            return executor;
+        }
+    }
 
     String getCssValue(String propertyName);
 

@@ -21,7 +21,10 @@ public class WebLocatorConfigReader extends PropertiesReader {
             "checkbox.baseCls.6.7.0=",
 
             "checkbox.boxLabel=/../",
-            "checkbox.boxLabel.6.7.0=/..//"
+            "checkbox.boxLabel.6.7.0=/..//",
+
+            "radio.boxLabel=/../",
+            "radio.boxLabel.6.7.0=/..//"
     );
 
     private static final String DEFAULT_CONFIG = String.join("\n", "##defaults \n",

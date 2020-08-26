@@ -16,11 +16,11 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     private String currentElementPath = "";
     public WebElement currentElement;
 
-    public static WebLocatorExecutor getExecutor() {
-        return executor;
-    }
-
-    protected static WebLocatorExecutor executor;
+//    public static WebLocatorExecutor getExecutor() {
+//        return executor;
+//    }
+//
+    protected static WebLocatorExecutor executor = Hidden.getExecutor();
 
     public WebLocator() {
     }
@@ -53,16 +53,16 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
 
     // getters and setters
 
-    public static void setDriverExecutor(WebDriver driver) {
-        executor = new WebLocatorDriverExecutor(driver);
-    }
+//    public static void setDriverExecutor(WebDriver driver) {
+//        executor = new WebLocatorDriverExecutor(driver);
+//    }
 
     /**
      * @param propertyName property name
      * @return Element value of css property
      */
     public String getCssValue(String propertyName) {
-        return executor.getCssValue(this, propertyName);
+        return getExecutor().getCssValue(this, propertyName);
     }
 
     /**

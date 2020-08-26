@@ -1,16 +1,19 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
+import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.WebLocatorAbstractBuilder;
 
-public class Radio extends WebLocator {
+public class Radio extends WebLocatorAbstractBuilder implements Cloneable, IWebLocator {
     private String version;
 
     public Radio() {
         setClassName("Radio");
-        setTag("span");
-        setBaseCls("x-form-radio");
+        setTag("input");
+        setBaseCls("x-form-cb-input");
+        setAttribute("role", "radio");
         setLabelPosition("/../");
     }
 
@@ -38,15 +41,12 @@ public class Radio extends WebLocator {
     }
 
     public boolean isSelected(boolean instant) {
-        WebLocator input = new WebLocator(this);
-        String checked;
+        boolean checked;
         if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
-            input.setElPath("//input");
-            checked = input.getAttribute("checked", instant);
+            checked = executor.isSelected(this);
         } else {
-            input.setElPath("/../input");
-            checked = input.getAttribute("aria-checked", instant);
+            checked = "true".equals(getAttribute("aria-checked", instant));
         }
-        return "true".equals(checked);
+        return checked;
     }
 }
