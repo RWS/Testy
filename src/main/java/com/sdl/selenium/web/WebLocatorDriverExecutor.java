@@ -232,7 +232,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
         }
-        if (instant) {
+        if (!instant) {
             if (attributeValue == null) {
                 return RetryUtils.retrySafe(4, () -> {
                     findAgain(el);
