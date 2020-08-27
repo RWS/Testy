@@ -29,10 +29,10 @@ public class RadioIntegrationTest extends TestBase {
     @Test
     public void selectRadioGroup() {
         assertThat(redRadio.isSelected(), is(true));
-        assertThat(blueRadio.click(), is(true));
+        assertThat(blueRadio.check(), is(true));
         assertThat(redRadio.isSelected(), is(false));
         assertThat(blueRadio.isSelected(), is(true));
-        assertThat(greenRadio.click(), is(true));
+        assertThat(greenRadio.check(), is(true));
         assertThat(blueRadio.isSelected(), is(false));
     }
 }

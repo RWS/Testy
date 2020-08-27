@@ -40,7 +40,7 @@ public class RadioGroup extends WebLocator {
 
     public boolean selectByLabel(String label, SearchType... searchType) {
         radio.setLabel(label, searchType);
-        boolean selected = radio.isSelected() || radio.click();
+        boolean selected = radio.isSelected() || radio.check();
         radio.setLabel(null);
         return selected;
     }
@@ -54,7 +54,7 @@ public class RadioGroup extends WebLocator {
     }
 
     public String getLabelName(String label) {
-        WebLocator locator = new WebLocator(radio).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
+        WebLocator locator = new WebLocator(radio.getLocator()).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
         return locator.getText();
     }
 

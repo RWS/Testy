@@ -79,7 +79,7 @@ public class WebDriverConfig {
             log.info("|          Open Selenium Web Driver ");
             log.info("===============================================================\n");
             WebDriverConfig.driver = driver;
-            WebLocator.setDriverExecutor(driver);
+            WebLocator.Hidden.setDriverExecutor(driver);
             if (driver instanceof InternetExplorerDriver) {
                 isIE = true;
             } else if (driver instanceof ChromeDriver) {

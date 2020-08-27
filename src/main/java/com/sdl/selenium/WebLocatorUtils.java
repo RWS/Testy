@@ -1,5 +1,6 @@
 package com.sdl.selenium;
 
+import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -82,7 +83,7 @@ public final class WebLocatorUtils extends WebLocator {
         builder.append("}").append(newLine).append(newLine);
     }
 
-    public static String getFirebugXPath(WebLocator locator) {
+    public static String getFirebugXPath(IWebLocator locator) {
         return "$x(\"" + locator.getXPath() + "\")";
     }
 

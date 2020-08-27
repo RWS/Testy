@@ -1,25 +1,25 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.web.utils.Utils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
-
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, IWebLocator {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebLocator.class);
-    private String currentElementPath = "";
-    public WebElement currentElement;
+    public WebElement currentElement = Hidden.getCurrentElement();
 
 //    public static WebLocatorExecutor getExecutor() {
 //        return executor;
 //    }
 //
+    public WebLocator getLocator(){
+        return this;
+    }
+
     protected static WebLocatorExecutor executor = Hidden.getExecutor();
 
     public WebLocator() {
@@ -32,7 +32,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         setClasses(cls);
     }
 
-    public WebLocator(WebLocator container) {
+    public WebLocator(IWebLocator container) {
         setContainer(container);
     }
 
@@ -57,68 +57,66 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
 //        executor = new WebLocatorDriverExecutor(driver);
 //    }
 
-    /**
-     * @param propertyName property name
-     * @return Element value of css property
-     */
-    public String getCssValue(String propertyName) {
-        return getExecutor().getCssValue(this, propertyName);
-    }
+//    /**
+//     * @param propertyName property name
+//     * @return Element value of css property
+//     */
+//    public String getCssValue(String propertyName) {
+//        return getExecutor().getCssValue(this, propertyName);
+//    }
+//
+//    /**
+//     * @return The tag name of this element.
+//     */
+//    public String getTagName() {
+//        return executor.getTagName(this);
+//    }
+//
+//    /**
+//     * @return The id of this element.
+//     */
+//    public String getAttributeId() {
+//        return getAttribute("id");
+//    }
+//
+//    /**
+//     * @return The classes of this element.
+//     */
+//    public String getAttributeClass() {
+//        return getAttribute("class");
+//    }
 
-    /**
-     * @return The tag name of this element.
-     */
-    public String getTagName() {
-        return executor.getTagName(this);
-    }
 
-    /**
-     * @return The id of this element.
-     */
-    public String getAttributeId() {
-        return getAttribute("id");
-    }
 
-    /**
-     * @return The classes of this element.
-     */
-    public String getAttributeClass() {
-        return getAttribute("class");
-    }
+//    public void setCurrentElementPath(String currentElementPath) {
+//        this.currentElementPath = currentElementPath;
+//    }
 
-    public String getCurrentElementPath() {
-        return currentElementPath;
-    }
+//    /**
+//     * @return This method return the WebElement
+//     */
+//    public WebElement getWebElement() {
+//        return currentElement != null ? currentElement : findElement();
+//    }
 
-    public void setCurrentElementPath(String currentElementPath) {
-        this.currentElementPath = currentElementPath;
-    }
-
-    /**
-     * @return This method return the WebElement
-     */
-    public WebElement getWebElement() {
-        return currentElement != null ? currentElement : findElement();
-    }
-
-    /**
-     *
-     * @param attribute eg "id" or "class"
-     * @return String attribute, if element not exist return null.
-     */
-    public String getAttribute(String attribute) {
-        return executor.getAttribute(this, attribute);
-    }
-
-    /**
-     *
-     * @param attribute eg "id" or "class"
-     * @param instant true or false
-     * @return String attribute, if element not exist return null.
-     */
-    public String getAttribute(String attribute, boolean instant) {
-        return executor.getAttribute(this, attribute, instant);
-    }
+//    /**
+//     *
+//     * @param attribute eg "id" or "class"
+//     * @return String attribute, if element not exist return null.
+//     */
+//    public String getAttribute(String attribute) {
+//        return executor.getAttribute(this, attribute);
+//    }
+//
+//    /**
+//     *
+//     * @param attribute eg "id" or "class"
+//     * @param instant true or false
+//     * @return String attribute, if element not exist return null.
+//     */
+//    public String getAttribute(String attribute, boolean instant) {
+//        return executor.getAttribute(this, attribute, instant);
+//    }
 
     /**
      * @return The text of this element.
@@ -384,84 +382,84 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return doClick;
     }
 
-    /**
-     * @return true | false
-     */
-    @Deprecated
-    public boolean isElementPresent() {
-        return executor.isElementPresent(this);
-    }
-
-    /**
-     * @return true | false
-     */
-    public boolean isPresent() {
-        return executor.isPresent(this);
-    }
-
-    /**
-     * driver.findElements(xpath).size()
-     *
-     * @return the number of elements in this list
-     */
-    public int size() {
-        return executor.size(this);
-    }
-
-    /**
-     * @return A point, containing the location of the top left-hand corner of the element
-     */
-    public Point getLocation() {
-        return executor.getLocation(this);
-    }
-
-    /**
-     * @return The size of the element on the page.
-     */
-    public Dimension getSize() {
-        return executor.getSize(this);
-    }
-
-    /**
-     * @return The location and size of the rendered element
-     */
-    public Rectangle getRect() {
-        return executor.getRect(this);
-    }
-
-    // TODO see where is used and if is necessary to be public
-    public WebElement findElement() {
-        return executor.findElement(this);
-    }
-
-    public List<WebElement> findElements() {
-        boolean findElements = waitToRender();
-        assertThat("Elements were not rendered " + toString(), findElements);
-        return executor.findElements(this);
-    }
-
-    public List<WebElement> doFindElements() {
-        return executor.findElements(this);
-    }
-
-    @Deprecated
-    public boolean isVisible() {
-        boolean visible = isPresent();
-        if (visible) {
-            String style = getAttribute("style");
-            style = style == null ? "" : style.toLowerCase();
-            style = style.replaceAll("\\s*:\\s*", ":");
-            if (style.contains("visibility:hidden") || style.contains("display:none")) {
-                visible = false;
-            }
-            /*else {
-                visible = getContainer().isVisible();
-                //TODO if must check parent is visible
-            }*/
-        }
-        return visible;
-    }
-
+//    /**
+//     * @return true | false
+//     */
+//    @Deprecated
+//    public boolean isElementPresent() {
+//        return executor.isElementPresent(this);
+//    }
+//
+//    /**
+//     * @return true | false
+//     */
+//    public boolean isPresent() {
+//        return executor.isPresent(this);
+//    }
+//
+//    /**
+//     * driver.findElements(xpath).size()
+//     *
+//     * @return the number of elements in this list
+//     */
+//    public int size() {
+//        return executor.size(this);
+//    }
+//
+//    /**
+//     * @return A point, containing the location of the top left-hand corner of the element
+//     */
+//    public Point getLocation() {
+//        return executor.getLocation(this);
+//    }
+//
+//    /**
+//     * @return The size of the element on the page.
+//     */
+//    public Dimension getSize() {
+//        return executor.getSize(this);
+//    }
+//
+//    /**
+//     * @return The location and size of the rendered element
+//     */
+//    public Rectangle getRect() {
+//        return executor.getRect(this);
+//    }
+//
+//    // TODO see where is used and if is necessary to be public
+//    public WebElement findElement() {
+//        return executor.findElement(this);
+//    }
+//
+//    public List<WebElement> findElements() {
+//        boolean findElements = waitToRender();
+//        assertThat("Elements were not rendered " + toString(), findElements);
+//        return executor.findElements(this);
+//    }
+//
+//    public List<WebElement> doFindElements() {
+//        return executor.findElements(this);
+//    }
+//
+//    @Deprecated
+//    public boolean isVisible() {
+//        boolean visible = isPresent();
+//        if (visible) {
+//            String style = getAttribute("style");
+//            style = style == null ? "" : style.toLowerCase();
+//            style = style.replaceAll("\\s*:\\s*", ":");
+//            if (style.contains("visibility:hidden") || style.contains("display:none")) {
+//                visible = false;
+//            }
+//            /*else {
+//                visible = getContainer().isVisible();
+//                //TODO if must check parent is visible
+//            }*/
+//        }
+//        return visible;
+//    }
+//
     /**
      * wait 5 seconds (or specified value for renderSeconds)
      *
@@ -470,24 +468,24 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     public boolean waitToRender() {
         return waitToRender(getPathBuilder().getRender());
     }
-
-    @Deprecated
-    public boolean waitToRender(final long millis) {
-        return executor.waitElement(this, Duration.ofMillis(millis), true) != null;
-    }
-
-    public boolean waitToRender(Duration duration) {
-        return executor.waitElement(this, duration, true) != null;
-    }
-
-    @Deprecated
-    public boolean waitToRender(final long millis, boolean showXPathLog) {
-        return executor.waitElement(this, Duration.ofMillis(millis), showXPathLog) != null;
-    }
-
-    public boolean waitToRender(Duration duration, boolean showXPathLog) {
-        return executor.waitElement(this, duration, showXPathLog) != null;
-    }
+//
+//    @Deprecated
+//    public boolean waitToRender(final long millis) {
+//        return executor.waitElement(this, Duration.ofMillis(millis), true) != null;
+//    }
+//
+//    public boolean waitToRender(Duration duration) {
+//        return executor.waitElement(this, duration, true) != null;
+//    }
+//
+//    @Deprecated
+//    public boolean waitToRender(final long millis, boolean showXPathLog) {
+//        return executor.waitElement(this, Duration.ofMillis(millis), showXPathLog) != null;
+//    }
+//
+//    public boolean waitToRender(Duration duration, boolean showXPathLog) {
+//        return executor.waitElement(this, duration, showXPathLog) != null;
+//    }
 
     /**
      * @param seconds time in seconds
@@ -530,73 +528,73 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     public boolean waitToActivate() {
         return waitToActivate(getPathBuilder().getActivate());
     }
+//
+//    /**
+//     * Wait for the element to be activated when there is deactivation mask on top of it
+//     *
+//     * @param seconds time in seconds
+//     * @return true | false
+//     */
+//    @Deprecated
+//    public boolean waitToActivate(int seconds) {
+//        return true;
+//    }
+//
+//    /**
+//     * Wait for the element to be activated when there is deactivation mask on top of it
+//     *
+//     * @param duration time
+//     * @return true | false
+//     */
+//    public boolean waitToActivate(Duration duration) {
+//        return true;
+//    }
+//
+//    public boolean ready() {
+//        return waitToRender() && waitToActivate();
+//    }
+//
+//    public boolean assertReady(String... values) {
+//        boolean ready = ready();
+//        if (values.length == 0) {
+//            assertThat("Element is not ready: '" + this + "'", ready);
+//        } else {
+//            assertThat("Element is not ready: '" + this + "' for values: " + Arrays.toString(values), ready);
+//        }
+//        return ready;
+//    }
 
-    /**
-     * Wait for the element to be activated when there is deactivation mask on top of it
-     *
-     * @param seconds time in seconds
-     * @return true | false
-     */
-    @Deprecated
-    public boolean waitToActivate(int seconds) {
-        return true;
-    }
-
-    /**
-     * Wait for the element to be activated when there is deactivation mask on top of it
-     *
-     * @param duration time
-     * @return true | false
-     */
-    public boolean waitToActivate(Duration duration) {
-        return true;
-    }
-
-    public boolean ready() {
-        return waitToRender() && waitToActivate();
-    }
-
-    public boolean assertReady(String... values) {
-        boolean ready = ready();
-        if (values.length == 0) {
-            assertThat("Element is not ready: '" + this + "'", ready);
-        } else {
-            assertThat("Element is not ready: '" + this + "' for values: " + Arrays.toString(values), ready);
-        }
-        return ready;
-    }
-
-    public boolean ready(Duration duration) {
-        return waitToRender(duration, true) && waitToActivate(duration);
-    }
-
-    @Deprecated
-    public boolean ready(int seconds) {
-        return waitToRender(seconds * 1000) && waitToActivate(seconds);
-    }
-
-    /**
-     * @return True if the element is disabled, false otherwise.
-     * @deprecated use {@link #isEnabled}
-     */
-    @Deprecated
-    public boolean isDisabled() {
-        return !executor.isEnabled(this);
-    }
-
-    /**
-     * @return True if the element is enable, false otherwise.
-     */
-    public boolean isEnabled() {
-        return executor.isEnabled(this);
-    }
-
-    /**
-     * @return Whether or not the element is displayed
-     */
-    public boolean isDisplayed() {
-        return executor.isDisplayed(this);
-    }
+//    public boolean ready(Duration duration) {
+//        return waitToRender(duration, true) && waitToActivate(duration);
+//    }
+//
+//    @Deprecated
+//    public boolean ready(int seconds) {
+//        return waitToRender(seconds * 1000) && waitToActivate(seconds);
+//    }
+//
+//    /**
+//     * @return True if the element is disabled, false otherwise.
+//     * @deprecated use {@link #isEnabled}
+//     */
+//    @Deprecated
+//    public boolean isDisabled() {
+//        return !executor.isEnabled(this);
+//    }
+//
+//    /**
+//     * @return True if the element is enable, false otherwise.
+//     */
+//    public boolean isEnabled() {
+//        return executor.isEnabled(this);
+//    }
+//
+//    /**
+//     * @return Whether or not the element is displayed
+//     */
+//    public boolean isDisplayed() {
+//        return executor.isDisplayed(this);
+//    }
 
     public WebLocator clone() throws CloneNotSupportedException {
         return (WebLocator) super.clone();

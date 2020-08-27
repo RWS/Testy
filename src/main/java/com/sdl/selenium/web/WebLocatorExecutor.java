@@ -11,81 +11,81 @@ import java.util.List;
 
 public interface WebLocatorExecutor {
 
-    boolean click(WebLocator el);
+    boolean click(IWebLocator el);
 
-    boolean clickAt(WebLocator el);
+    boolean clickAt(IWebLocator el);
 
-    boolean doubleClickAt(WebLocator el);
+    boolean doubleClickAt(IWebLocator el);
 
-    boolean submit(WebLocator el);
+    boolean submit(IWebLocator el);
 
-    boolean clear(WebLocator el);
+    boolean clear(IWebLocator el);
 
-    boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
+    boolean sendKeys(IWebLocator el, java.lang.CharSequence... charSequences);
 
-    boolean setValue(WebLocator el, String value);
+    boolean setValue(IWebLocator el, String value);
 
-    String getCssValue(final WebLocator el, final String propertyName);
+    String getCssValue(final IWebLocator el, final String propertyName);
 
-    String getTagName(WebLocator el);
+    String getTagName(IWebLocator el);
 
-    String getAttribute(final WebLocator el, final String attribute);
+    String getAttribute(final IWebLocator el, final String attribute);
 
-    String getAttribute(final WebLocator el, final String attribute, boolean instant);
+    String getAttribute(final IWebLocator el, final String attribute, boolean instant);
 
-    String getAttributeId(final WebLocator el);
+    String getAttributeId(final IWebLocator el);
 
-    String getText(WebLocator el);
+    String getText(IWebLocator el);
 
-    String getValue(WebLocator el);
-
-    @Deprecated
-    boolean isElementPresent(WebLocator el);
-
-    boolean isPresent(WebLocator el);
-
-    WebElement findElement(WebLocator el);
-
-    List<WebElement> findElements(WebLocator webLocator);
+    String getValue(IWebLocator el);
 
     @Deprecated
-    WebElement waitElement(WebLocator el, final long millis, boolean showXPathLog);
+    boolean isElementPresent(IWebLocator el);
 
-    WebElement waitElement(WebLocator el, Duration duration, boolean showXPathLog);
+    boolean isPresent(IWebLocator el);
 
-    int size(WebLocator el);
+    WebElement findElement(IWebLocator el);
 
-    Point getLocation(WebLocator el);
+    List<WebElement> findElements(IWebLocator webLocator);
 
-    Dimension getSize(WebLocator el);
+    @Deprecated
+    WebElement waitElement(IWebLocator el, final long millis, boolean showXPathLog);
 
-    Rectangle getRect(WebLocator el);
+    WebElement waitElement(IWebLocator el, Duration duration, boolean showXPathLog);
 
-    boolean focus(WebLocator el);
+    int size(IWebLocator el);
 
-    boolean mouseOver(WebLocator el);
+    Point getLocation(IWebLocator el);
 
-    boolean blur(WebLocator el);
+    Dimension getSize(IWebLocator el);
 
-    boolean isSelected(WebLocator el);
+    Rectangle getRect(IWebLocator el);
 
-    boolean isDisplayed(WebLocator el);
+    boolean focus(IWebLocator el);
 
-    boolean isEnabled(WebLocator el);
+    boolean mouseOver(IWebLocator el);
 
-    boolean isSamePath(WebLocator el, String path);
+    boolean blur(IWebLocator el);
+
+    boolean isSelected(IWebLocator el);
+
+    boolean isDisplayed(IWebLocator el);
+
+    boolean isEnabled(IWebLocator el);
+
+    boolean isSamePath(IWebLocator el, String path);
 
     Object executeScript(String script, Object... objects);
 
-    Object fireEventWithJS(WebLocator el, String eventName);
+    Object fireEventWithJS(IWebLocator el, String eventName);
 
-    void highlight(WebLocator el);
+    void highlight(IWebLocator el);
 
     boolean highlight = WebLocatorConfig.isHighlight();
 
     boolean download(String fileName, long timeoutMillis);
 
-    boolean browse(WebLocator el);
+    boolean browse(IWebLocator el);
 
     boolean upload(String filePath);
 }

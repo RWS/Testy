@@ -1,9 +1,7 @@
 package com.sdl.selenium;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
-import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.XPathBuilder;
+import com.sdl.selenium.web.*;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,16 +84,16 @@ public class WebLocatorSuggestions {
         }
     }
 
-    public static WebLocator getSuggestion(WebLocator webLocator) {
+    public static WebLocator getSuggestion(IWebLocator webLocator) {
         LOGGER.debug("getSuggestion >> enter");
         WebLocator suggestion = getElementSuggestion(webLocator);
         LOGGER.debug("getSuggestion << exit");
         return suggestion;
     }
 
-    private static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
+    private static WebLocator getElementSuggestion(IWebLocator originalWebLocator) {
 
-        WebLocator webLocator = getClone(originalWebLocator);
+        WebLocator webLocator = getClone(originalWebLocator.getLocator());
         if(webLocator == null) {
             return null;
         }
@@ -150,9 +148,9 @@ public class WebLocatorSuggestions {
         }
     }
 
-    private static WebLocator getClone(WebLocator originalWebLocator) {
+    private static<T extends WebLocatorAbstractBuilder> WebLocator getClone(T originalWebLocator) {
         try {
-            WebLocator webLocator = originalWebLocator.getClass().newInstance();
+            WebLocator webLocator = (WebLocator) originalWebLocator.getClass().newInstance();
             XPathBuilder builder = (XPathBuilder) originalWebLocator.getPathBuilder().clone();
             webLocator.setPathBuilder(builder);
             return webLocator;

@@ -27,6 +27,20 @@ public class Radio extends WebLocatorAbstractBuilder implements Cloneable, IWebL
         setLabel(label, searchTypes);
     }
 
+    public <T extends WebLocatorAbstractBuilder> T getLocator() {
+        return (T) this;
+    }
+
+    @Override
+    public boolean waitToRender() {
+        return waitToRender(getPathBuilder().getRender());
+    }
+
+    @Override
+    public boolean waitToActivate() {
+        return waitToActivate(getPathBuilder().getActivate());
+    }
+
     private String getVersion() {
         return version == null ? WebLocatorConfig.getExtJsVersion() : version;
     }
@@ -36,6 +50,11 @@ public class Radio extends WebLocatorAbstractBuilder implements Cloneable, IWebL
         return (T) this;
     }
 
+    public boolean check(){
+        WebLocator locator = new WebLocator(getLocator()).setRoot("/../../").setTag("span");
+        return locator.click();
+    }
+
     public boolean isSelected() {
         return isSelected(false);
     }
@@ -43,9 +62,9 @@ public class Radio extends WebLocatorAbstractBuilder implements Cloneable, IWebL
     public boolean isSelected(boolean instant) {
         boolean checked;
         if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
-            checked = executor.isSelected(this);
+            checked = getExecutor().isSelected(getLocator());
         } else {
-            checked = "true".equals(getAttribute("aria-checked", instant));
+            checked = "true".equals(getExecutor().getAttribute(getLocator(), "aria-checked", instant));
         }
         return checked;
     }

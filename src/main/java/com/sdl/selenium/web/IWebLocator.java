@@ -3,85 +3,205 @@ package com.sdl.selenium.web;
 import org.openqa.selenium.*;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public interface IWebLocator {
+
+    <T extends WebLocatorAbstractBuilder> T getLocator();
 
     default WebLocatorExecutor getExecutor() {
         return Hidden.getExecutor();
     }
 
     public static void setDriverExecutor(WebDriver driver) {
-        Hidden.setExecutor(driver);
+        Hidden.setDriverExecutor(driver);
     }
 
     class Hidden {
-        static WebLocatorDriverExecutor executor;
-        private static void setExecutor(WebDriver webDriver) {
-            executor = new WebLocatorDriverExecutor(webDriver);
+        private static WebLocatorDriverExecutor executor;
+        private static String currentElementPath;
+        private static WebElement currentElement;
+
+        public static void setDriverExecutor(WebDriver webDriver) {
+            Hidden.executor = new WebLocatorDriverExecutor(webDriver);
         }
 
-        public static WebLocatorDriverExecutor getExecutor(){
+        public static WebLocatorDriverExecutor getExecutor() {
             return executor;
+        }
+
+        private static void setCurrentElementPath(String currentElementPath) {
+            Hidden.currentElementPath = currentElementPath;
+        }
+
+        public static String getCurrentElementPath() {
+            return currentElementPath;
+        }
+
+        public static WebElement getCurrentElement() {
+            return currentElement;
+        }
+
+        public static void setCurrentElement(WebElement currentElement) {
+            Hidden.currentElement = currentElement;
         }
     }
 
-    String getCssValue(String propertyName);
+    default String getCssValue(String propertyName) {
+        return getExecutor().getCssValue(getLocator(), propertyName);
+    }
 
-    String getAttributeId();
+    default String getAttributeId() {
+        return getExecutor().getAttributeId(getLocator());
+    }
 
-    String getAttributeClass();
+    default String getAttributeClass() {
+        return getExecutor().getAttribute(getLocator(), "class");
+    }
 
-    String getCurrentElementPath();
+    default String getCurrentElementPath() {
+        return Hidden.getCurrentElementPath();
+    }
+
+    default void setCurrentElementPath(String currentElementPath) {
+        Hidden.setCurrentElementPath(currentElementPath);
+    }
+
+    default WebElement getWebElement() {
+        return Hidden.getCurrentElement() == null ? findElement() : Hidden.getCurrentElement();
+    }
+
+    /**
+     //     * @return The tag name of this element.
+     //     */
+    default String getTagName() {
+        return getExecutor().getTagName(getLocator());
+    }
 
     /**
      * @param attribute e.g. class, id
      * @return String attribute, if element not exist return null.
      */
-    String getAttribute(String attribute);
+    default String getAttribute(String attribute) {
+        return getExecutor().getAttribute(getLocator(), attribute);
+    }
 
     @Deprecated
-    boolean isElementPresent();
+    default boolean isElementPresent() {
+        return isPresent();
+    }
 
-    boolean isPresent();
+    default boolean isPresent() {
+        return getExecutor().isPresent(getLocator());
+    }
 
-    int size();
+    default int size() {
+        return getExecutor().size(getLocator());
+    }
 
-    Point getLocation();
+    default Point getLocation() {
+        return getExecutor().getLocation(getLocator());
+    }
 
-    Dimension getSize();
+    default Dimension getSize() {
+        return getExecutor().getSize(getLocator());
+    }
 
-    Rectangle getRect();
+    default Rectangle getRect() {
+        return getExecutor().getRect(getLocator());
+    }
 
-    WebElement findElement();
+    default WebElement findElement() {
+        return getExecutor().findElement(getLocator());
+    }
 
-    List<WebElement> findElements();
+    default List<WebElement> findElements() {
+        boolean findElements = waitToRender();
+        assertThat("Elements were not rendered " + toString(), findElements);
+        return getExecutor().findElements(getLocator());
+    }
+
+    default List<WebElement> doFindElements() {
+        return getExecutor().findElements(getLocator());
+    }
 
     @Deprecated
-    boolean isVisible();
+    default boolean isVisible() {
+        boolean visible = isPresent();
+        if (visible) {
+            String style = getAttribute("style");
+            style = style == null ? "" : style.toLowerCase();
+            style = style.replaceAll("\\s*:\\s*", ":");
+            if (style.contains("visibility:hidden") || style.contains("display:none")) {
+                visible = false;
+            }
+            /*else {
+                visible = getContainer().isVisible();
+                //TODO if must check parent is visible
+            }*/
+        }
+        return visible;
+    }
 
     boolean waitToRender();
 
     @Deprecated
-    boolean waitToRender(final long millis);
+    default boolean waitToRender(final long millis) {
+        return waitToRender(Duration.ofMillis(millis));
+    }
 
-    boolean waitToRender(Duration duration);
-
-    @Deprecated
-    boolean waitToRender(final long millis, boolean showXPathLog);
-
-    boolean waitToRender(Duration duration, boolean showXPathLog);
-
-    boolean ready();
+    default boolean waitToRender(Duration duration) {
+        return getExecutor().waitElement(getLocator(), duration, true) != null;
+    }
 
     @Deprecated
-    boolean ready(int seconds);
+    default boolean waitToRender(final long millis, boolean showXPathLog) {
+        return waitToRender(Duration.ofMillis(millis), showXPathLog);
+    }
 
-    boolean ready(Duration duration);
+    default boolean waitToRender(Duration duration, boolean showXPathLog) {
+        return getExecutor().waitElement(getLocator(), duration, showXPathLog) != null;
+    }
 
-    boolean isEnabled();
+    boolean waitToActivate();
 
-    boolean isDisplayed();
+    default boolean waitToActivate(Duration duration) {
+        return true;
+    }
+
+    default boolean ready() {
+        return waitToRender() && waitToActivate();
+    }
+
+    default boolean assertReady(String... values) {
+        boolean ready = ready();
+        if (values.length == 0) {
+            assertThat("Element is not ready: '" + getLocator() + "'", ready);
+        } else {
+            assertThat("Element is not ready: '" + getLocator() + "' for values: " + Arrays.toString(values), ready);
+        }
+        return ready;
+    }
+
+    @Deprecated
+    default boolean ready(int seconds) {
+        return ready(Duration.ofSeconds(seconds));
+    }
+
+    default boolean ready(Duration duration) {
+        return waitToRender(duration) && waitToActivate(duration);
+    }
+
+    default boolean isEnabled() {
+        return getExecutor().isEnabled(getLocator());
+    }
+
+    default boolean isDisplayed() {
+        return getExecutor().isDisplayed(getLocator());
+    }
 
     String getXPath();
 

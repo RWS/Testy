@@ -52,7 +52,6 @@ public class CheckBox extends TextField implements ICheck {
         return executor.isSelected(this);
     }
 
-    @Override
     public boolean isDisabled() {
         String cls = getAttributeClass();
         return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
