@@ -6,7 +6,11 @@ import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 
 public class TabIntegrationTest extends TestBase {
@@ -39,5 +43,12 @@ public class TabIntegrationTest extends TestBase {
     void isTabDisplayedTest() {
         boolean selected = inactiveTab1.isTabDisplayed();
         assertThat(selected, is(true));
+    }
+
+    @Test
+    void getTabsTest() {
+        List<String> tabs = Arrays.asList("Active Tab", "Inactive Tab", "Disabled Tab", "Closable Tab", "Another inactive Tab");
+        List<String> tabsName = activeTab.getTabsName();
+        assertThat("Actual tabs: " + String.join(",", tabsName), tabsName, containsInAnyOrder(tabs.toArray()));
     }
 }

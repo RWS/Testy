@@ -11,6 +11,7 @@ import com.sdl.selenium.web.tab.ITab;
 import org.slf4j.Logger;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -127,5 +128,19 @@ public class Tab extends WebLocator implements ITab {
 
     public String getIconCls() {
         return this.iconCls;
+    }
+
+    public List<String> getTabsName() {
+        List<String> tabs = new ArrayList<>();
+        WebLocator textEl = new WebLocator().setText(getPathBuilder().getText(), getPathBuilder().getSearchTextType().toArray(new SearchType[0]));
+        WebLocator tabBar = new WebLocator().setClasses("x-tab-bar").setChildNodes(textEl);
+        WebLocator tab = new WebLocator(tabBar).setClasses("x-tab", "x-box-item");
+        WebLocator textElTab = new WebLocator(tab).setClasses("x-tab-inner");
+        int size = tab.size();
+        for (int i = 1; i <= size; i++) {
+            tab.setResultIdx(i);
+            tabs.add(textElTab.getText());
+        }
+        return tabs;
     }
 }
