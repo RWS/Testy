@@ -7,9 +7,12 @@ import com.sdl.selenium.web.form.CheckBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -199,6 +202,37 @@ public class Table extends WebLocator implements ITable<Row, Cell> {
         } else {
             return null;
         }
+    }
+
+    public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(excludedColumns);
+        if (cellsText == null) {
+            return null;
+        }
+        Class<?> newClazz;
+        int size = cellsText.get(0).size();
+        Constructor constructor = null;
+        try {
+            newClazz = Class.forName(type.getTypeName());
+            Constructor[] constructors = newClazz.getConstructors();
+            for (Constructor c : constructors) {
+                int parameterCount = c.getParameterCount();
+                if (size == parameterCount) {
+                    constructor = c;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        final Constructor <V> finalConstructor = (Constructor<V>)constructor;
+        return cellsText.stream().map(t -> {
+            try {
+                return finalConstructor.newInstance(t.toArray(new Object[0]));
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 
     protected List<Integer> getColumns(int columns, int[] excludedColumns) {
