@@ -57,7 +57,7 @@ public class TestBase {
     }
 
     @BeforeMethod
-    public void bm(Method method) throws Exception {
+    public void bm(Method method) {
         log.info("===============================================================");
         log.info("|    Start Test (" + (++TEST_RUNS) + ") => " + method.getName());
         log.info("|    " + method.getDeclaringClass());
@@ -72,10 +72,10 @@ public class TestBase {
         log.info(result.getName() + " is " + (isFailed ? "FAILED" : "SUCCESS"));
         if (isFailed) {
             log.warn("tests message: " + result.getThrowable().getMessage());
-            String args = "";
+            StringBuilder args = new StringBuilder();
             if (result.getParameters() != null) {
                 for (Object o : result.getParameters()) {
-                    args += o.toString() + "; ";
+                    args.append(o.toString()).append("; ");
                 }
             }
             log.warn("tests arguments: " + args);
