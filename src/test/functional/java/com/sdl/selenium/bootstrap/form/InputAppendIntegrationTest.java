@@ -2,15 +2,14 @@ package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class InputAppendIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InputAppendIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private InputAppend inputAppend = new InputAppend(form, "LPID for Merge:");
@@ -22,12 +21,12 @@ public class InputAppendIntegrationTest extends TestBase {
 
     @Test
     public void setValueInputAppend() {
-        assertTrue(inputAppend.setValue("1234"));
-        assertTrue("1234".equals(inputAppend.getValue()));
+        assertThat(inputAppend.setValue("1234"), is(true));
+        assertThat(inputAppend.getValue(), equalTo("1234"));
     }
 
     @Test
     public void clickInputAppend() {
-        assertTrue(inputAppend.append());
+        assertThat(inputAppend.append(), is(true));
     }
 }

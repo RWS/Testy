@@ -6,8 +6,8 @@ import com.sdl.selenium.extjs6.panel.Panel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FieldSetIntegrationTest extends TestBase {
 
@@ -26,16 +26,16 @@ public class FieldSetIntegrationTest extends TestBase {
 
     @Test
     public void fieldSetTest() {
-        assertFalse(field.isCollapsed());
-        assertTrue(field.collapse());
-        assertTrue(field.isCollapsed());
-        assertTrue(field.expand());
-        assertFalse(field.isCollapsed());
+        assertThat(field.isCollapsed(), is(false));
+        assertThat(field.collapse(), is(true));
+        assertThat(field.isCollapsed(), is(true));
+        assertThat(field.expand(), is(true));
+        assertThat(field.isCollapsed(), is(false));
     }
 
     @Test
     public void fieldContainerTest() {
-        assertTrue(dateField1.isPresent());
-        assertTrue(dateField2.isPresent());
+        assertThat(dateField1.isPresent(), is(true));
+        assertThat(dateField2.isPresent(), is(true));
     }
 }

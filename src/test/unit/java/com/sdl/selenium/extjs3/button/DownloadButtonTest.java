@@ -1,9 +1,11 @@
 package com.sdl.selenium.extjs3.button;
 
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class DownloadButtonTest {
     public static WebLocator container = new WebLocator("container");
@@ -22,6 +24,6 @@ public class DownloadButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(DownloadButton downloadButton, String expectedXpath) {
-        Assert.assertEquals(downloadButton.getXPath(), expectedXpath);
+        assertThat(downloadButton.getXPath(), equalTo(expectedXpath));
     }
 }

@@ -1,9 +1,11 @@
 package com.sdl.selenium.extjs3.list;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ListTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
@@ -18,6 +20,6 @@ public class ListTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(List list, String expectedXpath) {
-        Assert.assertEquals(list.getXPath(), expectedXpath);
+        assertThat(list.getXPath(), equalTo(expectedXpath));
     }
 }

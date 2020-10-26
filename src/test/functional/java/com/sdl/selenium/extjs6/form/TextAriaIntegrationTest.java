@@ -3,8 +3,11 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
+import com.sdl.selenium.web.utils.RetryUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -19,7 +22,7 @@ public class TextAriaIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
-        area.ready(20);
+        area.ready(Duration.ofSeconds(20));
     }
 
     @Test
@@ -30,8 +33,7 @@ public class TextAriaIntegrationTest extends TestBase {
 
     @Test
     public void comboBoxTest() {
-        time.select("2:45 AM");
+        RetryUtils.retry(2, () -> time.select("2:45 AM"));
         assertThat(time.getValue(), equalTo("2:45 AM"));
     }
-
 }

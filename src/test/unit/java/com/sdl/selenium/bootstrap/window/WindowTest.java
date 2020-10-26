@@ -2,9 +2,11 @@ package com.sdl.selenium.bootstrap.window;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class WindowTest {
     public static WebLocator container = new WebLocator("container");
@@ -21,7 +23,6 @@ public class WindowTest {
 
     @Test (dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Window window, String expectedXpath) {
-        Assert.assertEquals(window.getXPath(), expectedXpath);
+        assertThat(window.getXPath(), equalTo(expectedXpath));
     }
-
 }

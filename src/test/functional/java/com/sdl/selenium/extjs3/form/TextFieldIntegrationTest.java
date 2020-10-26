@@ -9,7 +9,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class TextFieldIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextFieldIntegrationTest.class);
@@ -32,19 +34,19 @@ public class TextFieldIntegrationTest extends TestBase {
 
     @Test
     public void isEditable() {
-        assertFalse(firstNameTextField.isEditable());
-        assertTrue(lastNameTextField.isEditable());
-        assertTrue(disableTextField.isDisabled());
+        assertThat(firstNameTextField.isEditable(), is(false));
+        assertThat(lastNameTextField.isEditable(), is(true));
+        assertThat(disableTextField.isDisabled(), is(true));
     }
 
     @Test
     public void getValue() {
-        assertTrue(lastNameTextField.setValue("testValue"));
-        assertEquals(lastNameTextField.getValue(), "testValue");
-        assertTrue(lastNameTextField.setValue("testValue9999990"));
-        assertEquals(lastNameTextField.getValue(), "testValue9999990");
-        assertEquals(disableTextField.getValue(), "Disable Name");
-        assertEquals(firstNameTextField.getValue(), "First Name");
+        assertThat(lastNameTextField.setValue("testValue"), is(true));
+        assertThat(lastNameTextField.getValue(), equalTo("testValue"));
+        assertThat(lastNameTextField.setValue("testValue9999990"), is(true));
+        assertThat(lastNameTextField.getValue(), equalTo("testValue9999990"));
+        assertThat(disableTextField.getValue(), equalTo("Disable Name"));
+        assertThat(firstNameTextField.getValue(), equalTo("First Name"));
     }
 
     @Test

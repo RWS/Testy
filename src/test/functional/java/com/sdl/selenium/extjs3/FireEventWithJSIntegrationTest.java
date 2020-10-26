@@ -4,7 +4,8 @@ import com.sdl.demo.extjs3.form.SimpleForm;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FireEventWithJSIntegrationTest extends TestBase {
 
@@ -13,8 +14,8 @@ public class FireEventWithJSIntegrationTest extends TestBase {
     @Test
     public void fireEvent() {
         simpleForm.cancelButton.focus();
-        assertTrue(simpleForm.cancelButton.blur());
-        assertTrue(simpleForm.cancelButton.mouseOver());
-        assertTrue(simpleForm.cancelButton.doubleClickAt());
+        assertThat(simpleForm.cancelButton.blur(), is(true));
+        assertThat(simpleForm.cancelButton.mouseOver(), is(true));
+        assertThat(simpleForm.cancelButton.doubleClickAt(), is(true));
     }
 }

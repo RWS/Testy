@@ -1,9 +1,11 @@
 package com.sdl.selenium.bootstrap.window;
 
 import com.sdl.selenium.bootstrap.form.Form;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class PopOverTest {
     private static Form container = new Form(null, "Form");
@@ -20,7 +22,7 @@ public class PopOverTest {
 
     @Test (dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(PopOver popOver, String expectedXpath) {
-        Assert.assertEquals(popOver.getXPath(), expectedXpath);
+        assertThat(popOver.getXPath(), equalTo(expectedXpath));
     }
 
 }

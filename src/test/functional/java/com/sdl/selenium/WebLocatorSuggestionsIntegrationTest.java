@@ -12,8 +12,6 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 public class WebLocatorSuggestionsIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorSuggestionsIntegrationTest.class);
@@ -26,7 +24,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
     }
 
     @BeforeClass(alwaysRun = true)
-    public void startTest() throws Exception {
+    public void startTest() {
         suggestAttributes = WebLocatorSuggestions.isSuggestAttributes();
         WebLocatorSuggestions.setSuggestAttributes(true);
     }
@@ -42,8 +40,8 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
 
         WebLocator textLocator = new WebLocator().setText("Search Type", SearchType.TRIM);
 
-        assertFalse(parent.isPresent(), "parent should not be present");
-        assertTrue(textLocator.isPresent(), "textLocator should be present");
+        assertThat("parent should not be present", parent.isPresent(), is(true));
+        assertThat("textLocator should be present", textLocator.isPresent(), is(true));
 
         textLocator.setContainer(parent);
 
@@ -63,7 +61,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator inputWithLabel = new WebLocator().setLabel("User Name").setLabelPosition("//following-sibling::*//");
         String originalXpath = inputWithLabel.getXPath();
 
-        assertFalse(inputWithLabel.isPresent());
+        assertThat(inputWithLabel.isPresent(), is(false));
 
         LOGGER.debug("searching for suggestions:");
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(inputWithLabel);
@@ -74,7 +72,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         LOGGER.debug("found suggestion: {}", suggestedElement.getXPath());
         suggestedElement.assertReady();
 
-        assertTrue("userName".equals(suggestedElement.getAttribute("id")));
+        assertThat(suggestedElement.getAttribute("id"), equalTo("userName"));
     }
 
     /**
@@ -85,14 +83,14 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         TextField inputWithLabel = new TextField().setLabel("User Name:", SearchType.TRIM).setLabelPosition("//following-sibling::*//");
         String originalXPath = inputWithLabel.getXPath();
 
-        assertFalse(inputWithLabel.isPresent(), "Element should not be present.");
+        assertThat("Element should not be present.", inputWithLabel.isPresent(), is(false));
 
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(inputWithLabel);
 
         assertThat(suggestedElement, is(notNullValue()));
         suggestedElement.assertReady();
 
-        assertTrue("userName".equals(suggestedElement.getAttribute("id")), "The id of the found element should be 'userName'");
+        assertThat("The id of the found element should be 'userName'", suggestedElement.getAttribute("id"), equalTo("userName"));
 
         assertThat("original element should not be changed", inputWithLabel.getXPath(), is(originalXPath));
     }
@@ -105,14 +103,14 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator inputWithLabel = new WebLocator().setLabel("Email:", SearchType.TRIM).setLabelPosition("//following-sibling::*//");
         String originalXPath = inputWithLabel.getXPath();
 
-        assertFalse(inputWithLabel.isPresent(), "Element should not be present.");
+        assertThat("Element should not be present.", inputWithLabel.isPresent(), is(false));
 
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(inputWithLabel);
 
         assertThat(suggestedElement, is(notNullValue()));
         suggestedElement.assertReady();
 
-        assertTrue("email".equals(suggestedElement.getAttribute("id")), "The id of the found element should be 'email'");
+        assertThat("The id of the found element should be 'email'", suggestedElement.getAttribute("id"), equalTo("email"));
 
         assertThat("original element should not be changed", inputWithLabel.getXPath(), is(originalXPath));
     }
@@ -125,14 +123,14 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         Form form = new Form().setTitle("Form Title");
         String originalXPath = form.getXPath();
 
-        assertFalse(form.isPresent(), "The element should not be present.");
+        assertThat("The element should not be present.", form.isPresent(), is(false));
 
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(form);
 
         assertThat(suggestedElement, is(notNullValue()));
         suggestedElement.assertReady();
 
-        assertTrue("myForm".equals(suggestedElement.getAttribute("id")), "The id of the found element should be 'myForm'");
+        assertThat("The id of the found element should be 'myForm'", suggestedElement.getAttribute("id"), equalTo("myForm"));
         assertThat("original element should not be changed", form.getXPath(), is(originalXPath));
     }
 
@@ -144,7 +142,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator webLocator = new WebLocator().setText("Search Type", SearchType.EQUALS, SearchType.CHILD_NODE);
         String originalXPath = webLocator.getXPath();
 
-        assertFalse(webLocator.isPresent(), "The element should not be present.");
+        assertThat("The element should not be present.", webLocator.isPresent(), is(false));
 
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(webLocator);
 
@@ -162,7 +160,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         WebLocator textLocator = new WebLocator().setText("Search Type", SearchType.TRIM).setCls("foo");
         String originalXPath = textLocator.getXPath();
 
-        assertFalse(textLocator.isPresent(), "Element should not be present.");
+        assertThat("Element should not be present.", textLocator.isPresent(), is(false));
 
         WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(textLocator);
 

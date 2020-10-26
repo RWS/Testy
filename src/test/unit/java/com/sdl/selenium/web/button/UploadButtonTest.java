@@ -1,9 +1,11 @@
 package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class UploadButtonTest {
     public static WebLocator container = new WebLocator("container");
@@ -20,7 +22,7 @@ public class UploadButtonTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(UploadButton uploadButton, String expectedXpath) {
-        Assert.assertEquals(uploadButton.getXPath(), expectedXpath);
+        assertThat(uploadButton.getXPath(), equalTo(expectedXpath));
     }
 
 }

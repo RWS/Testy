@@ -15,11 +15,11 @@ public class SelectFilesHandlerTest {
 
 //    @Test(dataProvider = "testConstructorPathDataProvider")
 //    public void getPathSelectorCorrectlyFromConstructors(SelectFilesHandler selectFilesHandler, String expectedXpath) {
-////        Assert.assertEquals(selectFilesHandler.getXPath(), expectedXpath);
+////        assertThat(selectFilesHandler.getXPath(), equalTo(expectedXpath));
 //    }
 //
 //    @Test
 //    public void getPathSelectorCorrectlySetId() {
-//        //Assert.assertEquals(new SelectFilesHandler().setButtonElement(container).getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]");
+//        //assertThat(new SelectFilesHandler().setButtonElement(container).getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]");
 //    }
 }

@@ -10,8 +10,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class WebLocator1IntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator1IntegrationTest.class);
@@ -25,7 +25,7 @@ public class WebLocator1IntegrationTest extends TestBase {
     private WebLocator webLocatorNoWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
     private WebLocator webLocatorNoWithMoreEnter = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div");
     private WebLocator webLocatorWithMoreText = new WebLocator().setElPath("//*[contains(@class, 'element7') and concat(text()[1], ./*/text(), text()[2], ./*/text()[contains(.,'care')], text()[3])='Some important text care trebuie']");
-    private WebLocator webLocatorComplex = new WebLocator().setClasses("element11").setText("Some more important text that is very important . end", SearchType.HTML_NODE);
+    private WebLocator webLocatorComplex = new WebLocator().setClasses("element11").setText("Some more important text that is very important . end", SearchType.HTML_NODES);
     private WebLocator webLocatorLogger = new WebLocator().setId("logger");
 
     @DataProvider
@@ -68,19 +68,19 @@ public class WebLocator1IntegrationTest extends TestBase {
 
     @Test
     public void identifyById() {
-        assertEquals(webLocatorId.getAttributeId(), "webLocatorId");
-        assertEquals(webLocatorId.getAttributeClass(), "");
+        assertThat(webLocatorId.getAttributeId(), equalTo("webLocatorId"));
+        assertThat(webLocatorId.getAttributeClass(), equalTo(""));
     }
 
     @Test
     public void identifyByClass() {
-        assertEquals(webLocatorCls.getAttributeClass(), "webLocatorCls");
-        assertEquals(webLocatorCls.getAttributeId(), "");
+        assertThat(webLocatorCls.getAttributeClass(),  equalTo("webLocatorCls"));
+        assertThat(webLocatorCls.getAttributeId(),  equalTo(""));
     }
 
     @Test
     public void attributeForNotFoundElement() {
-        assertEquals(webLocatorNotAttribute.getAttributeClass(), null);
+        assertThat(webLocatorNotAttribute.getAttributeClass(), is(nullValue()));
     }
 
     //@Test
@@ -95,34 +95,34 @@ public class WebLocator1IntegrationTest extends TestBase {
 
         Browser browser = Browser.valueOf(browserName.toUpperCase());
         if (browser == Browser.FIREFOX) {
-            assertTrue(WebDriverConfig.isFireFox());
+            assertThat(WebDriverConfig.isFireFox(), is(true));
         } else if (browser == Browser.CHROME) {
-            assertTrue(WebDriverConfig.isChrome());
+            assertThat(WebDriverConfig.isChrome(), is(true));
         } else if (browser == Browser.IEXPLORE) {
-            assertTrue(WebDriverConfig.isIE());
+            assertThat(WebDriverConfig.isIE(), is(true));
         }
     }
 
     @Test
     public void getTextFromDiv() {
-        assertEquals(webLocatorWithMoreEnter.getAttributeClass(), "more-elements-inside no-enter element4");
-        assertEquals(webLocatorWithMoreEnterMoreElements.getAttributeClass(), "more-elements-inside with-enter element1");
-        assertEquals(webLocatorNoWithMoreEnterMoreElements.getAttributeClass(), "more-elements-inside no-enter element3");
-        assertEquals(webLocatorNoWithMoreEnter.getAttributeClass(), "more-elements-inside no-enter element4");
-        assertEquals(webLocatorWithMoreText.getAttributeClass(), "more-elements-inside with-enter element7");
-        assertEquals(webLocatorComplex.getAttributeClass(), "more-elements-inside with-enter element11");
+        assertThat(webLocatorWithMoreEnter.getAttributeClass(),  equalTo("more-elements-inside no-enter element4"));
+        assertThat(webLocatorWithMoreEnterMoreElements.getAttributeClass(),  equalTo("more-elements-inside with-enter element1"));
+        assertThat(webLocatorNoWithMoreEnterMoreElements.getAttributeClass(),  equalTo("more-elements-inside no-enter element3"));
+        assertThat(webLocatorNoWithMoreEnter.getAttributeClass(),  equalTo("more-elements-inside no-enter element4"));
+        assertThat(webLocatorWithMoreText.getAttributeClass(),  equalTo("more-elements-inside with-enter element7"));
+        assertThat(webLocatorComplex.getAttributeClass(),  equalTo("more-elements-inside with-enter element11"));
     }
 
     @Test(dataProvider = "testConstructorPathDataProviderText")
     public void shouldFindAllCombinationsForTextSearchTypeTest(WebLocator el, String expectedPath) {
 
         LOGGER.debug(el.getXPath());
-        assertTrue(el.click());
+        assertThat(el.click(), is(true));
 
         boolean useChildNodesSearch = el.getPathBuilder().getSearchTextType().contains(SearchType.DEEP_CHILD_NODE);
 
         String expected = "WebLocator text for search type-searchTextType" + (useChildNodesSearch ? " deep" : "");
-        assertEquals(webLocatorLogger.getText(), expected);
+        assertThat(webLocatorLogger.getText(), equalTo(expected));
 
         webLocatorWithMoreEnter.click();
     }

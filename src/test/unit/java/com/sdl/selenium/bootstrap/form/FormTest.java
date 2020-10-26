@@ -2,9 +2,11 @@ package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FormTest {
     public static WebLocator container = new WebLocator("container");
@@ -25,6 +27,6 @@ public class FormTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Form form, String expectedXpath) {
-        Assert.assertEquals(form.getXPath(), expectedXpath);
+        assertThat(form.getXPath(), equalTo(expectedXpath));
     }
 }

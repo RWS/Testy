@@ -1,9 +1,11 @@
 package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.web.SearchType;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class GridCellTest {
     private static GridPanel grid = new GridPanel();
@@ -27,6 +29,6 @@ public class GridCellTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(GridCell gridCell, String expectedXpath) {
-        Assert.assertEquals(gridCell.getXPath(), expectedXpath);
+        assertThat(gridCell.getXPath(), equalTo(expectedXpath));
     }
 }

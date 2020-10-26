@@ -62,8 +62,8 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public Boolean isChecked() {
         WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
-        String attributeClass = RetryUtils.retry(4, checkBox::getAttributeClass);
-        return attributeClass.contains("x-grid-checkcolumn-checked");
+        String aClass = RetryUtils.retry(4, "isChecked", checkBox::getAttributeClass);
+        return aClass != null && aClass.contains("x-grid-checkcolumn-checked");
     }
 
     private void scrollInGrid(Cell cell) {

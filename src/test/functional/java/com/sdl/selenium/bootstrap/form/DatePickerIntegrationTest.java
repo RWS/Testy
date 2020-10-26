@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class DatePickerIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatePickerIntegrationTest.class);
@@ -26,42 +27,42 @@ public class DatePickerIntegrationTest extends TestBase {
         datePicker.select("19/02/2016");
         long endMs = System.currentTimeMillis();
         LOGGER.info(String.format("selectDate1 took %s ms", endMs - startMs));
-        assertTrue("19-02-2016".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("19-02-2016"));
 
         startMs = System.currentTimeMillis();
         datePicker.select("22/09/2016");
         endMs = System.currentTimeMillis();
         LOGGER.info(String.format("selectDate2 took %s ms", endMs - startMs));
-        assertTrue("22-09-2016".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("22-09-2016"));
 
         startMs = System.currentTimeMillis();
         datePicker.select("12/09/2016");
         endMs = System.currentTimeMillis();
         LOGGER.info(String.format("selectDate3 took %s ms", endMs - startMs));
-        assertTrue("12-09-2016".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("12-09-2016"));
 
         startMs = System.currentTimeMillis();
         datePicker.select("12/09/2016");
         endMs = System.currentTimeMillis();
         LOGGER.info(String.format("selectDate4 took %s ms", endMs - startMs));
-        assertTrue("12-09-2016".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("12-09-2016"));
 
         startMs = System.currentTimeMillis();
         datePicker.select("29/01/2016");
         endMs = System.currentTimeMillis();
         LOGGER.info(String.format("selectDate5 took %s ms", endMs - startMs));
-        assertTrue("29-01-2016".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("29-01-2016"));
     }
 
     @Test
     public void selectOldDate() {
         datePicker.select("11/08/1872");
-        assertTrue("11-08-1872".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("11-08-1872"));
     }
 
     @Test
     public void selectNewDate() {
         datePicker.select("02/08/2052");
-        assertTrue("02-08-2052".equals(datePicker.getDate()));
+        assertThat(datePicker.getDate(), equalTo("02-08-2052"));
     }
 }

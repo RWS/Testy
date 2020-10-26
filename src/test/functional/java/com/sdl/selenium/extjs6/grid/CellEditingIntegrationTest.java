@@ -49,6 +49,6 @@ public class CellEditingIntegrationTest extends TestBase {
     void cellEditingDateFieldTest() {
         DateField textField = grid.getEditor(grid.getRow(1).getCell(4));
         textField.select("19/03/2019");
-        textField.sendKeys(Keys.ENTER);
+        textField.doSendKeys(Keys.ENTER);
     }
 }

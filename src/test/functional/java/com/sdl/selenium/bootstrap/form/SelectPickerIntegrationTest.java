@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class SelectPickerIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectPickerIntegrationTest.class);
@@ -22,7 +24,7 @@ public class SelectPickerIntegrationTest extends TestBase {
 
     @Test
     public void select() {
-        assertTrue(selectPicker.select("Manual"));
-        assertTrue(("Manual").equals(selectPicker.getValue()));
+        assertThat(selectPicker.select("Manual"), is(true));
+        assertThat(selectPicker.getValue(), equalTo("Manual"));
     }
 }

@@ -6,7 +6,8 @@ import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class CheckBoxIntegrationTest extends TestBase {
 
@@ -21,12 +22,12 @@ public class CheckBoxIntegrationTest extends TestBase {
 
     @Test
     public void check() {
-        assertTrue(checkBox.click());
-        assertTrue(checkBox.isSelected());
+        assertThat(checkBox.click(), is(true));
+        assertThat(checkBox.isSelected(), is(true));
     }
 
     @Test
     public void clickWith() {
-        assertTrue(withEnterWebLocator.click());
+        assertThat(withEnterWebLocator.click(), is(true));
     }
 }

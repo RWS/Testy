@@ -4,9 +4,11 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Table;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ButtonLinkTest {
     public static WebLocator container = new WebLocator().setId("ID");
@@ -27,6 +29,6 @@ public class ButtonLinkTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(ButtonLink button, String expectedXpath) {
-        Assert.assertEquals(button.getXPath(), expectedXpath);
+        assertThat(button.getXPath(), equalTo(expectedXpath));
     }
 }

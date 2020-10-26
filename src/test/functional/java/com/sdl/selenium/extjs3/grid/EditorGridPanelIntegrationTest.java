@@ -17,7 +17,8 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class EditorGridPanelIntegrationTest extends TestBase {
 
@@ -51,7 +52,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
 
     @Test
     public void testSelectRow() {
-        assertTrue(editorGridPanel.selectRow(new GridCell(1, "Wake Robin", SearchType.EQUALS), new GridCell(2, "Trillium grandiflorum", SearchType.EQUALS)));
+        assertThat(editorGridPanel.selectRow(new GridCell(1, "Wake Robin", SearchType.EQUALS), new GridCell(2, "Trillium grandiflorum", SearchType.EQUALS)), is(true));
     }
 
     @Test(dependsOnMethods = "testSelectRow", dataProvider = "createTestDP")
@@ -59,7 +60,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
         editorGridPanel.startEdit(1, column);
         Utils.sleep(1000);
         TextField textField = editorGridPanel.getActiveEditor();
-        assertTrue(cls.isAssignableFrom(textField.getClass()), textField.getClass() + " is not " + cls);
+        assertThat(textField.getClass() + " is not " + cls, cls.isAssignableFrom(textField.getClass()), is(true));
     }
 
     @Test(dependsOnMethods = "testEditorType")
@@ -69,41 +70,41 @@ public class EditorGridPanelIntegrationTest extends TestBase {
         editorGridPanel.setRowValue(1, 3, "Sun or Shade");
         String[] texRow = editorGridPanel.getRowText(1);
         List<String> optionList = Arrays.asList(texRow);
-        assertTrue(optionList.containsAll(Arrays.asList("WebLocator Company", "TestTest", "Sun or Shade")));
+        assertThat(optionList.containsAll(Arrays.asList("WebLocator Company", "TestTest", "Sun or Shade")), is(true));
     }
 
     @Test(dependsOnMethods = "editGridPanel")
     public void scrollInGridPanel() {
-        assertTrue(editorGridPanel.scrollBottom());
-        assertTrue(editorGridPanel.scrollTop());
-        assertTrue(editorGridPanel.scrollPageDown());
-        assertTrue(editorGridPanel.scrollPageDown());
-        assertTrue(editorGridPanel.scrollPageUp());
+        assertThat(editorGridPanel.scrollBottom(), is(true));
+        assertThat(editorGridPanel.scrollTop(), is(true));
+        assertThat(editorGridPanel.scrollPageDown(), is(true));
+        assertThat(editorGridPanel.scrollPageDown(), is(true));
+        assertThat(editorGridPanel.scrollPageUp(), is(true));
     }
 
     @Test(dependsOnMethods = "scrollInGridPanel")
     public void isSubmitButtonDisabled() {
-        assertTrue(submitButton.isDisabled());
+        assertThat(submitButton.isDisabled(), is(true));
     }
 
     @Test(dependsOnMethods = "isSubmitButtonDisabled")
     public void deleteCharacters() {
-        assertTrue(editorGridPanel.setRowValue(1, 2, "Este tare ce se in timpla"));
-        assertTrue(editorGridPanel.deleteCharacters(1, 2, 4, 10));
+        assertThat(editorGridPanel.setRowValue(1, 2, "Este tare ce se in timpla"), is(true));
+        assertThat(editorGridPanel.deleteCharacters(1, 2, 4, 10), is(true));
         Utils.sleep(1000);
     }
 
     @Test(dependsOnMethods = "deleteCharacters")
     public void backspaceCharacters() {
-        assertTrue(editorGridPanel.setRowValue(1, 2, "Essteee tare ce se in timpla"));
-        assertTrue(editorGridPanel.backspaceCharacters(1, 2, 4, 0));
+        assertThat(editorGridPanel.setRowValue(1, 2, "Essteee tare ce se in timpla"), is(true));
+        assertThat(editorGridPanel.backspaceCharacters(1, 2, 4, 0), is(true));
         Utils.sleep(1000);
     }
 
     @Test(dependsOnMethods = "backspaceCharacters")
     public void editGridPanelAndScrollWithoutClearCell() {
         for (int i = 1; i <= editorGridPanel.getCount(); i += 6) {
-            assertTrue(editorGridPanel.appendRowValue(i, 1, "1"));
+            assertThat(editorGridPanel.appendRowValue(i, 1, "1"), is(true));
         }
         Utils.sleep(1000);
     }
@@ -111,7 +112,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "editGridPanelAndScrollWithoutClearCell")
     public void editGridPanelAndScrollClearCell() {
         for (int i = 1; i <= editorGridPanel.getCount(); i += 6) {
-            assertTrue(editorGridPanel.setRowValue(i, 1, "1"));
+            assertThat(editorGridPanel.setRowValue(i, 1, "1"), is(true));
         }
         Utils.sleep(1000);
     }
@@ -120,26 +121,26 @@ public class EditorGridPanelIntegrationTest extends TestBase {
     public void assertRowEditorGridPanel() {
         ConditionManager conditionManager = new ConditionManager(Duration.ofSeconds(1));
         conditionManager.add(new RenderSuccessCondition(editorGridPanel.getRow(new GridCell(1, "Adder's-Tongue", SearchType.EQUALS), new GridCell(2, "Erythronium americanum", SearchType.EQUALS))));
-        assertTrue(conditionManager.execute().isSuccess());
+        assertThat(conditionManager.execute().isSuccess(), is(true));
     }
 
     @Test(dependsOnMethods = "assertRowEditorGridPanel")
     public void rowSelect() {
-        assertTrue(editorGridPanel.rowSelect("Spring-Beauty"));
+        assertThat(editorGridPanel.rowSelect("Spring-Beauty"), is(true));
     }
 
     @Test(dependsOnMethods = "rowSelect")
     public void rowSelectStartWith() {
-        assertTrue(editorGridPanel.rowSelect("Spring", SearchType.STARTS_WITH));
+        assertThat(editorGridPanel.rowSelect("Spring", SearchType.STARTS_WITH), is(true));
     }
 
     @Test(dependsOnMethods = "rowSelectStartWith")
     public void rowSelectContains() {
-        assertTrue(editorGridPanel.rowSelect("Beauty", 1, SearchType.CONTAINS));
+        assertThat(editorGridPanel.rowSelect("Beauty", 1, SearchType.CONTAINS), is(true));
     }
 
     @Test//(dependsOnMethods = "rowSelectContains")
     public void rowSelectMoreContains() {
-        assertTrue(editorGridPanel.rowSelect("/Spring/Beauty", 1, SearchType.CONTAINS_ALL));
+        assertThat(editorGridPanel.rowSelect("/Spring/Beauty", 1, SearchType.CONTAINS_ALL), is(true));
     }
 }

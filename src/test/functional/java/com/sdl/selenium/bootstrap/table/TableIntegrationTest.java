@@ -21,9 +21,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.Matchers.*;
 
 public class TableIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableIntegrationTest.class);
@@ -39,13 +37,13 @@ public class TableIntegrationTest extends TestBase {
     @Test
     public void verifyIfCheckBoxIsPresent() {
         Cell cell = table.getCell(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
-        assertTrue(new CheckBox(cell).isPresent());
+        assertThat(new CheckBox(cell).isPresent(), is(true));
     }
 
     @Test
     public void verifyIfCellByTextIsPresent() {
         Row row = table.getRow(new Cell("Carter", SearchType.EQUALS));
-        assertTrue(row.isPresent());
+        assertThat(row.isPresent(), is(true));
     }
 
     @Test
@@ -53,8 +51,8 @@ public class TableIntegrationTest extends TestBase {
         Row row = table.getRow(1, new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         Button first = new Button(row).setText("Details", SearchType.CONTAINS);
         Button second = new Button(row, "Remove");
-        assertTrue(first.isPresent());
-        assertTrue(second.isPresent());
+        assertThat(first.isPresent(), is(true));
+        assertThat(second.isPresent(), is(true));
     }
 
     @Test
@@ -64,7 +62,7 @@ public class TableIntegrationTest extends TestBase {
         Cell lastName = new Cell(3, "Last Name", SearchType.EQUALS).setTag("th");
         Cell email = new Cell(4, "Email", SearchType.EQUALS).setTag("th");
         Cell buttons = new Cell(5, "Actions", SearchType.EQUALS).setTag("th");
-        assertTrue(table.getRow(row, firstName, lastName, email, buttons).ready());
+        assertThat(table.getRow(row, firstName, lastName, email, buttons).ready(), is(true));
     }
 
     @Test
@@ -102,7 +100,7 @@ public class TableIntegrationTest extends TestBase {
             stringBuffer.append(el).append(" | ");
         }
         LOGGER.info("test {}", stringBuffer);
-        assertEquals(cellsText, listOfList);
+        assertThat(cellsText, equalTo(listOfList));
     }
 
     @Test
@@ -139,13 +137,13 @@ public class TableIntegrationTest extends TestBase {
         pool.shutdown();
         System.gc();
 
-        assertTrue(globalClick);
+        assertThat(globalClick, is(true));
 
 //        for (List<String> list : lists) {
 //            Cell cell = table.getCell(1, new Cell(2, list.get(0), SearchType.EQUALS), new Cell(3, list.get(1), SearchType.EQUALS));
 //            CheckBox check = new CheckBox(cell);
 //            exeThread = new RunExeThread(check);
-//            assertTrue(exeThread.isSelected());
+//            assertThat(exeThread.isSelected());
 //        }
 //        exeThread.interrupt();
 //        exeThread.join();

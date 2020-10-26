@@ -1,20 +1,18 @@
 package com.sdl.selenium.bootstrap.link;
 
+import com.sdl.selenium.InputData;
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.web.link.WebLink;
-import com.sdl.selenium.InputData;
-import com.sdl.selenium.TestBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class WebLinkIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLinkIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private WebLink link = new WebLink(form, "Link");
@@ -28,13 +26,13 @@ public class WebLinkIntegrationTest extends TestBase {
     @Test
     public void openNewTab() {
         selectPicker.select("No ADB");
-        assertTrue(link.openInNewWindow());
-        assertEquals(selectPicker.getValue(), "Auto");
+        assertThat(link.openInNewWindow(), is(true));
+        assertThat(selectPicker.getValue(), equalTo("Auto"));
     }
 
     @Test (dependsOnMethods = "openNewTab")
     public void clickWith() {
-        assertTrue(link.returnDefaultWindow());
-        assertEquals(selectPicker.getValue(), "No ADB");
+        assertThat(link.returnDefaultWindow(), is(true));
+        assertThat(selectPicker.getValue(), equalTo("No ADB"));
     }
 }

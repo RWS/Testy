@@ -1,15 +1,14 @@
 package com.sdl.selenium.extjs3.button;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.testng.Assert.assertTrue;
-import java.io.IOException;
-
 import com.sdl.demo.extjs3.form.SimpleForm;
+import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.utils.FileUtils;
 import org.testng.annotations.Test;
 
-import com.sdl.selenium.web.utils.FileUtils;
-import com.sdl.selenium.TestBase;
+import java.io.IOException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class DownloadIntegrationTest extends TestBase {
 
@@ -17,7 +16,7 @@ public class DownloadIntegrationTest extends TestBase {
 
     @Test
     public void download() {
-        assertTrue(simpleForm.downloadButton.download("text.docx"));
+        assertThat(simpleForm.downloadButton.download("text.docx"), is(true));
     }
 
     @Test

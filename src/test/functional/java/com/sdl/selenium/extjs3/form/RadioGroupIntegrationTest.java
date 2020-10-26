@@ -1,14 +1,16 @@
 package com.sdl.selenium.extjs3.form;
 
+import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.TestBase;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class RadioGroupIntegrationTest extends TestBase {
 
@@ -29,22 +31,22 @@ public class RadioGroupIntegrationTest extends TestBase {
 
     @Test
     public void isDisabledRadioGroup() {
-        assertFalse(enabledRadioGroup.isDisabled());
-        assertTrue(disabledRadioGroup.isDisabled());
+        assertThat(enabledRadioGroup.isDisabled(), is(false));
+        assertThat(disabledRadioGroup.isDisabled(), is(true));
     }
 
     @Test
     public void selectRadioGroup() {
-        assertTrue(enabledRadioGroup.selectByLabel("Item 2"));
-        assertTrue(enabledRadioGroup.selectByLabel("5", SearchType.CONTAINS));
-        assertTrue(enabledRadioGroup.selectByValue("3"));
-        assertFalse(disabledRadioGroup.selectByLabel("Item 1"));
-        assertFalse(disabledRadioGroup.selectByValue("4"));
+        assertThat(enabledRadioGroup.selectByLabel("Item 2"), is(true));
+        assertThat(enabledRadioGroup.selectByLabel("5", SearchType.CONTAINS), is(true));
+        assertThat(enabledRadioGroup.selectByValue("3"), is(true));
+        assertThat(disabledRadioGroup.selectByLabel("Item 1") , is(false));
+        assertThat(disabledRadioGroup.selectByValue("4"), is(false));
     }
 
     @Test
     public void getLabelNameRadioGroup() {
-        assertEquals(enabledRadioGroup.getLabelName("1"), "Item 1");
-        assertEquals(disabledRadioGroup.getLabelName("1"), "Item 1");
+        assertThat(enabledRadioGroup.getLabelName("1"), equalTo("Item 1"));
+        assertThat(disabledRadioGroup.getLabelName("1"), equalTo("Item 1"));
     }
 }

@@ -6,8 +6,9 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class DateFieldIntegrationTest extends TestBase {
 
@@ -23,49 +24,49 @@ public class DateFieldIntegrationTest extends TestBase {
 
     @Test
     public void setDateField() {
-        assertTrue(dateField.select("27/03/2013"));
-        assertEquals(dateField.getValue(), "03/27/13");
+        assertThat(dateField.select("27/03/2013"), is(true));
+        assertThat(dateField.getValue(), equalTo("03/27/13"));
     }
 
     @Test
     public void setDateField0() {
-        assertTrue(dateField.select("25/05/2013"));
-        assertEquals(dateField.getValue(), "05/25/13");
+        assertThat(dateField.select("25/05/2013"), is(true));
+        assertThat(dateField.getValue(), equalTo("05/25/13"));
     }
 
     @Test
     public void setDateField1() {
-        assertTrue(dateField.select("05/05/2013"));
-        assertEquals(dateField.getValue(), "05/05/13");
+        assertThat(dateField.select("05/05/2013"), is(true));
+        assertThat(dateField.getValue(), equalTo("05/05/13"));
     }
 
     @Test
     public void setDateField2() {
-        assertTrue(dateField.select("05/May/2013", "dd/MMM/yyyy"));
-        assertEquals(dateField.getValue(), "05/05/13");
+        assertThat(dateField.select("05/May/2013", "dd/MMM/yyyy"), is(true));
+        assertThat(dateField.getValue(), equalTo("05/05/13"));
     }
 
     @Test
     public void setDateField3() {
-        assertTrue(dateField.select("06/May/2033", "dd/MMM/yyyy"));
-        assertEquals(dateField.getValue(), "05/06/33");
+        assertThat(dateField.select("06/May/2033", "dd/MMM/yyyy"), is(true));
+        assertThat(dateField.getValue(), equalTo("05/06/33"));
     }
 
     @Test //(dependsOnMethods = "setDateField3")
     public void setDateField4() {
-        assertTrue(dateField.select("07/May/1920", "dd/MMM/yyyy"));
-        assertEquals(dateField.getValue(), "05/07/20");
+        assertThat(dateField.select("07/May/1920", "dd/MMM/yyyy"), is(true));
+        assertThat(dateField.getValue(), equalTo("05/07/20"));
     }
 
     @Test
     public void setDateField5() {
-        assertTrue(dateField.select("05/Apr/2216", "dd/MMM/yyyy"));
-        assertEquals(dateField.getValue(), "04/05/16");
+        assertThat(dateField.select("05/Apr/2216", "dd/MMM/yyyy"), is(true));
+        assertThat(dateField.getValue(), equalTo("04/05/16"));
     }
 
     @Test
     public void setDateField6() {
-        assertTrue(dateField.select("15/07/2022"));
-        assertEquals(dateField.getValue(), "07/15/22");
+        assertThat(dateField.select("15/07/2022"), is(true));
+        assertThat(dateField.getValue(), equalTo("07/15/22"));
     }
 }

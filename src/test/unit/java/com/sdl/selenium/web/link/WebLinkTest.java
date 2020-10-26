@@ -2,9 +2,11 @@ package com.sdl.selenium.web.link;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class WebLinkTest {
     private static WebLocator container = new WebLocator("container");
@@ -24,6 +26,6 @@ public class WebLinkTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLink webLink, String expectedXpath) {
-        Assert.assertEquals(webLink.getXPath(), expectedXpath);
+        assertThat(webLink.getXPath(), equalTo(expectedXpath));
     }
 }

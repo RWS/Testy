@@ -15,14 +15,13 @@ import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FindElementIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(FindElementIntegrationTest.class);
@@ -47,18 +46,18 @@ public class FindElementIntegrationTest extends TestBase {
     @Test
     public void clickExtreme() {
         findElementButton.click();
-        assertTrue(alertButton.click());
+        assertThat(alertButton.click(), is(true));
         ConditionManager conditionManager = new ConditionManager(Duration.ofSeconds(10));
         conditionManager.add(new MessageBoxSuccessCondition("Alert button was pressed"));
-        Assert.assertTrue(conditionManager.execute().isSuccess());
+        assertThat(conditionManager.execute().isSuccess(), is(true));
         MessageBox.pressOK();
         elementWindow.close();
 
         findElementButton.click();
-        assertTrue(alertButton.click());
+        assertThat(alertButton.click(), is(true));
         ConditionManager conditionManager1 = new ConditionManager(Duration.ofSeconds(10));
         conditionManager1.add(new MessageBoxSuccessCondition("Alert button was pressed"));
-        Assert.assertTrue(conditionManager1.execute().isSuccess());
+        assertThat(conditionManager1.execute().isSuccess(), is(true));
         MessageBox.pressOK();
     }
 
@@ -76,7 +75,7 @@ public class FindElementIntegrationTest extends TestBase {
         showButton.click();
 
         long startMs = System.currentTimeMillis();
-        Assert.assertTrue(el.waitToRender());
+        assertThat(el.waitToRender(), is(true));
         long endMs = System.currentTimeMillis();
 
         MessageBox.pressOK();
@@ -97,16 +96,16 @@ public class FindElementIntegrationTest extends TestBase {
     @Test
     public void testNewMethod() {
         DownloadFile downloadFile = new DownloadFile().setLabel("Download");
-        assertFalse(hasStatus("disabled", downloadFile));
-        assertTrue(hasStatus("enabled", downloadFile));
+        assertThat(hasStatus("disabled", downloadFile),  is(false));
+        assertThat(hasStatus("enabled", downloadFile), is(true));
 
         SelectPicker selectPicker = new SelectPicker().setLabel("SimpleTextField"); // TODO change label
-        assertFalse(hasStatus("disabled", selectPicker));
-        assertTrue(hasStatus("enabled", selectPicker));
+        assertThat(hasStatus("disabled", selectPicker), is(false));
+        assertThat(hasStatus("enabled", selectPicker), is(true));
 
 //        WebLocator el = new WebLocator().setElPath("SimpleTextField"); // TODO see why this has this path
 //        assertFalse(hasStatus("disabled", el));
-//        assertTrue(hasStatus("enabled", el));
+//        assertThat(hasStatus("enabled", el));
 //        assertFalse(hasStatus("test", el));
     }
 
@@ -122,7 +121,7 @@ public class FindElementIntegrationTest extends TestBase {
         hiddenElVisible.click();
         ConditionManager conditionManager = new ConditionManager();
         conditionManager.add(new MessageBoxSuccessCondition("Hidden Button was clicked"));
-        assertTrue(conditionManager.execute().isSuccess());
+        assertThat(conditionManager.execute().isSuccess(), is(true));
         MessageBox.pressOK();
     }
 }

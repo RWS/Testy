@@ -130,7 +130,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
         if(conditionManager.execute().isSuccess()){
             msg = MessageBox.pressYes();
         }
-        Assert.assertEquals(msg, "You are closing a tab that has unsaved changes.\n" +
+        assertThat(msg, "You are closing a tab that has unsaved changes.\n" +
                 "Would you like to save your changes?");
     }
 
@@ -138,8 +138,8 @@ public class ConditionManagerIntegrationTest extends TestBase {
     public void messageBoxTest() {
         showAlert.click();
         MessageBox.pressOK();
-        //Assert.assertTrue(new MessageBox("Changes saved successfully.").pressOk());
+        //assertThat(new MessageBox("Changes saved successfully.").pressOk());
         showAlert.click();
-        Assert.assertEquals(MessageBox.pressOK(), "Changes saved successfully.");
+        assertThat(MessageBox.pressOK(), "Changes saved successfully.");
     }*/
 }

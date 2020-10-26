@@ -7,7 +7,8 @@ import com.sdl.selenium.WebLocatorUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class CheckBoxIntegrationTest extends TestBase {
     private SimpleForm simpleForm = new SimpleForm();
@@ -20,13 +21,13 @@ public class CheckBoxIntegrationTest extends TestBase {
     @Test
     public void rightCheckBox() {
         simpleForm.rightCheckBox.click();
-        assertTrue(simpleForm.rightCheckBox.isSelected());
+        assertThat(simpleForm.rightCheckBox.isChecked(), is(true));
     }
 
     @Test
     public void leftCheckBox() {
         simpleForm.leftCheckBox.click();
-        assertTrue(simpleForm.leftCheckBox.isSelected());
+        assertThat(simpleForm.leftCheckBox.isChecked(), is(true));
     }
 
     public static void main(String[] args) {

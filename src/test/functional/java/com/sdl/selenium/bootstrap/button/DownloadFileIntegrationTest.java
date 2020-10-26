@@ -26,7 +26,7 @@ public class DownloadFileIntegrationTest extends TestBase {
     @Test
     public void assertDownload() {
         assertThat(downloadFile.download("text.docx"), is(true));
-//        assertTrue(downloadFile.download("LanguageCloudAddins.exe"));
+//        assertThat(downloadFile.download("LanguageCloudAddins.exe"));
         FileUtils.cleanDownloadDir();
     }
 

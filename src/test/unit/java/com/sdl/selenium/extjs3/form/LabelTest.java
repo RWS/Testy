@@ -2,9 +2,11 @@ package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class LabelTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
@@ -22,6 +24,6 @@ public class LabelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Label label, String expectedXpath) {
-        Assert.assertEquals(label.getXPath(), expectedXpath);
+        assertThat(label.getXPath(), equalTo(expectedXpath));
     }
 }

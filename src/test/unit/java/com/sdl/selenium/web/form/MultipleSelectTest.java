@@ -1,9 +1,11 @@
 package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebLocator;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class MultipleSelectTest {
     private static WebLocator container = new WebLocator("container");
@@ -20,6 +22,6 @@ public class MultipleSelectTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(MultipleSelect list, String expectedXpath) {
-        Assert.assertEquals(list.getXPath(), expectedXpath);
+        assertThat(list.getXPath(), equalTo(expectedXpath));
     }
 }

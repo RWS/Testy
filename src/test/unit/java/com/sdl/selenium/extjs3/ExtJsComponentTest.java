@@ -3,7 +3,8 @@ package com.sdl.selenium.extjs3;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ExtJsComponentTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
@@ -25,12 +26,12 @@ public class ExtJsComponentTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(ExtJsComponent extJsComponent, String expectedXpath) {
-        assertEquals(extJsComponent.getXPath(), expectedXpath);
+        assertThat(extJsComponent.getXPath(), equalTo(expectedXpath));
     }
 
     @Test
     public void getDisabledPathShoutContainDisabledClass(){
         ExtJsComponent locator = new ExtJsComponent(container);
-        assertEquals(locator.getXPath(true), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]) > 0]");
+        assertThat(locator.getXPath(true), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[count(ancestor-or-self::*[contains(@class, 'x-masked') or contains(@class, 'x-item-disabled')]) > 0]"));
     }
 }

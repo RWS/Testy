@@ -3,8 +3,10 @@ package com.sdl.selenium.extjs3.window;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.panel.Panel;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class MessageBoxIntegrationTest extends TestBase {
 
@@ -14,7 +16,7 @@ public class MessageBoxIntegrationTest extends TestBase {
 
     public static void assertThatMessageBoxExists(String expected, int waitSeconds) {
         String message = MessageBox.getMessage(waitSeconds);
-        Assert.assertEquals(message, expected);
+        assertThat(message, equalTo(expected));
         MessageBox.pressOK();
     }
 
@@ -25,7 +27,7 @@ public class MessageBoxIntegrationTest extends TestBase {
     @Test
     public void getNullIfNoMessageExistTest() {
         String message = MessageBox.getMessage();
-        Assert.assertNull(message);
+        assertThat(message, is(nullValue()));
     }
 
     @Test
@@ -40,7 +42,7 @@ public class MessageBoxIntegrationTest extends TestBase {
         instantMessageButton.click();
         String expected = "Instant Message button was pressed";
         String message = MessageBox.getMessage();
-        Assert.assertEquals(message, expected);
+        assertThat(message, equalTo(expected));
         MessageBox.pressOK();
     }
 }

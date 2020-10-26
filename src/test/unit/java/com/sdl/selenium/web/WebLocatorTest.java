@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.Matchers.*;
 
 public class WebLocatorTest {
     private static WebLocator container = new WebLocator("container");
@@ -188,35 +186,35 @@ public class WebLocatorTest {
     public void getPathSelectorSetTagWhenWebLocatorHasClsAndContainer() {
         WebLocator el = new WebLocator("testcls", container);
         el.setTag("textarea");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[contains(concat(' ', @class, ' '), ' testcls ')]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[contains(concat(' ', @class, ' '), ' testcls ')]"));
     }
 
     @Test
     public void getPathSelectorSetTagWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setTag("textarea");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//textarea[contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]"));
     }
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasContainerAndPath() {
         WebLocator el = new WebLocator(container).setElPath("//*[contains(@class, 'testcls')]");
         el.setId("ID");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls')]"));
     }
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasClsAndContainer() {
         WebLocator el = new WebLocator("testcls", container);
         el.setId("ID");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ')]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ')]"));
     }
 
     @Test
     public void getPathSelectorSetIdWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setId("ID");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(concat(' ', @class, ' '), ' testcls ') and contains(text(),'text')]"));
     }
 
     //@Test
@@ -224,49 +222,49 @@ public class WebLocatorTest {
     public void getPathSelectorSetIdWhenWebLocatorHasXPath() {
         WebLocator el = new WebLocator().setElPath("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(@class, 'testcls') and contains(text(),'text')]");
         el.setId("ID");
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[@id='ID' and contains(@class, 'testcls') and contains(text(),'text')]"));
     }
 
     @Test
     public void createInstancesWithBuilders() {
         WebLocator locatorBuilder1 = new WebLocator().setTag("div").setId("ID1");
-        assertEquals(locatorBuilder1.getPathBuilder().getTag(), "div");
-        assertEquals(locatorBuilder1.getPathBuilder().getId(), "ID1");
-        assertEquals(locatorBuilder1.getPathBuilder().getClassName(), "WebLocator");
+        assertThat(locatorBuilder1.getPathBuilder().getTag(), equalTo("div"));
+        assertThat(locatorBuilder1.getPathBuilder().getId(), equalTo("ID1"));
+        assertThat(locatorBuilder1.getPathBuilder().getClassName(), equalTo("WebLocator"));
     }
 
     @Test
     public void shouldShowClassInToStringWhenHasOneClass() {
         WebLocator locator = new WebLocator().setClasses("cls1");
-        assertEquals(locator.getPathBuilder().toString(), "cls1");
+        assertThat(locator.getPathBuilder().toString(), equalTo("cls1"));
     }
 
     @Test
     public void shouldShowClassesInToStringWhenHasManyClass() {
         WebLocator locator = new WebLocator().setClasses("cls1", "cls2");
-        assertEquals(locator.getPathBuilder().toString(), "[cls1, cls2]");
+        assertThat(locator.getPathBuilder().toString(), equalTo("[cls1, cls2]"));
     }
 
     @Test
     public void resetSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.EQUALS);
-        assertEquals(locator.getXPath(), "//*[text()='text']");
+        assertThat(locator.getXPath(), equalTo("//*[text()='text']"));
         locator.setSearchTextType(null);
-        assertEquals(locator.getXPath(), "//*[contains(text(),'text')]");
+        assertThat(locator.getXPath(), equalTo("//*[contains(text(),'text')]"));
     }
 
     @Test
     public void verifyxPath() {
         WebLocator locator = new WebLocator().setBaseCls("cls").setText("text", SearchType.DEEP_CHILD_NODE);
-        assertEquals(locator.getXPath(), "//*[contains(concat(' ', @class, ' '), ' cls ') and count(*//text()[contains(.,'text')]) > 0]");
+        assertThat(locator.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' cls ') and count(*//text()[contains(.,'text')]) > 0]"));
         locator.setContainer(container);
-        assertEquals(locator.getXPath(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ') and count(*//text()[contains(.,'text')]) > 0]");
+        assertThat(locator.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' cls ') and count(*//text()[contains(.,'text')]) > 0]"));
     }
 
     @Test
     public void setSearchTextType() {
         WebLocator locator = new WebLocator().setText("text", SearchType.STARTS_WITH);
-        assertEquals(locator.getPathBuilder().getSearchTextType().size(), 1);
+        assertThat(locator.getPathBuilder().getSearchTextType().size(), is(1));
     }
 
     @Test
@@ -274,15 +272,15 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setText("text").setResultIdx(1);
         WebLocator locator1 = new WebLocator(locator).setText("text").setResultIdx(2);
         WebLocator locator2 = new WebLocator().setText("text").setResultIdx(Position.LAST);
-        assertEquals(locator2.getXPath(), "(//*[contains(text(),'text')])[last()]");
-        assertEquals(locator1.getXPath(), "((//*[contains(text(),'text')])[1]//*[contains(text(),'text')])[2]");
+        assertThat(locator2.getXPath(), equalTo("(//*[contains(text(),'text')])[last()]"));
+        assertThat(locator1.getXPath(), equalTo("((//*[contains(text(),'text')])[1]//*[contains(text(),'text')])[2]"));
         locator1.setResultIdx(-1);
-        assertEquals(locator1.getXPath(), "(//*[contains(text(),'text')])[1]//*[contains(text(),'text')]");
+        assertThat(locator1.getXPath(), equalTo("(//*[contains(text(),'text')])[1]//*[contains(text(),'text')]"));
         locator.setResultIdx(-1);
-        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
+        assertThat(locator1.getXPath(), equalTo("//*[contains(text(),'text')]//*[contains(text(),'text')]"));
 
         WebLocator locator3 = new WebLocator().setText("text").setResultIdx(Position.LAST).setPosition(Position.LAST);
-        assertEquals(locator3.getXPath(), "(//*[contains(text(),'text')][position() = last()])[last()]");
+        assertThat(locator3.getXPath(), equalTo("(//*[contains(text(),'text')][position() = last()])[last()]"));
     }
 
     @Test
@@ -290,12 +288,12 @@ public class WebLocatorTest {
         WebLocator locator = new WebLocator().setText("text").setPosition(1);
         WebLocator locator1 = new WebLocator(locator).setText("text").setPosition(2);
         WebLocator locator2 = new WebLocator().setText("text").setPosition(Position.LAST);
-        assertEquals(locator2.getXPath(), "//*[contains(text(),'text')][position() = last()]");
-        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')][position() = 2]");
+        assertThat(locator2.getXPath(), equalTo("//*[contains(text(),'text')][position() = last()]"));
+        assertThat(locator1.getXPath(), equalTo("//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')][position() = 2]"));
         locator1.setPosition(-1);
-        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')]");
+        assertThat(locator1.getXPath(), equalTo("//*[contains(text(),'text')][position() = 1]//*[contains(text(),'text')]"));
         locator.setPosition(-1);
-        assertEquals(locator1.getXPath(), "//*[contains(text(),'text')]//*[contains(text(),'text')]");
+        assertThat(locator1.getXPath(), equalTo("//*[contains(text(),'text')]//*[contains(text(),'text')]"));
     }
 
     @Test

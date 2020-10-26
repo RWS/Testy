@@ -3739,7 +3739,7 @@
               Looks up a localized string similar to {0} ({1}).
             </summary>
         </member>
-        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FrameworkMessages.DoNotUseAssertEquals">
+        <member name="P:Microsoft.VisualStudio.TestTools.UnitTesting.FrameworkMessages.DoNotUseassertThat">
             <summary>
               Looks up a localized string similar to Assert.Equals should not be used for Assertions. Please use Assert.AreEqual &amp; overloads instead..
             </summary>

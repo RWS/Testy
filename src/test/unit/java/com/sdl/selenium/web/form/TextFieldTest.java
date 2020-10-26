@@ -1,8 +1,10 @@
 package com.sdl.selenium.web.form;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class TextFieldTest {
 
@@ -21,13 +23,13 @@ public class TextFieldTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(TextField field, String expectedXpath) {
-        Assert.assertEquals(field.getXPath(), expectedXpath);
+        assertThat(field.getXPath(), equalTo(expectedXpath));
     }
 
     @Test
     public void whenUsePlaceholderGenerateCorrectToString() {
         TextField field = new TextField().setPlaceholder("Password");
-        Assert.assertEquals(field.toString(), "@placeholder=Password");
+        assertThat(field.toString(), equalTo("@placeholder=Password"));
     }
 
 

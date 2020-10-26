@@ -454,12 +454,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     public Object fireEventWithJS(WebLocator el, String eventName) {
         String script = "if(document.createEvent){" +
-                        "var evObj = document.createEvent('MouseEvents');\n" +
-                        "evObj.initEvent('" + eventName + "', true, true);\n" +
-                        "return fireOnThis.dispatchEvent(evObj);\n" +
-                        "} else if(document.createEventObject) {" +
-                        "return fireOnThis.fireEvent('on" + eventName + "');" +
-                        "}";
+                "var evObj = document.createEvent('MouseEvents');\n" +
+                "evObj.initEvent('" + eventName + "',true,true);\n" +
+                "return fireOnThis.dispatchEvent(evObj);\n" +
+                "} else if(document.createEventObject) {" +
+                "return fireOnThis.fireEvent('on" + eventName + "');" +
+                "}";
         String id = getAttributeId(el);
         String cls;
         if (!Strings.isNullOrEmpty(id)) {
@@ -469,7 +469,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         } else {
             script = "var fireOnThis = document.evaluate(\"" + el.getXPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
                      "var evObj = document.createEvent('MouseEvents');\n" +
-                     "evObj.initEvent( '" + eventName + "', true, true );\n" +
+                     "evObj.initEvent('" + eventName + "',true,true);\n" +
                      "return fireOnThis.dispatchEvent(evObj);";
         }
         return executeScript(script);

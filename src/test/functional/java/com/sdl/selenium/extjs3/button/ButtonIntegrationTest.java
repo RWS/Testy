@@ -14,6 +14,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -117,7 +119,7 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test(dataProvider = "renderMillis")
     void tryToClickOnButtonThatDoesNotExist(long millis) {
-        Button button = new Button(panel, "ButtonThatDoesNotExist").setRenderMillis(millis);
+        Button button = new Button(panel, "ButtonThatDoesNotExist").setRender(Duration.ofMillis(millis));
 
         long startMs = System.currentTimeMillis();
         boolean clicked = button.doClick();

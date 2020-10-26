@@ -6,7 +6,8 @@ import com.sdl.selenium.extjs6.panel.Panel;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class DisplayFieldIntegrationTest extends TestBase {
 
@@ -22,6 +23,6 @@ public class DisplayFieldIntegrationTest extends TestBase {
 
     @Test
     public void displayFieldTest() {
-        assertEquals(field.getText(), "Display field value");
+        assertThat(field.getText(), equalTo("Display field value"));
     }
 }

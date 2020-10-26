@@ -1,8 +1,10 @@
 package com.sdl.selenium.jqueryui.window;
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class WindowTest {
 
@@ -17,6 +19,6 @@ public class WindowTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Window window, String expectedXpath) {
-        Assert.assertEquals(window.getXPath(), expectedXpath);
+        assertThat(window.getXPath(), equalTo(expectedXpath));
     }
 }

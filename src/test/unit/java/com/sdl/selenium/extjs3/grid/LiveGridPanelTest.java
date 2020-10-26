@@ -2,9 +2,11 @@ package com.sdl.selenium.extjs3.grid;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
 import com.sdl.selenium.web.SearchType;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class LiveGridPanelTest {
     private static ExtJsComponent container = new ExtJsComponent("container");
@@ -33,7 +35,7 @@ public class LiveGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(LiveGridPanel liveGridPanel, String expectedXpath) {
-        Assert.assertEquals(liveGridPanel.getXPath(), expectedXpath);
+        assertThat(liveGridPanel.getXPath(), equalTo(expectedXpath));
     }
 
     @DataProvider
@@ -57,7 +59,7 @@ public class LiveGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider1")
     public void getPathSelectorCorrectlyFromConstructors1(GridRow gridRow, String expectedXpath) {
-        Assert.assertEquals(gridRow.getXPath(), expectedXpath);
+        assertThat(gridRow.getXPath(), equalTo(expectedXpath));
     }
 
     @DataProvider
@@ -102,6 +104,6 @@ public class LiveGridPanelTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider2")
     public void getPathSelectorCorrectlyFromConstructors2(GridCell gridCell, String expectedXpath) {
-        Assert.assertEquals(gridCell.getXPath(), expectedXpath);
+        assertThat(gridCell.getXPath(), equalTo(expectedXpath));
     }
 }

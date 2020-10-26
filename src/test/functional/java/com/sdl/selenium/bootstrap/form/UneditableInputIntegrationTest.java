@@ -2,15 +2,13 @@ package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class UneditableInputIntegrationTest extends TestBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UneditableInputIntegrationTest.class);
 
     private Form form = new Form(null, "Form Title");
     private UneditableInput uneditableInput = new UneditableInput(form, "Span:");
@@ -23,11 +21,11 @@ public class UneditableInputIntegrationTest extends TestBase {
 
     @Test
     public void getSpanText() {
-        assertTrue("test".equals(uneditableInput.getText()));
+        assertThat(uneditableInput.getText(), equalTo("test"));
     }
 
     @Test
     public void getBudgetText() {
-        assertTrue("123".equals(budgetUneditableInput.getText()));
+        assertThat(budgetUneditableInput.getText(), equalTo("123"));
     }
 }

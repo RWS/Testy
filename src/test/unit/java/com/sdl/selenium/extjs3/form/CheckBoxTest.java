@@ -1,9 +1,11 @@
 package com.sdl.selenium.extjs3.form;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CheckBoxTest {
     public static ExtJsComponent container = new ExtJsComponent("container");
@@ -19,6 +21,6 @@ public class CheckBoxTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(CheckBox combo, String expectedXpath) {
-        Assert.assertEquals(combo.getXPath(), expectedXpath);
+        assertThat(combo.getXPath(), equalTo(expectedXpath));
     }
 }

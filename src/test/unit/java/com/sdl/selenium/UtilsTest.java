@@ -13,7 +13,8 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 
 public class UtilsTest {
@@ -52,23 +53,23 @@ public class UtilsTest {
 //    @Test( dataProviderClass = TrainerDataProvider.class, dataProvider = "translateDocumentFiles", alwaysRun = true)
 //    public void split(String project, String trainingName, int column,  String pathFile, String downloadPathFile, String unzippedPathFile){
 //        String newfile = Utils.obtainFileName(pathFile, "-trained.rum");
-//        Assert.assertEquals("headlines-trained.rum.txt", newfile);
+//        assertThat("headlines-trained.rum.txt", newfile);
 //    }
 //
 //    @Test( dataProviderClass = TrainerDataProvider.class, dataProvider = "translateDocumentFiles", alwaysRun = true)
 //    public void getFileName(String project, String trainingName, int column,  String pathFile, String downloadPathFile, String unzippedPathFile){
 //        String file = Utils.getFileFromPath(pathFile);
-//        Assert.assertEquals("headlines.txt",file);
+//        assertThat("headlines.txt",file);
 //    }
 
     @Test(dataProvider = "validateFileName")
     public void convertToValidFileName(String originalFileName, String validFileName) {
-        assertEquals(FileUtils.getValidFileName(originalFileName), validFileName);
+        assertThat(FileUtils.getValidFileName(originalFileName), equalTo(validFileName));
     }
 
     @Test(dataProvider = "validateTextWithQuotes")
     public void textWithQuotes(String original, String expected) {
-        assertEquals(Utils.getEscapeQuotesText(original), expected);
+        assertThat(Utils.getEscapeQuotesText(original), equalTo(expected));
     }
 
 //    @Test
@@ -106,7 +107,7 @@ public class UtilsTest {
 
         for (Map.Entry<Object, Object> entry : firefoxConfigReader.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
-            assertEquals(entry.getValue(), map.get(entry.getKey()));
+            assertThat(entry.getValue(), equalTo(map.get(entry.getKey())));
         }
 
         map.put("browser.profile.name", "");
@@ -114,7 +115,7 @@ public class UtilsTest {
         FirefoxConfigReader firefoxConfigReaderMod = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-firefox-test.properties");
         for (Map.Entry<Object, Object> entry : firefoxConfigReaderMod.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
-            assertEquals(entry.getValue(), map.get(entry.getKey()));
+            assertThat(entry.getValue(), equalTo(map.get(entry.getKey())));
         }
 
         map.put("browser.profile.name", "default");
@@ -125,7 +126,7 @@ public class UtilsTest {
         FirefoxConfigReader firefoxConfigReaderOverwrite = new FirefoxConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-firefox-overwrite.properties");
         for (Map.Entry<Object, Object> entry : firefoxConfigReaderOverwrite.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
-            assertEquals(entry.getValue(), map.get(entry.getKey()));
+            assertThat(entry.getValue(), equalTo(map.get(entry.getKey())));
         }
     }
 
@@ -140,7 +141,7 @@ public class UtilsTest {
 
         for (Map.Entry<Object, Object> entry : chromeConfigReader.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
-            assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
+            assertThat(entry.getValue(), equalTo(mapChrome.get(entry.getKey())));
         }
 
         mapChrome.put("browser.download.dir", "src\\test\\resources\\test\\");
@@ -148,7 +149,7 @@ public class UtilsTest {
         ChromeConfigReader chromeConfigReader1 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-chrome-test.properties");
         for (Map.Entry<Object, Object> entry : chromeConfigReader1.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
-            assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
+            assertThat(entry.getValue(), equalTo(mapChrome.get(entry.getKey())));
         }
 
         mapChrome.put("browser.download.dir", "src\\test\\resources\\download\\");
@@ -157,7 +158,7 @@ public class UtilsTest {
         ChromeConfigReader chromeConfigReader2 = new ChromeConfigReader("src\\test\\unit\\java\\com\\extjs3\\selenium\\localhost-chrome-overwrite.properties");
         for (Map.Entry<Object, Object> entry : chromeConfigReader2.entrySet()) {
             LOGGER.debug(entry.getKey() + " : " + entry.getValue());
-            assertEquals(entry.getValue(), mapChrome.get(entry.getKey()));
+            assertThat(entry.getValue(), equalTo(mapChrome.get(entry.getKey())));
         }
     }
 
@@ -167,7 +168,7 @@ public class UtilsTest {
         WebLocator el2 = new WebLocator().setCls("2");
         WebLocator el = new WebLocator().setClasses("cls").setChildNodes(el1, el2);
 
-        assertEquals(el.getXPath(), "//*[contains(concat(' ', @class, ' '), ' cls ') and count(.//*[@class='1']) > 0 and count(.//*[@class='2']) > 0]");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' cls ') and count(.//*[@class='1']) > 0 and count(.//*[@class='2']) > 0]"));
     }
 }
 

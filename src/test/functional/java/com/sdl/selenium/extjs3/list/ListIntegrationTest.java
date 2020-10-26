@@ -1,15 +1,16 @@
 package com.sdl.selenium.extjs3.list;
 
-import com.sdl.selenium.extjs3.button.Button;
-import com.sdl.selenium.extjs3.window.Window;
 import com.sdl.selenium.Ignores;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.extjs3.button.Button;
+import com.sdl.selenium.extjs3.window.Window;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static com.sdl.selenium.Ignores.Driver.CHROME;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class ListIntegrationTest extends TestBase {
 
@@ -30,13 +31,13 @@ public class ListIntegrationTest extends TestBase {
     @Ignores(value = {CHROME}, reason = "Nu se seleacteaza in Chrome")
     @Test
     public void select() {
-        assertTrue(multiSelectList.selectRows("English", "French", "Spanish"));
-        assertTrue(multiSelectList.isSelectedRows("English", "French", "Spanish"));
+        assertThat(multiSelectList.selectRows("English", "French", "Spanish"), is(true));
+        assertThat(multiSelectList.isSelectedRows("English", "French", "Spanish"), is(true));
     }
 
     @Test
     public void selectWithJs() {
-        assertTrue(multiSelectList.selectRowsWithJs("German", "Japanese", "Russian"));
-        assertTrue(multiSelectList.isSelectedRows("German", "Japanese", "Russian"));
+        assertThat(multiSelectList.selectRowsWithJs("German", "Japanese", "Russian"), is(true));
+        assertThat(multiSelectList.isSelectedRows("German", "Japanese", "Russian"), is(true));
     }
 }

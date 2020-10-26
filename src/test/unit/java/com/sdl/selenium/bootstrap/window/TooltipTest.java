@@ -1,9 +1,11 @@
 package com.sdl.selenium.bootstrap.window;
 
 import com.sdl.selenium.bootstrap.form.Form;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class TooltipTest {
 
@@ -21,6 +23,6 @@ public class TooltipTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Tooltip tooltip, String expectedXpath) {
-        Assert.assertEquals(tooltip.getXPath(), expectedXpath);
+        assertThat(tooltip.getXPath(), equalTo(expectedXpath));
     }
 }

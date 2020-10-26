@@ -11,8 +11,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class TabPanelIntegrationTest extends TestBase {
 
@@ -47,17 +48,17 @@ public class TabPanelIntegrationTest extends TestBase {
     @Test
     public void activeTab1() {
         tabPanel1.setActive();
-        assertTrue(panelWithFrame.isPresent());
-        assertEquals(elTab1.getText(), "element 1");
-        assertEquals(elTab11.getText(), "element 00");
+        assertThat(panelWithFrame.isPresent(), is(true));
+        assertThat(elTab1.getText(), equalTo("element 1"));
+        assertThat(elTab11.getText(), equalTo("element 00"));
         tabPanel21.setActive();
-        assertEquals(elTab21.getText(), "element 01");
+        assertThat(elTab21.getText(), equalTo("element 01"));
     }
 
     @Test
     public void activeTab2() {
         tabPanel2.setActive();
-        assertTrue(panelNoWithFrame.isPresent());
-        assertEquals(elTab12.getText(), "element 2");
+        assertThat(panelNoWithFrame.isPresent(), is(true));
+        assertThat(elTab12.getText(), equalTo("element 2"));
     }
 }

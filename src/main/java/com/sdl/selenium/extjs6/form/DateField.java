@@ -68,7 +68,12 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     private boolean setDate(String day, String month, String year) {
-        String fullDate = RetryUtils.retry(4, () -> monthYearButton.getText()).trim();
+        String fullDate = "";
+        try {
+            fullDate = RetryUtils.retrySafe(5, () -> monthYearButton.getText()).trim();
+        } catch (NullPointerException e){
+            Utils.sleep(1);
+        }
         if (!fullDate.contains(month) || !fullDate.contains(year)) {
             monthYearButton.click();
             if (!yearAndMonth.ready()) {
@@ -130,7 +135,7 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     public boolean select(String date) {
-        return select(date, "dd/MM/yyyy");
+        return RetryUtils.retry(2, ()-> select(date, "dd/MM/yyyy"));
     }
 
     public boolean select(String date, String format) {

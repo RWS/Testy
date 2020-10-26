@@ -2,6 +2,7 @@ package com.sdl.selenium.bootstrap.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,7 +138,18 @@ public class DatePicker extends WebLocator {
         int currentYear = Integer.parseInt(fullDate.split(" ")[1]);
         int yearInt = Integer.parseInt(year);
         int count = (int) Math.ceil((yearInt - currentYear) / 10.0);
+        doGoToYear(count);
+        WebLocator yearEl = new WebLocator(dataPickerYear).setClasses("year").setText(year);
+        if (!yearEl.isPresent()) {
+            WebLocator firstYearEl = new WebLocator(dataPickerYear).setClasses("year");
+            int actualYear = Integer.parseInt(firstYearEl.getText());
+            Utils.sleep(1);
+            count = (int) Math.ceil((yearInt - actualYear) / 3.0);
+            doGoToYear(count);
+        }
+    }
 
+    private void doGoToYear(int count) {
         while (count > 0) {
             WebLocator next = new WebLocator(dataPickerYear).setClasses("next");
             next.click();

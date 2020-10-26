@@ -1,9 +1,11 @@
 package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.SearchType;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class RowTest {
 
@@ -28,7 +30,7 @@ public class RowTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(Row tableRow, String expectedXpath) {
-        Assert.assertEquals(tableRow.getXPath(), expectedXpath);
+        assertThat(tableRow.getXPath(), equalTo(expectedXpath));
     }
 
     @DataProvider
@@ -40,6 +42,6 @@ public class RowTest {
 
     @Test(dataProvider = "testConstructorPathDataProviderCell")
     public void getPathSelectorCorrectlyFromConstructorsCell(Cell cell, String expectedXpath) {
-        Assert.assertEquals(cell.getXPath(), expectedXpath);
+        assertThat(cell.getXPath(), equalTo(expectedXpath));
     }
 }

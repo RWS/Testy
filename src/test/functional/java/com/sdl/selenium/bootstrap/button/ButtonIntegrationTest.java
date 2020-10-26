@@ -10,8 +10,9 @@ import org.openqa.selenium.Point;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class ButtonIntegrationTest extends TestBase {
 
@@ -26,11 +27,11 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test
     public void verifyIsDisabled() {
-        assertTrue(disableBtn.isDisabled());
-        assertTrue(disableBtnCls.isDisabled());
-        assertEquals(disableBtnCls.currentElement.getTagName(), "button");
-        assertEquals(disableBtnCls.currentElement.getLocation(), new Point(166, 519));
-        assertEquals(disableBtnCls.currentElement.getSize(), new Dimension(114, 30));
+        assertThat(disableBtn.isDisabled(), is(true));
+        assertThat(disableBtnCls.isDisabled(), is(true));
+        assertThat(disableBtnCls.currentElement.getTagName(), equalTo("button"));
+        assertThat(disableBtnCls.currentElement.getLocation(), is(new Point(166, 519)));
+        assertThat(disableBtnCls.currentElement.getSize(), is(new Dimension(114, 30)));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class ButtonIntegrationTest extends TestBase {
 
         Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
 
-        assertTrue(form.ready());
+        assertThat(form.ready(), is(true));
     }
 
     @Test
@@ -49,7 +50,7 @@ public class ButtonIntegrationTest extends TestBase {
 
         Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input, picker);
 
-        assertTrue(form.ready());
+        assertThat(form.ready(), is(true));
     }
 
     @Test
@@ -59,6 +60,6 @@ public class ButtonIntegrationTest extends TestBase {
         Form form = new Form().setTitle("Page Object And Page Factory").setChildNodes(input);
         input.setContainer(form);
 
-        assertTrue(form.ready());
+        assertThat(form.ready(), is(true));
     }
 }

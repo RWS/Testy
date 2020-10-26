@@ -30,11 +30,11 @@
             <class name="com.sdl.selenium.extjs3.FireEventWithJSIntegrationTest"/>
         </classes>
     </test>
-    <test name="ListTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.list.ListIntegrationTest"/>
-        </classes>
-    </test>
+<!--    <test name="ListTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.list.ListIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
     <test name="RadioGroupTest">
         <classes>
             <class name="com.sdl.selenium.extjs3.form.RadioGroupIntegrationTest"/>
