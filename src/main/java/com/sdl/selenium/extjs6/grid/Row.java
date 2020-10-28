@@ -12,6 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
@@ -62,7 +64,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public <V> V getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        List<String> cellsText = columnLanguages == 0 ? getCellsText(excludedColumns) : getCellsText(columnLanguages, excludedColumns);
+        return getCellsText(type, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    public <V> V getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<String> cellsText = getCellsText(predicate, function, excludedColumns);
         int fieldsCount;
         Constructor constructor = null;
         try {
@@ -87,13 +93,17 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public List<String> getCellsText(short columnLanguages, int... excludedColumns) {
+        return getCellsText(t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    public List<String> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         WebLocator columnsEl = new WebLocator(this).setTag("td");
         List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
         List<String> list = new ArrayList<>();
         for (int j : columns) {
             Cell cell = new Cell(this, j);
-            if (columnLanguages == j) {
-                list.add(cell.getLanguages());
+            if (predicate.test(j)) {
+                list.add(function.apply(cell));
             } else {
                 list.add(cell.getText().trim());
             }
