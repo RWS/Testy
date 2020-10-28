@@ -16,6 +16,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Grid extends Table implements Scrollable {
@@ -190,7 +192,7 @@ public class Grid extends Table implements Scrollable {
         return new ArrayList<>(Arrays.asList(headerText.trim().split("\n")));
     }
 
-    private List<List<String>> getLists(int rows, boolean rowExpand, short columnLanguages, List<Integer> columnsList) {
+    private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
             rowsEl.setTag("tr");
@@ -211,8 +213,8 @@ public class Grid extends Table implements Scrollable {
                         }
                         Cell cell = new Cell(row, j);
                         String text;
-                        if (columnLanguages == j) {
-                            text = cell.getLanguages();
+                        if (predicate.test(j)) {
+                            text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
                         }
@@ -251,11 +253,19 @@ public class Grid extends Table implements Scrollable {
         return getCellsText(false, columnLanguages, excludedColumns);
     }
 
+    public List<List<String>> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        return getCellsText(false, predicate, function, excludedColumns);
+    }
+
     public List<List<String>> getCellsText(boolean rowExpand, int... excludedColumns) {
         return getCellsText(rowExpand, (short) 0, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, short columnLanguages, int... excludedColumns) {
+        return getCellsText(rowExpand, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         if (rowExpand) {
@@ -269,7 +279,7 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return getLists(rows, rowExpand, columnLanguages, columnsList);
+            return getLists(rows, rowExpand, predicate, function, columnsList);
         }
     }
 
@@ -322,7 +332,11 @@ public class Grid extends Table implements Scrollable {
     }
 
     public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        List<List<String>> cellsText = getCellsText(columnLanguages, excludedColumns);
+        return getCellsText(type, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(predicate, function, excludedColumns);
         if (cellsText == null) {
             return null;
         }
@@ -341,7 +355,7 @@ public class Grid extends Table implements Scrollable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        final Constructor <V> finalConstructor = (Constructor<V>)constructor;
+        final Constructor<V> finalConstructor = (Constructor<V>) constructor;
         return cellsText.stream().map(t -> {
             try {
                 return finalConstructor.newInstance(t.toArray(new Object[0]));
