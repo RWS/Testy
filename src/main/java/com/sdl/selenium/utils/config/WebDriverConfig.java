@@ -227,18 +227,8 @@ public class WebDriverConfig {
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
-            if (properties.isRemoteDriver()) {
-                properties.setProperty("browser.download.dir","/home/seluser/Downloads");
-            }
-
             driver = properties.createDriver(remoteUrl);
-
-            if (!properties.isRemoteDriver()) {
-                    WebDriverConfig.setDownloadPath(properties.getDownloadPath());
-            }
-            else{
-                properties.setProperty("browser.download.dir","/home/seluser/Downloads");
-            }
+            WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
 
             if (browser != Browser.FIREFOX) {
