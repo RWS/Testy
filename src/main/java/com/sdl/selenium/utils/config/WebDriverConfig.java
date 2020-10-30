@@ -228,8 +228,17 @@ public class WebDriverConfig {
             }
 
             driver = properties.createDriver(remoteUrl);
-            WebDriverConfig.setDownloadPath(properties.getDownloadPath());
+
+            if (System.getProperty("remoteDriver") != null) {
+                if (System.getProperty("remoteDriver").equalsIgnoreCase("false")) {
+                    WebDriverConfig.setDownloadPath(properties.getDownloadPath());
+                }
+            } else {
+                WebDriverConfig.setDownloadPath(properties.getDownloadPath());
+
+            }
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
+
             if (browser != Browser.FIREFOX) {
                 WebDriverConfig.setHeadless(properties.getProperty("options.arguments").contains("headless"));
             }
