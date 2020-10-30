@@ -227,20 +227,18 @@ public class WebDriverConfig {
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
+            if (properties.isRemoteDriver()) {
+                properties.setProperty("browser.download.dir","/home/seluser/Downloads");
+            }
+
             driver = properties.createDriver(remoteUrl);
 
-            if (System.getProperty("remoteDriver") != null) {
-                if (System.getProperty("remoteDriver").equalsIgnoreCase("true")) {
-                    WebDriverConfig.setDownloadPath("/home/seluser/Downloads");
-                }
-                else{
+            if (!properties.isRemoteDriver()) {
                     WebDriverConfig.setDownloadPath(properties.getDownloadPath());
-                }
             }
             else{
-                WebDriverConfig.setDownloadPath(properties.getDownloadPath());
+                properties.setProperty("browser.download.dir","/home/seluser/Downloads");
             }
-
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
 
             if (browser != Browser.FIREFOX) {
