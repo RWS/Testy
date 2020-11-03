@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
@@ -66,8 +67,9 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
     }
 
     @Override
-    public WebDriver createDriver(URL remoteUrl) {
+    public WebDriver createDriver(URL remoteUrl, DesiredCapabilities capabilities) {
         ChromeOptions options = getChromeOptions();
+        options.merge(capabilities);
         options.setAcceptInsecureCerts(true);
         if (isRemoteDriver()) {
             RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, options);

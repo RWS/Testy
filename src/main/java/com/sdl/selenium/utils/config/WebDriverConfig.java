@@ -9,12 +9,18 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.client.ClientUtil;
+import net.lightbody.bmp.proxy.CaptureType;
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -45,6 +51,8 @@ public class WebDriverConfig {
     private static boolean isHeadless;
     private static DriverService driverService;
     private static String downloadPath;
+    private static boolean recordNetworkTraffic;
+    private static BrowserMobProxy proxy;
 
     /**
      * @return last created driver (current one)
@@ -227,7 +235,20 @@ public class WebDriverConfig {
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
-            driver = properties.createDriver(remoteUrl);
+            if (WebDriverConfig.isRecordNetworkTraffic()) {
+                proxy = new BrowserMobProxyServer();
+                proxy.setTrustAllServers(true);
+                proxy.start(0);
+                proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT, CaptureType.RESPONSE_HEADERS);
+                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
+                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                capabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
+                driver = properties.createDriver(remoteUrl, capabilities);
+            } else {
+                driver = properties.createDriver(remoteUrl, null);
+            }
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
 
@@ -258,6 +279,8 @@ public class WebDriverConfig {
     private static Browser findBrowser(InputStream inputStream) {
         PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
+
+        WebDriverConfig.setRecordNetworkTraffic(Boolean.parseBoolean(properties.getProperty("browser.recordNetworkTraffic")));
 
         WebLocatorConfig.setBrowserProperties(properties);
 
@@ -337,5 +360,17 @@ public class WebDriverConfig {
             millis -= 100;
         }
         return hasExpectedTabs;
+    }
+
+    public static boolean isRecordNetworkTraffic() {
+        return recordNetworkTraffic;
+    }
+
+    public static void setRecordNetworkTraffic(boolean recordNetworkTraffic) {
+        WebDriverConfig.recordNetworkTraffic = recordNetworkTraffic;
+    }
+
+    public static BrowserMobProxy getProxy() {
+        return proxy;
     }
 }

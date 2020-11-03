@@ -2,6 +2,7 @@ package com.sdl.selenium.utils.browsers;
 
 import com.sdl.selenium.web.utils.PropertiesReader;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.service.DriverService;
 import org.slf4j.Logger;
 
@@ -22,7 +23,7 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
 
     public abstract WebDriver createDriver() throws IOException;
 
-    public abstract WebDriver createDriver(URL remoteUrl) throws IOException;
+    public abstract WebDriver createDriver(URL remoteUrl, DesiredCapabilities capabilities) throws IOException;
 
     public abstract boolean isSilentDownload();
 
@@ -47,6 +48,11 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
 
     public boolean isRemoteDriver() {
         String remoteProperty = System.getProperty("remoteDriver");
-        return remoteProperty != null && Boolean.parseBoolean(remoteProperty);
+        return Boolean.parseBoolean(remoteProperty);
+    }
+
+    public boolean isRecordNetworkTraffic() {
+        String recordNetworkTraffic = System.getProperty("browser.recordNetworkTraffic");
+        return Boolean.parseBoolean(recordNetworkTraffic);
     }
 }

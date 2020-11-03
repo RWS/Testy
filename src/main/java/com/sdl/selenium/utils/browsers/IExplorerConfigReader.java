@@ -3,6 +3,7 @@ package com.sdl.selenium.utils.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
@@ -51,8 +52,9 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     }
 
     @Override
-    public WebDriver createDriver(URL remoteUrl) {
-        InternetExplorerOptions capabilities = getOptions();
+    public WebDriver createDriver(URL remoteUrl, DesiredCapabilities capabilities) {
+        InternetExplorerOptions defaultCapabilities = getOptions();
+        capabilities.merge(defaultCapabilities);
         if (isRemoteDriver()) {
             RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);
             driver.setFileDetector(new LocalFileDetector());
