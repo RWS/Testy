@@ -150,7 +150,7 @@ public class RetryUtils {
         fib.setLast(fib.getStart());
         fib.setStart(sum);
         fib.setResult(sum);
-        log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "time is {}", sum);
+//        log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "time is {}", sum);
         return fib;
     }
 
@@ -158,7 +158,7 @@ public class RetryUtils {
         int t = 0;
         for (int i = 0; i < 10; i++) {
             t = RetryUtils.fibonacci(t, new Fib(), "").getResult();
-            log.info("time is {}", t);
+//            log.info("time is {}", t);
             Utils.sleep(t);
         }
     }
