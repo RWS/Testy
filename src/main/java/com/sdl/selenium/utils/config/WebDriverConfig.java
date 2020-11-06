@@ -32,10 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
@@ -245,9 +242,17 @@ public class WebDriverConfig {
                 capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
                 capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 capabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
+                if (properties.isVNCEnabled()) {
+                    capabilities.setCapability("enableVNC", true);
+                }
                 driver = properties.createDriver(remoteUrl, capabilities);
             } else {
-                driver = properties.createDriver(remoteUrl, null);
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                if (properties.isVNCEnabled()) {
+                    capabilities.setCapability("enableVNC", true);
+                }
+                driver = properties.createDriver(remoteUrl, capabilities);
+
             }
             WebDriverConfig.setDownloadPath(properties.getDownloadPath());
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());

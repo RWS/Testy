@@ -55,4 +55,9 @@ public abstract class AbstractBrowserConfigReader extends PropertiesReader {
         String recordNetworkTraffic = System.getProperty("browser.recordNetworkTraffic");
         return Boolean.parseBoolean(recordNetworkTraffic);
     }
+
+    public boolean isVNCEnabled() {
+        String vncEnabled = System.getProperty("browser.vncEnabled");
+        return Boolean.parseBoolean(vncEnabled);
+    }
 }
