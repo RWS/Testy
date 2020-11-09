@@ -19,6 +19,7 @@ import java.util.List;
 public class Tab extends WebLocator implements ITab {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Tab.class);
     private String iconCls;
+    private String tagTabBody = "following-sibling::*";
 
     public Tab() {
         setClassName("TabPanel");
@@ -46,6 +47,11 @@ public class Tab extends WebLocator implements ITab {
 
     public <T extends Tab> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
+        return (T) this;
+    }
+
+    public <T extends Tab> T setTagTabBody(final String tagTabBody) {
+        this.tagTabBody = tagTabBody;
         return (T) this;
     }
 
@@ -84,7 +90,7 @@ public class Tab extends WebLocator implements ITab {
              */
             @Override
             public String getItemPath(boolean disabled) {
-                WebLocator body = new WebLocator().setTag("following-sibling::*").setClasses("x-panel-body");
+                WebLocator body = new WebLocator().setTag(getTagTabBody()).setClasses("x-panel-body");
                 WebLocator tab = new WebLocator(body).setRoot("/").setExcludeClasses("x-hidden-offsets").setClasses("x-tabpanel-child");
                 return getBaseTabPanelPath() + tab.getXPath();
             }
@@ -128,6 +134,10 @@ public class Tab extends WebLocator implements ITab {
 
     public String getIconCls() {
         return this.iconCls;
+    }
+
+    public String getTagTabBody() {
+        return tagTabBody;
     }
 
     public List<String> getTabsName() {
