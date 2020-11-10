@@ -3,6 +3,7 @@ package com.sdl.selenium.web.utils;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -10,12 +11,41 @@ public class RetryUtils {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(RetryUtils.class);
 
-    public static <V> V retry(int maxRetries, Callable<V> t) {
-        return retry(maxRetries, null, t, false);
+    public static <V> V retry(int maxRetries, Callable<V> call) {
+        return retry(maxRetries, null, call, false);
     }
 
-    public static <V> V retry(int maxRetries, String prefixLog, Callable<V> t) {
-        return retry(maxRetries, prefixLog, t, false);
+    /**
+     *
+     * @param duration example 20 seconds
+     * @param call button.click()
+     * @param <V> type of method
+     * @return true or false, throw RuntimeException()
+     * <pre>{@code
+     * RetryUtils.retry(Duration.ofSeconds(10), ()-> button.click());
+     * }</pre>
+     */
+    public static <V> V retry(Duration duration, Callable<V> call) {
+        return retry(duration, null, call, false);
+    }
+
+    public static <V> V retry(int maxRetries, String prefixLog, Callable<V> call) {
+        return retry(maxRetries, prefixLog, call, false);
+    }
+
+    /**
+     *
+     * @param duration example 20 seconds
+     * @param prefixLog class name
+     * @param call button.click()
+     * @param <V> type of method
+     * @return true or false, throw RuntimeException()
+     * <pre>{@code
+     * RetryUtils.retry(Duration.ofSeconds(10), "LoginButton", ()-> button.click());
+     * }</pre>
+     */
+    public static <V> V retry(Duration duration, String prefixLog, Callable<V> call) {
+        return retry(duration, prefixLog, call, false);
     }
 
     public static boolean retryRunnable(int maxRetries, Runnable r) {
@@ -42,7 +72,7 @@ public class RetryUtils {
         do {
             count++;
 //            wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
-            wait = count < 9 ? fibonacci(wait, fib, prefixLog).getResult() : wait;
+            wait = count < 9 ? fibonacci(wait, fib).getResult() : wait;
             Utils.sleep(wait);
             try {
                 r.run();
@@ -52,8 +82,7 @@ public class RetryUtils {
                     return false;
                 } else {
                     if (count >= maxRetries) {
-                        long endMs = System.currentTimeMillis();
-                        long duringMs = endMs - startMs;
+                        long duringMs = getDuringMillis(startMs);
                         log.error((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
@@ -61,14 +90,13 @@ public class RetryUtils {
             }
         } while (count < maxRetries);
         if (count > 1) {
-            long endMs = System.currentTimeMillis();
-            long duringMs = endMs - startMs;
+            long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
         return true;
     }
 
-    private static <V> V retry(int maxRetries, String prefixLog, Callable<V> t, boolean safe) {
+    private static <V> V retry(int maxRetries, String prefixLog, Callable<V> call, boolean safe) {
         int count = 0;
         int wait = 0;
         Fib fib = new Fib();
@@ -77,16 +105,15 @@ public class RetryUtils {
         do {
             count++;
 //            wait = wait == 0 ? 5 : count < 9 ? wait * 2 : wait;
-            wait = count < 9 ? fibonacci(wait, fib, prefixLog).getResult() : wait;
+            wait = count < 9 ? fibonacci(wait, fib).getResult() : wait;
             Utils.sleep(wait);
 //            log.info("Retry {} and wait {} ->!!!", count, wait);
             try {
-                execute = t.call();
+                execute = call.call();
             } catch (Exception | AssertionError e) {
                 if (!safe) {
                     if (count >= maxRetries) {
-                        long endMs = System.currentTimeMillis();
-                        long duringMs = endMs - startMs;
+                        long duringMs = getDuringMillis(startMs);
                         log.error((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
                         throw new RuntimeException(e.getMessage(), e);
                     }
@@ -94,24 +121,64 @@ public class RetryUtils {
             }
         } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
         if (count > 1) {
-            long endMs = System.currentTimeMillis();
-            long duringMs = endMs - startMs;
+            long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
         return execute;
     }
 
+    private static <V> V retry(Duration duration, String prefixLog, Callable<V> call, boolean safe) {
+        int count = 0;
+        int wait = 0;
+        int limit = (int) duration.getSeconds() / 5;
+        Fib fib = new Fib(limit);
+        long startMillis = System.currentTimeMillis();
+        V execute = null;
+        do {
+            count++;
+            wait = fibonacciSinusoidal(wait, fib).getResult();
+            Utils.sleep(wait);
+            try {
+                execute = call.call();
+            } catch (Exception | AssertionError e) {
+                if (!safe) {
+                    if (timeIsOver(startMillis, duration)) {
+                        long duringMillis = getDuringMillis(startMillis);
+                        log.error((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds ->{}", count, duringMillis, e);
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                }
+            }
+        } while ((execute == null || isNotExpected(execute)) && !timeIsOver(startMillis, duration));
+        if (count > 1) {
+            long duringMillis = getDuringMillis(startMillis);
+            log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMillis);
+        }
+        return execute;
+    }
+
+    private static boolean timeIsOver(long startMillis, Duration duration) {
+        long duringMillis = getDuringMillis(startMillis);
+        long toMillis = duration.toMillis();
+        return toMillis <= duringMillis;
+    }
+
+    private static long getDuringMillis(long startMillis) {
+        long endMillis = System.currentTimeMillis();
+        return endMillis - startMillis;
+    }
+
     @Deprecated
-    public static <V> V retryWithSuccess(int maxRetries, Callable<V> t) {
-        return retry(maxRetries, t);
+    public static <V> V retryWithSuccess(int maxRetries, Callable<V> call) {
+        return retry(maxRetries, call);
     }
 
-    public static <V> V retrySafe(int maxRetries, Callable<V> t) {
-        return retry(maxRetries, null, t, true);
+    public static <V> V retrySafe(int maxRetries, Callable<V> call) {
+        return retry(maxRetries, null, call, true);
     }
 
-    public static <V> V retrySafe(int maxRetries, String prefixLog, Callable<V> t) {
-        return retry(maxRetries, prefixLog, t, true);
+    public static <V> V retrySafe(int maxRetries, String prefixLog, Callable<V> call) {
+        return retry(maxRetries, prefixLog, call, true);
     }
 
     private static <V> boolean isNotExpected(V execute) {
@@ -125,27 +192,27 @@ public class RetryUtils {
         return execute == null;
     }
 
-    public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> t) {
+    public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> call) {
         V result = retry(maxRetries, () -> {
-            V text = t.call();
+            V text = call.call();
             if (text instanceof Integer) {
                 return expected == text ? text : null;
             } else {
                 return expected.equals(text) ? text : null;
             }
         });
-        return result == null ? retry(0, t) : result;
+        return result == null ? retry(0, call) : result;
     }
 
-    public static <V> V retryIfNotContains(int maxRetries, String expected, Callable<V> t) {
+    public static <V> V retryIfNotContains(int maxRetries, String expected, Callable<V> call) {
         V result = retry(maxRetries, () -> {
-            V text = t.call();
+            V text = call.call();
             return text instanceof String && ((String) text).contains(expected) ? text : null;
         });
-        return result == null ? retry(0, t) : result;
+        return result == null ? retry(0, call) : result;
     }
 
-    private static Fib fibonacci(int time, Fib fib, String prefixLog) {
+    private static Fib fibonacci(int time, Fib fib) {
         int sum = time + fib.getLast();
         fib.setLast(fib.getStart());
         fib.setStart(sum);
@@ -154,10 +221,37 @@ public class RetryUtils {
         return fib;
     }
 
+    private static Fib fibonacciSinusoidal(int time, Fib fib) {
+        int sum = 0;
+        if (fib.isPositive() && time >= fib.getLimit()) {
+            sum = fib.getLast();
+            fib.setStart(fib.getStart() - fib.getLast());
+            fib.setLast(sum);
+            fib.setPositive(false);
+        } else if (!fib.isPositive() && time < fib.getLimit()) {
+            sum = fib.getStart();
+            fib.setStart(fib.getLast() - fib.getStart());
+            fib.setLast(sum);
+        } else if (fib.isPositive() && time >= 0) {
+            sum = time + fib.getLast();
+            fib.setLast(fib.getStart());
+            fib.setStart(sum);
+        } else {
+            log.info("This value is not covered!");
+            Utils.sleep(1);
+        }
+        if (sum <= 0) {
+            fib.setPositive(true);
+        }
+        fib.setResult(sum);
+//        log.info("result is: {}", sum);
+        return fib;
+    }
+
     public static void main(String[] args) {
         int t = 0;
         for (int i = 0; i < 10; i++) {
-            t = RetryUtils.fibonacci(t, new Fib(), "").getResult();
+            t = RetryUtils.fibonacci(t, new Fib()).getResult();
 //            log.info("time is {}", t);
             Utils.sleep(t);
         }
@@ -167,6 +261,15 @@ public class RetryUtils {
         private int start = 0;
         private int last = 1;
         private int result;
+        private int limit = 60;
+        private boolean positive = true;
+
+        public Fib() {
+        }
+
+        public Fib(int limit) {
+            this.limit = limit;
+        }
 
         public void setStart(int start) {
             this.start = start;
@@ -190,6 +293,33 @@ public class RetryUtils {
 
         public int getResult() {
             return result;
+        }
+
+        public int getLimit() {
+            return limit;
+        }
+
+        public void setLimit(int limit) {
+            this.limit = limit;
+        }
+
+        public boolean isPositive() {
+            return positive;
+        }
+
+        public void setPositive(boolean positive) {
+            this.positive = positive;
+        }
+
+        @Override
+        public String toString() {
+            return "Fib{" +
+                    "start=" + start +
+                    ", last=" + last +
+                    ", result=" + result +
+                    ", limit=" + limit +
+                    ", positive=" + positive +
+                    '}';
         }
     }
 }

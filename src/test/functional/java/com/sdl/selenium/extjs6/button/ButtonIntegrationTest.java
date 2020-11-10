@@ -8,6 +8,8 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class ButtonIntegrationTest extends TestBase {
 
     private Table table = new Table().setClasses("x-table-layout");
@@ -20,7 +22,7 @@ public class ButtonIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-buttons");
         driver.switchTo().frame("examples-iframe");
-        small.ready(10);
+        small.ready(Duration.ofSeconds(10));
         Utils.sleep(1000);
     }
 

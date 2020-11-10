@@ -3,10 +3,12 @@ package com.sdl.selenium.web.table;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
+import java.time.Duration;
+
 public class Cell extends AbstractCell {
 
     public Cell() {
-        setRenderMillis(200);
+        setRender(Duration.ofMillis(200));
         setClassName("Cell");
         setTag("td");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
