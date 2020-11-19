@@ -137,7 +137,7 @@ public class RetryUtils {
         do {
             count++;
             wait = fibonacciSinusoidal(wait, fib).getResult();
-            Utils.sleep(wait * 10);
+            Utils.sleep(wait * 100);
             try {
                 execute = call.call();
             } catch (Exception | AssertionError e) {
