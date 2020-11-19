@@ -177,8 +177,15 @@ public class RetryUtils {
         return retry(maxRetries, null, call, true);
     }
 
+    public static <V> V retrySafe(Duration duration, Callable<V> call) {
+        return retry(duration, null, call, true);
+    }
+
     public static <V> V retrySafe(int maxRetries, String prefixLog, Callable<V> call) {
         return retry(maxRetries, prefixLog, call, true);
+    }
+    public static <V> V retrySafe(Duration duration, String prefixLog, Callable<V> call) {
+        return retry(duration, prefixLog, call, true);
     }
 
     private static <V> boolean isNotExpected(V execute) {
