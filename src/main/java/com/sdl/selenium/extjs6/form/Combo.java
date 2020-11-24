@@ -60,6 +60,9 @@ public abstract class Combo extends Field implements ICombo {
         if (values == null) {
             return null;
         }
+        if (values.isEmpty()) {
+            return new ArrayList<>();
+        }
         Class<?> newClazz;
         int size = values.get(0).split("\\n").length;
         Constructor constructor = null;
@@ -120,10 +123,10 @@ public abstract class Combo extends Field implements ICombo {
     }
 
     /**
-     * @param value             value
-     * @param duration          eg. 300ms
-     * @param pagination        true | false
-     * @param searchType        use {@link SearchType}
+     * @param value      value
+     * @param duration   eg. 300ms
+     * @param pagination true | false
+     * @param searchType use {@link SearchType}
      * @return true if value was selected
      */
     public boolean doSelect(String value, Duration duration, boolean pagination, SearchType... searchType) {
