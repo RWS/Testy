@@ -194,7 +194,7 @@ public class RetryUtils {
         } else if (execute instanceof String) {
             return Strings.isNullOrEmpty((String) execute);
         } else if (execute instanceof List) {
-            List list = (List) execute;
+            List<?> list = (List<?>) execute;
             return list.isEmpty() || list.stream().allMatch(Objects::isNull);
         }
         return execute == null;
@@ -206,8 +206,8 @@ public class RetryUtils {
             if (text instanceof Integer && expected instanceof Integer) {
                 return expected == text ? text : null;
             } else if (text instanceof List && expected instanceof List) {
-                List currentList = (List) text;
-                List expectedList = (List) expected;
+                List<?> currentList = (List<?>) text;
+                List<?> expectedList = (List<?>) expected;
                 if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
                     List<List<?>> currentListOfList = (List<List<?>>) text;
                     List<List<?>> expectedListOfList = (List<List<?>>) expected;

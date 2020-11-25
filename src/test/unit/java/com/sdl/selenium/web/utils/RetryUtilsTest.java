@@ -8,12 +8,12 @@ import java.util.List;
 
 public class RetryUtilsTest {
 
-//    @Test
-//    public void test1() {
-//        List<String> list = Arrays.asList("a", "b");
-//        List<String> actual = RetryUtils.retryIfNotSame(2, list, () -> getList());
-//        Utils.sleep(1);
-//    }
+    @Test
+    public void test1() {
+        List<String> list = Arrays.asList("a", "b");
+        List<String> actual = RetryUtils.retryIfNotSame(2, list, () -> getList());
+        Utils.sleep(1);
+    }
 
     @Test
     public void test2() {
