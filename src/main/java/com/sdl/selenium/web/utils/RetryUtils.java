@@ -17,10 +17,9 @@ public class RetryUtils {
     }
 
     /**
-     *
      * @param duration example 20 seconds
-     * @param call button.click()
-     * @param <V> type of method
+     * @param call     button.click()
+     * @param <V>      type of method
      * @return true or false, throw RuntimeException()
      * <pre>{@code
      * RetryUtils.retry(Duration.ofSeconds(10), ()-> button.click());
@@ -35,11 +34,10 @@ public class RetryUtils {
     }
 
     /**
-     *
-     * @param duration example 20 seconds
+     * @param duration  example 20 seconds
      * @param prefixLog class name
-     * @param call button.click()
-     * @param <V> type of method
+     * @param call      button.click()
+     * @param <V>       type of method
      * @return true or false, throw RuntimeException()
      * <pre>{@code
      * RetryUtils.retry(Duration.ofSeconds(10), "LoginButton", ()-> button.click());
@@ -185,6 +183,7 @@ public class RetryUtils {
     public static <V> V retrySafe(int maxRetries, String prefixLog, Callable<V> call) {
         return retry(maxRetries, prefixLog, call, true);
     }
+
     public static <V> V retrySafe(Duration duration, String prefixLog, Callable<V> call) {
         return retry(duration, prefixLog, call, true);
     }
@@ -204,10 +203,33 @@ public class RetryUtils {
     public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> call) {
         V result = retry(maxRetries, () -> {
             V text = call.call();
-            if (text instanceof Integer) {
+            if (text instanceof Integer && expected instanceof Integer) {
                 return expected == text ? text : null;
-            } else {
+            } else if (text instanceof List && expected instanceof List) {
+                List currentList = (List) text;
+                List expectedList = (List) expected;
+                if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
+                    List<List<?>> currentListOfList = (List<List<?>>) text;
+                    List<List<?>> expectedListOfList = (List<List<?>>) expected;
+                    Boolean compare = null;
+                    if (currentListOfList.size() == expectedListOfList.size()) {
+                        for (int i = 0; i < currentListOfList.size(); i++) {
+                            boolean match = currentListOfList.get(i).containsAll(expectedListOfList.get(i));
+                            compare = compare == null ? match : compare && match;
+                        }
+                        return compare ? text : null;
+                    } else {
+                        return null;
+                    }
+                } else {
+                    boolean allMatch = expectedList.containsAll(currentList);
+                    return allMatch ? text : null;
+                }
+            } else if (text instanceof String && expected instanceof String) {
                 return expected.equals(text) ? text : null;
+            } else {
+                log.error("Expected and actual objects aren't the some type!");
+                return null;
             }
         });
         return result == null ? retry(0, call) : result;
