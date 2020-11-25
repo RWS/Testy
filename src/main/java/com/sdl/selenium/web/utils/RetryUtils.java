@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class RetryUtils {
@@ -194,7 +195,8 @@ public class RetryUtils {
         } else if (execute instanceof String) {
             return Strings.isNullOrEmpty((String) execute);
         } else if (execute instanceof List) {
-            return ((List) execute).isEmpty();
+            List list = (List) execute;
+            return list.isEmpty() || list.stream().allMatch(Objects::isNull);
         }
         return execute == null;
     }
