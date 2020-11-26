@@ -227,6 +227,10 @@ public class RetryUtils {
                 }
             } else if (text instanceof String && expected instanceof String) {
                 return expected.equals(text) ? text : null;
+            } else if (text instanceof Boolean && expected instanceof Boolean) {
+                Boolean bolActual = (Boolean) text;
+                Boolean bolExpected = (Boolean) expected;
+                return bolExpected.equals(bolActual) ? text : null;
             } else {
                 log.error("Expected and actual objects aren't the some type!");
                 return null;

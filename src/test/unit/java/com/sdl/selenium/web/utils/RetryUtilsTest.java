@@ -9,6 +9,12 @@ import java.util.List;
 public class RetryUtilsTest {
 
     @Test
+    public void test0() {
+        Boolean actual = RetryUtils.retryIfNotSame(2, false, () -> isLive());
+        Utils.sleep(1);
+    }
+
+    @Test
     public void test1() {
         List<String> list = Arrays.asList("a", "b");
         List<String> actual = RetryUtils.retryIfNotSame(2, list, () -> getList());
@@ -24,6 +30,10 @@ public class RetryUtilsTest {
         lists.add(list2);
         List<List<String>> actual = RetryUtils.retryIfNotSame(2, lists, () -> getListOfList());
         Utils.sleep(1);
+    }
+
+    public static boolean isLive() {
+        return true;
     }
 
     public static List<String> getList() {
