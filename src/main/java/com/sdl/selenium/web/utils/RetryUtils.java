@@ -200,41 +200,72 @@ public class RetryUtils {
         return execute == null;
     }
 
-    public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> call) {
-        V result = retry(maxRetries, () -> {
-            V text = call.call();
-            if (text instanceof Integer && expected instanceof Integer) {
-                return expected == text ? text : null;
-            } else if (text instanceof List && expected instanceof List) {
-                List<?> currentList = (List<?>) text;
-                List<?> expectedList = (List<?>) expected;
-                if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
-                    List<List<?>> currentListOfList = (List<List<?>>) text;
-                    List<List<?>> expectedListOfList = (List<List<?>>) expected;
-                    Boolean compare = null;
-                    if (currentListOfList.size() == expectedListOfList.size()) {
-                        for (int i = 0; i < currentListOfList.size(); i++) {
-                            boolean match = currentListOfList.get(i).containsAll(expectedListOfList.get(i));
-                            compare = compare == null ? match : compare && match;
-                        }
-                        return compare ? text : null;
-                    } else {
-                        return null;
+    /**
+     *
+     * @param duration Duration.ofSeconds(2)
+     * @param expected accept only: Integer, String, Boolean, List<String> and List<List<String>>
+     * @param call getCount();
+     * @param <V> expected Type
+     * @return expected value
+     */
+    public static <V> V retryIfNotSame(Duration duration, V expected, Callable<V> call) {
+        V result = retry(duration, () -> doRetryIfNotSame(expected, call));
+        return result == null ? retry(0, call) : result;
+    }
+
+    private static <V> V doRetryIfNotSame(V expected, Callable<V> call) throws Exception {
+        V text = call.call();
+        if (text instanceof Integer && expected instanceof Integer) {
+            return expected == text ? text : null;
+        } else if (text instanceof List && expected instanceof List) {
+            List<?> currentList = (List<?>) text;
+            List<?> expectedList = (List<?>) expected;
+            if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
+                List<List<?>> currentListOfList = (List<List<?>>) text;
+                List<List<?>> expectedListOfList = (List<List<?>>) expected;
+                Boolean compare = null;
+                if (currentListOfList.size() == expectedListOfList.size()) {
+                    for (int i = 0; i < currentListOfList.size(); i++) {
+                        boolean match = currentListOfList.get(i).containsAll(expectedListOfList.get(i));
+                        compare = compare == null ? match : compare && match;
                     }
+                    return compare ? text : null;
                 } else {
-                    boolean allMatch = expectedList.containsAll(currentList);
-                    return allMatch ? text : null;
+                    return null;
                 }
-            } else if (text instanceof String && expected instanceof String) {
-                return expected.equals(text) ? text : null;
-            } else if (text instanceof Boolean && expected instanceof Boolean) {
-                Boolean bolActual = (Boolean) text;
-                Boolean bolExpected = (Boolean) expected;
-                return bolExpected.equals(bolActual) ? text : null;
             } else {
-                log.error("Expected and actual objects aren't the some type!");
-                return null;
+                boolean allMatch = expectedList.containsAll(currentList);
+                return allMatch ? text : null;
             }
+        } else if (text instanceof String && expected instanceof String) {
+            return expected.equals(text) ? text : null;
+        } else if (text instanceof Boolean && expected instanceof Boolean) {
+            Boolean bolActual = (Boolean) text;
+            Boolean bolExpected = (Boolean) expected;
+            return bolExpected.equals(bolActual) ? text : null;
+        } else {
+            log.error("Expected and actual objects aren't the some type!");
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param maxRetries e.g 3
+     * @param expected accept only: Integer, String, Boolean, List<String> and List<List<String>>
+     * @param call getCount();
+     * @param <V> expected Type
+     * @return expected value
+     */
+    public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> call) {
+        V result = retry(maxRetries, () -> doRetryIfNotSame(expected, call));
+        return result == null ? retry(0, call) : result;
+    }
+
+    public static <V> V retryIfNotContains(Duration duration, String expected, Callable<V> call) {
+        V result = retry(duration, () -> {
+            V text = call.call();
+            return text instanceof String && ((String) text).contains(expected) ? text : null;
         });
         return result == null ? retry(0, call) : result;
     }

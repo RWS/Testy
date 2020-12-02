@@ -10,15 +10,23 @@ public class RetryUtilsTest {
 
     @Test
     public void test0() {
-        Boolean actual = RetryUtils.retryIfNotSame(2, false, () -> isLive());
+        Boolean actual = RetryUtils.retryIfNotSame(2, false, RetryUtilsTest::isLive);
         Utils.sleep(1);
+    }
+
+    public static boolean isLive() {
+        return true;
     }
 
     @Test
     public void test1() {
         List<String> list = Arrays.asList("a", "b");
-        List<String> actual = RetryUtils.retryIfNotSame(2, list, () -> getList());
+        List<String> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getList);
         Utils.sleep(1);
+    }
+
+    public static List<String> getList() {
+        return Arrays.asList("a", "b1");
     }
 
     @Test
@@ -28,17 +36,8 @@ public class RetryUtilsTest {
         lists.add(list);
         List<String> list2 = Arrays.asList("a1", "b1");
         lists.add(list2);
-        List<List<String>> actual = RetryUtils.retryIfNotSame(2, lists, () -> getListOfList());
+        List<List<String>> actual = RetryUtils.retryIfNotSame(2, lists, RetryUtilsTest::getListOfList);
         Utils.sleep(1);
-    }
-
-    public static boolean isLive() {
-        return true;
-    }
-
-    public static List<String> getList() {
-        List<String> list = Arrays.asList("a", "b1");
-        return list;
     }
 
     public static List<List<String>> getListOfList() {
