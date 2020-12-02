@@ -121,41 +121,35 @@ public class ComboBox extends Combo {
     }
 
     public boolean select(String value, SearchType... searchType) {
-        boolean selected = doSelect(value, Duration.ofMillis(300), false, searchType);
-        assertThat("Could not selected value on: " + this, selected);
-        return selected;
+        return select(value, Duration.ofMillis(300), searchType);
     }
 
     @Deprecated
     public boolean select(String value, long optionRenderMillis) {
-        boolean selected = doSelect(value, Duration.ofMillis(optionRenderMillis), false, SearchType.EQUALS);
-        assertThat("Could not selected value on: " + this, selected);
-        return selected;
+        return select(value, Duration.ofMillis(optionRenderMillis));
     }
 
     public boolean select(String value, Duration duration) {
-        boolean selected = doSelect(value, duration, false, SearchType.EQUALS);
-        assertThat("Could not selected value on: " + this, selected);
-        return selected;
+        return select(value, duration, false, SearchType.EQUALS);
     }
 
     public boolean select(String value, boolean pagination) {
-        boolean selected = doSelect(value, Duration.ofMillis(300), pagination, SearchType.EQUALS);
-        assertThat("Could not selected value on: " + this, selected);
-        return selected;
+        return select(value, Duration.ofMillis(300), pagination);
     }
 
     @Deprecated
     public boolean select(String value, long optionRenderMillis, boolean pagination) {
-        boolean selected = doSelect(value, optionRenderMillis, pagination, SearchType.EQUALS);
-        assertThat("Could not selected value on: " + this, selected);
-        return selected;
+        return select(value, Duration.ofMillis(optionRenderMillis), pagination);
     }
 
     public boolean select(String value, Duration duration, boolean pagination) {
         boolean selected = doSelect(value, duration, pagination, SearchType.EQUALS);
         assertThat("Could not selected value on: " + this, selected);
         return selected;
+    }
+
+    public boolean select(String value, Duration duration, SearchType... searchType) {
+        return select(value, duration, false, searchType);
     }
 
     @Deprecated
