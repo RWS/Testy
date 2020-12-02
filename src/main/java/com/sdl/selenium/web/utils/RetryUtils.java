@@ -203,7 +203,7 @@ public class RetryUtils {
     /**
      *
      * @param duration Duration.ofSeconds(2)
-     * @param expected accept only: Integer, String, Boolean, List<String> and List<List<String>>
+     * @param expected accept only: <pre>{@code Integer, String, Boolean, List<String> and List<List<String>> }</pre>
      * @param call getCount();
      * @param <V> expected Type
      * @return expected value
@@ -252,7 +252,7 @@ public class RetryUtils {
     /**
      *
      * @param maxRetries e.g 3
-     * @param expected accept only: Integer, String, Boolean, List<String> and List<List<String>>
+     * @param expected accept only: <pre>{@code Integer, String, Boolean, List<String> and List<List<String>> }</pre>
      * @param call getCount();
      * @param <V> expected Type
      * @return expected value
