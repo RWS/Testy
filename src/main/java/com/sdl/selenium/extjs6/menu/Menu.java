@@ -94,6 +94,20 @@ public class Menu extends WebLocator {
         return false;
     }
 
+    public boolean isHideMenu(WebLocator parent) {
+        final String parentId = parent.getAttributeId();
+        return hideMenu(parentId);
+    }
+
+    public boolean isHideMenu(String parentId) {
+        if (!Strings.isNullOrEmpty(parentId)) {
+            String script = "return (function(){var b = Ext.getCmp('" + parentId + "'); return b.menu.isHidden();})()";
+            Object object = WebLocatorUtils.doExecuteScript(script);
+            return (Boolean) object;
+        }
+        return false;
+    }
+
     public static class Values {
         private String name;
         private boolean enabled;
