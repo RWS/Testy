@@ -50,6 +50,11 @@
             <class name="com.sdl.selenium.extjs6.window.WindowTest"/>
             <class name="com.sdl.selenium.extjs6.window.NotificationTest"/>
 
+            <class name="com.sdl.selenium.extreact.button.ButtonTest"/>
+            <class name="com.sdl.selenium.extreact.menu.MenuTest"/>
+            <class name="com.sdl.selenium.extreact.form.CheckBox"/>
+            <class name="com.sdl.selenium.extreact.panel.PanelTest"/>
+
             <class name="com.sdl.selenium.bootstrap.window.PopOverTest"/>
             <class name="com.sdl.selenium.bootstrap.window.TooltipTest"/>
             <class name="com.sdl.selenium.bootstrap.window.WindowTest"/>

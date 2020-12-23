@@ -94,7 +94,7 @@
     </test>
     <test name="PanelIntegration">
         <classes>
-            <class name="com.sdl.selenium.extjs6.panel.PanelIntegrationTest"/>
+            <class name="com.sdl.selenium.extreact.panel.PanelIntegrationTest"/>
         </classes>
     </test>
     <test name="SliderIntegration">

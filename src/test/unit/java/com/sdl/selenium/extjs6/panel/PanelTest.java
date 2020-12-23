@@ -9,8 +9,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PanelTest {
-    private static WebLocator container = new WebLocator("container");
-    private static WebLocator title = new WebLocator().setClasses("x-title").setText("Title");
+    private static final WebLocator container = new WebLocator("container");
+    private static final WebLocator title = new WebLocator().setClasses("x-title").setText("Title");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
