@@ -26,7 +26,7 @@ public class Button extends WebLocator implements IButton {
         return iconCls;
     }
 
-    public <T extends com.sdl.selenium.extjs6.button.Button> T setIconCls(final String iconCls) {
+    public <T extends Button> T setIconCls(final String iconCls) {
         this.iconCls = iconCls;
         setTemplateValue("icon-cls", iconCls);
         return (T) this;
