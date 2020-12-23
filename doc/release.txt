@@ -5,6 +5,10 @@ http://central.sonatype.org/pages/apache-maven.html
 
 Run following commands in windows cmd prompt:
 
+    cmd
+
+    cd /d e:\Aplication\Testy
+
     mvn release:clean release:prepare
 
     mvn release:perform -Prelease-sign-artifacts
