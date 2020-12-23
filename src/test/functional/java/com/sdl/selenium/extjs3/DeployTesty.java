@@ -31,16 +31,16 @@ public class DeployTesty extends TestBase {
 
     private static final String JENKINS_JOB_URL = "https://cluj-jenkins03:8443/job/testy/";
 
-    private WebLocator loginContainer = new WebLocator().setClasses("login");
-    private WebLink logOutEl = new WebLink(loginContainer).setAttribute("href", "/logout");
-    private Form loginForm = new Form().setName("login");
-    private TextField username = new TextField(loginForm).setName("j_username");
-    private TextField pass = new TextField(loginForm).setName("j_password");
-    private InputButton logInButton = new InputButton(loginForm).setName("Submit");
-    private WebLocator table = new WebLocator().setId("tasks");
-    private WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
-    private Table buildHistory = new Table().setClasses("pane", "stripped");
-    private Row buildNowEl = new Row(buildHistory).setClasses("build-row", "transitive");
+    private final WebLocator loginContainer = new WebLocator().setClasses("login");
+    private final WebLink logOutEl = new WebLink(loginContainer).setAttribute("href", "/logout");
+    private final Form loginForm = new Form().setName("login");
+    private final TextField username = new TextField(loginForm).setName("j_username");
+    private final TextField pass = new TextField(loginForm).setName("j_password");
+    private final InputButton logInButton = new InputButton(loginForm).setName("Submit");
+    private final WebLocator table = new WebLocator().setId("tasks");
+    private final WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
+    private final Table buildHistory = new Table().setClasses("pane", "stripped");
+    private final Row buildNowEl = new Row(buildHistory).setClasses("build-row", "transitive");
 
     @BeforeClass
     public void startTests() {
@@ -49,12 +49,12 @@ public class DeployTesty extends TestBase {
 
     @Test
     public void loginJenkins() {
-        loginForm.ready(10);
+        loginForm.ready(Duration.ofSeconds(10));
         WebLocatorUtils.scrollToWebLocator(loginForm);
         username.setValue(DOMAIN_USER);
         pass.setValue(DOMAIN_PASS);
         logInButton.click();
-        logOutEl.ready(10);
+        logOutEl.ready(Duration.ofSeconds(10));
     }
 
     @Test(dependsOnMethods = "loginJenkins")

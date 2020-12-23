@@ -12,11 +12,11 @@ import java.time.Duration;
 
 public class ButtonIntegrationTest extends TestBase {
 
-    private Table table = new Table().setClasses("x-table-layout");
-    private Cell cell = table.getCell(1, 2);
-    private Button small = new Button(cell, "Small").setVisibility(true);
-    private Button icon = new Button(table).setIconCls("button-home-small").setVisibility(true);
-    private Button iconAndText = new Button(table, "Medium").setIconCls("button-home-medium").setVisibility(true);
+    private final Table table = new Table().setClasses("x-table-layout");
+    private final Cell cell = table.getCell(1, 2);
+    private final Button small = new Button(cell, "Small").setVisibility(true);
+    private final Button icon = new Button(table).setIconCls("button-home-small").setVisibility(true);
+    private final Button iconAndText = new Button(table, "Medium").setIconCls("button-home-medium").setVisibility(true);
 
     @BeforeClass
     public void startTests() {
