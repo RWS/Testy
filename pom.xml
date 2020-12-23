@@ -32,7 +32,6 @@
         <connection>scm:git:git@github.com:sdl/Testy.git</connection>
         <developerConnection>scm:git:git@github.com:sdl/Testy.git</developerConnection>
         <url>git@github.com:sdl/Testy.git</url>
-        <tag>Testy-2.12.0</tag>
     </scm>
 
     <distributionManagement>
