@@ -23,6 +23,7 @@ public class CheckBoxIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTREACT_EXAMPLE_URL + "forms/checkboxfield");
+        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         checked.ready(Duration.ofSeconds(10));
         Utils.sleep(1);

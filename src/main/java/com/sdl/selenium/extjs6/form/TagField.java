@@ -60,6 +60,12 @@ public class TagField extends Tag {
         return selected;
     }
 
+    public boolean select(SearchType searchType, Duration duration, String... values) {
+        boolean selected = doSelect(searchType, duration, true, values);
+        assertThat("Could not selected value on : " + this, selected, is(true));
+        return selected;
+    }
+
     public boolean select(SearchType searchType, boolean holdOpen, String... values) {
         boolean selected = doSelect(searchType, Duration.ofMillis(300), holdOpen, values);
         assertThat("Could not selected value on : " + this, selected, is(true));

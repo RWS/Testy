@@ -1,0 +1,12 @@
+<suite name="Testy Functional Test Suite for ExtReact" verbose="1">
+    <listeners>
+        <listener class-name="com.sdl.selenium.MyTransformer"></listener>
+    </listeners>
+    <test name="FieldIntegration">
+        <classes>
+            <class name="com.sdl.selenium.extreact.button.ButtonIntegrationTest"/>
+            <class name="com.sdl.selenium.extreact.form.CheckBoxIntegrationTest"/>
+            <class name="com.sdl.selenium.extreact.panel.PanelIntegrationTest"/>
+        </classes>
+    </test>
+</suite>

@@ -18,6 +18,7 @@ public class PanelIntegrationTest extends TestBase {
     @BeforeClass
     public void startTest() {
         driver.get(InputData.EXTREACT_EXAMPLE_URL + "panels/basic_panels");
+        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         titlePanel.ready(Duration.ofSeconds(10));
     }
