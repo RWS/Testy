@@ -10,6 +10,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class CellTest {
     public static WebLocator container = new WebLocator("container");
+    private static final WebLocator iconEl = new WebLocator().setClasses("fa-icon");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -27,6 +28,7 @@ public class CellTest {
                 {new Grid().getCell(1, "Test", new Cell(2, "Text")),"//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[2][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0]//td[1][(.='Test' or count(*//text()[.='Test']) > 0)]"},
                 {new Grid().getRow(new Cell("Header", "Text")).getCell(1),     "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[count(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='Header']) > 0]/preceding-sibling::*[@aria-hidden='false']) + number(boolean(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='Header']) > 0]/preceding-sibling::*[@aria-hidden='false']))][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]) > 0]//td[1]"},
                 {new Grid().getRow(new Cell("Header", "")).getCell(1),         "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td) > 0]//td[1]"},
+                {new Grid().getRow(new Cell(1, iconEl)).getCell(2),         "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[1][count(.//*[contains(concat(' ', @class, ' '), ' fa-icon ')]) > 0]) > 0]//td[2]"},
                 {new Grid(container).getRow(1).getCell(2),                          "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[position() = 1]//td[2]"},
                 {new Grid().getCell(1, new Cell(1, "&Text&Test", SearchType.CONTAINS_ALL_CHILD_NODES)), "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//td[1][count(*//text()[contains(.,'Text')]) > 0 and count(*//text()[contains(.,'Test')]) > 0]) > 0]//td[1]"},
         };

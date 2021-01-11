@@ -31,6 +31,10 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         super(columnIndex, columnText, searchTypes);
     }
 
+    public Cell(int columnIndex, WebLocator iconEl) {
+        super(columnIndex, iconEl);
+    }
+
     public Cell(String header, String cellText, SearchType... searchTypes) {
         super();
         if (!Strings.isNullOrEmpty(cellText)) {

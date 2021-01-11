@@ -35,6 +35,12 @@ public class Cell extends AbstractCell {
         setText(columnText, searchTypes);
     }
 
+    public Cell(int columnIndex, WebLocator iconEl) {
+        this();
+        setTemplateValue("tagAndPosition", columnIndex + "");
+        setChildNodes(iconEl);
+    }
+
     public Cell(String header, String cellText, SearchType... searchTypes) {
         this();
         setTag(getPathBuilder().getTag() + "[count(//th[text()='" + header + "']/preceding-sibling::*) + number(boolean(//th[text()='" + header + "']/preceding-sibling::*))]");
