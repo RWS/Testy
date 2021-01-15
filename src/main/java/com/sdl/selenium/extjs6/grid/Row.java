@@ -128,15 +128,35 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public boolean select() {
         scrollInGrid(this);
-        return isSelected() || RetryUtils.retry(2, () -> doSelect() && isSelected());
+        return isSelected() || RetryUtils.retry(2, () -> selectPrivate() && isSelected());
+    }
+
+    public boolean doSelect() {
+        scrollInGrid(this);
+        return isSelected() || RetryUtils.retry(2, () -> doSelectPrivate() && isSelected());
     }
 
     public boolean unSelect() {
         scrollInGrid(this);
-        return !isSelected() || RetryUtils.retry(2, () -> doSelect() && !isSelected());
+        return !isSelected() || RetryUtils.retry(2, () -> selectPrivate() && !isSelected());
     }
 
-    protected boolean doSelect() {
+    public boolean doUnSelect() {
+        scrollInGrid(this);
+        return !isSelected() || RetryUtils.retry(2, () -> doSelectPrivate() && !isSelected());
+    }
+
+    private boolean selectPrivate() {
+        WebLocator checkBox = new WebLocator(this);
+        if ("6.7.0".equals(getVersion())) {
+            checkBox.setBaseCls("x-selmodel-column");
+        } else {
+            checkBox.setBaseCls("x-grid-row-checker");
+        }
+        return checkBox.click();
+    }
+
+    private boolean doSelectPrivate() {
         WebLocator checkBox = new WebLocator(this);
         if ("6.7.0".equals(getVersion())) {
             checkBox.setBaseCls("x-selmodel-column");
