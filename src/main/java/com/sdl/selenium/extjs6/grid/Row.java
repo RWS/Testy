@@ -128,22 +128,22 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public boolean select() {
         scrollInGrid(this);
-        return isSelected() || RetryUtils.retry(2, () -> selectPrivate() && isSelected());
+        return isSelected() || selectPrivate() && isSelected();
     }
 
     public boolean doSelect() {
         scrollInGrid(this);
-        return isSelected() || RetryUtils.retry(2, () -> doSelectPrivate() && isSelected());
+        return isSelected() || doSelectPrivate() && isSelected();
     }
 
     public boolean unSelect() {
         scrollInGrid(this);
-        return !isSelected() || RetryUtils.retry(2, () -> selectPrivate() && !isSelected());
+        return !isSelected() || selectPrivate() && !isSelected();
     }
 
     public boolean doUnSelect() {
         scrollInGrid(this);
-        return !isSelected() || RetryUtils.retry(2, () -> doSelectPrivate() && !isSelected());
+        return !isSelected() || doSelectPrivate() && !isSelected();
     }
 
     private boolean selectPrivate() {
