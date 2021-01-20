@@ -10,6 +10,7 @@ import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -102,7 +103,7 @@ public class DateField extends TextField {
         WebLink yearEl = new WebLink(yearContainer).setText(year, SearchType.EQUALS).setVisibility(true).setInfoMessage("year " + year);
         boolean found;
         do {
-            found = yearEl.waitToRender(150L, false);
+            found = yearEl.waitToRender(Duration.ofMillis(150), false);
             if (!found) {
                 btn.click();
             }
@@ -113,7 +114,7 @@ public class DateField extends TextField {
                 return yearEl.getAttributeClass().contains("-selected");
             });
         } catch (WebDriverException e) {
-            if (tooltip.waitToRender(500L, false)) {
+            if (tooltip.waitToRender(Duration.ofMillis(500), false)) {
                 WebLocator monthEl = new WebLocator(monthContainer).setText("Jan", SearchType.EQUALS).setInfoMessage("month Jan");
                 monthEl.mouseOver();
                 Utils.sleep(300);

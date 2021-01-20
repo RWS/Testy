@@ -6,6 +6,8 @@ import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -21,7 +23,7 @@ public class SliderIntegrationTest extends TestBase {
 
     @Test
     void sliderTest() {
-        slider.ready(25);
+        slider.ready(Duration.ofSeconds(25));
 
         slider.move(60);
         assertThat(slider.getValue(), equalTo(60));

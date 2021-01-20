@@ -23,7 +23,7 @@ public class MessageBoxIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#message-box");
         driver.switchTo().frame("examples-iframe");
-        dialogButton.ready(20);
+        dialogButton.ready(Duration.ofSeconds(20));
         Utils.sleep(2000);
         dialogButton.click();
     }

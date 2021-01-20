@@ -84,7 +84,7 @@ public class EditorGridPanelIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "scrollInGridPanel")
     public void isSubmitButtonDisabled() {
-        assertThat(submitButton.isDisabled(), is(true));
+        assertThat(submitButton.isEnabled(), is(false));
     }
 
     @Test(dependsOnMethods = "isSubmitButtonDisabled")

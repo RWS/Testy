@@ -5,6 +5,8 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Notification extends WebLocator {
@@ -35,8 +37,8 @@ public class Notification extends WebLocator {
         WebLocator close = new WebLocator(this).setClasses("x-tool-close");
         Utils.sleep(350);
         return RetryUtils.retry(3, () -> {
-            this.waitToRender(300L, false);
-            return close.doClick() || !this.waitToRender(100L, false);
+            this.waitToRender(Duration.ofMillis(300), false);
+            return close.doClick() || !this.waitToRender(Duration.ofMillis(100), false);
         });
     }
 }

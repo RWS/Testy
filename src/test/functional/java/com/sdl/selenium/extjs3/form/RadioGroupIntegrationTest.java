@@ -31,8 +31,8 @@ public class RadioGroupIntegrationTest extends TestBase {
 
     @Test
     public void isDisabledRadioGroup() {
-        assertThat(enabledRadioGroup.isDisabled(), is(false));
-        assertThat(disabledRadioGroup.isDisabled(), is(true));
+        assertThat(enabledRadioGroup.isEnabled(), is(true));
+        assertThat(disabledRadioGroup.isEnabled(), is(false));
     }
 
     @Test

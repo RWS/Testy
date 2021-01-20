@@ -7,6 +7,8 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -19,7 +21,7 @@ public class FileUploadIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
-        fileUpload.ready(20);
+        fileUpload.ready(Duration.ofSeconds(20));
         Utils.sleep(2000);
     }
 

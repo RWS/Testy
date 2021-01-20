@@ -18,7 +18,7 @@ public class DateFieldIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
-        dateField.ready(20);
+        dateField.ready(Duration.ofSeconds(20));
         Utils.sleep(3000);
     }
 

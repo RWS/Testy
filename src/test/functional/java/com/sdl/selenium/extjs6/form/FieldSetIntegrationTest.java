@@ -21,7 +21,7 @@ public class FieldSetIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldcontainer");
         driver.switchTo().frame("examples-iframe");
-        field.ready(20);
+        field.ready(Duration.ofSeconds(20));
     }
 
     @Test

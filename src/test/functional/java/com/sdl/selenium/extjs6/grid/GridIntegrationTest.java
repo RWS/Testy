@@ -110,7 +110,7 @@ public class GridIntegrationTest extends TestBase {
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "2010"));
-        row.ready(10);
+        row.ready(Duration.ofSeconds(10));
         boolean actual = row.scrollTo();
         assertThat(actual, is(true));
     }
@@ -180,7 +180,7 @@ public class GridIntegrationTest extends TestBase {
         Grid spreadsheet = new Grid().setTitle("XML Grid");
 //        Grid spreadsheet = new Grid().setTitle("Basic Grid");
         Utils.sleep(1000);
-        spreadsheet.ready(20);
+        spreadsheet.ready(Duration.ofSeconds(20));
         spreadsheet.ready(true);
         Utils.sleep(5000);
         long startMs = System.currentTimeMillis();
@@ -192,7 +192,7 @@ public class GridIntegrationTest extends TestBase {
         driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         Utils.sleep(1000);
-        spreadsheet.ready(20);
+        spreadsheet.ready(Duration.ofSeconds(20));
         spreadsheet.ready(true);
         Utils.sleep(5000);
 //        spreadsheet.scrollTop();
@@ -292,7 +292,7 @@ public class GridIntegrationTest extends TestBase {
         Grid spreadsheet = new Grid().setTitle("XML Grid");
 //        Grid spreadsheet = new Grid().setTitle("Basic Grid");
         Utils.sleep(1000);
-        spreadsheet.ready(20);
+        spreadsheet.ready(Duration.ofSeconds(20));
         spreadsheet.ready(true);
         Utils.sleep(5000);
         long startMs = System.currentTimeMillis();

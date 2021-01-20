@@ -13,7 +13,7 @@ public class GridBufferTest extends TestBase {
 //        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/classic/grid/buffer-grid.html");
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#buffer-grid");
         driver.switchTo().frame("examples-iframe");
-        grid.ready(20);
+        grid.ready(Duration.ofSeconds(20));
     }
 
     //@Test

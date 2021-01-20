@@ -3,6 +3,8 @@ package com.sdl.selenium.conditions;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 
+import java.time.Duration;
+
 // TODO is possible that ElementRemovedSuccessCondition is executed because some error messages have been arrived
 // think about some solutions to fix this.
 public class ElementRemovedSuccessCondition extends SuccessCondition implements RenderCondition {
@@ -38,7 +40,7 @@ public class ElementRemovedSuccessCondition extends SuccessCondition implements 
     }
 
     public boolean execute() {
-        return !component.waitToRender(0L, false);
+        return !component.waitToRender(Duration.ZERO, false);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class TagFieldIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-tag");
         driver.switchTo().frame("examples-iframe");
-        tagField.ready(20);
+        tagField.ready(Duration.ofSeconds(20));
         Utils.sleep(2000);
     }
 

@@ -18,7 +18,7 @@ public class TextFieldIntegrationTest extends TestBase {
     public void startTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
-        field.ready(20);
+        field.ready(Duration.ofSeconds(20));
     }
 
     @Test

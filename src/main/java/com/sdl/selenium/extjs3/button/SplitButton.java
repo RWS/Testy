@@ -35,7 +35,7 @@ public class SplitButton extends Button {
         LOGGER.debug("clickOnMenu : " + menuOptions[n - 1]);
         ready();
         String info = toString();
-        if (isDisabled()) {
+        if (!isEnabled()) {
             // waiting period for some buttons to become enabled (monitor valid)
             LOGGER.debug("Button is disabled. Waiting ...");
             Utils.sleep(1000);

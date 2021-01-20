@@ -36,7 +36,7 @@ public class TextFieldIntegrationTest extends TestBase {
     public void isEditable() {
         assertThat(firstNameTextField.isEditable(), is(false));
         assertThat(lastNameTextField.isEditable(), is(true));
-        assertThat(disableTextField.isDisabled(), is(true));
+        assertThat(disableTextField.isEnabled(), is(false));
     }
 
     @Test

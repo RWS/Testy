@@ -572,7 +572,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
 
     @Deprecated
     public boolean ready(int seconds) {
-        return waitToRender(seconds * 1000) && waitToActivate(seconds);
+        return waitToRender(Duration.ofSeconds(seconds)) && waitToActivate(seconds);
     }
 
     /**

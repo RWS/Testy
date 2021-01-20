@@ -63,7 +63,7 @@ public class DateField extends TextField {
             yearEl.click();
             WebLocator yearContainer1 = new WebLocator(yearAndMonth).setClasses("x-date-mp-year", "x-date-mp-sel");
             WebLocator yearEl1 = new WebLocator(yearContainer1).setText(year, SearchType.EQUALS);
-            if (!yearEl1.ready(1)) {
+            if (!yearEl1.ready(Duration.ofSeconds(1))) {
                 yearEl.click();
             }
             WebLocator monthEl = new WebLocator(monthContainer).setText(month, SearchType.EQUALS).setInfoMessage("month " + month);

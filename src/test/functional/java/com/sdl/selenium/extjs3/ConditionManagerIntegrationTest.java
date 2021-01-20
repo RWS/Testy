@@ -43,7 +43,7 @@ public class ConditionManagerIntegrationTest extends TestBase {
         login.click();
         WebLink link = new WebLink(null, "ExtJs Demo", SearchType.CONTAINS);
         link.click();
-        panel.waitToRender(2000L, false);
+        panel.waitToRender(Duration.ofSeconds(2), false);
     }
 
     private Condition doClick(Button button) {

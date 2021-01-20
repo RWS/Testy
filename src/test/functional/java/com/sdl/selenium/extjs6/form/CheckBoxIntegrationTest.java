@@ -22,7 +22,7 @@ public class CheckBoxIntegrationTest extends TestBase {
         driver.switchTo().frame("examples-iframe");
         checkBox.setVersion(version);
         boxLabel.setVersion(version);
-        boxLabel.ready(10);
+        boxLabel.ready(Duration.ofSeconds(10));
         Utils.sleep(1);
     }
 
