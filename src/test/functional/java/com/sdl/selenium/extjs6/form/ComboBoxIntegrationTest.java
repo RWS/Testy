@@ -6,6 +6,7 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 

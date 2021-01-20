@@ -6,6 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,10 +16,10 @@ import static org.hamcrest.core.Is.is;
 
 public class TabIntegrationTest extends TestBase {
 
-    private Tab activeTab = new Tab("Active Tab");
-    private Tab inactiveTab = new Tab("Inactive Tab");
-    private Tab closableTab = new Tab("Closable Tab");
-    private Tab inactiveTab1 = new Tab("/Inactive Tab/Closable Tab", SearchType.CONTAINS_ANY);
+    private final Tab activeTab = new Tab("Active Tab");
+    private final Tab inactiveTab = new Tab("Inactive Tab");
+    private final Tab closableTab = new Tab("Closable Tab");
+    private final Tab inactiveTab1 = new Tab("/Inactive Tab/Closable Tab", SearchType.CONTAINS_ANY);
 
     @BeforeClass
     public void startTests() {

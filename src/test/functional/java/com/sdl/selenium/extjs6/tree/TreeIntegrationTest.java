@@ -6,12 +6,14 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class TreeIntegrationTest extends TestBase {
 
-    private Tree tree = new Tree().setVisibility(true);
+    private final Tree tree = new Tree().setVisibility(true);
 
     @BeforeClass
     public void startTests() {

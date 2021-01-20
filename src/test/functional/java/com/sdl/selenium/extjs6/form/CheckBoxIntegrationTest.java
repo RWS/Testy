@@ -7,14 +7,16 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class CheckBoxIntegrationTest extends TestBase {
 
-    private Panel panel = new Panel(null, "Form Fields");
-    private CheckBox checkBox = new CheckBox(panel, "Checkbox:");
-    private CheckBox boxLabel = new CheckBox("box label", panel);
+    private final Panel panel = new Panel(null, "Form Fields");
+    private final CheckBox checkBox = new CheckBox(panel, "Checkbox:");
+    private final CheckBox boxLabel = new CheckBox("box label", panel);
 
     @BeforeClass
     public void startTest() {

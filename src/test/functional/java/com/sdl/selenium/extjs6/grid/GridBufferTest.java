@@ -4,6 +4,8 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.utils.Utils;
 
+import java.time.Duration;
+
 public class GridBufferTest extends TestBase {
 
     private Grid grid = new Grid();
