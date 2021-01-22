@@ -1,5 +1,6 @@
 package com.sdl.selenium.utils.browsers;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -56,6 +57,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             System.setProperty("webdriver.chrome.driver", driverPath);
         }
         ChromeOptions options = new ChromeOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
         setProfilePreferences(options);
         return options;
     }
