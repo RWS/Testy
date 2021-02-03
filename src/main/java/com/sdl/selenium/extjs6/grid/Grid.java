@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
+import com.sdl.selenium.extjs4.window.XTool;
 import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
@@ -24,7 +25,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Grid extends Table implements Scrollable {
+public class Grid extends Table implements Scrollable, XTool {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
     private String version;
 
@@ -39,6 +40,11 @@ public class Grid extends Table implements Scrollable {
     public Grid(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    @Override
+    public WebLocator getView() {
+        return this;
     }
 
     /**

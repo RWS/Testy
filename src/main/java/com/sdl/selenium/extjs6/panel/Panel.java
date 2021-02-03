@@ -1,9 +1,10 @@
 package com.sdl.selenium.extjs6.panel;
 
+import com.sdl.selenium.extjs4.window.XTool;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
-public class Panel extends WebLocator {
+public class Panel extends WebLocator implements XTool {
 
     public Panel() {
         setClassName("Panel");
@@ -26,16 +27,21 @@ public class Panel extends WebLocator {
         setTitle(title, searchTypes);
     }
 
-    protected WebLocator getCollapseEl(String type) {
+    @Override
+    public WebLocator getView() {
+        return this;
+    }
+
+    public WebLocator getToolEl(String type) {
         return new WebLocator(this).setCls("x-tool-" + type).setTemplate("cls", "contains(@class,'%s')");
     }
 
     public boolean collapse() {
-        return !getCollapseEl("collapse").isPresent() || getCollapseEl("collapse").click();
+        return !getToolEl("collapse").isPresent() || XTool.super.collapse();
     }
 
     public boolean expand() {
-        return !getCollapseEl("expand").isPresent() || getCollapseEl("expand").click();
+        return !getToolEl("expand").isPresent() || XTool.super.expand();
     }
 
     @Override
