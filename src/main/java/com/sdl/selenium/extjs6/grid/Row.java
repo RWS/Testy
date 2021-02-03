@@ -63,6 +63,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                     childNode.setContainer(grid);
                     WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
                     index = tmpEl.getAttribute("data-recordindex");
+                    childNode.setContainer(null);
                 }
                 String positions = childNode.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
                 childNode.setTag("table[@data-recordindex='" + index + "']//td");
