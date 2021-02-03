@@ -218,4 +218,8 @@ public class Row extends com.sdl.selenium.web.table.Row {
             }
         }
     }
+
+    public int getCells() {
+        return new Cell(this).size();
+    }
 }

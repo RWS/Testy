@@ -1,5 +1,7 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.google.common.base.Strings;
+import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
@@ -192,6 +194,95 @@ public class Grid extends Table implements Scrollable {
         return new ArrayList<>(Arrays.asList(headerText.trim().split("\n")));
     }
 
+    private List<List<String>> getLockedLists(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
+        WebLocator containerLocked = new WebLocator(this).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
+        Row rowsEl = new Row(containerLocked);
+        int cells = new Row(containerLocked, 1).getCells();
+        List<Integer> firstColumns = new ArrayList<>();
+        List<Integer> secondColumns = new ArrayList<>();
+        for (int i = 0; i < columnsList.size(); i++) {
+            int in = columnsList.get(i);
+            if (cells > i && in <= cells) {
+                firstColumns.add(columnsList.get(i));
+            } else {
+                secondColumns.add(columnsList.get(i));
+            }
+        }
+        int size = rowsEl.size();
+        List<List<String>> listOfList = new ArrayList<>();
+        boolean canRead = true;
+        String id = "";
+        int timeout = 0;
+        do {
+            for (int i = 1; i <= size; ++i) {
+                if (canRead) {
+                    List<String> list = new ArrayList<>();
+                    Row row = new Row(containerLocked).setTag("tr").setResultIdx(i);
+                    for (int j : firstColumns) {
+                        Cell cell = new Cell(row, j);
+                        String text;
+                        if (predicate.test(j)) {
+                            text = function.apply(cell);
+                        } else {
+                            text = cell.getText(true).trim();
+                        }
+                        list.add(text);
+                    }
+                    WebLocator containerUnLocked = new WebLocator(this).setClasses("x-grid-scrollbar-clipper").setExcludeClasses("x-grid-scrollbar-clipper-locked");
+                    row = new Row(containerUnLocked).setTag("tr").setResultIdx(i);
+                    for (int j : secondColumns) {
+                        Cell cell = new Cell(row, j - cells);
+                        String text;
+                        if (predicate.test(j)) {
+                            text = function.apply(cell);
+                        } else {
+                            text = cell.getText(true).trim();
+                        }
+                        list.add(text);
+                    }
+                    listOfList.add(list);
+                } else {
+                    if (size == i + 1) {
+                        break;
+                    }
+                    Row row = new Row(containerLocked, i);
+                    String currentId = row.getAttributeId();
+                    if (!"".equals(id) && id.equals(currentId)) {
+                        canRead = true;
+                    }
+                }
+            }
+            if (isScrollBottom_()) {
+                break;
+            }
+            Row row = new Row(this, size);
+            id = row.getAttributeId();
+            scrollPageDown_();
+            scrollPageDown_();
+            scrollPageDown_();
+            scrollPageDown_();
+            scrollPageDown_();
+            canRead = false;
+            timeout++;
+        } while (timeout < 30);
+        return listOfList;
+    }
+
+    private boolean isScrollBottom_() {
+        String id = getAttributeId();
+        if (!Strings.isNullOrEmpty(id)) {
+            String script = "return (function (c){var a=c.ownerGrid.scrollable,b=a._scrollElement;return Math.round(b.dom.scrollTop) >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
+    }
+
+    public boolean scrollPageDown_() {
+        String id = getAttributeId();
+        String script = "return (function(c){var a=c.ownerGrid,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += a.getHeight() - 13;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    }
+
     private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
@@ -279,7 +370,11 @@ public class Grid extends Table implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return getLists(rows, rowExpand, predicate, function, columnsList);
+            if (getAttributeClass().contains("x-grid-locked")) {
+                return getLockedLists(predicate, function, columnsList);
+            } else {
+                return getLists(rows, rowExpand, predicate, function, columnsList);
+            }
         }
     }
 
