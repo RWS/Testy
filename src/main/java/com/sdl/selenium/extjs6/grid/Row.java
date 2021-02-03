@@ -60,6 +60,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
             String index = null;
             for (AbstractCell childNode : childNodes) {
                 if (Strings.isNullOrEmpty(index)) {
+                    childNode.setContainer(grid);
                     WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
                     index = tmpEl.getAttribute("data-recordindex");
                 }
