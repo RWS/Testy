@@ -55,8 +55,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
         this();
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
         if (isGridLocked(grid)) {
-            WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
-            int firstColumns = new Row(containerLocked, 1).getCells();
+            int firstColumns = getLockedCells(grid);
             String index = null;
             for (AbstractCell childNode : childNodes) {
                 if (Strings.isNullOrEmpty(index)) {
@@ -89,7 +88,19 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     @Override
     public Cell getCell(int columnIndex) {
+        Grid grid = (Grid) getPathBuilder().getContainer();
+        if (isGridLocked(grid)) {
+            int firstColumns = getLockedCells(grid);
+            if(columnIndex > firstColumns){
+                columnIndex = columnIndex - firstColumns;
+            }
+        }
         return new Cell(this, columnIndex);
+    }
+
+    private int getLockedCells(WebLocator grid) {
+        WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
+        return new Row(containerLocked, 1).getCells();
     }
 
     public List<String> getCellsText(int... excludedColumns) {
