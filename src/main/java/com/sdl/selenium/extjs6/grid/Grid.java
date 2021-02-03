@@ -2,6 +2,8 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.conditions.ConditionManager;
+import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
@@ -185,7 +187,11 @@ public class Grid extends Table implements Scrollable {
         Row row = getRow(1).setVisibility(true).setRoot("//..//").setInfoMessage("first Row");
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct"); // TODO see if must add for all rows
         row.setContainer(body);
-        return row.waitToRender(duration, false);
+        Row row2 = getRow(1).setVisibility(true).setRoot("//..//..//..//../preceding-sibling::*//").setInfoMessage("first Row");
+        row2.setContainer(body);
+        ConditionManager cm = new ConditionManager(duration);
+        cm.add(new RenderSuccessCondition(row)).add(new RenderSuccessCondition(row2));
+        return cm.execute().isSuccess();
     }
 
     public List<String> getHeaders() {
