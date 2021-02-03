@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
@@ -35,14 +36,48 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
-        this(grid);
+        this();
         setText(searchElement, searchTypes);
+        if (isGridLocked(grid)) {
+            String index = getAttribute("data-recordindex");
+            setTag("*");
+            setElPath(getXPath() + "//table[@data-recordindex='" + index + "']");
+        }
+        setContainer(grid);
+    }
+
+    private boolean isGridLocked(WebLocator grid) {
+        String aClass = WebDriverConfig.getDriver() == null ? null : grid.getAttributeClass();
+        return aClass != null && aClass.contains("x-grid-locked");
     }
 
     public Row(WebLocator grid, AbstractCell... cells) {
-        this(grid);
+        this();
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
-        setChildNodes(childNodes);
+        if (isGridLocked(grid)) {
+            WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
+            int firstColumns = new Row(containerLocked, 1).getCells();
+            String index = null;
+            for (AbstractCell childNode : childNodes) {
+                if (Strings.isNullOrEmpty(index)) {
+                    WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
+                    index = tmpEl.getAttribute("data-recordindex");
+                }
+                String positions = childNode.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
+                childNode.setTag("table[@data-recordindex='" + index + "']//td");
+                int actualPosition = Integer.parseInt(positions);
+                if (actualPosition > firstColumns) {
+                    int i = actualPosition - firstColumns;
+                    childNode.setTemplateValue("tagAndPosition", i + "");
+                }
+            }
+            setChildNodes(childNodes);
+            setTag("*");
+            setElPath(getXPath() + "//table[1]");
+        } else {
+            setChildNodes(childNodes);
+        }
+        setContainer(grid);
     }
 
     public Row(WebLocator grid, int indexRow, AbstractCell... cells) {

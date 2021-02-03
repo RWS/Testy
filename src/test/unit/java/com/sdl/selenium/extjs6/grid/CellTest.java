@@ -15,6 +15,7 @@ public class CellTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
+                {new Cell(1, "Text"),                                "//td[1][(contains(.,'Text') or count(*//text()[contains(.,'Text')]) > 0)]"},
                 {new Grid().getCell(1, 2),                                "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[position() = 1]//td[2]"},
                 {new Grid().getCell("Test"),                                     "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table//td[(.='Test' or count(*//text()[.='Test']) > 0)]"},
                 {new Grid().getCell("Test", SearchType.DEEP_CHILD_NODE_OR_SELF), "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table//td[(contains(.,'Test') or count(*//text()[contains(.,'Test')]) > 0)]"},
