@@ -73,7 +73,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
             }
             setChildNodes(childNodes);
             setTag("*");
-            setElPath(getXPath() + "//table[1]");
+            setElPath(getXPath() + "//table[@data-recordindex='" + index + "']");
         } else {
             setChildNodes(childNodes);
         }
