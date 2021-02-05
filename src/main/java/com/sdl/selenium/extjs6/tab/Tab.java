@@ -143,7 +143,7 @@ public class Tab extends WebLocator implements ITab {
     public List<String> getTabsName() {
         List<String> tabs = new ArrayList<>();
         WebLocator textEl = new WebLocator().setText(getPathBuilder().getText(), getPathBuilder().getSearchTextType().toArray(new SearchType[0]));
-        WebLocator tabBar = new WebLocator().setClasses("x-tab-bar").setChildNodes(textEl);
+        WebLocator tabBar = new WebLocator(getPathBuilder().getContainer()).setClasses("x-tab-bar").setChildNodes(textEl);
         WebLocator tab = new WebLocator(tabBar).setClasses("x-tab", "x-box-item");
         WebLocator textElTab = new WebLocator(tab).setClasses("x-tab-inner");
         int size = tab.size();
