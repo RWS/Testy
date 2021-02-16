@@ -254,7 +254,9 @@ public class WebDriverConfig {
                 driver = properties.createDriver(remoteUrl, capabilities);
 
             }
-            WebDriverConfig.setDownloadPath(properties.getDownloadPath());
+            if(!properties.isRemoteDriver()) {
+                WebDriverConfig.setDownloadPath(properties.getDownloadPath());
+            }
             WebDriverConfig.setSilentDownload(properties.isSilentDownload());
 
             if (browser != Browser.FIREFOX) {
