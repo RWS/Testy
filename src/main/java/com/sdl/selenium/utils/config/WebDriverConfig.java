@@ -232,6 +232,10 @@ public class WebDriverConfig {
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
+            if(properties.isRemoteDriver()) {
+                properties.setProperty("browser.download.dir", "/home/seluser/Downloads");
+            }
+
             if (WebDriverConfig.isRecordNetworkTraffic()) {
                 proxy = new BrowserMobProxyServer();
                 proxy.setTrustAllServers(true);
