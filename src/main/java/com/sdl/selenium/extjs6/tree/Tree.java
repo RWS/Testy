@@ -2,8 +2,9 @@ package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.extjs6.grid.Scrollable;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.Table;
 import org.openqa.selenium.WebDriverException;
 
@@ -36,7 +37,7 @@ public class Tree extends WebLocator implements Scrollable {
         for (String node : nodes) {
             WebLocator textEl = new WebLocator().setText(node);
             Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected");
-            Row rowSelected = nodeSelected.getRow(1).setClasses("x-grid-row");
+            com.sdl.selenium.web.table.Row rowSelected = nodeSelected.getRow(1).setClasses("x-grid-row");
             Table nodeEl;
             if (parent != null && nodeSelected.waitToRender(Duration.ofMillis(800), false) && rowSelected.getAttributeClass().contains("x-grid-tree-node-expanded")) {
                 nodeEl = new Table(nodeSelected).setClasses("x-grid-item").setTag("following::table").setChildNodes(textEl).setVisibility(true);
@@ -46,7 +47,7 @@ public class Tree extends WebLocator implements Scrollable {
             if (doScroll) {
                 scrollPageDownTo(nodeEl);
             }
-            Row row = nodeEl.getRow(1).setClasses("x-grid-row");
+            com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 String aClass = row.getAttributeClass();
@@ -157,5 +158,39 @@ public class Tree extends WebLocator implements Scrollable {
             timeout++;
         } while (timeout < 30);
         return listOfList;
+    }
+
+    public Row getRow(String searchElement, SearchType... searchTypes) {
+        return new Row(this, searchElement, searchTypes).setInfoMessage("-Row");
+    }
+
+    public Row getRow(Cell... byCells) {
+        return new Row(this, byCells).setInfoMessage("-Row");
+    }
+
+    class Row extends com.sdl.selenium.extjs6.grid.Row {
+        public Row() {
+            super();
+        }
+
+        public Row(WebLocator grid) {
+            super(grid);
+        }
+
+        public Row(WebLocator grid, int indexRow) {
+            super(grid, indexRow);
+        }
+
+        public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
+            super(grid, searchElement, searchTypes);
+        }
+
+        public Row(WebLocator grid, AbstractCell... cells) {
+            super(grid, cells);
+        }
+
+        public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
+            super(grid, indexRow, cells);
+        }
     }
 }
