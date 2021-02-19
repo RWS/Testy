@@ -71,6 +71,25 @@ public class Tree extends WebLocator implements Scrollable {
         return selected;
     }
 
+    public List<List<String>> getNodesValues(List<String> nodes, int... excludedColumns) {
+        select(nodes.toArray(new String[0]));
+        Row rowEl = new Row(this, 1);
+        Cell columnsEl = new Cell(rowEl);
+        int columns = columnsEl.size();
+        List<List<String>> listOfList = new ArrayList<>();
+        for (String node : nodes) {
+            Row nodeRow = getRow(new Cell(1, node));
+            List<String> cellsText = nodeRow.getCellsText(excludedColumns);
+            listOfList.add(cellsText);
+        }
+        Row rowsEl = new Row(this).setTag("tr").setClasses("x-grid-tree-node-leaf");
+        int rows = rowsEl.size();
+        final List<Integer> columnsList = getColumns(columns, excludedColumns);
+        List<List<String>> lists = getLists(rows, false, (short) 0, columnsList);
+        listOfList.addAll(lists);
+        return listOfList;
+    }
+
     public List<List<String>> getCellsText(int... excludedColumns) {
         return getCellsText(false, (short) 0, excludedColumns);
     }
@@ -168,7 +187,7 @@ public class Tree extends WebLocator implements Scrollable {
         return new Row(this, byCells).setInfoMessage("-Row");
     }
 
-    class Row extends com.sdl.selenium.extjs6.grid.Row {
+    static class Row extends com.sdl.selenium.extjs6.grid.Row {
         public Row() {
             super();
         }
