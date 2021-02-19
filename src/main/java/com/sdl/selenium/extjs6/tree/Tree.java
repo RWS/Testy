@@ -79,7 +79,7 @@ public class Tree extends WebLocator implements Scrollable {
         int columns = columnsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
         for (String node : nodes) {
-            Row nodeRow = getRow(new Cell(1, node));
+            Row nodeRow = getRow(new Cell(1, node)).setResultIdx(1);
             List<String> cellsText = nodeRow.getCellsText(excludedColumns);
             listOfList.add(cellsText);
         }
