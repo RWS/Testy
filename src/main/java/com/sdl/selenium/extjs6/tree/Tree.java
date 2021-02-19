@@ -72,6 +72,16 @@ public class Tree extends WebLocator implements Scrollable {
         return selected;
     }
 
+    public List<List<String>> getValues(int... excludedColumns) {
+        Row rowEl = new Row(this, 1);
+        Cell columnsEl = new Cell(rowEl);
+        int columns = columnsEl.size();
+        Row rowsEl = new Row(this).setTag("tr");
+        int rows = rowsEl.size();
+        final List<Integer> columnsList = getColumns(columns, excludedColumns);
+        return getValues(rows, columnsList);
+    }
+
     public List<List<String>> getNodesValues(List<String> nodes, int... excludedColumns) {
         select(nodes.toArray(new String[0]));
         Row rowEl = new Row(this, 1);
@@ -129,7 +139,7 @@ public class Tree extends WebLocator implements Scrollable {
     }
 
     private List<List<String>> getValues(int rows, List<Integer> columnsList) {
-        Row rowsEl = new Row(this).setTag("tr").setClasses("x-grid-tree-node-leaf");
+        Row rowsEl = new Row(this).setTag("tr");
         int size = rowsEl.size();
         List<List<String>> listOfList = new LinkedList<>();
         boolean canRead = true;
@@ -140,7 +150,7 @@ public class Tree extends WebLocator implements Scrollable {
                 if (canRead) {
                     List<String> list = new LinkedList<>();
                     for (int j : columnsList) {
-                        Row row = new Row(this).setTag("tr").setClasses("x-grid-tree-node-leaf").setResultIdx(i);
+                        Row row = new Row(this).setTag("tr").setResultIdx(i);
                         Cell cell = new Cell(row, j);
                         String text = cell.getText(true).trim();
                         list.add(text);
