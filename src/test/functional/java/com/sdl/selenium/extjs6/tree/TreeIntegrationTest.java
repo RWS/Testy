@@ -30,10 +30,14 @@ public class TreeIntegrationTest extends TestBase {
         assertThat(selected, is(true));
     }
 
-    @Test
+    @Test(dependsOnMethods = "treeTest")
     void treeExpanderTest() {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#tree-xml");
+        driver.switchTo().frame("examples-iframe");
+        tree.ready(Duration.ofSeconds(20));
         tree.expandAllNodes();
+        tree.scrollTop();
         List<List<String>> values = tree.getValues();
-        assertThat(values.size(), is(30));
+        assertThat(values.size(), is(439));
     }
 }

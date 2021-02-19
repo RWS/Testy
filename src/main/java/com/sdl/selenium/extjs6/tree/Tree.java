@@ -6,7 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.Table;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriverException;
 
 import java.time.Duration;
@@ -75,15 +75,24 @@ public class Tree extends WebLocator implements Scrollable {
 
     public void expandAllNodes() {
         Row rowsEl = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded");
-        RetryUtils.retry(2, () -> {
-            int rows = rowsEl.size();
-            for (int i = 0; i < rows; i++) {
-                Row row = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded").setResultIdx(i);
-                WebLocator expanderEl = new WebLocator(row).setClasses("x-tree-expander");
-                expanderEl.doClick();
+        int size;
+        do {
+            Row row = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded").setResultIdx(1);
+            WebLocator expanderEl = new WebLocator(row).setClasses("x-tree-expander").setRender(Duration.ofSeconds(1));
+            expanderEl.doClick();
+            size = rowsEl.size();
+            if (size == 0) {
+                scrollPageDown();
+                size = rowsEl.size();
+                if (size == 0) {
+                    scrollPageDown();
+                    size = rowsEl.size();
+                    if (size == 0) {
+                        Utils.sleep(1);
+                    }
+                }
             }
-            return rowsEl.size() == 0;
-        });
+        } while (size != 0);
     }
 
     public List<List<String>> getValues(int... excludedColumns) {
