@@ -80,7 +80,7 @@ public class Tree extends WebLocator implements Scrollable {
             for (int i = 0; i < rows; i++) {
                 Row row = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded").setResultIdx(i);
                 WebLocator expanderEl = new WebLocator(row).setClasses("x-tree-expander");
-                expanderEl.click();
+                expanderEl.doClick();
             }
             return rowsEl.size() == 0;
         });
