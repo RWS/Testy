@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -17,7 +18,7 @@ public class TreeIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL +"#check-tree");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#check-tree");
         driver.switchTo().frame("examples-iframe");
         tree.ready(Duration.ofSeconds(20));
         Utils.sleep(1000);
@@ -27,5 +28,12 @@ public class TreeIntegrationTest extends TestBase {
     void treeTest() {
         boolean selected = tree.select("Grocery List", "Energy foods", "Coffee");
         assertThat(selected, is(true));
+    }
+
+    @Test
+    void treeExpanderTest() {
+        tree.expandAllNodes();
+        List<List<String>> values = tree.getValues();
+        assertThat(values.size(), is(30));
     }
 }

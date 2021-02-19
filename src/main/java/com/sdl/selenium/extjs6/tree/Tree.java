@@ -6,6 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.Table;
+import com.sdl.selenium.web.utils.RetryUtils;
 import org.openqa.selenium.WebDriverException;
 
 import java.time.Duration;
@@ -70,6 +71,19 @@ public class Tree extends WebLocator implements Scrollable {
             parent = node;
         }
         return selected;
+    }
+
+    public void expandAllNodes() {
+        Row rowsEl = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded");
+        RetryUtils.retry(2, () -> {
+            int rows = rowsEl.size();
+            for (int i = 0; i < rows; i++) {
+                Row row = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded").setResultIdx(i);
+                WebLocator expanderEl = new WebLocator(row).setClasses("x-tree-expander");
+                expanderEl.click();
+            }
+            return rowsEl.size() == 0;
+        });
     }
 
     public List<List<String>> getValues(int... excludedColumns) {
