@@ -65,6 +65,9 @@ public class Tab extends WebLocator implements ITab {
         if (getPathBuilder().getChildNodes() != null && !getPathBuilder().getChildNodes().isEmpty()) {
             link.setChildNodes(getPathBuilder().getChildNodes().toArray(new WebLocator[0]));
         }
+        if (!Strings.isNullOrEmpty(getIconCls())) {
+            link.setChildNodes(new WebLocator().setClasses(getIconCls()));
+        }
         return link.setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
 
@@ -75,9 +78,9 @@ public class Tab extends WebLocator implements ITab {
      */
     private String getBaseTabPanelPath() {
         String selector = getPathBuilder().getBasePath();
-        WebLocator child = new WebLocator().setClasses(iconCls);
+        WebLocator child = new WebLocator().setClasses(getIconCls());
         WebLink activeTab = new WebLink().setClasses("x-tab-active").setChildNodes(child);
-        selector = selector + (Strings.isNullOrEmpty(iconCls) ? "" : " and count(." + activeTab.getXPath() + ") > 0");
+        selector = selector + (Strings.isNullOrEmpty(getIconCls()) ? "" : " and count(." + activeTab.getXPath() + ") > 0");
         return getPathBuilder().getRoot() + getPathBuilder().getTag() + "[" + selector + "]";
     }
 

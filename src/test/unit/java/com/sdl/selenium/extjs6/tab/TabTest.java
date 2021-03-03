@@ -9,9 +9,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class TabTest {
-    private static WebLocator container = new WebLocator("container");
-
-    private static WebLocator child = new WebLocator().setClasses("fa-globe");
+    private static final WebLocator container = new WebLocator("container");
+    private static final WebLocator child = new WebLocator().setClasses("fa-globe");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
@@ -36,6 +35,7 @@ public class TabTest {
         return new Object[][]{
                 {((Tab) new Tab(container).setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
                 {((Tab) new Tab("Test").setChildNodes(child)).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0 and count(.//*[contains(concat(' ', @class, ' '), ' fa-globe ')]) > 0]"},
+                {new Tab(container).setIconCls("fa-close").getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(.//*[contains(concat(' ', @class, ' '), ' fa-close ')]) > 0]"},
                 {new Tab("Test").getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and count(*//text()[.='Test']) > 0]"},
                 {new Tab("|Test|New", SearchType.CONTAINS_ANY).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and (count(*//text()[.='Test']) > 0 or count(*//text()[.='New']) > 0)]"},
                 {new Tab("|Test|New", SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.CONTAINS_ANY).getTitleInactiveEl(), "//*[contains(concat(' ', @class, ' '), ' x-tab-bar ')]//a[contains(concat(' ', @class, ' '), ' x-tab ') and ((.='Test' or count(*//text()[.='Test']) > 0) or (.='New' or count(*//text()[.='New']) > 0))]"},
