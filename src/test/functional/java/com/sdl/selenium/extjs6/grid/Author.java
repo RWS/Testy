@@ -2,10 +2,16 @@ package com.sdl.selenium.extjs6.grid;
 
 public class Author {
     private String author;
+    private BString bTitle;
     private String title;
     private String manufacturer;
     private String productGroup;
-//    private String test;
+
+    public Author(String title, String manufacturer, String productGroup) {
+        this.title = title;
+        this.manufacturer = manufacturer;
+        this.productGroup = productGroup;
+    }
 
     public Author(String author, String title, String manufacturer, String productGroup) {
         this.author = author;
@@ -14,38 +20,53 @@ public class Author {
         this.productGroup = productGroup;
     }
 
-//    public Author(String author, String title, String manufacturer, String productGroup, String test) {
-//        this.author = author;
-//        this.title = title;
-//        this.manufacturer = manufacturer;
-//        this.productGroup = productGroup;
-//        this.test = test;
-//    }
+    public Author(String author, BString title, String manufacturer, String productGroup) {
+        this.author = author;
+        this.bTitle = title;
+        this.manufacturer = manufacturer;
+        this.productGroup = productGroup;
+    }
 
     public Author() {
     }
 
     public String getAuthor() {
-        return this.author;
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getBTitle() {
+        return bTitle.getTitle();
+    }
+
+    public void setBTitle(String bTitle) {
+        this.bTitle = new BString(bTitle);
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getManufacturer() {
-        return this.manufacturer;
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public String getProductGroup() {
-        return this.productGroup;
+        return productGroup;
     }
 
-//    public String getTest() {
-//        return test;
-//    }
-//
-//    public void setTest(String test) {
-//        this.test = test;
-//    }
+    public void setProductGroup(String productGroup) {
+        this.productGroup = productGroup;
+    }
 }

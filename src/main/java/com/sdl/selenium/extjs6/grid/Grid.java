@@ -449,11 +449,11 @@ public class Grid extends Table implements Scrollable, XTool {
         }
         Class<?> newClazz;
         int size = cellsText.get(0).size();
-        Constructor constructor = null;
+        Constructor<?> constructor = null;
         try {
             newClazz = Class.forName(type.getTypeName());
-            Constructor[] constructors = newClazz.getConstructors();
-            for (Constructor c : constructors) {
+            Constructor<?>[] constructors = newClazz.getConstructors();
+            for (Constructor<?> c : constructors) {
                 int parameterCount = c.getParameterCount();
                 if (size == parameterCount) {
                     constructor = c;
@@ -465,7 +465,7 @@ public class Grid extends Table implements Scrollable, XTool {
         final Constructor<V> finalConstructor = (Constructor<V>) constructor;
         return cellsText.stream().map(t -> {
             try {
-                return finalConstructor.newInstance(t.toArray(new Object[0]));
+                return finalConstructor.newInstance(t.toArray());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
