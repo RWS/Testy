@@ -299,6 +299,8 @@ public class Grid extends Table implements Scrollable, XTool {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
             rowsEl.setTag("tr");
+        } else {
+            rowsEl.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
         }
         int size = rowsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
@@ -312,7 +314,7 @@ public class Grid extends Table implements Scrollable, XTool {
                     for (int j : columnsList) {
                         Row row = new Row(this).setTag("tr").setResultIdx(i);
                         if (rowExpand) {
-                            row.setExcludeClasses("x-grid-rowbody-tr");
+                            row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                         }
                         Cell cell = new Cell(row, j);
                         String text;
@@ -329,6 +331,9 @@ public class Grid extends Table implements Scrollable, XTool {
                         break;
                     }
                     Row row = new Row(this, i);
+                    if(rowExpand){
+                        row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
+                    }
                     String currentId = row.getAttributeId();
                     if (!"".equals(id) && id.equals(currentId)) {
                         canRead = true;
@@ -339,8 +344,16 @@ public class Grid extends Table implements Scrollable, XTool {
                 break;
             }
             Row row = new Row(this, size);
+            if(rowExpand){
+                row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
+            }
             id = row.getAttributeId();
-            scrollPageDownInTree();
+            if(rowExpand){
+                scrollPageDown();
+                scrollPageDown();
+            } else {
+                scrollPageDownInTree();
+            }
             canRead = false;
             timeout++;
         } while (timeout < 30);
@@ -372,8 +385,8 @@ public class Grid extends Table implements Scrollable, XTool {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         if (rowExpand) {
-            rowsEl.setExcludeClasses("x-grid-rowbody-tr");
-            rowEl = new Row(this).setTag("tr").setExcludeClasses("x-grid-rowbody-tr").setResultIdx(1);
+            rowsEl.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
+            rowEl = new Row(this).setTag("tr").setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true).setResultIdx(1);
         }
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();

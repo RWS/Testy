@@ -159,19 +159,6 @@ public class GridIntegrationTest extends TestBase {
     }
 
     @Test(dependsOnMethods = "checkExpandedRowTest")
-    void getCellTextForRowExpanderTest() {
-        if (InputData.EXTJS_EXAMPLE_URL.contains("?classic")) {
-            driver.get(InputData.EXTJS_EXAMPLE_URL + "#row-widget-grid");
-            driver.switchTo().frame("examples-iframe");
-            Grid spreadsheet = new Grid().setTitle("Expander rows to show company orders");
-            spreadsheet.ready(true);
-            spreadsheet.ready(true);
-            List<List<String>> cellsText = spreadsheet.getCellsText(true);
-            assertThat(cellsText.size(), is(100));
-        }
-    }
-
-    @Test(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
 //        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
@@ -282,7 +269,7 @@ public class GridIntegrationTest extends TestBase {
         log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
     }
 
-//    @Test
+    //    @Test
 //(dependsOnMethods = "getCellTextForRowExpanderTest")
     void getCellsTest1() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
