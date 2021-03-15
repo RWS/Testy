@@ -13,6 +13,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Tree extends WebLocator implements Scrollable {
 
@@ -125,10 +127,10 @@ public class Tree extends WebLocator implements Scrollable {
     }
 
     public List<List<String>> getCellsText(int... excludedColumns) {
-        return getCellsText(false, (short) 0, excludedColumns);
+        return getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
     }
 
-    private List<List<String>> getCellsText(boolean rowExpand, short columnLanguages, int... excludedColumns) {
+    public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         com.sdl.selenium.extjs6.grid.Row rowsEl = new com.sdl.selenium.extjs6.grid.Row(this).setTag("tr");
         com.sdl.selenium.extjs6.grid.Row rowEl = new com.sdl.selenium.extjs6.grid.Row(this, 1);
         if (rowExpand) {
@@ -142,7 +144,7 @@ public class Tree extends WebLocator implements Scrollable {
         if (rows <= 0) {
             return null;
         } else {
-            return getLists(rows, rowExpand, columnLanguages, columnsList);
+            return getLists(rows, rowExpand, predicate, function, columnsList);
         }
     }
 
@@ -202,7 +204,7 @@ public class Tree extends WebLocator implements Scrollable {
         return listOfList;
     }
 
-    private List<List<String>> getLists(int rows, boolean rowExpand, short columnLanguages, List<Integer> columnsList) {
+    private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
             rowsEl.setTag("tr");
@@ -223,8 +225,8 @@ public class Tree extends WebLocator implements Scrollable {
                         }
                         Cell cell = new Cell(row, j);
                         String text;
-                        if (columnLanguages == j) {
-                            text = cell.getLanguages();
+                        if (predicate.test(j)) {
+                            text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
                         }
