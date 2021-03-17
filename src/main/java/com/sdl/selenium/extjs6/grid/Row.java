@@ -255,17 +255,20 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private void scrollInGrid(Row row) {
-        while (!row.waitToRender(Duration.ofMillis(100), false)) {
-            Grid grid;
-            if (getPathBuilder().getContainer() instanceof Grid) {
-                grid = (Grid) getPathBuilder().getContainer();
+        Grid grid;
+        if (getPathBuilder().getContainer() instanceof Grid) {
+            grid = (Grid) getPathBuilder().getContainer();
+        } else {
+            if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
+                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
             } else {
-                if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
-                    grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
-                } else {
-                    grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
-                }
+                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
             }
+        }
+        if (grid.isScrollBottom()) {
+            grid.scrollTop();
+        }
+        while (!row.waitToRender(Duration.ofMillis(100), false)) {
             if (!grid.scrollPageDown()) {
                 break;
             }
