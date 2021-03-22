@@ -331,7 +331,7 @@ public class Grid extends Table implements Scrollable, XTool {
                         break;
                     }
                     Row row = new Row(this, i);
-                    if(rowExpand){
+                    if (rowExpand) {
                         row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                     }
                     String currentId = row.getAttributeId();
@@ -344,11 +344,11 @@ public class Grid extends Table implements Scrollable, XTool {
                 break;
             }
             Row row = new Row(this, size);
-            if(rowExpand){
+            if (rowExpand) {
                 row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
             }
             id = row.getAttributeId();
-            if(rowExpand){
+            if (rowExpand) {
                 scrollPageDown();
                 scrollPageDown();
             } else {
@@ -448,15 +448,27 @@ public class Grid extends Table implements Scrollable, XTool {
     }
 
     public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
-        return getCellsText(type, (short) 0, excludedColumns);
+        return getCellsText(type, false, (short) 0, excludedColumns);
+    }
+
+    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, int... excludedColumns) {
+        return getCellsText(type, expandRow, (short) 0, excludedColumns);
     }
 
     public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        return getCellsText(type, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+        return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
+        return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
     public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        List<List<String>> cellsText = getCellsText(predicate, function, excludedColumns);
+        return getCellsText(type, false, predicate, function, excludedColumns);
+    }
+
+    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
         if (cellsText == null) {
             return null;
         }
