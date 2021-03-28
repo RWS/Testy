@@ -99,7 +99,7 @@ public class Tab extends WebLocator implements ITab {
             }
 
             @Override
-            public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTypes) {
+            public void addTextInPath(List<String> selectors, String text, String pattern, List<SearchType> searchTypes) {
 
             }
         };

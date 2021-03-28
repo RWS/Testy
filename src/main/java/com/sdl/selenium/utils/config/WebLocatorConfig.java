@@ -221,10 +221,7 @@ public class WebLocatorConfig {
 
     @SuppressWarnings("unchecked")
     public static List<SearchType> getSearchTextType() {
-        return (List<SearchType>) ((ArrayList) searchTextType).clone();
-//        ArrayList<SearchType> copyOfArrayList = new ArrayList<SearchType>();
-//        copyOfArrayList.addAll(searchTextType);
-//        return copyOfArrayList;
+        return (List<SearchType>) searchTextType.clone();
     }
 
     public static void setSearchTextType(ArrayList<SearchType> searchTextType) {

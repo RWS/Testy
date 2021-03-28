@@ -9,17 +9,17 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class InputData extends PropertiesReader {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(InputData.class);
 
     public static final String ENV_PROPERTY = "env";
     public static final String ENV_PROPERTY_DEFAULT = "localhost";
     public static final String FUNCTIONAL_PATH = "src/test/functional/";
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(InputData.class);
 
-    private static InputData properties = new InputData();
+    private static final InputData properties = new InputData();
 
     public InputData() {
         String testEnvironment = System.getProperty(ENV_PROPERTY, ENV_PROPERTY_DEFAULT);
-        log.info("test.environment : " + testEnvironment);
+        log.info("test.environment: " + testEnvironment);
 
 //        FileInputStream inputStream = getFileAsStream(RESOURCES_PATH + testEnvironment + ".properties");
         URL resource = Thread.currentThread().getContextClassLoader().getResource(testEnvironment + ".properties");
@@ -29,11 +29,10 @@ public class InputData extends PropertiesReader {
         try {
             inputStream = resource != null ? resource.openStream() : null;
         } catch (IOException e) {
-            log.error("IOException: {}", e);
+            log.error("IOException: {}", e.getMessage());
         }
 
         init(null, inputStream);
-
         log.info(toString());
     }
 

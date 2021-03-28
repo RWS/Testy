@@ -52,8 +52,8 @@ public class XPathBuilder implements Cloneable {
     private String resultIdx;
     private String type;
     private String localName;
-    private final Map<String, SearchText> attribute = new LinkedHashMap<>();
-    private final Map<String, String[]> attributes = new LinkedHashMap<>();
+    private Map<String, SearchText> attribute = new LinkedHashMap<>();
+    private Map<String, String[]> attributes = new LinkedHashMap<>();
 
     //private int elIndex; // TODO try to find how can be used
 
@@ -827,45 +827,45 @@ public class XPathBuilder implements Cloneable {
     protected String getBasePathSelector() {
         // TODO use disabled
         // TODO verify what need to be equal OR contains
-        List<String> selector = new ArrayList<>();
-        CollectionUtils.addIgnoreNull(selector, getBasePath());
+        List<String> selectors = new ArrayList<>();
+        CollectionUtils.addIgnoreNull(selectors, getBasePath());
 
         if (!WebDriverConfig.isIE()) {
             if (hasStyle()) {
-                selector.add(applyTemplate("style", getStyle()));
+                selectors.add(applyTemplate("style", getStyle()));
             }
             // TODO make specific for WebLocator
             if (isVisibility()) {
-//               TODO selector.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
-                CollectionUtils.addIgnoreNull(selector, applyTemplate("visibility", isVisibility()));
+//               TODO selectors.append(" and count(ancestor-or-self::*[contains(replace(@style, '\s*:\s*', ':'), 'display:none')]) = 0");
+                CollectionUtils.addIgnoreNull(selectors, applyTemplate("visibility", isVisibility()));
             }
         }
 
-        return selector.isEmpty() ? "" : String.join(" and ", selector);
+        return selectors.isEmpty() ? "" : String.join(" and ", selectors);
     }
 
     public String getBasePath() {
-        List<String> selector = new ArrayList<>();
+        List<String> selectors = new ArrayList<>();
         if (hasId()) {
-            selector.add(applyTemplate("id", getId()));
+            selectors.add(applyTemplate("id", getId()));
         }
         if (hasName()) {
-            selector.add(applyTemplate("name", getName()));
+            selectors.add(applyTemplate("name", getName()));
         }
         if (hasLocalName()) {
-            selector.add(applyTemplate("localName", getLocalName()));
+            selectors.add(applyTemplate("localName", getLocalName()));
         }
         if (hasBaseCls()) {
-            selector.add(applyTemplate("class", getBaseCls()));
+            selectors.add(applyTemplate("class", getBaseCls()));
         }
         if (hasCls()) {
-            selector.add(applyTemplate("cls", getCls()));
+            selectors.add(applyTemplate("cls", getCls()));
         }
         if (hasClasses()) {
-            selector.addAll(getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList()));
+            selectors.addAll(getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList()));
         }
         if (hasExcludeClasses()) {
-            selector.addAll(getExcludeClasses().stream().map(excludeClass -> applyTemplate("excludeClass", excludeClass)).collect(Collectors.toList()));
+            selectors.addAll(getExcludeClasses().stream().map(excludeClass -> applyTemplate("excludeClass", excludeClass)).collect(Collectors.toList()));
         }
         if (hasTitle()) {
             String title = getTitle();
@@ -876,58 +876,58 @@ public class XPathBuilder implements Cloneable {
                         titleTplEl.setText(title, searchTitleType.toArray(new SearchType[0]));
                     }
                     if (titleTplEl.getPathBuilder().getText() != null) {
-                        addTemplate(selector, "titleEl", titleTplEl.getXPath());
+                        addTemplate(selectors, "titleEl", titleTplEl.getXPath());
                     }
                 } else if (searchTitleType.isEmpty()) {
-                    addTemplate(selector, "title", title);
+                    addTemplate(selectors, "title", title);
                 } else {
-                    addTextInPath(selector, title, "@title", searchTitleType);
+                    addTextInPath(selectors, title, "@title", searchTitleType);
                 }
             }
         }
         if (hasType()) {
-            addTemplate(selector, "type", getType());
+            addTemplate(selectors, "type", getType());
         }
         if (!attribute.isEmpty()) {
             for (Map.Entry<String, SearchText> entry : attribute.entrySet()) {
                 List<SearchType> searchType = entry.getValue().getSearchTypes();
                 String text = entry.getValue().getValue();
-                addTextInPath(selector, text, "@" + entry.getKey(), searchType);
+                addTextInPath(selectors, text, "@" + entry.getKey(), searchType);
             }
         }
         if (!attributes.isEmpty()) {
             for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
                 String[] values = entry.getValue();
                 for (String value : values) {
-                    selector.add(applyTemplate("attributes", entry.getKey(), value));
+                    selectors.add(applyTemplate("attributes", entry.getKey(), value));
                 }
             }
         }
         if (hasText()) {
             if (!Strings.isNullOrEmpty(getTemplate("text"))) {
-                selector.add(applyTemplate("text", Utils.getEscapeQuotesText(getText())));
+                selectors.add(applyTemplate("text", Utils.getEscapeQuotesText(getText())));
             } else {
-                addTextInPath(selector, getText(), ".", searchTextType);
+                addTextInPath(selectors, getText(), ".", searchTextType);
             }
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
             if (!"tagAndPosition".equals(entry.getKey())) {
-                addTemplate(selector, entry.getKey(), entry.getValue());
+                addTemplate(selectors, entry.getKey(), entry.getValue());
             }
         }
-        selector.addAll(new ArrayList<>(elPathSuffix.values()));
-        selector.addAll(getChildNodesToSelector());
-        return selector.isEmpty() ? null : String.join(" and ", selector);
+        selectors.addAll(new ArrayList<>(elPathSuffix.values()));
+        selectors.addAll(getChildNodesToSelector());
+        return selectors.isEmpty() ? null : String.join(" and ", selectors);
     }
 
-    public void addTextInPath(List<String> selector, String text, String pattern, List<SearchType> searchTextType) {
+    public void addTextInPath(List<String> selectors, String text, String pattern, List<SearchType> searchTextType) {
         text = getTextAfterEscapeQuotes(text, searchTextType);
         boolean hasContainsAll = searchTextType.contains(SearchType.CONTAINS_ALL) || searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES);
         if (searchTextType.contains(SearchType.HTML_NODE)) {
             String selfPath = getTextWithSearchType(searchTextType, text, ".");
-            addTemplate(selector, "HTML_NODE", selfPath);
+            addTemplate(selectors, "HTML_NODE", selfPath);
         } else if (searchTextType.contains(SearchType.HTML_NODES)) {
-            addTemplate(selector, "HTML_NODES", text);
+            addTemplate(selectors, "HTML_NODES", text);
         } else if (hasContainsAll || searchTextType.contains(SearchType.CONTAINS_ANY)) {
             String splitChar = String.valueOf(text.charAt(0));
             String[] strings = Pattern.compile(Pattern.quote(splitChar)).split(text.substring(1));
@@ -950,27 +950,27 @@ public class XPathBuilder implements Cloneable {
                     }
                 }
             }
-            selector.add(hasContainsAll ? String.join(" and ", strings) : "(" + String.join(" or ", strings) + ")");
+            selectors.add(hasContainsAll ? String.join(" and ", strings) : "(" + String.join(" or ", strings) + ")");
         } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE_OR_SELF)) {
             String selfPath = getTextWithSearchType(searchTextType, text, pattern);
-            addTemplate(selector, "DEEP_CHILD_NODE_OR_SELF", selfPath);
+            addTemplate(selectors, "DEEP_CHILD_NODE_OR_SELF", selfPath);
         } else if (searchTextType.contains(SearchType.DEEP_CHILD_NODE)) {
             String selfPath = getTextWithSearchType(searchTextType, text, pattern);
-            addTemplate(selector, "DEEP_CHILD_NODE", selfPath);
+            addTemplate(selectors, "DEEP_CHILD_NODE", selfPath);
         } else if (searchTextType.contains(SearchType.CHILD_NODE)) {
             String selfPath = getTextWithSearchType(searchTextType, text, pattern);
-            addTemplate(selector, "CHILD_NODE", selfPath);
+            addTemplate(selectors, "CHILD_NODE", selfPath);
         } else {
-            selector.add(getTextWithSearchType(searchTextType, text, ".".equals(pattern) ? "text()" : pattern));
+            selectors.add(getTextWithSearchType(searchTextType, text, ".".equals(pattern) ? "text()" : pattern));
         }
     }
 
     private List<String> getChildNodesToSelector() {
-        List<String> selector = new ArrayList<>();
+        List<String> selectors = new ArrayList<>();
         if (hasChildNodes()) {
-            selector.addAll(getChildNodes().stream().map(this::getChildNodeSelector).collect(Collectors.toList()));
+            selectors.addAll(getChildNodes().stream().map(this::getChildNodeSelector).collect(Collectors.toList()));
         }
-        return selector;
+        return selectors;
     }
 
     private String getChildNodeSelector(WebLocator child) {
@@ -998,10 +998,10 @@ public class XPathBuilder implements Cloneable {
         return selector;
     }
 
-    private void addTemplate(List<String> selector, String key, Object... arguments) {
+    private void addTemplate(List<String> selectors, String key, Object... arguments) {
         String tpl = applyTemplate(key, arguments);
         if (!Strings.isNullOrEmpty(tpl)) {
-            selector.add(tpl);
+            selectors.add(tpl);
         }
     }
 
@@ -1076,34 +1076,34 @@ public class XPathBuilder implements Cloneable {
     }
 
     private String getItemCssSelector() {
-        List<String> selector = new ArrayList<>();
+        List<String> selectors = new ArrayList<>();
         if (hasTag()) {
-            selector.add(getTag());
+            selectors.add(getTag());
         }
         if (hasId()) {
-            selector.add("#" + getId());
+            selectors.add("#" + getId());
         }
         if (hasBaseCls()) {
-            selector.add("." + getBaseCls());
+            selectors.add("." + getBaseCls());
         }
         if (hasCls()) {
-            selector.add("[class=" + getCls() + "]");
+            selectors.add("[class=" + getCls() + "]");
         }
         if (hasClasses()) {
-            selector.addAll(getClasses().stream().map(cls -> "." + cls).collect(Collectors.toList()));
+            selectors.addAll(getClasses().stream().map(cls -> "." + cls).collect(Collectors.toList()));
         }
         if (hasExcludeClasses()) {
 //            LOGGER.warn("excludeClasses is not supported yet");
-            selector.addAll(getExcludeClasses().stream().map(excludeClass -> ":not(." + excludeClass + ")").collect(Collectors.toList()));
+            selectors.addAll(getExcludeClasses().stream().map(excludeClass -> ":not(." + excludeClass + ")").collect(Collectors.toList()));
         }
         if (hasName()) {
-            selector.add("[name='" + getName() + "']");
+            selectors.add("[name='" + getName() + "']");
         }
         if (hasType()) {
-            selector.add("[type='" + getType() + "']");
+            selectors.add("[type='" + getType() + "']");
         }
         if (!attribute.isEmpty()) {
-            selector.addAll(attribute.entrySet().stream()
+            selectors.addAll(attribute.entrySet().stream()
                     .map(e -> "[" + e.getKey() + "='" + e.getValue().getValue() + "']")
                     .collect(Collectors.toList()));
         }
@@ -1113,7 +1113,7 @@ public class XPathBuilder implements Cloneable {
 //        for (String suffix : elPathSuffix.values()) {
 //            selector.add(suffix);
 //        }
-        return selector.isEmpty() ? "*" : String.join("", selector);
+        return selectors.isEmpty() ? "*" : String.join("", selectors);
     }
 
     public final By getSelector() {
@@ -1291,14 +1291,23 @@ public class XPathBuilder implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         XPathBuilder builder = (XPathBuilder) super.clone();
 
+        builder.defaultSearchTextType = (List<SearchType>) ((ArrayList) defaultSearchTextType).clone();
+        builder.searchTextType = (List<SearchType>) ((ArrayList) searchTextType).clone();
+        builder.searchTitleType = (List<SearchType>) ((ArrayList) searchTitleType).clone();
+        builder.searchLabelType = (List<SearchType>) ((ArrayList) searchLabelType).clone();
+
         LinkedHashMap<String, String> templates = (LinkedHashMap<String, String>) builder.templates;
         LinkedHashMap<String, WebLocator> templateTitle = (LinkedHashMap<String, WebLocator>) builder.templateTitle;
         LinkedHashMap<String, String[]> templatesValues = (LinkedHashMap<String, String[]>) builder.templatesValues;
         LinkedHashMap<String, String> elPathSuffix = (LinkedHashMap<String, String>) builder.elPathSuffix;
+        LinkedHashMap<String, SearchText> attribute = (LinkedHashMap<String, SearchText>) builder.attribute;
+        LinkedHashMap<String, String[]> attributes = (LinkedHashMap<String, String[]>) builder.attributes;
 
         builder.templates = (Map<String, String>) templates.clone();
         builder.templatesValues = (Map<String, String[]>) templatesValues.clone();
         builder.elPathSuffix = (Map<String, String>) elPathSuffix.clone();
+        builder.attribute = (Map<String, SearchText>) attribute.clone();
+        builder.attributes = (Map<String, String[]>) attributes.clone();
 
         builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
         WebLocator titleTplEl = templateTitle.get("title");

@@ -40,7 +40,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
 
         WebLocator textLocator = new WebLocator().setText("Search Type", SearchType.TRIM);
 
-        assertThat("parent should not be present", parent.isPresent(), is(true));
+        assertThat("parent should not be present", parent.isPresent(), is(false));
         assertThat("textLocator should be present", textLocator.isPresent(), is(true));
 
         textLocator.setContainer(parent);
@@ -167,6 +167,7 @@ public class WebLocatorSuggestionsIntegrationTest extends TestBase {
         assertThat(suggestedElement, is(notNullValue()));
         suggestedElement.assertReady();
 
-        assertThat("original element should not be changed", textLocator.getXPath(), is(originalXPath));
+        String actualXPath = textLocator.getXPath();
+        assertThat("original element should not be changed!", actualXPath, equalTo(originalXPath));
     }
 }

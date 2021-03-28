@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.time.Duration;
 import java.util.*;
 
 public class WebLocatorSuggestions {
@@ -96,7 +98,7 @@ public class WebLocatorSuggestions {
     private static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
 
         WebLocator webLocator = getClone(originalWebLocator);
-        if(webLocator == null) {
+        if (webLocator == null) {
             return null;
         }
 
@@ -138,9 +140,9 @@ public class WebLocatorSuggestions {
             return webLocator;
         }
 
-        if(isSuggestAttributes()) {
+        if (isSuggestAttributes()) {
             WebLocator locator = suggestAttributeSubsets(webLocator);
-            if(locator == null) {
+            if (locator == null) {
                 LOGGER.debug("No suggestions found for {}", originalWebLocator);
             }
             return locator;
@@ -152,11 +154,11 @@ public class WebLocatorSuggestions {
 
     private static WebLocator getClone(WebLocator originalWebLocator) {
         try {
-            WebLocator webLocator = originalWebLocator.getClass().newInstance();
+            WebLocator webLocator = originalWebLocator.getClass().getDeclaredConstructor().newInstance();
             XPathBuilder builder = (XPathBuilder) originalWebLocator.getPathBuilder().clone();
             webLocator.setPathBuilder(builder);
             return webLocator;
-        } catch (IllegalAccessException | InstantiationException | CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             LOGGER.error("Error while cloning the WebLocator: " + e.getMessage());
         }
         return null;
@@ -180,7 +182,7 @@ public class WebLocatorSuggestions {
         searchTypes.toArray(labelSearchTypes);
 
         WebLocator labelLocator = new WebLocator(xPathBuilder.getContainer())
-                .setRenderMillis(0)
+                .setRender(Duration.ZERO)
                 .setText(label, labelSearchTypes)
                 .setTag(xPathBuilder.getLabelTag());
 
@@ -217,7 +219,7 @@ public class WebLocatorSuggestions {
                 return webLocator;
             } else {
                 labelLocator.setTag("*");
-                if(labelLocator.isPresent()) {
+                if (labelLocator.isPresent()) {
                     LOGGER.warn("But found it using tag *.");
                     webLocator.setLabelTag("*");
                     return webLocator;
@@ -405,8 +407,6 @@ public class WebLocatorSuggestions {
                         field.set(builder, WebLocatorConfig.getDefaultLabelPosition());
                         break;
                     case "position":
-                        field.set(builder, -1);
-                        break;
                     case "resultIdx":
                         field.set(builder, -1);
                         break;
@@ -450,11 +450,18 @@ public class WebLocatorSuggestions {
         }
     }
 
-    public static class SolutionFoundException extends Exception{}
+    public static class SolutionFoundException extends Exception {
+    }
 
     /**
      * Returns an array that contains all differences between first and second.
      */
+    private static String[] differences1(String[] first, String[] second) {
+        List<String> differences = new ArrayList<>(Arrays.asList(first));
+        differences.removeAll(Arrays.asList(second));
+        return differences.toArray(String[]::new);
+    }
+
     private static String[] differences(String[] first, String[] second) {
 
         String[] sortedFirst = Arrays.copyOf(first, first.length); // O(n)

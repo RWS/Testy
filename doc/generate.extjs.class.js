@@ -105,15 +105,17 @@ var _classGen = {
             xtype = item.getXType ? item.getXType() : ('unknownGetXType'),
             xtypes = item.getXTypes ? item.getXTypes() : ('unknownGetXTypes');
 
-        //console.debug('getItemCode', container, item);
+        console.info('getItemCode', container, item);
 
         // all classes that are or extend panels
         if(me.isTypeOf(xtype, xtypes, 'panel') || item instanceof Ext.Panel){
             if(me.isTypeOf(xtype, xtypes, 'window') || item instanceof Ext.Window){
                 className = 'Window';
-            } else if(me.isTypeOf(xtype, xtypes, 'editorgrid') || item instanceof Ext.grid.EditorGridPanel){
-                className = 'EditorGridPanel';
-            } else if(me.isTypeOf(xtype, xtypes, 'grid') || item instanceof Ext.grid.GridPanel){
+            }
+//            else if(me.isTypeOf(xtype, xtypes, 'editorgrid') || item instanceof Ext.grid.EditorGridPanel){
+//                className = 'EditorGridPanel';
+//            }
+             else if(me.isTypeOf(xtype, xtypes, 'grid') || item instanceof Ext.grid.GridPanel){
                 className = 'GridPanel';
             } else {
                 className = 'Panel';
@@ -288,7 +290,7 @@ var _classGen = {
         code += '\n// methods hire \n';
         code += '\n}\n';
 
-        code = _classGen.getImports(code) + code;
+//        code = _classGen.getImports(code) + code;
 
         return code;
     },
@@ -302,7 +304,7 @@ var _classGen = {
 // usage examples:
 // ================
 
-console.info('\n'+ _classGen.getActiveWinClassCode());
-//console.info('\n'+ _classGen.getCmpClassCode('winUserPreferences'));
+//console.info('\n'+ _classGen.getActiveWinClassCode());
+console.info('\n'+ _classGen.getCmpClassCode('form-login-1034'));
 
 // TODO verify that all var names are used only once
