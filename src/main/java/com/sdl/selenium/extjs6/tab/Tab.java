@@ -120,6 +120,15 @@ public class Tab extends WebLocator implements ITab {
         return activated;
     }
 
+    public boolean doSetActive() {
+        WebLocator inactiveTab = getTitleInactiveEl().setExcludeClasses("x-tab-active");
+        boolean activated = isActive() || inactiveTab.doClick();
+        if (activated) {
+            log.info("doSetActive : " + toString());
+        }
+        return activated;
+    }
+
     @Override
     public boolean isActive() {
         return new ConditionManager(Duration.ofMillis(200)).add(new RenderSuccessCondition(this)).execute().isSuccess();
