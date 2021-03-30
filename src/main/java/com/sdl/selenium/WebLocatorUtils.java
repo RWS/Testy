@@ -1,5 +1,6 @@
 package com.sdl.selenium;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -143,6 +144,129 @@ public final class WebLocatorUtils extends WebLocator {
         }
 
         return result;
+    }
+
+    public static String discoverElements(WebLocator webLocator) {
+        String result = "";
+        if (webLocator.getWebElement() != null) {
+            WebElement parent = webLocator.getWebElement();
+            List<WebElement> branch = new LinkedList<>();
+            List<String> elements = new LinkedList<>();
+            int index = 0;
+            boolean found = false;
+            boolean foundField = false;
+            String label = "";
+            while (parent != null) {
+                if (index > 0) {
+                    String aClass = parent.getAttribute("class");
+                    if (!aClass.contains("x-hidden-offsets") && !aClass.contains("x-hidden-clip") && !aClass.contains("Wrap")
+                            && !aClass.contains("wrap") && !aClass.contains("-inner") && !aClass.contains("-outerCt")) {
+                        String tag = parent.getTagName();
+                        String text = parent.getText().split("\\n")[0];
+                        StringBuilder element = new StringBuilder();
+                        if (aClass.contains("x-panel ")) {
+                            element.append("Panel panel = new Panel(null");
+                            addText(text, element);
+                            found = true;
+                        } else if (aClass.contains("x-field ") || foundField) {
+                            foundField = true;
+                            if (tag.equals("label")) {
+                                label = text.replace(":", "");
+                            } else if (tag.equals("input") || tag.equals("textarea")) {
+                                String attribute = parent.getAttribute("data-componentid");
+                                String componentId = "";
+                                if (!Strings.isNullOrEmpty(attribute)) {
+                                    componentId = attribute.split("-")[0];
+                                }
+                                switch (componentId) {
+                                    case "numberfield":
+                                    case "textfield":
+                                        element.append("TextField field = new TextField(this");
+                                        addText(label, element);
+                                        found = true;
+                                        label = "";
+                                        foundField = false;
+                                        break;
+                                    case "timefield":
+                                    case "checkbox":
+                                        element.append("CheckBox checkBox = new CheckBox(this");
+                                        addText(label, element);
+                                        found = true;
+                                        label = "";
+                                        foundField = false;
+                                        break;
+                                    case "combo":
+                                        element.append("ComboBox comboBox = new ComboBox(this");
+                                        addText(label, element);
+                                        found = true;
+                                        label = "";
+                                        foundField = false;
+                                        break;
+                                    case "datefield":
+                                        element.append("DateField dateField = new DateField(this");
+                                        addText(label, element);
+                                        found = true;
+                                        label = "";
+                                        foundField = false;
+                                        break;
+                                    case "textarea":
+                                        element.append("TextArea textarea = new TextArea(this");
+                                        addText(label, element);
+                                        found = true;
+                                        label = "";
+                                        foundField = false;
+                                        break;
+                                    default:
+                                        LOGGER.info("Not associated these classes::" + text + "|" + aClass);
+                                        break;
+                                }
+                            } else {
+                                if (!foundField) {
+                                    LOGGER.info("Not associated these classes:::" + text + "|" + aClass);
+                                }
+                            }
+                        } else if (aClass.contains("x-btn ")) {
+                            element.append("Button button = new Button(this");
+                            addText(text, element);
+                            found = true;
+                        } else {
+                            LOGGER.info("Not associated these classes: " + aClass);
+                            found = false;
+                        }
+                        if (found) {
+                            elements.add(element.toString());
+                        }
+                    }
+                }
+                index++;
+                List<WebElement> webElements = parent.findElements(By.xpath("./*"));
+                int size = webElements.size();
+                if (size == 0 && !branch.isEmpty()) {
+                    found = false;
+                    parent = branch.get(0);
+                    branch.remove(0);
+                    continue;
+                }
+                if (size > 1) {
+                    int i = found ? 2 : 1;
+                    for (; i < size; i++) {
+                        branch.add(0, webElements.get(i));
+                    }
+                    parent = webElements.isEmpty() ? null : webElements.get(found ? 1 : 0);
+                } else {
+                    parent = webElements.isEmpty() ? null : webElements.get(0);
+                }
+            }
+            result = "\n" + String.join("\n", elements);
+        }
+        return result;
+    }
+
+    private static void addText(String label, StringBuilder element) {
+        if (!Strings.isNullOrEmpty(label)) {
+            element.append(", \"").append(label).append("\"");
+        }
+        element.append(");");
     }
 
     private static void setupJs() {

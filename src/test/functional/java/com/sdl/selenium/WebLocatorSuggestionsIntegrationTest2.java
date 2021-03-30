@@ -1,7 +1,6 @@
 package com.sdl.selenium;
 
 import com.sdl.selenium.extjs6.panel.Panel;
-import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
@@ -12,7 +11,6 @@ import java.time.Duration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 
 public class WebLocatorSuggestionsIntegrationTest2 extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorSuggestionsIntegrationTest2.class);
@@ -21,7 +19,7 @@ public class WebLocatorSuggestionsIntegrationTest2 extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-login");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
     }
 
@@ -38,15 +36,10 @@ public class WebLocatorSuggestionsIntegrationTest2 extends TestBase {
 
     @Test
     public void whenContainerDoesNotExistIAmInformed() {
-        Panel parent = new Panel(null, "Login");
+        Panel parent = new Panel(null, "Form Fields");
         parent.ready(Duration.ofSeconds(10));
         assertThat("parent should not be present", parent.isPresent(), is(true));
-
-        String originalXpath = parent.getXPath();
-        WebLocator suggestedElement = WebLocatorSuggestions.getSuggestion(parent);
-
-        assertThat(suggestedElement, is(nullValue()));
-        assertThat("original element should not be changed", parent.getXPath(), is(originalXpath));
+        WebLocatorSuggestions.discoverElements(parent);
     }
 
 //    /**
