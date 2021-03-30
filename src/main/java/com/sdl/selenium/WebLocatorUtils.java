@@ -146,7 +146,7 @@ public final class WebLocatorUtils extends WebLocator {
         return result;
     }
 
-    public static String discoverElements(WebLocator webLocator) {
+    public static String discoverExtJs6Elements(WebLocator webLocator) {
         String result = "";
         if (webLocator.getWebElement() != null) {
             WebElement parent = webLocator.getWebElement();

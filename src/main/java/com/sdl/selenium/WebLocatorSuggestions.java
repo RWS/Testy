@@ -96,7 +96,7 @@ public class WebLocatorSuggestions {
     }
 
     public static void discoverElements(WebLocator originalWebLocator) {
-        LOGGER.debug("Found elements: {}", WebLocatorUtils.discoverElements(originalWebLocator));
+        LOGGER.debug("Found elements: {}", WebLocatorUtils.discoverExtJs6Elements(originalWebLocator));
     }
 
     private static WebLocator getElementSuggestion(WebLocator originalWebLocator) {
@@ -108,7 +108,7 @@ public class WebLocatorSuggestions {
 
         if (webLocator.currentElement != null || webLocator.isPresent()) {
             if (webLocator.currentElement.isDisplayed()) {
-                LOGGER.debug("The element already exists: {}", WebLocatorUtils.discoverElements(webLocator));
+                LOGGER.debug("The element already exists: {}", WebLocatorUtils.discoverExtJs6Elements(webLocator));
             } else {
                 LOGGER.info("The element already exists but it is not visible: {}", WebLocatorUtils.getHtmlTree(webLocator));
             }
