@@ -154,71 +154,80 @@ public final class WebLocatorUtils extends WebLocator {
             List<String> elements = new LinkedList<>();
             int index = 0;
             boolean found = false;
+            boolean foundPanel = false;
             boolean foundField = false;
             String label = "";
+            String labelVar = "";
             while (parent != null) {
                 if (index > 0) {
                     String aClass = parent.getAttribute("class");
-                    if (!aClass.contains("x-hidden-offsets") && !aClass.contains("x-hidden-clip") && !aClass.contains("Wrap")
+                    if (!aClass.contains("Wrap")
                             && !aClass.contains("wrap") && !aClass.contains("-inner") && !aClass.contains("-outerCt")) {
                         String tag = parent.getTagName();
                         String text = parent.getText().split("\\n")[0];
                         StringBuilder element = new StringBuilder();
                         if (aClass.contains("x-panel ")) {
-                            element.append("Panel panel = new Panel(null");
+                            if (aClass.contains("x-grid")) {
+                                element.append("Grid grid = new Grid(this");
+                                found = true;
+                            } else {
+                                element.append("Panel panel = new Panel(this");
+                                foundPanel = true;
+                                found = false;
+                            }
                             addText(text, element);
-                            found = true;
                         } else if (aClass.contains("x-field ") || foundField) {
                             foundField = true;
                             if (tag.equals("label")) {
-                                label = text.replace(":", "");
+                                if (!Strings.isNullOrEmpty(text)) {
+                                    label = text.replace(":", "");
+                                    labelVar = label.substring(0, 1).toLowerCase() + label.substring(1);
+                                    labelVar = labelVar.replaceAll(" ", "");
+                                }
                             } else if (tag.equals("input") || tag.equals("textarea")) {
                                 String attribute = parent.getAttribute("data-componentid");
-                                String componentId = "";
+                                String componentId;
                                 if (!Strings.isNullOrEmpty(attribute)) {
                                     componentId = attribute.split("-")[0];
-                                }
-                                switch (componentId) {
-                                    case "numberfield":
-                                    case "textfield":
-                                        element.append("TextField field = new TextField(this");
-                                        addText(label, element);
-                                        found = true;
-                                        label = "";
-                                        foundField = false;
-                                        break;
-                                    case "timefield":
-                                    case "checkbox":
-                                        element.append("CheckBox checkBox = new CheckBox(this");
-                                        addText(label, element);
-                                        found = true;
-                                        label = "";
-                                        foundField = false;
-                                        break;
-                                    case "combo":
-                                        element.append("ComboBox comboBox = new ComboBox(this");
-                                        addText(label, element);
-                                        found = true;
-                                        label = "";
-                                        foundField = false;
-                                        break;
-                                    case "datefield":
-                                        element.append("DateField dateField = new DateField(this");
-                                        addText(label, element);
-                                        found = true;
-                                        label = "";
-                                        foundField = false;
-                                        break;
-                                    case "textarea":
-                                        element.append("TextArea textarea = new TextArea(this");
-                                        addText(label, element);
-                                        found = true;
-                                        label = "";
-                                        foundField = false;
-                                        break;
-                                    default:
-                                        LOGGER.info("Not associated these classes::" + text + "|" + aClass);
-                                        break;
+                                    switch (componentId) {
+                                        case "numberfield":
+                                        case "textfield":
+                                            element.append("TextField ").append(labelVar).append(" = new TextField(this");
+                                            addText(label, element);
+                                            found = true;
+                                            foundField = false;
+                                            break;
+                                        case "checkbox":
+                                            element.append("CheckBox ").append(labelVar).append(" = new CheckBox(this");
+                                            addText(label, element);
+                                            found = true;
+                                            foundField = false;
+                                            break;
+                                        case "timefield":
+                                        case "combo":
+                                            element.append("ComboBox ").append(labelVar).append(" = new ComboBox(this");
+                                            addText(label, element);
+                                            found = true;
+                                            foundField = false;
+                                            break;
+                                        case "datefield":
+                                            element.append("DateField ").append(labelVar).append(" = new DateField(this");
+                                            addText(label, element);
+                                            found = true;
+                                            foundField = false;
+                                            break;
+                                        case "textarea":
+                                            element.append("TextArea ").append(labelVar).append(" = new TextArea(this");
+                                            addText(label, element);
+                                            found = true;
+                                            foundField = false;
+                                            break;
+                                        default:
+                                            LOGGER.info("Not associated these classes::" + text + "|" + aClass);
+                                            break;
+                                    }
+                                    label = "";
+                                    labelVar = "";
                                 }
                             } else {
                                 if (!foundField) {
@@ -229,12 +238,17 @@ public final class WebLocatorUtils extends WebLocator {
                             element.append("Button button = new Button(this");
                             addText(text, element);
                             found = true;
+                        } else if (aClass.contains("x-fieldset ")) {
+                            element.append("FieldSet fieldSet = new FieldSet(this");
+                            addText(text, element);
+                            found = true;
                         } else {
                             LOGGER.info("Not associated these classes: " + aClass);
                             found = false;
                         }
-                        if (found) {
+                        if (found || foundPanel) {
                             elements.add(element.toString());
+                            foundPanel = false;
                         }
                     }
                 }
@@ -249,8 +263,17 @@ public final class WebLocatorUtils extends WebLocator {
                 }
                 if (size > 1) {
                     int i = found ? 2 : 1;
+                    int j = 0;
                     for (; i < size; i++) {
-                        branch.add(0, webElements.get(i));
+                        WebElement element = webElements.get(i);
+                        String aClass = element.getAttribute("class");
+                        if (!Strings.isNullOrEmpty(aClass) && !aClass.contains("x-hidden-offsets") && !aClass.contains("x-hidden-clip")
+                                && !aClass.contains("x-grid-") && !aClass.contains("x-mask") && !aClass.contains("wrap")) {
+                            branch.add(j, element);
+                            j++;
+                        } else {
+//                            LOGGER.info("Not added>" + aClass);
+                        }
                     }
                     parent = webElements.isEmpty() ? null : webElements.get(found ? 1 : 0);
                 } else {

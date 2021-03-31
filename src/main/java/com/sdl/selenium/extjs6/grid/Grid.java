@@ -42,6 +42,11 @@ public class Grid extends Table implements Scrollable, XTool {
         setContainer(container);
     }
 
+    public Grid(WebLocator container, String title, SearchType... searchTypes) {
+        this(container);
+        setTitle(title, searchTypes);
+    }
+
     @Override
     public WebLocator getView() {
         return this;
