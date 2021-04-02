@@ -161,8 +161,7 @@ public final class WebLocatorUtils extends WebLocator {
             while (parent != null) {
                 if (index > 0) {
                     String aClass = parent.getAttribute("class");
-                    if (!aClass.contains("Wrap")
-                            && !aClass.contains("wrap") && !aClass.contains("-inner") && !aClass.contains("-outerCt")) {
+                    if (!aClass.contains("Wrap") && !aClass.contains("-inner") && !aClass.contains("-outerCt")) {
                         String tag = parent.getTagName();
                         String text = parent.getText().split("\\n")[0];
                         StringBuilder element = new StringBuilder();
@@ -229,6 +228,11 @@ public final class WebLocatorUtils extends WebLocator {
                                     label = "";
                                     labelVar = "";
                                 }
+                            } else if (aClass.contains("x-form-display-field ")) {
+                                element.append("DisplayField ").append(labelVar).append(" = new DisplayField(this");
+                                addText(label, element);
+                                found = true;
+                                foundField = false;
                             } else {
                                 if (!foundField) {
                                     LOGGER.info("Not associated these classes:::" + text + "|" + aClass);
@@ -268,11 +272,9 @@ public final class WebLocatorUtils extends WebLocator {
                         WebElement element = webElements.get(i);
                         String aClass = element.getAttribute("class");
                         if (!Strings.isNullOrEmpty(aClass) && !aClass.contains("x-hidden-offsets") && !aClass.contains("x-hidden-clip")
-                                && !aClass.contains("x-grid-") && !aClass.contains("x-mask") && !aClass.contains("wrap")) {
+                                && !aClass.contains("x-grid-") && !aClass.contains("x-mask")) {
                             branch.add(j, element);
                             j++;
-                        } else {
-//                            LOGGER.info("Not added>" + aClass);
                         }
                     }
                     parent = webElements.isEmpty() ? null : webElements.get(found ? 1 : 0);
