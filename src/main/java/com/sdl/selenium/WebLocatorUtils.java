@@ -166,24 +166,29 @@ public final class WebLocatorUtils extends WebLocator {
                         String text = parent.getText().split("\\n")[0];
                         StringBuilder element = new StringBuilder();
                         if (aClass.contains("x-panel ")) {
+                            String name = getVariable(text);
                             if (aClass.contains("x-grid")) {
-                                element.append("Grid grid = new Grid(this");
+                                element.append("Grid ").append(name).append(" = new Grid(this");
                                 found = true;
                             } else {
-                                element.append("Panel panel = new Panel(this");
+                                element.append("Panel ").append(name).append(" = new Panel(this");
                                 foundPanel = true;
                                 found = false;
                             }
                             addText(text, element);
+                        } else if (aClass.contains("x-tab ")) {
+                            String name = getVariable(text);
+                            element.append("Tab ").append(name).append(" = new Tab(this");
+                            addText(text, element);
+                            found = true;
                         } else if (aClass.contains("x-field ") || foundField) {
                             foundField = true;
                             if (tag.equals("label")) {
                                 if (!Strings.isNullOrEmpty(text)) {
                                     label = text.replace(":", "");
-                                    labelVar = label.substring(0, 1).toLowerCase() + label.substring(1);
-                                    labelVar = labelVar.replaceAll(" ", "");
+                                    labelVar = getVariable(label);
                                 }
-                            } else if (tag.equals("input") || tag.equals("textarea")) {
+                            } else if (tag.equals("input")) {
                                 String attribute = parent.getAttribute("data-componentid");
                                 String componentId;
                                 if (!Strings.isNullOrEmpty(attribute)) {
@@ -215,12 +220,6 @@ public final class WebLocatorUtils extends WebLocator {
                                             found = true;
                                             foundField = false;
                                             break;
-                                        case "textarea":
-                                            element.append("TextArea ").append(labelVar).append(" = new TextArea(this");
-                                            addText(label, element);
-                                            found = true;
-                                            foundField = false;
-                                            break;
                                         default:
                                             LOGGER.info("Not associated these classes::" + text + "|" + aClass);
                                             break;
@@ -228,6 +227,11 @@ public final class WebLocatorUtils extends WebLocator {
                                     label = "";
                                     labelVar = "";
                                 }
+                            } else if (tag.equals("textarea")) {
+                                element.append("TextArea ").append(labelVar).append(" = new TextArea(this");
+                                addText(label, element);
+                                found = true;
+                                foundField = false;
                             } else if (aClass.contains("x-form-display-field ")) {
                                 element.append("DisplayField ").append(labelVar).append(" = new DisplayField(this");
                                 addText(label, element);
@@ -285,6 +289,11 @@ public final class WebLocatorUtils extends WebLocator {
             result = "\n" + String.join("\n", elements);
         }
         return result;
+    }
+
+    private static String getVariable(String label) {
+        String labelVar = label.substring(0, 1).toLowerCase() + label.substring(1);
+        return labelVar.replaceAll(" ", "");
     }
 
     private static void addText(String label, StringBuilder element) {

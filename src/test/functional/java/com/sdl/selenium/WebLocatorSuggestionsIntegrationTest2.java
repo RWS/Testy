@@ -19,7 +19,7 @@ public class WebLocatorSuggestionsIntegrationTest2 extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-tabs");
         driver.switchTo().frame("examples-iframe");
     }
 
