@@ -310,8 +310,17 @@ public final class WebLocatorUtils extends WebLocator {
     }
 
     private static String getVariable(String label) {
-        String labelVar = label.substring(0, 1).toLowerCase() + label.substring(1);
-        return labelVar.replaceAll(" ", "");
+        String[] strings = label.split(" ");
+        List<String> list = new LinkedList<>();
+        for (int i = 0; i < strings.length; i++) {
+            if (i > 0) {
+                String labelVar = strings[i].substring(0, 1).toUpperCase() + strings[i].substring(1);
+                list.add(labelVar);
+            } else {
+                list.add(strings[i].toLowerCase());
+            }
+        }
+        return String.join("", list);
     }
 
     private static void addText(String label, StringBuilder element) {
