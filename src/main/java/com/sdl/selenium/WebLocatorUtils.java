@@ -194,7 +194,7 @@ public final class WebLocatorUtils extends WebLocator {
                                 addText(title, element);
                                 break;
                             }
-                            case "xtab": {
+                            case "tab": {
                                 String title = executeExtJS(parent, "c.title");
                                 String name = getVariable(title);
                                 element.append("Tab ").append(name).append(" = new Tab(this");
@@ -203,6 +203,7 @@ public final class WebLocatorUtils extends WebLocator {
                                 break;
                             }
                             case "textfield":
+                            case "datetime":
                             case "numberfield": {
                                 String label = executeExtJS(parent, "c.fieldLabel");
                                 String name = getVariable(label);
@@ -230,7 +231,7 @@ public final class WebLocatorUtils extends WebLocator {
                             }
                             case "datefield": {
                                 String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = getVariable(label);
+                                String name = Strings.isNullOrEmpty(label) ? "dateField" : getVariable(label);
                                 element.append("DateField ").append(name).append(" = new DateField(this");
                                 addText(label, element);
                                 found = true;
