@@ -173,113 +173,81 @@ public final class WebLocatorUtils extends WebLocator {
                     String xType = getXType(parent);
                     if (!Strings.isNullOrEmpty(xType)) {
                         StringBuilder element = new StringBuilder();
-                        switch (xType) {
-                            case "xpanel":
-                            case "form-fieldtypes": {
-                                String title = executeExtJS(parent, "c.title");
-                                String name = getVariable(title);
-                                element.append("Panel ").append(name).append(" = new Panel(this");
-                                found = false;
-                                addText(title, element);
-                                break;
-                            }
-                            case "grid":
-                            case "row-expander-grid":
-                            case "row-numberer":
-                            case "array-grid": {
-                                String title = executeExtJS(parent, "c.title");
-                                String name = getVariable(title);
-                                element.append("Grid ").append(name).append(" = new Grid(this");
-                                found = true;
-                                addText(title, element);
-                                break;
-                            }
-                            case "tab": {
-                                String title = executeExtJS(parent, "c.title");
-                                String name = getVariable(title);
-                                element.append("Tab ").append(name).append(" = new Tab(this");
-                                addText(title, element);
-                                found = true;
-                                break;
-                            }
-                            case "textfield":
-                            case "datetime":
-                            case "numberfield": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = getVariable(label);
-                                element.append("TextField ").append(name).append(" = new TextField(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "checkboxfield": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = getVariable(label);
-                                element.append("CheckBox ").append(name).append(" = new CheckBox(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "timefield": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = Strings.isNullOrEmpty(label) ? "timeField" : getVariable(label);
-                                element.append("ComboBox ").append(name).append(" = new ComboBox(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "combobox": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = getVariable(label);
-                                element.append("ComboBox ").append(name).append(" = new ComboBox(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "datefield": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = Strings.isNullOrEmpty(label) ? "dateField" : getVariable(label);
-                                element.append("DateField ").append(name).append(" = new DateField(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "textareafield": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = getVariable(label);
-                                element.append("TextArea ").append(name).append(" = new TextArea(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "displayfield": {
-                                String label = executeExtJS(parent, "c.fieldLabel");
-                                String name = getVariable(label);
-                                element.append("DisplayField ").append(name).append(" = new DisplayField(this");
-                                addText(label, element);
-                                found = true;
-                                break;
-                            }
-                            case "button": {
-                                String text = executeExtJS(parent, "c.text");
-                                String name = getVariable(text);
-                                element.append("Button ").append(name).append(" = new Button(this");
-                                addText(text, element);
-                                found = true;
-                                break;
-                            }
-                            case "fieldset": {
-                                String title = executeExtJS(parent, "c.title");
-                                String name = getVariable(title);
-                                element.append("FieldSet ").append(name).append(" = new FieldSet(this");
-                                addText(title, element);
-                                found = true;
-                                break;
-                            }
-                            default:
-                                LOGGER.info("Not associated these xtype: " + xType);
-                                found = false;
-                                break;
+                        if ("panel".equals(xType) || "form-fieldtypes".equals(xType)) {
+                            String title = executeExtJS(parent, "c.title");
+                            String name = getVariable(title);
+                            element.append("Panel ").append(name).append(" = new Panel(this");
+                            found = false;
+                            addText(title, element);
+                        } else if ("grid".equals(xType) || "row-expander-grid".equals(xType) || "row-numberer".equals(xType) || "array-grid".equals(xType)) {
+                            String title = executeExtJS(parent, "c.title");
+                            String name = Strings.isNullOrEmpty(title) ? "grid" : getVariable(title);
+                            element.append("Grid ").append(name).append(" = new Grid(this");
+                            found = true;
+                            addText(title, element);
+                        } else if ("tab".equals(xType)) {
+                            String title = executeExtJS(parent, "c.title");
+                            String name = getVariable(title);
+                            element.append("Tab ").append(name).append(" = new Tab(this");
+                            addText(title, element);
+                            found = true;
+                        } else if ("textfield".equals(xType) || "datetime".equals(xType) || "numberfield".equals(xType)) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = getVariable(label);
+                            element.append("TextField ").append(name).append(" = new TextField(this");
+                            addText(label, element);
+                            found = true;
+                        } else if ("checkboxfield".equals(xType)) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = getVariable(label);
+                            element.append("CheckBox ").append(name).append(" = new CheckBox(this");
+                            addText(label, element);
+                            found = true;
+                        } else if ("timefield".equals(xType)) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = Strings.isNullOrEmpty(label) ? "timeField" : getVariable(label);
+                            element.append("ComboBox ").append(name).append(" = new ComboBox(this");
+                            addText(label, element);
+                            found = true;
+                        } else if (xType.contains("combobox")) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = getVariable(label);
+                            element.append("ComboBox ").append(name).append(" = new ComboBox(this");
+                            addText(label, element);
+                            found = true;
+                        } else if ("datefield".equals(xType)) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = Strings.isNullOrEmpty(label) ? "dateField" : getVariable(label);
+                            element.append("DateField ").append(name).append(" = new DateField(this");
+                            addText(label, element);
+                            found = true;
+                        } else if (xType.contains("textarea")) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = getVariable(label);
+                            element.append("TextArea ").append(name).append(" = new TextArea(this");
+                            addText(label, element);
+                            found = true;
+                        } else if ("displayfield".equals(xType)) {
+                            String label = executeExtJS(parent, "c.fieldLabel");
+                            String name = getVariable(label);
+                            element.append("DisplayField ").append(name).append(" = new DisplayField(this");
+                            addText(label, element);
+                            found = true;
+                        } else if ("button".equals(xType)) {
+                            String text = executeExtJS(parent, "c.text");
+                            String name = getVariable(text);
+                            element.append("Button ").append(name).append(" = new Button(this");
+                            addText(text, element);
+                            found = true;
+                        } else if ("fieldset".equals(xType)) {
+                            String title = executeExtJS(parent, "c.title");
+                            String name = getVariable(title);
+                            element.append("FieldSet ").append(name).append(" = new FieldSet(this");
+                            addText(title, element);
+                            found = true;
+                        } else {
+                            LOGGER.info("Not associated these xtype: " + xType);
+                            found = false;
                         }
                         if (found) {
                             elements.add(element.toString());
