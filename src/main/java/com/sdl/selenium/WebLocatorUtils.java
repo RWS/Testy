@@ -175,7 +175,7 @@ public final class WebLocatorUtils extends WebLocator {
                         StringBuilder element = new StringBuilder();
                         if ("panel".equals(xType) || "form-fieldtypes".equals(xType)) {
                             String title = executeExtJS(parent, "c.title");
-                            String name = getVariable(title);
+                            String name = Strings.isNullOrEmpty(title) ? "panel" : getVariable(title);
                             element.append("Panel ").append(name).append(" = new Panel(this");
                             found = false;
                             addText(title, element);
@@ -187,7 +187,7 @@ public final class WebLocatorUtils extends WebLocator {
                             addText(title, element);
                         } else if ("tab".equals(xType)) {
                             String title = executeExtJS(parent, "c.title");
-                            String name = getVariable(title);
+                            String name = Strings.isNullOrEmpty(title) ? "tab" : getVariable(title);
                             element.append("Tab ").append(name).append(" = new Tab(this");
                             addText(title, element);
                             found = true;
@@ -235,7 +235,7 @@ public final class WebLocatorUtils extends WebLocator {
                             found = true;
                         } else if ("button".equals(xType)) {
                             String text = executeExtJS(parent, "c.text");
-                            String name = getVariable(text);
+                            String name = Strings.isNullOrEmpty(text) ? "button" : getVariable(text);;
                             element.append("Button ").append(name).append(" = new Button(this");
                             addText(text, element);
                             found = true;
