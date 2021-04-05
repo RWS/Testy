@@ -193,13 +193,13 @@ public final class WebLocatorUtils extends WebLocator {
                             found = true;
                         } else if ("textfield".equals(xType) || "datetime".equals(xType) || "numberfield".equals(xType)) {
                             String label = executeExtJS(parent, "c.fieldLabel");
-                            String name = getVariable(label);
+                            String name = Strings.isNullOrEmpty(label) ? "textField" : getVariable(label);
                             element.append("TextField ").append(name).append(" = new TextField(this");
                             addText(label, element);
                             found = true;
                         } else if ("checkboxfield".equals(xType)) {
                             String label = executeExtJS(parent, "c.fieldLabel");
-                            String name = getVariable(label);
+                            String name = Strings.isNullOrEmpty(label) ? "checkBox" : getVariable(label);
                             element.append("CheckBox ").append(name).append(" = new CheckBox(this");
                             addText(label, element);
                             found = true;
@@ -211,7 +211,7 @@ public final class WebLocatorUtils extends WebLocator {
                             found = true;
                         } else if (xType.contains("combobox")) {
                             String label = executeExtJS(parent, "c.fieldLabel");
-                            String name = getVariable(label);
+                            String name = Strings.isNullOrEmpty(label) ? "comboBox" : getVariable(label);
                             element.append("ComboBox ").append(name).append(" = new ComboBox(this");
                             addText(label, element);
                             found = true;
@@ -223,13 +223,13 @@ public final class WebLocatorUtils extends WebLocator {
                             found = true;
                         } else if (xType.contains("textarea")) {
                             String label = executeExtJS(parent, "c.fieldLabel");
-                            String name = getVariable(label);
+                            String name = Strings.isNullOrEmpty(label) ? "textArea" : getVariable(label);
                             element.append("TextArea ").append(name).append(" = new TextArea(this");
                             addText(label, element);
                             found = true;
                         } else if ("displayfield".equals(xType)) {
                             String label = executeExtJS(parent, "c.fieldLabel");
-                            String name = getVariable(label);
+                            String name = Strings.isNullOrEmpty(label) ? "displayField" : getVariable(label);
                             element.append("DisplayField ").append(name).append(" = new DisplayField(this");
                             addText(label, element);
                             found = true;
