@@ -220,7 +220,14 @@ public final class WebLocatorUtils extends WebLocator {
                                 found = true;
                                 break;
                             }
-                            case "timefield":
+                            case "timefield": {
+                                String label = executeExtJS(parent, "c.fieldLabel");
+                                String name = Strings.isNullOrEmpty(label) ? "timeField" : getVariable(label);
+                                element.append("ComboBox ").append(name).append(" = new ComboBox(this");
+                                addText(label, element);
+                                found = true;
+                                break;
+                            }
                             case "combobox": {
                                 String label = executeExtJS(parent, "c.fieldLabel");
                                 String name = getVariable(label);
