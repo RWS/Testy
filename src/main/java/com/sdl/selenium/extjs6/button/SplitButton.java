@@ -41,7 +41,6 @@ public class SplitButton extends Button {
     }
 
     public boolean doClickOnMenu(String... options) {
-        assertReady();
         return doClickOnMenu(SearchType.CONTAINS, options);
     }
 
