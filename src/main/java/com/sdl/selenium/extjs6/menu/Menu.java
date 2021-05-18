@@ -29,7 +29,12 @@ public class Menu extends WebLocator {
     public void clickOnMenu(String option, SearchType... searchTypes) {
         ready();
         WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
-        link.click();
+        boolean click = link.doClick();
+        if (!click) {
+            String id = getAttributeId();
+            scrollDown(id);
+            link.click();
+        }
     }
 
     public boolean doClickOnMenu(String option, SearchType... searchTypes) {
@@ -61,7 +66,7 @@ public class Menu extends WebLocator {
         WebLink item = new WebLink(menuList).setClasses("x-menu-item-link");
         int size = item.size();
         List<Values> list = new ArrayList<>();
-        for (int i = 1; i <= size ; i++) {
+        for (int i = 1; i <= size; i++) {
             item.setResultIdx(i);
             String disabled = item.getAttribute("aria-disabled");
             String text = item.getText();

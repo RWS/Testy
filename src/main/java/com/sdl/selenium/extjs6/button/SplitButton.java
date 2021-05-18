@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * See split button examples <a href="http://examples.sencha.com/extjs/6.0.2/examples/kitchensink/#split-buttons">here</a>
  */
 public class SplitButton extends Button {
-
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(SplitButton.class);
 
     /**
@@ -38,7 +37,12 @@ public class SplitButton extends Button {
 
     public void clickOnMenu(String... options) {
         assertReady();
-        doClickOnMenu(SearchType.CONTAINS, options);
+        clickOnMenu(SearchType.CONTAINS, options);
+    }
+
+    public boolean doClickOnMenu(String... options) {
+        assertReady();
+        return doClickOnMenu(SearchType.CONTAINS, options);
     }
 
     public void clickOnMenu(SearchType searchType, String... options) {
@@ -49,7 +53,7 @@ public class SplitButton extends Button {
                 menu.clickOnMenu(option, searchType);
             }
         } else {
-            log.debug("(" + toString() + ") The element arrow could not be located.");
+            log.debug("(" + this + ") The element arrow could not be located.");
         }
     }
 
@@ -61,7 +65,7 @@ public class SplitButton extends Button {
                 success = success && menu.doClickOnMenu(option, searchType);
             }
         } else {
-            log.debug("(" + toString() + ") The element arrow could not be located.");
+            log.debug("(" + this + ") The element arrow could not be located.");
             success = false;
         }
         return success;
