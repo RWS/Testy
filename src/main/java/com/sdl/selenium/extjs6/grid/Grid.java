@@ -216,7 +216,8 @@ public class Grid extends Table implements Scrollable, XTool {
     }
 
     public int getHeadersCount() {
-        WebLocator header = new WebLocator(this).setClasses("x-column-header");
+        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden");
+        WebLocator header = new WebLocator(body).setClasses("x-column-header");
         return header.size();
     }
 
