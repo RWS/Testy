@@ -19,7 +19,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -206,9 +205,19 @@ public class Grid extends Table implements Scrollable, XTool {
     }
 
     public List<String> getHeaders() {
-        WebLocator header = new WebLocator(this).setClasses("x-grid-header-ct");
-        String headerText = RetryUtils.retrySafe(4, header::getText);
-        return new ArrayList<>(Arrays.asList(headerText.trim().split("\n")));
+        WebLocator header = new WebLocator(this).setClasses("x-column-header");
+        int size = header.size();
+        List<String> headers = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            header.setResultIdx(i);
+            headers.add(header.getText());
+        }
+        return headers.stream().filter(i -> !Strings.isNullOrEmpty(i.trim())).collect(Collectors.toList());
+    }
+
+    public int getHeadersCount() {
+        WebLocator header = new WebLocator(this).setClasses("x-column-header");
+        return header.size();
     }
 
     private List<List<String>> getLockedLists(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
