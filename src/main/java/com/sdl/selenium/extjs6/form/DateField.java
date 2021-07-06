@@ -22,22 +22,22 @@ import java.util.Locale;
 public class DateField extends TextField {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(DateField.class);
-    private WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
-    private WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
-    private Button monthYearButton = new Button(calendarLayer);
-    private WebLocator selectOkButton = new WebLocator(calendarLayer).setText("OK").setVisibility(true).setInfoMessage("Ok");
-    private WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-monthpicker").setVisibility(true);
-    private WebLocator nextYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-next").setVisibility(true);
-    private WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-prev").setVisibility(true);
-    private WebLocator yearContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-years");
-    private WebLocator monthContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-months");
-    private WebLocator dayContainer = new WebLocator(calendarLayer).setClasses("x-datepicker-active");
+    private final WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
+    private final WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
+    private final Button monthYearButton = new Button(calendarLayer);
+    private final Button selectOkButton = new Button(calendarLayer,"OK").setVisibility(true).setInfoMessage("OK");
+    private final WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-monthpicker").setVisibility(true);
+    private final WebLocator nextYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-next").setVisibility(true);
+    private final WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-prev").setVisibility(true);
+    private final WebLocator yearContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-years");
+    private final WebLocator monthContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-months");
+    private final WebLocator dayContainer = new WebLocator(calendarLayer).setClasses("x-datepicker-active");
 
-    private WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
-    private Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
-    private Slider minuteSlider = new Slider(hourLayer).setLabel("Min", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private final WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
+    private final Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private final Slider minuteSlider = new Slider(hourLayer).setLabel("Min", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
-    private WebLocator tooltip = new WebLocator().setClasses("x-tip").setAttribute("aria-hidden", "false");
+    private final WebLocator tooltip = new WebLocator().setClasses("x-tip").setAttribute("aria-hidden", "false");
 
     public DateField() {
         setClassName("DateField");
@@ -71,7 +71,7 @@ public class DateField extends TextField {
     private boolean setDate(String day, String month, String year) {
         String fullDate = "";
         try {
-            fullDate = RetryUtils.retrySafe(5, () -> monthYearButton.getText()).trim();
+            fullDate = RetryUtils.retrySafe(5, monthYearButton::getText).trim();
         } catch (NullPointerException e){
             Utils.sleep(1);
         }
@@ -157,7 +157,7 @@ public class DateField extends TextField {
         int year = localDate.getYear();
         ready();
         log.debug("select: " + date);
-        RetryUtils.retry(2, () ->trigger.click());
+        RetryUtils.retry(2, trigger::click);
 //        String[] dates = date.split("/");
 //        String[] extraDates = dates[2].split(" ");
 //        String year = extraDates[0];
