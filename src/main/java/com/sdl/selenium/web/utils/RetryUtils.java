@@ -226,7 +226,9 @@ public class RetryUtils {
                 Boolean compare = null;
                 if (currentListOfList.size() == expectedListOfList.size()) {
                     for (int i = 0; i < currentListOfList.size(); i++) {
-                        boolean match = currentListOfList.get(i).containsAll(expectedListOfList.get(i));
+                        List<?> currentTmp = currentListOfList.get(i);
+                        List<?> expectedTmp = expectedListOfList.get(i);
+                        boolean match = expectedTmp.stream().allMatch(currentTmp::contains);
                         compare = compare == null ? match : compare && match;
                     }
                     return compare ? text : null;
@@ -234,7 +236,7 @@ public class RetryUtils {
                     return null;
                 }
             } else {
-                boolean allMatch = expectedList.containsAll(currentList);
+                boolean allMatch = expectedList.stream().allMatch(currentList::contains);
                 return allMatch ? text : null;
             }
         } else if (text instanceof String && expected instanceof String) {

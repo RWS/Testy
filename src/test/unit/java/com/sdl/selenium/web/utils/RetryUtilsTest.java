@@ -20,21 +20,21 @@ public class RetryUtilsTest {
 
     @Test
     public void test1() {
-        List<String> list = Arrays.asList("a", "b");
+        List<String> list = Arrays.asList("a", "b", "c");
         List<String> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getList);
         Utils.sleep(1);
     }
 
     public static List<String> getList() {
-        return Arrays.asList("a", "b1");
+        return Arrays.asList("a", "b");
     }
 
     @Test
     public void test2() {
         List<List<String>> lists = new ArrayList<>();
-        List<String> list = Arrays.asList("a", "b");
+        List<String> list = Arrays.asList("a", "b", "c");
         lists.add(list);
-        List<String> list2 = Arrays.asList("a1", "b1");
+        List<String> list2 = Arrays.asList("a", "b");
         lists.add(list2);
         List<List<String>> actual = RetryUtils.retryIfNotSame(2, lists, RetryUtilsTest::getListOfList);
         Utils.sleep(1);
@@ -44,7 +44,7 @@ public class RetryUtilsTest {
         List<List<String>> lists = new ArrayList<>();
         List<String> list = Arrays.asList("a", "b");
         lists.add(list);
-        List<String> list2 = Arrays.asList("a1", "b2");
+        List<String> list2 = Arrays.asList("a", "b");
         lists.add(list2);
         return lists;
     }
