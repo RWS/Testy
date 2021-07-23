@@ -201,11 +201,10 @@ public class RetryUtils {
     }
 
     /**
-     *
      * @param duration Duration.ofSeconds(2)
      * @param expected accept only: <pre>{@code Integer, String, Boolean, List<String> and List<List<String>> }</pre>
-     * @param call getCount();
-     * @param <V> expected Type
+     * @param call     getCount();
+     * @param <V>      expected Type
      * @return expected value
      */
     public static <V> V retryIfNotSame(Duration duration, V expected, Callable<V> call) {
@@ -224,20 +223,32 @@ public class RetryUtils {
                 List<List<?>> currentListOfList = (List<List<?>>) text;
                 List<List<?>> expectedListOfList = (List<List<?>>) expected;
                 Boolean compare = null;
-                if (currentListOfList.size() == expectedListOfList.size()) {
+                int expectedSize = expectedListOfList.size();
+                for (int j = 0; j < expectedSize; j++) {
+                    int currentFind = 0;
+                    boolean match = true;
                     for (int i = 0; i < currentListOfList.size(); i++) {
                         List<?> currentTmp = currentListOfList.get(i);
-                        List<?> expectedTmp = expectedListOfList.get(i);
-                        boolean match = expectedTmp.stream().allMatch(currentTmp::contains);
-                        compare = compare == null ? match : compare && match;
+                        List<?> expectedTmp = expectedListOfList.get(j);
+                        boolean matchTmp = expectedTmp.containsAll(currentTmp);
+                        if (matchTmp) {
+                            currentFind++;
+                        }
+                        if (expectedSize == currentFind) {
+                            break;
+                        }
+                        if (i == currentListOfList.size() - 1) {
+                            match = false;
+                        }
                     }
-                    return compare ? text : null;
-                } else {
-                    return null;
+                    compare = compare == null ? match : compare && match;
                 }
-            } else {
+                return compare ? text : null;
+            } else if (currentList.get(0) instanceof String && expectedList.get(0) instanceof String) {
                 boolean allMatch = expectedList.stream().allMatch(currentList::contains);
                 return allMatch ? text : null;
+            } else {
+                throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");
             }
         } else if (text instanceof String && expected instanceof String) {
             return expected.equals(text) ? text : null;
@@ -252,11 +263,10 @@ public class RetryUtils {
     }
 
     /**
-     *
      * @param maxRetries e.g 3
-     * @param expected accept only: <pre>{@code Integer, String, Boolean, List<String> and List<List<String>> }</pre>
-     * @param call getCount();
-     * @param <V> expected Type
+     * @param expected   accept only: <pre>{@code Integer, String, Boolean, List<String> and List<List<String>> }</pre>
+     * @param call       getCount();
+     * @param <V>        expected Type
      * @return expected value
      */
     public static <V> V retryIfNotSame(int maxRetries, V expected, Callable<V> call) {
