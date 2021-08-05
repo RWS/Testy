@@ -30,88 +30,28 @@ public class Slider extends WebLocator {
     }
 
     public boolean move(int distance) {
+        Actions actions = new Actions(WebDriverConfig.getDriver());
         boolean exists = true;
         WebLocator element = new WebLocator(this).setTag("descendant::*").setClasses("x-slider-thumb");
         if (element.ready()) {
             element.mouseOver();
             boolean done = false;
-            boolean plusOneValue = false;
-            boolean minusOneValue = false;
             int distanceTemp = distance;
             do {
-                boolean vertical = getAttributeClass().contains("x-slider-vert");
                 int value = getValue();
-                log.debug("distance: {}, value: {}", distance, value);
-                if (value + 1 == distance) {
-                    plusOneValue = true;
-                    minusOneValue = false;
-                    distanceTemp = 0;
-                } else if (value - 1 == distance) {
-                    minusOneValue = true;
-                    plusOneValue = false;
-                    distanceTemp = 0;
-                } else if (value > distance) {
-                    plusOneValue = false;
-                    minusOneValue = false;
-                    if (vertical) {
-                        distanceTemp = value - distance;
-                    } else {
-                        distanceTemp = -1 * (value - distance);
-                    }
+                log.debug("distance: {}, curentValue: {}", distance, value);
+                if (value > distance) {
+                    distanceTemp = -1 * (value - distance) * 2;
                 } else if (value < distance) {
-                    plusOneValue = false;
-                    minusOneValue = false;
-                    if (vertical) {
-                        distanceTemp = -1 * (distance - value);
-                    } else {
-                        distanceTemp = distance - value;
-                    }
+                    distanceTemp = (distance - value) * 2;
                 } else {
                     done = true;
                 }
+                if (distanceTemp <= 2 && distanceTemp >= -2) {
+                    distanceTemp = distanceTemp * 4;
+                }
                 if (!done) {
-                    if (vertical) {
-                        distanceTemp = distanceTemp * 2 + 4;
-                    } else {
-                        if (distanceTemp == 1) {
-                            distanceTemp = distanceTemp + 3;
-                        } else if (distanceTemp == 2) {
-                            distanceTemp = distanceTemp + 2;
-                        } else if (distanceTemp == -1) {
-                            distanceTemp = distanceTemp - 3;
-                        } else if (distanceTemp == -2) {
-                            distanceTemp = distanceTemp - 2;
-                        } else if (plusOneValue) {
-                            if (distance > 95 || distance < 5) {
-                                if (distance % 2 == 0) {
-                                    distanceTemp = 9;
-                                } else {
-                                    distanceTemp = 5;
-                                }
-                            } else {
-                                distanceTemp = 4;
-                            }
-                        } else if (minusOneValue) {
-                            if (distance > 95 || distance < 5) {
-                                if (distance % 2 == 0) {
-                                    distanceTemp = -9;
-                                } else {
-                                    distanceTemp = -4;
-                                }
-                            } else {
-                                distanceTemp = -6;
-                            }
-                        } else if (distanceTemp < 0) {
-                            distanceTemp = distanceTemp * 2 - 4;
-                        } else {
-                            distanceTemp = distanceTemp * 2 + 2;
-                        }
-                    }
-                    if (vertical) {
-                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), 1, distanceTemp).perform();
-                    } else {
-                        new Actions(WebDriverConfig.getDriver()).dragAndDropBy(element.getWebElement(), distanceTemp, 1).perform();
-                    }
+                    actions.dragAndDropBy(element.getWebElement(), distanceTemp, 0).perform();
                     element.mouseOver();
                 }
             } while (!done);

@@ -13,7 +13,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class SliderIntegrationTest extends TestBase {
 
-    private Slider slider = new Slider().setLabel("Sound Effects:", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private final Slider slider = new Slider().setLabel("Sound Effects:", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
     @BeforeClass
     public void startTests() {
@@ -41,8 +41,8 @@ public class SliderIntegrationTest extends TestBase {
         assertThat(slider.getValue(), equalTo(0));
         slider.move(99);
         assertThat(slider.getValue(), equalTo(99));
-//        slider.move(10);
-//        assertThat(slider.getValue(), equalTo(10));
+        slider.move(10);
+        assertThat(slider.getValue(), equalTo(10));
         slider.move(57);
         assertThat(slider.getValue(), equalTo(57));
         slider.move(58);
@@ -51,9 +51,9 @@ public class SliderIntegrationTest extends TestBase {
         assertThat(slider.getValue(), equalTo(57));
         slider.move(0);
         assertThat(slider.getValue(), equalTo(0));
-//        slider.move(1);
-//        assertThat(slider.getValue(), equalTo(1));
-//        slider.move(0);
-//        assertThat(slider.getValue(), equalTo(0));
+        slider.move(1);
+        assertThat(slider.getValue(), equalTo(1));
+        slider.move(0);
+        assertThat(slider.getValue(), equalTo(0));
     }
 }
