@@ -7,6 +7,7 @@ import com.sdl.selenium.web.utils.RetryUtils;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cell extends com.sdl.selenium.web.table.Cell {
@@ -109,5 +110,20 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
             return flags.toString();
         }
         return "";
+    }
+
+    public List<String> getTargets() {
+        List<String> flags = new ArrayList<>();
+        WebLocator flagEl = new WebLocator(this).setTag("i").setClasses("flag");
+        List<WebElement> elements = flagEl.doFindElements();
+        if (elements != null && !elements.isEmpty()) {
+            for (WebElement el : elements) {
+                String aClass = el.getAttribute("class");
+                String lang = aClass.replace("flag", "").trim();
+                flags.add(lang);
+            }
+            return flags;
+        }
+        return null;
     }
 }
