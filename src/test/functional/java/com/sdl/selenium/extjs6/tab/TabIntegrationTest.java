@@ -20,6 +20,7 @@ public class TabIntegrationTest extends TestBase {
     private final Tab inactiveTab = new Tab("Inactive Tab");
     private final Tab closableTab = new Tab("Closable Tab");
     private final Tab inactiveTab1 = new Tab("/Inactive Tab/Closable Tab", SearchType.CONTAINS_ANY);
+    private final Tab anotherInactiveTab = new Tab("Another inactive Tab");
 
     @BeforeClass
     public void startTests() {

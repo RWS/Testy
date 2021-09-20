@@ -8,6 +8,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.tab.ITab;
+import com.sdl.selenium.web.utils.RetryUtils;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -113,18 +114,48 @@ public class Tab extends WebLocator implements ITab {
     @Override
     public boolean setActive() {
         WebLocator inactiveTab = getTitleInactiveEl().setExcludeClasses("x-tab-active");
-        boolean activated = isActive() || inactiveTab.click();
+        boolean activated = false;
+        try {
+            activated = isActive() || inactiveTab.click();
+        } catch (AssertionError e) {
+            if (!inactiveTab.isDisplayed()) {
+                WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
+                WebLocator right = new WebLocator(container).setClasses("x-box-scroller-right");
+                Boolean scroll = RetryUtils.retry(6, () -> {
+                    right.doClick();
+                    return inactiveTab.isDisplayed();
+                });
+                if (scroll) {
+                    activated = inactiveTab.click();
+                }
+            }
+        }
         if (activated) {
-            log.info("setActive : " + toString());
+            log.info("setActive : " + this);
         }
         return activated;
     }
 
     public boolean doSetActive() {
         WebLocator inactiveTab = getTitleInactiveEl().setExcludeClasses("x-tab-active");
-        boolean activated = isActive() || inactiveTab.doClick();
+        boolean activated = false;
+        try {
+            activated = isActive() || inactiveTab.doClick();
+        } catch (AssertionError e) {
+            if (!inactiveTab.isDisplayed()) {
+                WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
+                WebLocator right = new WebLocator(container).setClasses("x-box-scroller-right");
+                Boolean scroll = RetryUtils.retry(6, () -> {
+                    right.doClick();
+                    return inactiveTab.isDisplayed();
+                });
+                if (scroll) {
+                    activated = inactiveTab.doClick();
+                }
+            }
+        }
         if (activated) {
-            log.info("doSetActive : " + toString());
+            log.info("doSetActive : " + this);
         }
         return activated;
     }
