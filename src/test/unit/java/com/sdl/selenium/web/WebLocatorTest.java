@@ -131,6 +131,7 @@ public class WebLocatorTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProviderAttributes() {
         return new Object[][]{
+                {new WebLocator().setAttribute("data", ""), "//*[@data]"},
                 {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS), "//*[contains(@data,'value')]"},
                 {new WebLocator().setAttribute("data", "value", SearchType.EQUALS), "//*[@data='value']"},
                 {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH), "//*[starts-with(@data,'value')]"},

@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.utils;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -32,7 +33,9 @@ public class Utils {
     public static String getEscapeQuotesText(String text) {
         boolean hasDoubleQuote = text.contains("\"");
         boolean hasSingeQuote = text.contains("'");
-        if (hasDoubleQuote && hasSingeQuote) {
+        if (Strings.isNullOrEmpty(text)) {
+            return text;
+        } else if (hasDoubleQuote && hasSingeQuote) {
             boolean quoteIsLast = false;
             if (text.lastIndexOf("\"") == text.length() - 1) {
                 quoteIsLast = true;

@@ -1055,7 +1055,11 @@ public class XPathBuilder implements Cloneable {
             text = text.toLowerCase();
         }
         if (searchType.contains(SearchType.EQUALS)) {
-            text = pattern + "=" + text;
+            if(Strings.isNullOrEmpty(text)){
+                text = pattern;
+            } else {
+                text = pattern + "=" + text;
+            }
         } else if (searchType.contains(SearchType.STARTS_WITH)) {
             text = "starts-with(" + pattern + "," + text + ")";
         } else {
