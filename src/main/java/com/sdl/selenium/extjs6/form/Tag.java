@@ -54,4 +54,9 @@ public abstract class Tag extends Combo implements ITag {
     public boolean collapse() {
         return "false".equals(aria.getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
     }
+
+    public String getError() {
+        WebLocator error = new WebLocator(this).setRoot("/../../../../../../../").setClasses("x-form-error-wrap");
+        return error.getText();
+    }
 }
