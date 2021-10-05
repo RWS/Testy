@@ -30,10 +30,10 @@ public class RetryUtilsTest {
     }
 
     @Test
-    public void test2() {
+    public void testListOfListEqualsPassed() {
         List<List<String>> expectedList = new ArrayList<>();
-        expectedList.add(Arrays.asList("a", "b"));
-        expectedList.add(Arrays.asList("b", "a"));
+        expectedList.add(Arrays.asList("a", "c"));
+        expectedList.add(Arrays.asList("b", "e"));
         List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList);
         Utils.sleep(1);
     }
@@ -41,8 +41,57 @@ public class RetryUtilsTest {
     public static List<List<String>> getListOfList() {
         List<List<String>> lists = new ArrayList<>();
         lists.add(Arrays.asList("a", "c"));
-        lists.add(Arrays.asList("a", "b"));
-        lists.add(Arrays.asList("a", "b"));
+        lists.add(Arrays.asList("b", "e"));
+        return lists;
+    }
+
+    @Test
+    public void testListOfListEqualsFailed() {
+        List<List<String>> expectedList = new ArrayList<>();
+        expectedList.add(Arrays.asList("a", "c"));
+        expectedList.add(Arrays.asList("b", "e"));
+        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList1);
+        Utils.sleep(1);
+    }
+
+    public static List<List<String>> getListOfList1() {
+        List<List<String>> lists = new ArrayList<>();
+        lists.add(Arrays.asList("a", ""));
+        lists.add(Arrays.asList("b", "e"));
+        return lists;
+    }
+
+    @Test
+    public void testListOfList2EqualsPassed() {
+        List<List<String>> expectedList = new ArrayList<>();
+        expectedList.add(Arrays.asList("a", "c"));
+        expectedList.add(Arrays.asList("b", "e"));
+        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList2);
+        Utils.sleep(1);
+    }
+
+    public static List<List<String>> getListOfList2() {
+        List<List<String>> lists = new ArrayList<>();
+        lists.add(Arrays.asList("a", "c"));
+        lists.add(Arrays.asList("b", "e"));
+        lists.add(Arrays.asList("c", "d"));
+        return lists;
+    }
+
+    @Test
+    public void testListOfList3EqualsFailed() {
+        List<List<String>> expectedList = new ArrayList<>();
+        expectedList.add(Arrays.asList("a", "c"));
+        expectedList.add(Arrays.asList("b", "e"));
+        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList3);
+        Utils.sleep(1);
+    }
+
+    public static List<List<String>> getListOfList3() {
+        List<List<String>> lists = new ArrayList<>();
+        lists.add(Arrays.asList("a", "c"));
+        lists.add(Arrays.asList("b", "d"));
+        lists.add(Arrays.asList("b", "d"));
         return lists;
     }
 
@@ -98,9 +147,9 @@ public class RetryUtilsTest {
     @Test
     public void test3() {
         List<Tet> list = new ArrayList<>();
-        Tet t1 = new Tet("a","b","c");
+        Tet t1 = new Tet("a", "b", "c");
         list.add(t1);
-        Tet t2 = new Tet("a","b","c");
+        Tet t2 = new Tet("a", "b", "c");
         list.add(t2);
         List<Tet> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getListOfObject);
         Utils.sleep(1);
@@ -108,9 +157,9 @@ public class RetryUtilsTest {
 
     public static List<Tet> getListOfObject() {
         List<Tet> list = new ArrayList<>();
-        Tet t1 = new Tet("a","b","c1");
+        Tet t1 = new Tet("a", "b", "c1");
         list.add(t1);
-        Tet t2 = new Tet("a","b","c");
+        Tet t2 = new Tet("a", "b", "c");
         list.add(t2);
         return list;
     }

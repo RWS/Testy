@@ -224,24 +224,20 @@ public class RetryUtils {
                 List<List<?>> expectedListOfList = (List<List<?>>) expected;
                 Boolean compare = null;
                 int expectedSize = expectedListOfList.size();
-                for (int j = 0; j < expectedSize; j++) {
+                for (List<?> expectedTmp : expectedListOfList) {
                     int currentFind = 0;
-                    boolean match = true;
-                    for (int i = 0; i < currentListOfList.size(); i++) {
-                        List<?> currentTmp = currentListOfList.get(i);
-                        List<?> expectedTmp = expectedListOfList.get(j);
+                    Boolean match = null;
+                    for (List<?> currentTmp : currentListOfList) {
                         boolean matchTmp = expectedTmp.containsAll(currentTmp);
                         if (matchTmp) {
                             currentFind++;
+                            match = true;
                         }
                         if (expectedSize == currentFind) {
                             break;
                         }
-                        if (i == currentListOfList.size() - 1) {
-                            match = false;
-                        }
                     }
-                    compare = compare == null ? match : compare && match;
+                    compare = compare == null ? Boolean.TRUE.equals(match) : compare && Boolean.TRUE.equals(match);
                 }
                 return compare ? text : null;
             } else if (currentList.get(0) instanceof String && expectedList.get(0) instanceof String) {
