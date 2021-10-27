@@ -75,6 +75,12 @@ public class Tree extends WebLocator implements Scrollable {
         return selected;
     }
 
+    public boolean isSelected(String node){
+        WebLocator nodeEl = new WebLocator().setText(node);
+        Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected").setChildNodes(nodeEl).setVisibility(true);
+        return nodeSelected.isPresent();
+    }
+
     public void expandAllNodes() {
         Row rowsEl = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded");
         int size;

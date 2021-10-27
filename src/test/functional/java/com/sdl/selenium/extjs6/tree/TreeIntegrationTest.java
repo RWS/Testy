@@ -28,6 +28,8 @@ public class TreeIntegrationTest extends TestBase {
     void treeTest() {
         boolean selected = tree.select("Grocery List", "Energy foods", "Coffee");
         assertThat(selected, is(true));
+        boolean isSelected = tree.isSelected("Coffee");
+        assertThat(isSelected, is(true));
     }
 
     @Test(dependsOnMethods = "treeTest")
