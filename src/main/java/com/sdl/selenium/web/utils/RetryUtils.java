@@ -126,20 +126,23 @@ public class RetryUtils {
         return execute;
     }
 
-    public static <V> V retryUntilOneIs(int maxRetries, Callable<V> ...calls) {
+    public static <V> Result retryUntilOneIs(int maxRetries, Callable<V>... calls) {
         int count = 0;
         int wait = 0;
         Fib fib = new Fib();
         long startMs = System.currentTimeMillis();
         V execute = null;
         boolean notExpected = true;
+        int position;
         do {
             count++;
             wait = count < 9 ? fibonacci(wait, fib).getResult() : wait;
             Utils.sleep(wait);
+            position = 0;
             try {
                 for (Callable<V> call : calls) {
                     execute = call.call();
+                    position++;
                     notExpected = isNotExpected(execute);
                     if (!notExpected) {
                         break;
@@ -157,7 +160,7 @@ public class RetryUtils {
             long duringMs = getDuringMillis(startMs);
             log.info("Retry {} and wait {} milliseconds", count, duringMs);
         }
-        return execute;
+        return new Result(execute, position);
     }
 
     private static <V> V retry(Duration duration, String prefixLog, Callable<V> call, boolean safe) {

@@ -3,6 +3,7 @@ package com.sdl.selenium.extjs6.button;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
+import com.sdl.selenium.web.utils.Result;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
@@ -29,9 +30,14 @@ public class RetryUtilsIntegrationTest extends TestBase {
 
     @Test
     void retryUntilOneIs() {
-        Boolean notPresent = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Loginx")::isPresent);
-        assertThat(notPresent, is(false));
-        Boolean present = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Login")::isPresent);
-        assertThat(present, is(true));
+        Result notPresent = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Loginx")::isPresent);
+        assertThat(notPresent.result(), is(false));
+        assertThat(notPresent.position(), is(2));
+        Result present = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Login")::isPresent);
+        assertThat(present.result(), is(true));
+        assertThat(present.position(), is(2));
+        Result present2 = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Loginy")::isPresent, new Button(loginPanel, "Login")::isPresent);
+        assertThat(present2.result(), is(true));
+        assertThat(present2.position(), is(3));
     }
 }
