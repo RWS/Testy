@@ -32,7 +32,7 @@ public class RetryUtilsIntegrationTest extends TestBase {
     void retryUntilOneIs() {
         Result notPresent = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Loginx")::isPresent);
         assertThat(notPresent.result(), is(false));
-        assertThat(notPresent.position(), is(2));
+        assertThat(notPresent.position(), is(0));
         Result present = RetryUtils.retryUntilOneIs(2, new Button(loginPanel, "Registerx")::isPresent, new Button(loginPanel, "Login")::isPresent);
         assertThat(present.result(), is(true));
         assertThat(present.position(), is(2));

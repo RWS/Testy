@@ -142,9 +142,9 @@ public class RetryUtils {
             try {
                 for (Callable<V> call : calls) {
                     execute = call.call();
-                    position++;
                     notExpected = isNotExpected(execute);
                     if (!notExpected) {
+                        position++;
                         break;
                     }
                 }
