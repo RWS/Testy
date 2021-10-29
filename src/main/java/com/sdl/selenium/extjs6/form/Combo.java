@@ -147,7 +147,8 @@ public abstract class Combo extends Field implements ICombo {
             } else {
                 selected = option.doClick();
                 if (!selected && option.isPresent()) {
-                    WebLocatorUtils.scrollToWebLocator(option);
+//                    WebLocatorUtils.scrollToWebLocator(option);
+                    WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
                     selected = option.doClick();
                 }
             }

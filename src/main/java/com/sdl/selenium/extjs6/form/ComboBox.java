@@ -78,7 +78,8 @@ public class ComboBox extends Combo {
             } else {
                 selected = option.doClick();
                 if (!selected && option.isPresent()) {
-                    WebLocatorUtils.scrollToWebLocator(option);
+//                    WebLocatorUtils.scrollToWebLocator(option);
+                    WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
                     String id = getBoundList().getAttributeId();
                     scrollBack(id);
                     selected = option.doClick();
