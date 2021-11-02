@@ -1055,7 +1055,7 @@ public class XPathBuilder implements Cloneable {
             text = text.toLowerCase();
         }
         if (searchType.contains(SearchType.EQUALS)) {
-            if(Strings.isNullOrEmpty(text)){
+            if (Strings.isNullOrEmpty(text)) {
                 text = pattern;
             } else {
                 text = pattern + "=" + text;
@@ -1064,6 +1064,9 @@ public class XPathBuilder implements Cloneable {
             text = "starts-with(" + pattern + "," + text + ")";
         } else {
             text = "contains(" + pattern + "," + text + ")";
+        }
+        if (searchType.contains(SearchType.NOT)) {
+            text = "not(" + text + ")";
         }
         return text;
     }

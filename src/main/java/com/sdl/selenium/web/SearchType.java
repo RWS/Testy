@@ -195,7 +195,12 @@ public enum SearchType {
      * Override general setting regarding internationalized text for specific web locators
      * without disabling internationalization for all locators
      */
-    NOT_INTERNATIONALIZED("text");
+    NOT_INTERNATIONALIZED("text"),
+
+    /**
+     * and not(contains(@role,'textfield'))
+     */
+    NOT("text");
 
     private final String group;
 
