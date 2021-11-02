@@ -168,6 +168,24 @@ public class WebLocatorTest {
         };
     }
 
+    @DataProvider
+    public static Object[][] testConstructorPathDataProviderNotAttributes() {
+        return new Object[][]{
+                {new WebLocator().setAttribute("data", null), "//*"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.CONTAINS), "//*[not(contains(@data,'value'))]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.EQUALS), "//*[not(@data='value')]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.STARTS_WITH), "//*[not(starts-with(@data,'value'))]"},
+
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.CONTAINS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[not(contains(translate(@data,'VALUE','value'),'value'))]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.EQUALS, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[not(translate(@data,'VALUE','value')='value')]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.STARTS_WITH, SearchType.CASE_INSENSITIVE).addSearchTextType(SearchType.CASE_SENSITIVE), "//*[not(starts-with(translate(@data,'VALUE','value'),'value'))]"},
+
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.CONTAINS, SearchType.TRIM), "//*[not(contains(normalize-space(@data),'value'))]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.EQUALS, SearchType.TRIM), "//*[not(normalize-space(@data)='value')]"},
+                {new WebLocator().setAttribute("data", "value", SearchType.NOT, SearchType.STARTS_WITH, SearchType.TRIM), "//*[not(starts-with(normalize-space(@data),'value'))]"},
+        };
+    }
+
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
         assertThat(el.getXPath(), equalTo(expectedXpath));
@@ -180,6 +198,11 @@ public class WebLocatorTest {
 
     @Test(dataProvider = "testConstructorPathDataProviderAttributes")
     public void getPathSelectorCorrectlyFromConstructorsByAttributes(WebLocator el, String expectedXpath) {
+        assertThat(el.getXPath(), equalTo(expectedXpath));
+    }
+
+    @Test(dataProvider = "testConstructorPathDataProviderNotAttributes")
+    public void getPathSelectorCorrectlyFromConstructorsByNotAttributes(WebLocator el, String expectedXpath) {
         assertThat(el.getXPath(), equalTo(expectedXpath));
     }
 
