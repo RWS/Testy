@@ -39,7 +39,7 @@ public class Tree extends WebLocator implements Scrollable {
         boolean selected = false;
         String parent = null;
         for (String node : nodes) {
-            WebLocator textEl = new WebLocator().setText(node);
+            WebLocator textEl = new WebLocator().setText(node, SearchType.EQUALS);
             Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected");
             com.sdl.selenium.web.table.Row rowSelected = nodeSelected.getRow(1).setClasses("x-grid-row");
             Table nodeEl;
