@@ -6,6 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.Table;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebDriverException;
 
@@ -61,12 +62,21 @@ public class Tree extends WebLocator implements Scrollable {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
                     WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
                     try {
-                        selected = checkTree.isPresent() ? checkTree.click() : nodeTree.click();
+                        if (checkTree.isPresent()) {
+                            selected = checkTree.click();
+                        } else {
+                            selected = RetryUtils.retry(2, nodeTree::click);
+                        }
+//                        selected = checkTree.isPresent() ? checkTree.click() : nodeTree.click();
                     } catch (WebDriverException e) {
                         if (doScroll) {
                             scrollPageDown();
                         }
-                        selected = checkTree.isPresent() ? checkTree.click() : nodeTree.click();
+                        if (checkTree.isPresent()) {
+                            selected = checkTree.click();
+                        } else {
+                            selected = RetryUtils.retry(2, nodeTree::click);
+                        }
                     }
                 }
             }

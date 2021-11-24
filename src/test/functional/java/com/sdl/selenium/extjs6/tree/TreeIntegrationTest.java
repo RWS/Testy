@@ -42,4 +42,14 @@ public class TreeIntegrationTest extends TestBase {
         List<List<String>> values = tree.getValues();
         assertThat(values.size(), is(439));
     }
+
+    @Test (dependsOnMethods = "treeExpanderTest")
+    void treeSelectTest() {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#tree-xml");
+        driver.switchTo().frame("examples-iframe");
+        tree.ready(Duration.ofSeconds(20));
+        tree.select("Ext JS", "app", "bindinspector", "noconflict", "BaseModel.js");
+        boolean isSelected = tree.isSelected("BaseModel.js");
+        assertThat(isSelected, is(true));
+    }
 }

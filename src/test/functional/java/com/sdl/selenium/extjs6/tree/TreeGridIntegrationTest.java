@@ -25,7 +25,7 @@ public class TreeGridIntegrationTest extends TestBase {
         Utils.sleep(1000);
     }
 
-//    @Test
+    @Test
     void treeTest() {
         List<List<String>> selected = tree.getNodesValues(Arrays.asList("Project: Shopping", "Housewares"), 4, 5);
         assertThat(selected.size(), is(6));
