@@ -168,7 +168,12 @@ public abstract class WebLocatorAbstractBuilder {
      */
     @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
-        pathBuilder.setChildNodes(childNodes);
+        pathBuilder.setChildNodes(null, childNodes);
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setChildNodes(SearchType searchType, final WebLocator... childNodes) {
+        pathBuilder.setChildNodes(searchType, childNodes);
         return (T) this;
     }
 

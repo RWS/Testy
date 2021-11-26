@@ -64,7 +64,7 @@ public class XPathBuilder implements Cloneable {
     private Duration activate = Duration.ofSeconds(60);
 
     private WebLocator container;
-    private List<WebLocator> childNodes;
+    private ChildNodes childNodes = new ChildNodes();
 
     protected XPathBuilder() {
         setTemplate("visibility", "count(ancestor-or-self::*[contains(@style, 'display: none')]) = 0");
@@ -226,17 +226,19 @@ public class XPathBuilder implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setChildNodes(final WebLocator... childNodes) {
-        if (childNodes != null) {
-            this.childNodes = Stream.of(childNodes).filter(Objects::nonNull).collect(Collectors.toList());
+    public <T extends XPathBuilder> T setChildNodes(SearchType searchType, final WebLocator... childNodes) {
+        if (searchType == null || searchType == SearchType.EQUALS || searchType == SearchType.CONTAINS) {
+            if (childNodes != null) {
+                List<WebLocator> children = Stream.of(childNodes).filter(Objects::nonNull).collect(Collectors.toList());
+                this.childNodes.setChildNodes(children);
+                if (this.childNodes.getSearchType() == null) {
+                    this.childNodes.setSearchType(searchType);
+                }
+            }
+            return (T) this;
+        } else {
+            throw new IllegalStateException("Support only: EQUALS or CONTAINS!");
         }
-//        if (childNodes != null) {
-//            List<WebLocator> newList = this.childNodes == null ? new ArrayList<>() : this.childNodes;
-//            List<WebLocator> webLocators = Arrays.asList(childNodes);
-//            newList.addAll(webLocators);
-//            this.childNodes = newList;
-//        }
-        return (T) this;
     }
 
     /**
@@ -748,7 +750,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasChildNodes() {
-        return childNodes != null && childNodes.size() > 0;
+        return childNodes != null && childNodes.getChildNodes().size() > 0;
     }
 
     protected boolean hasExcludeClasses() {
@@ -968,7 +970,10 @@ public class XPathBuilder implements Cloneable {
     private List<String> getChildNodesToSelector() {
         List<String> selectors = new ArrayList<>();
         if (hasChildNodes()) {
-            selectors.addAll(getChildNodes().stream().map(this::getChildNodeSelector).collect(Collectors.toList()));
+            List<String> collect = getChildNodes().stream().map(this::getChildNodeSelector).collect(Collectors.toList());
+            boolean equals = this.childNodes.getSearchType() == null || this.childNodes.getSearchType() == SearchType.EQUALS;
+            String children = collect.isEmpty() ? null : String.join(equals ? " and " : " or ", collect);
+            selectors.add(children);
         }
         return selectors;
     }
@@ -1478,6 +1483,6 @@ public class XPathBuilder implements Cloneable {
     }
 
     public List<WebLocator> getChildNodes() {
-        return this.childNodes;
+        return this.childNodes.getChildNodes();
     }
 }

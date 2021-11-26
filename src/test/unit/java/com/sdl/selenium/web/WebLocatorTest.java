@@ -331,7 +331,19 @@ public class WebLocatorTest {
         WebLocator childSecond = new WebLocator().setText("second");
         parent.setChildNodes(childSecond, child, null);
         assertThat(parent.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(text(),'second')]) > 0 and count(.//*[contains(text(),'child')][position() = 1]) > 0]"));
+    }
 
+    @Test
+    public void setChildNodes1() {
+        WebLocator child = new WebLocator().setText("child").setPosition(1);
+        WebLocator childFirst = new WebLocator().setText("childFirst").setPosition(Position.FIRST);
+        WebLocator parent = new WebLocator().setClasses("parent").setChildNodes(SearchType.CONTAINS, child, childFirst);
+
+        assertThat(parent.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(text(),'child')][position() = 1]) > 0 or count(.//*[contains(text(),'childFirst')][position() = first()]) > 0]"));
+
+        WebLocator childSecond = new WebLocator().setText("second");
+        parent.setChildNodes(childSecond, child, null);
+        assertThat(parent.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' parent ') and count(.//*[contains(text(),'second')]) > 0 or count(.//*[contains(text(),'child')][position() = 1]) > 0]"));
     }
 
     @Test

@@ -35,10 +35,16 @@ public class Cell extends AbstractCell {
         setText(columnText, searchTypes);
     }
 
-    public Cell(int columnIndex, WebLocator iconEl) {
+    public Cell(int columnIndex, WebLocator... iconEl) {
         this();
         setTemplateValue("tagAndPosition", columnIndex + "");
         setChildNodes(iconEl);
+    }
+
+    public Cell(int columnIndex, SearchType searchType, WebLocator... iconEl) {
+        this();
+        setTemplateValue("tagAndPosition", columnIndex + "");
+        setChildNodes(searchType, iconEl);
     }
 
     public Cell(String header, String cellText, SearchType... searchTypes) {
