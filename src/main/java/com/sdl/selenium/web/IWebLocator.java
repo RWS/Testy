@@ -87,6 +87,8 @@ public interface IWebLocator {
 
     <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes);
 
+    <T extends WebLocatorAbstractBuilder> T setChildNodes(SearchType searchType, final WebLocator... childNodes);
+
     <T extends WebLocatorAbstractBuilder> T setName(final String name);
 
     <T extends WebLocatorAbstractBuilder> T setLocalName(final String localName);
