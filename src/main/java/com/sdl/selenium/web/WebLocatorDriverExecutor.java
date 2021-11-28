@@ -361,7 +361,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 .ignoring(WebDriverException.class);
         try {
             if (el.getPathBuilder().isVisibility()) {
-                webElement = wait.until(ExpectedConditions.visibilityOfElementLocated(el.getSelector()));
+                webElement = wait.until((d)->ExpectedConditions.visibilityOfElementLocated(el.getSelector()).apply(d));
             } else {
                 webElement = wait.until(d -> d.findElement(el.getSelector()));
             }
