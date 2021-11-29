@@ -89,7 +89,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     @Override
     public Cell getCell(int columnIndex) {
-        Grid grid = (Grid) getPathBuilder().getContainer();
+        WebLocator grid = getPathBuilder().getContainer();
         if (isGridLocked(grid)) {
             int firstColumns = getLockedCells(grid);
             Position position = Position.FIRST;

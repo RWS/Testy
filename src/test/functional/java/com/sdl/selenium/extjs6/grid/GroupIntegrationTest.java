@@ -16,7 +16,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class GroupIntegrationTest extends TestBase {
 
-    private Grid grid = new Grid().setTitle("Restaurants").setVisibility(true);
+    private final Grid grid = new Grid().setTitle("Restaurants").setVisibility(true);
 
     @BeforeClass
     public void startTests() {

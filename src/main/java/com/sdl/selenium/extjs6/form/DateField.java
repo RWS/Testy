@@ -23,15 +23,15 @@ public class DateField extends TextField {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(DateField.class);
     private final WebLocator trigger = new WebLocator(this).setRoot("/../../").setClasses("x-form-date-trigger");
-    private final WebLocator calendarLayer = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
-    private final Button monthYearButton = new Button(calendarLayer);
-    private final Button selectOkButton = new Button(calendarLayer,"OK").setVisibility(true).setInfoMessage("OK");
-    private final WebLocator yearAndMonth = new WebLocator(calendarLayer).setClasses("x-monthpicker").setVisibility(true);
+    private final WebLocator datePicker = new WebLocator().setClasses("x-datepicker", "x-layer").setAttribute("aria-hidden", "false").setVisibility(true);
+    private final Button monthYearButton = new Button(datePicker);
+    private final Button selectOkButton = new Button(datePicker, "OK", SearchType.TRIM).setVisibility(true).setInfoMessage("OK");
+    private final WebLocator yearAndMonth = new WebLocator(datePicker).setClasses("x-monthpicker").setVisibility(true);
     private final WebLocator nextYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-next").setVisibility(true);
     private final WebLocator prevYears = new WebLocator(yearAndMonth).setClasses("x-monthpicker-yearnav-prev").setVisibility(true);
     private final WebLocator yearContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-years");
     private final WebLocator monthContainer = new WebLocator(yearAndMonth).setClasses("x-monthpicker-months");
-    private final WebLocator dayContainer = new WebLocator(calendarLayer).setClasses("x-datepicker-active");
+    private final WebLocator dayContainer = new WebLocator(datePicker).setClasses("x-datepicker-active");
 
     private final WebLocator hourLayer = new WebLocator().setClasses("x-panel", "x-layer").setVisibility(true);
     private final Slider hourSlider = new Slider(hourLayer).setLabel("Hour", SearchType.DEEP_CHILD_NODE_OR_SELF);
@@ -72,7 +72,7 @@ public class DateField extends TextField {
         String fullDate = "";
         try {
             fullDate = RetryUtils.retrySafe(5, monthYearButton::getText).trim();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Utils.sleep(1);
         }
         if (!fullDate.contains(month) || !fullDate.contains(year)) {
@@ -92,7 +92,7 @@ public class DateField extends TextField {
 
     private boolean setHour(String hour, String minute) {
         return hourSlider.move(Integer.parseInt(hour)) &&
-               minuteSlider.move(Integer.parseInt(minute));
+                minuteSlider.move(Integer.parseInt(minute));
     }
 
     private void goToYear(String year, String fullDate) {
@@ -136,7 +136,7 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     public boolean select(String date) {
-        return RetryUtils.retry(2, ()-> select(date, "dd/MM/yyyy"));
+        return RetryUtils.retry(2, () -> select(date, "dd/MM/yyyy"));
     }
 
     public boolean select(String date, String format) {
@@ -145,7 +145,8 @@ public class DateField extends TextField {
 
     /**
      * example new DataField().select("19/05/2013", "dd/MM/yyyy", Locale.ENGLISH);
-     * @param date in string format
+     *
+     * @param date   in string format
      * @param format set format date
      * @param locale set locale
      * @return true if is selected date, false when DataField doesn't exist
@@ -156,18 +157,11 @@ public class DateField extends TextField {
         String month = localDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
         int year = localDate.getYear();
         ready();
+        RetryUtils.retry(2, () -> {
+            trigger.click();
+            return datePicker.ready(Duration.ofSeconds(1));
+        });
         log.debug("select: " + date);
-        RetryUtils.retry(2, trigger::click);
-//        String[] dates = date.split("/");
-//        String[] extraDates = dates[2].split(" ");
-//        String year = extraDates[0];
-//        if (format.contains("H")) {
-//            String[] hours = extraDates[1].split(":");
-//            String hour = hours[0];
-//            String minutes = hours[1];
-//            return setHour(hour, minutes) && setDate(Integer.parseInt(dates[0]) + "", dates[1], year);
-//        } else {
         return setDate(day + "", month, year + "");
-//        }
     }
 }

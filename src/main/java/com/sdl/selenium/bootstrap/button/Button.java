@@ -3,8 +3,6 @@ package com.sdl.selenium.bootstrap.button;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.IButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p><b><i>Used for finding element process (to generate xpath address)</i></b></p>
@@ -19,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  */
 public class Button extends WebLocator implements IButton {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Button.class);
 
     private String iconCls;
 
@@ -60,18 +57,13 @@ public class Button extends WebLocator implements IButton {
      * <p>Example:</p>
      * <pre>{@code
      * Button disableButton = new Button().setText("DisableBtn");
-     * disableButton.isDisabled();
+     * disableButton.isEnabled();
      * }</pre>
      *
      * @return true if element has attribute disabled or class disabled otherwise false
      */
-    public boolean isDisabled() {
-        String cls = getAttributeClass();
-        return (cls != null && cls.contains("disabled")) || getAttribute("disabled") != null;
-    }
-
     public boolean isEnabled() {
         String cls = getAttributeClass();
-        return (cls != null && !cls.contains("disabled")) || getAttribute("disabled") == null;
+        return cls != null && !cls.contains("disabled") && getAttribute("disabled") == null;
     }
 }

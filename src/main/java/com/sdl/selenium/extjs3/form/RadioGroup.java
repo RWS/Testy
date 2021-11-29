@@ -47,7 +47,6 @@ public class RadioGroup extends ExtJsComponent {
     }
 
     public boolean isEnabled() {
-        WebLocator locator = new WebLocator().setElPath(radio.getXPath(false));
-        return locator.ready();
+        return radio.getAttribute("disabled") == null;
     }
 }

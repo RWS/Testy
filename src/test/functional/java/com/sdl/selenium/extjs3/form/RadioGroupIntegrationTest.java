@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs3.form;
 
+import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.extjs3.window.Window;
@@ -14,12 +15,13 @@ import static org.hamcrest.Matchers.is;
 
 public class RadioGroupIntegrationTest extends TestBase {
 
-    private Window radioGroupWindow = new Window("RadioGroupsWindow");
-    private RadioGroup enabledRadioGroup = new RadioGroup(radioGroupWindow, "enabledRadio");
-    private RadioGroup disabledRadioGroup = new RadioGroup(radioGroupWindow, "disabledRadio");
+    private final Window radioGroupWindow = new Window("RadioGroupsWindow");
+    private final RadioGroup enabledRadioGroup = new RadioGroup(radioGroupWindow, "enabledRadio");
+    private final RadioGroup disabledRadioGroup = new RadioGroup(radioGroupWindow, "disabledRadio");
 
     @BeforeClass
     public void startTests() {
+        driver.get(InputData.EXTJS_URL);
         Button radioGroupsButton = new Button(null, "RadioGroups");
         radioGroupsButton.click();
     }

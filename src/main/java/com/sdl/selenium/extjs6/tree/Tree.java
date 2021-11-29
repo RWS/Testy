@@ -216,7 +216,7 @@ public class Tree extends WebLocator implements Scrollable {
             scrollPageDownInTree();
             canRead = false;
             timeout++;
-        } while (timeout < 30);
+        } while (timeout < 60);
         return listOfList;
     }
 

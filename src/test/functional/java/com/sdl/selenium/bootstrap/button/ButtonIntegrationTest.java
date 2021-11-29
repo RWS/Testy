@@ -16,9 +16,9 @@ import static org.hamcrest.Matchers.is;
 
 public class ButtonIntegrationTest extends TestBase {
 
-    private Form form = new Form(null, "Form Title");
-    private Button disableBtn = new Button(form, "DisableBtn");
-    private Button disableBtnCls = new Button(form, "DisableBtnCls");
+    private final Form form = new Form(null, "Form Title");
+    private final Button disableBtn = new Button(form, "DisableBtn");
+    private final Button disableBtnCls = new Button(form, "DisableBtnCls");
 
     @BeforeClass
     public void startTests() {
@@ -27,10 +27,11 @@ public class ButtonIntegrationTest extends TestBase {
 
     @Test
     public void verifyIsDisabled() {
-        assertThat(disableBtn.isEnabled(), is(false));
+        boolean enabled = disableBtn.isEnabled();
+        assertThat(enabled, is(false));
         assertThat(disableBtnCls.isEnabled(), is(false));
         assertThat(disableBtnCls.currentElement.getTagName(), equalTo("button"));
-        assertThat(disableBtnCls.currentElement.getLocation(), is(new Point(166, 519)));
+        assertThat(disableBtnCls.currentElement.getLocation(), is(new Point(166, 520)));
         assertThat(disableBtnCls.currentElement.getSize(), is(new Dimension(114, 30)));
     }
 

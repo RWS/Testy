@@ -104,7 +104,7 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void getLocationTest() {
-        assertThat(locator.getLocation(), WebDriverConfig.isChrome() ? is(new Point(136, 161)) : is(new Point(136, 162)));
+        assertThat(locator.getLocation(), WebDriverConfig.isChrome() ? is(new Point(136, 162)) : is(new Point(136, 162)));
     }
 
     @Test

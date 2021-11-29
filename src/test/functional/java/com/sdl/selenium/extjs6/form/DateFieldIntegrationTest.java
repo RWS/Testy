@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 public class DateFieldIntegrationTest extends TestBase {
 
-    private DateField dateField = new DateField(null, "Date Field:");
+    private final DateField dateField = new DateField(null, "Date Field:");
 
     @BeforeClass
     public void startTest() {
