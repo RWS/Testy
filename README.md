@@ -98,7 +98,7 @@ This project is optimized for:
 <dependency>
     <groupId>com.sdl.lt</groupId>
     <artifactId>Testy</artifactId>
-    <version>2.11.0</version>
+    <version>2.13.1</version>
 </dependency>
 ```
 
@@ -152,35 +152,11 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 
 ## Release Notes
-**Release Notes for Testy 2.11.0**
-- added setHeaders(boolean strictPosition, final String... headers) method
-- added selectAll() method in Grid
-- improvement retryIfNotSame(...) accept integer parameter
-- improvement getCellsText()
-- chrome use --use-simple-cache-backend
-- improvement Panel
-- getParent correct in scrollInGrid(Row row) method
-- added expand and collapse methods in ICombo interface
-- added setIconCls () method in Tab
-- improvement Tab
-- added FieldContainer
-- update webdriver version 3.14.0
-- use lombok
-- added getCellsText(String group, int... excludedColumns) method
-- improvement setDate from DateField
-- setSearch{*}Type methods overate with current value
-- added Group class
-- click method is with retry
-- added RetryUtils class
-- added doRemove in TagField
-- added waitToRender(final long millis, boolean showXPathLog) method in IWebLocator
-- improvement Scrollable
-- fix for SearchType.CONTAINS_ALL_CHILD_NODES
-- fix FieldSet
-- setTemplateValue accept array
-- ConditionManager is with Duration
-- fix download with headless on linux
-- update webdriver version 3.9.0
+**Release Notes for Testy 2.13.1**
+- added setChildNodes(SearchType searchType, final WebLocator... childNodes) method
+- improvement select(boolean doScroll, String... nodes) method in Tree
+- update webdriver version 3.141.59
+- TODO
 
 [Detailed Release Notes](./release-notes.md) 
 
@@ -197,7 +173,7 @@ Here is a sample project with cucumber and Testy on Chrome browser:
     <dependency>
         <groupId>com.sdl.lt</groupId>
         <artifactId>Testy</artifactId>
-        <version>2.12.0-SNAPSHOT</version>
+        <version>2.14.0-SNAPSHOT</version>
     </dependency>
 ```
 

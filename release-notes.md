@@ -1,7 +1,16 @@
 RELEASE NOTES
 -------------
-**Release Notes for Testy 2.12.0-SNAPSHOT**
+**Release Notes for Testy 2.14.0-SNAPSHOT**
 -
+
+**Release Notes for Testy 2.13.1**
+- added setChildNodes(SearchType searchType, final WebLocator... childNodes) method
+- improvement select(boolean doScroll, String... nodes) method in Tree
+- update webdriver version 3.141.59
+- TODO
+
+**Release Notes for Testy 2.12.0**
+- TODO
 
 **Release Notes for Testy 2.11.0**
 - added setHeaders(boolean strictPosition, final String... headers) method
