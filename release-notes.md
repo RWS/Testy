@@ -1,7 +1,7 @@
 RELEASE NOTES
 -------------
 **Release Notes for Testy 2.14.0-SNAPSHOT**
--
+- update webdriver version 4.1.0
 
 **Release Notes for Testy 2.13.1**
 - added setChildNodes(SearchType searchType, final WebLocator... childNodes) method
