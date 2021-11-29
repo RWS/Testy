@@ -5,10 +5,11 @@ http://central.sonatype.org/pages/apache-maven.html
 Run following commands in windows cmd prompt:
     1. cmd
     2. cd /d e:\Aplication\Testy
-    3. https://central.sonatype.org/publish/requirements/gpg/#distributing-your-public-key
-    4. mvn release:clean release:prepare
-    5. mvn release:perform -Prelease-sign-artifacts
-    6. http://central.sonatype.org/pages/manual-staging-bundle-creation-and-deployment.html
+    3. Use settings-for-release.xml
+    4. https://central.sonatype.org/publish/requirements/gpg/#distributing-your-public-key
+    5. mvn release:clean release:prepare
+    6. mvn release:perform -Prelease-sign-artifacts
+    7. http://central.sonatype.org/pages/manual-staging-bundle-creation-and-deployment.html
 
 https://oss.sonatype.org
 user:
