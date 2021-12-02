@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.tree;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.SearchType;
@@ -43,7 +44,10 @@ public class Tree extends WebLocator implements Scrollable {
             Table nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
             com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             boolean isExpanded;
-            String aClass = row.getAttributeClass();;
+            String aClass = row.getAttributeClass();
+            if (Strings.isNullOrEmpty(aClass)) {
+                Utils.sleep(1);
+            }
             isExpanded = aClass.contains("x-grid-tree-node-expanded");
             if (doScroll) {
                 scrollPageDownTo(nodeEl);
@@ -272,29 +276,29 @@ public class Tree extends WebLocator implements Scrollable {
         return new Row(this, byCells).setInfoMessage("-Row");
     }
 
-static class Row extends com.sdl.selenium.extjs6.grid.Row {
-    public Row() {
-        super();
-    }
+    static class Row extends com.sdl.selenium.extjs6.grid.Row {
+        public Row() {
+            super();
+        }
 
-    public Row(WebLocator grid) {
-        super(grid);
-    }
+        public Row(WebLocator grid) {
+            super(grid);
+        }
 
-    public Row(WebLocator grid, int indexRow) {
-        super(grid, indexRow);
-    }
+        public Row(WebLocator grid, int indexRow) {
+            super(grid, indexRow);
+        }
 
-    public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
-        super(grid, searchElement, searchTypes);
-    }
+        public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
+            super(grid, searchElement, searchTypes);
+        }
 
-    public Row(WebLocator grid, AbstractCell... cells) {
-        super(grid, cells);
-    }
+        public Row(WebLocator grid, AbstractCell... cells) {
+            super(grid, cells);
+        }
 
-    public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
-        super(grid, indexRow, cells);
+        public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
+            super(grid, indexRow, cells);
+        }
     }
-}
 }
