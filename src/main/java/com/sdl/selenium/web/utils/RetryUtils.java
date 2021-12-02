@@ -280,7 +280,7 @@ public class RetryUtils {
                 }
                 return compare ? text : null;
             } else if (currentList.get(0) instanceof String && expectedList.get(0) instanceof String) {
-                boolean allMatch = expectedList.stream().allMatch(currentList::contains);
+                boolean allMatch = currentList.size() == expectedList.size() && currentList.containsAll(expectedList);
                 return allMatch ? text : null;
             } else {
                 throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");

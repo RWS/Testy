@@ -1,17 +1,24 @@
 package com.sdl.selenium.web.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+
 public class RetryUtilsTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtilsTest.class);
 
     @Test
     public void test0() {
         Boolean actual = RetryUtils.retryIfNotSame(2, false, RetryUtilsTest::isLive);
-        Utils.sleep(1);
+        assertThat(actual, is(true));
     }
 
     public static boolean isLive() {
@@ -21,12 +28,33 @@ public class RetryUtilsTest {
     @Test
     public void test1() {
         List<String> list = Arrays.asList("a", "b", "c");
-        List<String> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getList);
-        Utils.sleep(1);
+        long startMs = System.currentTimeMillis();
+        List<String> actual = RetryUtils.retryIfNotSame(3, list, RetryUtilsTest::getList);
+        long endMs = System.currentTimeMillis();
+        long time = endMs - startMs;
+        LOGGER.info(String.format("retryIfNotSame took %s ms", time));
+        assertThat(actual, containsInAnyOrder(getList().toArray()));
+        assertThat("This test need during more time!", time, greaterThan(11L));
     }
 
     public static List<String> getList() {
         return Arrays.asList("a", "b");
+    }
+
+    @Test
+    public void test2() {
+        List<String> list = Arrays.asList("a", "b", "c");
+        long startMs = System.currentTimeMillis();
+        List<String> actual = RetryUtils.retryIfNotSame(3, list, RetryUtilsTest::getList1);
+        long endMs = System.currentTimeMillis();
+        long time = endMs - startMs;
+        LOGGER.info(String.format("retryIfNotSame took %s ms", time));
+        assertThat(actual, containsInAnyOrder(getList1().toArray()));
+        assertThat("This test need during more time!", time, greaterThan(11L));
+    }
+
+    public static List<String> getList1() {
+        return Arrays.asList("a", "b", "c", "d");
     }
 
     @Test
