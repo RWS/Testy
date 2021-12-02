@@ -38,25 +38,19 @@ public class Tree extends WebLocator implements Scrollable {
             scrollTop();
         }
         boolean selected = false;
-        String parent = null;
         for (String node : nodes) {
             WebLocator textEl = new WebLocator().setText(node, SearchType.EQUALS);
-            Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected");
-            com.sdl.selenium.web.table.Row rowSelected = nodeSelected.getRow(1).setClasses("x-grid-row");
-            Table nodeEl;
-            if (parent != null && nodeSelected.waitToRender(Duration.ofMillis(800), false) && rowSelected.getAttributeClass().contains("x-grid-tree-node-expanded")) {
-                nodeEl = new Table(nodeSelected).setClasses("x-grid-item").setTag("following::table").setChildNodes(textEl).setVisibility(true);
-            } else {
-                nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
-            }
+            Table nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
+            boolean isExpanded;
+            String aClass = row.getAttributeClass();;
+            isExpanded = aClass.contains("x-grid-tree-node-expanded");
             if (doScroll) {
                 scrollPageDownTo(nodeEl);
             }
-            com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
-                String aClass = row.getAttributeClass();
-                if (!(aClass.contains("x-grid-tree-node-expanded") || aClass.contains("x-grid-tree-node-leaf"))) {
+                if (!(isExpanded || aClass.contains("x-grid-tree-node-leaf"))) {
                     expanderEl.click();
                 } else {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
@@ -67,7 +61,6 @@ public class Tree extends WebLocator implements Scrollable {
                         } else {
                             selected = RetryUtils.retry(2, nodeTree::click);
                         }
-//                        selected = checkTree.isPresent() ? checkTree.click() : nodeTree.click();
                     } catch (WebDriverException e) {
                         if (doScroll) {
                             scrollPageDown();
@@ -80,12 +73,11 @@ public class Tree extends WebLocator implements Scrollable {
                     }
                 }
             }
-            parent = node;
         }
         return selected;
     }
 
-    public boolean isSelected(String node){
+    public boolean isSelected(String node) {
         WebLocator nodeEl = new WebLocator().setText(node);
         Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected").setChildNodes(nodeEl).setVisibility(true);
         return nodeSelected.isPresent();
@@ -280,29 +272,29 @@ public class Tree extends WebLocator implements Scrollable {
         return new Row(this, byCells).setInfoMessage("-Row");
     }
 
-    static class Row extends com.sdl.selenium.extjs6.grid.Row {
-        public Row() {
-            super();
-        }
-
-        public Row(WebLocator grid) {
-            super(grid);
-        }
-
-        public Row(WebLocator grid, int indexRow) {
-            super(grid, indexRow);
-        }
-
-        public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
-            super(grid, searchElement, searchTypes);
-        }
-
-        public Row(WebLocator grid, AbstractCell... cells) {
-            super(grid, cells);
-        }
-
-        public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
-            super(grid, indexRow, cells);
-        }
+static class Row extends com.sdl.selenium.extjs6.grid.Row {
+    public Row() {
+        super();
     }
+
+    public Row(WebLocator grid) {
+        super(grid);
+    }
+
+    public Row(WebLocator grid, int indexRow) {
+        super(grid, indexRow);
+    }
+
+    public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
+        super(grid, searchElement, searchTypes);
+    }
+
+    public Row(WebLocator grid, AbstractCell... cells) {
+        super(grid, cells);
+    }
+
+    public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
+        super(grid, indexRow, cells);
+    }
+}
 }
