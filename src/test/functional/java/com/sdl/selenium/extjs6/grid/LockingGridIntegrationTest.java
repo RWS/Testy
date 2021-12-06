@@ -31,6 +31,7 @@ public class LockingGridIntegrationTest extends TestBase {
 
     @Test
     void getRow() {
+        grid.scrollTop();
         Row row = grid.getRow(new Cell(2, "Voomm"), new Cell(4, "2.64"));
         boolean ready = row.ready();
         assertThat(ready, is(true));

@@ -1,11 +1,11 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
-import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs4.window.XTool;
 import com.sdl.selenium.extjs6.form.*;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
@@ -279,35 +279,25 @@ public class Grid extends Table implements Scrollable, XTool {
                     }
                 }
             }
-            if (isScrollBottom_()) {
+            if (isScrollBottom()) {
                 break;
             }
             Row row = new Row(this, size);
             id = row.getAttributeId();
-            scrollPageDown_();
-            scrollPageDown_();
-            scrollPageDown_();
-            scrollPageDown_();
-            scrollPageDown_();
+            scrollPageDown();
+            scrollPageDown();
+            scrollPageDown();
+            scrollPageDown();
+            scrollPageDown();
             canRead = false;
             timeout++;
         } while (timeout < 30);
         return listOfList;
     }
 
-    private boolean isScrollBottom_() {
-        String id = getAttributeId();
-        if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function (c){var a=c.ownerGrid.scrollable,b=a._scrollElement;return Math.round(b.dom.scrollTop) >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
-            return (Boolean) WebLocatorUtils.doExecuteScript(script);
-        }
-        return false;
-    }
-
-    public boolean scrollPageDown_() {
-        String id = getAttributeId();
-        String script = "return (function(c){var a=c.ownerGrid,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += a.getHeight() - 13;return true}return false})(window.Ext.getCmp('" + id + "'))";
-        return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    public boolean isGridLocked() {
+        String aClass = WebDriverConfig.getDriver() == null ? null : this.getAttributeClass();
+        return aClass != null && aClass.contains("x-grid-locked");
     }
 
     private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {

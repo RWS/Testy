@@ -9,21 +9,33 @@ import java.time.Duration;
 
 public interface Scrollable extends IWebLocator {
 
+    default boolean isGridLocked() {
+        return false;
+    }
+
     default boolean scrollTop() {
         String id = getAttributeId();
         return !Strings.isNullOrEmpty(id) && scrollTop(id);
     }
 
     default boolean scrollTop(String id) {
-        String script = "return (function(c){var a = c.view.getScrollable()._scrollElement;if(a.dom.scrollTop != 0){a.dom.scrollTop = 0;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        String script = "return (function(c){var a = c." + getView() + ".getScrollable()._scrollElement;if(a.dom.scrollTop != 0){a.dom.scrollTop = 0;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
+    }
+
+    private String getView() {
+        String view = "view";
+        if (isGridLocked()) {
+            view = "ownerGrid";
+        }
+        return view;
     }
 
 
     default boolean scrollBottom() {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(c){var b=c.view.scrollable.getMaxUserPosition().y;c.view.scrollBy(0, b);setTimeout(function(){c.view.scrollBy(0, 1000);},50);return true})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function(c){var b=c." + getView() + ".scrollable.getMaxUserPosition().y;c.view.scrollBy(0, b);setTimeout(function(){c.view.scrollBy(0, 1000);},50);return true})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
@@ -32,7 +44,7 @@ public interface Scrollable extends IWebLocator {
     default boolean isScrollTop() {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function (c){return c.view.scrollable._scrollElement.dom.scrollTop == 0;})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function (c){return c." + getView() + ".scrollable._scrollElement.dom.scrollTop == 0;})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
@@ -41,7 +53,7 @@ public interface Scrollable extends IWebLocator {
     default boolean isScrollBottom() {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function (c){var a=c.view.scrollable,b=a._scrollElement;return Math.round(b.dom.scrollTop) >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function (c){var a=c." + getView() + ".scrollable,b=a._scrollElement;return Math.round(b.dom.scrollTop) >= a.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
@@ -56,7 +68,7 @@ public interface Scrollable extends IWebLocator {
     default boolean scrollPageUp() {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(c){var a=c.view,b=a.getScrollable()._scrollElement;if(b.dom.scrollTop>0){b.dom.scrollTop-=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function(c){var a=c." + getView() + ",b=a.getScrollable()._scrollElement;if(b.dom.scrollTop>0){b.dom.scrollTop-=a.getHeight()-13;return true}return false})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
@@ -73,14 +85,14 @@ public interface Scrollable extends IWebLocator {
     }
 
     default boolean scrollPageDown(String id) {
-        String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += a.getHeight() - 13;return true}return false})(window.Ext.getCmp('" + id + "'))";
+        String script = "return (function(c){var a=c." + getView() + ",b=a.scrollable._scrollElement;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += a.getHeight() - 13;return true}return false})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
     default boolean scrollPageDownInTree() {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(c){var a=c.view,b=a.scrollable._scrollElement,d=a.body.dom.firstChild.scrollHeight;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += (a.body.dom.childElementCount - 3) * d;setTimeout(function(){b.dom.scrollTop += 1;},2);return true}return false})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function(c){var a=c." + getView() + ",b=a.scrollable._scrollElement,d=a.body.dom.firstChild.scrollHeight;if(b.dom.scrollTop<a.scrollable.getMaxPosition().y){b.dom.scrollTop += (a.body.dom.childElementCount - 3) * d;setTimeout(function(){b.dom.scrollTop += 1;},2);return true}return false})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;

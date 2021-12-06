@@ -8,6 +8,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -63,6 +64,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
                     childNode.setContainer(grid);
                     WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
                     index = tmpEl.getAttribute("data-recordindex");
+                    if (Strings.isNullOrEmpty(index)) {
+                        Utils.sleep(1);
+                    }
                     childNode.setContainer(null);
                 }
                 String positions = childNode.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
