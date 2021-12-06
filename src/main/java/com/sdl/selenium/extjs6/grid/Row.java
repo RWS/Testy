@@ -62,20 +62,19 @@ public class Row extends com.sdl.selenium.web.table.Row {
             for (AbstractCell childNode : childNodes) {
                 if (Strings.isNullOrEmpty(index)) {
                     childNode.setContainer(grid);
+                    int indexCurrent = getChildNodePosition(firstColumns, childNode);
+                    childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
                     WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
                     index = tmpEl.getAttribute("data-recordindex");
                     if (Strings.isNullOrEmpty(index)) {
                         Utils.sleep(1);
                     }
                     childNode.setContainer(null);
+                } else {
+                    int indexCurrent = getChildNodePosition(firstColumns, childNode);
+                    childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
                 }
-                String positions = childNode.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
                 childNode.setTag("table[@data-recordindex='" + index + "']//td");
-                int actualPosition = Integer.parseInt(positions);
-                if (actualPosition > firstColumns) {
-                    int i = actualPosition - firstColumns;
-                    childNode.setTemplateValue("tagAndPosition", i + "");
-                }
             }
             setChildNodes(childNodes);
             setTag("*");
@@ -84,6 +83,16 @@ public class Row extends com.sdl.selenium.web.table.Row {
             setChildNodes(childNodes);
         }
         setContainer(grid);
+    }
+
+    private int getChildNodePosition(int firstColumns, AbstractCell childNode) {
+        String positions = childNode.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
+        int actualPosition = Integer.parseInt(positions);
+        if (actualPosition <= firstColumns) {
+            return actualPosition;
+        } else {
+            return actualPosition - firstColumns;
+        }
     }
 
     public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
