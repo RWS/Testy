@@ -7,10 +7,10 @@ import com.sdl.selenium.web.WebLocator;
 
 public class MessageBox extends WebLocator {
 
-    private Button okButton = new Button(this, "OK");
-    private Button cancelButton = new Button(this, "Cancel");
-    private Button yesButton = new Button(this, "Yes");
-    private Button noButton = new Button(this, "No");
+    private final Button okButton = new Button(this, "OK");
+    private final Button cancelButton = new Button(this, "Cancel");
+    private final Button yesButton = new Button(this, "Yes");
+    private final Button noButton = new Button(this, "No");
 
     private MessageBox() {
         setClassName("MessageBox");
@@ -23,7 +23,7 @@ public class MessageBox extends WebLocator {
 
     public MessageBox(String title) {
         this();
-        setTitle(title, SearchType.EQUALS);
+        setTitle(title, SearchType.EQUALS, SearchType.TRIM);
     }
 
     public MessageBox(String title, String msg, SearchType... searchTypes) {
