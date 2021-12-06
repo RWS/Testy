@@ -9,6 +9,8 @@ import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriverException;
 
 import java.time.Duration;
@@ -19,6 +21,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Tree extends WebLocator implements Scrollable {
+    private static final Logger log = LogManager.getLogger(Tree.class);
 
     public Tree() {
         setClassName("Tree");
@@ -48,14 +51,25 @@ public class Tree extends WebLocator implements Scrollable {
             if (Strings.isNullOrEmpty(aClass)) {
                 Utils.sleep(1);
             }
-            isExpanded = aClass.contains("x-grid-tree-node-expanded");
+            isExpanded = aClass != null && aClass.contains("x-grid-tree-node-expanded");
             if (doScroll) {
                 scrollPageDownTo(nodeEl);
             }
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 if (!(isExpanded || aClass.contains("x-grid-tree-node-leaf"))) {
-                    expanderEl.click();
+                    RetryUtils.retry(2, () -> {
+                        expanderEl.click();
+                        String aCls = row.getAttributeClass();
+                        boolean contains = aCls.contains("x-grid-tree-node-expanded");
+                        if (!contains) {
+                            Utils.sleep(1);
+                            log.error("Node '{}' is not expanded!!!", node);
+                        } else {
+                            log.info("Node '{}' is expanded.", node);
+                        }
+                        return contains;
+                    });
                 } else {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
                     WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
