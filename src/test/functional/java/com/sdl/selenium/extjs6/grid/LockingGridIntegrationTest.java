@@ -34,14 +34,22 @@ public class LockingGridIntegrationTest extends TestBase {
     @Test
     void getRow() {
         grid.scrollTop();
-        Row row = grid.getRow(new Cell(2, "Voomm"), new Cell(4, "2.64"));
+        Row row = grid.getRow(new Cell(2, "Voomm"), new Cell(5, "6.83"));
+        boolean ready = row.ready();
+        assertThat(ready, is(true));
+    }
+
+    @Test
+    void findRow() {
+        grid.scrollTop();
+        Row row = grid.getRow(new Cell(2, "oo", SearchType.CONTAINS), new Cell(5, "4.02"));
         boolean ready = row.ready();
         assertThat(ready, is(true));
     }
 
     @Test
     void getRow1() {
-        Row row = grid.getRow(new Cell(2, "Voomm"));
+        Row row = grid.getRow(new Cell(1, "2"), new Cell(2, "Voomm") );
         boolean ready = row.ready();
         assertThat(ready, is(true));
     }

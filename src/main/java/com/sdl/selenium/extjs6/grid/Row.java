@@ -7,7 +7,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
-import com.sdl.selenium.web.utils.Utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -61,21 +60,21 @@ public class Row extends com.sdl.selenium.web.table.Row {
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
         if (isGridLocked(grid)) {
             int firstColumns = getLockedCells(grid);
-            String index = null;
-            for (AbstractCell childNode : childNodes) {
-                if (Strings.isNullOrEmpty(index)) {
+            Integer index = null;
+            for (int i = 0; i < childNodes.length; i++) {
+                AbstractCell childNode = childNodes[i];
+                if (index == null) {
                     childNode.setContainer(grid);
-                    int indexCurrent = getChildNodePosition(firstColumns, childNode);
-                    childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
-                    WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
-                    index = tmpEl.getAttribute("data-recordindex");
-                    if (Strings.isNullOrEmpty(index)) {
-                        Utils.sleep(1);
-                    }
+                    index = getRecordIndex(firstColumns, childNode);
                     childNode.setContainer(null);
                 } else {
-                    int indexCurrent = getChildNodePosition(firstColumns, childNode);
-                    childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
+                    Integer indexTmp = getRecordIndex(firstColumns, childNode);
+                    if (!indexTmp.equals(index)) {
+                        index = indexTmp;
+                        for (int j = 0; j < i; j++) {
+                            childNodes[j].setTag("table[@data-recordindex='" + index + "']//td");
+                        }
+                    }
                 }
                 if (size) {
                     childNode.setTag("td");
@@ -94,6 +93,14 @@ public class Row extends com.sdl.selenium.web.table.Row {
             setChildNodes(childNodes);
         }
         setContainer(grid);
+    }
+
+    private Integer getRecordIndex(int firstColumns, AbstractCell childNode) {
+        int indexCurrent = getChildNodePosition(firstColumns, childNode);
+        childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
+        WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
+        String indexValue = tmpEl.getAttribute("data-recordindex");
+        return Integer.parseInt(indexValue);
     }
 
     private int getChildNodePosition(int firstColumns, AbstractCell childNode) {
