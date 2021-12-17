@@ -54,7 +54,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row(WebLocator grid, AbstractCell... cells) {
-       this(grid, false, cells);
+        this(grid, false, cells);
     }
 
     public Row(WebLocator grid, boolean size, AbstractCell... cells) {
@@ -78,13 +78,17 @@ public class Row extends com.sdl.selenium.web.table.Row {
                     int indexCurrent = getChildNodePosition(firstColumns, childNode);
                     childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
                 }
-                if(!size){
+                if (size) {
+                    childNode.setTag("td");
+                } else {
                     childNode.setTag("table[@data-recordindex='" + index + "']//td");
                 }
             }
             setChildNodes(childNodes);
-            setTag("*");
-            if(!size) {
+            if (size) {
+                setTag("table");
+            } else {
+                setTag("*");
                 setElPath(getXPath() + "//table[@data-recordindex='" + index + "']");
             }
         } else {

@@ -56,6 +56,6 @@ public class LockingGridIntegrationTest extends TestBase {
     void getRowSize() {
         Row row = grid.getRow(true, new Cell(6, "21", SearchType.CONTAINS));
         int size = row.size();
-        assertThat(size, is(136));
+        assertThat(size, is(43));
     }
 }
