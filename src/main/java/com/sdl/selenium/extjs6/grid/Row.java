@@ -54,9 +54,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row(WebLocator grid, AbstractCell... cells) {
+       this(grid, null, cells);
+    }
+
+    public Row(WebLocator grid, Boolean isLocked, AbstractCell... cells) {
         this();
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
-        if (isGridLocked(grid)) {
+        if (isLocked == null ? isGridLocked(grid) : isLocked) {
             int firstColumns = getLockedCells(grid);
             String index = null;
             for (AbstractCell childNode : childNodes) {

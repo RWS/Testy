@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -49,5 +50,12 @@ public class LockingGridIntegrationTest extends TestBase {
         Row row = grid.getRow("Voomm");
         boolean ready = row.ready();
         assertThat(ready, is(true));
+    }
+
+    @Test
+    void getRowSize() {
+        Row row = grid.getRow(false, new Cell(2, "oo", SearchType.CONTAINS));
+        int size = row.size();
+        assertThat(size, is(12));
     }
 }
