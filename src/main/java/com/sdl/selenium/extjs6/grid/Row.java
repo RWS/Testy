@@ -105,7 +105,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 return null;
             }
         }
-        return tmpEl.isPresent() ? null : Integer.parseInt(indexValue);
+        return Integer.parseInt(indexValue);
     }
 
     private int getChildNodePosition(int firstColumns, AbstractCell childNode) {
