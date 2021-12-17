@@ -7,7 +7,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
-import com.sdl.selenium.web.utils.Utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -102,9 +101,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
         WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
         String indexValue = tmpEl.getAttribute("data-recordindex");
         if (Strings.isNullOrEmpty(indexValue)) {
-            Utils.sleep(1);
+            if (tmpEl.isPresent()) {
+                return null;
+            }
         }
-        return Integer.parseInt(indexValue);
+        return tmpEl.isPresent() ? null : Integer.parseInt(indexValue);
     }
 
     private int getChildNodePosition(int firstColumns, AbstractCell childNode) {
