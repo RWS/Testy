@@ -101,9 +101,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
         WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
         String indexValue = tmpEl.getAttribute("data-recordindex");
         if (Strings.isNullOrEmpty(indexValue)) {
-            if (tmpEl.isPresent()) {
-                return null;
-            }
+            return null;
         }
         return Integer.parseInt(indexValue);
     }
