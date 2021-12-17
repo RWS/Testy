@@ -54,13 +54,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row(WebLocator grid, AbstractCell... cells) {
-       this(grid, null, cells);
+       this(grid, false, cells);
     }
 
-    public Row(WebLocator grid, Boolean isLocked, AbstractCell... cells) {
+    public Row(WebLocator grid, boolean size, AbstractCell... cells) {
         this();
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
-        if (isLocked == null ? isGridLocked(grid) : isLocked) {
+        if (isGridLocked(grid)) {
             int firstColumns = getLockedCells(grid);
             String index = null;
             for (AbstractCell childNode : childNodes) {
@@ -78,11 +78,15 @@ public class Row extends com.sdl.selenium.web.table.Row {
                     int indexCurrent = getChildNodePosition(firstColumns, childNode);
                     childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
                 }
-                childNode.setTag("table[@data-recordindex='" + index + "']//td");
+                if(!size){
+                    childNode.setTag("table[@data-recordindex='" + index + "']//td");
+                }
             }
             setChildNodes(childNodes);
             setTag("*");
-            setElPath(getXPath() + "//table[@data-recordindex='" + index + "']");
+            if(!size) {
+                setElPath(getXPath() + "//table[@data-recordindex='" + index + "']");
+            }
         } else {
             setChildNodes(childNodes);
         }

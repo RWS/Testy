@@ -115,8 +115,8 @@ public class Grid extends Table implements Scrollable, XTool {
         return new Row(this, byCells).setInfoMessage("-Row");
     }
 
-    public Row getRow(Boolean isLocked, Cell... byCells) {
-        return new Row(this, isLocked, byCells).setInfoMessage("-Row");
+    public Row getRow(boolean size, Cell... byCells) {
+        return new Row(this, size, byCells).setInfoMessage("-Row");
     }
 
     public Row getRow(int indexRow, Cell... byCells) {
