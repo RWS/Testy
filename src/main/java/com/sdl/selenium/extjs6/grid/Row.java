@@ -3,7 +3,6 @@ package com.sdl.selenium.extjs6.grid;
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebDriverConfig;
-import com.sdl.selenium.web.Position;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
@@ -117,10 +116,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
         WebLocator grid = getPathBuilder().getContainer();
         if (isGridLocked(grid)) {
             int firstColumns = getLockedCells(grid);
-            Position position = Position.FIRST;
+            int position = 1;
             if (columnIndex > firstColumns) {
                 columnIndex = columnIndex - firstColumns;
-                position = Position.LAST;
+                position = 2;
             }
             return new Cell(this, columnIndex).setResultIdx(position);
         } else {

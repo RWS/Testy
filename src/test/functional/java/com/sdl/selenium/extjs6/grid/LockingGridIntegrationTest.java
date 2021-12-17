@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class LockingGridIntegrationTest extends TestBase {
@@ -57,5 +58,12 @@ public class LockingGridIntegrationTest extends TestBase {
         Row row = grid.getRow(true, new Cell(6, "21", SearchType.CONTAINS));
         int size = row.size();
         assertThat(size, is(43));
+    }
+
+    @Test
+    void getCell() {
+        Row row = grid.getRow("Voomm");
+        String text = row.getCell(3).getText();
+        assertThat(text, equalTo("$41.31"));
     }
 }
