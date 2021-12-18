@@ -7,17 +7,21 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
+    private static final Logger log = LogManager.getLogger(Row.class);
+    //    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Row.class);
+    //    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Row.class);
     private String version;
 
     public Row() {
@@ -61,21 +65,43 @@ public class Row extends com.sdl.selenium.web.table.Row {
         if (isGridLocked(grid)) {
             int firstColumns = getLockedCells(grid);
             Integer index = null;
-            for (int i = 0; i < childNodes.length; i++) {
-                AbstractCell childNode = childNodes[i];
-                if (index == null) {
-                    childNode.setContainer(grid);
-                    index = getRecordIndex(firstColumns, childNode);
-                    childNode.setContainer(null);
-                } else {
-                    Integer indexTmp = getRecordIndex(firstColumns, childNode);
-                    if (!indexTmp.equals(index)) {
-                        index = indexTmp;
-                        for (int j = 0; j < i; j++) {
-                            childNodes[j].setTag("table[@data-recordindex='" + index + "']//td");
-                        }
+            List<Set<Integer>> ids = new ArrayList<>();
+            for (AbstractCell childNode : childNodes) {
+                ((Grid) grid).scrollTop();
+                int indexCurrent = getChildNodePosition(firstColumns, childNode);
+                childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
+                WebLocator tmpEl = new WebLocator(grid).setTag("table").setChildNodes(childNode);
+                boolean isScrollBottom;
+                Set<Integer> list = new LinkedHashSet<>();
+                do {
+                    int count = tmpEl.size();
+                    for (int j = 1; j <= count; j++) {
+                        tmpEl.setResultIdx(j);
+                        String indexValue = tmpEl.getAttribute("data-recordindex");
+                        int i1 = Integer.parseInt(indexValue);
+                        list.add(i1);
                     }
-                }
+                    isScrollBottom = ((Grid) grid).isScrollBottom();
+                    if (!isScrollBottom) {
+                        ((Grid) grid).scrollPageDown();
+                        ((Grid) grid).scrollPageDown();
+                        ((Grid) grid).scrollPageDown();
+                        ((Grid) grid).scrollPageDown();
+                    }
+                    tmpEl.setResultIdx(0);
+                } while (!isScrollBottom);
+                ids.add(list);
+            }
+            ((Grid) grid).scrollTop();
+            List<Integer> theMinList = getTheMinList(ids);
+            ids.remove(theMinList);
+            List<Integer> commonId = findCommonId(ids, theMinList);
+            if (commonId.size() == 1) {
+                index = commonId.get(0);
+            } else {
+                log.error("Find more row that one!!!");
+            }
+            for (AbstractCell childNode : childNodes) {
                 if (size) {
                     childNode.setTag("td");
                 } else {
@@ -95,15 +121,17 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setContainer(grid);
     }
 
-    private Integer getRecordIndex(int firstColumns, AbstractCell childNode) {
-        int indexCurrent = getChildNodePosition(firstColumns, childNode);
-        childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
-        WebLocator tmpEl = new WebLocator(childNode).setElPath("/../../..");
-        String indexValue = tmpEl.getAttribute("data-recordindex");
-        if (Strings.isNullOrEmpty(indexValue)) {
-            return null;
+    private List<Integer> findCommonId(List<Set<Integer>> ids, List<Integer> theMinList) {
+        for (Set<Integer> idList : ids) {
+            theMinList.retainAll(idList);
         }
-        return Integer.parseInt(indexValue);
+        return theMinList;
+    }
+
+    private static List<Integer> getTheMinList(List<Set<Integer>> lists) {
+        Optional<Set<Integer>> min = lists.stream()
+                .min(Comparator.comparingInt(Set::size));
+        return min.<List<Integer>>map(ArrayList::new).orElseGet(ArrayList::new);
     }
 
     private int getChildNodePosition(int firstColumns, AbstractCell childNode) {

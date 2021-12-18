@@ -22,7 +22,6 @@ public class LockingGridIntegrationTest extends TestBase {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#locking-grid");
         driver.switchTo().frame("examples-iframe");
         grid.ready(Duration.ofSeconds(10));
-//        grid.ready(true);
     }
 
     @Test
@@ -42,14 +41,14 @@ public class LockingGridIntegrationTest extends TestBase {
     @Test
     void findRow() {
         grid.scrollTop();
-        Row row = grid.getRow(new Cell(2, "oo", SearchType.CONTAINS), new Cell(5, "4.02"));
-        boolean ready = row.ready();
-        assertThat(ready, is(true));
+        Row row = grid.getRow(new Cell(2, "oo", SearchType.CONTAINS), new Cell(5, "4.02"), new Cell(6, "21"));
+        String value = row.getCell(2).getText();
+        assertThat(value, equalTo("Oloo"));
     }
 
     @Test
     void getRow1() {
-        Row row = grid.getRow(new Cell(1, "2"), new Cell(2, "Voomm") );
+        Row row = grid.getRow(new Cell(1, "2"), new Cell(2, "Voomm"));
         boolean ready = row.ready();
         assertThat(ready, is(true));
     }
