@@ -20,8 +20,6 @@ import java.util.stream.Stream;
 
 public class Row extends com.sdl.selenium.web.table.Row {
     private static final Logger log = LogManager.getLogger(Row.class);
-    //    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Row.class);
-    //    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Row.class);
     private String version;
 
     public Row() {
