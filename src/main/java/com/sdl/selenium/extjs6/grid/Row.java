@@ -61,14 +61,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
         this();
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
         if (isGridLocked(grid)) {
-            int firstColumns = getLockedCells(grid);
             Integer index = null;
             List<Set<Integer>> ids = new ArrayList<>();
-            for (AbstractCell childNode : childNodes) {
+            for (AbstractCell cell : childNodes) {
                 ((Grid) grid).scrollTop();
-                int indexCurrent = getChildNodePosition(firstColumns, childNode);
-                childNode.setTemplateValue("tagAndPosition", indexCurrent + "");
-                WebLocator tmpEl = new WebLocator(grid).setTag("table").setChildNodes(childNode);
+                int indexCurrent = getChildNodePosition(((Grid) grid), cell);
+                cell.setTemplateValue("tagAndPosition", indexCurrent + "");
+                WebLocator tmpEl = new WebLocator(grid).setTag("table").setChildNodes(cell);
                 boolean isScrollBottom;
                 Set<Integer> list = new LinkedHashSet<>();
                 do {
@@ -132,8 +131,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return min.<List<Integer>>map(ArrayList::new).orElseGet(ArrayList::new);
     }
 
-    private int getChildNodePosition(int firstColumns, AbstractCell childNode) {
-        String positions = childNode.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
+    private int getChildNodePosition(Grid grid, AbstractCell cell) {
+        int firstColumns = getLockedCells(grid);
+        String positions = cell.getPathBuilder().getTemplatesValues().get("tagAndPosition")[0];
         int actualPosition = Integer.parseInt(positions);
         if (actualPosition <= firstColumns) {
             return actualPosition;

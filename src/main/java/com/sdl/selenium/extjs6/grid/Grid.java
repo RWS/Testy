@@ -284,6 +284,7 @@ public class Grid extends Table implements Scrollable, XTool {
                 }
             }
             if (isScrollBottom()) {
+                scrollTop();
                 break;
             }
             Row row = new Row(this, size);
@@ -404,7 +405,7 @@ public class Grid extends Table implements Scrollable, XTool {
         if (rows <= 0) {
             return null;
         } else {
-            if (getAttributeClass().contains("x-grid-locked")) {
+            if (isGridLocked()) {
                 return getLockedLists(predicate, function, columnsList);
             } else {
                 return getLists(rows, rowExpand, predicate, function, columnsList);

@@ -31,6 +31,12 @@ public class LockingGridIntegrationTest extends TestBase {
     }
 
     @Test
+    void getCellTextsFromRow() {
+        List<String> cellsText = grid.getRow(2).getCellsText();
+        assertThat(cellsText.size(), is(6));
+    }
+
+    @Test
     void getRow() {
         grid.scrollTop();
         Row row = grid.getRow(new Cell(2, "Voomm"), new Cell(5, "6.83"));

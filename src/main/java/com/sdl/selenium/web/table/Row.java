@@ -3,6 +3,7 @@ package com.sdl.selenium.web.table;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -10,7 +11,7 @@ import java.util.stream.Stream;
 public class Row extends AbstractRow {
 
     public Row() {
-        setRenderMillis(200);
+        setRender(Duration.ofMillis(200));
         setClassName("Row");
         setTag("tr");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
