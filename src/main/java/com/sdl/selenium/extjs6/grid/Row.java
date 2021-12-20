@@ -38,14 +38,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
-        this();
+        this(grid);
         setText(searchElement, searchTypes);
         if (isGridLocked()) {
             String index = getAttribute("data-recordindex");
             setTag("*");
             setElPath(getXPath() + "//table[@data-recordindex='" + index + "']");
         }
-        setContainer(grid);
     }
 
     private boolean isGridLocked() {
@@ -65,7 +64,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row(WebLocator grid, boolean size, AbstractCell... cells) {
-        this();
+        this(grid);
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
         if (isGridLocked()) {
             Integer index = null;
@@ -122,7 +121,6 @@ public class Row extends com.sdl.selenium.web.table.Row {
         } else {
             setChildNodes(childNodes);
         }
-        setContainer(grid);
     }
 
     private List<Integer> findCommonId(List<Set<Integer>> ids, List<Integer> theMinList) {
