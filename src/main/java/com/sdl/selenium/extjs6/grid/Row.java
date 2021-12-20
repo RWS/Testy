@@ -256,6 +256,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 list.add(cell.getText().trim());
             }
         }
+        setContainer(container);
         return list;
     }
 
