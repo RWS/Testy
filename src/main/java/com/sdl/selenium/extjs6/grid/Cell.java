@@ -21,15 +21,21 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     }
 
     public Cell(WebLocator container, int columnIndex) {
+        this(container, false, columnIndex);
+    }
+
+    public Cell(WebLocator container, boolean notLocked, int columnIndex) {
         this(container);
-        Grid grid;
-        try {
-            grid = (Grid) container.getPathBuilder().getContainer();
-        } catch (ClassCastException e) {
-            grid = (Grid) container.getPathBuilder().getContainer().getPathBuilder().getContainer();
-        }
-        if (grid.isGridLocked()) {
-            columnIndex = getChildNodePosition(grid, columnIndex);
+        if (notLocked) {
+            Grid grid;
+            try {
+                grid = (Grid) container.getPathBuilder().getContainer();
+            } catch (ClassCastException e) {
+                grid = (Grid) container.getPathBuilder().getContainer().getPathBuilder().getContainer();
+            }
+            if (grid.isGridLocked()) {
+                columnIndex = getChildNodePosition(grid, columnIndex);
+            }
         }
         setTemplateValue("tagAndPosition", columnIndex + "");
     }
