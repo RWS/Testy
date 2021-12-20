@@ -250,7 +250,7 @@ public class Grid extends Table implements Scrollable, XTool {
                     List<String> list = new ArrayList<>();
                     Row row = new Row(containerLocked).setTag("tr").setResultIdx(i);
                     for (int j : firstColumns) {
-                        Cell cell = new Cell(row, false, j);
+                        Cell cell = new Cell(row, j);
                         String text;
                         if (predicate.test(j)) {
                             text = function.apply(cell);
@@ -262,7 +262,7 @@ public class Grid extends Table implements Scrollable, XTool {
                     WebLocator containerUnLocked = new WebLocator(this).setClasses("x-grid-scrollbar-clipper").setExcludeClasses("x-grid-scrollbar-clipper-locked");
                     row = new Row(containerUnLocked).setTag("tr").setResultIdx(i);
                     for (int j : secondColumns) {
-                        Cell cell = new Cell(row, false,j - cells);
+                        Cell cell = new Cell(row, j - cells);
                         String text;
                         if (predicate.test(j)) {
                             text = function.apply(cell);
@@ -305,7 +305,7 @@ public class Grid extends Table implements Scrollable, XTool {
         return aClass != null && aClass.contains("x-grid-locked");
     }
 
-    private short getChildNodePosition(int actualPosition) {
+    private short getCellPosition(int actualPosition) {
         int firstColumns = getLockedCells();
         if (actualPosition <= firstColumns) {
             return (short) actualPosition;

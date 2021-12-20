@@ -10,8 +10,7 @@ import java.time.Duration;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class LockingGridIntegrationTest extends TestBase {
 
@@ -32,8 +31,9 @@ public class LockingGridIntegrationTest extends TestBase {
 
     @Test
     void getCellTextsFromRow() {
+        List<String> expectedList = List.of("2", "Voomm", "$41.31", "2.64", "6.83", "10/18/2021");
         List<String> cellsText = grid.getRow(2).getCellsText();
-        assertThat(cellsText.size(), is(6));
+        assertThat("Actual values: " + cellsText.toString(), cellsText, containsInAnyOrder(expectedList.toArray()));
     }
 
     @Test

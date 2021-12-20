@@ -21,23 +21,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     }
 
     public Cell(WebLocator container, int columnIndex) {
-        this(container, false, columnIndex);
-    }
-
-    public Cell(WebLocator container, boolean notLocked, int columnIndex) {
-        this(container);
-        if (notLocked) {
-            Grid grid;
-            try {
-                grid = (Grid) container.getPathBuilder().getContainer();
-            } catch (ClassCastException e) {
-                grid = (Grid) container.getPathBuilder().getContainer().getPathBuilder().getContainer();
-            }
-            if (grid.isGridLocked()) {
-                columnIndex = getChildNodePosition(grid, columnIndex);
-            }
-        }
-        setTemplateValue("tagAndPosition", columnIndex + "");
+        super(container, columnIndex);
     }
 
     public Cell(String columnText, SearchType... searchTypes) {
@@ -67,20 +51,6 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     public Cell(WebLocator container, int columnIndex, String columnText, SearchType... searchTypes) {
         this(container, columnIndex);
         setText(columnText, searchTypes);
-    }
-
-    private int getChildNodePosition(Grid grid, int actualPosition) {
-        int firstColumns = getLockedCells(grid);
-        if (actualPosition <= firstColumns) {
-            return actualPosition;
-        } else {
-            return actualPosition - firstColumns;
-        }
-    }
-
-    private int getLockedCells(WebLocator grid) {
-        WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
-        return new Row(containerLocked, 1).getCells();
     }
 
     public void check() {
