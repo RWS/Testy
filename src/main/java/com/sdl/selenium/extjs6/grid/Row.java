@@ -50,7 +50,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     private boolean isGridLocked() {
         Grid grid = (Grid) getPathBuilder().getContainer();
-        String aClass = WebDriverConfig.getDriver() == null ? null : grid.getAttributeClass();
+        String aClass;
+        try {
+            aClass = WebDriverConfig.getDriver() == null ? null : grid.getAttributeClass();
+        } catch (NullPointerException e) {
+            grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
+            aClass = WebDriverConfig.getDriver() == null ? null : grid.getAttributeClass();
+        }
         return aClass != null && aClass.contains("x-grid-locked");
     }
 
