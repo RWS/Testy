@@ -26,8 +26,8 @@ import static org.hamcrest.Matchers.*;
 public class TableIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TableIntegrationTest.class);
 
-    private Form form = new Form(null, "Form Table");
-    private Table table = new Table(form);
+    private final Form form = new Form(null, "Form Table");
+    private final Table table = new Table(form);
 
     @BeforeClass
     public void startTests() {
@@ -162,7 +162,7 @@ public class TableIntegrationTest extends TestBase {
     }
 
     public class RunExeThread implements Callable<Boolean> {
-        private List<String> list;
+        private final List<String> list;
         private CheckBox check;
 
         public RunExeThread(List<String> list) {

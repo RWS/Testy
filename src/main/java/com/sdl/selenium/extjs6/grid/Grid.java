@@ -305,6 +305,20 @@ public class Grid extends Table implements Scrollable, XTool {
         return aClass != null && aClass.contains("x-grid-locked");
     }
 
+    private short getChildNodePosition(int actualPosition) {
+        int firstColumns = getLockedCells();
+        if (actualPosition <= firstColumns) {
+            return (short) actualPosition;
+        } else {
+            return (short) (actualPosition - firstColumns);
+        }
+    }
+
+    private int getLockedCells() {
+        WebLocator containerLocked = new WebLocator(this).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
+        return new Row(containerLocked, 1).getCells();
+    }
+
     private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
@@ -376,7 +390,8 @@ public class Grid extends Table implements Scrollable, XTool {
     }
 
     public List<List<String>> getCellsText(short columnLanguages, int... excludedColumns) {
-        return getCellsText(false, columnLanguages, excludedColumns);
+        short finalColumnLanguages = getChildNodePosition(columnLanguages);
+        return getCellsText(false, finalColumnLanguages, excludedColumns);
     }
 
     public List<List<String>> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
@@ -388,7 +403,8 @@ public class Grid extends Table implements Scrollable, XTool {
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, short columnLanguages, int... excludedColumns) {
-        return getCellsText(rowExpand, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+        short finalColumnLanguages = getChildNodePosition(columnLanguages);
+        return getCellsText(rowExpand, t -> t == finalColumnLanguages, Cell::getLanguages, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
@@ -466,11 +482,13 @@ public class Grid extends Table implements Scrollable, XTool {
     }
 
     public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
-        return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+        short finalColumnLanguages = getChildNodePosition(columnLanguages);
+        return getCellsText(type, false, t -> t == finalColumnLanguages, Cell::getLanguages, excludedColumns);
     }
 
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
-        return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+        short finalColumnLanguages = getChildNodePosition(columnLanguages);
+        return getCellsText(type, expandRow, t -> t == finalColumnLanguages, Cell::getLanguages, excludedColumns);
     }
 
     public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
