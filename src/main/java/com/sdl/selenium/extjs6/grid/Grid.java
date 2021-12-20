@@ -340,7 +340,7 @@ public class Grid extends Table implements Scrollable, XTool {
                         if (rowExpand) {
                             row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                         }
-                        Cell cell = new Cell(row, true, j);
+                        Cell cell = new Cell(row, j);
                         String text;
                         if (predicate.test(j)) {
                             text = function.apply(cell);
