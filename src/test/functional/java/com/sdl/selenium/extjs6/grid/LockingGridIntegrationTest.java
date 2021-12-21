@@ -57,6 +57,8 @@ public class LockingGridIntegrationTest extends TestBase {
         Row row = grid.getRow(new Cell(1, "2"), new Cell(2, "Voomm"));
         boolean ready = row.ready();
         assertThat(ready, is(true));
+        String text = row.getCell(4).getText();
+        assertThat(text, equalTo("2.64"));
     }
 
     @Test
