@@ -52,19 +52,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private boolean isGridLocked() {
-        Grid grid;
-        try {
-            grid = (Grid) getPathBuilder().getContainer();
-        } catch (ClassCastException e) {
-            try {
-                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
-            } catch (ClassCastException e1) {
-                try {
-                    grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
-                } catch (ClassCastException e2) {
-                    return false;
-                }
-            }
+        Grid grid = getGridAsContainer();
+        if (grid == null) {
+            return false;
         }
         String aClass;
         try {
@@ -74,6 +64,20 @@ public class Row extends com.sdl.selenium.web.table.Row {
             aClass = WebDriverConfig.getDriver() == null ? null : grid.getAttributeClass();
         }
         return aClass != null && aClass.contains("x-grid-locked");
+    }
+
+    private Grid getGridAsContainer() {
+        Grid grid;
+        if (getPathBuilder().getContainer() instanceof Grid) {
+            grid = (Grid) getPathBuilder().getContainer();
+        } else {
+            if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
+                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
+            } else {
+                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
+            }
+        }
+        return grid;
     }
 
     public Row(WebLocator grid, AbstractCell... cells) {
@@ -270,7 +274,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private int getLockedCells() {
-        Grid grid = (Grid) getPathBuilder().getContainer();
+        Grid grid = getGridAsContainer();
         WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
         return new Row(containerLocked, 1).getCells();
     }
@@ -449,16 +453,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private void scrollInGrid(Row row) {
-        Grid grid;
-        if (getPathBuilder().getContainer() instanceof Grid) {
-            grid = (Grid) getPathBuilder().getContainer();
-        } else {
-            if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
-                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
-            } else {
-                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
-            }
-        }
+        Grid grid = getGridAsContainer();
         if (grid.isScrollBottom()) {
             grid.scrollTop();
         }
