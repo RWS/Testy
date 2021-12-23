@@ -13,10 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -161,20 +158,17 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     private List<Integer> findCommonId(List<List<Integer>> ids, List<Integer> theMinList) {
-        List<Integer> finalList = new ArrayList<>();
-        for (List<Integer> idList : ids) {
-            for (Integer integer : idList) {
-                for (Integer integ : theMinList) {
-                    if (integer.equals(integ)) {
-                        if (!finalList.contains(integer)) {
-                            finalList.add(integer);
-                        }
-                        break;
-                    }
+        Set<Integer> intersection = new HashSet<>(theMinList);
+        for(List<Integer> list : ids) {
+            Set<Integer> newIntersection = new HashSet<>();
+            for(Integer i : list) {
+                if(intersection.contains(i)) {
+                    newIntersection.add(i);
                 }
             }
+            intersection = newIntersection;
         }
-        return finalList;
+        return new ArrayList<>(intersection);
     }
 
     private static List<Integer> getTheMinList(List<List<Integer>> lists) {
@@ -464,5 +458,15 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public int getCells() {
         return new Cell(this).size();
+    }
+
+    public static void main(String[] args) {
+        List<Integer> list1 = List.of(0, 2);
+        List<Integer> list2 = List.of(0, 1, 2, 3);
+        List<Integer> list3 = List.of(0, 1, 2, 3);
+        List<Integer> list4 = List.of(1, 2);
+        List<List<Integer>> list = List.of(list2, list3, list4);
+        List<Integer> commonId = new Row().findCommonId(list, list1);
+        log.info(commonId);
     }
 }
