@@ -107,7 +107,7 @@ public interface Scrollable extends IWebLocator {
     default boolean scrollPageDownTo(WebLocator el) {
         el.setVisibility(true);
         return RetryUtils.retry(50, () -> {
-            boolean isPresent = !el.waitToRender(Duration.ofMillis(100), false);
+            boolean isPresent = el.waitToRender(Duration.ofMillis(100), false);
             if (!isPresent && !isScrollBottom()) {
                 scrollPageDown();
             }
