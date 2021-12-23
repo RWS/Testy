@@ -2,6 +2,16 @@ RELEASE NOTES
 -------------
 **Release Notes for Testy 2.14.0-SNAPSHOT**
 - update webdriver version 4.1.0
+- improvement select(boolean doScroll, String... nodes) method in Tree
+- improvement doRetryIfNotSame(V expected, Callable<V> call) method in RetryUtils
+- migrate from slf4j-log4j12 to log4j-api
+- make scrollable interface works with locked grid
+- improvement Row(WebLocator grid, AbstractCell... cells) method for locked grid
+- improvement MessageBox.java
+- added getRow(boolean size, Cell... byCells) method for locked grid
+- improvement locked grid
+- improvement Row(WebLocator grid, AbstractCell... cells) method for locked grid
+- add setFinalXPath(final String finalXPath)
 
 **Release Notes for Testy 2.13.1**
 - added setChildNodes(SearchType searchType, final WebLocator... childNodes) method
