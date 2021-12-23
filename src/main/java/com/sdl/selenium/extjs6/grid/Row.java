@@ -7,7 +7,6 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -360,13 +359,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
             if (predicate.test(j)) {
                 list.add(function.apply(cell));
             } else {
-                try {
-                    list.add(cell.getText().trim());
-                } catch (NullPointerException e) {
-                    Utils.sleep(1);
-                }
+                list.add(cell.getText().trim());
             }
         }
+        setFinalXPath(finalXPath);
         setContainer(container);
         return list;
     }
