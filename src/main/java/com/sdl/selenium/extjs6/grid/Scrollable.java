@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.IWebLocator;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.RetryUtils;
 
 import java.time.Duration;
 
@@ -105,15 +106,12 @@ public interface Scrollable extends IWebLocator {
 
     default boolean scrollPageDownTo(WebLocator el) {
         el.setVisibility(true);
-        boolean scroll = true;
-        int timeout = 0;
-        while (!el.waitToRender(Duration.ofMillis(100), false) && timeout < 50) {
-            scroll = scrollPageDown();
-            if (!scroll) {
-                break;
+        return RetryUtils.retry(50, () -> {
+            boolean isPresent = !el.waitToRender(Duration.ofMillis(100), false);
+            if (!isPresent && !isScrollBottom()) {
+                scrollPageDown();
             }
-            timeout++;
-        }
-        return scroll;
+            return isPresent;
+        });
     }
 }
