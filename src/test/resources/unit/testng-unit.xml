@@ -85,8 +85,11 @@
             <class name="com.sdl.selenium.web.table.CellTest"/>
             <class name="com.sdl.selenium.web.table.RowTest"/>
             <class name="com.sdl.selenium.web.table.TableTest"/>
+
             <class name="com.sdl.selenium.web.WebLocatorTest"/>
             <class name="com.sdl.selenium.web.WebLocatorCssTest"/>
+            <class name="com.sdl.selenium.web.SetFinalXPathTest"/>
+            <class name="com.sdl.selenium.web.SetElPathSuffixTest"/>
 
             <class name="com.sdl.selenium.jqueryui.window.WindowTest"/>
         </classes>

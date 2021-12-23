@@ -32,7 +32,7 @@ public class LockingGridIntegrationTest extends TestBase {
     @Test
     void getCellTextsFromRow() {
         List<String> expectedList = List.of("2", "Voomm", "$41.31", "2.64", "6.83", "10/18/2021");
-        List<String> cellsText = grid.getRow(2).getCellsText();
+        List<String> cellsText = grid.getRow(new Cell(2, "Voomm"), new Cell(4, "2.64")).getCellsText();
         assertThat("Actual values: " + cellsText.toString(), cellsText, containsInAnyOrder(expectedList.toArray()));
     }
 

@@ -601,6 +601,23 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     new WebLocator().setAttribute("atr", "2").setFinalXPath("//tab[1]")
+     *     //*[@atr='2']//tab[1]
+     * </pre>
+     * @param finalXPath //tab[1]
+     * @param <T> the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setFinalXPath(final String finalXPath) {
+        pathBuilder.setFinalXPath(finalXPath);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * This method add new searchTextType to existing searchTextType.
      *
      * @param searchTextTypes accepted values are: {@link SearchType#EQUALS}

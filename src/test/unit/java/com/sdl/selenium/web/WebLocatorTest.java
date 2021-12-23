@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class WebLocatorTest {
-    private static WebLocator container = new WebLocator("container");
+    private static final WebLocator container = new WebLocator("container");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {

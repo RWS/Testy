@@ -7,6 +7,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,12 +71,12 @@ public class Row extends com.sdl.selenium.web.table.Row {
         Grid grid;
         if (getPathBuilder().getContainer() instanceof Grid) {
             grid = (Grid) getPathBuilder().getContainer();
+        } else if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
+            grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
+        } else if (getPathBuilder().getContainer().getPathBuilder().getContainer() != null && getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
+            grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
         } else {
-            if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
-                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
-            } else {
-                grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
-            }
+            return null;
         }
         return grid;
     }
@@ -168,8 +169,8 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 setTag("table");
             } else {
                 setTag("*");
-                String xPath = getXPath().replace(grid.getXPath(), "");
-                setElPath(xPath + "//table[@data-recordindex='" + index + "']");
+//                String xPath = getXPath().replace(grid.getXPath(), "");
+                setFinalXPath("//table[@data-recordindex='" + index + "']");
             }
         } else {
             setChildNodes(childNodes);
@@ -345,17 +346,25 @@ public class Row extends com.sdl.selenium.web.table.Row {
         List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
         List<String> list = new ArrayList<>();
         WebLocator container = getPathBuilder().getContainer();
-        WebLocator containerUnLocked = new WebLocator(container).setClasses("x-grid-scrollbar-clipper").setExcludeClasses("x-grid-scrollbar-clipper-locked");
+        WebLocator containerLocked = new WebLocator().setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
+        WebLocator containerUnLocked = new WebLocator().setClasses("x-grid-scrollbar-clipper").setExcludeClasses("x-grid-scrollbar-clipper-locked");
+        String finalXPath = getPathBuilder().getFinalXPath();
         for (int j : columns) {
             if (j > firstColumns) {
-                setContainer(containerUnLocked);
+                setFinalXPath(containerUnLocked.getXPath() + finalXPath);
+            } else {
+                setFinalXPath(containerLocked.getXPath() + finalXPath);
             }
             int currentPosition = getLockedPosition(firstColumns, j);
             Cell cell = new Cell(this, currentPosition);
             if (predicate.test(j)) {
                 list.add(function.apply(cell));
             } else {
-                list.add(cell.getText().trim());
+                try {
+                    list.add(cell.getText().trim());
+                } catch (NullPointerException e) {
+                    Utils.sleep(1);
+                }
             }
         }
         setContainer(container);
