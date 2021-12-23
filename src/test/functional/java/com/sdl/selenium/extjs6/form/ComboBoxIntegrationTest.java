@@ -16,7 +16,7 @@ import static org.hamcrest.core.Is.is;
 
 public class ComboBoxIntegrationTest extends TestBase {
 
-    private ComboBox comboBox = new ComboBox(null, "Select State:");
+    private final ComboBox comboBox = new ComboBox(null, "Select State:");
 
     @BeforeClass
     public void startTest() {

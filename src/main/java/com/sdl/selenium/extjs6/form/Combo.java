@@ -1,13 +1,15 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,16 +22,15 @@ import java.util.stream.Collectors;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public abstract class Combo extends Field implements ICombo {
-
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Combo.class);
-    private Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
+    private static final Logger log = LogManager.getLogger(Row.class);
+    private final Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
 
     @Deprecated
     protected WebLocator getComboEl(String value, long optionRenderMillis, SearchType... searchType) {
         return getComboEl(value, Duration.ofMillis(optionRenderMillis), searchType);
     }
 
-    protected WebLocator getComboEl(String value, Duration duration, SearchType... searchType) {
+    protected <T extends WebLocator> T getComboEl(String value, Duration duration, SearchType... searchType) {
         return new WebLocator(getBoundList()).setTag("li").setText(value, searchType).setRender(duration).setInfoMessage(value);
     }
 

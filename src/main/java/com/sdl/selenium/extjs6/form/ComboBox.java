@@ -1,11 +1,13 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.WebLocatorUtils;
+import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -15,9 +17,8 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ComboBox extends Combo {
-
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ComboBox.class);
-    private Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
+    private static final Logger log = LogManager.getLogger(Row.class);
+    private final Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
 
     public ComboBox() {
         setClassName("ComboBox");
