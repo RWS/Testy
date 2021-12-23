@@ -112,14 +112,12 @@ public class Row extends com.sdl.selenium.web.table.Row {
                         if (!ids.isEmpty()) {
                             Set<Integer> integers = ids.get(0);
                             for (int k : integers) {
-                                if (list.isEmpty()) {
-                                    tmpEl.setResultIdx(k + positionForUnLocked);
-                                    tmpEl.scrollInGrid(tmpEl);
-                                    if (tmpEl.isPresent()) {
-                                        String indexValue = tmpEl.getAttribute("data-recordindex");
-                                        int i1 = Integer.parseInt(indexValue);
-                                        list.add(i1);
-                                    }
+                                tmpEl.setResultIdx(k + positionForUnLocked);
+                                tmpEl.scrollInGrid(tmpEl);
+                                if (tmpEl.isPresent()) {
+                                    String indexValue = tmpEl.getAttribute("data-recordindex");
+                                    int i1 = Integer.parseInt(indexValue);
+                                    list.add(i1);
                                 }
                             }
                         } else {
@@ -244,6 +242,15 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
         public int getLockedPosition() {
             return lockedPosition;
+        }
+
+        @Override
+        public String toString() {
+            return "Details{" +
+                    "firstColumns=" + firstColumns +
+                    ", actualPosition=" + actualPosition +
+                    ", lockedPosition=" + lockedPosition +
+                    '}';
         }
     }
 
