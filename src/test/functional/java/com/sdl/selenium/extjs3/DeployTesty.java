@@ -6,6 +6,7 @@ import com.sdl.selenium.bootstrap.form.Form;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.ElementRemovedSuccessCondition;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.InputButton;
 import com.sdl.selenium.web.form.TextField;
@@ -38,7 +39,7 @@ public class DeployTesty extends TestBase {
     private final TextField pass = new TextField(loginForm).setName("j_password");
     private final InputButton logInButton = new InputButton(loginForm).setName("Submit");
     private final WebLocator table = new WebLocator().setId("tasks");
-    private final WebLink buildNow = new WebLink(table, "Build Now").setClasses("task-link");
+    private final WebLink buildNow = new WebLink(table, "Build Now", SearchType.DEEP_CHILD_NODE_OR_SELF).setClasses("task-link ");
     private final Table buildHistory = new Table().setClasses("pane", "stripped");
     private final Row buildNowEl = new Row(buildHistory).setClasses("build-row", "transitive");
 
