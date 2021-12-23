@@ -97,12 +97,14 @@ public class Row extends com.sdl.selenium.web.table.Row {
                     int indexCurrent = details.getLockedPosition();
                     cell.setTemplateValue("tagAndPosition", indexCurrent + "");
                     Row tmpEl;
+                    int positionForUnLocked = 0;
                     if (details.getFirstColumns() >= details.getActualPosition()) {
                         WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
                         tmpEl = new Row(containerLocked).setChildNodes(cell);
                     } else {
                         WebLocator containerUnLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper").setExcludeClasses("x-grid-scrollbar-clipper-locked");
                         tmpEl = new Row(containerUnLocked).setChildNodes(cell);
+                        positionForUnLocked = 1;
                     }
                     boolean isScrollBottom;
                     Set<Integer> list = new LinkedHashSet<>();
@@ -111,7 +113,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                             Set<Integer> integers = ids.get(0);
                             for (int k : integers) {
                                 if (list.isEmpty()) {
-                                    tmpEl.setResultIdx(k);
+                                    tmpEl.setResultIdx(k + positionForUnLocked);
                                     tmpEl.scrollInGrid(tmpEl);
                                     if (tmpEl.isPresent()) {
                                         String indexValue = tmpEl.getAttribute("data-recordindex");
