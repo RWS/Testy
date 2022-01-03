@@ -27,6 +27,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
+import org.testng.util.Strings;
 
 import java.io.File;
 import java.io.IOException;
@@ -232,7 +233,7 @@ public class WebDriverConfig {
                 properties.setProperty("options.arguments", properties.getProperty("options.arguments") + userData);
             }
 
-            if(properties.isRemoteDriver()) {
+            if (properties.isRemoteDriver()) {
                 properties.setProperty("browser.download.dir", "/home/seluser/Downloads");
             }
 
@@ -246,9 +247,7 @@ public class WebDriverConfig {
                 capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
                 capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                 capabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
-                if (properties.isVNCEnabled()) {
-                    capabilities.setCapability("enableVNC", true);
-                }
+                capabilities.setCapability("enableVNC", properties.isVNCEnabled());
                 driver = properties.createDriver(remoteUrl, capabilities);
             } else {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -288,9 +287,14 @@ public class WebDriverConfig {
     private static Browser findBrowser(InputStream inputStream) {
         PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
-
-        WebDriverConfig.setRecordNetworkTraffic(Boolean.parseBoolean(properties.getProperty("browser.recordNetworkTraffic")));
-
+        String systemRecordNetworkTraffic = System.getProperty("browser.recordNetworkTraffic");
+        if (Strings.isNullOrEmpty(systemRecordNetworkTraffic)) {
+            if(systemRecordNetworkTraffic.equals("true")) {
+                WebDriverConfig.setRecordNetworkTraffic(true);
+            }
+        } else {
+            WebDriverConfig.setRecordNetworkTraffic(Boolean.parseBoolean(properties.getProperty("browser.recordNetworkTraffic")));
+        }
         WebLocatorConfig.setBrowserProperties(properties);
 
         log.info("Browser is: {}", browserKey);
