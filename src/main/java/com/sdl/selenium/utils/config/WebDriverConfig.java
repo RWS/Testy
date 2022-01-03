@@ -287,9 +287,8 @@ public class WebDriverConfig {
     private static Browser findBrowser(InputStream inputStream) {
         PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
-        String systemRecordNetworkTraffic = System.getProperty("browser.recordNetworkTraffic");
-        if (Strings.isNullOrEmpty(systemRecordNetworkTraffic)) {
-            if(systemRecordNetworkTraffic.equals("true")) {
+        if (System.getProperty("browser.recordNetworkTraffic")!=null) {
+            if(System.getProperty("browser.recordNetworkTraffic").equals("true")) {
                 WebDriverConfig.setRecordNetworkTraffic(true);
             }
         } else {
