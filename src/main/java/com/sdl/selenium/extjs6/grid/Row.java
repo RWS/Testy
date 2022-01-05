@@ -121,6 +121,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
                         }
                         tmpEl.setResultIdx(0);
                     } while (!isScrollBottom);
+                    if (list.isEmpty()) {
+                        log.info("No found child with value: '{}'", cell.getPathBuilder().getText());
+                    }
                     ids.add(list);
                 }
                 ((Grid) grid).scrollTop();
@@ -133,6 +136,8 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 List<Integer> commonId = findCommonId(collect, theMinList);
                 if (commonId.size() == 1) {
                     index = commonId.get(0);
+                } else if (commonId.size() == 0) {
+                    log.error("No found commonId!!!");
                 } else {
                     log.error("Find more row that one!!!");
                 }
@@ -159,10 +164,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     private List<Integer> findCommonId(List<List<Integer>> ids, List<Integer> theMinList) {
         Set<Integer> intersection = new HashSet<>(theMinList);
-        for(List<Integer> list : ids) {
+        for (List<Integer> list : ids) {
             Set<Integer> newIntersection = new HashSet<>();
-            for(Integer i : list) {
-                if(intersection.contains(i)) {
+            for (Integer i : list) {
+                if (intersection.contains(i)) {
                     newIntersection.add(i);
                 }
             }

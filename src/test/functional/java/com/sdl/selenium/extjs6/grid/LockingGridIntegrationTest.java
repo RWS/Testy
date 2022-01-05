@@ -31,7 +31,7 @@ public class LockingGridIntegrationTest extends TestBase {
 
     @Test
     void getCellTextsFromRow() {
-        List<String> expectedList = List.of("2", "Voomm", "$41.31", "2.64", "6.83", "10/18/2021");
+        List<String> expectedList = List.of("2", "Voomm", "$41.31", "2.64", "6.83", "10/18/2022");
         List<String> cellsText = grid.getRow(new Cell(2, "Voomm"), new Cell(4, "2.64")).getCellsText();
         assertThat("Actual values: " + cellsText.toString(), cellsText, containsInAnyOrder(expectedList.toArray()));
     }
@@ -47,7 +47,7 @@ public class LockingGridIntegrationTest extends TestBase {
     @Test
     void findRow() {
         grid.scrollTop();
-        Row row = grid.getRow(new Cell(2, "oo", SearchType.CONTAINS), new Cell(5, "4.02"), new Cell(6, "21"));
+        Row row = grid.getRow(new Cell(2, "oo", SearchType.CONTAINS), new Cell(5, "4.02"), new Cell(6, "20"));
         String value = row.getCell(2).getText();
         assertThat(value, equalTo("Oloo"));
     }
@@ -70,7 +70,7 @@ public class LockingGridIntegrationTest extends TestBase {
 
     @Test
     void getRowSize() {
-        Row row = grid.getRow(true, new Cell(6, "21", SearchType.CONTAINS));
+        Row row = grid.getRow(true, new Cell(6, "20", SearchType.CONTAINS));
         int size = row.size();
         assertThat(size, is(43));
     }
