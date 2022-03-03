@@ -42,4 +42,18 @@ public class Button extends com.sdl.selenium.web.button.Button {
         String cls = getAttributeClass();
         return cls != null && !cls.contains("x-btn-disabled");
     }
+
+    public boolean click() {
+        logIfButtonIsDisabled();
+        return super.click();
+    }
+
+    public boolean doClick(boolean showLog) {
+        logIfButtonIsDisabled();
+        return super.doClick(showLog);
+    }
+
+    public String toString() {
+        return getPathBuilder().itemToString();
+    }
 }

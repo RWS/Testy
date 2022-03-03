@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.button;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
@@ -10,6 +11,9 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
 public class ButtonIntegrationTest extends TestBase {
 
     private final Table table = new Table().setClasses("x-table-layout");
@@ -17,6 +21,7 @@ public class ButtonIntegrationTest extends TestBase {
     private final Button small = new Button(cell, "Small").setVisibility(true);
     private final Button icon = new Button(table).setIconCls("button-home-small").setVisibility(true);
     private final Button iconAndText = new Button(table, "Medium").setIconCls("button-home-medium").setVisibility(true);
+    private final CheckBox disabledCheckBox = new CheckBox("Disabled", null);
 
     @BeforeClass
     public void startTests() {
@@ -31,13 +36,21 @@ public class ButtonIntegrationTest extends TestBase {
         small.click();
     }
 
-    @Test
+    @Test (dependsOnMethods = "buttonTest")
     public void iconButtonTest() {
         icon.click();
     }
 
-    @Test
+    @Test (dependsOnMethods = "iconButtonTest")
     public void iconAndTextButtonTest() {
         iconAndText.click();
+    }
+
+    @Test (dependsOnMethods = "iconAndTextButtonTest")
+    public void clickOnDisabledButtonTest() {
+        disabledCheckBox.check(true);
+        boolean enabled = small.isEnabled();
+        assertThat(enabled, is(false));
+        small.doClick();
     }
 }
