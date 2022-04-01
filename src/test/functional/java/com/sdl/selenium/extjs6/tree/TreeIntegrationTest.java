@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -26,7 +27,7 @@ public class TreeIntegrationTest extends TestBase {
 
     @Test
     void treeTest() {
-        boolean selected = tree.select("Grocery List", "Energy foods", "Coffee");
+        boolean selected = tree.select(List.of("Grocery List", "Energy foods", "Coffee"));
         assertThat(selected, is(true));
         boolean isSelected = tree.isSelected("Coffee");
         assertThat(isSelected, is(true));
@@ -46,7 +47,7 @@ public class TreeIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "treeExpanderTest")
     void treeSelectTest() {
         tree.scrollTop();
-        tree.select("Ext JS", "app", "bindinspector", "noconflict", "BaseModel.js");
+        tree.select(List.of("Ext JS", "app", "bindinspector", "noconflict", "BaseModel.js"));
         boolean isSelected = tree.isSelected("BaseModel.js");
         assertThat(isSelected, is(true));
     }
@@ -54,16 +55,16 @@ public class TreeIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "treeSelectTest")
     void treeSelectTest2() {
         tree.scrollTop();
-        tree.select("Ext JS", "app", "domain", "Controller.js");
-        boolean isSelected = tree.isSelected("Ext JS", "app", "domain", "Controller.js");
+        tree.select(List.of("Ext JS", "app", "domain", "Controller.js"));
+        boolean isSelected = tree.isSelected(List.of("Ext JS", "app", "domain", "Controller.js"));
         assertThat(isSelected, is(true));
     }
 
     @Test(dependsOnMethods = "treeSelectTest2")
     void treeSelectTest3() {
         tree.scrollTop();
-        tree.select("Ext JS", "app", "Controller.js");
-        boolean isSelected = tree.isSelected("Ext JS", "app", "Controller.js");
+        tree.select(List.of("Ext JS", "app", "Controller.js"), SearchType.EQUALS);
+        boolean isSelected = tree.isSelected(List.of("Ext JS", "app", "Controller.js"));
         assertThat(isSelected, is(true));
     }
 }

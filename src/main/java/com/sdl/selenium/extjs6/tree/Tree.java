@@ -1,6 +1,5 @@
 package com.sdl.selenium.extjs6.tree;
 
-import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.SearchType;
@@ -33,19 +32,33 @@ public class Tree extends WebLocator implements Scrollable {
         setContainer(container);
     }
 
+    @Deprecated
     public boolean select(String... nodes) {
         return select(false, nodes);
     }
 
+    public boolean select(List<String> nodes) {
+        return select(false, nodes);
+    }
+
+    @Deprecated
     public boolean select(boolean doScroll, String... nodes) {
+        return select(doScroll, List.of(nodes), SearchType.EQUALS, SearchType.TRIM);
+    }
+
+    public boolean select(List<String> nodes, SearchType... searchTypes) {
+        return select(false, nodes, searchTypes);
+    }
+
+    public boolean select(boolean doScroll, List<String> nodes, SearchType... searchTypes) {
         if (doScroll) {
             scrollTop();
         }
         Table previousNodeEl = null;
         boolean selected = false;
-        for (int i = 0; i < nodes.length; i++) {
-            String node = nodes[i];
-            WebLocator textEl = new WebLocator().setText(node, SearchType.EQUALS, SearchType.TRIM);
+        for (int i = 0; i < nodes.size(); i++) {
+            String node = nodes.get(i);
+            WebLocator textEl = new WebLocator().setText(node, searchTypes);
             WebLocator container = previousNodeEl == null ? this : previousNodeEl;
             Table nodeEl = new Table(container).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
             if (previousNodeEl != null) {
@@ -54,9 +67,6 @@ public class Tree extends WebLocator implements Scrollable {
             com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             boolean isExpanded;
             String aClass = row.getAttributeClass();
-            if (Strings.isNullOrEmpty(aClass)) {
-                Utils.sleep(1);
-            }
             isExpanded = aClass != null && aClass.contains("x-grid-tree-node-expanded");
             if (doScroll) {
                 scrollPageDownTo(nodeEl);
@@ -119,7 +129,7 @@ public class Tree extends WebLocator implements Scrollable {
         return nodeSelected.isPresent();
     }
 
-    public boolean isSelected(String... nodes) {
+    public boolean isSelected(List<String> nodes) {
         Table previousNodeEl = null;
         Table nodeEl = null;
         int count = 0;
