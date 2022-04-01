@@ -50,4 +50,20 @@ public class TreeIntegrationTest extends TestBase {
         boolean isSelected = tree.isSelected("BaseModel.js");
         assertThat(isSelected, is(true));
     }
+
+    @Test(dependsOnMethods = "treeSelectTest")
+    void treeSelectTest2() {
+        tree.scrollTop();
+        tree.select("Ext JS", "app", "domain", "Controller.js");
+        boolean isSelected = tree.isSelected("Ext JS", "app", "domain", "Controller.js");
+        assertThat(isSelected, is(true));
+    }
+
+    @Test(dependsOnMethods = "treeSelectTest2")
+    void treeSelectTest3() {
+        tree.scrollTop();
+        tree.select("Ext JS", "app", "Controller.js");
+        boolean isSelected = tree.isSelected("Ext JS", "app", "Controller.js");
+        assertThat(isSelected, is(true));
+    }
 }

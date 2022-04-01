@@ -41,10 +41,16 @@ public class Tree extends WebLocator implements Scrollable {
         if (doScroll) {
             scrollTop();
         }
+        Table previousNodeEl = null;
         boolean selected = false;
-        for (String node : nodes) {
+        for (int i = 0; i < nodes.length; i++) {
+            String node = nodes[i];
             WebLocator textEl = new WebLocator().setText(node, SearchType.EQUALS, SearchType.TRIM);
-            Table nodeEl = new Table(this).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            WebLocator container = previousNodeEl == null ? this : previousNodeEl;
+            Table nodeEl = new Table(container).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            if (previousNodeEl != null) {
+                nodeEl.setRoot("/following-sibling::");
+            }
             com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
             boolean isExpanded;
             String aClass = row.getAttributeClass();
@@ -73,6 +79,17 @@ public class Tree extends WebLocator implements Scrollable {
                 } else {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
                     WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
+                    int nodeCount = nodeTree.size();
+                    if (nodeCount > 1) {
+                        WebLocator precedingSibling = new WebLocator(nodeTree).setTag("preceding-sibling::*").setClasses("x-tree-elbow-img");
+                        for (int j = 1; j <= nodeCount; j++) {
+                            nodeTree.setResultIdx(j);
+                            int size = precedingSibling.size();
+                            if (size == i + 1) {
+                                break;
+                            }
+                        }
+                    }
                     try {
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
@@ -91,6 +108,7 @@ public class Tree extends WebLocator implements Scrollable {
                     }
                 }
             }
+            previousNodeEl = nodeEl;
         }
         return selected;
     }
@@ -99,6 +117,37 @@ public class Tree extends WebLocator implements Scrollable {
         WebLocator nodeEl = new WebLocator().setText(node);
         Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected").setChildNodes(nodeEl).setVisibility(true);
         return nodeSelected.isPresent();
+    }
+
+    public boolean isSelected(String... nodes) {
+        Table previousNodeEl = null;
+        Table nodeEl = null;
+        int count = 0;
+        for (String node : nodes) {
+            WebLocator textEl = new WebLocator().setText(node, SearchType.EQUALS);
+            WebLocator container = previousNodeEl == null ? this : previousNodeEl;
+            nodeEl = new Table(container).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            if (previousNodeEl != null) {
+                nodeEl.setRoot("/following-sibling::");
+            }
+            previousNodeEl = nodeEl;
+            count++;
+        }
+        int nodeCount = nodeEl.size();
+        if (nodeCount > 1) {
+            WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
+            WebLocator precedingSibling = new WebLocator(nodeTree).setTag("preceding-sibling::*").setClasses("x-tree-elbow-img");
+            for (int j = 1; j <= nodeCount; j++) {
+                nodeTree.setResultIdx(j);
+                int size = precedingSibling.size();
+                if (size == count) {
+                    nodeEl.setResultIdx(j);
+                    break;
+                }
+            }
+        }
+        String aClass = nodeEl.getAttributeClass();
+        return aClass.contains("x-grid-item-selected");
     }
 
     public void expandAllNodes() {
