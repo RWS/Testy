@@ -67,6 +67,7 @@
             <class name="com.sdl.selenium.extjs6.button.ButtonIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.button.FileUploadIntegrationTest"/>
             <class name="com.sdl.selenium.extjs6.button.SplitButtonIntegrationTest"/>
+            <class name="com.sdl.selenium.extjs6.button.SplitButtonAdvancedIntegrationTest"/>
         </classes>
     </test>
     <test name="FieldIntegration">

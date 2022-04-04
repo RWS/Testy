@@ -28,7 +28,7 @@ public class Menu extends WebLocator {
 
     public void clickOnMenu(String option, SearchType... searchTypes) {
         ready();
-        WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        WebLink link = getWebLink(option, searchTypes);
         boolean click = link.doClick();
         if (!click) {
             String id = getAttributeId();
@@ -37,9 +37,18 @@ public class Menu extends WebLocator {
         }
     }
 
+    public boolean mouseOverOnMenu(String option, SearchType... searchTypes) {
+        ready();
+        return getWebLink(option, searchTypes).mouseOver();
+    }
+
+    private WebLink getWebLink(String option, SearchType[] searchTypes) {
+        return new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+    }
+
     public boolean doClickOnMenu(String option, SearchType... searchTypes) {
         ready();
-        WebLink link = new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+        WebLink link = getWebLink(option, searchTypes);
         boolean click = link.doClick();
         if (!click) {
             String id = getAttributeId();
