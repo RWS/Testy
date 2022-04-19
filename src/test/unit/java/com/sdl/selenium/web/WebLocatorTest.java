@@ -235,6 +235,13 @@ public class WebLocatorTest {
     }
 
     @Test
+    public void getPathSelectorSetIdWhenWebLocatorHasClsAndContainer1() {
+        WebLocator el = new WebLocator(container);
+        el.setClasses(ClassesType.OR, "ID", "CLASS");
+        assertThat(el.getXPath(), equalTo("//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' ID ') or contains(concat(' ', @class, ' '), ' CLASS ')]"));
+    }
+
+    @Test
     public void getPathSelectorSetIdWhenWebLocatorHasTextAndClsAndContainer() {
         WebLocator el = new WebLocator("text", "testcls", container);
         el.setId("ID");

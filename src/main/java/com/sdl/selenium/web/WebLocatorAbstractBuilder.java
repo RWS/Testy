@@ -148,6 +148,12 @@ public abstract class WebLocatorAbstractBuilder {
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setClasses(ClassesType classesType, final String... classes) {
+        pathBuilder.setClasses(classesType, classes);
+        return (T) this;
+    }
+
     /**
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
@@ -194,7 +200,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param localName eg. name()="svg"
-     * @param <T>  the element which calls this method
+     * @param <T>       the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
@@ -391,7 +397,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * @param duration time
-     * @param <T>          the element which calls this method
+     * @param <T>      the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
@@ -414,7 +420,7 @@ public abstract class WebLocatorAbstractBuilder {
 
     /**
      * @param duration time
-     * @param <T>             the element which calls this method
+     * @param <T>      the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
@@ -588,13 +594,13 @@ public abstract class WebLocatorAbstractBuilder {
      *     //*[@placeholder='Search']
      * </pre>
      *
-     * @param attribute   eg. placeholder
-     * @param value       eg. Search
-     * @param <T>         the element which calls this method
+     * @param attribute eg. placeholder
+     * @param value     eg. Search
+     * @param <T>       the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, String ...value) {
+    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, String... value) {
         pathBuilder.setAttributes(attribute, value);
         return (T) this;
     }
@@ -606,8 +612,9 @@ public abstract class WebLocatorAbstractBuilder {
      *     new WebLocator().setAttribute("atr", "2").setFinalXPath("//tab[1]")
      *     //*[@atr='2']//tab[1]
      * </pre>
+     *
      * @param finalXPath //tab[1]
-     * @param <T> the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")

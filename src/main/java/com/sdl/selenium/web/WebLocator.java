@@ -102,7 +102,6 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     }
 
     /**
-     *
      * @param attribute eg "id" or "class"
      * @return String attribute, if element not exist return null.
      */
@@ -111,9 +110,8 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     }
 
     /**
-     *
      * @param attribute eg "id" or "class"
-     * @param instant true or false
+     * @param instant   true or false
      * @return String attribute, if element not exist return null.
      */
     public String getAttribute(String attribute, boolean instant) {

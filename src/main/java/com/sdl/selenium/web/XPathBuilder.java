@@ -29,6 +29,7 @@ public class XPathBuilder implements Cloneable {
     private String baseCls;
     private String cls;
     private List<String> classes;
+    private ClassesType searchClassesType = ClassesType.AND;
     private List<String> excludeClasses;
     private String name;
     private String text;
@@ -206,6 +207,15 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setClasses(final String... classes) {
         if (classes != null) {
+            this.classes = Arrays.asList(classes);
+        }
+        return (T) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setClasses(ClassesType classesType, final String... classes) {
+        if (classes != null) {
+            this.searchClassesType = classesType;
             this.classes = Arrays.asList(classes);
         }
         return (T) this;
@@ -737,8 +747,9 @@ public class XPathBuilder implements Cloneable {
      *     new WebLocator().setAttribute("atr", "2").setFinalXPath("//tab[1]")
      *     //*[@atr='2']//tab[1]
      * </pre>
+     *
      * @param finalXPath //tab[1]
-     * @param <T> the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
@@ -886,7 +897,13 @@ public class XPathBuilder implements Cloneable {
             selectors.add(applyTemplate("cls", getCls()));
         }
         if (hasClasses()) {
-            selectors.addAll(getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList()));
+            if (searchClassesType.name().equalsIgnoreCase("and")) {
+                selectors.addAll(getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList()));
+            } else {
+                List<String> collect = getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList());
+                String classes = String.join(" or ", collect);
+                selectors.add(classes);
+            }
         }
         if (hasExcludeClasses()) {
             selectors.addAll(getExcludeClasses().stream().map(excludeClass -> applyTemplate("excludeClass", excludeClass)).collect(Collectors.toList()));
