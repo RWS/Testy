@@ -149,7 +149,7 @@ public abstract class WebLocatorAbstractBuilder {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setClasses(ClassesType classesType, final String... classes) {
+    public <T extends WebLocatorAbstractBuilder> T setClasses(Operand classesType, final String... classes) {
         pathBuilder.setClasses(classesType, classes);
         return (T) this;
     }
