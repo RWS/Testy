@@ -7,7 +7,6 @@ import com.sdl.selenium.extjs4.window.XTool;
 import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
-import com.sdl.selenium.web.Operator;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.Field;
@@ -573,8 +572,12 @@ public class Grid extends Table implements Scrollable, XTool {
     public <T extends Field> T getEditor() {
         Field editor;
         WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl = new WebLocator(container).setClasses(Operator.OR, "x-form-field", "x-form-cb-input", "x-tagfield-input-field");
-        String type = RetryUtils.retry(2, () -> editableEl.getAttribute("data-componentid"));
+        WebLocator editableEl = new WebLocator(container).setTag("input");
+        if (!editableEl.isPresent()) {
+            editableEl = new WebLocator(container).setTag("textarea");
+        }
+        WebLocator finalEditableEl = editableEl;
+        String type = RetryUtils.retry(2, () -> finalEditableEl.getAttribute("data-componentid"));
         if (type == null) {
             log.error("active editor type: 'null'");
             return null;
