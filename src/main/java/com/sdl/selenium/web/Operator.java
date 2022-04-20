@@ -1,6 +1,6 @@
 package com.sdl.selenium.web;
 
-public enum Operand {
+public enum Operator {
     AND,
     OR
 }

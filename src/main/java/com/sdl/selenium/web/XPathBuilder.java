@@ -29,7 +29,7 @@ public class XPathBuilder implements Cloneable {
     private String baseCls;
     private String cls;
     private List<String> classes;
-    private Operand operand = Operand.AND;
+    private Operator operator = Operator.AND;
     private List<String> excludeClasses;
     private String name;
     private String text;
@@ -213,9 +213,9 @@ public class XPathBuilder implements Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setClasses(Operand operand, final String... classes) {
+    public <T extends XPathBuilder> T setClasses(Operator operator, final String... classes) {
         if (classes != null) {
-            this.operand = operand;
+            this.operator = operator;
             this.classes = Arrays.asList(classes);
         }
         return (T) this;
@@ -897,11 +897,14 @@ public class XPathBuilder implements Cloneable {
             selectors.add(applyTemplate("cls", getCls()));
         }
         if (hasClasses()) {
-            if (operand.name().equalsIgnoreCase("and")) {
+            if (operator.name().equalsIgnoreCase("and")) {
                 selectors.addAll(getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList()));
             } else {
                 List<String> collect = getClasses().stream().map(cls -> applyTemplate("class", cls)).collect(Collectors.toList());
                 String classes = String.join(" or ", collect);
+                if (collect.size() > 1) {
+                    classes = "(" + classes + ")";
+                }
                 selectors.add(classes);
             }
         }
