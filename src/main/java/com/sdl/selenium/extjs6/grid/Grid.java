@@ -556,9 +556,31 @@ public class Grid extends Table implements Scrollable, XTool {
         return null;
     }
 
-    public void selectAll() {
-        WebLocator checkBox = new WebLocator(this).setBaseCls("x-column-header-checkbox");
-        checkBox.click();
+    public boolean selectAll() {
+        return selectAll(true);
+    }
+
+    public boolean selectAll(boolean check) {
+        CheckBox checkBox = getCheckBox();
+        return checkBox.check(check);
+    }
+
+    public boolean doSelectAll(Boolean check) {
+        CheckBox checkBox = getCheckBox();
+        return checkBox.doCheck(check);
+    }
+
+    private CheckBox getCheckBox() {
+        WebLocator columnHeader = new WebLocator(this).setClasses("x-column-header");
+        CheckBox checkBox = new CheckBox(columnHeader) {
+            @Override
+            public boolean isChecked() {
+                String aClass = columnHeader.getAttributeClass();
+                return aClass != null && aClass.contains("x-grid-hd-checker-on");
+            }
+        }.setBaseCls("x-column-header-checkbox");
+        checkBox.setTag("*").setType(null);
+        return checkBox;
     }
 
     public <T extends Field> T getEditor(WebLocator cell) {
