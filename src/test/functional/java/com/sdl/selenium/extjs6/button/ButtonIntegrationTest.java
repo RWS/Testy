@@ -27,7 +27,7 @@ public class ButtonIntegrationTest extends TestBase {
     public void startTests() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-buttons");
         driver.switchTo().frame("examples-iframe");
-        small.ready(Duration.ofSeconds(10));
+        small.ready(Duration.ofSeconds(20));
         Utils.sleep(1000);
     }
 
@@ -36,17 +36,17 @@ public class ButtonIntegrationTest extends TestBase {
         small.click();
     }
 
-    @Test (dependsOnMethods = "buttonTest")
+    @Test(dependsOnMethods = "buttonTest")
     public void iconButtonTest() {
         icon.click();
     }
 
-    @Test (dependsOnMethods = "iconButtonTest")
+    @Test(dependsOnMethods = "iconButtonTest")
     public void iconAndTextButtonTest() {
         iconAndText.click();
     }
 
-    @Test (dependsOnMethods = "iconAndTextButtonTest")
+    @Test(dependsOnMethods = "iconAndTextButtonTest")
     public void clickOnDisabledButtonTest() {
         disabledCheckBox.check(true);
         boolean enabled = small.isEnabled();
