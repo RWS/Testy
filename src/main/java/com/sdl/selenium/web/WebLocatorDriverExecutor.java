@@ -116,15 +116,15 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             try {
                 el.getWebElement().sendKeys(charSequences);
                 sendKeys = true;
-            } catch (ElementNotVisibleException e) {
+            } catch (NoSuchElementException e) {
                 try {
                     sendKeys = tryAgainDoSendKeys(el, charSequences);
-                } catch (ElementNotVisibleException ex) {
+                } catch (NoSuchElementException ex) {
                     try {
                         mouseOver(el);
                         sendKeys = tryAgainDoSendKeys(el, charSequences);
-                    } catch (ElementNotVisibleException exc) {
-                        log.error("final ElementNotVisibleException in sendKeys: {}", el, exc);
+                    } catch (NoSuchElementException exc) {
+                        log.error("final NoSuchElementException in sendKeys: {}", el, exc);
                         throw exc;
                     }
                 }
@@ -357,7 +357,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 .withTimeout(duration)
                 .pollingEvery(Duration.ofMillis(1))
                 .ignoring(NoSuchElementException.class)
-                .ignoring(ElementNotVisibleException.class)
                 .ignoring(WebDriverException.class);
         try {
             if (el.getPathBuilder().isVisibility()) {

@@ -6,7 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.utils.Utils;
-import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +87,7 @@ public class TabPanel extends ExtJsComponent {
         boolean activated;
         try {
             activated = titleElement.click();
-        } catch (ElementNotVisibleException e) {
+        } catch (NoSuchElementException e) {
             LOGGER.error("setActive Exception: " + e.getMessage());
             activated = setActiveWithExtJS();
         }
