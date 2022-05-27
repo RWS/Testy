@@ -591,17 +591,38 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
-     *     //*[@placeholder='Search']
+     *     new WebLocator().setAttributes("placeholder", "Search", "Search");
+     *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') and contains(concat(' ', @placeholder, ' '), ' Text ')]
      * </pre>
      *
      * @param attribute eg. placeholder
-     * @param value     eg. Search
+     * @param values    eg. Search,Text
      * @param <T>       the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, String... value) {
-        pathBuilder.setAttributes(attribute, value);
+    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, String... values) {
+        pathBuilder.setAttributes(attribute, values);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     new WebLocator().setAttributes("placeholder", Operator.OR, "Search", "Search");
+     *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') or contains(concat(' ', @placeholder, ' '), ' Search ')]
+     * </pre>
+     *
+     * @param attribute eg. placeholder
+     * @param operator  eg. AND or OR
+     * @param values    eg. Search,Text
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, Operator operator, String... values) {
+        pathBuilder.setAttributes(attribute, operator, values);
         return (T) this;
     }
 

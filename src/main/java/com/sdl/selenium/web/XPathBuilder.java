@@ -55,6 +55,7 @@ public class XPathBuilder implements Cloneable {
     private String localName;
     private Map<String, SearchText> attribute = new LinkedHashMap<>();
     private Map<String, String[]> attributes = new LinkedHashMap<>();
+    private Operator attributesOperator = Operator.AND;
 
     //private int elIndex; // TODO try to find how can be used
 
@@ -720,21 +721,49 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
-     *     //*[@placeholder='Search']
+     *     new WebLocator().setAttributes("placeholder", "Search", "Search");
+     *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') and contains(concat(' ', @placeholder, ' '), ' Text ')]
      * </pre>
      *
      * @param attribute eg. placeholder
-     * @param value     eg. Search
+     * @param values    eg. Search,Text
      * @param <T>       the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setAttributes(final String attribute, String... value) {
+    public <T extends XPathBuilder> T setAttributes(final String attribute, String... values) {
         if (attribute != null) {
-            if (value == null) {
+            if (values == null) {
                 this.attributes.remove(attribute);
             } else {
-                this.attributes.put(attribute, value);
+                this.attributes.put(attribute, values);
+            }
+        }
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     * <p>Result Example:</p>
+     * <pre>
+     *     new WebLocator().setAttributes("placeholder", Operator.OR, "Search", "Search");
+     *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') or contains(concat(' ', @placeholder, ' '), ' Search ')]
+     * </pre>
+     *
+     * @param attribute eg. placeholder
+     * @param operator  eg. AND or OR
+     * @param values    eg. Search,Text
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setAttributes(final String attribute, Operator operator, String... values) {
+        if (attribute != null) {
+            if (values == null) {
+                this.attributes.remove(attribute);
+            } else {
+                this.attributes.put(attribute, values);
+                this.attributesOperator = operator;
             }
         }
         return (T) this;
@@ -942,8 +971,17 @@ public class XPathBuilder implements Cloneable {
         if (!attributes.isEmpty()) {
             for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
                 String[] values = entry.getValue();
-                for (String value : values) {
-                    selectors.add(applyTemplate("attributes", entry.getKey(), value));
+                if (attributesOperator.name().equalsIgnoreCase("and")) {
+                    for (String value : values) {
+                        selectors.add(applyTemplate("attributes", entry.getKey(), value));
+                    }
+                } else {
+                    List<String> collect = Stream.of(values).map(att -> applyTemplate("attributes", entry.getKey(), att)).collect(Collectors.toList());
+                    String attributesPath = String.join(" or ", collect);
+                    if (collect.size() > 1) {
+                        attributesPath = "(" + attributesPath + ")";
+                    }
+                    selectors.add(attributesPath);
                 }
             }
         }

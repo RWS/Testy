@@ -186,6 +186,16 @@ public class WebLocatorTest {
         };
     }
 
+    @DataProvider
+    public static Object[][] testConstructorPathDataProviderAttributesV2() {
+        return new Object[][]{
+                {new WebLocator().setAttributes("data", "value"), "//*[contains(concat(' ', @data, ' '), ' value ')]"},
+                {new WebLocator().setAttributes("data", "value", "value2"), "//*[contains(concat(' ', @data, ' '), ' value ') and contains(concat(' ', @data, ' '), ' value2 ')]"},
+                {new WebLocator().setAttributes("data", Operator.OR, "value", "value2"), "//*[(contains(concat(' ', @data, ' '), ' value ') or contains(concat(' ', @data, ' '), ' value2 '))]"},
+                {new WebLocator().setAttributes("data", Operator.AND, "value", "value2"), "//*[contains(concat(' ', @data, ' '), ' value ') and contains(concat(' ', @data, ' '), ' value2 ')]"},
+        };
+    }
+
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(WebLocator el, String expectedXpath) {
         assertThat(el.getXPath(), equalTo(expectedXpath));
@@ -203,6 +213,11 @@ public class WebLocatorTest {
 
     @Test(dataProvider = "testConstructorPathDataProviderNotAttributes")
     public void getPathSelectorCorrectlyFromConstructorsByNotAttributes(WebLocator el, String expectedXpath) {
+        assertThat(el.getXPath(), equalTo(expectedXpath));
+    }
+
+    @Test(dataProvider = "testConstructorPathDataProviderAttributesV2")
+    public void getPathSelectorCorrectlyFromConstructorsByAttributesV2(WebLocator el, String expectedXpath) {
         assertThat(el.getXPath(), equalTo(expectedXpath));
     }
 
