@@ -74,7 +74,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         options.merge(capabilities);
         options.setAcceptInsecureCerts(true);
         if (isRemoteDriver()) {
-            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, options, false);
+            RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, options);
             driver.setFileDetector(new LocalFileDetector());
             return driver;
         } else {
