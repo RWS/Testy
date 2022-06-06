@@ -30,8 +30,13 @@ public class Slider extends WebLocator {
     }
 
     public boolean move(int distance) {
+        return move(distance, 0);
+    }
+
+    public boolean move(int distance, int extra) {
         Actions actions = new Actions(WebDriverConfig.getDriver());
         boolean exists = true;
+        boolean isVertical = getAttributeClass().contains("x-slider-vert");
         WebLocator element = new WebLocator(this).setTag("descendant::*").setClasses("x-slider-thumb");
         if (element.ready()) {
             element.mouseOver();
@@ -51,7 +56,12 @@ public class Slider extends WebLocator {
                     distanceTemp = distanceTemp * 4;
                 }
                 if (!done) {
-                    actions.dragAndDropBy(element.getWebElement(), distanceTemp, 0).perform();
+                    if (isVertical) {
+                        distanceTemp = distanceTemp + extra;
+                        actions.dragAndDropBy(element.getWebElement(), 0, -distanceTemp).perform();
+                    } else {
+                        actions.dragAndDropBy(element.getWebElement(), distanceTemp, 0).perform();
+                    }
                     element.mouseOver();
                 }
             } while (!done);

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -90,9 +91,9 @@ public class DateField extends TextField {
         return dayEl.click();
     }
 
-    private boolean setHour(String hour, String minute) {
-        return hourSlider.move(Integer.parseInt(hour)) &&
-                minuteSlider.move(Integer.parseInt(minute));
+    protected boolean setHour(int hour, int minute) {
+        return hourSlider.move(hour) &&
+                minuteSlider.move(minute);
     }
 
     private void goToYear(String year, String fullDate) {
@@ -152,16 +153,34 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     public boolean select(String date, String format, Locale locale) {
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(format, locale));
-        int day = localDate.getDayOfMonth();
-        String month = localDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
-        int year = localDate.getYear();
-        ready();
-        RetryUtils.retry(2, () -> {
-            trigger.click();
-            return datePicker.ready(Duration.ofSeconds(1));
-        });
-        log.debug("select: " + date);
-        return setDate(day + "", month, year + "");
+        boolean hasHour = format.contains("HH:");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format, locale);
+        if (hasHour) {
+            LocalDateTime localDate = LocalDateTime.parse(date, formatter);
+            int day = localDate.getDayOfMonth();
+            String month = localDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
+            int year = localDate.getYear();
+            int hour = localDate.getHour();
+            int minute = localDate.getMinute();
+            ready();
+            RetryUtils.retry(2, () -> {
+                trigger.click();
+                return datePicker.ready(Duration.ofSeconds(1));
+            });
+            log.debug("select: " + date);
+            return setHour(hour, minute) && setDate(day + "", month, year + "");
+        } else {
+            LocalDate localDate = LocalDate.parse(date, formatter);
+            int day = localDate.getDayOfMonth();
+            String month = localDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
+            int year = localDate.getYear();
+            ready();
+            RetryUtils.retry(2, () -> {
+                trigger.click();
+                return datePicker.ready(Duration.ofSeconds(1));
+            });
+            log.debug("select: " + date);
+            return setDate(day + "", month, year + "");
+        }
     }
 }
