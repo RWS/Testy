@@ -91,9 +91,9 @@ public class DateField extends TextField {
         return dayEl.click();
     }
 
-    protected boolean setHour(int hour, int minute) {
+    public boolean setHour(int hour, int minute) {
         return hourSlider.move(hour) &&
-                minuteSlider.move(minute);
+                minuteSlider.move(minute, 10);
     }
 
     private void goToYear(String year, String fullDate) {
