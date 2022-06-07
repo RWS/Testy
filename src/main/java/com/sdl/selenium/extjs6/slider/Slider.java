@@ -42,13 +42,20 @@ public class Slider extends WebLocator {
             element.mouseOver();
             boolean done = false;
             int distanceTemp = distance;
+            int timeout = 50;
             do {
                 int value = getValue();
-                log.debug("distance: {}, curentValue: {}", distance, value);
+                log.info("distance: {}, currentValue: {}", distance, value);
                 if (value > distance) {
                     distanceTemp = -1 * (value - distance) * 2;
+                    if (isVertical) {
+                        distanceTemp = distanceTemp - extra;
+                    }
                 } else if (value < distance) {
                     distanceTemp = (distance - value) * 2;
+                    if (isVertical) {
+                        distanceTemp = distanceTemp + extra;
+                    }
                 } else {
                     done = true;
                 }
@@ -57,14 +64,14 @@ public class Slider extends WebLocator {
                 }
                 if (!done) {
                     if (isVertical) {
-                        distanceTemp = distanceTemp + extra;
                         actions.dragAndDropBy(element.getWebElement(), 0, -distanceTemp).perform();
                     } else {
                         actions.dragAndDropBy(element.getWebElement(), distanceTemp, 0).perform();
                     }
                     element.mouseOver();
                 }
-            } while (!done);
+                timeout--;
+            } while (!done && timeout > 0);
         } else {
             log.warn("The slider for " + getPathBuilder().getLabel() + " has not been selected or is missing");
             exists = false;
