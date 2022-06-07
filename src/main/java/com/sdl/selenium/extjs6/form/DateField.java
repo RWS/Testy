@@ -7,6 +7,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.Getter;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 
@@ -20,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+@Getter
 public class DateField extends TextField {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(DateField.class);
@@ -92,8 +94,8 @@ public class DateField extends TextField {
     }
 
     public boolean setHour(int hour, int minute) {
-        return hourSlider.move(hour) &&
-                minuteSlider.move(minute, 10);
+        return getHourSlider().move(hour) &&
+                getMinuteSlider().move(minute, 10);
     }
 
     private void goToYear(String year, String fullDate) {
