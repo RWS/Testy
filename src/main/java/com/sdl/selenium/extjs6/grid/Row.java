@@ -455,7 +455,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
             grid.scrollTop();
         }
         return RetryUtils.retry(100, () -> {
-            boolean render = waitToRender(Duration.ofMillis(100), false);
+            boolean render = waitToRender(Duration.ofMillis(100), false) || grid.isScrollBottom();
             if (!render) {
                 grid.scrollPageDown();
             }
