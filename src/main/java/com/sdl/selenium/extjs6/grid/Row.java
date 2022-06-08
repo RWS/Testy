@@ -449,16 +449,18 @@ public class Row extends com.sdl.selenium.web.table.Row {
         });
     }
 
-    public void scrollInGrid() {
+    public boolean scrollInGrid() {
         Grid grid = getGridAsContainer();
         if (grid.isScrollBottom()) {
             grid.scrollTop();
         }
-        while (!waitToRender(Duration.ofMillis(100), false) && !grid.isScrollBottom()) {
-            if (!grid.scrollPageDown()) {
-                break;
+        return RetryUtils.retry(100, () -> {
+            boolean render = waitToRender(Duration.ofMillis(100), false);
+            if (!render) {
+                grid.scrollPageDown();
             }
-        }
+            return render;
+        });
     }
 
     public int getCells() {
