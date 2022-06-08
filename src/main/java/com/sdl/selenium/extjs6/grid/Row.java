@@ -375,22 +375,22 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public boolean select() {
-        scrollInGrid(this);
+        scrollInGrid();
         return isSelected() || selectPrivate() && isSelected();
     }
 
     public boolean doSelect() {
-        scrollInGrid(this);
+        scrollInGrid();
         return isSelected() || doSelectPrivate() && isSelected();
     }
 
     public boolean unSelect() {
-        scrollInGrid(this);
+        scrollInGrid();
         return !isSelected() || selectPrivate() && !isSelected();
     }
 
     public boolean doUnSelect() {
-        scrollInGrid(this);
+        scrollInGrid();
         return !isSelected() || doSelectPrivate() && !isSelected();
     }
 
@@ -420,12 +420,12 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public boolean expand() {
-        scrollInGrid(this);
+        scrollInGrid();
         return !isCollapsed() || RetryUtils.retry(2, () -> doExpanded() && !isCollapsed());
     }
 
     public boolean collapse() {
-        scrollInGrid(this);
+        scrollInGrid();
         return isCollapsed() || RetryUtils.retry(2, () -> doExpanded() && isCollapsed());
     }
 
@@ -449,12 +449,12 @@ public class Row extends com.sdl.selenium.web.table.Row {
         });
     }
 
-    private void scrollInGrid(Row row) {
+    public void scrollInGrid() {
         Grid grid = getGridAsContainer();
         if (grid.isScrollBottom()) {
             grid.scrollTop();
         }
-        while (!row.waitToRender(Duration.ofMillis(100), false) && !grid.isScrollBottom()) {
+        while (!waitToRender(Duration.ofMillis(100), false) && !grid.isScrollBottom()) {
             if (!grid.scrollPageDown()) {
                 break;
             }
