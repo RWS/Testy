@@ -168,14 +168,14 @@ public class RetryUtils {
     private static <V> V retry(Duration duration, String prefixLog, Callable<V> call, boolean safe) {
         int count = 0;
         int wait = 0;
-        int limit = (int) duration.getSeconds() / 5;
+        int limit = getLimit(duration);
         Fib fib = new Fib(limit);
         long startMillis = System.currentTimeMillis();
         V execute = null;
         do {
             count++;
             wait = fibonacciSinusoidal(wait, fib).getResult();
-            Utils.sleep(wait * 1000);
+            Utils.sleep(wait * 1000L);
             try {
                 execute = call.call();
             } catch (Exception | AssertionError e) {
@@ -193,6 +193,23 @@ public class RetryUtils {
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMillis);
         }
         return execute;
+    }
+
+    private static int getLimit(Duration duration) {
+        List<Integer> integers = List.of(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610);
+        int limit = (int) (duration.getSeconds() / 8);
+//        log.info("limit: {}", limit);
+        int lastItem = 0;
+        for (Integer integer : integers) {
+            if (integer > limit) {
+                return lastItem;
+            } else if (integer == limit) {
+                return integer;
+            } else {
+                lastItem = integer;
+            }
+        }
+        return limit;
     }
 
     private static boolean timeIsOver(long startMillis, Duration duration) {
@@ -335,39 +352,57 @@ public class RetryUtils {
     }
 
     private static Fib fibonacciSinusoidal(int time, Fib fib) {
+        int startTMP = fib.getStart();
         int sum = 0;
         if (fib.isPositive() && time >= fib.getLimit()) {
+//            log.info("if1");
             sum = fib.getLast();
             fib.setStart(fib.getStart() - fib.getLast());
             fib.setLast(sum);
             fib.setPositive(false);
-        } else if (!fib.isPositive() && time < fib.getLimit()) {
+            if (fib.getLimit() > 2) {
+                fib.setLimit(fib.getLimit() - fib.getStart());
+            }
+        } else if (!fib.isPositive() && time <= fib.getLimit()) {
+//            log.info("if2");
             sum = fib.getStart();
-            fib.setStart(fib.getLast() - fib.getStart());
+            fib.setStart(fib.getLast() == fib.getStart() ? 1 : fib.getLast() - fib.getStart());
             fib.setLast(sum);
+            if (startTMP == fib.getStart()) {
+                fib.setPositive(true);
+                fib.setStart(fib.getStart() + 1);
+                fib.setLast(fib.getStart());
+                fib.setExtra(true);
+            }
         } else if (fib.isPositive() && time >= 0) {
+//            log.info("if3");
             sum = time + fib.getLast();
-            fib.setLast(fib.getStart());
+            if (fib.isExtra()) {
+                sum = sum - 1;
+                fib.setLast(fib.getStart() - 1);
+                fib.setExtra(false);
+            } else {
+                fib.setLast(fib.getStart() == 0 ? 1 : fib.getStart());
+            }
             fib.setStart(sum);
         } else {
             log.info("This value is not covered!");
             Utils.sleep(1);
         }
-        if (sum <= 0) {
-            fib.setPositive(true);
-        }
         fib.setResult(sum);
-//        log.info("result is: {}", sum);
+        log.info("Fib is: {}", fib);
         return fib;
     }
 
     public static void main(String[] args) {
-        int t = 0;
-        for (int i = 0; i < 10; i++) {
-            t = RetryUtils.fibonacci(t, new Fib()).getResult();
-//            log.info("time is {}", t);
-            Utils.sleep(t);
-        }
+        int limit = RetryUtils.getLimit(Duration.ofSeconds(200));
+        Utils.sleep(1);
+//        int t = 0;
+//        for (int i = 0; i < 10; i++) {
+////            t = RetryUtils.fibonacciSinusoidal(t, new Fib()).getResult();
+////            log.info("time is {}", t);
+//            Utils.sleep(t);
+//        }
     }
 
     private static class Fib {
@@ -376,6 +411,7 @@ public class RetryUtils {
         private int result;
         private int limit = 60;
         private boolean positive = true;
+        private boolean extra = false;
 
         public Fib() {
         }
@@ -424,6 +460,14 @@ public class RetryUtils {
             this.positive = positive;
         }
 
+        public boolean isExtra() {
+            return extra;
+        }
+
+        public void setExtra(boolean extra) {
+            this.extra = extra;
+        }
+
         @Override
         public String toString() {
             return "Fib{" +
@@ -432,6 +476,7 @@ public class RetryUtils {
                     ", result=" + result +
                     ", limit=" + limit +
                     ", positive=" + positive +
+                    ", extra=" + extra +
                     '}';
         }
     }

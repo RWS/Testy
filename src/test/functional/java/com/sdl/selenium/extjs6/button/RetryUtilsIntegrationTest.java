@@ -78,4 +78,11 @@ public class RetryUtilsIntegrationTest extends TestBase {
         assertThat(present.result(), equalTo(""));
         assertThat(present.position(), is(0));
     }
+
+    @Test
+    void retryUntilOneIs6() {
+        userId.setValue("");
+        String present = RetryUtils.retry(Duration.ofSeconds(100), userId::getValue);
+        assertThat(present, equalTo(""));
+    }
 }
