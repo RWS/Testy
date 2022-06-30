@@ -119,6 +119,7 @@ public class RetryUtils {
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && count < maxRetries);
+        execute = lastCall(call, execute);
         if (count > 1) {
             long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
@@ -188,9 +189,21 @@ public class RetryUtils {
                 }
             }
         } while ((execute == null || isNotExpected(execute)) && !timeIsOver(startMillis, duration));
+        execute = lastCall(call, execute);
         if (count > 1) {
             long duringMillis = getDuringMillis(startMillis);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMillis);
+        }
+        return execute;
+    }
+
+    private static <V> V lastCall(Callable<V> call, V execute) {
+        if (execute == null) {
+            try {
+                execute = call.call();
+            } catch (Exception | AssertionError e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
         }
         return execute;
     }
@@ -390,7 +403,7 @@ public class RetryUtils {
             Utils.sleep(1);
         }
         fib.setResult(sum);
-        log.info("Fib is: {}", fib);
+//        log.info("Fib is: {}", fib);
         return fib;
     }
 
