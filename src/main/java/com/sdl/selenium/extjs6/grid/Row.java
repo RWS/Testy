@@ -467,6 +467,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return new Cell(this).size();
     }
 
+    public Row getNextRow() {
+        return new Row(this).setRoot("/").setTag("following-sibling::table[1]");
+    }
+
     public static void main(String[] args) {
         List<Integer> list1 = List.of(0, 2);
         List<Integer> list2 = List.of(0, 1, 2, 3);
