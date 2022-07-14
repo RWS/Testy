@@ -53,26 +53,39 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         setText(columnText, searchTypes);
     }
 
+    @Deprecated
+    /**
+     * @deprecated use check(boolean checked)
+     */
     public void check() {
-        scrollInGrid(this);
-        if (!isChecked()) {
-            WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
-            checkBox.click();
-        }
+        check(true);
     }
 
-    public void unCheck() {
+    public boolean check(boolean checked) {
         scrollInGrid(this);
-        if (isChecked()) {
-            WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
-            checkBox.click();
-        }
+        return checked == isChecked() || (getCheckBoxCell().click() && (checked == isChecked()));
+    }
+
+    public boolean doCheck(boolean checked) {
+        scrollInGrid(this);
+        return checked == isChecked() || (getCheckBoxCell().doClick() && (checked == isChecked()));
+    }
+
+    @Deprecated
+    /**
+     * @deprecated use check(boolean checked)
+     */
+    public void unCheck() {
+        check(false);
     }
 
     public Boolean isChecked() {
-        WebLocator checkBox = new WebLocator(this).setBaseCls("x-grid-checkcolumn");
-        String aClass = RetryUtils.retry(4, "isChecked", checkBox::getAttributeClass);
+        String aClass = RetryUtils.retry(4, "isChecked", getCheckBoxCell()::getAttributeClass);
         return aClass != null && aClass.contains("x-grid-checkcolumn-checked");
+    }
+
+    private WebLocator getCheckBoxCell() {
+        return new WebLocator(this).setBaseCls("x-grid-checkcolumn");
     }
 
     private void scrollInGrid(Cell cell) {
