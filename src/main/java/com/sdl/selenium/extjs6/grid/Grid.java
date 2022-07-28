@@ -225,7 +225,7 @@ public class Grid extends Table implements Scrollable, XTool {
         return header.size();
     }
 
-    private List<List<String>> getLockedLists(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
+    public List<List<String>> getLockedLists(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         WebLocator containerLocked = new WebLocator(this).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
         Row rowsEl = new Row(containerLocked);
         int cells = new Row(containerLocked, 1).getCells();
@@ -319,7 +319,7 @@ public class Grid extends Table implements Scrollable, XTool {
         return new Row(containerLocked, 1).getCells();
     }
 
-    private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
+    public List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
             rowsEl.setTag("tr");
