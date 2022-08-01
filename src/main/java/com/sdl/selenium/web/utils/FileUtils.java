@@ -107,7 +107,10 @@ public class FileUtils {
             while (ze != null) {
 
                 String fileName = ze.getName();
-                File newFile = new File(outputFolderPath + File.separator + fileName);
+                File newFile = new File(outputFolderPath, fileName);
+                if (!newFile.toPath().normalize().startsWith(outputFolderPath)) {
+                    throw new RuntimeException("Bad zip entry");
+                }
 
                 LOGGER.info("file unzip : " + newFile.getAbsoluteFile());
 
