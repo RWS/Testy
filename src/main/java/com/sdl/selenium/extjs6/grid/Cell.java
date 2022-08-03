@@ -1,6 +1,5 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.RetryUtils;
@@ -42,9 +41,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
 
     public Cell(String header, String cellText, SearchType... searchTypes) {
         super();
-        if (!Strings.isNullOrEmpty(cellText)) {
-            setTag(getPathBuilder().getTag() + "[count(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*[@aria-hidden='false']) + number(boolean(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*[@aria-hidden='false']))]");
-        }
+        setTag(getPathBuilder().getTag() + "[count(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*[@aria-hidden='false']) + number(boolean(ancestor::*/*[contains(concat(' ', @class, ' '), ' x-grid-header-ct ')]//*[contains(concat(' ', @class, ' '), ' x-column-header ') and count(*//text()[.='" + header + "']) > 0]/preceding-sibling::*[@aria-hidden='false']))]");
         setText(cellText, searchTypes);
     }
 
