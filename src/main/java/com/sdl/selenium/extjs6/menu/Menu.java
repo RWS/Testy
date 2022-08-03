@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.link.WebLink;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Menu extends WebLocator {
 
     public void clickOnMenu(String option, SearchType... searchTypes) {
         ready();
-        WebLink link = getWebLink(option, searchTypes);
+        WebLink link = getWebLink(this, option, searchTypes);
         boolean click = link.doClick();
         if (!click) {
             String id = getAttributeId();
@@ -37,18 +38,24 @@ public class Menu extends WebLocator {
         }
     }
 
-    public boolean mouseOverOnMenu(String option, SearchType... searchTypes) {
+    public boolean checkInMenu(String option, SearchType... searchTypes) {
         ready();
-        return getWebLink(option, searchTypes).mouseOver();
+        Item item = new Item(option, searchTypes);
+        return item.check(true);
     }
 
-    private WebLink getWebLink(String option, SearchType[] searchTypes) {
-        return new WebLink(this).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
+    public boolean mouseOverOnMenu(String option, SearchType... searchTypes) {
+        ready();
+        return getWebLink(this, option, searchTypes).mouseOver();
+    }
+
+    public WebLink getWebLink(WebLocator container, String option, SearchType[] searchTypes) {
+        return new WebLink(container).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
     public boolean doClickOnMenu(String option, SearchType... searchTypes) {
         ready();
-        WebLink link = getWebLink(option, searchTypes);
+        WebLink link = getWebLink(this, option, searchTypes);
         boolean click = link.doClick();
         if (!click) {
             String id = getAttributeId();
@@ -145,6 +152,32 @@ public class Menu extends WebLocator {
 
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;
+        }
+    }
+
+    public class Item extends WebLocator implements ICheck {
+        WebLink itemLink;
+
+        public Item(String option, SearchType[] searchTypes) {
+            WebLink link = getWebLink(null, option, searchTypes);
+            setClasses("x-menu-item").setChildNodes(link);
+            itemLink = getWebLink(this, option, searchTypes);
+        }
+
+        @Override
+        public boolean isSelected() {
+            return false;
+        }
+
+        @Override
+        public boolean isChecked() {
+            String aClass = getAttributeClass();
+            return aClass != null && aClass.contains("x-menu-item-checked");
+        }
+
+        @Override
+        public boolean click() {
+            return itemLink.click();
         }
     }
 }
