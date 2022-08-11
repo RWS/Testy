@@ -91,6 +91,20 @@ public class Menu extends WebLocator {
         return list;
     }
 
+    public List<String> getAllCheckedValues() {
+        Item item = new Item(null, null);
+        int size = item.size();
+        List<String> list = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            item.setResultIdx(i);
+            if (item.isChecked()) {
+                String text = item.getText();
+                list.add(text);
+            }
+        }
+        return list;
+    }
+
     public boolean showMenu(WebLocator parent) {
         final String id = parent.getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
