@@ -6,6 +6,7 @@ import com.sdl.selenium.web.WebLocator;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class Row extends AbstractRow {
@@ -34,7 +35,7 @@ public class Row extends AbstractRow {
 
     public Row(WebLocator table, AbstractCell... cells) {
         this(table);
-        setChildNodes(Stream.of(cells).filter(t -> t != null && t.getPathBuilder().getText() != null).toArray(AbstractCell[]::new));
+        setChildNodes(Stream.of(cells).filter(Objects::nonNull).toArray(AbstractCell[]::new));
     }
 
     public Row(WebLocator table, int indexRow, AbstractCell... cells) {
