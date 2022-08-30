@@ -245,13 +245,9 @@ public class WebDriverConfig {
                 Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-                capabilities.setCapability("enableVNC", properties.isVNCEnabled());
                 driver = properties.createDriver(remoteUrl, capabilities);
             } else {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
-                if (properties.isVNCEnabled()) {
-                    capabilities.setCapability("enableVNC", true);
-                }
                 driver = properties.createDriver(remoteUrl, capabilities);
 
             }
