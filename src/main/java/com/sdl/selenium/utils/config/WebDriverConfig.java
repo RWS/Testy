@@ -240,13 +240,11 @@ public class WebDriverConfig {
             if (WebDriverConfig.isRecordNetworkTraffic()) {
                 proxy = new BrowserMobProxyServer();
                 proxy.setTrustAllServers(true);
-                proxy.start(0);
+                proxy.start();
                 proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT, CaptureType.RESPONSE_HEADERS);
                 Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-                capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-                capabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
                 capabilities.setCapability("enableVNC", properties.isVNCEnabled());
                 driver = properties.createDriver(remoteUrl, capabilities);
             } else {

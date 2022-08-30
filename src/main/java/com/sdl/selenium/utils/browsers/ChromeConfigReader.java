@@ -73,7 +73,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
     @Override
     public WebDriver createDriver(URL remoteUrl, DesiredCapabilities capabilities) {
         ChromeOptions options = getChromeOptions();
-        options.merge(capabilities);
+        options = options.merge(capabilities);
         options.setAcceptInsecureCerts(true);
         if (isRemoteDriver()) {
             ClientConfig config = ClientConfig.defaultConfig().readTimeout(Duration.ofMinutes(10));

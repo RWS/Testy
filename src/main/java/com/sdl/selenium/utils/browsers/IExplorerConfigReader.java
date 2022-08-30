@@ -53,14 +53,14 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 
     @Override
     public WebDriver createDriver(URL remoteUrl, DesiredCapabilities capabilities) {
-        InternetExplorerOptions defaultCapabilities = getOptions();
-        capabilities.merge(defaultCapabilities);
+        InternetExplorerOptions options = getOptions();
+        options = options.merge(capabilities);
         if (isRemoteDriver()) {
             RemoteWebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);
             driver.setFileDetector(new LocalFileDetector());
             return driver;
         } else {
-            return new InternetExplorerDriver(capabilities);
+            return new InternetExplorerDriver(options);
         }
     }
 
