@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.form;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITag;
@@ -8,6 +9,7 @@ import com.sdl.selenium.web.utils.RetryUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Tag extends Combo implements ITag {
 
@@ -36,15 +38,20 @@ public abstract class Tag extends Combo implements ITag {
 
     public List<String> getAllSelectedValues() {
         String text = list.getText();
-        if (text != null) {
+        if (!Strings.isNullOrEmpty(text)) {
             boolean isEmpty = false;
             String[] comboValues = text.split("\\n");
             if (comboValues.length == 1) {
                 isEmpty = "".equals(comboValues[0]);
             }
-            return isEmpty ? new ArrayList<>() : Arrays.asList(comboValues);
+            if (isEmpty) {
+                return new ArrayList<>();
+            } else {
+                return Arrays.stream(comboValues).map(String::trim).collect(Collectors.toList());
+            }
+        } else {
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
 
     public boolean expand() {
