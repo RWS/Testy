@@ -40,7 +40,7 @@ public class Menu extends WebLocator {
 
     public boolean checkInMenu(String option, SearchType... searchTypes) {
         ready();
-        Item item = new Item(this, option, searchTypes);
+        Item item = new Item(option, searchTypes);
         return item.check(true);
     }
 
@@ -92,7 +92,7 @@ public class Menu extends WebLocator {
     }
 
     public List<String> getAllCheckedValues() {
-        Item item = new Item(this, null);
+        Item item = new Item(null);
         int size = item.size();
         List<String> list = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
@@ -172,8 +172,8 @@ public class Menu extends WebLocator {
     public class Item extends WebLocator implements ICheck {
         WebLink itemLink;
 
-        public Item(WebLocator container, String option, SearchType... searchTypes) {
-            WebLink link = getWebLink(container, option, searchTypes);
+        public Item(String option, SearchType... searchTypes) {
+            WebLink link = getWebLink(null, option, searchTypes);
             setClasses("x-menu-item").setChildNodes(link);
             itemLink = getWebLink(this, option, searchTypes);
             setVisibility(true);
