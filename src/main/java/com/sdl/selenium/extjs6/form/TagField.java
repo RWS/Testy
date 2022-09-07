@@ -114,9 +114,9 @@ public class TagField extends Tag {
                 selected = selected && option.doClick();
                 if (selected) {
                     log.info("Set value(" + info + "): " + value);
+                    collapse();
                 } else {
                     log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
-                    collapse();
                 }
             }
         }
