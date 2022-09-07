@@ -66,6 +66,9 @@ public class Menu extends WebLocator {
     }
 
     private boolean scrollDown(String id) {
+        if (Strings.isNullOrEmpty(id)) {
+            return false;
+        }
         String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,50);return Math.round(top) >= c.scrollable.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
