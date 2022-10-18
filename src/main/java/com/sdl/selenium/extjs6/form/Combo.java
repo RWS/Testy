@@ -167,9 +167,6 @@ public abstract class Combo extends Field implements ICombo {
     }
 
     public boolean doSelectIcon(String value, String iconClass, Duration duration, SearchType... searchType) {
-        if (value.equals(getValue())) {
-            return true;
-        }
         boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, duration, searchType).setVisibility(true);
