@@ -177,7 +177,7 @@ public class ComboBox extends Combo {
             if (!selected && iconEl.isPresent()) {
                 String id = getBoundList().getAttributeId();
                 scrollBack(id);
-                selected = option.doClick();
+                selected = iconEl.doClick();
             }
             if (selected) {
                 log.info("Set value({}): {}", info, value);
