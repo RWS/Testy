@@ -165,4 +165,31 @@ public abstract class Combo extends Field implements ICombo {
         }
         return false;
     }
+
+    public boolean doSelectIcon(String value, String iconClass, Duration duration, SearchType... searchType) {
+        if (value.equals(getValue())) {
+            return true;
+        }
+        boolean selected;
+        String info = toString();
+        WebLocator option = getComboEl(value, duration, searchType).setVisibility(true);
+        WebLocator iconEl = new WebLocator(option).setTag("i").setClasses(iconClass);
+        if (expand()) {
+            selected = iconEl.doClick();
+            if (!selected && iconEl.isPresent()) {
+                WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
+                selected = iconEl.doClick();
+            }
+            if (selected) {
+                log.info("Set value({}): {}", info, value);
+                Utils.sleep(20);
+                return true;
+            }
+            collapse();
+            log.debug("({}) The option '{}' and '{}' cls could not be located. {}", info, iconClass, value, option.getXPath());
+        } else {
+            log.debug("({}) The combo or arrow could not be located.", info);
+        }
+        return false;
+    }
 }
