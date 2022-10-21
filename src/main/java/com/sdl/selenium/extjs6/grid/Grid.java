@@ -4,14 +4,13 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs4.window.XTool;
-import com.sdl.selenium.extjs6.form.*;
+import com.sdl.selenium.extjs6.form.CheckBox;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
+import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.table.Table;
-import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 
@@ -24,7 +23,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Grid extends Table implements Scrollable, XTool {
+public class Grid extends Table implements Scrollable, XTool, Editor {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
     private String version;
 
@@ -583,50 +582,7 @@ public class Grid extends Table implements Scrollable, XTool {
         return checkBox;
     }
 
-    public <T extends Field> T getEditor(WebLocator cell) {
-        return RetryUtils.retry(3, () -> {
-            cell.click();
-            return getEditor();
-        });
-    }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Field> T getEditor() {
-        Field editor;
-        WebLocator container = new WebLocator("x-editor", this);
-        WebLocator editableEl = new WebLocator(container).setTag("input");
-        if (!editableEl.isPresent()) {
-            editableEl = new WebLocator(container).setTag("textarea");
-        }
-        WebLocator finalEditableEl = editableEl;
-        String type = RetryUtils.retry(2, () -> finalEditableEl.getAttribute("data-componentid"));
-        if (type == null) {
-            log.error("active editor type: 'null'");
-            return null;
-        } else {
-            if (type.contains("combo")) {
-                editor = new ComboBox();
-            } else if (type.contains("textarea")) {
-                editor = new TextArea();
-            } else if (type.contains("datefield")) {
-                editor = new DateField();
-            } else if (type.contains("tag")) {
-                editor = new TagField();
-            } else if (type.contains("checkbox")) {
-                editor = new CheckBox();
-            } else if (type.contains("numberfield") || type.contains("textfield")) {
-                editor = new TextField();
-            } else {
-                log.warn("active editor type: {}", type);
-                return null;
-            }
-        }
-        editor.setContainer(this).setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
-        if (!(editor instanceof CheckBox)) {
-            editor.setClasses("x-form-focus");
-        }
-        return (T) editor;
-    }
 
     public WebLocator getEmptyEl(String title, String message) {
         WebLocator titleEL = new WebLocator().setClasses("x-grid-empty-title").setText(title);

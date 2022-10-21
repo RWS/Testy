@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.extjs6.grid.Scrollable;
+import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Tree extends WebLocator implements Scrollable {
+public class Tree extends WebLocator implements Scrollable, Editor {
     private static final Logger log = LogManager.getLogger(Tree.class);
 
     public Tree() {
@@ -30,6 +31,11 @@ public class Tree extends WebLocator implements Scrollable {
     public Tree(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    @Override
+    public WebLocator getView() {
+        return this;
     }
 
     @Deprecated
