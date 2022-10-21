@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,6 +24,14 @@ public class TreeGridIntegrationTest extends TestBase {
         driver.switchTo().frame("examples-iframe");
         tree.ready(Duration.ofSeconds(20));
         Utils.sleep(1000);
+    }
+
+    @Test
+    void treeTest0() {
+        Tree.Row treeNode = tree.getNode(List.of("Project: Shopping", "Housewares"));
+        Cell cell = treeNode.getCell(4);
+        cell.check(true);
+        assertThat(cell.isChecked(), is(true));
     }
 
     @Test
