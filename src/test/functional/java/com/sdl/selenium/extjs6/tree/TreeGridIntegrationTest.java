@@ -43,6 +43,6 @@ public class TreeGridIntegrationTest extends TestBase {
     @Test
     void treeTest2() {
         List<List<String>> selected = tree.getValues(4, 5);
-        assertThat(selected.size(), is(9));
+        assertThat(selected.size(), is(8));
     }
 }
