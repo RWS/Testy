@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 
 public class TreeGridIntegrationTest extends TestBase {
@@ -36,8 +37,30 @@ public class TreeGridIntegrationTest extends TestBase {
 
     @Test
     void treeTest() {
-        List<List<String>> selected = tree.getNodesValues(Arrays.asList("Project: Shopping", "Housewares"), 4, 5);
-        assertThat(selected.size(), is(6));
+        List<List<String>> expectedValues = List.of(
+                List.of("Project: Testing", "2 hours", "Core Team"),
+                List.of("Mac OSX", "45 mins", "Tommy Maintz"),
+                List.of("FireFox", "15 mins", "Tommy Maintz"),
+                List.of("Safari", "15 mins", "Tommy Maintz"),
+                List.of("Chrome", "15 mins", "Tommy Maintz")
+        );
+        List<List<String>> actualValues = tree.getNodesValues(Arrays.asList("Project: Testing", "Mac OSX", "FireFox"), 4, 5);
+        actualValues.forEach(System.out::println);
+        assertThat(actualValues, containsInAnyOrder(expectedValues.toArray()));
+    }
+
+    @Test
+    void treeTest1() {
+        List<List<String>> expectedValues = List.of(
+                List.of("Project: Testing", "2 hours", "Core Team"),
+                List.of("Mac OSX", "45 mins", "Tommy Maintz"),
+                List.of("FireFox", "15 mins", "Tommy Maintz"),
+                List.of("Safari", "15 mins", "Tommy Maintz"),
+                List.of("Chrome", "15 mins", "Tommy Maintz")
+        );
+        List<List<String>> actualValues = tree.getNodesValues(Arrays.asList("Project: Testing", "Mac OSX"), 4, 5);
+        actualValues.forEach(System.out::println);
+        assertThat(actualValues, containsInAnyOrder(expectedValues.toArray()));
     }
 
     @Test

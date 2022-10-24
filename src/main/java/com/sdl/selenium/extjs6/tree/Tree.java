@@ -208,20 +208,15 @@ public class Tree extends WebLocator implements Scrollable, Editor {
     }
 
     public List<List<String>> getNodesValues(List<String> nodes, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        Row rowEl = getNode(nodes);
-        Cell columnsEl = new Cell(rowEl);
-        int columns = columnsEl.size();
-        List<List<String>> listOfList = new ArrayList<>();
+        Row rowNode = getNode(nodes);
+        List<List<String>> listOfList = new LinkedList<>();
         for (String node : nodes) {
-            Row nodeRow = getRow(new Cell(1, node)).setResultIdx(1);
+            Row nodeRow = this.getRow(new Cell(1, node)).setResultIdx(1);
             List<String> cellsText = nodeRow.getCellsText(excludedColumns);
             listOfList.add(cellsText);
         }
-        Row rowsEl = new Row(this).setTag("tr").setClasses("x-grid-tree-node-leaf");
-        int rows = rowsEl.size();
-        final List<Integer> columnsList = getColumns(columns, excludedColumns);
-        List<List<String>> lists = getValues(rows, columnsList, predicate, function);
-        listOfList.addAll(lists);
+        List<List<String>> values = getNodesValues(rowNode, predicate, function, excludedColumns);
+        listOfList.addAll(values);
         return listOfList;
     }
 
@@ -308,6 +303,23 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         return listOfList;
     }
 
+    private List<List<String>> getNodesValues(Row rowNode, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> listOfList = new LinkedList<>();
+        Row nextRow = rowNode.getNextRow();
+        while (nextRow.ready()) {
+            Row row = nextRow.getNextRow();
+            Row rowTMP = row.clone(row);
+            rowTMP.setTag("tr").setClasses("x-grid-tree-node-leaf");
+            if (!rowTMP.isPresent()) {
+                break;
+            }
+            List<String> actualValues = rowTMP.getCellsText(predicate, function, excludedColumns);
+            listOfList.add(actualValues);
+            nextRow = row;
+        }
+        return listOfList;
+    }
+
     private List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
         if (!rowExpand) {
@@ -391,6 +403,14 @@ public class Tree extends WebLocator implements Scrollable, Editor {
 
         public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
             super(grid, indexRow, cells);
+        }
+
+        public Row clone(Row row) {
+            return new Row(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
+        }
+
+        public Row getNextRow() {
+            return new Row(this).setRoot("/").setTag("following-sibling::table[1]");
         }
     }
 }

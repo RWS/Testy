@@ -5,12 +5,12 @@ import java.util.List;
 
 public class ChildNodes {
     private SearchType searchType;
-    private List<WebLocator> childNodes = new ArrayList<>();
+    private List<? extends WebLocator> childNodes = new ArrayList<>();
 
     public ChildNodes() {
     }
 
-    public ChildNodes(SearchType searchType, List<WebLocator> childNodes) {
+    public ChildNodes(SearchType searchType, List<? extends WebLocator> childNodes) {
         this.searchType = searchType;
         this.childNodes = childNodes;
     }
@@ -23,11 +23,11 @@ public class ChildNodes {
         this.searchType = searchType;
     }
 
-    public List<WebLocator> getChildNodes() {
+    public List<? extends WebLocator> getChildNodes() {
         return childNodes;
     }
 
-    public void setChildNodes(List<WebLocator> childNodes) {
+    public void setChildNodes(List<? extends WebLocator> childNodes) {
         this.childNodes = childNodes;
     }
 }

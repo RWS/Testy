@@ -109,7 +109,7 @@ public class WebLocatorActionsIntegrationTest extends TestBase {
 
     @Test
     public void getSizeTest() {
-        assertThat(locator.getSize(), is(new Dimension(61, 30)));
+        assertThat(locator.getSize(), is(new Dimension(60, 30)));
     }
 
     @Test

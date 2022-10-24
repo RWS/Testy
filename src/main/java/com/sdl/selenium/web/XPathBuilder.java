@@ -3,6 +3,7 @@ package com.sdl.selenium.web;
 import com.google.common.base.Strings;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
+import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
@@ -1569,8 +1570,12 @@ public class XPathBuilder implements Cloneable {
         return this.container;
     }
 
-    public List<WebLocator> getChildNodes() {
+    public List<? extends WebLocator> getChildNodes() {
         return this.childNodes.getChildNodes();
+    }
+
+    public AbstractCell[] getCells() {
+        return this.childNodes.getChildNodes().toArray(new AbstractCell[0]);
     }
 
     public String getFinalXPath() {
