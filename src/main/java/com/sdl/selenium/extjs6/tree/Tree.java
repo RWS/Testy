@@ -195,7 +195,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         Row rowsEl = new Row(this).setTag("tr");
         int rows = rowsEl.size();
         final List<Integer> columnsList = getColumns(columns, excludedColumns);
-        return getValues(rows, columnsList);
+        return getValues(rows, columnsList, t -> t == 0, null);
     }
 
     public Row getNode(List<String> nodes) {
@@ -206,6 +206,10 @@ public class Tree extends WebLocator implements Scrollable, Editor {
     }
 
     public List<List<String>> getNodesValues(List<String> nodes, int... excludedColumns) {
+        return getNodesValues(nodes, t -> t == 0, null, excludedColumns);
+    }
+
+    public List<List<String>> getNodesValues(List<String> nodes, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         select(nodes.toArray(new String[0]));
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
@@ -219,7 +223,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         Row rowsEl = new Row(this).setTag("tr").setClasses("x-grid-tree-node-leaf");
         int rows = rowsEl.size();
         final List<Integer> columnsList = getColumns(columns, excludedColumns);
-        List<List<String>> lists = getValues(rows, columnsList);
+        List<List<String>> lists = getValues(rows, columnsList, predicate, function);
         listOfList.addAll(lists);
         return listOfList;
     }
@@ -261,7 +265,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         return columnsList;
     }
 
-    private List<List<String>> getValues(int rows, List<Integer> columnsList) {
+    private List<List<String>> getValues(int rows, List<Integer> columnsList, Predicate<Integer> predicate, Function<Cell, String> function) {
         Row rowsEl = new Row(this).setTag("tr");
         int size = rowsEl.size();
         List<List<String>> listOfList = new LinkedList<>();
@@ -275,7 +279,12 @@ public class Tree extends WebLocator implements Scrollable, Editor {
                     for (int j : columnsList) {
                         Row row = new Row(this).setTag("tr").setResultIdx(i);
                         Cell cell = new Cell(row, j);
-                        String text = cell.getText(true).trim();
+                        String text;
+                        if (predicate.test(j)) {
+                            text = function.apply(cell);
+                        } else {
+                            text = cell.getText(true).trim();
+                        }
                         list.add(text);
                     }
                     listOfList.add(list);
