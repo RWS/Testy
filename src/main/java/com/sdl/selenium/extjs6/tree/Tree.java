@@ -200,9 +200,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
 
     public Row getNode(List<String> nodes) {
         select(nodes);
-        Row nodeRow = getRow(new Cell(1, nodes.get(nodes.size() - 1)));
-
-        return nodeRow;
+        return getRow(new Cell(1, nodes.get(nodes.size() - 1)));
     }
 
     public List<List<String>> getNodesValues(List<String> nodes, int... excludedColumns) {
@@ -210,8 +208,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
     }
 
     public List<List<String>> getNodesValues(List<String> nodes, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        select(nodes.toArray(new String[0]));
-        Row rowEl = new Row(this, 1);
+        Row rowEl = getNode(nodes);
         Cell columnsEl = new Cell(rowEl);
         int columns = columnsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
