@@ -212,7 +212,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         List<List<String>> listOfList = new LinkedList<>();
         for (String node : nodes) {
             Row nodeRow = this.getRow(new Cell(1, node)).setResultIdx(1);
-            List<String> cellsText = nodeRow.getCellsText(excludedColumns);
+            List<String> cellsText = nodeRow.getCellsText(predicate, function, excludedColumns);
             listOfList.add(cellsText);
         }
         List<List<String>> values = getNodesValues(rowNode, predicate, function, excludedColumns);
