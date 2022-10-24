@@ -27,21 +27,22 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.service.DriverService;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
-import org.testng.util.Strings;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class WebDriverConfig {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebDriverConfig.class);
     private static WebDriver driver;
     private static boolean isIE;
-    private static boolean isOpera;
     private static boolean isSafari;
     private static boolean isChrome;
     private static boolean isFireFox;
@@ -61,10 +62,6 @@ public class WebDriverConfig {
 
     public static boolean isIE() {
         return isIE;
-    }
-
-    public static boolean isOpera() {
-        return isOpera;
     }
 
     public static boolean isSafari() {
@@ -99,7 +96,7 @@ public class WebDriverConfig {
             if (!SystemUtils.IS_OS_LINUX) {
                 driver.manage().window().maximize();
             }
-            driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
+            driver.manage().timeouts().implicitlyWait(Duration.ofMillis(WebLocatorConfig.getInt("driver.implicitlyWait")));
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     if (WebLocatorConfig.getBoolean("driver.autoClose")) {
