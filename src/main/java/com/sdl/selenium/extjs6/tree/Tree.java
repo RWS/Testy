@@ -1,11 +1,11 @@
 package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.extjs6.grid.Cell;
+import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
@@ -200,7 +200,18 @@ public class Tree extends WebLocator implements Scrollable, Editor {
 
     public Row getNode(List<String> nodes) {
         select(nodes);
-        return getRow(new Cell(1, nodes.get(nodes.size() - 1)));
+        int size = nodes.size();
+        if (size == 0) {
+            return null;
+        } else if (size == 1) {
+            return getRow(new Cell(1, nodes.get(0)));
+        } else {
+            Row row = getRow(new Cell(1, nodes.get(size - 2)));
+            Row nextRow = row.getNextRow();
+            Cell cell = new Cell(1, nodes.get(size - 1));
+            nextRow.setChildNodes(cell);
+            return nextRow;
+        }
     }
 
     public List<List<String>> getNodesValues(List<String> nodes, int... excludedColumns) {
@@ -378,39 +389,5 @@ public class Tree extends WebLocator implements Scrollable, Editor {
 
     public Row getRow(Cell... byCells) {
         return new Row(this, byCells).setInfoMessage("-Row");
-    }
-
-    static class Row extends com.sdl.selenium.extjs6.grid.Row {
-        public Row() {
-            super();
-        }
-
-        public Row(WebLocator grid) {
-            super(grid);
-        }
-
-        public Row(WebLocator grid, int indexRow) {
-            super(grid, indexRow);
-        }
-
-        public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {
-            super(grid, searchElement, searchTypes);
-        }
-
-        public Row(WebLocator grid, AbstractCell... cells) {
-            super(grid, cells);
-        }
-
-        public Row(WebLocator grid, int indexRow, AbstractCell... cells) {
-            super(grid, indexRow, cells);
-        }
-
-        public Row clone(Row row) {
-            return new Row(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
-        }
-
-        public Row getNextRow() {
-            return new Row(this).setRoot("/").setTag("following-sibling::table[1]");
-        }
     }
 }
