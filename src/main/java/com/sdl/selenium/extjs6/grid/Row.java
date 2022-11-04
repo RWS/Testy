@@ -455,16 +455,20 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public boolean scrollInGrid() {
         Grid grid = getGridAsContainer();
-        if (grid.isScrollBottom()) {
-            grid.scrollTop();
-        }
-        return RetryUtils.retry(100, () -> {
-            boolean render = waitToRender(Duration.ofMillis(100), false) || grid.isScrollBottom();
-            if (!render) {
-                grid.scrollPageDown();
+        if (grid.canItScroll()) {
+            if (grid.isScrollBottom()) {
+                grid.scrollTop();
             }
-            return render;
-        });
+            return RetryUtils.retry(100, () -> {
+                boolean render = waitToRender(Duration.ofMillis(100), false) || grid.isScrollBottom();
+                if (!render) {
+                    grid.scrollPageDown();
+                }
+                return render;
+            });
+        } else {
+            return false;
+        }
     }
 
     public int getCells() {
