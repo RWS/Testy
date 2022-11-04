@@ -42,6 +42,15 @@ public interface Scrollable extends IWebLocator {
         return false;
     }
 
+    default boolean canItScroll() {
+        String id = getAttributeId();
+        if (!Strings.isNullOrEmpty(id)) {
+            String script = "return (function(c){var b=c." + getView() + ".scrollable.getMaxUserPosition().y;return b>0 })(window.Ext.getCmp('" + id + "'))";
+            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+        }
+        return false;
+    }
+
     default boolean isScrollTop() {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
