@@ -32,7 +32,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setContainer(grid);
     }
 
-    public Row(Row row) {
+    public Row(Row row, boolean clone) {
         this(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
     }
 
