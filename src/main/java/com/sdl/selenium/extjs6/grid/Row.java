@@ -52,6 +52,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return new Row(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
     }
 
+    public Row clone() {
+        return new Row(getPathBuilder().getContainer(), getPathBuilder().getCells());
+    }
+
     private boolean isGridLocked() {
         Grid grid = getGridAsContainer();
         if (grid == null) {
