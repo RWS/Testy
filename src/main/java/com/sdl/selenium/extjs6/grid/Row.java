@@ -32,6 +32,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setContainer(grid);
     }
 
+    public Row(Row row) {
+        this(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
+    }
+
     public Row(WebLocator grid, int indexRow) {
         this(grid);
         setPosition(indexRow);
@@ -50,10 +54,6 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public Row clone(Row row) {
         return new Row(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
-    }
-
-    public Row clone() {
-        return new Row(getPathBuilder().getContainer(), getPathBuilder().getCells());
     }
 
     private boolean isGridLocked() {
