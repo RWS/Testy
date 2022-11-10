@@ -4,6 +4,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.AbstractRow;
+import com.sdl.selenium.web.table.Cell;
+import com.sdl.selenium.web.table.ICell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,5 +62,15 @@ public class GridRow extends AbstractRow {
             setClasses("x-grid3-row-selected");
             setExcludeClasses("x-grid3-row-checker");
         }
+    }
+
+    @Override
+    public ICell getCell(int columnIndex) {
+        return new Cell(this, columnIndex);
+    }
+
+    @Override
+    public int getCells() {
+        return new Cell(this).size();
     }
 }

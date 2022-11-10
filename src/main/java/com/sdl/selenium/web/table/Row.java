@@ -47,6 +47,11 @@ public class Row extends AbstractRow {
         return new Cell(this, columnIndex);
     }
 
+    @Override
+    public int getCells() {
+        return new Cell(this).size();
+    }
+
     public List<String> getCellsText(int... excludedColumns) {
         WebLocator columnsEl = new WebLocator(this).setTag("td");
         List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
