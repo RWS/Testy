@@ -32,10 +32,6 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setContainer(grid);
     }
 
-    public Row(Row row, boolean clone) {
-        this(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
-    }
-
     public Row(WebLocator grid, int indexRow) {
         this(grid);
         setPosition(indexRow);
@@ -87,6 +83,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public Row(WebLocator grid, AbstractCell... cells) {
         this(grid, false, cells);
+    }
+
+    public Row(Row row, boolean clone) {
+        this(row.getPathBuilder().getContainer(), row.getPathBuilder().getCells());
     }
 
     public Row(WebLocator grid, boolean size, AbstractCell... cells) {

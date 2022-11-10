@@ -22,4 +22,8 @@ public interface IRow extends IWebLocator, IText {
         }
         return columnsList;
     }
+
+    ICell getCell(int columnIndex);
+
+    int getCells();
 }
