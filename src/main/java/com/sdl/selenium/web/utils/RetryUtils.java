@@ -304,13 +304,11 @@ public class RetryUtils {
             } else {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
-                boolean allMatch = true;
-                for (int i = 0; i < expectedList.size(); i++) {
-                    Object expectedObject = expectedList.get(i);
-                    Object currentObject = currentList.get(i);
-                    String expectedJson = mapper.writeValueAsString(expectedObject);
-                    String currentJson = mapper.writeValueAsString(currentObject).replaceAll(":null", ":\\\"\\\"");;
-                    allMatch = allMatch && expectedJson.equals(currentJson);
+                String expectedJson = mapper.writeValueAsString(expectedList);
+                String currentJson = mapper.writeValueAsString(currentList).replaceAll(":null", ":\\\"\\\"");
+                boolean allMatch = expectedJson.equals(currentJson);
+                if (!allMatch) {
+                    Utils.sleep(1);
                 }
                 return allMatch ? text : null;
 //                throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");
