@@ -304,9 +304,19 @@ public class RetryUtils {
             } else {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
-                String expectedJson = mapper.writeValueAsString(expectedList);
-                String currentJson = mapper.writeValueAsString(currentList).replaceAll(":null", ":\\\"\\\"");
-                boolean allMatch = expectedJson.equals(currentJson);
+                boolean allMatch = true;
+                for (Object o : expectedList) {
+                    String expectedJson = mapper.writeValueAsString(o);
+                    boolean found = false;
+                    for (Object c : currentList) {
+                        String currentJson = mapper.writeValueAsString(c).replaceAll(":null", ":\\\"\\\"");
+                        if (expectedJson.equals(currentJson)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    allMatch = allMatch && found;
+                }
                 if (!allMatch) {
                     Utils.sleep(1);
                 }

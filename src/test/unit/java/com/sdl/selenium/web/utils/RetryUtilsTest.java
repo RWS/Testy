@@ -174,21 +174,38 @@ public class RetryUtilsTest {
 
     @Test
     public void test3() {
-        List<Tet> list = new ArrayList<>();
-        Tet t1 = new Tet("a", "b", "c");
-        list.add(t1);
-        Tet t2 = new Tet("a", "b", "c");
-        list.add(t2);
+        List<Tet> list = List.of(
+                new Tet("a", "b", "c"),
+                new Tet("a", "b", "c")
+        );
         List<Tet> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getListOfObject);
         Utils.sleep(1);
     }
 
     public static List<Tet> getListOfObject() {
-        List<Tet> list = new ArrayList<>();
-        Tet t1 = new Tet("a", "b", "c1");
-        list.add(t1);
-        Tet t2 = new Tet("a", "b", "c");
-        list.add(t2);
+        List<Tet> list = List.of(
+                new Tet("a", "b", "c1"),
+                new Tet("a", "b", "c")
+        );
         return list;
+    }
+
+    @Test
+    public void test4() {
+        List<Tet> list = List.of(
+                new Tet("a", "b", "c"),
+                new Tet("a2", "b2", "c2"),
+                new Tet("a1", "b1", "c1")
+        );
+        List<Tet> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getListOfObject1);
+        Utils.sleep(1);
+    }
+
+    public static List<Tet> getListOfObject1() {
+        return List.of(
+                new Tet("a", "b", "c"),
+                new Tet("a1", "b1", "c1"),
+                new Tet("a2", "b2", "c2")
+        );
     }
 }
