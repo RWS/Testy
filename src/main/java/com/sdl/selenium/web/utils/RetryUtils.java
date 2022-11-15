@@ -309,9 +309,8 @@ public class RetryUtils {
                     Object expectedObject = expectedList.get(i);
                     Object currentObject = currentList.get(i);
                     String expectedJson = mapper.writeValueAsString(expectedObject);
-                    String currentJson = mapper.writeValueAsString(currentObject);
+                    String currentJson = mapper.writeValueAsString(currentObject).replaceAll(":null", ":\\\"\\\"");;
                     allMatch = allMatch && expectedJson.equals(currentJson);
-                    Utils.sleep(1);
                 }
                 return allMatch ? text : null;
 //                throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");
