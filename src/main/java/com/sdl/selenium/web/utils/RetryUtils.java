@@ -1,5 +1,7 @@
 package com.sdl.selenium.web.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 
@@ -300,7 +302,19 @@ public class RetryUtils {
                 boolean allMatch = currentList.size() == expectedList.size() && currentList.containsAll(expectedList);
                 return allMatch ? text : null;
             } else {
-                throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
+                boolean allMatch = true;
+                for (int i = 0; i < expectedList.size(); i++) {
+                    Object expectedObject = expectedList.get(i);
+                    Object currentObject = currentList.get(i);
+                    String expectedJson = mapper.writeValueAsString(expectedObject);
+                    String currentJson = mapper.writeValueAsString(currentObject);
+                    allMatch = allMatch && expectedJson.equals(currentJson);
+                    Utils.sleep(1);
+                }
+                return allMatch ? text : null;
+//                throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");
             }
         } else if (text instanceof String && expected instanceof String) {
             return expected.equals(text) ? text : null;
