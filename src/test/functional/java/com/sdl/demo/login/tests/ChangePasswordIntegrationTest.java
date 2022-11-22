@@ -1,11 +1,8 @@
 package com.sdl.demo.login.tests;
 
 import com.sdl.demo.login.views.ChangePasswordWindow;
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.button.Button;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -16,12 +13,12 @@ public class ChangePasswordIntegrationTest extends TestBase {
 
     private ChangePasswordWindow changePasswordWindow = new ChangePasswordWindow();
 
-    @BeforeClass
-    public void startTests() {
-        driver.get(InputData.BOOTSTRAP_URL);
-    }
-
-    @Test
+//    @BeforeClass
+//    public void startTests() {
+//        driver.get(InputData.BOOTSTRAP_URL);
+//    }
+//
+//    @Test
     public void whenPreviewPasswordIsWrongIGetCorrectErrorMessage() {
         preferencesButton.click();
 

@@ -1,10 +1,9 @@
 package com.sdl.selenium.pageObject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,28 +35,28 @@ public class PageObjectTest {
         driver.get("file:///D:/Testy/src/test/functional/bootstrap/index.html");
     }
 
-    public static void pageObject(StartPage page) {
-        long startMs = System.currentTimeMillis();
-        page.open();
-
-        page2 = PageFactory.initElements(driver, WritePage.class);
-        page2.complete();
-        page2.save();
-
-        long endMs = System.currentTimeMillis();
-        LOGGER.info(String.format("pageObject took %s ms", endMs - startMs));
-    }
-
-    public static void pageObject2(StartPage page) {
-        long startMs = System.currentTimeMillis();
-        page.open();
-
-        page2.complete();
-        page2.save();
-
-        long endMs = System.currentTimeMillis();
-        LOGGER.info(String.format("pageObject took %s ms", endMs - startMs));
-    }
+//    public static void pageObject(StartPage page) {
+//        long startMs = System.currentTimeMillis();
+//        page.open();
+//
+//        page2 = PageFactory.initElements(driver, WritePage.class);
+//        page2.complete();
+//        page2.save();
+//
+//        long endMs = System.currentTimeMillis();
+//        LOGGER.info(String.format("pageObject took %s ms", endMs - startMs));
+//    }
+//
+//    public static void pageObject2(StartPage page) {
+//        long startMs = System.currentTimeMillis();
+//        page.open();
+//
+//        page2.complete();
+//        page2.save();
+//
+//        long endMs = System.currentTimeMillis();
+//        LOGGER.info(String.format("pageObject took %s ms", endMs - startMs));
+//    }
 
     public static void pageSimple(SimplePage page) {
         long startMs = System.currentTimeMillis();

@@ -3,18 +3,11 @@ package com.sdl.selenium;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,53 +35,53 @@ public class TestBase {
         return version;
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void startTest() throws Exception {
-        log.debug("===============================================================");
-        log.debug("|         BeforeClass START-TEST >> enter                     |");
-        log.debug("===============================================================\n");
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void stopTest() {
-        log.debug("==============================================================");
-        log.debug("|         AfterClass STOP-TEST >> enter                       |");
-        log.debug("==============================================================\n");
-    }
-
-    @BeforeMethod
-    public void bm(Method method) {
-        log.info("===============================================================");
-        log.info("|    Start Test (" + (++TEST_RUNS) + ") => " + method.getName());
-        log.info("|    " + method.getDeclaringClass());
-        log.info("===============================================================");
-    }
-
-    @AfterMethod
-    public void tearDown(ITestResult result) {
-        log.debug("tearDown >> enter");
-        String testName = result.getName(); // TODO class name
-        boolean isFailed = !result.isSuccess();
-        log.info(result.getName() + " is " + (isFailed ? "FAILED" : "SUCCESS"));
-        if (isFailed) {
-            log.warn("tests message: " + result.getThrowable().getMessage());
-            StringBuilder args = new StringBuilder();
-            if (result.getParameters() != null) {
-                for (Object o : result.getParameters()) {
-                    args.append(o.toString()).append("; ");
-                }
-            }
-            log.warn("tests arguments: " + args);
-            String fileName = testName + "-failed";
-            log.error("tests. screen: " + Utils.getScreenShot(fileName, getScreensPath()));
-
-            log.info("TOTAL FAILED TESTS: " + (++TEST_FAILED) + " of " + TEST_RUNS);
-            log.info("Refresh page to clean up page for next tests.");
-            driver.navigate().refresh();
-        }
-        log.debug("tearDown << exit");
-        log.info("\n");
-    }
+//    @BeforeClass(alwaysRun = true)
+//    public void startTest() throws Exception {
+//        log.debug("===============================================================");
+//        log.debug("|         BeforeClass START-TEST >> enter                     |");
+//        log.debug("===============================================================\n");
+//    }
+//
+//    @AfterClass(alwaysRun = true)
+//    public void stopTest() {
+//        log.debug("==============================================================");
+//        log.debug("|         AfterClass STOP-TEST >> enter                       |");
+//        log.debug("==============================================================\n");
+//    }
+//
+//    @BeforeMethod
+//    public void bm(Method method) {
+//        log.info("===============================================================");
+//        log.info("|    Start Test (" + (++TEST_RUNS) + ") => " + method.getName());
+//        log.info("|    " + method.getDeclaringClass());
+//        log.info("===============================================================");
+//    }
+//
+//    @AfterMethod
+//    public void tearDown(ITestResult result) {
+//        log.debug("tearDown >> enter");
+//        String testName = result.getName(); // TODO class name
+//        boolean isFailed = !result.isSuccess();
+//        log.info(result.getName() + " is " + (isFailed ? "FAILED" : "SUCCESS"));
+//        if (isFailed) {
+//            log.warn("tests message: " + result.getThrowable().getMessage());
+//            StringBuilder args = new StringBuilder();
+//            if (result.getParameters() != null) {
+//                for (Object o : result.getParameters()) {
+//                    args.append(o.toString()).append("; ");
+//                }
+//            }
+//            log.warn("tests arguments: " + args);
+//            String fileName = testName + "-failed";
+//            log.error("tests. screen: " + Utils.getScreenShot(fileName, getScreensPath()));
+//
+//            log.info("TOTAL FAILED TESTS: " + (++TEST_FAILED) + " of " + TEST_RUNS);
+//            log.info("Refresh page to clean up page for next tests.");
+//            driver.navigate().refresh();
+//        }
+//        log.debug("tearDown << exit");
+//        log.info("\n");
+//    }
 
     private static void startSuite() {
         log.info("===============================================================");

@@ -5,6 +5,7 @@ import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.bootstrap.form.Form;
+import com.sdl.selenium.utils.Storage;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
@@ -12,6 +13,7 @@ import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
+import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -28,6 +31,8 @@ public class TableIntegrationTest extends TestBase {
 
     private final Form form = new Form(null, "Form Table");
     private final Table table = new Table(form);
+    @Autowired
+    private Storage storage;
 
     @BeforeClass
     public void startTests() {
@@ -67,40 +72,27 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void getAllTexts() {
-        List<List<String>> listOfList = new ArrayList<>();
-
-        listOfList.add(Arrays.asList("John", "Carter", "johncarter@mail.com"));
-        listOfList.add(Arrays.asList("Peter", "Parker", "peterparker@mail.com"));
-        listOfList.add(Arrays.asList("John", "Moore", "johnmoore@mail.com"));
-        listOfList.add(Arrays.asList("David", "Miller", "davidmiller@mail.com"));
-        listOfList.add(Arrays.asList("Nick", "White", "nickwhite@mail.com"));
-        listOfList.add(Arrays.asList("Bob", "Smith", "bobsmith@mail.com"));
+        storage.set("name", "John");
+        List<List<String>> listOfList = List.of(
+                List.of("John", "Carter", "johncarter@mail.com"),
+                List.of("Peter", "Parker", "peterparker@mail.com"),
+                List.of("John", "Moore", "johnmoore@mail.com"),
+                List.of("David", "Miller", "davidmiller@mail.com"),
+                List.of("Nick", "White", "nickwhite@mail.com"),
+                List.of("Bob", "Smith", "bobsmith@mail.com")
+        );
 
         List<List<String>> cellsText = table.getCellsText(1, 5);
-//        StringBuffer stringBuffer = new StringBuffer();
-//        for (List<String> listEl : cellsText) {
-//            stringBuffer.append("\n| ");
-//            for (String el : listEl) {
-//                stringBuffer.append(el).append(" | ");
-//            }
-//        }
-//        LOGGER.info("test {}", stringBuffer);
-        assertThat(cellsText, contains(listOfList.toArray()));
+        assertThatList("Actual values: ", cellsText, contains(listOfList.toArray()));
     }
 
     @Test
     public void getAllTextsFromRow() {
-        List<String> listOfList = Arrays.asList("John", "Carter", "johncarter@mail.com", "Details Remove");
+        List<String> listOfList = List.of("John", "Carter", "johncarter@mail.com", "Details Remove");
 
         Row row = table.getRow(new Cell(2, "John", SearchType.EQUALS), new Cell(3, "Carter", SearchType.EQUALS));
         List<String> cellsText = row.getCellsText(1);
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("\n| ");
-        for (String el : cellsText) {
-            stringBuffer.append(el).append(" | ");
-        }
-        LOGGER.info("test {}", stringBuffer);
-        assertThat(cellsText, equalTo(listOfList));
+        assertThatList("Actual values: ", cellsText, equalTo(listOfList));
     }
 
     @Test
