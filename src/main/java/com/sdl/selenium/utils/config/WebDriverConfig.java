@@ -32,11 +32,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class WebDriverConfig {
 
@@ -96,7 +96,7 @@ public class WebDriverConfig {
             if (!SystemUtils.IS_OS_LINUX) {
                 driver.manage().window().maximize();
             }
-            driver.manage().timeouts().implicitlyWait(WebLocatorConfig.getInt("driver.implicitlyWait"), TimeUnit.MILLISECONDS);
+            driver.manage().timeouts().implicitlyWait(Duration.ofMillis(WebLocatorConfig.getInt("driver.implicitlyWait")));
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     if (WebLocatorConfig.getBoolean("driver.autoClose")) {
