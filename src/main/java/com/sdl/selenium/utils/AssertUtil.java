@@ -2,6 +2,8 @@ package com.sdl.selenium.utils;
 
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +15,11 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
+@Component
 public class AssertUtil {
+
+    @Autowired
+    private ApplicationContext context;
 
     @Autowired
     private Storage storage;
@@ -54,7 +60,7 @@ public class AssertUtil {
         return String.join(", ", (List) values);
     }
 
-    public  <T> String showObjects(T object, boolean transformDate) {
+    public <T> String showObjects(T object, boolean transformDate) {
         if (object == null) {
             return null;
         }

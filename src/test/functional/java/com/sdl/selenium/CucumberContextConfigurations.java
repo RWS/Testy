@@ -1,12 +1,10 @@
 package com.sdl.selenium;
 
-import io.cucumber.junit.Cucumber;
 import io.cucumber.spring.CucumberContextConfiguration;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@RunWith(Cucumber.class)
 @CucumberContextConfiguration
-@ContextConfiguration(locations = {"classpath:cucumber.xml"})
+//@ContextConfiguration(locations = {"classpath:cucumber.xml"})
+@SpringBootTest(classes = TestConfig.class)
 public class CucumberContextConfigurations {
 }

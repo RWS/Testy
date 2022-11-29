@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class MatcherAssertList {
-
     private static final AssertUtil assertUtil = new AssertUtil();
 
     public static <E, T extends List<E>> void assertThatList(T actual, Matcher<? super T> matcher) {
