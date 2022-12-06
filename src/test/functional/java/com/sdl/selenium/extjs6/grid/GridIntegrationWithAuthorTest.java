@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,14 +26,19 @@ public class GridIntegrationWithAuthorTest extends TestBase {
     }
 
     @Test
-    void getCellsTest1() {
+    void getCellsTest() {
         long startMs = System.currentTimeMillis();
-//        Author cellsText1 = spreadsheet.getRow(1).getCellsText(Author.class);
-        List<String> a = Arrays.asList("Author", "BTitle", "Manufacturer", "ProductGroup");
         List<Author> cellsText1 = spreadsheet.getCellsText(Author.class, 1);
         assertThat(cellsText1.size(), is(10));
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.debug("performanceIsCheckedTest took {} ms", rez);
+    }
+
+    @Test
+    void getCellsValues() {
+        Author author1 = new Author(null, "Master of the Game", "Warner Books", "Book");
+        Author author = spreadsheet.getRow(1).getCellsValues(author1, 1);
+        assertThat(author, is(author1));
     }
 }

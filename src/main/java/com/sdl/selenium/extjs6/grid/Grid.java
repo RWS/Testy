@@ -469,10 +469,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         }
     }
 
-    @Deprecated
     /**
      * @deprecated use {@link Grid#getCellsValues(Object, int...)}
-     */ public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
+     */
+    @Deprecated
+    public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
         return getCellsText(type, false, (short) 0, excludedColumns);
     }
 
@@ -483,10 +484,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsValues(type, false, (short) 0, excludedColumns);
     }
 
-    @Deprecated
     /**
      * @deprecated use {@link Grid#getCellsValues(Object, boolean, int...)}
-     */ public <V> List<V> getCellsText(Class<V> type, boolean expandRow, int... excludedColumns) {
+     */
+    @Deprecated
+    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, int... excludedColumns) {
         return getCellsText(type, expandRow, (short) 0, excludedColumns);
     }
 
@@ -497,10 +499,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsValues(type, expandRow, (short) 0, excludedColumns);
     }
 
-    @Deprecated
     /**
      * @deprecated use {@link Grid#getCellsValues(Object, short, int...)}
-     */ public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
+     */
+    @Deprecated
+    public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
@@ -511,10 +514,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsValues(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
-    @Deprecated
     /**
      * @deprecated use {@link Grid#getCellsValues(Object, boolean, short, int...)}
-     */ public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
+     */
+    @Deprecated
+    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
@@ -525,10 +529,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsValues(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
-    @Deprecated
     /**
      * @deprecated use {@link Grid#getCellsValues(Object, Predicate, Function, int...)}
-     */ public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+     */
+    @Deprecated
+    public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         return getCellsText(type, false, predicate, function, excludedColumns);
     }
 
@@ -539,10 +544,10 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsValues(type, false, predicate, function, excludedColumns);
     }
 
-    @Deprecated
     /**
      * @deprecated use {@link Grid#getCellsValues(Object, boolean, Predicate, Function, int...)}
      */
+    @Deprecated
     @SneakyThrows
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);

@@ -2,11 +2,12 @@ package com.sdl.selenium.web.table;
 
 import com.sdl.selenium.web.IText;
 import com.sdl.selenium.web.IWebLocator;
+import com.sdl.selenium.web.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IRow extends IWebLocator, IText {
+public interface IRow extends IWebLocator, IText, Transform {
 
     default List<Integer> getColumns(int columns, int[] excludedColumns) {
         List<Integer> excluded = new ArrayList<>();
