@@ -210,6 +210,9 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
         return transformToObjectList(type, cellsText);
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(excludedColumns);
         if (cellsText == null) {

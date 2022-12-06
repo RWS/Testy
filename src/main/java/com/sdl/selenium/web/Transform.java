@@ -16,6 +16,9 @@ public interface Transform {
 
     ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     @SneakyThrows
     default <V> List<V> transformToObjectList(V type, List<List<String>> actualListOfList) {
         String json = mapper.writeValueAsString(type);

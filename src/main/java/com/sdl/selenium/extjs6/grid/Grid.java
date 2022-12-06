@@ -476,6 +476,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsText(type, false, (short) 0, excludedColumns);
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
         return getCellsValues(type, false, (short) 0, excludedColumns);
     }
@@ -487,6 +490,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsText(type, expandRow, (short) 0, excludedColumns);
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, boolean expandRow, int... excludedColumns) {
         return getCellsValues(type, expandRow, (short) 0, excludedColumns);
     }
@@ -498,6 +504,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, short columnLanguages, int... excludedColumns) {
         return getCellsValues(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
@@ -509,6 +518,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, boolean expandRow, short columnLanguages, int... excludedColumns) {
         return getCellsValues(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
@@ -520,6 +532,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsText(type, false, predicate, function, excludedColumns);
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         return getCellsValues(type, false, predicate, function, excludedColumns);
     }
@@ -538,6 +553,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return collect;
     }
 
+    /**
+     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     @SneakyThrows
     public <V> List<V> getCellsValues(V type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
