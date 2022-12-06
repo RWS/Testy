@@ -1,9 +1,9 @@
 package com.sdl.selenium.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +16,8 @@ public interface Transform {
 
     ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
 
-    default <V> List<V> transformToObjectList(V type, List<List<String>> actualListOfList) throws JsonProcessingException {
+    @SneakyThrows
+    default <V> List<V> transformToObjectList(V type, List<List<String>> actualListOfList) {
         String json = mapper.writeValueAsString(type);
         JsonNode jsonNode = mapper.readValue(json, JsonNode.class);
         String jsonPretty = jsonNode.toPrettyString();
