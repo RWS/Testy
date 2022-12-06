@@ -9,13 +9,13 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Grid extends Table implements Scrollable, XTool, Editor {
+public class Grid extends Table implements Scrollable, XTool, Editor, Transform {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
     private String version;
 
@@ -490,35 +490,14 @@ public class Grid extends Table implements Scrollable, XTool, Editor {
         return getCellsText(type, false, predicate, function, excludedColumns);
     }
 
+    @SneakyThrows
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
         if (cellsText == null) {
             return null;
         }
-        Class<?> newClazz;
-        int size = cellsText.get(0).size();
-        Constructor<?> constructor = null;
-        try {
-            newClazz = Class.forName(type.getTypeName());
-            Constructor<?>[] constructors = newClazz.getConstructors();
-            for (Constructor<?> c : constructors) {
-                int parameterCount = c.getParameterCount();
-                if (size == parameterCount) {
-                    constructor = c;
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        final Constructor<V> finalConstructor = (Constructor<V>) constructor;
-        return cellsText.stream().map(t -> {
-            try {
-                return finalConstructor.newInstance(t.toArray());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).collect(Collectors.toList());
+        List<V> collect = transformToObjectList(type, cellsText);
+        return collect;
     }
 
     @Override
@@ -581,7 +560,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor {
         checkBox.setTag("*").setType(null);
         return checkBox;
     }
-
 
 
     public WebLocator getEmptyEl(String title, String message) {
