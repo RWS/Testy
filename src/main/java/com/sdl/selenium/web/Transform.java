@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +16,7 @@ public interface Transform {
 
     ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
 
-    default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) throws JsonProcessingException {
+    default <V> List<V> transformToObjectList(V type, List<List<String>> actualListOfList) throws JsonProcessingException {
         String json = mapper.writeValueAsString(type);
         JsonNode jsonNode = mapper.readValue(json, JsonNode.class);
         String jsonPretty = jsonNode.toPrettyString();
@@ -44,5 +46,32 @@ public interface Transform {
             return actualObject;
         }).collect(Collectors.toList());
         return actualList;
+    }
+
+    default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) {
+        Class<?> newClazz;
+        int size = actualListOfList.get(0).size();
+        Constructor<?> constructor = null;
+        try {
+            newClazz = Class.forName(type.getTypeName());
+            Constructor<?>[] constructors = newClazz.getConstructors();
+            for (Constructor<?> c : constructors) {
+                int parameterCount = c.getParameterCount();
+                if (size == parameterCount) {
+                    constructor = c;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        final Constructor<V> finalConstructor = (Constructor<V>) constructor;
+        return actualListOfList.stream().map(t -> {
+            try {
+                return finalConstructor.newInstance(t.toArray());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 }

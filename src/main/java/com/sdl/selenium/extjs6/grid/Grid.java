@@ -76,8 +76,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     public <T extends Table> T setHeaders(boolean strictPosition, final String... headers) {
         List<WebLocator> list = new ArrayList<>();
         for (int i = 0; i < headers.length; i++) {
-            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").
-                    setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
+            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
             if (strictPosition) {
                 headerEL.setTag("*[" + (i + 1) + "]");
             }
@@ -470,28 +469,77 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         }
     }
 
-    public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
+    @Deprecated
+    /**
+     * @deprecated use {@link Grid#getCellsText(Object, int...)}
+     */ public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
         return getCellsText(type, false, (short) 0, excludedColumns);
     }
 
-    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, int... excludedColumns) {
+    public <V> List<V> getCellsText(V type, int... excludedColumns) {
+        return getCellsText(type, false, (short) 0, excludedColumns);
+    }
+
+    @Deprecated
+    /**
+     * @deprecated use {@link Grid#getCellsText(Object, boolean, int...)}
+     */ public <V> List<V> getCellsText(Class<V> type, boolean expandRow, int... excludedColumns) {
         return getCellsText(type, expandRow, (short) 0, excludedColumns);
     }
 
-    public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
+    public <V> List<V> getCellsText(V type, boolean expandRow, int... excludedColumns) {
+        return getCellsText(type, expandRow, (short) 0, excludedColumns);
+    }
+
+    @Deprecated
+    /**
+     * @deprecated use {@link Grid#getCellsText(Object, short, int...)}
+     */ public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
-    public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
+    public <V> List<V> getCellsText(V type, short columnLanguages, int... excludedColumns) {
+        return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    @Deprecated
+    /**
+     * @deprecated use {@link Grid#getCellsText(Object, boolean, short, int...)}
+     */ public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
-    public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+    public <V> List<V> getCellsText(V type, boolean expandRow, short columnLanguages, int... excludedColumns) {
+        return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    @Deprecated
+    /**
+     * @deprecated use {@link Grid#getCellsText(Object, Predicate, Function, int...)}
+     */ public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         return getCellsText(type, false, predicate, function, excludedColumns);
     }
 
+    public <V> List<V> getCellsText(V type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        return getCellsText(type, false, predicate, function, excludedColumns);
+    }
+
+    @Deprecated
+    /**
+     * @deprecated use {@link Grid#getCellsText(Object, boolean, Predicate, Function, int...)}
+     */
     @SneakyThrows
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
+        if (cellsText == null) {
+            return null;
+        }
+        List<V> collect = transformToObjectList(type, cellsText);
+        return collect;
+    }
+
+    @SneakyThrows
+    public <V> List<V> getCellsText(V type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
         if (cellsText == null) {
             return null;
