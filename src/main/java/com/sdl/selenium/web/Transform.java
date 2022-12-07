@@ -17,7 +17,7 @@ public interface Transform {
     ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
 
     /**
-     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
      */
     @SneakyThrows
     default <V> List<V> transformToObjectList(V type, List<List<String>> actualListOfList) {
@@ -80,7 +80,7 @@ public interface Transform {
     }
 
     /**
-     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
      */
     @SneakyThrows
     default <V> V transformToObject(V type, List<String> actualList) {

@@ -286,7 +286,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     /**
-     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
      */
     public <V> V getCellsValues(V type, int... excludedColumns) {
         return getCellsValues(type, (short) 0, excludedColumns);
@@ -297,7 +297,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     /**
-     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
      */
     public <V> V getCellsValues(V type, short columnLanguages, int... excludedColumns) {
         return getCellsValues(type, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
@@ -309,7 +309,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     /**
-     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
      */
     public <V> V getCellsValues(V type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<String> cellsText = getCellsText(predicate, function, excludedColumns);

@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
     private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
 
-    private Duration timeout = Duration.ofSeconds(30);
+    private final Duration timeout = Duration.ofSeconds(30);
 
     public Table() {
         setClassName("Table");
@@ -211,7 +211,7 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
     }
 
     /**
-     * add in class this @JsonInclude(JsonInclude.Include.NON_NULL)
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
      */
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(excludedColumns);
@@ -254,25 +254,25 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
     public void select(Row row) {
         CheckBox checkBox = new CheckBox(row);
         boolean selected = checkBox.check(true);
-        assertThat("Could not selected " + toString(), selected);
+        assertThat("Could not selected " + this, selected);
     }
 
     public void check(Cell... cells) {
         CheckBox checkBox = new CheckBox(getRow(cells));
         boolean selected = checkBox.check(true);
-        assertThat("Could not checked " + toString(), selected);
+        assertThat("Could not checked " + this, selected);
     }
 
     public void unSelect(Row row) {
         CheckBox checkBox = new CheckBox(row);
         boolean selected = checkBox.check(false);
-        assertThat("Could not unselected " + toString(), selected);
+        assertThat("Could not unselected " + this, selected);
     }
 
     public void unCheck(Cell... cells) {
         CheckBox checkBox = new CheckBox(getRow(cells));
         boolean selected = checkBox.check(false);
-        assertThat("Could not unchecked " + toString(), selected);
+        assertThat("Could not unchecked " + this, selected);
     }
 
     public boolean waitToPopulate() {
