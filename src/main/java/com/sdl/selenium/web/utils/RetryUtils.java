@@ -164,7 +164,48 @@ public class RetryUtils {
             long duringMs = getDuringMillis(startMs);
             log.info("Retry {} and wait {} milliseconds", count, duringMs);
         }
-        return new Result<>(execute, position);
+        return new Result<>(execute, position, count == maxRetries);
+    }
+
+    @SafeVarargs
+    public static <V> Result<V> retryUntilOneIs(Duration duration, Callable<V>... calls) {
+        int count = 0;
+        int wait = 0;
+        int limit = getLimit(duration);
+        Fib fib = new Fib(limit);
+        long startMillis = System.currentTimeMillis();
+        long startMs = System.currentTimeMillis();
+        V execute = null;
+        boolean notExpected = true;
+        int position = 0;
+        do {
+            count++;
+            wait = fibonacciSinusoidal(wait, fib).getResult();
+            Utils.sleep(wait);
+            int iteration = 0;
+            try {
+                for (Callable<V> call : calls) {
+                    iteration++;
+                    execute = call.call();
+                    notExpected = isNotExpected(execute);
+                    if (!notExpected) {
+                        position = iteration;
+                        break;
+                    }
+                }
+            } catch (Exception | AssertionError e) {
+                if (timeIsOver(startMillis, duration)) {
+                    long duringMs = getDuringMillis(startMs);
+                    log.error("Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        } while ((execute == null || notExpected ) && !timeIsOver(startMillis, duration));
+        if (count > 1) {
+            long duringMs = getDuringMillis(startMs);
+            log.info("Retry {} and wait {} milliseconds", count, duringMs);
+        }
+        return new Result<>(execute, position, timeIsOver(startMillis, duration));
     }
 
     private static <V> V retry(Duration duration, String prefixLog, Callable<V> call, boolean safe) {
