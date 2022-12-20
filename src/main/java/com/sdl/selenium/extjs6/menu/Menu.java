@@ -183,11 +183,6 @@ public class Menu extends WebLocator {
         }
 
         @Override
-        public boolean isSelected() {
-            return false;
-        }
-
-        @Override
         public boolean isChecked() {
             String aClass = getAttributeClass();
             return aClass != null && aClass.contains("x-menu-item-checked");

@@ -72,11 +72,6 @@ public class CheckBox extends Field implements ICheck {
         return property;
     }
 
-    @Deprecated
-    public boolean isSelected() {
-        return isChecked();
-    }
-
     @Override
     public boolean isChecked() {
         if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
