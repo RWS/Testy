@@ -339,11 +339,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                             row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                         }
                         Cell cell = new Cell(row, j);
-                        String text;
+                        String text = null;
                         if (predicate.test(j)) {
                             text = function.apply(cell);
                         } else {
-                            text = cell.getText(true).trim();
+                            try {
+                                text = cell.getText(true).trim();
+                            } catch (NullPointerException e) {
+                                Utils.sleep(1);
+                            }
                         }
                         list.add(text);
                     }
