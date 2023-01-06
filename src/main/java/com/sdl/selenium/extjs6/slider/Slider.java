@@ -71,7 +71,8 @@ public class Slider extends WebLocator {
                         actions.dragAndDropBy(element.getWebElement(), 0, -distanceTemp).perform();
                         int valueTmp = getValue();
                         if (valueTmp == value) {
-                            actions.dragAndDropBy(element.getWebElement(), 0, -distanceTemp - oneTimeExtra).perform();
+                            distanceTemp = distanceTemp - oneTimeExtra;
+                            actions.dragAndDropBy(element.getWebElement(), 0, -distanceTemp).perform();
                         }
                     } else {
                         actions.dragAndDropBy(element.getWebElement(), distanceTemp, 0).perform();
