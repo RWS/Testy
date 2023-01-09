@@ -76,7 +76,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
         options = options.merge(capabilities);
         options.setAcceptInsecureCerts(true);
         if (isRemoteDriver()) {
-            ClientConfig config = ClientConfig.defaultConfig().readTimeout(Duration.ofMinutes(10));
+            ClientConfig config = ClientConfig.defaultConfig().readTimeout(Duration.ofMinutes(6));
             RemoteWebDriver driver = (RemoteWebDriver) RemoteWebDriver.builder().oneOf(options).address(remoteUrl).config(config).build();
             driver.setFileDetector(new LocalFileDetector());
             return driver;
