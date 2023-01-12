@@ -324,7 +324,7 @@ public class WebDriverConfig {
     public static String switchToTab(int index) {
         String oldTabName = null;
         try {
-            Utils.sleep(100); // to make sure tab has been created
+            Utils.sleep(1000); // to make sure tab has been created
             try {
                 oldTabName = driver.getWindowHandle();
                 log.debug("Preview tab id: {}, title {}", oldTabName, driver.getTitle());
@@ -336,7 +336,7 @@ public class WebDriverConfig {
             String tabID = winList.get(index);
             String title = RetryUtils.retry(3, () -> {
                 driver.switchTo().window(tabID);
-                Utils.sleep(100);
+                Utils.sleep(1000);
                 return driver.getTitle();
             });
             log.info("Current tab id: {}, title: {}", tabID, title);
