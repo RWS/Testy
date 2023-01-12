@@ -327,9 +327,9 @@ public class WebDriverConfig {
             Utils.sleep(1000); // to make sure tab has been created
             try {
                 oldTabName = driver.getWindowHandle();
-                log.debug("Preview tab id: {}, title {}", oldTabName, driver.getTitle());
-            } catch (NoSuchWindowException e) {
-                log.info("Preview tab already closed");
+                log.debug("Tab id: {}, title {}", oldTabName, driver.getTitle());
+            } catch (Exception e) {
+                log.info("Tab already closed");
             }
 
             List<String> winList = new ArrayList<>(driver.getWindowHandles());
