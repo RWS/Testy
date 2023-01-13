@@ -300,7 +300,7 @@ public class WebDriverConfig {
         int totalTabs;
         int time = 0;
         do {
-            Utils.sleep(1000L);
+            Utils.sleep(100L);
             totalTabs = getCountTabs();
             time++;
         } while (totalTabs <= 1 && time < 10);
