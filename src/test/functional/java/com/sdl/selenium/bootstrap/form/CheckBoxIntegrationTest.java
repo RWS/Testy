@@ -11,9 +11,9 @@ import static org.hamcrest.Matchers.is;
 
 public class CheckBoxIntegrationTest extends TestBase {
 
-    private Form form = new Form(null, "Form Title");
-    private CheckBox checkBox = new CheckBox(form);
-    private CheckBox withEnterWebLocator = new CheckBox(form).setLabel("Label with Enter.", SearchType.CHILD_NODE).setLabelPosition("//");
+    private final Form form = new Form(null, "Form Title");
+    private final CheckBox checkBox = new CheckBox(form);
+    private final CheckBox withEnterWebLocator = new CheckBox(form).setLabel("Label with Enter.", SearchType.CHILD_NODE).setLabelPosition("//");
 
     @BeforeClass
     public void startTests() {
@@ -23,7 +23,7 @@ public class CheckBoxIntegrationTest extends TestBase {
     @Test
     public void check() {
         assertThat(checkBox.click(), is(true));
-        assertThat(checkBox.isSelected(), is(true));
+        assertThat(checkBox.isChecked(), is(true));
     }
 
     @Test

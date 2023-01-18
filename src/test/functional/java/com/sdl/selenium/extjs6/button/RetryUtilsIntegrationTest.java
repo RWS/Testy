@@ -20,7 +20,6 @@ public class RetryUtilsIntegrationTest extends TestBase {
 
     private final Panel loginPanel = new Panel(null, "Login");
     private final Button register = new Button(loginPanel, "Register");
-    private final Button login = new Button(loginPanel, "Login");
     private final TextField userId = new TextField(loginPanel, "User ID");
     private final TextField password = new TextField(loginPanel, "Password");
 
@@ -77,10 +76,21 @@ public class RetryUtilsIntegrationTest extends TestBase {
         Result<String> present = RetryUtils.retryUntilOneIs(2, userId::getValue, password::getValue);
         assertThat(present.result(), equalTo(""));
         assertThat(present.position(), is(0));
+        assertThat(present.timeOut(), is(true));
     }
 
     @Test
     void retryUntilOneIs6() {
+        userId.setValue("");
+        password.setValue("");
+        Result<String> present = RetryUtils.retryUntilOneIs(Duration.ofSeconds(5), userId::getValue, password::getValue);
+        assertThat(present.result(), equalTo(""));
+        assertThat(present.position(), is(0));
+        assertThat(present.timeOut(), is(true));
+    }
+
+    @Test
+    void retryUntilOneIs7() {
         userId.setValue("");
         String present = RetryUtils.retry(Duration.ofSeconds(100), userId::getValue);
         assertThat(present, equalTo(""));

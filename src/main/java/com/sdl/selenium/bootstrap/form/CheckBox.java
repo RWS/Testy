@@ -42,11 +42,6 @@ public class CheckBox extends TextField implements ICheck {
         setLabel(boxLabel);
     }
 
-    @Deprecated
-    public boolean isSelected() {
-        return isChecked();
-    }
-
     @Override
     public boolean isChecked() {
         return executor.isSelected(this);

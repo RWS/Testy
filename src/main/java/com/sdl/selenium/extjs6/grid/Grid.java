@@ -9,13 +9,13 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Grid extends Table implements Scrollable, XTool, Editor {
+public class Grid extends Table implements Scrollable, XTool, Editor, Transform {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
     private String version;
 
@@ -76,8 +76,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor {
     public <T extends Table> T setHeaders(boolean strictPosition, final String... headers) {
         List<WebLocator> list = new ArrayList<>();
         for (int i = 0; i < headers.length; i++) {
-            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").
-                    setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
+            WebLocator headerEL = new WebLocator(this).setClasses("x-column-header").setText(headers[i], SearchType.DEEP_CHILD_NODE_OR_SELF, SearchType.EQUALS);
             if (strictPosition) {
                 headerEL.setTag("*[" + (i + 1) + "]");
             }
@@ -340,11 +339,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor {
                             row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                         }
                         Cell cell = new Cell(row, j);
-                        String text;
+                        String text = null;
                         if (predicate.test(j)) {
                             text = function.apply(cell);
                         } else {
-                            text = cell.getText(true).trim();
+                            try {
+                                text = cell.getText(true).trim();
+                            } catch (NullPointerException e) {
+                                Utils.sleep(1);
+                            }
                         }
                         list.add(text);
                     }
@@ -470,55 +473,106 @@ public class Grid extends Table implements Scrollable, XTool, Editor {
         }
     }
 
+    /**
+     * @deprecated use {@link Grid#getCellsValues(Object, int...)}
+     */
+    @Deprecated
     public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
         return getCellsText(type, false, (short) 0, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, int... excludedColumns) {
+        return getCellsValues(type, false, (short) 0, excludedColumns);
+    }
+
+    /**
+     * @deprecated use {@link Grid#getCellsValues(Object, boolean, int...)}
+     */
+    @Deprecated
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, int... excludedColumns) {
         return getCellsText(type, expandRow, (short) 0, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, boolean expandRow, int... excludedColumns) {
+        return getCellsValues(type, expandRow, (short) 0, excludedColumns);
+    }
+
+    /**
+     * @deprecated use {@link Grid#getCellsValues(Object, short, int...)}
+     */
+    @Deprecated
     public <V> List<V> getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, short columnLanguages, int... excludedColumns) {
+        return getCellsValues(type, false, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    /**
+     * @deprecated use {@link Grid#getCellsValues(Object, boolean, short, int...)}
+     */
+    @Deprecated
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, boolean expandRow, short columnLanguages, int... excludedColumns) {
+        return getCellsValues(type, expandRow, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
+    /**
+     * @deprecated use {@link Grid#getCellsValues(Object, Predicate, Function, int...)}
+     */
+    @Deprecated
     public <V> List<V> getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         return getCellsText(type, false, predicate, function, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        return getCellsValues(type, false, predicate, function, excludedColumns);
+    }
+
+    /**
+     * @deprecated use {@link Grid#getCellsValues(Object, boolean, Predicate, Function, int...)}
+     */
+    @Deprecated
+    @SneakyThrows
     public <V> List<V> getCellsText(Class<V> type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
         if (cellsText == null) {
             return null;
         }
-        Class<?> newClazz;
-        int size = cellsText.get(0).size();
-        Constructor<?> constructor = null;
-        try {
-            newClazz = Class.forName(type.getTypeName());
-            Constructor<?>[] constructors = newClazz.getConstructors();
-            for (Constructor<?> c : constructors) {
-                int parameterCount = c.getParameterCount();
-                if (size == parameterCount) {
-                    constructor = c;
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        final Constructor<V> finalConstructor = (Constructor<V>) constructor;
-        return cellsText.stream().map(t -> {
-            try {
-                return finalConstructor.newInstance(t.toArray());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+        List<V> collect = transformToObjectList(type, cellsText);
+        return collect;
+    }
+
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    @SneakyThrows
+    public <V> List<V> getCellsValues(V type, boolean expandRow, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(expandRow, predicate, function, excludedColumns);
+        if (cellsText == null) {
             return null;
-        }).collect(Collectors.toList());
+        }
+        List<V> collect = transformToObjectList(type, cellsText);
+        return collect;
     }
 
     @Override
@@ -581,7 +635,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor {
         checkBox.setTag("*").setType(null);
         return checkBox;
     }
-
 
 
     public WebLocator getEmptyEl(String title, String message) {

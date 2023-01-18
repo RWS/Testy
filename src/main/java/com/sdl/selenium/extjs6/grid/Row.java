@@ -10,8 +10,6 @@ import com.sdl.selenium.web.utils.RetryUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
@@ -287,33 +285,35 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return getCellsText(type, (short) 0, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> V getCellsValues(V type, int... excludedColumns) {
+        return getCellsValues(type, (short) 0, excludedColumns);
+    }
+
     public <V> V getCellsText(Class<V> type, short columnLanguages, int... excludedColumns) {
         return getCellsText(type, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> V getCellsValues(V type, short columnLanguages, int... excludedColumns) {
+        return getCellsValues(type, t -> t == columnLanguages, Cell::getLanguages, excludedColumns);
+    }
+
     public <V> V getCellsText(Class<V> type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<String> cellsText = getCellsText(predicate, function, excludedColumns);
-        int fieldsCount;
-        Constructor constructor = null;
-        try {
-            Class<?> newClazz = Class.forName(type.getTypeName());
-            fieldsCount = cellsText.size();
-            Constructor[] constructors = newClazz.getConstructors();
-            for (Constructor c : constructors) {
-                if (fieldsCount == c.getParameterCount()) {
-                    constructor = c;
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            Constructor<V> constructorTemp = (Constructor<V>) constructor;
-            return constructorTemp.newInstance(cellsText.toArray(new Object[0]));
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return transformToObject(type, cellsText);
+    }
+
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> V getCellsValues(V type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<String> cellsText = getCellsText(predicate, function, excludedColumns);
+        return transformToObject(type, cellsText);
     }
 
     public List<String> getCellsText(short columnLanguages, int... excludedColumns) {

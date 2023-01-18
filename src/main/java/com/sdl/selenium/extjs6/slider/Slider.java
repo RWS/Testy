@@ -34,6 +34,10 @@ public class Slider extends WebLocator {
     }
 
     public boolean move(int distance, int extra) {
+        return move(distance, extra, 0);
+    }
+
+    public boolean move(int distance, int extra, int oneTimeExtra) {
         Actions actions = new Actions(WebDriverConfig.getDriver());
         boolean exists = true;
         boolean isVertical = getAttributeClass().contains("x-slider-vert");
@@ -65,6 +69,16 @@ public class Slider extends WebLocator {
                 if (!done) {
                     if (isVertical) {
                         actions.dragAndDropBy(element.getWebElement(), 0, -distanceTemp).perform();
+                        int valueTmp = getValue();
+                        if (valueTmp == value) {
+                            int distanceTempExtra;
+                            if (value > distance) {
+                                distanceTempExtra = distanceTemp - oneTimeExtra;
+                            } else {
+                                distanceTempExtra = distanceTemp + oneTimeExtra;
+                            }
+                            actions.dragAndDropBy(element.getWebElement(), 0, -distanceTempExtra).perform();
+                        }
                     } else {
                         actions.dragAndDropBy(element.getWebElement(), distanceTemp, 0).perform();
                     }

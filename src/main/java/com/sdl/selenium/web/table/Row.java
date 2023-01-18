@@ -62,4 +62,12 @@ public class Row extends AbstractRow {
         }
         return list;
     }
+
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> V getCellsValues(V type, int... excludedColumns) {
+        List<String> actualList = getCellsText(excludedColumns);
+        return transformToObject(type, actualList);
+    }
 }
