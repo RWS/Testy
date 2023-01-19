@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L [%X{scenario}],[%X{feature}] - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="console"/>
+        </Root>
+
+        <Logger name="org.springframework" additivity="false" level="error">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <Logger name="org.asynchttpclient.netty" additivity="false" level="error">
+            <AppenderRef ref="console"/>
+        </Logger>
+    </Loggers>
+</Configuration>
