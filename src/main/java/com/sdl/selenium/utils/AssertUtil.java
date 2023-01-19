@@ -2,7 +2,6 @@ package com.sdl.selenium.utils;
 
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -18,11 +17,12 @@ import java.util.regex.Pattern;
 @Component
 public class AssertUtil {
 
-    @Autowired
-    private ApplicationContext context;
+    private static Storage storage;
 
-//    @Autowired
-//    private Storage storage;
+    @Autowired
+    public void setStorage(Storage storage) {
+        AssertUtil.storage = storage;
+    }
 
     private <E, T extends List<E>> String showValues(T values, boolean transformDate, Function<String, String> format) {
         if (values == null) {
@@ -176,7 +176,7 @@ public class AssertUtil {
         for (Object o : lists) {
             try {
                 Method getKeysMethod = aClass.getMethod("getMap");
-                keys.addAll(((LinkedHashMap<String, String>) getKeysMethod.invoke((E) o)).keySet());
+                keys.addAll(((LinkedHashMap<String, String>) getKeysMethod.invoke(o)).keySet());
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -230,7 +230,6 @@ public class AssertUtil {
     public Function<String, String> getFormat() {
         return this::format;
     }
-
 
     private <O> O format(O dates) {
         if (dates instanceof String) {
@@ -306,11 +305,10 @@ public class AssertUtil {
         } else {
             valueTmp = date;
         }
-        String key = "";
-//        String key = storage.getKey(valueTmp);
-//        if (Strings.isNullOrEmpty(key)) {
-//            key = storage.getKey(storage.getKey(valueTmp));
-//        }
+        String key = storage.getKey(valueTmp);
+        if (Strings.isNullOrEmpty(key)) {
+            key = storage.getKey(storage.getKey(valueTmp));
+        }
         String value;
         if (key == null) {
             value = date;

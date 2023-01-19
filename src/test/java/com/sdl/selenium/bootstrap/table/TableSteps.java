@@ -25,7 +25,7 @@ public class TableSteps extends TestBase {
 
     @Given("I open bootstrap app")
     public void iOpenBootstrapApp() {
-//        storage.set("email", "johncarter@mail.com");
+        storage.set("email", "johncarter@mail.com");
         driver.get(InputData.BOOTSTRAP_URL);
     }
 

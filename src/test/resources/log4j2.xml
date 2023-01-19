@@ -14,5 +14,8 @@
         <Logger name="org.springframework" additivity="false" level="error">
             <AppenderRef ref="console"/>
         </Logger>
+        <Logger name="org.asynchttpclient.netty" additivity="false" level="error">
+            <AppenderRef ref="console"/>
+        </Logger>
     </Loggers>
 </Configuration>
