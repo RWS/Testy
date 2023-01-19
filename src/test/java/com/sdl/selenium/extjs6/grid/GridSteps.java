@@ -21,8 +21,7 @@ public class GridSteps extends TestBase {
 
     @Autowired
     private Storage storage;
-    Grid grid = new Grid().setTitle("Row Editing Employees");
-    ;
+    Grid grid = new Grid().setTitle("Cell Editing Plants");
 
     @Given("I open extjs6 app and add {string} path")
     public void iOpenExtjs6AppAndAddPath(String path) {
@@ -37,7 +36,7 @@ public class GridSteps extends TestBase {
     @Then("I verify if grid has values:")
     public void iVerifyIfGridHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = grid.getCellsText(t -> t == 5, getBooleanValue());
+        List<List<String>> cellsText = grid.getCellsText(t -> t == 5, getBooleanValue(), 6);
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.debug("performance took {} ms", rez);
