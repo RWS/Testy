@@ -21,8 +21,8 @@ public class AssertUtil {
     @Autowired
     private ApplicationContext context;
 
-    @Autowired
-    private Storage storage;
+//    @Autowired
+//    private Storage storage;
 
     private <E, T extends List<E>> String showValues(T values, boolean transformDate, Function<String, String> format) {
         if (values == null) {
@@ -306,10 +306,11 @@ public class AssertUtil {
         } else {
             valueTmp = date;
         }
-        String key = storage.getKey(valueTmp);
-        if (Strings.isNullOrEmpty(key)) {
-            key = storage.getKey(storage.getKey(valueTmp));
-        }
+        String key = "";
+//        String key = storage.getKey(valueTmp);
+//        if (Strings.isNullOrEmpty(key)) {
+//            key = storage.getKey(storage.getKey(valueTmp));
+//        }
         String value;
         if (key == null) {
             value = date;

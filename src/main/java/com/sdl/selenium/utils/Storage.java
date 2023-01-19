@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 @Component
 public class Storage {
 
+//    @Autowired
     private Map<String, Object> cache = new HashMap<>();
 
     public Map<String, Object> getCache() {
