@@ -21,7 +21,7 @@ public class GridSteps extends TestBase {
 
     @Autowired
     private Storage storage;
-    Grid grid = new Grid().setTitle("Cell Editing Plants");
+    private final Grid grid = new Grid().setTitle("Cell Editing Plants");
 
     @Given("I open extjs6 app and add {string} path")
     public void iOpenExtjs6AppAndAddPath(String path) {

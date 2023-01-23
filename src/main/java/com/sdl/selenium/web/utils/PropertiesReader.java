@@ -16,6 +16,8 @@ public class PropertiesReader extends OrderedProperties {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(PropertiesReader.class);
     public static String RESOURCES_PATH = "src/test/resources/";
     public static String RESOURCES_DIRECTORY_PATH = new File(RESOURCES_PATH).getAbsolutePath();
+    public static String TEST_PATH = new File("src/test/").getAbsolutePath();
+    public static String MAIN_PATH = new File("src/main/").getAbsolutePath();
 
     public PropertiesReader() {
     }
