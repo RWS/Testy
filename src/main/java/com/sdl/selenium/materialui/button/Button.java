@@ -1,0 +1,26 @@
+package com.sdl.selenium.materialui.button;
+
+import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocator;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class Button extends WebLocator {
+
+   public Button() {
+       setClassName("Button");
+   }
+
+   public Button(WebLocator container) {
+       this();
+       setContainer(container);
+   }
+
+   public Button(WebLocator container, String text, SearchType... searchTypes) {
+       this(container);
+       if (searchTypes.length == 0) {
+           searchTypes = new SearchType[]{SearchType.EQUALS};
+       }
+       setText(text, searchTypes);
+   }
+}
