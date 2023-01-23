@@ -13,6 +13,8 @@ import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.Augmenter;
@@ -46,12 +48,21 @@ public class WebDriverConfig {
     private static DriverService driverService;
     private static String downloadPath;
     private static boolean recordNetworkTraffic;
+    private static DevTools chromeDevTools;
 
     /**
      * @return last created driver (current one)
      */
     public static WebDriver getDriver() {
         return driver;
+    }
+
+    public static DevTools getChromeDevTools() {
+        return chromeDevTools;
+    }
+
+    public static DevTools setChromeDevTools(DevTools devTools) {
+        return chromeDevTools = devTools;
     }
 
     public static boolean isIE() {
@@ -232,7 +243,8 @@ public class WebDriverConfig {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 driver = properties.createDriver(remoteUrl, capabilities);
                 driver = new Augmenter().augment(WebDriverConfig.getDriver());
-
+                chromeDevTools = ((HasDevTools) WebDriverConfig.getDriver()).getDevTools();
+                chromeDevTools.createSession();
             } else {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 driver = properties.createDriver(remoteUrl, capabilities);
@@ -326,6 +338,7 @@ public class WebDriverConfig {
             String tabID = winList.get(index);
             String title = RetryUtils.retry(3, () -> {
                 driver.switchTo().window(tabID);
+//                getChromeDevTools().createSession(tabID);
                 Utils.sleep(100);
                 return driver.getTitle();
             });
