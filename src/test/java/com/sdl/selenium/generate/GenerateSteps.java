@@ -6,7 +6,7 @@ import com.sdl.selenium.web.utils.Utils;
 import io.cucumber.java.en.Given;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,7 @@ public class GenerateSteps extends TestBase {
                 Files.createDirectories(path);
                 Path namePath = Paths.get(InputData.TEST_PATH, "java", "com", "sdl", "selenium", packageName, featureName);
                 Files.createDirectories(namePath);
-                String nameFormat = WordUtils.capitalizeFully(featureName, '-').replaceAll("-", "");
+                String nameFormat = WordUtils.capitalize(featureName, '-').replaceAll("-", "");
                 String nameRunner = nameFormat + "Runner";
                 Path runnerPath = Paths.get(String.valueOf(namePath), nameRunner + ".java");
                 List<String> rows = List.of(
@@ -103,7 +104,7 @@ public class GenerateSteps extends TestBase {
     @SneakyThrows
     private static Path createFeatureFile(String directoryPath, String name, String packageName) {
         Path path = Paths.get(directoryPath, name + ".feature");
-        String nameFormat = WordUtils.capitalizeFully(name, '-').replaceAll("-", "");
+        String nameFormat = WordUtils.capitalize(name, '-').replaceAll("-", "");
         Path filePath = Files.createFile(path);
         List<String> rows = List.of(
                 "Feature: " + nameFormat + "\n",
@@ -125,61 +126,114 @@ public class GenerateSteps extends TestBase {
         Path directoryPath = Paths.get(InputData.RESOURCES_DIRECTORY_PATH, "features", packageName);
         Path featureFile = Paths.get(String.valueOf(directoryPath), featureName + ".feature");
         List<String> rows = Files.readAllLines(featureFile);
-        rows.add("");
-        rows.add("  And " + step);
-        Files.write(featureFile, rows, StandardOpenOption.TRUNCATE_EXISTING);
+        Optional<String> find = rows.stream().filter(i -> i.contains(step)).findFirst();
+        if (find.isEmpty()) {
+            rows.add("");
+            rows.add("  And " + step);
+            Files.write(featureFile, rows, StandardOpenOption.TRUNCATE_EXISTING);
+        }
 
         Path viewDir = Paths.get(InputData.MAIN_PATH, "java", "com", "sdl", "selenium", packageName, featureName);
         if (!viewDir.toFile().exists()) {
             Files.createDirectories(viewDir);
         }
 
-        String featureNameFormat = WordUtils.capitalizeFully(featureName);
+        String featureNameFormat = WordUtils.capitalize(featureName);
         Path viewFile = Paths.get(String.valueOf(viewDir), featureNameFormat + ".java");
-        List<String> viewRows = List.of(
-                "package com.sdl.selenium." + packageName + "." + featureName + ";\n",
-                "import com.sdl.selenium.web.WebLocator;",
-                "import com.sdl.selenium.web.SearchType;",
-                "import lombok.extern.slf4j.Slf4j;\n",
-                "@Slf4j",
-                "public class " + featureNameFormat + " extends WebLocator {\n",
-                "   public " + featureNameFormat + "() {",
-                "       setClassName(\"Button\");",
-                "   }\n",
-                "   public " + featureNameFormat + "(WebLocator container) {",
-                "       this();",
-                "       setContainer(container);",
-                "   }\n",
-                "   public " + featureNameFormat + "(WebLocator container, String text, SearchType... searchTypes) {",
-                "       this(container);",
-                "       if (searchTypes.length == 0) {",
-                "           searchTypes = new SearchType[]{SearchType.EQUALS};",
-                "       }",
-                "       setText(text, searchTypes);",
-                "   }",
-                "}"
-        );
-        createFileAndAddContent(viewFile, viewRows);
+        if (!viewFile.toFile().exists()) {
+            List<String> viewRows = List.of(
+                    "package com.sdl.selenium." + packageName + "." + featureName + ";\n",
+                    "import com.sdl.selenium.web.WebLocator;",
+                    "import com.sdl.selenium.web.SearchType;",
+                    "import lombok.extern.slf4j.Slf4j;\n",
+                    "@Slf4j",
+                    "public class " + featureNameFormat + " extends WebLocator {\n",
+                    "   public " + featureNameFormat + "() {",
+                    "       setClassName(\"Button\");",
+                    "   }\n",
+                    "   public " + featureNameFormat + "(WebLocator container) {",
+                    "       this();",
+                    "       setContainer(container);",
+                    "   }\n",
+                    "   public " + featureNameFormat + "(WebLocator container, String text, SearchType... searchTypes) {",
+                    "       this(container);",
+                    "       if (searchTypes.length == 0) {",
+                    "           searchTypes = new SearchType[]{SearchType.EQUALS};",
+                    "       }",
+                    "       setText(text, searchTypes);",
+                    "   }",
+                    "}"
+            );
+            createFileAndAddContent(viewFile, viewRows);
+        }
         Path stepsFile = Paths.get(InputData.TEST_PATH, "java", "com", "sdl", "selenium", packageName, featureName, featureNameFormat + "Steps.java");
         List<String> stepsRows = Files.readAllLines(stepsFile);
-        int index = lastIndexOf(stepsRows, s -> s.contains("import"));
-        List<String> rows1 = List.of(
-                "import com.sdl.selenium." + packageName + "." + featureName + "." + featureNameFormat + ";",
-                "import io.cucumber.java.en.And;",
-                "import static org.hamcrest.MatcherAssert.assertThat;",
-                "import static org.hamcrest.core.Is.is;"
-        );
-        stepsRows.addAll(index + 1, rows1);
-        List<String> rows2 = List.of(
-                "",
-                "   @And(\"" + step + "\")",
-                "   public void " + WordUtils.capitalizeFully(step).replaceAll(" ", "") + "() {",
-                "       Button button = new Button(null, \"\");",
-                "       assertThat(button.isPresent(), is(true));",
-                "   }"
-        );
-        stepsRows.addAll(stepsRows.size() - 1, rows2);
-        Files.write(stepsFile, stepsRows, StandardOpenOption.TRUNCATE_EXISTING);
+        String nameMethod = WordUtils.capitalize(step).replaceAll(" ", "");
+        Optional<String> findStep = stepsRows.stream().filter(i -> i.contains(nameMethod)).findFirst();
+        if (findStep.isEmpty()) {
+            int index = lastIndexOf(stepsRows, s -> s.contains("import"));
+            List<String> rows1 = List.of(
+                    "import com.sdl.selenium." + packageName + "." + featureName + "." + featureNameFormat + ";",
+                    "import io.cucumber.java.en.And;",
+                    "import static org.hamcrest.MatcherAssert.assertThat;",
+                    "import static org.hamcrest.core.Is.is;"
+            );
+            stepsRows.addAll(index + 1, rows1);
+            List<String> rows2 = List.of(
+                    "",
+                    "   @And(\"" + step + "\")",
+                    "   public void " + nameMethod + "() {",
+                    "       Button button = new Button(null, \"\");",
+                    "       assertThat(button.isPresent(), is(true));",
+                    "   }"
+            );
+            stepsRows.addAll(stepsRows.size() - 1, rows2);
+            Files.write(stepsFile, stepsRows, StandardOpenOption.TRUNCATE_EXISTING);
+        }
+        Path unitDir = Paths.get(InputData.TEST_PATH, "java", "com", "sdl", "unit", packageName, featureName);
+        if (!unitDir.toFile().exists()) {
+            Files.createDirectories(unitDir);
+        }
+        Path unitFile = Paths.get(String.valueOf(unitDir), featureNameFormat + "Test.java");
+        if (!unitFile.toFile().exists()) {
+            List<String> unitRows = List.of(
+                    "package com.sdl.unit." + packageName + "." + featureName + ";\n",
+                    "import com.sdl.selenium." + packageName + "." + featureName + "." + featureNameFormat + ";",
+                    "import com.sdl.selenium.web.SearchType;",
+                    "import com.sdl.selenium.web.WebLocator;",
+                    "import org.testng.annotations.DataProvider;",
+                    "import org.testng.annotations.Test;\n",
+                    "import static org.hamcrest.MatcherAssert.assertThat;",
+                    "import static org.hamcrest.core.IsEqual.equalTo;\n",
+                    "public class " + featureNameFormat + "Test  {\n",
+                    "   public static WebLocator container = new WebLocator(\"container\");\n",
+                    "   @DataProvider",
+                    "   public static Object[][] testConstructorPathDataProvider() {",
+                    "       return new Object[][]{",
+                    "           {new " + featureNameFormat + "(), \"//*\"},",
+                    "           {new " + featureNameFormat + "().setClasses(\"cls\"), \"//*[contains(concat(' ', @class, ' '), ' cls ')]\"},",
+                    "           {new " + featureNameFormat + "(container), \"//*[contains(concat(' ', @class, ' '), ' container ')]//*\"},",
+                    "           {new " + featureNameFormat + "(container, \"Text\"), \"//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Text']\"},",
+                    "           {new " + featureNameFormat + "(container, \"Text\", SearchType.CONTAINS), \"//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(),'Text')]\"},",
+                    "       };",
+                    "   }\n",
+                    "   @Test(dataProvider = \"testConstructorPathDataProvider\")",
+                    "   public void getPathSelectorCorrectlyFromConstructors(" + featureNameFormat + " " + featureName + ", String expectedXpath) {",
+                    "       assertThat(" + featureName + ".getXPath(), equalTo(expectedXpath));",
+                    "   }",
+                    "}"
+            );
+            createFileAndAddContent(unitFile, unitRows);
+        }
+        Path testNGFile = Paths.get(InputData.RESOURCES_DIRECTORY_PATH, "unit", "testng-unit.xml");
+        List<String> testNGRows = Files.readAllLines(testNGFile);
+        String item = "<class name=\"com.sdl.unit." + packageName + "." + featureName + "." + featureNameFormat + "Test\"/>";
+        Optional<String> itemFound = testNGRows.stream().filter(i -> i.contains(item)).findFirst();
+        if (itemFound.isEmpty()) {
+            int index = lastIndexOf(testNGRows, s -> s.contains("<class name="));
+            testNGRows.add(index + 1, "             " + item);
+            Files.write(testNGFile, testNGRows, StandardOpenOption.TRUNCATE_EXISTING);
+        }
     }
 
     public static <E> int lastIndexOf(List<E> list, Predicate<E> predicate) {
