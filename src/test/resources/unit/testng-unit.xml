@@ -95,6 +95,7 @@
 
             <class name="com.sdl.unit.materialui.button.ButtonTest"/>
             <class name="com.sdl.unit.materialui.checkbox.CheckboxTest"/>
+            <class name="com.sdl.unit.materialui.form.ComboBoxTest"/>
         </classes>
     </test>
 </suite>

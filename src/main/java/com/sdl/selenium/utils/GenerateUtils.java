@@ -159,7 +159,7 @@ public class GenerateUtils {
     }
 
     public void createViewClass() throws IOException {
-        Path viewDir = Paths.get(new File("src/main").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, name);
+        Path viewDir = Paths.get(new File("src/main").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, getPackageFormat());
         if (!viewDir.toFile().exists()) {
             Files.createDirectories(viewDir);
         }
@@ -271,7 +271,7 @@ public class GenerateUtils {
         Optional<String> itemFound = testNGRows.stream().filter(i -> i.contains(item)).findFirst();
         if (itemFound.isEmpty()) {
             int index = lastIndexOf(testNGRows, s -> s.contains("<class name="));
-            testNGRows.add(index + 1, "             " + item);
+            testNGRows.add(index + 1, "            " + item);
             Files.write(testNGFile, testNGRows, StandardOpenOption.TRUNCATE_EXISTING);
         }
     }
