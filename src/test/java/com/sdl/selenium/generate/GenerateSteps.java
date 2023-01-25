@@ -2,13 +2,11 @@ package com.sdl.selenium.generate;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.web.utils.Utils;
 import io.cucumber.java.en.Given;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.WordUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +16,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class GenerateSteps extends TestBase {
@@ -26,73 +23,54 @@ public class GenerateSteps extends TestBase {
     @SneakyThrows
     @Given("I generate feature {string} file in {string} package")
     public void iGenerateFeatureFileInPackage(String featureName, String packageName) {
-        List<Path> features = getAllFilesFromResource("features");
-        boolean createDirectory = true;
-        boolean createFile = true;
-        Path directoryPath = null;
-        for (Path feature : features) {
-            boolean directory = feature.toFile().isDirectory();
-            String fileName = feature.toString();
-            if (directory) {
-                if (fileName.contains(packageName)) {
-                    createDirectory = false;
-                    directoryPath = feature;
-                }
-            } else {
-                if (fileName.contains(featureName)) {
-                    createFile = false;
-                }
+        Path directoryPath = Paths.get(InputData.RESOURCES_DIRECTORY_PATH, "features", packageName);
+        Path featureFile = Paths.get(String.valueOf(directoryPath), featureName + ".feature");
+        String packageNameFormat = WordUtils.capitalize(packageName);
+        if (!featureFile.toFile().exists()) {
+            if (!directoryPath.toFile().exists()) {
+                Files.createDirectories(directoryPath);
             }
+            createFeatureFile(featureFile, featureName, packageNameFormat);
         }
-        if (createDirectory) {
-            Path dir = Paths.get(String.valueOf(features.get(0)), packageName);
-            directoryPath = Files.createDirectories(dir);
+        Path namePath = Paths.get(InputData.TEST_PATH, "java", "com", "sdl", "selenium", packageName, featureName);
+        if (!namePath.toFile().exists()) {
+            Files.createDirectories(namePath);
         }
-        if (createFile) {
-            String packageNameFormat = WordUtils.capitalize(packageName);
-            Path featureFile = createFeatureFile(String.valueOf(directoryPath), featureName, packageNameFormat);
-            Path path = Paths.get(InputData.TEST_PATH, "java", "com", "sdl", "selenium", packageName);
-            if (!path.toFile().exists()) {
-                Files.createDirectories(path);
-                Path namePath = Paths.get(InputData.TEST_PATH, "java", "com", "sdl", "selenium", packageName, featureName);
-                Files.createDirectories(namePath);
-                String nameFormat = WordUtils.capitalize(featureName, '-').replaceAll("-", "");
-                String nameRunner = nameFormat + "Runner";
-                Path runnerPath = Paths.get(String.valueOf(namePath), nameRunner + ".java");
-                List<String> rows = List.of(
-                        "package com.sdl.selenium." + packageName + "." + featureName + ";\n",
-                        "import io.cucumber.junit.Cucumber;",
-                        "import io.cucumber.junit.CucumberOptions;",
-                        "import org.junit.runner.RunWith;\n",
-                        "@RunWith(Cucumber.class)",
-                        "@CucumberOptions(\n" +
-                                "        plugin = {\"pretty\", \"json:target/" + nameFormat + ".json\"},\n" +
-                                "        glue = {\"com.sdl.selenium\"},\n" +
-                                "        features = \"classpath:features/" + packageName + "/" + featureFile.getFileName().toString() + "\"\n" +
-                                ")",
-                        "public class " + nameRunner + " {",
-                        "}"
-                );
-                createFileAndAddContent(runnerPath, rows);
-                String nameSteps = nameFormat + "Steps";
-                Path stepsPath = Paths.get(String.valueOf(namePath), nameSteps + ".java");
-                List<String> stepsRows = List.of(
-                        "package com.sdl.selenium." + packageName + "." + featureName + ";\n",
-                        "import com.sdl.selenium.TestBase;",
-                        "import io.cucumber.java.en.Given;",
-                        "import lombok.extern.slf4j.Slf4j;\n",
-                        "@Slf4j",
-                        "public class " + nameSteps + " extends TestBase {\n",
-                        "   @Given(\"I open " + packageNameFormat + " app\")",
-                        "   public void iOpen" + packageNameFormat + "App() {",
-                        "       driver.get(\"\");",
-                        "   }",
-                        "}"
-                );
-                createFileAndAddContent(stepsPath, stepsRows);
-            }
-        }
-        Utils.sleep(1);
+        String nameFormat = WordUtils.capitalize(featureName, '-').replaceAll("-", "");
+        String nameRunner = nameFormat + "Runner";
+        Path runnerPath = Paths.get(String.valueOf(namePath), nameRunner + ".java");
+        List<String> rows = List.of(
+                "package com.sdl.selenium." + packageName + "." + featureName + ";\n",
+                "import io.cucumber.junit.Cucumber;",
+                "import io.cucumber.junit.CucumberOptions;",
+                "import org.junit.runner.RunWith;\n",
+                "@RunWith(Cucumber.class)",
+                "@CucumberOptions(\n" +
+                        "        stepNotifications = true,\n" +
+                        "        plugin = {\"pretty\", \"json:target/" + nameFormat + ".json\"},\n" +
+                        "        glue = {\"com.sdl.selenium\"},\n" +
+                        "        features = \"classpath:features/" + packageName + "/" + featureFile.getFileName().toString() + "\"\n" +
+                        ")",
+                "public class " + nameRunner + " {",
+                "}"
+        );
+        createFileAndAddContent(runnerPath, rows);
+        String nameSteps = nameFormat + "Steps";
+        Path stepsPath = Paths.get(String.valueOf(namePath), nameSteps + ".java");
+        List<String> stepsRows = List.of(
+                "package com.sdl.selenium." + packageName + "." + featureName + ";\n",
+                "import com.sdl.selenium.TestBase;",
+                "import io.cucumber.java.en.Given;",
+                "import lombok.extern.slf4j.Slf4j;\n",
+                "@Slf4j",
+                "public class " + nameSteps + " extends TestBase {\n",
+                "   @Given(\"I open " + packageNameFormat + " app\")",
+                "   public void iOpen" + packageNameFormat + "App() {",
+                "       driver.get(\"\");",
+                "   }",
+                "}"
+        );
+        createFileAndAddContent(stepsPath, stepsRows);
     }
 
     @SneakyThrows
@@ -102,8 +80,7 @@ public class GenerateSteps extends TestBase {
     }
 
     @SneakyThrows
-    private static Path createFeatureFile(String directoryPath, String name, String packageName) {
-        Path path = Paths.get(directoryPath, name + ".feature");
+    private static Path createFeatureFile(Path path, String name, String packageName) {
         String nameFormat = WordUtils.capitalize(name, '-').replaceAll("-", "");
         Path filePath = Files.createFile(path);
         List<String> rows = List.of(
@@ -113,12 +90,6 @@ public class GenerateSteps extends TestBase {
         );
         Files.write(filePath, rows, StandardOpenOption.CREATE);
         return filePath;
-    }
-
-    @SneakyThrows
-    private List<Path> getAllFilesFromResource(String folder) {
-        String path = InputData.RESOURCES_DIRECTORY_PATH + File.separator + folder;
-        return Files.walk(Paths.get(path)).collect(Collectors.toList());
     }
 
     @Given("I generate step {string} in feature {string} file in {string} package")
@@ -149,7 +120,7 @@ public class GenerateSteps extends TestBase {
                     "@Slf4j",
                     "public class " + featureNameFormat + " extends WebLocator {\n",
                     "   public " + featureNameFormat + "() {",
-                    "       setClassName(\"Button\");",
+                    "       setClassName(\"" + featureNameFormat + "\");",
                     "   }\n",
                     "   public " + featureNameFormat + "(WebLocator container) {",
                     "       this();",
@@ -183,8 +154,8 @@ public class GenerateSteps extends TestBase {
                     "",
                     "   @And(\"" + step + "\")",
                     "   public void " + nameMethod + "() {",
-                    "       Button button = new Button(null, \"\");",
-                    "       assertThat(button.isPresent(), is(true));",
+                    "       " + featureNameFormat + " " + featureName + " = new " + featureNameFormat + "(null, \"\");",
+                    "       assertThat(" + featureName + ".isPresent(), is(true));",
                     "   }"
             );
             stepsRows.addAll(stepsRows.size() - 1, rows2);

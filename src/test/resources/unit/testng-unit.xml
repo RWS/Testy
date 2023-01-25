@@ -92,7 +92,9 @@
             <class name="com.sdl.unit.web.SetElPathSuffixTest"/>
 
             <class name="com.sdl.unit.window.WindowTest"/>
+
             <class name="com.sdl.unit.materialui.button.ButtonTest"/>
+            <class name="com.sdl.unit.materialui.checkbox.CheckboxTest"/>
         </classes>
     </test>
 </suite>

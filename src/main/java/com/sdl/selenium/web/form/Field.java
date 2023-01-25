@@ -1,6 +1,5 @@
 package com.sdl.selenium.web.form;
 
-import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.slf4j.Logger;
 
@@ -10,15 +9,7 @@ public abstract class Field extends WebLocator implements IField {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Field.class);
 
-    /**
-     * @param value       value
-     * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
-     * @return current element
-     */
-    public <T extends IField> T setPlaceholder(String value, SearchType... searchTypes) {
-        setAttribute("placeholder", value, searchTypes);
-        return (T) this;
-    }
+
 
     public String getError() {
         WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");

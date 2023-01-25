@@ -19,7 +19,7 @@ public class ButtonSteps extends TestBase {
 
     @Given("I open Materialui app and add {string} path")
     public void iOpenMaterialuiApp(String path) {
-        driver.get("https://mui.com/material-ui/react-button/" + path);
+        driver.get("https://mui.com/material-ui/" + path);
         Utils.sleep(1);
     }
 
