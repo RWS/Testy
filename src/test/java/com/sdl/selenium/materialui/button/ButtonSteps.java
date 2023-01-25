@@ -29,4 +29,11 @@ public class ButtonSteps extends TestBase {
         boolean present = button.ready(Duration.ofSeconds(1));
         assertThat(present, is(true));
     }
+
+    @And("I verify if {string} button is {status}")
+    public void iVerifyIfButtonIsDisabled(String buttonName, Boolean status) {
+        Button button = new Button(container, buttonName).setResultIdx(1);
+        boolean enabled = button.isEnabled();
+        assertThat(enabled, is(status));
+    }
 }

@@ -16,11 +16,11 @@ public class ButtonTest  {
    @DataProvider
    public static Object[][] testConstructorPathDataProvider() {
        return new Object[][]{
-           {new Button(), "//*"},
-           {new Button().setClasses("cls"), "//*[contains(concat(' ', @class, ' '), ' cls ')]"},
-           {new Button(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
-           {new Button(container, "Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Text']"},
-           {new Button(container, "Text", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(),'Text')]"},
+           {new Button(), "//button[@type='button']"},
+           {new Button().setClasses("cls"), "//button[contains(concat(' ', @class, ' '), ' cls ') and @type='button']"},
+           {new Button(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button']"},
+           {new Button(container, "Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and text()='Text']"},
+           {new Button(container, "Text", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and contains(text(),'Text')]"},
        };
    }
 

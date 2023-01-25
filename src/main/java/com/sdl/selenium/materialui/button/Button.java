@@ -5,10 +5,11 @@ import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Button extends WebLocator {
+public class Button extends com.sdl.selenium.web.button.Button {
 
    public Button() {
        setClassName("Button");
+       setType("button");
    }
 
    public Button(WebLocator container) {
