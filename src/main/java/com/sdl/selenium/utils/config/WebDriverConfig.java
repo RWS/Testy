@@ -13,6 +13,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -48,6 +49,7 @@ public class WebDriverConfig {
     private static DriverService driverService;
     private static String downloadPath;
     private static boolean recordNetworkTraffic;
+    private static boolean debugMode;
     private static DevTools chromeDevTools;
 
     /**
@@ -239,14 +241,21 @@ public class WebDriverConfig {
                 properties.setProperty("browser.download.dir", "/home/seluser/Downloads");
             }
 
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+
+            if (WebDriverConfig.isDebugMode()){
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--remote-debugging-address=0.0.0.0");
+                options.addArguments("--remote-debugging-port=5131");
+                capabilities.merge(options);
+            }
+
             if (WebDriverConfig.isRecordNetworkTraffic()) {
-                DesiredCapabilities capabilities = new DesiredCapabilities();
                 driver = properties.createDriver(remoteUrl, capabilities);
                 driver = new Augmenter().augment(WebDriverConfig.getDriver());
                 chromeDevTools = ((HasDevTools) WebDriverConfig.getDriver()).getDevTools();
                 chromeDevTools.createSession();
             } else {
-                DesiredCapabilities capabilities = new DesiredCapabilities();
                 driver = properties.createDriver(remoteUrl, capabilities);
 
             }
@@ -280,12 +289,19 @@ public class WebDriverConfig {
     private static Browser findBrowser(InputStream inputStream) {
         PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
-        if (System.getProperty("browser.recordNetworkTraffic")!=null) {
-            if(System.getProperty("browser.recordNetworkTraffic").equals("true")) {
+        if (System.getProperty("browser.recordNetworkTraffic") != null) {
+            if (System.getProperty("browser.recordNetworkTraffic").equals("true")) {
                 WebDriverConfig.setRecordNetworkTraffic(true);
             }
         } else {
             WebDriverConfig.setRecordNetworkTraffic(Boolean.parseBoolean(properties.getProperty("browser.recordNetworkTraffic")));
+        }
+        if (System.getProperty("browser.debugMode") != null) {
+            if (System.getProperty("browser.debugMode").equals("true")) {
+                WebDriverConfig.setDebugMode(true);
+            }
+        } else {
+            WebDriverConfig.setDebugMode(Boolean.parseBoolean(properties.getProperty("browser.debugMode")));
         }
         WebLocatorConfig.setBrowserProperties(properties);
 
@@ -375,5 +391,14 @@ public class WebDriverConfig {
     public static void setRecordNetworkTraffic(boolean recordNetworkTraffic) {
         WebDriverConfig.recordNetworkTraffic = recordNetworkTraffic;
     }
+
+    public static boolean isDebugMode() {
+        return debugMode;
+    }
+
+    public static void setDebugMode(boolean debugMode) {
+        WebDriverConfig.debugMode = debugMode;
+    }
+
 
 }
