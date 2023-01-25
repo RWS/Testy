@@ -96,7 +96,7 @@ public class GenerateUtils {
 
     @SneakyThrows
     public Path createRunner(Path featureFile) {
-        Path namePath = Paths.get(new File("src/test").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, name);
+        Path namePath = Paths.get(new File("src/test").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, getPackageFormat());
         if (!namePath.toFile().exists()) {
             Files.createDirectories(namePath);
         }
