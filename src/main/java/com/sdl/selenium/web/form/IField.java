@@ -7,7 +7,15 @@ import com.sdl.selenium.web.WebLocator;
 
 public interface IField extends IWebLocator, Editable {
 
-    <T extends IField> T setPlaceholder(final String value, SearchType... searchTypes);
+    /**
+     * @param value       value
+     * @param searchTypes accept only SearchType.EQUALS, SearchType.CONTAINS, SearchType.STARTS_WITH, SearchType.TRIM
+     * @return current element
+     */
+    default <T extends IField> T setPlaceholder(String value, SearchType... searchTypes) {
+        setAttribute("placeholder", value, searchTypes);
+        return (T) this;
+    }
 
     default WebLocator getTriggerEl(WebLocator container, String icon) {
         WebLocator ancestor = new WebLocator(container).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-form-trigger-wrap ')]");
