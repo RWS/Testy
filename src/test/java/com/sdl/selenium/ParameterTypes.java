@@ -2,11 +2,23 @@ package com.sdl.selenium;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sdl.selenium.utils.Storage;
 import io.cucumber.java.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ParameterTypes {
+
+    private static Storage storage;
+
+    @Autowired
+    public void setStorage(Storage storage) {
+        ParameterTypes.storage = storage;
+    }
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @DefaultParameterTransformer
@@ -58,5 +70,26 @@ public class ParameterTypes {
         } else {
             return null;
         }
+    }
+
+    @ParameterType(name = "list", value = "\"[\\d_,;:.\\[\\]{}+=~#$%`\\\\&\\-\\pL\\pM'!()<>\\s™®©?@^\\p{Sc}\\/؟]+\"")
+    public List<String> list(String strings) {
+        String s = strings.replaceAll("^\"|\"$", "");
+        String first = s.substring(0, 1);
+        String splitChar = ",";
+        if (first.equals(";")) {
+            splitChar = ";";
+            s = s.substring(1);
+        }
+        if (s.equals("[blank]")) {
+            s = "";
+        }
+        return Arrays.stream(s.split(splitChar)).map(i -> variable(i).trim()).collect(Collectors.toList());
+    }
+
+    @ParameterType(name = "variable", value = "(.*)")
+    public String variable(String variable) {
+        variable = variable.replaceAll("^\"|\"$", "");
+        return storage.replaceVariable(variable);
     }
 }

@@ -16,11 +16,11 @@ public class ComboBoxTest  {
    @DataProvider
    public static Object[][] testConstructorPathDataProvider() {
        return new Object[][]{
-           {new ComboBox(), "//*"},
-           {new ComboBox().setClasses("cls"), "//*[contains(concat(' ', @class, ' '), ' cls ')]"},
-           {new ComboBox(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*"},
-           {new ComboBox(container, "Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[text()='Text']"},
-           {new ComboBox(container, "Text", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(text(),'Text')]"},
+           {new ComboBox(), "//*[contains(concat(' ', @class, ' '), ' MuiSelect-select ')]"},
+           {new ComboBox().setClasses("cls"), "//*[contains(concat(' ', @class, ' '), ' MuiSelect-select ') and contains(concat(' ', @class, ' '), ' cls ')]"},
+           {new ComboBox(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//*[contains(concat(' ', @class, ' '), ' MuiSelect-select ')]"},
+           {new ComboBox(container, "Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[text()='Text']//following-sibling::*//*[contains(concat(' ', @class, ' '), ' MuiSelect-select ')]"},
+           {new ComboBox(container, "Text", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//label[contains(text(),'Text')]//following-sibling::*//*[contains(concat(' ', @class, ' '), ' MuiSelect-select ')]"},
        };
    }
 
