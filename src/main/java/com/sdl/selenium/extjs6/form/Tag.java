@@ -59,7 +59,7 @@ public abstract class Tag extends Combo implements ITag {
             clickIcon("arrow-trigger");
             return "true".equals(aria.getAttribute("aria-expanded"));
         } else {
-            return false;
+            return true;
         }
     }
 
