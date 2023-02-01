@@ -6,6 +6,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITag;
 import com.sdl.selenium.web.utils.RetryUtils;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +21,10 @@ public abstract class Tag extends Combo implements ITag {
         boolean removed = true;
         for (String value : values) {
             WebLocator item = new WebLocator(list).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
-            WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-            removed = removed && RetryUtils.retry(14, closeEl::click);
+            if (item.ready(Duration.ofMillis(500))) {
+                WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
+                removed = removed && RetryUtils.retry(2, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
+            }
         }
         return removed;
     }
@@ -30,8 +33,10 @@ public abstract class Tag extends Combo implements ITag {
         boolean removed = true;
         for (String value : values) {
             WebLocator item = new WebLocator(list).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
-            WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-            removed = removed && RetryUtils.retry(15, closeEl::doClick);
+            if (item.ready(Duration.ofMillis(500))) {
+                WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
+                removed = removed && RetryUtils.retry(2, () -> closeEl.doClick() && !item.ready(Duration.ofMillis(500)));
+            }
         }
         return removed;
     }
