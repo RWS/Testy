@@ -55,7 +55,12 @@ public abstract class Tag extends Combo implements ITag {
     }
 
     public boolean expand() {
-        return "true".equals(aria.getAttribute("aria-expanded")) || clickIcon("arrow-trigger");
+        if ("false".equals(aria.getAttribute("aria-expanded"))) {
+            clickIcon("arrow-trigger");
+            return "true".equals(aria.getAttribute("aria-expanded"));
+        } else {
+            return false;
+        }
     }
 
     public boolean collapse() {
