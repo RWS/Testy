@@ -27,7 +27,7 @@ public interface Transform {
         String jsonPretty = jsonNode.toPrettyString();
         List<String> jsonList = new ArrayList<>(Arrays.asList(jsonPretty.split("\\n")));
         jsonList.removeIf(o -> o.startsWith("{") || o.endsWith("}"));
-        return actualListOfList.stream().map(i -> {
+        List<V> collect = actualListOfList.stream().map(i -> {
             V actualObject = null;
             try {
                 List<String> result = new ArrayList<>();
@@ -49,7 +49,8 @@ public interface Transform {
                 e1.printStackTrace();
             }
             return actualObject;
-        }).collect(Collectors.toCollection(LinkedList::new));
+        }).collect(Collectors.toList());
+        return new LinkedList<>(collect);
     }
 
     default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) {
@@ -76,7 +77,7 @@ public interface Transform {
                 e.printStackTrace();
             }
             return null;
-        }).collect(Collectors.toCollection(LinkedList::new));
+        }).collect(Collectors.toList());
     }
 
     /**
