@@ -49,7 +49,7 @@ public interface Transform {
             }
             return actualObject;
         }).collect(Collectors.toList());
-        return actualList;
+        return new ArrayList<>(actualList);
     }
 
     default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) {
