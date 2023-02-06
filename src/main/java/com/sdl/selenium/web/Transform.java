@@ -9,6 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public interface Transform {
         String jsonPretty = jsonNode.toPrettyString();
         List<String> jsonList = new ArrayList<>(Arrays.asList(jsonPretty.split("\\n")));
         jsonList.removeIf(o -> o.startsWith("{") || o.endsWith("}"));
-        List<V> actualList = actualListOfList.stream().map(i -> {
+        return actualListOfList.stream().map(i -> {
             V actualObject = null;
             try {
                 List<String> result = new ArrayList<>();
@@ -48,8 +49,7 @@ public interface Transform {
                 e1.printStackTrace();
             }
             return actualObject;
-        }).collect(Collectors.toList());
-        return new ArrayList<>(actualList);
+        }).collect(Collectors.toCollection(LinkedList::new));
     }
 
     default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) {
@@ -76,7 +76,7 @@ public interface Transform {
                 e.printStackTrace();
             }
             return null;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**
