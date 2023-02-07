@@ -21,7 +21,9 @@ public class AssertUtil {
 
     @Autowired
     public void setStorage(Storage storage) {
-        AssertUtil.storage = storage;
+        if (AssertUtil.storage == null) {
+            AssertUtil.storage = storage;
+        }
     }
 
     private <E, T extends List<E>> String showValues(T values, boolean transformDate, Function<String, String> format) {
