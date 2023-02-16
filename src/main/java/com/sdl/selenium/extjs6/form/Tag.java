@@ -17,6 +17,15 @@ public abstract class Tag extends Combo implements ITag {
     private final WebLocator list = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield-list ')]");
     private final WebLocator aria = new WebLocator(this).setElPath("/ancestor::*[contains(concat(' ', @class, ' '), ' x-tagfield ') and contains(concat(' ', @class, ' '), ' x-form-field ')]");
 
+    public boolean removeAll() {
+        boolean removed;
+        WebLocator item = new WebLocator(list).setClasses("x-tagfield-item");
+        int size = item.size();
+        WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
+        removed = RetryUtils.retry(size, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
+        return removed;
+    }
+
     public boolean remove(String... values) {
         boolean removed = true;
         for (String value : values) {
