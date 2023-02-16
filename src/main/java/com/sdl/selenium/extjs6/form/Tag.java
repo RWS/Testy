@@ -22,7 +22,7 @@ public abstract class Tag extends Combo implements ITag {
         WebLocator item = new WebLocator(list).setClasses("x-tagfield-item");
         int size = item.size();
         WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-        removed = RetryUtils.retry(size, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
+        removed = RetryUtils.retrySafe(size, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
         return removed;
     }
 
