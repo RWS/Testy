@@ -6,6 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.link.WebLink;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,30 +147,36 @@ public class Menu extends WebLocator {
         return false;
     }
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    @ToString
+    @Setter
+    @Getter
     public static class Values {
         private String name;
         private boolean enabled;
 
-        public Values(String name, boolean enabled) {
-            this.name = name;
-            this.enabled = enabled;
-        }
+//        public Values(String name, boolean enabled) {
+//            this.name = name;
+//            this.enabled = enabled;
+//        }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public boolean isEnabled() {
+//            return enabled;
+//        }
+//
+//        public void setEnabled(boolean enabled) {
+//            this.enabled = enabled;
+//        }
     }
 
     public class Item extends WebLocator implements ICheck {
