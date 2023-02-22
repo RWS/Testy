@@ -90,7 +90,7 @@ public class Menu extends WebLocator {
             item.setResultIdx(i);
             String disabled = item.getAttribute("aria-disabled");
             String text = item.getText();
-            list.add(new Values(text, disabled));
+            list.add(new Values(text, "true".equalsIgnoreCase(disabled) ? "false" : "true"));
         }
         return list;
     }
