@@ -83,14 +83,14 @@ public class Menu extends WebLocator {
 
     public List<Values> getMenuValuesWithStatus() {
         WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setVisibility(true).setInfoMessage(this + " -> x-menu-body");
-        WebLink item = new WebLink(menuList).setClasses("x-menu-item-link");
+        WebLink item = new WebLink(menuList).setClasses("x-menu-item-link").setVisibility(true);
         int size = item.size();
         List<Values> list = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
             item.setResultIdx(i);
             String disabled = item.getAttribute("aria-disabled");
             String text = item.getText();
-            list.add(new Values(text, !"true".equalsIgnoreCase(disabled)));
+            list.add(new Values(text, disabled));
         }
         return list;
     }
@@ -155,7 +155,7 @@ public class Menu extends WebLocator {
     @Getter
     public static class Values {
         private String name;
-        private boolean enabled;
+        private String enabled;
 
 //        public Values(String name, boolean enabled) {
 //            this.name = name;

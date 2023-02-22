@@ -111,7 +111,7 @@ public class SplitButton extends Button {
         List<Menu.Values> menuValues = menu.getMenuValuesWithStatus();
         menu.hideMenu(this);
         return menuValues.stream().map(i -> {
-            if (i.isEnabled()) {
+            if (Boolean.parseBoolean(i.getEnabled())) {
                 return null;
             } else {
                 return i.getName();
@@ -128,7 +128,7 @@ public class SplitButton extends Button {
         List<Menu.Values> menuValues = menu.getMenuValuesWithStatus();
         menu.hideMenu(this);
         return menuValues.stream().map(i -> {
-            if (i.isEnabled()) {
+            if (Boolean.parseBoolean(i.getEnabled())) {
                 return i.getName();
             } else {
                 return null;
