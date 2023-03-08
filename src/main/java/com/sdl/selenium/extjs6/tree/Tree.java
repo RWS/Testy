@@ -268,7 +268,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         return columnsList;
     }
 
-    private List<List<String>> getValues(int rows, List<Integer> columnsList, Predicate<Integer> predicate, Function<Cell, String> function) {
+    public List<List<String>> getValues(int rows, List<Integer> columnsList, Predicate<Integer> predicate, Function<Cell, String> function) {
         Row rowsEl = new Row(this).setTag("tr");
         int size = rowsEl.size();
         List<List<String>> listOfList = new LinkedList<>();
