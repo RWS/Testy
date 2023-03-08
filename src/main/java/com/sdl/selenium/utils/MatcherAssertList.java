@@ -121,6 +121,8 @@ public class MatcherAssertList {
                                 tmpValue = "in2Days dd MMM yyyy";
                             } else if (now.plusDays(3L).isEqual(newDate)) {
                                 tmpValue = "in3Days dd MMM yyyy";
+                            } else if (now.plusDays(4L).isEqual(newDate)) {
+                                tmpValue = "in4Days dd MMM yyyy";
                             } else if (now.plusDays(7L).isEqual(newDate)) {
                                 tmpValue = "nextWeek dd MMM yyyy";
                             } else if (now.plusMonths(1L).minusDays(1L).isEqual(newDate)) {

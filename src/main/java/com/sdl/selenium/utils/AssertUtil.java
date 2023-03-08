@@ -262,6 +262,8 @@ public class AssertUtil {
                             return (O) "in2Days dd MMM yyyy";
                         } else if (now.plusDays(3L).isEqual(newDate)) {
                             return (O) "in3Days dd MMM yyyy";
+                        } else if (now.plusDays(4L).isEqual(newDate)) {
+                            return (O) "in4Days dd MMM yyyy";
                         } else if (now.plusDays(7L).isEqual(newDate)) {
                             return (O) "nextWeek dd MMM yyyy";
                         } else if (now.plusMonths(1L).minusDays(1L).isEqual(newDate)) {
