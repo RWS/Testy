@@ -244,12 +244,18 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
         return getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
         List<V> actualValues = transformToObjectList(type, cellsText);
         return actualValues;
     }
 
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
     public <V> List<V> getCellsValues(V type, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(rowExpand, predicate, function, excludedColumns);
         List<V> actualValues = transformToObjectList(type, cellsText);
