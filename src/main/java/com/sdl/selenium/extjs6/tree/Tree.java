@@ -5,6 +5,7 @@ import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Tree extends WebLocator implements Scrollable, Editor {
+public class Tree extends WebLocator implements Scrollable, Editor, Transform {
     private static final Logger log = LogManager.getLogger(Tree.class);
 
     public Tree() {
@@ -210,7 +211,7 @@ public class Tree extends WebLocator implements Scrollable, Editor {
         } else if (size == 1) {
             return getRow(new Cell(1, nodes.get(0)));
         } else {
-            Row row = new Row(this, new Cell(1, nodes.get(size - 2))){
+            Row row = new Row(this, new Cell(1, nodes.get(size - 2))) {
                 public Row getNextRow() {
                     return new Row(this).setRoot("/").setTag("following-sibling::table");
                 }
@@ -241,6 +242,18 @@ public class Tree extends WebLocator implements Scrollable, Editor {
 
     public List<List<String>> getCellsText(int... excludedColumns) {
         return getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
+    }
+
+    public <V> List<V> getCellsValues(V type, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
+        List<V> actualValues = transformToObjectList(type, cellsText);
+        return actualValues;
+    }
+
+    public <V> List<V> getCellsValues(V type, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(rowExpand, predicate, function, excludedColumns);
+        List<V> actualValues = transformToObjectList(type, cellsText);
+        return actualValues;
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
