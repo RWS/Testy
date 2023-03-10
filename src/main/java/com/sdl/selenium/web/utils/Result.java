@@ -1,5 +1,8 @@
 package com.sdl.selenium.web.utils;
 
+import lombok.ToString;
+
+@ToString
 public class Result<V> {
     V result;
     int position;
