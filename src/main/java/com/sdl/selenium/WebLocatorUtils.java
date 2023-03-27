@@ -199,7 +199,7 @@ public final class WebLocatorUtils extends WebLocator {
             }
         }
         String join = String.join("\n", result);
-        LOGGER.info(join);
+        LOGGER.info("ChildrenHtmlTree:\n {}", join);
         return join;
     }
 
