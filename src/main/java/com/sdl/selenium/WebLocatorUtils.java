@@ -2,6 +2,7 @@ package com.sdl.selenium;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -9,6 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class WebLocatorUtils extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
@@ -146,6 +150,74 @@ public final class WebLocatorUtils extends WebLocator {
         return result;
     }
 
+    public static String getChildrenHtmlTree(WebLocator webLocator) {
+        String innerHTML = webLocator.getAttribute("innerHTML").replaceAll("><", ">\n<");
+        List<String> collect = innerHTML.lines().collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+        int size = collect.size();
+        final Map<String, String> map = Map.of(
+                "full", "<[a-zA-Z\"-=\\s]+>[0-9a-zA-Z-()\\s\\/]+<\\/[a-z]+>",
+                "startEl", "<(?!\\/).[a-zA-Z\"-=\\s_]+>",
+                "endEl", "<\\/[a-z]+>"
+        );
+        int countTabs = 0;
+        boolean ignoreNextEl = false;
+        for (int i = 0; i < size; i++) {
+            String value = collect.get(i);
+            String nextValue = collect.get(size == i + 1 ? i : i + 1);
+            if (ignoreNextEl) {
+                ignoreNextEl = false;
+            } else {
+                for (Map.Entry<String, String> regex : map.entrySet()) {
+                    if (isMatches(value, regex.getValue())) {
+                        String key = regex.getKey();
+                        if ("full".equals(key)) {
+                            value = addTabs(value, countTabs);
+                            result.add(value);
+                            break;
+                        } else if ("startEl".equals(key)) {
+                            if (isMatches(nextValue, map.get("endEl"))) {
+                                value = addTabs(value + nextValue, countTabs);
+                                result.add(value);
+                                ignoreNextEl = true;
+                            } else {
+                                value = addTabs(value, countTabs);
+                                result.add(value);
+                                countTabs++;
+                            }
+                            break;
+                        } else if ("endEl".equals(key)) {
+                            countTabs--;
+                            value = addTabs(value, countTabs);
+                            result.add(value);
+                            break;
+                        } else {
+                            Utils.sleep(1);
+                        }
+                    }
+                }
+            }
+        }
+        String join = String.join("\n", result);
+        LOGGER.info(join);
+        return join;
+    }
+
+    private static boolean isMatches(String value, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
+    }
+
+    private static String addTabs(String value, int tabs) {
+        StringBuilder valueBuilder = new StringBuilder(value);
+        for (int i = 0; i < tabs; i++) {
+            valueBuilder.insert(0, "\t");
+        }
+        value = valueBuilder.toString();
+        return value;
+    }
+
     private static String getXType(WebElement el) {
         return executeExtJS(el, "c.xtype");
     }
@@ -235,7 +307,8 @@ public final class WebLocatorUtils extends WebLocator {
                             found = true;
                         } else if ("button".equals(xType)) {
                             String text = executeExtJS(parent, "c.text");
-                            String name = Strings.isNullOrEmpty(text) ? "button" : getVariable(text);;
+                            String name = Strings.isNullOrEmpty(text) ? "button" : getVariable(text);
+                            ;
                             element.append("Button ").append(name).append(" = new Button(this");
                             addText(text, element);
                             found = true;
