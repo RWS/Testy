@@ -1,6 +1,7 @@
 package com.sdl.selenium.utils;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.web.utils.Utils;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -31,17 +32,29 @@ public class Storage {
         String name;
         Pattern pattern = Pattern.compile("\\{(\\S+)}");
         Matcher matcher = pattern.matcher(variable);
-        if (matcher.find()) {
+        while (matcher.find()) {
             String variableKey = matcher.group(1);
             name = get(variableKey);
+            String group = matcher.group();
             if (Strings.isNullOrEmpty(name) || name.contains(variableKey)) {
                 String tmp = get(get(variableKey));
                 name = tmp == null ? name : tmp;
-                return name == null ? "Not found value for key: '" + variableKey + "'" : variable.replace(matcher.group(), name);
+                variable = name == null ? "Not found value for key: '" + variableKey + "'" : variable.replace(group, name);
+            } else {
+                variable = variable.replace(group, name);
             }
-            return variable.replace(matcher.group(), name);
         }
         return variable;
+    }
+
+    public static void main(String[] args) {
+        Storage storage = new Storage();
+        storage.set("projectName", "p0");
+        storage.set("projectName1", "p1");
+        storage.set("projectName2", "p2");
+        String var = "The file replacement for the projects {projectName}, {projectName1}, {projectName2} was saved for later. Click here to return to the Replace Files screen.";
+        String s = storage.replaceVariable(var);
+        Utils.sleep(1);
     }
 
     public String getKey(String value) {
