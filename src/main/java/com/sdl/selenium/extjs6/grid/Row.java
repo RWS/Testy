@@ -369,7 +369,13 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     private String getVersion() {
         if (version == null) {
-            Grid grid = (Grid) getPathBuilder().getContainer();
+            WebLocator container = getPathBuilder().getContainer();
+            Grid grid;
+            if (container instanceof Grid) {
+                grid = (Grid) container;
+            } else {
+                grid = (Grid) container.getPathBuilder().getContainer();
+            }
             if (grid != null) {
                 this.version = grid.getVersion();
             }
