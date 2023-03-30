@@ -7,7 +7,8 @@
   LOGGER.debug(MessageFormat.format("{0} is {0} years old, er, young", "e45"));
 - [x] Generate cssSelector instead of xpath when possible
 - [ ] private WebLocator btn = WebLocator.find(By.id("ix"), By.name("xxx"));
-- [ ] combo.select("item"); combo.getValue().equals("item") into select(...)
+- [x] combo.select("item"); combo.getValue().equals("item") into select(...)
+- [ ] getCellsValues from grouped grid
 
 
 ## Examples and Documentation
