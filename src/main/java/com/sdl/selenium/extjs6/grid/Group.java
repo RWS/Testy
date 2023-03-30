@@ -1,6 +1,5 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 
@@ -54,40 +53,21 @@ public class Group extends WebLocator {
     }
 
     public List<Row> getRows() {
-        Grid grid = (Grid) getPathBuilder().getContainer();
-        String toGroup = grid.getNextGroupName(nameGroup);
-        if (!expand()) {
-            return null;
-        }
-        WebLocator group;
-        if (Strings.isNullOrEmpty(toGroup)) {
-            group = new WebLocator(grid).setTag("").setRoot("//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table");
-        } else {
-            group = new WebLocator(grid).setTag("").setRoot("//table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]] | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table[following::table[.//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')] and count(.//text()[contains(translate(.,'" + toGroup.toUpperCase() + "','" + toGroup.toLowerCase() + "'),'" + toGroup.toLowerCase() + "')]) > 0]]");
-        }
-        int size = group.size();
+        expand();
+        Row firstRow = new Row(this).setTag("tr").setClasses("x-grid-row");
+        Row row = new Row(this).setTag("tr").setRoot("/following::").setClasses("x-grid-row");
+        int size = row.size();
         ArrayList<Row> rows = new ArrayList<>();
+        rows.add(firstRow);
         for (int i = 1; i <= size; i++) {
-            Row rowTemp = new Row().setElPath("(" + group.getXPath() + ")[" + i + "]");
-            Row row = new Row(rowTemp).setTag("tr").setBaseCls("x-grid-row");
-            rows.add(row);
+            final Row tmpRow = new Row(this).setTag("tr").setRoot("/following::").setClasses("x-grid-row").setResultIdx(i);
+            rows.add(tmpRow);
         }
         return rows;
     }
 
     public Row getRow(AbstractCell... cells) {
-        Grid grid = (Grid) getPathBuilder().getContainer();
-        String toGroup = grid.getNextGroupName(nameGroup);
-        if (!expand()) {
-            return null;
-        }
-        WebLocator group;
-        if (Strings.isNullOrEmpty(toGroup)) {
-            group = new WebLocator(grid).setTag("").setRoot("//table[count(.//*[@class='x-grid-group-title' and contains(.,'" + nameGroup + "')]) > 0][1] | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table");
-        } else {
-            group = new WebLocator(grid).setTag("").setRoot("//table[//table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]] | //table[count(.//text()[contains(.,'" + nameGroup + "')]) > 0 and .//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')]]/following-sibling::table[following::table[.//tr//td[contains(concat(' ', @class, ' '), ' x-group-hd-container ')] and count(.//text()[contains(translate(.,'" + toGroup.toUpperCase() + "','" + toGroup.toLowerCase() + "'),'" + toGroup.toLowerCase() + "')]) > 0]]]");
-        }
-        return new Row(group).setTag("").setRoot("").setChildNodes(cells);
+        return new Row(this).setTag("tr").setRoot("/following::").setClasses("x-grid-row").setChildNodes(cells);
     }
 
     public String getNameGroup() {

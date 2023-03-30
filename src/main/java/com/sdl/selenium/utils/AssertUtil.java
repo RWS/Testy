@@ -309,24 +309,28 @@ public class AssertUtil {
         } else {
             valueTmp = date;
         }
-        String key = storage.getKey(valueTmp);
-        if (Strings.isNullOrEmpty(key)) {
-            key = storage.getKey(storage.getKey(valueTmp));
-        }
-        String value;
-        if (key == null) {
-            value = date;
-        } else {
-            if (date.contains(".")) {
-                if (isCopied) {
-                    value = date.replace(valueTmp, "{" + key + "}");
-                } else {
-                    value = date.replace(key, "{" + key + "}");
-                }
-            } else {
-                value = "{" + key + "}";
+        if (storage != null) {
+            String key = storage.getKey(valueTmp);
+            if (Strings.isNullOrEmpty(key)) {
+                key = storage.getKey(storage.getKey(valueTmp));
             }
+            String value;
+            if (key == null) {
+                value = date;
+            } else {
+                if (date.contains(".")) {
+                    if (isCopied) {
+                        value = date.replace(valueTmp, "{" + key + "}");
+                    } else {
+                        value = date.replace(key, "{" + key + "}");
+                    }
+                } else {
+                    value = "{" + key + "}";
+                }
+            }
+            return value;
+        } else {
+            return date;
         }
-        return value;
     }
 }

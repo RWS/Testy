@@ -25,7 +25,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
             "browser=chrome",
             "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe",
             "browser.download.dir=src\\\\test\\\\resources\\\\download\\\\",
-            "options.arguments=--disable-infobars --lang=en --use-simple-cache-backend --allow-running-insecure-content --enable-logging --v=1 --test-type",
+            "options.arguments=--remote-allow-origins=* --disable-infobars --lang=en --use-simple-cache-backend --allow-running-insecure-content --enable-logging --v=1 --test-type",
             "options.experimental.profile.default_content_setting_values.automatic_downloads=1",
             "options.experimental.profile.content_settings.pattern_pairs.*.multiple-automatic-downloads=1",
             "options.experimental.profile.default_content_settings.popups=0",
