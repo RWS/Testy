@@ -8,8 +8,7 @@ import java.util.List;
 
 public class Group extends WebLocator {
 
-    private static String nameGroup = null;
-    private WebLocator group = new WebLocator().setClasses("x-grid-group-title").setTemplate("title", "contains(.,'%s')");
+    private final WebLocator group = new WebLocator().setClasses("x-grid-group-title").setTemplate("title", "contains(.,'%s')");
 
     public Group() {
         setTag("table");
@@ -29,7 +28,6 @@ public class Group extends WebLocator {
 
     public Group(WebLocator container, String groupName) {
         this(container);
-        nameGroup = groupName;
         group.setTemplateValue("title", groupName);
     }
 
@@ -55,19 +53,19 @@ public class Group extends WebLocator {
     public List<Row> getRows() {
         expand();
         Row firstRow = new Row(this).setTag("tr").setClasses("x-grid-row");
-        Row row = new Row(this).setTag("tr").setRoot("/following::").setClasses("x-grid-row");
+        Row row = new Row(this).setTag("tr").setRoot("//following::").setClasses("x-grid-row");
         int size = row.size();
         ArrayList<Row> rows = new ArrayList<>();
         rows.add(firstRow);
         for (int i = 1; i <= size; i++) {
-            final Row tmpRow = new Row(this).setTag("tr").setRoot("/following::").setClasses("x-grid-row").setResultIdx(i);
+            final Row tmpRow = new Row(this).setTag("tr").setRoot("//following::").setClasses("x-grid-row").setResultIdx(i);
             rows.add(tmpRow);
         }
         return rows;
     }
 
     public Row getRow(AbstractCell... cells) {
-        return new Row(this).setTag("tr").setRoot("/following::").setClasses("x-grid-row").setChildNodes(cells);
+        return new Row(this).setTag("tr").setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
     }
 
     public String getNameGroup() {

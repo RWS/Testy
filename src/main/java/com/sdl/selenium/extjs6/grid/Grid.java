@@ -430,6 +430,28 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     }
 
     public List<List<String>> getCellsText(String group, int... excludedColumns) {
+        return getCellsText(group, t -> t == 0, null, excludedColumns);
+    }
+
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, String group, int... excludedColumns) {
+        List<List<String>> actualValues = getCellsText(group, t -> t == 0, null, excludedColumns);
+        List<V> collect = transformToObjectList(type, actualValues);
+        return collect;
+    }
+
+    /**
+     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
+     */
+    public <V> List<V> getCellsValues(V type, String group, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        List<List<String>> actualValues = getCellsText(group, predicate, function, excludedColumns);
+        List<V> collect = transformToObjectList(type, actualValues);
+        return collect;
+    }
+
+    public List<List<String>> getCellsText(String group, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         Group groupEl = getGroup(group);
         groupEl.expand();
         List<Row> groupElRows = groupEl.getRows();
@@ -450,7 +472,13 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     if (canRead) {
                         List<String> list = new ArrayList<>();
                         for (int j : columnsList) {
-                            String text = groupElRows.get(i).getCell(j).getText(true).trim();
+                            String text;
+                            Cell cell = groupElRows.get(i).getCell(j);
+                            if (predicate.test(j)) {
+                                text = function.apply(cell);
+                            } else {
+                                text = cell.getText(true).trim();
+                            }
                             list.add(text);
                         }
                         listOfList.add(list);
