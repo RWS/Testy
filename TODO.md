@@ -8,7 +8,7 @@
 - [x] Generate cssSelector instead of xpath when possible
 - [ ] private WebLocator btn = WebLocator.find(By.id("ix"), By.name("xxx"));
 - [x] combo.select("item"); combo.getValue().equals("item") into select(...)
-- [ ] getCellsValues from grouped grid
+- [x] getCellsValues from grouped grid
 
 
 ## Examples and Documentation
