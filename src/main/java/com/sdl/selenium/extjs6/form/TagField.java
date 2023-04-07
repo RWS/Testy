@@ -94,9 +94,17 @@ public class TagField extends Tag {
         boolean selected = true;
         String info = toString();
         ready();
+        List<String> selectedValues = getAllSelectedValues();
+        List<String> valuesList = List.of(values);
+        List<String> selectValues = new ArrayList<>();
+        for (String value : valuesList) {
+            if(!selectedValues.contains(value)){
+                selectValues.add(value);
+            }
+        }
         if (holdOpen) {
             if (expand()) {
-                for (String value : values) {
+                for (String value : selectValues) {
                     WebLocator option = getComboEl(value, duration, searchType);
                     selected = selected && option.doClick();
                     if (selected) {
@@ -108,7 +116,7 @@ public class TagField extends Tag {
                 collapse(); // to close combo
             }
         } else {
-            for (String value : values) {
+            for (String value : selectValues) {
                 expand();
                 WebLocator option = getComboEl(value, duration, searchType);
                 selected = selected && option.doClick();

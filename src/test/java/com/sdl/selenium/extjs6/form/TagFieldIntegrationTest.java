@@ -3,16 +3,21 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 
+@Slf4j
 public class TagFieldIntegrationTest extends TestBase {
 
     private final TagField tagField = new TagField(null, "Select a state:");
@@ -45,20 +50,21 @@ public class TagFieldIntegrationTest extends TestBase {
     public void tagTest() {
         assertThat(tagField.remove("California"), is(true));
         assertThat(tagField.getAllSelectedValues(), is(new ArrayList<>()));
+        long startMs = System.currentTimeMillis();
         assertThat(tagField.select("California", "Alaska"), is(true));
-//        assertThat(tagField.getValue(), containsString("Alaska"));
+        long endMs = System.currentTimeMillis();
+        log.info(String.format("select took %s ms", endMs - startMs));
         assertThat(tagField.getAllSelectedValues(), is(Arrays.asList("California", "Alaska")));
-
-//        LogEntries logEntries = WebDriverConfig.getDriver().manage().logs().get(LogType.PERFORMANCE);
-//        for (LogEntry entry : logEntries) {
-//            LOGGER.debug("{}", entry.toString());
-//        }
+        startMs = System.currentTimeMillis();
+        tagField.select("Alaska", "Florida");
+        endMs = System.currentTimeMillis();
+        log.info(String.format("select1 took %s ms", endMs - startMs));
     }
 
     @Test(dependsOnMethods = "tagTest")
     public void selectValuesTagTest() {
         assertThat(tagField.select("Delaware", "Florida"), is(true));
-        assertThat(tagField.getAllSelectedValues(), is(Arrays.asList("California", "Alaska", "Delaware", "Florida")));
+        assertThatList(tagField.getAllSelectedValues(), containsInAnyOrder(List.of("California", "Alaska", "Delaware", "Florida").toArray()));
     }
 
     @Test(dependsOnMethods = "selectValuesTagTest")
