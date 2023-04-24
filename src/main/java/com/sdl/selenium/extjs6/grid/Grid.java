@@ -605,11 +605,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
 
     @Override
     public int getCount() {
-        if (ready(true)) {
-            return new Row(this).size();
-        } else {
-            return -1;
-        }
+        return new Row(this).size();
     }
 
     public List<String> getGroupsName() {
