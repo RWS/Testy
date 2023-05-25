@@ -212,7 +212,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
     }
 
     public Row getNode(List<String> nodes, Action action, SearchType... searchTypes) {
-        return getNode(false, nodes, searchTypes);
+        return getNode(false, nodes, action, searchTypes);
     }
 
     public Row getNode(boolean doScroll, List<String> nodes, SearchType... searchTypes) {
