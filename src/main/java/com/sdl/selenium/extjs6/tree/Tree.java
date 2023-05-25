@@ -119,7 +119,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
                         } else {
-                            selected = RetryUtils.retry(2, nodeTree::click);
+                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
                         }
                     } catch (WebDriverException e) {
                         if (doScroll) {
