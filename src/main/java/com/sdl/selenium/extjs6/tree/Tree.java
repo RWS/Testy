@@ -45,19 +45,27 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
     }
 
     public boolean select(List<String> nodes) {
-        return select(false, nodes);
+        return select(false, nodes, Action.CLICK);
     }
 
     @Deprecated
     public boolean select(boolean doScroll, String... nodes) {
-        return select(doScroll, List.of(nodes), SearchType.EQUALS, SearchType.TRIM);
+        return select(doScroll, List.of(nodes), Action.CLICK, SearchType.EQUALS, SearchType.TRIM);
     }
 
     public boolean select(List<String> nodes, SearchType... searchTypes) {
-        return select(false, nodes, searchTypes);
+        return select(false, nodes, Action.CLICK, searchTypes);
+    }
+
+    public boolean select(List<String> nodes, Action action, SearchType... searchTypes) {
+        return select(false, nodes, action, searchTypes);
     }
 
     public boolean select(boolean doScroll, List<String> nodes, SearchType... searchTypes) {
+        return select(doScroll, nodes, Action.CLICK, searchTypes);
+    }
+
+    public boolean select(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
         if (doScroll) {
             scrollTop();
         }
@@ -120,7 +128,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
                         } else {
-                            selected = RetryUtils.retry(2, nodeTree::click);
+                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
                         }
                     }
                 }
@@ -203,8 +211,16 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
         return getNode(false, nodes, searchTypes);
     }
 
+    public Row getNode(List<String> nodes, Action action, SearchType... searchTypes) {
+        return getNode(false, nodes, searchTypes);
+    }
+
     public Row getNode(boolean doScroll, List<String> nodes, SearchType... searchTypes) {
-        select(doScroll, nodes);
+        return getNode(doScroll, nodes, Action.CLICK, searchTypes);
+    }
+
+    public Row getNode(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
+        select(doScroll, nodes, action);
         int size = nodes.size();
         if (size == 0) {
             return null;
