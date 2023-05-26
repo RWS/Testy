@@ -88,7 +88,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
             }
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
-                if (!(isExpanded || aClass.contains("x-grid-tree-node-leaf"))) {
+                if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
                     RetryUtils.retry(2, () -> {
                         expanderEl.click();
                         String aCls = row.getAttributeClass();
