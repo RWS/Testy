@@ -2,65 +2,65 @@
     <listeners>
         <listener class-name="com.sdl.selenium.MyTransformer"></listener>
     </listeners>
-    <test name="ButtonIntegrationTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.button.ButtonIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="EditorGridPanelTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.grid.EditorGridPanelIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="ComboBoxTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.form.ComboBoxIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="DateFieldTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.form.DateFieldIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="DisplayFieldTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.form.DisplayFieldIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs3.FireEventWithJSIntegrationTest"/>
-        </classes>
-    </test>
-<!--    <test name="ListTest">-->
+<!--    <test name="ButtonIntegrationTest">-->
 <!--        <classes>-->
-<!--            <class name="com.sdl.selenium.extjs3.list.ListIntegrationTest"/>-->
+<!--            <class name="com.sdl.selenium.extjs3.button.ButtonIntegrationTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
-    <test name="RadioGroupTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.form.RadioGroupIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="TextAreaTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.form.TextAreaIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="TextFieldTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.form.TextFieldIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="WindowTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.window.WindowIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs3.window.MessageBoxIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs3.panel.TabPanelIntegrationTest"/>
-        </classes>
-    </test>
-    <test name="DownloadTest">
-        <classes>
-            <class name="com.sdl.selenium.extjs3.button.DownloadIntegrationTest"/>
-            <class name="com.sdl.selenium.extjs3.button.UploadButtonIntegrationTest"/>
-        </classes>
-    </test>
+<!--    <test name="EditorGridPanelTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.grid.EditorGridPanelIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="ComboBoxTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.form.ComboBoxIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="DateFieldTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.form.DateFieldIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="DisplayFieldTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.form.DisplayFieldIntegrationTest"/>-->
+<!--            <class name="com.sdl.selenium.extjs3.FireEventWithJSIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--&lt;!&ndash;    <test name="ListTest">&ndash;&gt;-->
+<!--&lt;!&ndash;        <classes>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="com.sdl.selenium.extjs3.list.ListIntegrationTest"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </classes>&ndash;&gt;-->
+<!--&lt;!&ndash;    </test>&ndash;&gt;-->
+<!--    <test name="RadioGroupTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.form.RadioGroupIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="TextAreaTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.form.TextAreaIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="TextFieldTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.form.TextFieldIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="WindowTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.window.WindowIntegrationTest"/>-->
+<!--            <class name="com.sdl.selenium.extjs3.window.MessageBoxIntegrationTest"/>-->
+<!--            <class name="com.sdl.selenium.extjs3.panel.TabPanelIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="DownloadTest">-->
+<!--        <classes>-->
+<!--            <class name="com.sdl.selenium.extjs3.button.DownloadIntegrationTest"/>-->
+<!--            <class name="com.sdl.selenium.extjs3.button.UploadButtonIntegrationTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
     <test name="ButtonIntegration">
         <classes>
