@@ -5,7 +5,6 @@ import com.sdl.selenium.TestBase;
 import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.bootstrap.form.Form;
-import com.sdl.selenium.utils.Storage;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
@@ -13,7 +12,6 @@ import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -31,8 +29,6 @@ public class TableIntegrationTest extends TestBase {
 
     private final Form form = new Form(null, "Form Table");
     private final Table table = new Table(form);
-    @Autowired
-    private Storage storage;
 
     @BeforeClass
     public void startTests() {
@@ -72,7 +68,6 @@ public class TableIntegrationTest extends TestBase {
 
     @Test
     public void getAllTexts() {
-        storage.set("name", "John");
         List<List<String>> listOfList = List.of(
                 List.of("John", "Carter", "johncarter@mail.com"),
                 List.of("Peter", "Parker", "peterparker@mail.com"),
