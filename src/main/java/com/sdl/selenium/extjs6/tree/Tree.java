@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.tree;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.grid.Scrollable;
@@ -330,6 +331,9 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
+                            if(Strings.isNullOrEmpty(text)){
+                                text = cell.getText(true).trim();
+                            }
                         }
                         list.add(text);
                     }
@@ -399,6 +403,9 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform {
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
+                            if(Strings.isNullOrEmpty(text)){
+                                text = cell.getText(true).trim();
+                            }
                         }
                         list.add(text);
                     }
