@@ -269,7 +269,7 @@ public final class WebLocatorUtils extends WebLocator {
                             element.append("TextField ").append(name).append(" = new TextField(this");
                             addText(label, element);
                             found = true;
-                        } else if ("checkboxfield".equals(xType)) {
+                        } else if (xType.contains("checkbox")) {
                             String label = executeExtJS(parent, "c.fieldLabel");
                             String name = Strings.isNullOrEmpty(label) ? "checkBox" : getVariable(label);
                             element.append("CheckBox ").append(name).append(" = new CheckBox(this");
@@ -281,7 +281,7 @@ public final class WebLocatorUtils extends WebLocator {
                             element.append("ComboBox ").append(name).append(" = new ComboBox(this");
                             addText(label, element);
                             found = true;
-                        } else if (xType.contains("combobox")) {
+                        } else if (xType.contains("combo")) {
                             String label = executeExtJS(parent, "c.fieldLabel");
                             String name = Strings.isNullOrEmpty(label) ? "comboBox" : getVariable(label);
                             element.append("ComboBox ").append(name).append(" = new ComboBox(this");
@@ -308,7 +308,6 @@ public final class WebLocatorUtils extends WebLocator {
                         } else if ("button".equals(xType)) {
                             String text = executeExtJS(parent, "c.text");
                             String name = Strings.isNullOrEmpty(text) ? "button" : getVariable(text);
-                            ;
                             element.append("Button ").append(name).append(" = new Button(this");
                             addText(text, element);
                             found = true;
