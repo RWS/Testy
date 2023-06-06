@@ -251,7 +251,7 @@ public final class WebLocatorUtils extends WebLocator {
                             element.append("Panel ").append(name).append(" = new Panel(this");
                             found = false;
                             addText(title, element);
-                        } else if ("grid".equals(xType) || "row-expander-grid".equals(xType) || "row-numberer".equals(xType) || "array-grid".equals(xType)) {
+                        } else if ("grid".equals(xType) || "row-expander-grid".equals(xType) || "row-numberer".equals(xType) || "array-grid".equals(xType) || "gridfield".equals(xType)) {
                             String title = executeExtJS(parent, "c.title");
                             String name = Strings.isNullOrEmpty(title) ? "grid" : getVariable(title);
                             element.append("Grid ").append(name).append(" = new Grid(this");
