@@ -273,8 +273,8 @@ public final class WebLocatorUtils extends WebLocator {
                             String boxLabel = executeExtJS(parent, "c.boxLabel");
                             if(!Strings.isNullOrEmpty(boxLabel)) {
                                 String name = Strings.isNullOrEmpty(boxLabel) ? "checkBox" : getVariable(boxLabel);
-                                element.append("CheckBox ").append(name).append(" = new CheckBox(this");
-                                addText(boxLabel, element);
+                                element.append("CheckBox ").append(name).append(" = new CheckBox(");
+                                addBoxLabel(boxLabel, element);
                             } else {
                                 String label = executeExtJS(parent, "c.fieldLabel");
                                 String name = Strings.isNullOrEmpty(label) ? "checkBox" : getVariable(label);
@@ -383,6 +383,13 @@ public final class WebLocatorUtils extends WebLocator {
             element.append(", \"").append(label).append("\"");
         }
         element.append(");");
+    }
+
+    private static void addBoxLabel(String label, StringBuilder element) {
+        if (!Strings.isNullOrEmpty(label)) {
+            element.append("\"").append(label).append("\", ");
+        }
+        element.append("this);");
     }
 
     private static void setupJs() {
