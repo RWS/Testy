@@ -270,10 +270,17 @@ public final class WebLocatorUtils extends WebLocator {
                             addText(label, element);
                             found = true;
                         } else if (xType.contains("checkbox")) {
-                            String label = executeExtJS(parent, "c.fieldLabel");
-                            String name = Strings.isNullOrEmpty(label) ? "checkBox" : getVariable(label);
-                            element.append("CheckBox ").append(name).append(" = new CheckBox(this");
-                            addText(label, element);
+                            String boxLabel = executeExtJS(parent, "c.boxLabel");
+                            if(!Strings.isNullOrEmpty(boxLabel)) {
+                                String name = Strings.isNullOrEmpty(boxLabel) ? "checkBox" : getVariable(boxLabel);
+                                element.append("CheckBox ").append(name).append(" = new CheckBox(this");
+                                addText(boxLabel, element);
+                            } else {
+                                String label = executeExtJS(parent, "c.fieldLabel");
+                                String name = Strings.isNullOrEmpty(label) ? "checkBox" : getVariable(label);
+                                element.append("CheckBox ").append(name).append(" = new CheckBox(this");
+                                addText(label, element);
+                            }
                             found = true;
                         } else if ("timefield".equals(xType)) {
                             String label = executeExtJS(parent, "c.fieldLabel");
