@@ -247,7 +247,7 @@ public final class WebLocatorUtils extends WebLocator {
                         StringBuilder element = new StringBuilder();
                         if ("panel".equals(xType) || "form-fieldtypes".equals(xType)) {
                             String title = executeExtJS(parent, "c.title");
-                            String name = Strings.isNullOrEmpty(title) ? "panel" : getVariable(title);
+                            String name = Strings.isNullOrEmpty(title) ? "panel" : getVariable(title.trim());
                             element.append("Panel ").append(name).append(" = new Panel(this");
                             found = false;
                             addText(title, element);
