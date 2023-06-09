@@ -107,14 +107,16 @@ public class MatcherAssertList {
                         String tmpValue = "";
                         try {
                             LocalDate newDate = LocalDate.parse(group, DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
-                            if (now.isEqual(newDate)) {
-                                tmpValue = "today dd MMM yyyy";
-                            } else if (now.minusDays(1L).isEqual(newDate)) {
-                                tmpValue = "yesterday dd MMM yyyy";
-                            } else if (now.minusDays(2L).isEqual(newDate)) {
-                                tmpValue = "2DaysAgo dd MMM yyyy";
+                            if (now.minusDays(7L).isEqual(newDate)) {
+                                tmpValue = "1WeekAgo dd MMM yyyy";
                             } else if (now.minusDays(3L).isEqual(newDate)) {
                                 tmpValue = "3DaysAgo dd MMM yyyy";
+                            } else if (now.minusDays(2L).isEqual(newDate)) {
+                                tmpValue = "2DaysAgo dd MMM yyyy";
+                            } else if (now.minusDays(1L).isEqual(newDate)) {
+                                tmpValue = "yesterday dd MMM yyyy";
+                            } else if (now.isEqual(newDate)) {
+                                tmpValue = "today dd MMM yyyy";
                             } else if (now.plusDays(1L).isEqual(newDate)) {
                                 tmpValue = "tomorrow dd MMM yyyy";
                             } else if (now.plusDays(2L).isEqual(newDate)) {
@@ -123,8 +125,30 @@ public class MatcherAssertList {
                                 tmpValue = "in3Days dd MMM yyyy";
                             } else if (now.plusDays(4L).isEqual(newDate)) {
                                 tmpValue = "in4Days dd MMM yyyy";
+                            } else if (now.plusDays(5L).isEqual(newDate)) {
+                                tmpValue = "in5Days dd MMM yyyy";
+                            } else if (now.plusDays(6L).isEqual(newDate)) {
+                                tmpValue = "in6Days dd MMM yyyy";
                             } else if (now.plusDays(7L).isEqual(newDate)) {
                                 tmpValue = "nextWeek dd MMM yyyy";
+                            } else if (now.plusDays(8L).isEqual(newDate)) {
+                                tmpValue = "nextWeekAnd1Day dd MMM yyyy";
+                            } else if (now.plusDays(9L).isEqual(newDate)) {
+                                tmpValue = "nextWeekAnd2Days dd MMM yyyy";
+                            } else if (now.plusDays(10L).isEqual(newDate)) {
+                                tmpValue = "nextWeekAnd3Days dd MMM yyyy";
+                            } else if (now.plusDays(11L).isEqual(newDate)) {
+                                tmpValue = "nextWeekAnd4Days dd MMM yyyy";
+                            } else if (now.plusDays(12L).isEqual(newDate)) {
+                                tmpValue = "nextWeekAnd5Days dd MMM yyyy";
+                            } else if (now.plusDays(13L).isEqual(newDate)) {
+                                tmpValue = "nextWeekAnd6Days dd MMM yyyy";
+                            } else if (now.plusDays(14L).isEqual(newDate)) {
+                                tmpValue = "next2Weeks dd MMM yyyy";
+                            } else if (now.plusDays(21L).isEqual(newDate)) {
+                                tmpValue = "next3Weeks dd MMM yyyy";
+                            } else if (now.plusDays(28L).isEqual(newDate)) {
+                                tmpValue = "next4Weeks dd MMM yyyy";
                             } else if (now.plusMonths(1L).minusDays(1L).isEqual(newDate)) {
                                 tmpValue = "nextMonth1DayAgo dd MMM yyyy";
                             } else if (now.plusMonths(1L).minusDays(2L).isEqual(newDate)) {
