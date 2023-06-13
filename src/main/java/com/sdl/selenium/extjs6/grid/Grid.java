@@ -23,6 +23,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Grid extends Table implements Scrollable, XTool, Editor, Transform {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
@@ -673,22 +674,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
         int columns = columnsEl.size();
-        final List<Integer> columnsList = getColumns(columns, excludedColumns);
+        List<Integer> columnsList = getColumns(columns, excludedColumns);
         int size = rowsEl.size();
-        List<List<String>> listOfList = new ArrayList<>();
-        List<CompletableFuture<List<String>>> futures = new ArrayList<>();
-        for (int i = 1; i <= size; ++i) {
-            int finalI = i;
-            futures.add(CompletableFuture.supplyAsync(() -> getRowValues(columnsList, finalI)));
-        }
-        CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-        allFutures.thenRun(() -> {
-            for (CompletableFuture<List<String>> future : futures) {
-                listOfList.add(future.join());
-            }
-        });
-        allFutures.join();
-        return listOfList;
+
+        CompletableFuture<List<List<String>>> allRowsFuture = CompletableFuture.supplyAsync(() -> IntStream.rangeClosed(1, size)
+                .parallel()
+                .mapToObj(i -> getRowValues(columnsList, i))
+                .collect(Collectors.toList()));
+
+        return allRowsFuture.join();
     }
 
     private List<String> getRowValues(List<Integer> columnsList, int finalI) {
