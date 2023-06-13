@@ -4,6 +4,8 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.utils.Storage;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ public class GridSteps extends TestBase {
     @Autowired
     private Storage storage;
     private final Grid grid = new Grid().setTitle("Cell Editing Plants");
+    private final Grid employees = new Grid().setTitle("Row Editing Employees");
 
     @Given("I open extjs6 app and add {string} path")
     public void iOpenExtjs6AppAndAddPath(String path) {
@@ -58,5 +61,20 @@ public class GridSteps extends TestBase {
             }
             return null;
         };
+    }
+
+    @Then("I verify parallel if grid has values:")
+    public void iVerifyParallelIfGridHasValues(List<List<String>> values) {
+        long startMs = System.currentTimeMillis();
+        List<List<String>> cellsText = employees.getParallelValues(t -> t == 5, getBooleanValue());
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.debug("performance took {} ms", rez);
+        assertThatList("Actual values: ", cellsText, contains(values.toArray()));
+    }
+
+    @And("I stop")
+    public void iStop() {
+        Utils.sleep(1);
     }
 }

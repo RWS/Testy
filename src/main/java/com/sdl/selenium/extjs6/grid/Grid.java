@@ -18,12 +18,12 @@ import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Grid extends Table implements Scrollable, XTool, Editor, Transform {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
@@ -669,24 +669,56 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return new WebLocator(this).setClasses("x-grid-empty").setChildNodes(content, titleEL);
     }
 
-    public List<List<String>> getParallelCellsText(int... excludedColumns) {
+    public List<List<String>> getParallelValues(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
         int columns = columnsEl.size();
         List<Integer> columnsList = getColumns(columns, excludedColumns);
         int size = rowsEl.size();
-
-        CompletableFuture<List<List<String>>> allRowsFuture = CompletableFuture.supplyAsync(() -> IntStream.rangeClosed(1, size)
-                .parallel()
-                .mapToObj(i -> getRowValues(columnsList, i))
-                .collect(Collectors.toList()));
-
-        return allRowsFuture.join();
+        List<List<String>> listOfList = new LinkedList<>();
+        boolean canRead = true;
+        String id = "";
+        int timeout = 0;
+        do {
+            List<CompletableFuture<List<String>>> futures = new ArrayList<>();
+            for (int i = 1; i <= size; ++i) {
+                if (canRead) {
+                    int finalI = i;
+                    CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(predicate, function, columnsList, finalI));
+                    futures.add(future);
+                    future.thenAccept(listOfList::add);
+                } else {
+                    if (size == i + 1) {
+                        break;
+                    }
+                    Row row = new Row(this, i);
+                    String currentId = row.getAttributeId();
+                    if (!"".equals(id) && id.equals(currentId)) {
+                        canRead = true;
+                        log.info("canRead=true");
+                    } else {
+                        log.info("canRead=false");
+                    }
+                }
+            }
+            CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+            allFutures.join();
+            if (isScrollBottom()) {
+                break;
+            }
+            Row row = new Row(this, size);
+            id = row.getAttributeId();
+            scrollPageDownInTree();
+            log.info("scroll------");
+            canRead = false;
+            timeout++;
+        } while (timeout < 30);
+        return listOfList;
     }
 
-    private List<String> getRowValues(List<Integer> columnsList, int finalI) {
+    private List<String> getRowValues(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList, int finalI) {
         Row row = new Row(this).setTag("tr").setResultIdx(finalI);
-        return row.getValues(t -> t == 0, null, columnsList);
+        return row.getValues(predicate, function, columnsList);
     }
 }
