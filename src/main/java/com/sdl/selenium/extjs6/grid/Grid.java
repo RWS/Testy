@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -665,5 +666,33 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         WebLocator titleEL = new WebLocator().setClasses("x-grid-empty-title").setText(title);
         WebLocator content = new WebLocator().setClasses("x-grid-empty-text").setText(message);
         return new WebLocator(this).setClasses("x-grid-empty").setChildNodes(content, titleEL);
+    }
+
+    public List<List<String>> getParallelCellsText(int... excludedColumns) {
+        Row rowsEl = new Row(this).setTag("tr");
+        Row rowEl = new Row(this, 1);
+        Cell columnsEl = new Cell(rowEl);
+        int columns = columnsEl.size();
+        final List<Integer> columnsList = getColumns(columns, excludedColumns);
+        int size = rowsEl.size();
+        List<List<String>> listOfList = new ArrayList<>();
+        List<CompletableFuture<List<String>>> futures = new ArrayList<>();
+        for (int i = 1; i <= size; ++i) {
+            int finalI = i;
+            futures.add(CompletableFuture.supplyAsync(() -> getRowValues(columnsList, finalI)));
+        }
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+        allFutures.thenRun(() -> {
+            for (CompletableFuture<List<String>> future : futures) {
+                listOfList.add(future.join());
+            }
+        });
+        allFutures.join();
+        return listOfList;
+    }
+
+    private List<String> getRowValues(List<Integer> columnsList, int finalI) {
+        Row row = new Row(this).setTag("tr").setResultIdx(finalI);
+        return row.getValues(t -> t == 0, null, columnsList);
     }
 }

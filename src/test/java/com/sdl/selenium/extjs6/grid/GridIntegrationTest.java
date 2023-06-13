@@ -4,7 +4,7 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -16,9 +16,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Slf4j
 public class GridIntegrationTest extends TestBase {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(GridIntegrationTest.class);
     private Grid grid;
 
     @BeforeClass
@@ -290,5 +290,20 @@ public class GridIntegrationTest extends TestBase {
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.debug("performanceIsCheckedTest took {} ms", rez);
+    }
+
+    @Test
+    void getCellsTestParallel() {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
+        driver.switchTo().frame("examples-iframe");
+        Grid spreadsheet = new Grid().setTitle("XML Grid");
+        spreadsheet.ready(Duration.ofSeconds(20));
+        spreadsheet.ready(true);
+        long startMs = System.currentTimeMillis();
+        List<List<String>> cellsText = spreadsheet.getParallelCellsText();
+        assertThat(cellsText.size(), is(10));
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.info("performanceGetCellsTestParallel took {} ms", rez);
     }
 }

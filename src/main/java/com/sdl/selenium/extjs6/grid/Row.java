@@ -327,6 +327,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public List<String> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         WebLocator columnsEl = new WebLocator(this).setTag("td");
         List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
+        return getValues(predicate, function, columns);
+    }
+
+    public List<String> getValues(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columns) {
         List<String> list = new ArrayList<>();
         for (int j : columns) {
             Cell cell = new Cell(this, j);
