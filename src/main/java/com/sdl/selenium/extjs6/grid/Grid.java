@@ -680,14 +680,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         boolean canRead = true;
         String id = "";
         int timeout = 0;
+
         do {
             List<CompletableFuture<List<String>>> futures = new ArrayList<>();
+
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
                     CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(predicate, function, columnsList, finalI));
                     futures.add(future);
-                    future.thenAccept(listOfList::add);
                 } else {
                     if (size == i + 1) {
                         break;
@@ -702,11 +703,19 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     }
                 }
             }
+
             CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-            allFutures.join();
+            CompletableFuture<List<List<String>>> combinedFuture = allFutures.thenCompose(v ->
+                    CompletableFuture.completedFuture(futures.stream()
+                            .map(CompletableFuture::join)
+                            .collect(Collectors.toList()))
+            );
+            listOfList.addAll(combinedFuture.join());
+
             if (isScrollBottom()) {
                 break;
             }
+
             Row row = new Row(this, size);
             id = row.getAttributeId();
             scrollPageDownInTree();
@@ -714,6 +723,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             canRead = false;
             timeout++;
         } while (timeout < 30);
+
         return listOfList;
     }
 
