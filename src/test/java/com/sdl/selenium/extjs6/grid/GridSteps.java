@@ -18,6 +18,7 @@ import static org.hamcrest.Matchers.contains;
 @Slf4j
 public class GridSteps extends TestBase {
     private final Grid grid = new Grid().setTitle("Cell Editing Plants");
+    private final Grid numberedRows = new Grid().setTitle("Grid with Numbered Rows");
 
     @Given("I open extjs6 app and add {string} path")
     public void iOpenExtjs6AppAndAddPath(String path) {
@@ -49,10 +50,10 @@ public class GridSteps extends TestBase {
     @Then("I verify parallel if grid has values:")
     public void iVerifyParallelIfGridHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = grid.getParallelValues(t -> t == 5, getBooleanValue(), 6);
+        List<List<String>> cellsText = numberedRows.getCellsText(t -> t == 0, getBooleanValue());
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
-        log.debug("performance took {} ms", rez);
+        log.info("performance took {} ms", rez);
         assertThatList("Actual values: ", cellsText, contains(values.toArray()));
     }
 

@@ -334,25 +334,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         do {
             for (int i = 1; i <= rows; ++i) {
                 if (canRead) {
-                    List<String> list = new ArrayList<>();
-                    for (int j : columnsList) {
-                        Row row = new Row(this).setTag("tr").setResultIdx(i);
-                        if (rowExpand) {
-                            row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
-                        }
-                        Cell cell = new Cell(row, j);
-                        String text = null;
-                        if (predicate.test(j)) {
-                            text = function.apply(cell);
-                        } else {
-                            try {
-                                text = cell.getText(true).trim();
-                            } catch (NullPointerException e) {
-                                Utils.sleep(1);
-                            }
-                        }
-                        list.add(text);
+                    Row row = new Row(this).setTag("tr").setResultIdx(i);
+                    if (rowExpand) {
+                        row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                     }
+                    List<String> list = row.getValues(predicate, function, columnsList);
                     listOfList.add(list);
                 } else {
                     if (size == i + 1) {
