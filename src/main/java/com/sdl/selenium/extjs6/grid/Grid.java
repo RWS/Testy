@@ -18,9 +18,11 @@ import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -662,18 +664,19 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         int columns = columnsEl.size();
         List<Integer> columnsList = getColumns(columns, excludedColumns);
         int size = rowsEl.size();
-        List<List<String>> listOfList = new LinkedList<>();
+        List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
         String id = "";
         int timeout = 0;
 
-        do {
-            List<CompletableFuture<List<String>>> futures = new ArrayList<>();
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        List<Future<List<String>>> futures = new ArrayList<>();
 
+        do {
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
-                    CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(predicate, function, columnsList, finalI));
+                    Future<List<String>> future = executorService.submit(() -> getRowValues(predicate, function, columnsList, finalI));
                     futures.add(future);
                 } else {
                     if (size == i + 1) {
@@ -690,13 +693,16 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                 }
             }
 
-            CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-            CompletableFuture<List<List<String>>> combinedFuture = allFutures.thenCompose(v ->
-                    CompletableFuture.completedFuture(futures.stream()
-                            .map(CompletableFuture::join)
-                            .collect(Collectors.toList()))
-            );
-            listOfList.addAll(combinedFuture.join());
+            for (Future<List<String>> future : futures) {
+                try {
+                    listOfList.add(future.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    // Tratarea erorilor sau înregistrarea lor
+                    e.printStackTrace();
+                }
+            }
+
+            futures.clear();
 
             if (isScrollBottom()) {
                 break;
@@ -709,6 +715,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             canRead = false;
             timeout++;
         } while (timeout < 30);
+
+        executorService.shutdown();
 
         return listOfList;
     }
