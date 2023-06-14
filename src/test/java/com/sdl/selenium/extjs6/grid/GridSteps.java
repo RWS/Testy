@@ -35,7 +35,7 @@ public class GridSteps extends TestBase {
         List<List<String>> cellsText = grid.getCellsText(t -> t == 5, getBooleanValue(), 6);
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
-        log.debug("performance took {} ms", rez);
+        log.info("performance took {} ms", rez);
         assertThatList("Actual values: ", cellsText, contains(values.toArray()));
     }
 
@@ -50,7 +50,7 @@ public class GridSteps extends TestBase {
     @Then("I verify parallel if grid has values:")
     public void iVerifyParallelIfGridHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = numberedRows.getCellsText(t -> t == 0, getBooleanValue());
+        List<List<String>> cellsText = numberedRows.getParallelValues(t -> t == 0, getBooleanValue());
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
@@ -60,5 +60,15 @@ public class GridSteps extends TestBase {
     @And("I stop")
     public void iStop() {
         Utils.sleep(1);
+    }
+
+    @Then("I verify if grid has headers {list}")
+    public void iVerifyIfGridHasHeaders(List<String> headers) {
+        long startMs = System.currentTimeMillis();
+        List<String> actualHeaders = numberedRows.getHeaders();
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.info("performance took {} ms", rez);
+        assertThatList("Actual values: ", actualHeaders, contains(headers.toArray()));
     }
 }

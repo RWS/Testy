@@ -52,6 +52,7 @@ Feature: Grid
 
   Scenario: Verify grid parallel
     Given I open extjs6 app and add "#row-numberer" path
+    Then I verify if grid has headers "Company, Price, Change, % Change, Last Updated"
     Then I verify parallel if grid has values:
       | 1   | Roodel       | $59.47 | 1.23  | 2.11   | 10/08/2023 |
       | 2   | Voomm        | $41.31 | 2.64  | 6.83   | 10/18/2023 |

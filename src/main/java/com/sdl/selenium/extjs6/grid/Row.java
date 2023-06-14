@@ -326,8 +326,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public List<String> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        WebLocator columnsEl = new WebLocator(this).setTag("td");
-        List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
+        List<Integer> columns = getColumns(excludedColumns);
         return getValues(predicate, function, columns);
     }
 
@@ -350,8 +349,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public List<String> getLockedCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         int firstColumns = getLockedCells();
-        WebLocator columnsEl = new WebLocator(this).setTag("td");
-        List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
+        List<Integer> columns = getColumns(excludedColumns);
         List<String> list = new ArrayList<>();
         WebLocator container = getPathBuilder().getContainer();
         WebLocator containerLocked = new WebLocator().setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");

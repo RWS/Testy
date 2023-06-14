@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
+public class Table extends WebLocator implements ITable<Row, Cell>, Transform, IColumns {
     private static final Logger LOGGER = LoggerFactory.getLogger(Table.class);
 
     private final Duration timeout = Duration.ofSeconds(30);
@@ -27,6 +27,11 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
     public Table(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    @Override
+    public int getHeadersCount() {
+        return 0;
     }
 
     @Override
@@ -219,21 +224,6 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform {
             return null;
         }
         return transformToObjectList(type, cellsText);
-    }
-
-    protected List<Integer> getColumns(int columns, int[] excludedColumns) {
-        List<Integer> excluded = new ArrayList<>();
-        for (int excludedColumn : excludedColumns) {
-            excluded.add(excludedColumn);
-        }
-
-        List<Integer> columnsList = new ArrayList<>();
-        for (int i = 1; i <= columns; i++) {
-            if (!excluded.contains(i)) {
-                columnsList.add(i);
-            }
-        }
-        return columnsList;
     }
 
     public String getText(String searchText, int columnId) {

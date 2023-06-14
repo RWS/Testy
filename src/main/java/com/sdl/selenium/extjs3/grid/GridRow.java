@@ -6,11 +6,8 @@ import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.table.AbstractRow;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.ICell;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class GridRow extends AbstractRow {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GridRow.class);
 
     public GridRow() {
         setRenderMillis(200);
@@ -72,5 +69,10 @@ public class GridRow extends AbstractRow {
     @Override
     public int getCells() {
         return new Cell(this).size();
+    }
+
+    @Override
+    public int getHeadersCount() {
+        return 0;
     }
 }

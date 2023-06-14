@@ -12,9 +12,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
-import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -294,38 +292,38 @@ public class GridIntegrationTest extends TestBase {
         log.debug("performanceIsCheckedTest took {} ms", rez);
     }
 
-    @Test
-    void getCellsTestParallel() {
-//        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
-//        driver.switchTo().frame("examples-iframe");
-        Grid spreadsheet = new Grid().setTitle("Basic Grid");
-        spreadsheet.ready(Duration.ofSeconds(20));
-        List<List<String>> values = List.of(
-                List.of("Sidney Sheldonv", "Master of the Game", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "Are You Afraid of the Dark?", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "If Tomorrow Comes", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "Tell Me Your Dreams", "Warner Vision", "Book"),
-                List.of("Sidney Sheldonv", "Bloodline", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "The Other Side of Me", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "A Stranger in the Mirror", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "The Sky Is Falling", "William Morrow & Company", "Book"),
-                List.of("Sidney Sheldonv", "Nothing Lasts Forever", "Warner Books", "Book"),
-                List.of("Sidney Sheldonv", "The Naked Face", "Warner Books", "Book")
-        );
-        spreadsheet.ready(true);
-        long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = spreadsheet.getParallelValues(t -> t == 1, getValue());
-//        List<List<String>> cellsText = spreadsheet.getCellsText(t -> t == 0, null);
-        assertThatList("Actual values: ", cellsText, containsInAnyOrder(values.toArray()));
-//        assertThat(cellsText.size(), is(10));
-        long endMs = System.currentTimeMillis();
-        long rez = endMs - startMs;
-        log.info("performanceGetCellsTestParallel took {} ms", rez);
-    }
-
-    public static Function<Cell, String> getValue() {
-        return f -> {
-            return f.getText() + "v";
-        };
-    }
+//    @Test
+//    void getCellsTestParallel() {
+////        driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
+////        driver.switchTo().frame("examples-iframe");
+//        Grid spreadsheet = new Grid().setTitle("Basic Grid");
+//        spreadsheet.ready(Duration.ofSeconds(20));
+//        List<List<String>> values = List.of(
+//                List.of("Sidney Sheldonv", "Master of the Game", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "Are You Afraid of the Dark?", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "If Tomorrow Comes", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "Tell Me Your Dreams", "Warner Vision", "Book"),
+//                List.of("Sidney Sheldonv", "Bloodline", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "The Other Side of Me", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "A Stranger in the Mirror", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "The Sky Is Falling", "William Morrow & Company", "Book"),
+//                List.of("Sidney Sheldonv", "Nothing Lasts Forever", "Warner Books", "Book"),
+//                List.of("Sidney Sheldonv", "The Naked Face", "Warner Books", "Book")
+//        );
+//        spreadsheet.ready(true);
+//        long startMs = System.currentTimeMillis();
+//        List<List<String>> cellsText = spreadsheet.getParallelValues(t -> t == 1, getValue());
+////        List<List<String>> cellsText = spreadsheet.getCellsText(t -> t == 0, null);
+//        assertThatList("Actual values: ", cellsText, containsInAnyOrder(values.toArray()));
+////        assertThat(cellsText.size(), is(10));
+//        long endMs = System.currentTimeMillis();
+//        long rez = endMs - startMs;
+//        log.info("performanceGetCellsTestParallel took {} ms", rez);
+//    }
+//
+//    public static Function<Cell, String> getValue() {
+//        return f -> {
+//            return f.getText() + "v";
+//        };
+//    }
 }

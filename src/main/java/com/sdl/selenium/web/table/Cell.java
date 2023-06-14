@@ -21,7 +21,7 @@ public class Cell extends AbstractCell {
 
     public Cell(WebLocator container, int columnIndex) {
         this(container);
-        setTemplateValue("tagAndPosition", columnIndex + "");
+        setTemplateValue("tagAndPosition", String.valueOf(columnIndex));
     }
 
     public Cell(String columnText, SearchType... searchTypes) {
@@ -31,19 +31,19 @@ public class Cell extends AbstractCell {
 
     public Cell(int columnIndex, String columnText, SearchType... searchTypes) {
         this();
-        setTemplateValue("tagAndPosition", columnIndex + "");
+        setTemplateValue("tagAndPosition", String.valueOf(columnIndex));
         setText(columnText, searchTypes);
     }
 
     public Cell(int columnIndex, WebLocator... iconEl) {
         this();
-        setTemplateValue("tagAndPosition", columnIndex + "");
+        setTemplateValue("tagAndPosition", String.valueOf(columnIndex));
         setChildNodes(iconEl);
     }
 
     public Cell(int columnIndex, SearchType searchType, WebLocator... iconEl) {
         this();
-        setTemplateValue("tagAndPosition", columnIndex + "");
+        setTemplateValue("tagAndPosition", String.valueOf(columnIndex));
         setChildNodes(searchType, iconEl);
     }
 

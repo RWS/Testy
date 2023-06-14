@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -211,7 +212,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     }
 
     public List<String> getHeaders() {
-        WebLocator header = new WebLocator(this).setClasses("x-column-header");
+        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
+        WebLocator header = new WebLocator(body).setClasses("x-column-header");
         int size = header.size();
         List<String> headers = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
@@ -219,6 +221,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             headers.add(header.getText());
         }
         return headers.stream().filter(i -> !Strings.isNullOrEmpty(i.trim())).collect(Collectors.toList());
+    }
+
+    public List<String> getHeadersFast() {
+        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
+        return Arrays.asList(body.getText().split("\\n"));
     }
 
     public int getHeadersCount() {
@@ -399,15 +406,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
 
     public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
-        Row rowEl = new Row(this, 1);
         if (rowExpand) {
             rowsEl.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
-            rowEl = new Row(this).setTag("tr").setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true).setResultIdx(1);
         }
-        Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size();
-        int columns = columnsEl.size();
-        final List<Integer> columnsList = getColumns(columns, excludedColumns);
+        final List<Integer> columnsList = getColumns(excludedColumns);
         if (rows <= 0) {
             return null;
         } else {
@@ -659,10 +662,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
 
     public List<List<String>> getParallelValues(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
-        Row rowEl = new Row(this, 1);
-        Cell columnsEl = new Cell(rowEl);
-        int columns = columnsEl.size();
-        List<Integer> columnsList = getColumns(columns, excludedColumns);
+        List<Integer> columnsList = getColumns(excludedColumns);
         int size = rowsEl.size();
         List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
@@ -686,9 +686,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     String currentId = row.getAttributeId();
                     if (!"".equals(id) && id.equals(currentId)) {
                         canRead = true;
-                        log.info("canRead=true");
-                    } else {
-                        log.info("canRead=false");
                     }
                 }
             }
@@ -711,7 +708,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             Row row = new Row(this, size);
             id = row.getAttributeId();
             scrollPageDownInTree();
-            log.info("scroll------");
             canRead = false;
             timeout++;
         } while (timeout < 30);

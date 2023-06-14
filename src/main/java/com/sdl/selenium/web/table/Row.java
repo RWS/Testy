@@ -53,8 +53,7 @@ public class Row extends AbstractRow {
     }
 
     public List<String> getCellsText(int... excludedColumns) {
-        WebLocator columnsEl = new WebLocator(this).setTag("td");
-        List<Integer> columns = getColumns(columnsEl.size(), excludedColumns);
+        List<Integer> columns = getColumns(excludedColumns);
         List<String> list = new ArrayList<>();
         for (int j : columns) {
             Cell cell = new Cell(this, j);
@@ -69,5 +68,11 @@ public class Row extends AbstractRow {
     public <V> V getCellsValues(V type, int... excludedColumns) {
         List<String> actualList = getCellsText(excludedColumns);
         return transformToObject(type, actualList);
+    }
+
+    @Override
+    public int getHeadersCount() {
+        WebLocator columnsEl = new WebLocator(this).setTag("td");
+        return columnsEl.size();
     }
 }
