@@ -36,9 +36,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
         setPosition(indexRow);
         if (isGridLocked()) {
             String index = getAttribute("data-recordindex");
-//            setTag("*");
-//            String xPath = getXPath().replace(grid.getXPath(), "");
-            setElPath(grid.getXPath() + "//table[@data-recordindex='" + index + "']");
+            setTag("*");
+            String xPath = getXPath().replace(grid.getXPath(), "");
+            setElPath(xPath + "//table[@data-recordindex='" + index + "']");
         }
     }
 
