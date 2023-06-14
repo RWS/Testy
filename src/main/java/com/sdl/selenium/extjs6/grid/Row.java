@@ -34,12 +34,6 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public Row(WebLocator grid, int indexRow) {
         this(grid);
         setPosition(indexRow);
-        if (isGridLocked()) {
-            String index = getAttribute("data-recordindex");
-            setTag("*");
-            String xPath = getXPath().replace(grid.getXPath(), "");
-            setElPath(xPath + "//table[@data-recordindex='" + index + "']");
-        }
     }
 
     public Row(WebLocator grid, String searchElement, SearchType... searchTypes) {

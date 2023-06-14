@@ -229,9 +229,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     }
 
     public int getHeadersCount() {
-        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-        WebLocator header = new WebLocator(body).setClasses("x-column-header");
-        return header.size();
+        if(isGridLocked()){
+            Row row = getRow(1);
+            WebLocator columnsEl = new WebLocator(row).setTag("td");
+            return columnsEl.size();
+        } else {
+            WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
+            WebLocator header = new WebLocator(body).setClasses("x-column-header");
+            return header.size();
+        }
     }
 
     public List<List<String>> getLockedLists(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
