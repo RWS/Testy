@@ -235,7 +235,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             return columnsEl.size();
         } else {
             WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-            WebLocator header = new WebLocator(body).setClasses("x-column-header");
+            WebLocator header = new WebLocator(body).setClasses("x-column-header").setAttribute("aria-hidden", "false");;
             return header.size();
         }
     }
