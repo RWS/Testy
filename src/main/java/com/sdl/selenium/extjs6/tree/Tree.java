@@ -295,8 +295,8 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
 
     @Override
     public int getHeadersCount() {
-        WebLocator columnsEl = new WebLocator(this).setTag("td");
-        return columnsEl.size();
+        Row row = new Row(this, 1);
+        return row.getCells();
     }
 
     public List<List<String>> getValues(int rows, List<Integer> columnsList, Predicate<Integer> predicate, Function<Cell, String> function) {
