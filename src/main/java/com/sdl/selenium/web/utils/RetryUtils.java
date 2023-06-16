@@ -1,5 +1,6 @@
 package com.sdl.selenium.web.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
@@ -239,17 +240,16 @@ public class RetryUtils {
     }
 
     private static int getLimit(Duration duration) {
-        List<Integer> integers = List.of(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610);
+        List<Integer> fibonacciNumbers = List.of(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610);
         int limit = (int) (duration.getSeconds() / 8);
-//        log.info("limit: {}", limit);
-        int lastItem = 0;
-        for (Integer integer : integers) {
-            if (integer > limit) {
-                return lastItem;
-            } else if (integer == limit) {
-                return integer;
+        int lastFibonacci = 0;
+        for (int fibonacci : fibonacciNumbers) {
+            if (fibonacci > limit) {
+                return lastFibonacci;
+            } else if (fibonacci == limit) {
+                return fibonacci;
             } else {
-                lastItem = integer;
+                lastFibonacci = fibonacci;
             }
         }
         return limit;
@@ -312,68 +312,74 @@ public class RetryUtils {
     }
 
     private static <V> V doRetryIfNotSame(V expected, Callable<V> call) throws Exception {
-        V text = call.call();
-        if (text instanceof Integer && expected instanceof Integer) {
-            return expected == text ? text : null;
-        } else if (text instanceof List && expected instanceof List) {
-            List<?> currentList = (List<?>) text;
+        V currentResult = call.call();
+        if (currentResult instanceof Integer && expected instanceof Integer) {
+            return expected == currentResult ? currentResult : null;
+        } else if (currentResult instanceof List && expected instanceof List) {
+            List<?> currentList = (List<?>) currentResult;
             List<?> expectedList = (List<?>) expected;
             if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
-                List<List<?>> currentListOfList = (List<List<?>>) text;
-                List<List<?>> expectedListOfList = (List<List<?>>) expected;
-                Boolean compare = null;
-                int expectedSize = expectedListOfList.size();
-                for (List<?> expectedTmp : expectedListOfList) {
-                    int currentFind = 0;
-                    Boolean match = null;
-                    for (List<?> currentTmp : currentListOfList) {
-                        boolean matchTmp = expectedTmp.containsAll(currentTmp);
-                        if (matchTmp) {
-                            currentFind++;
-                            match = true;
-                        }
-                        if (expectedSize == currentFind) {
-                            break;
-                        }
-                    }
-                    compare = compare == null ? Boolean.TRUE.equals(match) : compare && Boolean.TRUE.equals(match);
-                }
-                return compare ? text : null;
+                return compareListOfList((List<List<?>>) expected, currentResult);
             } else if (currentList.get(0) instanceof String && expectedList.get(0) instanceof String) {
                 boolean allMatch = currentList.size() == expectedList.size() && currentList.containsAll(expectedList);
-                return allMatch ? text : null;
+                return allMatch ? currentResult : null;
             } else {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
-                boolean allMatch = true;
-                for (Object o : expectedList) {
-                    String expectedJson = mapper.writeValueAsString(o);
-                    boolean found = false;
-                    for (Object c : currentList) {
-                        String currentJson = mapper.writeValueAsString(c).replaceAll(":null", ":\\\"\\\"");
-                        if (expectedJson.equals(currentJson)) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    allMatch = allMatch && found;
-                }
-                if (!allMatch) {
-                    Utils.sleep(1);
-                }
-                return allMatch ? text : null;
-//                throw new UnsupportedOperationException("Cannot compare List of object with another List of object!");
+                return compareListOfObject(currentResult, currentList, expectedList);
             }
-        } else if (text instanceof String && expected instanceof String) {
-            return expected.equals(text) ? text : null;
-        } else if (text instanceof Boolean && expected instanceof Boolean) {
-            Boolean bolActual = (Boolean) text;
+        } else if (currentResult instanceof String && expected instanceof String) {
+            return expected.equals(currentResult) ? currentResult : null;
+        } else if (currentResult instanceof Boolean && expected instanceof Boolean) {
+            Boolean bolActual = (Boolean) currentResult;
             Boolean bolExpected = (Boolean) expected;
-            return bolExpected.equals(bolActual) ? text : null;
+            return bolExpected.equals(bolActual) ? currentResult : null;
         } else {
             log.error("Expected and actual objects aren't the some type!");
             return null;
         }
+    }
+
+    private static <V> V compareListOfList(List<List<?>> expectedListOfList, V currentResult) {
+        List<List<?>> currentListOfList = (List<List<?>>) currentResult;
+        Boolean compare = null;
+        int expectedSize = expectedListOfList.size();
+        for (List<?> expectedTmp : expectedListOfList) {
+            int currentFind = 0;
+            Boolean match = null;
+            for (List<?> currentTmp : currentListOfList) {
+                boolean matchTmp = expectedTmp.containsAll(currentTmp);
+                if (matchTmp) {
+                    currentFind++;
+                    match = true;
+                }
+                if (expectedSize == currentFind) {
+                    break;
+                }
+            }
+            compare = compare == null ? Boolean.TRUE.equals(match) : compare && Boolean.TRUE.equals(match);
+        }
+        return Boolean.TRUE.equals(compare) ? currentResult : null;
+    }
+
+    private static <V> V compareListOfObject(V currentResult, List<?> currentList, List<?> expectedList) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
+        boolean allMatch = true;
+        for (Object o : expectedList) {
+            String expectedJson = mapper.writeValueAsString(o);
+            boolean found = false;
+            for (Object currentObject : currentList) {
+                String currentJson = mapper.writeValueAsString(currentObject).replaceAll(":null", ":\\\"\\\"");
+                if (expectedJson.equals(currentJson)) {
+                    found = true;
+                    break;
+                }
+            }
+            allMatch = allMatch && found;
+        }
+        if (!allMatch) {
+            Utils.sleep(1);
+        }
+        return allMatch ? currentResult : null;
     }
 
     /**
