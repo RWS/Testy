@@ -36,10 +36,7 @@ public class Utils {
         if (Strings.isNullOrEmpty(text)) {
             return text;
         } else if (hasDoubleQuote && hasSingeQuote) {
-            boolean quoteIsLast = false;
-            if (text.lastIndexOf("\"") == text.length() - 1) {
-                quoteIsLast = true;
-            }
+            boolean quoteIsLast = text.lastIndexOf("\"") == text.length() - 1;
             String[] substrings = text.split("\"");
 
             StringBuilder quoted = new StringBuilder("concat(");

@@ -139,6 +139,83 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return selected;
     }
 
+    public Row selectAndGetNode(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
+        if (doScroll) {
+            scrollTop();
+        }
+        Row previousNodeEl = null;
+        boolean selected = false;
+        for (int i = 0; i < nodes.size(); i++) {
+            String node = nodes.get(i);
+            WebLocator textEl = new WebLocator().setText(node, searchTypes);
+            WebLocator container = previousNodeEl == null ? this : previousNodeEl;
+            Row nodeEl = new Row(container).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
+            if (previousNodeEl != null) {
+                nodeEl.setRoot("/following-sibling::");
+            }
+            Row row = new Row(nodeEl, 1).setTag("tr").setClasses("x-grid-row");
+            boolean isExpanded;
+            String aClass = row.getAttributeClass();
+            isExpanded = aClass != null && aClass.contains("x-grid-tree-node-expanded");
+            if (doScroll) {
+                scrollPageDownTo(nodeEl);
+            }
+            WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
+            if (nodeEl.ready()) {
+                if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
+                    RetryUtils.retry(2, () -> {
+                        expanderEl.click();
+                        String aCls = row.getAttributeClass();
+                        boolean contains = aCls.contains("x-grid-tree-node-expanded");
+                        if (!contains) {
+                            Utils.sleep(1);
+                            log.error("Node '{}' is not expanded!!!", node);
+                        } else {
+                            log.info("Node '{}' is expanded.", node);
+                        }
+                        return contains;
+                    });
+                } else {
+                    WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
+                    WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
+                    int nodeCount = nodeTree.size();
+                    if (nodeCount > 1) {
+                        WebLocator precedingSibling = new WebLocator(nodeTree).setTag("preceding-sibling::*").setClasses("x-tree-elbow-img");
+                        for (int j = 1; j <= nodeCount; j++) {
+                            nodeTree.setResultIdx(j);
+                            int size = precedingSibling.size();
+                            if (size == i + 1) {
+                                break;
+                            }
+                        }
+                    }
+                    try {
+                        if (checkTree.isPresent()) {
+                            selected = checkTree.click();
+                        } else {
+                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                        }
+                    } catch (WebDriverException e) {
+                        if (doScroll) {
+                            scrollPageDown();
+                        }
+                        if (checkTree.isPresent()) {
+                            selected = checkTree.click();
+                        } else {
+                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                        }
+                    }
+                }
+            }
+            previousNodeEl = nodeEl;
+        }
+        if (selected) {
+            return previousNodeEl;
+        } else {
+            return null;
+        }
+    }
+
     public boolean isSelected(String node) {
         WebLocator nodeEl = new WebLocator().setText(node);
         Table nodeSelected = new Table(this).setClasses("x-grid-item", "x-grid-item-selected").setChildNodes(nodeEl).setVisibility(true);
@@ -318,7 +395,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
-                            if(Strings.isNullOrEmpty(text)){
+                            if (Strings.isNullOrEmpty(text)) {
                                 text = cell.getText(true).trim();
                             }
                         }
@@ -390,7 +467,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
-                            if(Strings.isNullOrEmpty(text)){
+                            if (Strings.isNullOrEmpty(text)) {
                                 text = cell.getText(true).trim();
                             }
                         }

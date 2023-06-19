@@ -9,8 +9,6 @@ public abstract class Field extends WebLocator implements IField {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Field.class);
 
-
-
     public String getError() {
         WebLocator error = new WebLocator(this).setRoot("/../../../../").setClasses("x-form-error-wrap");
         return error.getText();
