@@ -20,6 +20,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -225,7 +226,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
 
     public List<String> getHeadersFast() {
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-        return Arrays.asList(body.getText().split("\\n"));
+        ArrayList<String> headers = new ArrayList<>();
+        if(!Objects.isNull(body)){
+            headers.addAll(Arrays.asList(body.getText().split("\\n")));
+        }
+        return headers;
     }
 
     public int getHeadersCount() {
