@@ -227,7 +227,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     public List<String> getHeadersFast() {
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
         ArrayList<String> headers = new ArrayList<>();
-        if(!Objects.isNull(body)){
+        if(!Strings.isNullOrEmpty(body.getText())){
             headers.addAll(Arrays.asList(body.getText().split("\\n")));
         }
         return headers;
