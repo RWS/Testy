@@ -160,7 +160,7 @@ public class GenerateUtils {
                     "@RunWith(Cucumber.class)",
                     "@CucumberOptions(\n" +
                             "        stepNotifications = true,\n" +
-                            "        plugin = {\"pretty\", \"json:target/" + getNameFormat() + ".json\"},\n" +
+                            "        plugin = {\"pretty\", \"html:target/cucumber\", \"json:target/" + getNameFormat() + ".json\"},\n" +
                             "        glue = {\"com.sdl.selenium\"},\n" +
                             "        features = \"classpath:features/" + getPackageName() + "/" + featureFile.getFileName().toString() + "\"\n" +
                             ")",
