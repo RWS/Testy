@@ -72,6 +72,10 @@ public abstract class Tag extends Combo implements ITag {
         }
     }
 
+    public String getValue(){
+        return String.join(",", getAllSelectedValues());
+    }
+
     public boolean expand() {
         if ("false".equals(aria.getAttribute("aria-expanded"))) {
             clickIcon("arrow-trigger");
