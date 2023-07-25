@@ -1,4 +1,4 @@
-package com.sdl.selenium.materialui.checkbox;
+package com.sdl.selenium.materialui.form;
 
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.WebLocator;
@@ -16,24 +16,24 @@ public class CheckboxSteps extends TestBase {
 
     @And("I verify if checkbox is present")
     public void IVerifyIfCheckboxIsPresent() {
-        Checkbox end = new Checkbox(container, "End");
+        CheckBox end = new CheckBox(container, "End");
         boolean present = end.ready(Duration.ofSeconds(1));
         assertThat(present, is(true));
-        Checkbox start = new Checkbox(container, "Start");
+        CheckBox start = new CheckBox(container, "Start");
         present = start.ready(Duration.ofSeconds(1));
         assertThat(present, is(true));
     }
 
     @And("I verify if {string} checkbox is {check}")
     public void iVerifyIfCheckboxIsChecked(String checkboxName, Boolean check) {
-        Checkbox end = new Checkbox(container, checkboxName);
+        CheckBox end = new CheckBox(container, checkboxName);
         boolean checked = end.isChecked();
         assertThat(checked, is(check));
     }
 
     @And("I {check} {string} checkbox")
     public void iCheckCheckbox(Boolean check, String checkboxName) {
-        Checkbox end = new Checkbox(container, checkboxName);
+        CheckBox end = new CheckBox(container, checkboxName);
         end.check(check);
     }
 }

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.apache.commons.text.WordUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,14 +37,11 @@ public class GenerateUtils {
             case "combobox":
                 result = "ComboBox";
                 break;
-            case "button":
-                result = WordUtils.capitalize(name);
-                break;
             case "togglebutton":
                 result = "ToggleButton";
                 break;
             default:
-                result = "";
+                result = WordUtils.capitalize(name);
                 break;
         }
         return result;
@@ -63,18 +59,71 @@ public class GenerateUtils {
                 result = "button";
                 break;
             default:
-                result = "";
+                result = WordUtils.capitalize(getName(), '-').replaceAll("-", "");
+                result = WordUtils.uncapitalize(result);
                 break;
         }
         return result;
     }
 
+    public String getLastPackageName() {
+        return getLastPackageName(getPackageName());
+    }
+
+    public String getLastPackageName(String name) {
+        if (name.contains("/")) {
+            return name.split("/")[1];
+        } else {
+            return name;
+        }
+    }
+
+    public String getPackageForImport() {
+        return getPackageForImport(getPackageName());
+    }
+
+    public String getPackageForImport(String name) {
+        return name.replaceAll("/", ".");
+    }
+
+    public Path getUnitTestAboslutePath() {
+        return Paths.get("src", "test", "java", "com", "sdl", "unit", packageName).toAbsolutePath();
+    }
+
+    public Path getMainAboslutePath() {
+        return getMainAboslutePath(getPackageName());
+    }
+
+    public Path getMainAboslutePath(String packageName) {
+        return Paths.get("src", "main", "java", "com", "sdl", "selenium", packageName).toAbsolutePath();
+    }
+
+    public Path getTestAbsolutePath() {
+        return getTestAbsolutePath(getPackageName());
+    }
+
+    public Path getTestAbsolutePath(String packageName) {
+        return Paths.get("src", "test", "java", "com", "sdl", "selenium", packageName).toAbsolutePath();
+    }
+
+    public Path getFeaturesPath() {
+        return getFeaturesPath(getPackageName());
+    }
+
+    public Path getFeaturesPath(String packageName) {
+        return Paths.get("src", "test", "resources", "features", packageName).toAbsolutePath();
+    }
+
+    public Path getUnitAbsolutePath() {
+        return Paths.get("src", "test", "resources", "unit").toAbsolutePath();
+    }
+
     @SneakyThrows
     public Path createPackageAndFeatureFile() {
-        Path directoryPath = Paths.get(new File("src/test/resources").getAbsolutePath(), "features", packageName);
-        Path featureFile = Paths.get(String.valueOf(directoryPath), name + ".feature");
-        if (!featureFile.toFile().exists()) {
-            if (!directoryPath.toFile().exists()) {
+        Path directoryPath = getFeaturesPath();
+        Path featureFile = directoryPath.resolve(name + ".feature");
+        if (Files.notExists(featureFile)) {
+            if (Files.notExists(directoryPath)) {
                 Files.createDirectories(directoryPath);
             }
             createFeatureFile(featureFile);
@@ -96,28 +145,30 @@ public class GenerateUtils {
 
     @SneakyThrows
     public Path createRunner(Path featureFile) {
-        Path namePath = Paths.get(new File("src/test").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, getPackageFormat());
-        if (!namePath.toFile().exists()) {
+        Path namePath = getTestAbsolutePath();
+        if (Files.notExists(namePath)) {
             Files.createDirectories(namePath);
         }
         String nameRunner = getNameFormat() + "Runner";
-        Path runnerPath = Paths.get(String.valueOf(namePath), nameRunner + ".java");
-        List<String> rows = List.of(
-                "package com.sdl.selenium." + getPackageName() + "." + getPackageFormat() + ";\n",
-                "import io.cucumber.junit.Cucumber;",
-                "import io.cucumber.junit.CucumberOptions;",
-                "import org.junit.runner.RunWith;\n",
-                "@RunWith(Cucumber.class)",
-                "@CucumberOptions(\n" +
-                        "        stepNotifications = true,\n" +
-                        "        plugin = {\"pretty\", \"json:target/" + getNameFormat() + ".json\"},\n" +
-                        "        glue = {\"com.sdl.selenium\"},\n" +
-                        "        features = \"classpath:features/" + getPackageName() + "/" + featureFile.getFileName().toString() + "\"\n" +
-                        ")",
-                "public class " + nameRunner + " {",
-                "}"
-        );
-        createFileAndAddContent(runnerPath, rows);
+        Path runnerPath = namePath.resolve(nameRunner + ".java");
+        if (Files.notExists(runnerPath)) {
+            List<String> rows = List.of(
+                    "package com.sdl.selenium." + getPackageForImport() + ";\n",
+                    "import io.cucumber.junit.Cucumber;",
+                    "import io.cucumber.junit.CucumberOptions;",
+                    "import org.junit.runner.RunWith;\n",
+                    "@RunWith(Cucumber.class)",
+                    "@CucumberOptions(\n" +
+                            "        stepNotifications = true,\n" +
+                            "        plugin = {\"pretty\", \"json:target/" + getNameFormat() + ".json\"},\n" +
+                            "        glue = {\"com.sdl.selenium\"},\n" +
+                            "        features = \"classpath:features/" + getPackageName() + "/" + featureFile.getFileName().toString() + "\"\n" +
+                            ")",
+                    "public class " + nameRunner + " {",
+                    "}"
+            );
+            createFileAndAddContent(runnerPath, rows);
+        }
         return namePath;
     }
 
@@ -129,9 +180,9 @@ public class GenerateUtils {
 
     public void createSteps(Path namePath) {
         String nameSteps = getNameFormat() + "Steps";
-        Path stepsPath = Paths.get(String.valueOf(namePath), nameSteps + ".java");
+        Path stepsPath = namePath.resolve(nameSteps + ".java");
         List<String> stepsRows = List.of(
-                "package com.sdl.selenium." + packageName + "." + getPackageFormat() + ";\n",
+                "package com.sdl.selenium." + getPackageForImport() + ";\n",
                 "import com.sdl.selenium.TestBase;",
                 "import io.cucumber.java.en.Given;",
                 "import lombok.extern.slf4j.Slf4j;\n",
@@ -147,8 +198,8 @@ public class GenerateUtils {
     }
 
     public void addStepInFeatureFile(String step) throws IOException {
-        Path directoryPath = Paths.get(new File("src/test/resources").getAbsolutePath(), "features", packageName);
-        Path featureFile = Paths.get(String.valueOf(directoryPath), name + ".feature");
+        Path directoryPath = getFeaturesPath();
+        Path featureFile = directoryPath.resolve(name + ".feature");
         List<String> rows = Files.readAllLines(featureFile);
         Optional<String> find = rows.stream().filter(i -> i.contains(step)).findFirst();
         if (find.isEmpty()) {
@@ -159,14 +210,14 @@ public class GenerateUtils {
     }
 
     public void createViewClass() throws IOException {
-        Path viewDir = Paths.get(new File("src/main").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, getPackageFormat());
-        if (!viewDir.toFile().exists()) {
+        Path viewDir = getMainAboslutePath();
+        if (Files.notExists(viewDir)) {
             Files.createDirectories(viewDir);
         }
-        Path viewFile = Paths.get(String.valueOf(viewDir), getNameFormat() + ".java");
-        if (!viewFile.toFile().exists()) {
+        Path viewFile = viewDir.resolve(getNameFormat() + ".java");
+        if (Files.notExists(viewFile)) {
             List<String> viewRows = List.of(
-                    "package com.sdl.selenium." + packageName + "." + getPackageFormat() + ";\n",
+                    "package com.sdl.selenium." + getPackageForImport() + ";\n",
                     "import com.sdl.selenium.web.WebLocator;",
                     "import com.sdl.selenium.web.SearchType;",
                     "import lombok.extern.slf4j.Slf4j;\n",
@@ -192,15 +243,15 @@ public class GenerateUtils {
         }
     }
 
-   public void addMethodInStepsClass(String step) throws IOException {
-        Path stepsFile = Paths.get(new File("src/test").getAbsolutePath(), "java", "com", "sdl", "selenium", packageName, getPackageFormat(), getNameFormat() + "Steps.java");
+    public void addMethodInStepsClass(String step) throws IOException {
+        Path stepsFile = getTestAbsolutePath().resolve(getNameFormat() + "Steps.java");
         List<String> stepsRows = Files.readAllLines(stepsFile);
         String nameMethod = WordUtils.capitalize(step).replaceAll(" ", "");
         Optional<String> findStep = stepsRows.stream().filter(i -> i.contains(nameMethod)).findFirst();
         if (findStep.isEmpty()) {
             int index = lastIndexOf(stepsRows, s -> s.contains("import"));
             List<String> rows1 = List.of(
-                    "import com.sdl.selenium." + packageName + "." + getPackageFormat() + "." + getNameFormat() + ";",
+                    "import com.sdl.selenium." + getPackageForImport() + "." + getNameFormat() + ";",
                     "import io.cucumber.java.en.And;",
                     "import static org.hamcrest.MatcherAssert.assertThat;",
                     "import static org.hamcrest.core.Is.is;"
@@ -227,15 +278,15 @@ public class GenerateUtils {
     }
 
     public void createUnitTestClass() throws IOException {
-        Path unitDir = Paths.get(new File("src/test").getAbsolutePath(), "java", "com", "sdl", "unit", packageName, getPackageFormat());
-        if (!unitDir.toFile().exists()) {
+        Path unitDir = getUnitTestAboslutePath();
+        if (Files.notExists(unitDir)) {
             Files.createDirectories(unitDir);
         }
-        Path unitFile = Paths.get(String.valueOf(unitDir), getNameFormat() + "Test.java");
-        if (!unitFile.toFile().exists()) {
+        Path unitFile = unitDir.resolve(getNameFormat() + "Test.java");
+        if (Files.notExists(unitFile)) {
             List<String> unitRows = List.of(
-                    "package com.sdl.unit." + packageName + "." + getPackageFormat() + ";\n",
-                    "import com.sdl.selenium." + packageName + "." + getPackageFormat() + "." + getNameFormat() + ";",
+                    "package com.sdl.unit." + getPackageForImport() + ";\n",
+                    "import com.sdl.selenium." + getPackageForImport() + "." + getNameFormat() + ";",
                     "import com.sdl.selenium.web.SearchType;",
                     "import com.sdl.selenium.web.WebLocator;",
                     "import org.testng.annotations.DataProvider;",
@@ -265,9 +316,9 @@ public class GenerateUtils {
     }
 
     public void addUnitTestInTestNGFile() throws IOException {
-        Path testNGFile = Paths.get(new File("src/test/resources").getAbsolutePath(), "unit", "testng-unit.xml");
+        Path testNGFile = getUnitAbsolutePath().resolve("testng-unit.xml");
         List<String> testNGRows = Files.readAllLines(testNGFile);
-        String item = "<class name=\"com.sdl.unit." + packageName + "." + getPackageFormat() + "." + getNameFormat() + "Test\"/>";
+        String item = "<class name=\"com.sdl.unit." + getPackageForImport() + "." + getNameFormat() + "Test\"/>";
         Optional<String> itemFound = testNGRows.stream().filter(i -> i.contains(item)).findFirst();
         if (itemFound.isEmpty()) {
             int index = lastIndexOf(testNGRows, s -> s.contains("<class name="));

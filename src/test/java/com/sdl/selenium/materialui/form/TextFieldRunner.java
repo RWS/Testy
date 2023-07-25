@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         stepNotifications = true,
-        plugin = {"pretty", "html:target/cucumber", "json:target/ComboBox.json", "com.sdl.selenium.StepDetails"},
+        plugin = {"pretty", "html:target/cucumber", "json:target/TextField.json", "com.sdl.selenium.StepDetails"},
         glue = {"com.sdl.selenium"},
-        features = "classpath:features/materialui/form/combobox.feature"
+        features = "classpath:features/materialui/form/textField.feature"
 )
-public class ComboBoxRunner {
+public class TextFieldRunner {
 }
