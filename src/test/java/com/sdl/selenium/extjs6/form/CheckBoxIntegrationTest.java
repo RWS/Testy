@@ -23,6 +23,7 @@ public class CheckBoxIntegrationTest extends TestBase {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
         driver.switchTo().frame("examples-iframe");
         checkBox.setVersion(version);
+        checkBox.getValue();
         boxLabel.setVersion(version);
         boxLabel.ready(Duration.ofSeconds(10));
         Utils.sleep(1);

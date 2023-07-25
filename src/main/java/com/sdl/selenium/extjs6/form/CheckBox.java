@@ -82,4 +82,8 @@ public class CheckBox extends Field implements ICheck {
             return select != null && select.contains("true");
         }
     }
+
+    public String getValue() {
+        return String.valueOf(isChecked());
+    }
 }
