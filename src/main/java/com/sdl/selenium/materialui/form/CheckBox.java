@@ -2,12 +2,13 @@ package com.sdl.selenium.materialui.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.IField;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CheckBox extends WebLocator implements IField, ICheck {
+public class CheckBox extends Field implements IField, ICheck {
 
     public CheckBox() {
         setClassName("Checkbox");
@@ -33,5 +34,9 @@ public class CheckBox extends WebLocator implements IField, ICheck {
     @Override
     public boolean isChecked() {
         return ready() && executor.isSelected(this);
+    }
+
+    public String getValue() {
+        return String.valueOf(isChecked());
     }
 }
