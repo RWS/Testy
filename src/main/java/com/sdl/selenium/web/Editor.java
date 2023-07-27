@@ -1,7 +1,6 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.extjs6.form.*;
-import com.sdl.selenium.extjs6.grid.Grid;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.utils.RetryUtils;
 import org.slf4j.Logger;
@@ -9,7 +8,7 @@ import org.slf4j.Logger;
 import java.time.Duration;
 
 public interface Editor {
-    Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
+    Logger log = org.slf4j.LoggerFactory.getLogger(Editor.class);
 
     WebLocator getView();
 
@@ -22,14 +21,18 @@ public interface Editor {
 
     @SuppressWarnings("unchecked")
     default <T extends Field> T getEditor() {
+        return getDoEditor(getView());
+    }
+
+    default <T extends Field> T getDoEditor(WebLocator parent) {
         Field editor;
-        WebLocator container = new WebLocator("x-editor", getView());
-        WebLocator editableEl = new WebLocator(container).setTag("input");
-        if (!editableEl.isPresent()) {
-            editableEl = new WebLocator(container).setTag("textarea");
+        WebLocator container = new WebLocator(parent).setClasses("x-editor");
+        WebLocator input = new WebLocator(container).setTag("input");
+        if (!input.isPresent()) {
+            input = new WebLocator(container).setTag("textarea");
         }
-        WebLocator finalEditableEl = editableEl;
-        String type = RetryUtils.retry(2, () -> finalEditableEl.getAttribute("data-componentid"));
+        WebLocator finalInput = input;
+        String type = RetryUtils.retry(2, () -> finalInput.getAttribute("data-componentid"));
         if (type == null) {
             log.error("active editor type: 'null'");
             return null;
@@ -51,7 +54,7 @@ public interface Editor {
                 return null;
             }
         }
-        editor.setContainer(getView()).setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
+        editor.setContainer(parent).setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
         if (!(editor instanceof CheckBox)) {
             editor.setClasses("x-form-focus");
         }
