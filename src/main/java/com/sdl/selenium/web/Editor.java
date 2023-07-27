@@ -65,13 +65,23 @@ public interface Editor {
     default boolean edit(WebLocator cell, List<String> values) {
         String value = values.get(0);
         Field editor = getEditor(cell);
+        boolean edited = false;
         if (editor instanceof TextField) {
-            editor.setValue(value);
+            edited = RetryUtils.retry(2, () -> {
+                editor.setValue(value);
+                return editor.getValue().equals(value);
+            });
         } else if (editor instanceof ComboBox) {
-            ((ComboBox) editor).select(value);
+            ComboBox comboBox = (ComboBox) editor;
+            edited = RetryUtils.retry(2, () -> {
+                comboBox.select(value);
+                return comboBox.getValue().equals(value);
+            });
         } else if (editor instanceof TagField) {
-            ((TagField) editor).select(values.toArray(new String[0]));
+            edited = ((TagField) editor).select(values.toArray(new String[0]));
+        } else {
+            log.error("Is not suported!");
         }
-        return true;
+        return edited;
     }
 }
