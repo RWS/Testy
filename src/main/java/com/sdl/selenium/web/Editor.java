@@ -6,6 +6,7 @@ import com.sdl.selenium.web.utils.RetryUtils;
 import org.slf4j.Logger;
 
 import java.time.Duration;
+import java.util.List;
 
 public interface Editor {
     Logger log = org.slf4j.LoggerFactory.getLogger(Editor.class);
@@ -59,5 +60,18 @@ public interface Editor {
             editor.setClasses("x-form-focus");
         }
         return (T) editor;
+    }
+
+    default boolean edit(WebLocator cell, List<String> values) {
+        String value = values.get(0);
+        Field editor = getEditor(cell);
+        if (editor instanceof TextField) {
+            editor.setValue(value);
+        } else if (editor instanceof ComboBox) {
+            ((ComboBox) editor).select(value);
+        } else if (editor instanceof TagField) {
+            ((TagField) editor).select(values.toArray(new String[0]));
+        }
+        return true;
     }
 }
