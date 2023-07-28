@@ -1,8 +1,7 @@
 package com.sdl.selenium.materialui.form;
 
 import com.sdl.selenium.StepDetails;
-import com.sdl.selenium.TestBase;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.materialui.Base;
 import com.sdl.selenium.web.form.Field;
 import io.cucumber.java.en.And;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +11,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @Slf4j
-public class TextFieldSteps extends TestBase {
-    private final WebLocator container = new WebLocator().setId("main-content");
-    private final TextField textField = new TextField(container, "Required");
+public class TextFieldSteps extends Base {
+    private final TextField textField = new TextField(getContainer(), "Required");
 
     @And("I verify if textfield is present")
     public void IVerifyIfTextfieldIsPresent() {
@@ -33,7 +31,7 @@ public class TextFieldSteps extends TestBase {
         if (stepName.contains("Name")) {
             field = textField;
         } else if (stepName.contains("Age")) {
-            field = new ComboBox(container, "Age");
+            field = new ComboBox(getContainer(), "Age");
         }
         String actual = field.getValue();
         assertThat("Actual value", actual, equalTo(value));

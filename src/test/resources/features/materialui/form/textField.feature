@@ -1,7 +1,7 @@
 Feature: TextField
 
   Scenario: Start
-    Given I open Materialui app and add "react-text-field/" path
+    Given I open MaterialUI app and add "react-text-field/" path
 
   Scenario: Verify textfield
     And I verify if textfield is present
