@@ -137,7 +137,7 @@ public class GenerateUtils {
         List<String> rows = List.of(
                 "Feature: " + getNameFormat() + "\n",
                 "  Scenario: Start",
-                "    Given I open " + getPackageNameFormat() + " app"
+                "    Given I open MaterialUI app and add \"\" path"
         );
         Files.write(filePath, rows, StandardOpenOption.CREATE);
         return filePath;
@@ -183,15 +183,11 @@ public class GenerateUtils {
         Path stepsPath = namePath.resolve(nameSteps + ".java");
         List<String> stepsRows = List.of(
                 "package com.sdl.selenium." + getPackageForImport() + ";\n",
-                "import com.sdl.selenium.TestBase;",
+                "import com.sdl.selenium.materialui.Base",
                 "import io.cucumber.java.en.Given;",
                 "import lombok.extern.slf4j.Slf4j;\n",
                 "@Slf4j",
-                "public class " + nameSteps + " extends TestBase {\n",
-                "   @Given(\"I open " + getPackageNameFormat() + " app\")",
-                "   public void iOpen" + getPackageNameFormat() + "App() {",
-                "       driver.get(\"\");",
-                "   }",
+                "public class " + nameSteps + " extends Base {\n",
                 "}"
         );
         createFileAndAddContent(stepsPath, stepsRows);
@@ -261,7 +257,7 @@ public class GenerateUtils {
                     "",
                     "   @And(\"" + step + "\")",
                     "   public void " + nameMethod + "() {",
-                    "       " + getNameFormat() + " " + name + " = new " + getNameFormat() + "(null, \"\");",
+                    "       " + getNameFormat() + " " + name + " = new " + getNameFormat() + "(getContainer(), \"\");",
                     "       assertThat(" + name + ".isPresent(), is(true));",
                     "   }"
             );
