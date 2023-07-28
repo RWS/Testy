@@ -13,8 +13,8 @@ import static org.hamcrest.Matchers.equalTo;
 public class DatePickerIntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatePickerIntegrationTest.class);
 
-    private Form form = new Form(null, "Form Title");
-    private DatePicker datePicker = new DatePicker(form, "dp3");
+    private final Form form = new Form(null, "Form Title");
+    private final DatePicker datePicker = new DatePicker(form, "dp3");
 
     @BeforeClass
     public void startTests() {

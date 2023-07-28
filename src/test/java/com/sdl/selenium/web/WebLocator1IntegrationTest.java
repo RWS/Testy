@@ -16,17 +16,17 @@ import static org.hamcrest.Matchers.*;
 public class WebLocator1IntegrationTest extends TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocator1IntegrationTest.class);
 
-    private WebLocator webLocatorId = new WebLocator().setId("webLocatorId");
-    private WebLocator webLocatorCls = new WebLocator().setClasses("webLocatorCls");
-    private WebLocator webLocatorNotAttribute = new WebLocator().setClasses("notExist");
+    private final WebLocator webLocatorId = new WebLocator().setId("webLocatorId");
+    private final WebLocator webLocatorCls = new WebLocator().setClasses("webLocatorCls");
+    private final WebLocator webLocatorNotAttribute = new WebLocator().setClasses("notExist");
 
-    private WebLocator webLocatorWithMoreEnter = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div");
-    private WebLocator webLocatorWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
-    private WebLocator webLocatorNoWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
-    private WebLocator webLocatorNoWithMoreEnter = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div");
-    private WebLocator webLocatorWithMoreText = new WebLocator().setElPath("//*[contains(@class, 'element7') and concat(text()[1], ./*/text(), text()[2], ./*/text()[contains(.,'care')], text()[3])='Some important text care trebuie']");
-    private WebLocator webLocatorComplex = new WebLocator().setClasses("element11").setText("Some more important text that is very important . end", SearchType.HTML_NODES);
-    private WebLocator webLocatorLogger = new WebLocator().setId("logger");
+    private final WebLocator webLocatorWithMoreEnter = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div");
+    private final WebLocator webLocatorWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
+    private final WebLocator webLocatorNoWithMoreEnterMoreElements = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div", SearchType.DEEP_CHILD_NODE);
+    private final WebLocator webLocatorNoWithMoreEnter = new WebLocator().setClasses("more-elements-inside no-enter").setText("more enter inside div");
+    private final WebLocator webLocatorWithMoreText = new WebLocator().setElPath("//*[contains(@class, 'element7') and concat(text()[1], ./*/text(), text()[2], ./*/text()[contains(.,'care')], text()[3])='Some important text care trebuie']");
+    private final WebLocator webLocatorComplex = new WebLocator().setClasses("element11").setText("Some more important text that is very important . end", SearchType.HTML_NODES);
+    private final WebLocator webLocatorLogger = new WebLocator().setId("logger");
 
     @DataProvider
     public static Object[][] testConstructorPathDataProviderText() {
