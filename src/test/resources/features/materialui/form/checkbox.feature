@@ -1,7 +1,7 @@
 Feature: Checkbox
 
   Scenario: Start
-    Given I open MaterialUI app and add "react-checkbox/" path
+    Given I open MaterialUI and add "react-checkbox/" path
 
   Scenario: Verify checkbox
     And I verify if checkbox is present

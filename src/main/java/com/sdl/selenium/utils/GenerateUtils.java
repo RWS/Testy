@@ -137,7 +137,7 @@ public class GenerateUtils {
         List<String> rows = List.of(
                 "Feature: " + getNameFormat() + "\n",
                 "  Scenario: Start",
-                "    Given I open MaterialUI app and add \"\" path"
+                "    Given I open MaterialUI and add \"\" path"
         );
         Files.write(filePath, rows, StandardOpenOption.CREATE);
         return filePath;

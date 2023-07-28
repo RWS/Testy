@@ -1,7 +1,7 @@
 Feature: ComboBox
 
   Scenario: Start
-    Given I open MaterialUI app and add "react-select/" path
+    Given I open MaterialUI and add "react-select/" path
 
   Scenario: Verify combobox
     And I verify if combobox is present
