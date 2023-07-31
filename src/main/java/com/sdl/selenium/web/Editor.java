@@ -32,6 +32,9 @@ public interface Editor {
         if (!input.isPresent()) {
             input = new WebLocator(container).setTag("textarea");
         }
+        if (((WebLocator) new WebLocator(container).setTag("iframe")).isPresent()) {
+            input = new WebLocator(container).setTag("iframe");
+        }
         WebLocator finalInput = input;
         String type = RetryUtils.retry(2, () -> finalInput.getAttribute("data-componentid"));
         if (type == null) {
@@ -50,6 +53,8 @@ public interface Editor {
                 editor = new CheckBox();
             } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
+            } else if (type.contains("crossreferenceeditor")) {
+                editor = new HtmlEditor();
             } else {
                 log.warn("active editor type: {}", type);
                 return null;
@@ -66,7 +71,7 @@ public interface Editor {
         String value = values.get(0);
         Field editor = getEditor(cell);
         boolean edited = false;
-        if (editor instanceof TextField) {
+        if (editor instanceof TextField || editor instanceof HtmlEditor) {
             edited = RetryUtils.retry(2, () -> {
                 editor.setValue(value);
                 return editor.getValue().equals(value);
