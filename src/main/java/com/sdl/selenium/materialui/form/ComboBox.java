@@ -80,7 +80,7 @@ public class ComboBox extends Combo implements Selectable {
     }
 
     public WebLocator getBoundList() {
-        return new WebLocator().setId("menu-");
+        return new WebLocator().setAttribute("id", "menu-", SearchType.CONTAINS);
     }
 
     protected <T extends WebLocator> T getComboEl(String value, Duration duration, SearchType... searchType) {
