@@ -28,7 +28,7 @@ public interface Editor {
     default <T extends Field> T getDoEditor(WebLocator parent) {
         Field editor;
         WebLocator container = new WebLocator(parent).setClasses("x-editor");
-        WebLocator input = new WebLocator(container).setTag("input");
+        WebLocator input = new WebLocator(container).setTag("input").setResultIdx(Position.LAST);
         if (!input.isPresent()) {
             input = new WebLocator(container).setTag("textarea");
         }
