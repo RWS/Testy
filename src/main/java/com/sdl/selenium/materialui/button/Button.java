@@ -30,10 +30,4 @@ public class Button extends com.sdl.selenium.web.button.Button {
         setChildNodes(svgIcon);
         return (T) this;
     }
-
-    public <T extends Button> T setIcon(final String icon, SearchType... searchTypes) {
-        WebLocator svgIcon = new WebLocator().setAttribute("data-testid", icon, searchTypes);
-        setChildNodes(svgIcon);
-        return (T) this;
-    }
 }

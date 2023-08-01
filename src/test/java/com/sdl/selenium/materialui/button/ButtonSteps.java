@@ -1,6 +1,7 @@
 package com.sdl.selenium.materialui.button;
 
 import com.sdl.selenium.materialui.Base;
+import com.sdl.selenium.web.WebLocator;
 import io.cucumber.java.en.And;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +29,13 @@ public class ButtonSteps extends Base {
 
     @And("in MaterialUI I click on button identify by icon")
     public void inMaterialUIIClickOnButtonIdentifyByIcon() {
-        Button iconButton = new Button(getContainer()).setIcon("AlarmIcon");
+        Button iconButton = new Button(getContainer()){
+            public <T extends com.sdl.selenium.web.button.Button> T setIconCls(final String icon) {
+                WebLocator svgIcon = new WebLocator().setAttribute("data-testid", icon);
+                setChildNodes(svgIcon);
+                return (T) this;
+            }
+        }.setIconCls("AlarmIcon");
         boolean click = iconButton.click();
         assertThat(click, is(true));
     }
