@@ -25,6 +25,12 @@ public class Button extends com.sdl.selenium.web.button.Button {
        setText(text, searchTypes);
    }
 
+    public <T extends com.sdl.selenium.web.button.Button> T setIconCls(String iconCls) {
+        WebLocator svgIcon = new WebLocator().setTag("svg").setClasses(iconCls);
+        setChildNodes(svgIcon);
+        return (T) this;
+    }
+
     public <T extends Button> T setIcon(final String icon, SearchType... searchTypes) {
         WebLocator svgIcon = new WebLocator().setAttribute("data-testid", icon, searchTypes);
         setChildNodes(svgIcon);
