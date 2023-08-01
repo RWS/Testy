@@ -26,7 +26,7 @@ public class Button extends com.sdl.selenium.web.button.Button {
    }
 
     public <T extends com.sdl.selenium.web.button.Button> T setIconCls(String iconCls) {
-        WebLocator svgIcon = new WebLocator().setTag("svg").setClasses(iconCls);
+        WebLocator svgIcon = new WebLocator().setLocalName("svg").setClasses(iconCls);
         setChildNodes(svgIcon);
         return (T) this;
     }
