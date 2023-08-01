@@ -2,15 +2,13 @@ package com.sdl.selenium.materialui.button;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.button.IButton;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Button extends WebLocator implements IButton {
+public class Button extends com.sdl.selenium.web.button.Button {
 
    public Button() {
        setClassName("Button");
-       setTag("button");
        setType("button");
    }
 

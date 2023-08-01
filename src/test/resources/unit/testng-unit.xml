@@ -70,6 +70,7 @@
             <class name="com.sdl.unit.bootstrap.form.UneditableInputTest"/>
             <class name="com.sdl.unit.bootstrap.form.SelectPickerTest"/>
 
+            <class name="com.sdl.unit.web.button.ButtonTest"/>
             <class name="com.sdl.unit.web.button.FlashUploadButtonTest"/>
             <class name="com.sdl.unit.web.button.InputButtonTest"/>
             <class name="com.sdl.unit.web.button.SelectFilesHandlerTest"/>

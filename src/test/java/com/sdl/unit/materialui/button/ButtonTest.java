@@ -21,6 +21,7 @@ public class ButtonTest  {
            {new Button(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button']"},
            {new Button(container, "Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and text()='Text']"},
            {new Button(container, "Text", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and contains(text(),'Text')]"},
+           {new Button(container).setIconCls("IconCls"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and count(.//*[contains(concat(' ', @class, ' '), ' IconCls ')]) > 0]"},
            {new Button(container).setIcon("AlarmIcon"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and count(.//*[@data-testid='AlarmIcon']) > 0]"},
        };
    }

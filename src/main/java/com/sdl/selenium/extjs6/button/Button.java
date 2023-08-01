@@ -11,7 +11,6 @@ public class Button extends com.sdl.selenium.web.button.Button {
         setClassName("Button");
         setBaseCls("x-btn");
         setTag("a");
-        setTemplate("icon-cls", "count(.//*[contains(concat(' ', @class, ' '), ' %s ')]) > 0");
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
