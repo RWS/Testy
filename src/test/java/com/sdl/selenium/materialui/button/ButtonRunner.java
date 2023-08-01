@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         stepNotifications = true,
         plugin = {"pretty", "html:target/cucumber", "json:target/Button.json"},
         glue = {"com.sdl.selenium"},
-        features = "classpath:features/materialui/button.feature"
+        features = "classpath:features/materialui/button/button.feature"
 )
 public class ButtonRunner {
 }

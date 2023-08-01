@@ -25,4 +25,11 @@ public class ButtonSteps extends Base {
         boolean enabled = button.isEnabled();
         assertThat(enabled, is(status));
     }
+
+    @And("in MaterialUI I click on button identify by icon")
+    public void inMaterialUIIClickOnButtonIdentifyByIcon() {
+        Button iconButton = new Button(getContainer()).setIcon("AlarmIcon");
+        boolean click = iconButton.click();
+        assertThat(click, is(true));
+    }
 }

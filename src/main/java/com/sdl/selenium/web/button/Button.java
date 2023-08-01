@@ -17,6 +17,9 @@ public class Button extends WebLocator implements IButton {
 
     public Button(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
         setText(text, searchTypes);
     }
 
