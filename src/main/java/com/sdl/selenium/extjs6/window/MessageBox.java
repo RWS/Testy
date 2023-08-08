@@ -4,7 +4,9 @@ import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.extjs6.form.TextArea;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import lombok.Getter;
 
+@Getter
 public class MessageBox extends WebLocator {
 
     private final Button okButton = new Button(this, "OK");
@@ -68,21 +70,5 @@ public class MessageBox extends WebLocator {
     public boolean close() {
         WebLocator close = new WebLocator(this).setClasses("x-tool-close");
         return close.click();
-    }
-
-    public Button getOkButton() {
-        return this.okButton;
-    }
-
-    public Button getCancelButton() {
-        return this.cancelButton;
-    }
-
-    public Button getYesButton() {
-        return this.yesButton;
-    }
-
-    public Button getNoButton() {
-        return this.noButton;
     }
 }
