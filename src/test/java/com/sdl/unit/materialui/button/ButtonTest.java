@@ -21,7 +21,7 @@ public class ButtonTest  {
            {new Button(container), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button']"},
            {new Button(container, "Text"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and text()='Text']"},
            {new Button(container, "Text", SearchType.CONTAINS), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and contains(text(),'Text')]"},
-           {new Button(container).setIconCls("IconCls"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and count(.//svg[contains(concat(' ', @class, ' '), ' IconCls ')]) > 0]"},
+           {new Button(container).setIconCls("IconCls"), "//*[contains(concat(' ', @class, ' '), ' container ')]//button[@type='button' and count(.//*[name()='svg' and contains(concat(' ', @class, ' '), ' IconCls ')]) > 0]"},
        };
    }
 

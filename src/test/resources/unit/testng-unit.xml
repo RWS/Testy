@@ -99,6 +99,7 @@
             <class name="com.sdl.unit.materialui.form.ComboBoxTest"/>
             <class name="com.sdl.unit.materialui.form.TextFieldTest"/>
             <class name="com.sdl.unit.materialui.list.ListTest"/>
+            <class name="com.sdl.unit.materialui.dialog.DialogTest"/>
         </classes>
     </test>
 </suite>
