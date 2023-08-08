@@ -3,6 +3,7 @@ package com.sdl.selenium.web;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sdl.selenium.web.utils.Utils;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
@@ -33,7 +34,13 @@ public interface Transform {
                 List<String> result = new ArrayList<>();
                 result.add("{");
                 for (int j = 0; j < i.size(); j++) {
-                    String replace = i.get(j).replace("\n", " ");
+                    String replace;
+                    try {
+                        replace = i.get(j).replace("\n", " ");
+                    } catch (NullPointerException e) {
+                        Utils.sleep(1);
+                        replace = i.get(j).replace("\n", " ");
+                    }
                     String oldValue = jsonList.get(j);
                     if (oldValue.contains(":")) {
                         String tmp = oldValue.replaceAll(":([^{}]*)\"", ":\"" + replace + "\"");
