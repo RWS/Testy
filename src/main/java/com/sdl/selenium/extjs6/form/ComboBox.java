@@ -5,6 +5,7 @@ import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
@@ -79,9 +80,11 @@ public class ComboBox extends Combo {
                     }
                 } while (paginationEl.goToNextPage());
             } else {
-                selected = option.doClick();
+                selected = RetryUtils.retry(5, () -> {
+                    option.doClick();
+                    return option.getAttributeClass().contains("selected");
+                });
                 if (!selected && option.isPresent()) {
-//                    WebLocatorUtils.scrollToWebLocator(option);
                     WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
                     String id = getBoundList().getAttributeId();
                     scrollBack(id);
