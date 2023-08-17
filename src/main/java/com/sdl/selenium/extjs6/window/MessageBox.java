@@ -30,7 +30,7 @@ public class MessageBox extends WebLocator {
 
     public MessageBox(String title, String msg, SearchType... searchTypes) {
         this(title);
-        WebLocator body = new WebLocator().setClasses("x-window-body");
+        WebLocator body = new WebLocator().setClasses("x-window-body").setExcludeClasses("x-window-body-fullscreen");
         WebLocator textEl = new WebLocator(body).setText(msg, searchTypes);
         setElPathSuffix("msg", "count(" + textEl.getXPath() + ") > 0");
     }

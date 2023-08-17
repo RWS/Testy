@@ -17,7 +17,7 @@ import static org.hamcrest.core.Is.is;
 
 public class MessageBoxIntegrationTest extends TestBase {
 
-    private Button dialogButton = new Button().setText("Confirm Dialog", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private final Button dialogButton = new Button().setText("Confirm Dialog", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
     @BeforeClass
     public void startTests() {
