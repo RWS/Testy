@@ -58,10 +58,10 @@ public class ComboBox extends Combo {
     }
 
     /**
-     * @param value             value
-     * @param duration          eg. 300ms
-     * @param pagination        true | false
-     * @param searchType        use {@link SearchType}
+     * @param value      value
+     * @param duration   eg. 300ms
+     * @param pagination true | false
+     * @param searchType use {@link SearchType}
      * @return true if value was selected
      */
     public boolean doSelect(String value, Duration duration, boolean pagination, SearchType... searchType) {
@@ -78,11 +78,11 @@ public class ComboBox extends Combo {
                     if (!option.doClick()) {
                         break;
                     }
-                } while (paginationEl.goToNextPage());
+                } while (getPaginationEl().goToNextPage());
             } else {
-                selected = RetryUtils.retry(5, () -> {
+                selected = RetryUtils.retry(2, () -> {
                     option.doClick();
-                    return option.getAttributeClass().contains("selected");
+                    return !option.ready(Duration.ofMillis(200));
                 });
                 if (!selected && option.isPresent()) {
                     WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
