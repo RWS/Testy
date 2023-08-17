@@ -6,6 +6,7 @@ import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Getter
 public class ComboBox extends Combo {
     private static final Logger log = LogManager.getLogger(Row.class);
     private final Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
@@ -65,14 +67,14 @@ public class ComboBox extends Combo {
         if (value.equals(getValue())) {
             return true;
         }
-        boolean selected;
+        boolean selected = false;
         String info = toString();
         WebLocator option = getComboEl(value, duration, searchType).setVisibility(true);
         boolean trigger = expand();
         if (trigger) {
             if (pagination) {
                 do {
-                    if (selected = option.doClick()) {
+                    if (!option.doClick()) {
                         break;
                     }
                 } while (paginationEl.goToNextPage());
@@ -103,12 +105,12 @@ public class ComboBox extends Combo {
         return false;
     }
 
-    private boolean scrollBack(String id) {
+    public boolean scrollBack(String id) {
         String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,-50);var topTemp = c.scrollable._scrollElement.dom.scrollTop;return top < topTemp;})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
-    private boolean scrollDown(String id) {
+    public boolean scrollDown(String id) {
         String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,50);return Math.round(top) >= c.scrollable.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
