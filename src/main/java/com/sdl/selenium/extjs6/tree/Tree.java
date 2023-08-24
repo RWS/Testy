@@ -10,6 +10,7 @@ import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.IColumns;
 import com.sdl.selenium.web.table.Table;
+import com.sdl.selenium.web.utils.Response;
 import com.sdl.selenium.web.utils.RetryUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,11 +70,11 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         if (doScroll) {
             scrollTop();
         }
-        Row previousNodeEl = null;
-        return doSelected(previousNodeEl, doScroll, nodes, action, searchTypes);
+        return doSelected(doScroll, nodes, action, searchTypes).isDone();
     }
 
-    private boolean doSelected(Row previousNodeEl, boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
+    private Response<Row> doSelected(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
+        Row previousNodeEl = null;
         boolean selected = false;
         for (int i = 0; i < nodes.size(); i++) {
             String node = nodes.get(i);
@@ -146,7 +147,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             }
             previousNodeEl = nodeEl;
         }
-        return selected;
+        return new Response<>(previousNodeEl, selected);
     }
 
     public Row selectAndGetNode(boolean doScroll, List<String> nodes, SearchType... searchTypes) {
@@ -157,10 +158,10 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         if (doScroll) {
             scrollTop();
         }
-        Row previousNodeEl = null;
-        boolean selected = doSelected(previousNodeEl, doScroll, nodes, action, searchTypes);
+        Response<Row> response = doSelected(doScroll, nodes, action, searchTypes);
+        boolean selected = response.isDone();
         if (selected) {
-            return previousNodeEl;
+            return response.getResult();
         } else {
             return null;
         }
