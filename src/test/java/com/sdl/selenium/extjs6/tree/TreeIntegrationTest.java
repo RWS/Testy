@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
@@ -62,9 +63,21 @@ public class TreeIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "treeSelectTest2")
     void treeSelectTest3() {
-        tree.scrollTop();
-        tree.select(List.of("Ext JS", "app", "Controller.js"), SearchType.EQUALS);
-        boolean isSelected = tree.isSelected(List.of("Ext JS", "app", "Controller.js"));
+        WebDriverConfig.getDriver().navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
+        tree.ready();
+        boolean select = tree.select(List.of("Ext JS", "app", "Controller.js"), SearchType.EQUALS);
+        boolean isSelected = tree.isSelected(List.of("Ext JS", "app", "Controller.js"), SearchType.EQUALS);
         assertThat(isSelected, is(true));
+    }
+
+    @Test(dependsOnMethods = "treeSelectTest3")
+    void treeSelectTest4() {
+        tree.scrollTop();
+        List<String> nodes = List.of("Ext JS", "grid", "plugin", "Editing.js");
+        tree.select(true, nodes, SearchType.EQUALS);
+        tree.scrollTop();
+        boolean selected = tree.isSelected(nodes, SearchType.EQUALS);
+        assertThat(selected, is(true));
     }
 }

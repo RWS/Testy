@@ -9,6 +9,7 @@
 - [ ] private WebLocator btn = WebLocator.find(By.id("ix"), By.name("xxx"));
 - [x] combo.select("item"); combo.getValue().equals("item") into select(...)
 - [x] getCellsValues from grouped grid
+- [] waitToAppearAndDisappear(5s,20s)
 
 
 ## Examples and Documentation

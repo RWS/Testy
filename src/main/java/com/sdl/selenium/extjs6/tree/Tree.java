@@ -11,7 +11,6 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.IColumns;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.RetryUtils;
-import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriverException;
@@ -70,80 +69,11 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         if (doScroll) {
             scrollTop();
         }
-        Table previousNodeEl = null;
-        boolean selected = false;
-        for (int i = 0; i < nodes.size(); i++) {
-            String node = nodes.get(i);
-            WebLocator textEl = new WebLocator().setText(node, searchTypes);
-            WebLocator container = previousNodeEl == null ? this : previousNodeEl;
-            Table nodeEl = new Table(container).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
-            if (previousNodeEl != null) {
-                nodeEl.setRoot("/following-sibling::");
-            }
-            com.sdl.selenium.web.table.Row row = nodeEl.getRow(1).setClasses("x-grid-row");
-            boolean isExpanded;
-            String aClass = row.getAttributeClass();
-            isExpanded = aClass != null && aClass.contains("x-grid-tree-node-expanded");
-            if (doScroll) {
-                scrollPageDownTo(nodeEl);
-            }
-            WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
-            if (nodeEl.ready()) {
-                if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
-                    RetryUtils.retry(2, () -> {
-                        expanderEl.click();
-                        String aCls = row.getAttributeClass();
-                        boolean contains = aCls.contains("x-grid-tree-node-expanded");
-                        if (!contains) {
-                            Utils.sleep(1);
-                            log.error("Node '{}' is not expanded!!!", node);
-                        } else {
-                            log.info("Node '{}' is expanded.", node);
-                        }
-                        return contains;
-                    });
-                } else {
-                    WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
-                    WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
-                    int nodeCount = nodeTree.size();
-                    if (nodeCount > 1) {
-                        WebLocator precedingSibling = new WebLocator(nodeTree).setTag("preceding-sibling::*").setClasses("x-tree-elbow-img");
-                        for (int j = 1; j <= nodeCount; j++) {
-                            nodeTree.setResultIdx(j);
-                            int size = precedingSibling.size();
-                            if (size == i + 1) {
-                                break;
-                            }
-                        }
-                    }
-                    try {
-                        if (checkTree.isPresent()) {
-                            selected = checkTree.click();
-                        } else {
-                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
-                        }
-                    } catch (WebDriverException e) {
-                        if (doScroll) {
-                            scrollPageDown();
-                        }
-                        if (checkTree.isPresent()) {
-                            selected = checkTree.click();
-                        } else {
-                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
-                        }
-                    }
-                }
-            }
-            previousNodeEl = nodeEl;
-        }
-        return selected;
+        Row previousNodeEl = null;
+        return doSelected(previousNodeEl, doScroll, nodes, action, searchTypes);
     }
 
-    public Row selectAndGetNode(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
-        if (doScroll) {
-            scrollTop();
-        }
-        Row previousNodeEl = null;
+    private boolean doSelected(Row previousNodeEl, boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
         boolean selected = false;
         for (int i = 0; i < nodes.size(); i++) {
             String node = nodes.get(i);
@@ -165,15 +95,17 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                 if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
                     RetryUtils.retry(2, () -> {
                         expanderEl.click();
-                        String aCls = row.getAttributeClass();
-                        boolean contains = aCls.contains("x-grid-tree-node-expanded");
-                        if (!contains) {
-                            Utils.sleep(1);
-                            log.error("Node '{}' is not expanded!!!", node);
-                        } else {
+                        boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
+                            String aCls = row.getAttributeClass();
+                            log.debug("classes:{}", aCls);
+                            return aCls.contains("x-grid-tree-node-expanded");
+                        });
+                        if (expanded) {
                             log.info("Node '{}' is expanded.", node);
+                        } else {
+                            log.error("Node '{}' is not expanded!!!", node);
                         }
-                        return contains;
+                        return expanded;
                     });
                 } else {
                     WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
@@ -207,8 +139,22 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                     }
                 }
             }
+            WebLocator containerOfParent = nodeEl.getPathBuilder().getContainer().getPathBuilder().getContainer();
+            if (containerOfParent != null) {
+                nodeEl.setContainer(containerOfParent);
+                nodeEl.setRoot("//");
+            }
             previousNodeEl = nodeEl;
         }
+        return selected;
+    }
+
+    public Row selectAndGetNode(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
+        if (doScroll) {
+            scrollTop();
+        }
+        Row previousNodeEl = null;
+        boolean selected = doSelected(previousNodeEl, doScroll, nodes, action, searchTypes);
         if (selected) {
             return previousNodeEl;
         } else {
@@ -222,16 +168,21 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return nodeSelected.isPresent();
     }
 
-    public boolean isSelected(List<String> nodes) {
+    public boolean isSelected(List<String> nodes, SearchType... searchTypes) {
         Table previousNodeEl = null;
         Table nodeEl = null;
         int count = 0;
         for (String node : nodes) {
-            WebLocator textEl = new WebLocator().setText(node, SearchType.EQUALS);
+            WebLocator textEl = new WebLocator().setText(node, searchTypes);
             WebLocator container = previousNodeEl == null ? this : previousNodeEl;
             nodeEl = new Table(container).setClasses("x-grid-item").setChildNodes(textEl).setVisibility(true);
             if (previousNodeEl != null) {
                 nodeEl.setRoot("/following-sibling::");
+            }
+            WebLocator containerOfParent = nodeEl.getPathBuilder().getContainer().getPathBuilder().getContainer();
+            if (containerOfParent != null) {
+                nodeEl.setContainer(containerOfParent);
+                nodeEl.setRoot("//");
             }
             previousNodeEl = nodeEl;
             count++;
@@ -258,17 +209,29 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         int size;
         do {
             Row row = new Row(this).setTag("tr").setExcludeClasses("x-grid-tree-node-leaf", "x-grid-tree-node-expanded").setResultIdx(1);
+            Row row1 = new Row(this).setTag("tr").setClasses("x-grid-tree-node-expanded").setExcludeClasses("x-grid-tree-node-leaf").setResultIdx(1);
             WebLocator expanderEl = new WebLocator(row).setClasses("x-tree-expander").setRender(Duration.ofSeconds(1));
             expanderEl.doClick();
+            row1.ready();
+            waitToActivate();
             size = rowsEl.size();
             if (size == 0) {
                 scrollPageDown();
+                waitToActivate();
                 size = rowsEl.size();
                 if (size == 0) {
                     scrollPageDown();
+                    waitToActivate();
                     size = rowsEl.size();
                     if (size == 0) {
-                        Utils.sleep(1);
+                        scrollPageDown();
+                        waitToActivate();
+                        size = rowsEl.size();
+                        if (size == 0) {
+                            if (isScrollBottom()) {
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -317,6 +280,15 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         }
     }
 
+    public static Function<Cell, String> getValue() {
+        return cell -> {
+            WebLocator el = new WebLocator(cell).setClasses("x-tree-elbow-img");
+            int spaces = el.size() == 0 ? 0 : el.size() - 1;
+            String text = cell.getText(true).trim();
+            return ">".repeat(spaces) + text;
+        };
+    }
+
     public List<List<String>> getNodesValues(List<String> nodes, int... excludedColumns) {
         return getNodesValues(nodes, t -> t == 0, null, excludedColumns);
     }
@@ -354,6 +326,10 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         List<List<String>> cellsText = getCellsText(rowExpand, predicate, function, excludedColumns);
         List<V> actualValues = transformToObjectList(type, cellsText);
         return actualValues;
+    }
+
+    public List<List<String>> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        return getCellsText(false, predicate, function, excludedColumns);
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
@@ -503,5 +479,22 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
 
     public Row getRow(Cell... byCells) {
         return new Row(this, byCells).setInfoMessage("-Row");
+    }
+
+    public boolean waitToActivate(Duration duration) {
+        boolean hasMask;
+        long startMs = System.currentTimeMillis();
+        long timeMs = 0L;
+        while ((hasMask = hasMask()) && (timeMs < duration.toMillis())) {
+            timeMs = System.currentTimeMillis() - startMs;
+        }
+        long endMs = System.currentTimeMillis();
+        log.info("waitToActivate:" + (endMs - startMs) + " milliseconds; " + toString());
+        return !hasMask;
+    }
+
+    private boolean hasMask() {
+        WebLocator mask = new WebLocator(this).setClasses("x-mask").setElPathSuffix("style", "not(contains(@style, 'display: none'))").setAttribute("aria-hidden", "false").setInfoMessage("Mask");
+        return mask.waitToRender(Duration.ofMillis(200L), false);
     }
 }
