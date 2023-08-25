@@ -18,7 +18,15 @@ public class List extends WebLocator {
     }
 
     public boolean clickOn(String item, final SearchType... searchTypes) {
-        WebLocator itemEl = new WebLocator().setTag("li").setText(item, searchTypes);
+        WebLocator itemEl = getItemEl(item, searchTypes);
         return itemEl.click();
+    }
+
+    public boolean doClickOn(String item, final SearchType... searchTypes) {
+        return getItemEl(item, searchTypes).doClick();
+    }
+
+    public WebLocator getItemEl(String item, SearchType... searchTypes) {
+        return new WebLocator(this).setTag("li").setText(item, searchTypes);
     }
 }

@@ -183,7 +183,7 @@ public class GenerateUtils {
         Path stepsPath = namePath.resolve(nameSteps + ".java");
         List<String> stepsRows = List.of(
                 "package com.sdl.selenium." + getPackageForImport() + ";\n",
-                "import com.sdl.selenium.materialui.Base",
+                "import com.sdl.selenium.materialui.Base;",
                 "import io.cucumber.java.en.Given;",
                 "import lombok.extern.slf4j.Slf4j;\n",
                 "@Slf4j",

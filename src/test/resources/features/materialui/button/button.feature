@@ -10,4 +10,8 @@ Feature: Materialui
 
   Scenario: Click on button with icon
     And in MaterialUI I click on button identify by icon
+
+  Scenario: Click on button and select option from menu
+    Given I open MaterialUI and add "react-menu/" path
+    And in MaterialUI I click on "" option
     And I stop
