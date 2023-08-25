@@ -73,7 +73,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return doSelected(doScroll, nodes, action, searchTypes).isDone();
     }
 
-    private Response<Row> doSelected(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
+    public Response<Row> doSelected(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
         Row previousNodeEl = null;
         boolean selected = false;
         for (int i = 0; i < nodes.size(); i++) {
