@@ -20,7 +20,7 @@ public class List extends WebLocator implements IMenu {
     }
 
     public List clickOnAnd(String item, final SearchType... searchTypes) {
-        if (clickOnMenu(item, searchTypes)) {
+        if (clickOn(item, searchTypes)) {
             return this;
         } else {
             return null;
