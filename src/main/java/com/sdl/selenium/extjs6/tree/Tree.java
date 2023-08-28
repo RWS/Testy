@@ -140,12 +140,12 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                     }
                 }
             }
-            WebLocator containerOfParent = nodeEl.getPathBuilder().getContainer().getPathBuilder().getContainer();
-            if (i > 0) {
-                nodeEl.setContainer(containerOfParent);
-                nodeEl.setRoot("//");
-            }
-            previousNodeEl = nodeEl;
+//            WebLocator containerOfParent = nodeEl.getPathBuilder().getContainer().getPathBuilder().getContainer();
+//            if (i > 0) {
+//                nodeEl.setContainer(containerOfParent);
+//                nodeEl.setRoot("//");
+//            }
+//            previousNodeEl = nodeEl;
         }
         return new Response<>(previousNodeEl, selected);
     }
