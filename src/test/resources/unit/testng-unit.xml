@@ -101,6 +101,7 @@
             <class name="com.sdl.unit.materialui.list.ListTest"/>
             <class name="com.sdl.unit.materialui.dialog.DialogTest"/>
             <class name="com.sdl.unit.materialui.menu.MenuTest"/>
+            <class name="com.sdl.unit.materialui.alert.AlertTest"/>
         </classes>
     </test>
 </suite>
