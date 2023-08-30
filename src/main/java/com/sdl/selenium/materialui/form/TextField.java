@@ -26,4 +26,9 @@ public class TextField extends Field {
        }
        setLabel(label, searchTypes);
    }
+
+    public String getError() {
+        WebLocator error = new WebLocator(this).setTag("p").setRoot("/../../").setClasses("Mui-error");
+        return error.getText();
+    }
 }
