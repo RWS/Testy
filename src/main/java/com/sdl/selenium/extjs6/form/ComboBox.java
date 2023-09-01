@@ -75,7 +75,7 @@ public class ComboBox extends Combo {
         if (trigger) {
             if (pagination) {
                 do {
-                    if (!option.doClick()) {
+                    if (option.doClick()) {
                         break;
                     }
                 } while (getPaginationEl().goToNextPage());
