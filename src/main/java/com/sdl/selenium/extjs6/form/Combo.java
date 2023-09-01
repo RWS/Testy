@@ -141,7 +141,8 @@ public abstract class Combo extends Field implements ICombo {
         if (trigger) {
             if (pagination) {
                 do {
-                    if (selected = option.doClick()) {
+                    selected = option.doClick();
+                    if (selected) {
                         break;
                     }
                 } while (paginationEl.goToNextPage());
