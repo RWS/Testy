@@ -1,6 +1,7 @@
 package com.sdl.unit.bootstrap.tab;
 
 import com.sdl.selenium.bootstrap.tab.Tab;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -14,10 +15,11 @@ public class TabTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Tab("Tab"),                      "//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//*[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
-                {new Tab(container, "Tab"),          "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//*[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
-                {new Tab(container, "Tab").setId("IdTab"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[@id='IdTab' and contains(concat(' ', @class, ' '), ' nav nav-tabs ') and count(.//li[@class='active']//*[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
-                {new Tab(container, "Tab").setClasses("Class"),   "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav nav-tabs ') and contains(concat(' ', @class, ' '), ' Class ') and count(.//li[@class='active']//*[.='Tab']) > 0]//following-sibling::*[@class='tab-content']//*[@class='tab-pane active']"},
+                {new Tab("Tab"), "//ul[contains(concat(' ', @class, ' '), ' nav-tabs ') and count(.//li[contains(concat(' ', @class, ' '), ' active ') and text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+                {new Tab(container, "Tab"), "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav-tabs ') and count(.//li[contains(concat(' ', @class, ' '), ' active ') and text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+                {new Tab(container, "Tab", SearchType.TRIM), "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav-tabs ') and count(.//li[contains(concat(' ', @class, ' '), ' active ') and contains(normalize-space(text()),'Tab')]) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+                {new Tab(container, "Tab").setId("IdTab"), "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[@id='IdTab' and contains(concat(' ', @class, ' '), ' nav-tabs ') and count(.//li[contains(concat(' ', @class, ' '), ' active ') and text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
+                {new Tab(container, "Tab").setClasses("Class"), "//*[contains(concat(' ', @class, ' '), ' container ')]//ul[contains(concat(' ', @class, ' '), ' nav-tabs ') and contains(concat(' ', @class, ' '), ' Class ') and count(.//li[contains(concat(' ', @class, ' '), ' active ') and text()='Tab']) > 0]//following-sibling::*[contains(concat(' ', @class, ' '), ' tab-content ')]//*[contains(concat(' ', @class, ' '), ' tab-pane ') and contains(concat(' ', @class, ' '), ' active ')]"},
         };
     }
 
