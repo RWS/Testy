@@ -68,14 +68,15 @@ public class ComboBox extends Combo {
         if (value.equals(getValue())) {
             return true;
         }
-        boolean selected = false;
+        boolean selected;
         String info = toString();
         WebLocator option = getComboEl(value, duration, searchType).setVisibility(true);
         boolean trigger = expand();
         if (trigger) {
             if (pagination) {
                 do {
-                    if (option.doClick()) {
+                    selected = option.doClick();
+                    if (selected) {
                         break;
                     }
                 } while (getPaginationEl().goToNextPage());
