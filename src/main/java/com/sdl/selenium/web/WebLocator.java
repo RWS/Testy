@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.WebLocatorSuggestions;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
@@ -596,8 +597,8 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return executor.isDisplayed(this);
     }
 
-    public WebLocator clone() throws CloneNotSupportedException {
-        return (WebLocator) super.clone();
+    public WebLocator clone() {
+        return WebLocatorSuggestions.getClone(this);
     }
 
     @Override
