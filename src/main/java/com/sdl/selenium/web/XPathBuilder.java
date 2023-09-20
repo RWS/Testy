@@ -805,15 +805,15 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected boolean hasClasses() {
-        return classes != null && classes.size() > 0;
+        return classes != null && !classes.isEmpty();
     }
 
     protected boolean hasChildNodes() {
-        return childNodes != null && childNodes.getChildNodes().size() > 0;
+        return childNodes != null && !childNodes.getChildNodes().isEmpty();
     }
 
     protected boolean hasExcludeClasses() {
-        return excludeClasses != null && excludeClasses.size() > 0;
+        return excludeClasses != null && !excludeClasses.isEmpty();
     }
 
     protected boolean hasBaseCls() {
@@ -1379,7 +1379,7 @@ public class XPathBuilder implements Cloneable {
     }
 
     protected String getLabelPath() {
-        if (searchLabelType.size() == 0) {
+        if (searchLabelType.isEmpty()) {
             searchLabelType.add(SearchType.EQUALS);
         }
         SearchType[] st = searchLabelType.toArray(new SearchType[0]);
@@ -1388,13 +1388,13 @@ public class XPathBuilder implements Cloneable {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object clone() throws CloneNotSupportedException {
+    public XPathBuilder clone() throws CloneNotSupportedException {
         XPathBuilder builder = (XPathBuilder) super.clone();
 
-        builder.defaultSearchTextType = (List<SearchType>) ((ArrayList) defaultSearchTextType).clone();
-        builder.searchTextType = (List<SearchType>) ((ArrayList) searchTextType).clone();
-        builder.searchTitleType = (List<SearchType>) ((ArrayList) searchTitleType).clone();
-        builder.searchLabelType = (List<SearchType>) ((ArrayList) searchLabelType).clone();
+        builder.defaultSearchTextType = (List<SearchType>) ((ArrayList<?>) defaultSearchTextType).clone();
+        builder.searchTextType = (List<SearchType>) ((ArrayList<?>) searchTextType).clone();
+        builder.searchTitleType = (List<SearchType>) ((ArrayList<?>) searchTitleType).clone();
+        builder.searchLabelType = (List<SearchType>) ((ArrayList<?>) searchLabelType).clone();
 
         LinkedHashMap<String, String> templates = (LinkedHashMap<String, String>) builder.templates;
         LinkedHashMap<String, WebLocator> templateTitle = (LinkedHashMap<String, WebLocator>) builder.templateTitle;
@@ -1412,7 +1412,7 @@ public class XPathBuilder implements Cloneable {
         builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
         WebLocator titleTplEl = templateTitle.get("title");
         if (titleTplEl != null) {
-            XPathBuilder titleTplElBuilder = (XPathBuilder) titleTplEl.getPathBuilder().clone();
+            XPathBuilder titleTplElBuilder = titleTplEl.getPathBuilder().clone();
             WebLocator titleTplElCloned = new WebLocator().setPathBuilder(titleTplElBuilder);
             builder.templateTitle.put("title", titleTplElCloned);
         }

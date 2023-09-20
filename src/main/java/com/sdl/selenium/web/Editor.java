@@ -1,15 +1,15 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.extjs6.form.*;
-import com.sdl.selenium.extjs6.grid.Grid;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.utils.RetryUtils;
 import org.slf4j.Logger;
 
 import java.time.Duration;
+import java.util.List;
 
 public interface Editor {
-    Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
+    Logger log = org.slf4j.LoggerFactory.getLogger(Editor.class);
 
     WebLocator getView();
 
@@ -22,14 +22,21 @@ public interface Editor {
 
     @SuppressWarnings("unchecked")
     default <T extends Field> T getEditor() {
+        return getDoEditor(getView());
+    }
+
+    default <T extends Field> T getDoEditor(WebLocator parent) {
         Field editor;
-        WebLocator container = new WebLocator("x-editor", getView());
-        WebLocator editableEl = new WebLocator(container).setTag("input");
-        if (!editableEl.isPresent()) {
-            editableEl = new WebLocator(container).setTag("textarea");
+        WebLocator container = new WebLocator(parent).setClasses("x-editor");
+        WebLocator input = new WebLocator(container).setTag("input").setResultIdx(Position.LAST);
+        if (!input.isPresent()) {
+            input = new WebLocator(container).setTag("textarea");
         }
-        WebLocator finalEditableEl = editableEl;
-        String type = RetryUtils.retry(2, () -> finalEditableEl.getAttribute("data-componentid"));
+        if (((WebLocator) new WebLocator(container).setTag("iframe")).isPresent()) {
+            input = new WebLocator(container).setTag("iframe");
+        }
+        WebLocator finalInput = input;
+        String type = RetryUtils.retry(2, () -> finalInput.getAttribute("data-componentid"));
         if (type == null) {
             log.error("active editor type: 'null'");
             return null;
@@ -46,15 +53,40 @@ public interface Editor {
                 editor = new CheckBox();
             } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
+            } else if (type.contains("crossreferenceeditor")) {
+                editor = new HtmlEditor();
             } else {
                 log.warn("active editor type: {}", type);
                 return null;
             }
         }
-        editor.setContainer(getView()).setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
+        editor.setContainer(parent).setRender(Duration.ofSeconds(1)).setInfoMessage("active editor");
         if (!(editor instanceof CheckBox)) {
             editor.setClasses("x-form-focus");
         }
         return (T) editor;
+    }
+
+    default boolean edit(WebLocator cell, List<String> values) {
+        String value = values.get(0);
+        Field editor = getEditor(cell);
+        boolean edited = false;
+        if (editor instanceof TextField || editor instanceof HtmlEditor) {
+            edited = RetryUtils.retry(2, () -> {
+                editor.setValue(value);
+                return editor.getValue().equals(value);
+            });
+        } else if (editor instanceof ComboBox) {
+            ComboBox comboBox = (ComboBox) editor;
+            edited = RetryUtils.retry(2, () -> {
+                comboBox.select(value);
+                return comboBox.getValue().equals(value);
+            });
+        } else if (editor instanceof TagField) {
+            edited = ((TagField) editor).select(values.toArray(new String[0]));
+        } else {
+            log.error("Is not suported!");
+        }
+        return edited;
     }
 }

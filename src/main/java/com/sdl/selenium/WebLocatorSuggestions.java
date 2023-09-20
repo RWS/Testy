@@ -156,10 +156,10 @@ public class WebLocatorSuggestions {
         }
     }
 
-    private static WebLocator getClone(WebLocator originalWebLocator) {
+    public static WebLocator getClone(WebLocator originalWebLocator) {
         try {
             WebLocator webLocator = originalWebLocator.getClass().getDeclaredConstructor().newInstance();
-            XPathBuilder builder = (XPathBuilder) originalWebLocator.getPathBuilder().clone();
+            XPathBuilder builder = originalWebLocator.getPathBuilder().clone();
             webLocator.setPathBuilder(builder);
             return webLocator;
         } catch (CloneNotSupportedException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {

@@ -70,6 +70,7 @@
             <class name="com.sdl.unit.bootstrap.form.UneditableInputTest"/>
             <class name="com.sdl.unit.bootstrap.form.SelectPickerTest"/>
 
+            <class name="com.sdl.unit.web.button.ButtonTest"/>
             <class name="com.sdl.unit.web.button.FlashUploadButtonTest"/>
             <class name="com.sdl.unit.web.button.InputButtonTest"/>
             <class name="com.sdl.unit.web.button.SelectFilesHandlerTest"/>
@@ -94,8 +95,14 @@
             <class name="com.sdl.unit.window.WindowTest"/>
 
             <class name="com.sdl.unit.materialui.button.ButtonTest"/>
-            <class name="com.sdl.unit.materialui.checkbox.CheckboxTest"/>
+            <class name="com.sdl.unit.materialui.form.CheckBoxTest"/>
             <class name="com.sdl.unit.materialui.form.ComboBoxTest"/>
+            <class name="com.sdl.unit.materialui.form.TextFieldTest"/>
+            <class name="com.sdl.unit.materialui.form.TextAreaTest"/>
+            <class name="com.sdl.unit.materialui.list.ListTest"/>
+            <class name="com.sdl.unit.materialui.dialog.DialogTest"/>
+            <class name="com.sdl.unit.materialui.menu.MenuTest"/>
+            <class name="com.sdl.unit.materialui.alert.AlertTest"/>
         </classes>
     </test>
 </suite>

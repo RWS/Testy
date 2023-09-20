@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -222,6 +223,11 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
         List<List<String>> cellsText = getCellsText(excludedColumns);
         if (cellsText == null) {
             return null;
+        } else {
+            Optional<List<String>> optional = cellsText.stream().filter(i -> i.contains(null)).findFirst();
+            if (optional.isPresent()) {
+                cellsText = getCellsText(excludedColumns);
+            }
         }
         return transformToObjectList(type, cellsText);
     }

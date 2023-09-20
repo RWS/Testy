@@ -1,32 +1,20 @@
 package com.sdl.selenium.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.sdl.selenium.WebLocatorSuggestions;
 import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
-import com.sdl.selenium.web.utils.FileUtils;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
 import com.sdl.selenium.web.utils.RetryUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.slf4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
@@ -360,7 +348,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 .ignoring(WebDriverException.class);
         try {
             if (el.getPathBuilder().isVisibility()) {
-                webElement = wait.until((d)->ExpectedConditions.visibilityOfElementLocated(el.getSelector()).apply(d));
+                webElement = wait.until((d) -> ExpectedConditions.visibilityOfElementLocated(el.getSelector()).apply(d));
             } else {
                 webElement = wait.until(d -> d.findElement(el.getSelector()));
             }
@@ -467,9 +455,9 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             script = "var fireOnThis = document.getElementsByClassName('" + cls + "')[0];\n" + script;
         } else {
             script = "var fireOnThis = document.evaluate(\"" + el.getXPath() + "\", document, null, XPathResult.ANY_TYPE, null).iterateNext();\n" +
-                     "var evObj = document.createEvent('MouseEvents');\n" +
-                     "evObj.initEvent('" + eventName + "',true,true);\n" +
-                     "return fireOnThis.dispatchEvent(evObj);";
+                    "var evObj = document.createEvent('MouseEvents');\n" +
+                    "evObj.initEvent('" + eventName + "',true,true);\n" +
+                    "return fireOnThis.dispatchEvent(evObj);";
         }
         return executeScript(script);
     }
@@ -480,33 +468,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public boolean download(String fileName, long timeoutMillis) {
-        if (WebDriverConfig.isSilentDownload()) {
-            if (WebDriverConfig.isHeadless() && WebDriverConfig.isChrome()) {
-                Map<String, Object> commandParams = new HashMap<>();
-                commandParams.put("cmd", "Page.setDownloadBehavior");
-                Map<String, String> params = new HashMap<>();
-                params.put("behavior", "allow");
-                params.put("downloadPath", WebDriverConfig.getDownloadPath());
-                commandParams.put("params", params);
-                ObjectMapper objectMapper = new ObjectMapper();
-                HttpClient httpClient = HttpClientBuilder.create().build();
-                try {
-                    String command = objectMapper.writeValueAsString(commandParams);
-                    String uri = WebDriverConfig.getDriverService().getUrl().toString() + "/session/" + ((ChromeDriver) driver).getSessionId() + "/chromium/send_command";
-                    HttpPost request = new HttpPost(uri);
-                    request.addHeader("content-type", "application/json");
-                    request.setEntity(new StringEntity(command));
-                    httpClient.execute(request);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            fileName = WebDriverConfig.getDownloadPath() + File.separator + fileName;
-            File file = new File(fileName);
-            return FileUtils.waitFileIfIsEmpty(file, timeoutMillis) && fileName.equals(file.getAbsolutePath());
-        } else {
-            return RunExe.getInstance().download(fileName);
-        }
+        return RunExe.getInstance().download(fileName);
     }
 
     public boolean browse(WebLocator el) {

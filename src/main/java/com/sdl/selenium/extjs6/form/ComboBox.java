@@ -5,7 +5,9 @@ import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Getter
 public class ComboBox extends Combo {
     private static final Logger log = LogManager.getLogger(Row.class);
     private final Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
@@ -55,10 +58,10 @@ public class ComboBox extends Combo {
     }
 
     /**
-     * @param value             value
-     * @param duration          eg. 300ms
-     * @param pagination        true | false
-     * @param searchType        use {@link SearchType}
+     * @param value      value
+     * @param duration   eg. 300ms
+     * @param pagination true | false
+     * @param searchType use {@link SearchType}
      * @return true if value was selected
      */
     public boolean doSelect(String value, Duration duration, boolean pagination, SearchType... searchType) {
@@ -72,14 +75,17 @@ public class ComboBox extends Combo {
         if (trigger) {
             if (pagination) {
                 do {
-                    if (selected = option.doClick()) {
+                    selected = option.doClick();
+                    if (selected) {
                         break;
                     }
-                } while (paginationEl.goToNextPage());
+                } while (getPaginationEl().goToNextPage());
             } else {
-                selected = option.doClick();
+                selected = RetryUtils.retry(2, () -> {
+                    option.doClick();
+                    return !option.ready(Duration.ofMillis(200));
+                });
                 if (!selected && option.isPresent()) {
-//                    WebLocatorUtils.scrollToWebLocator(option);
                     WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
                     String id = getBoundList().getAttributeId();
                     scrollBack(id);
@@ -103,12 +109,12 @@ public class ComboBox extends Combo {
         return false;
     }
 
-    private boolean scrollBack(String id) {
+    public boolean scrollBack(String id) {
         String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,-50);var topTemp = c.scrollable._scrollElement.dom.scrollTop;return top < topTemp;})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }
 
-    private boolean scrollDown(String id) {
+    public boolean scrollDown(String id) {
         String script = "return (function (c) {var top = c.scrollable._scrollElement.dom.scrollTop;c.scrollBy(0,50);return Math.round(top) >= c.scrollable.getMaxPosition().y;})(window.Ext.getCmp('" + id + "'))";
         return (Boolean) WebLocatorUtils.doExecuteScript(script);
     }

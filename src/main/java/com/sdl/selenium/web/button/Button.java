@@ -8,6 +8,7 @@ public class Button extends WebLocator implements IButton {
     public Button() {
         setClassName("Button");
         setTag("button");
+        setTemplate("icon-cls", "count(.//*[contains(concat(' ', @class, ' '), ' %s ')]) > 0");
     }
 
     public Button(WebLocator container) {
@@ -17,6 +18,9 @@ public class Button extends WebLocator implements IButton {
 
     public Button(WebLocator container, String text, SearchType... searchTypes) {
         this(container);
+        if (searchTypes.length == 0) {
+            searchTypes = new SearchType[]{SearchType.EQUALS};
+        }
         setText(text, searchTypes);
     }
 

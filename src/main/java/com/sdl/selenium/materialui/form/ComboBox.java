@@ -1,9 +1,9 @@
 package com.sdl.selenium.materialui.form;
 
+import com.sdl.selenium.extjs6.form.Combo;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.form.ICombo;
 import com.sdl.selenium.web.form.Selectable;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.interactions.Actions;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class ComboBox extends WebLocator implements Selectable, ICombo {
+public class ComboBox extends Combo implements Selectable {
 
     public ComboBox() {
         setClassName("ComboBox");
@@ -80,7 +80,7 @@ public class ComboBox extends WebLocator implements Selectable, ICombo {
     }
 
     public WebLocator getBoundList() {
-        return new WebLocator().setId("menu-");
+        return new WebLocator().setAttribute("id", "menu-", SearchType.CONTAINS);
     }
 
     protected <T extends WebLocator> T getComboEl(String value, Duration duration, SearchType... searchType) {

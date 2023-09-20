@@ -1,4 +1,4 @@
-package com.sdl.selenium.materialui.checkbox;
+package com.sdl.selenium.materialui.list;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         stepNotifications = true,
-        plugin = {"pretty", "json:target/Checkbox.json"},
+        plugin = {"pretty", "html:target/cucumber", "json:target/List.json"},
         glue = {"com.sdl.selenium"},
-        features = "classpath:features/materialui/checkbox.feature"
+        features = "classpath:features/materialui/list/list.feature"
 )
-public class CheckboxRunner {
+public class ListRunner {
 }

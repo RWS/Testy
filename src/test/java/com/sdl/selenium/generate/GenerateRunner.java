@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         stepNotifications = true,
-        plugin = {"pretty", "json:target/Generate.json"},
+        plugin = {"pretty", "html:target/cucumber", "json:target/Generate.json"},
         glue = {"com.sdl.selenium"},
         features = "classpath:features/generate.feature"
 )

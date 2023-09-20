@@ -36,6 +36,10 @@ public abstract class Field extends WebLocator implements IField {
         return !"true".equals(getAttribute("disabled"));
     }
 
+    public boolean setValue(String value) {
+        return executor.setValue(this, value);
+    }
+
     public String getValue() {
         return executor.getValue(this);
     }

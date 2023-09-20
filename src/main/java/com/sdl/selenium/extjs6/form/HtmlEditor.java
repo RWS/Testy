@@ -36,7 +36,8 @@ public class HtmlEditor extends TextField {
     }
 
     public boolean setValue(String value) {
-        WebDriverConfig.getDriver().switchTo().frame(iframe.getWebElement());
+        WebLocator iframe2 = new WebLocator().setTag("iframe").setClasses("x-htmleditor-iframe");
+        WebDriverConfig.getDriver().switchTo().frame(iframe2.getWebElement());
         body.clear();
         boolean set = body.sendKeys(value) != null;
         WebDriverConfig.getDriver().switchTo().defaultContent();

@@ -1,15 +1,16 @@
-package com.sdl.selenium.materialui.checkbox;
+package com.sdl.selenium.materialui.form;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.form.IField;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Checkbox extends WebLocator implements IField, ICheck {
+public class CheckBox extends Field implements IField, ICheck {
 
-    public Checkbox() {
+    public CheckBox() {
         setClassName("Checkbox");
         setType("checkbox");
         setTag("input");
@@ -17,12 +18,12 @@ public class Checkbox extends WebLocator implements IField, ICheck {
         setLabelPosition("/preceding-sibling::*//");
     }
 
-    public Checkbox(WebLocator container) {
+    public CheckBox(WebLocator container) {
         this();
         setContainer(container);
     }
 
-    public Checkbox(WebLocator container, String label, SearchType... searchTypes) {
+    public CheckBox(WebLocator container, String label, SearchType... searchTypes) {
         this(container);
         if (searchTypes.length == 0) {
             searchTypes = new SearchType[]{SearchType.EQUALS};
@@ -33,5 +34,9 @@ public class Checkbox extends WebLocator implements IField, ICheck {
     @Override
     public boolean isChecked() {
         return ready() && executor.isSelected(this);
+    }
+
+    public String getValue() {
+        return String.valueOf(isChecked());
     }
 }
