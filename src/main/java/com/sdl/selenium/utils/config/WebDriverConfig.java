@@ -119,7 +119,9 @@ public class WebDriverConfig {
         driver.quit();
         String user = System.getProperty("user.home");
         try {
-            org.apache.commons.io.FileUtils.cleanDirectory(new File(user + "\\AppData\\Local\\Temp"));
+            if (!SystemUtils.IS_OS_LINUX) {
+                org.apache.commons.io.FileUtils.cleanDirectory(new File(user + "\\AppData\\Local\\Temp"));
+            }
         } catch (IOException e) {
             log.debug("{}", e.getMessage());
         }
