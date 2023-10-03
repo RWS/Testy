@@ -82,8 +82,8 @@ public class ComboBox extends Combo {
                 } while (getPaginationEl().goToNextPage());
             } else {
                 selected = RetryUtils.retry(2, () -> {
-                    option.doClick();
-                    return !option.ready(Duration.ofMillis(200));
+                    boolean doClick = option.doClick();
+                    return doClick && !option.ready(Duration.ofMillis(200));
                 });
                 if (!selected && option.isPresent()) {
                     WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
