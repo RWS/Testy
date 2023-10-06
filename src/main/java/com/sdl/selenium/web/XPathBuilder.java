@@ -987,10 +987,11 @@ public class XPathBuilder implements Cloneable {
             }
         }
         if (hasText()) {
+            String escapeQuotesText = Utils.getEscapeQuotesText(getText());
             if (!Strings.isNullOrEmpty(getTemplate("text"))) {
-                selectors.add(applyTemplate("text", Utils.getEscapeQuotesText(getText())));
+                selectors.add(applyTemplate("text", escapeQuotesText));
             } else {
-                addTextInPath(selectors, getText(), ".", searchTextType);
+                addTextInPath(selectors, escapeQuotesText, ".", searchTextType);
             }
         }
         for (Map.Entry<String, String[]> entry : getTemplatesValues().entrySet()) {
