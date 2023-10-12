@@ -24,7 +24,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
             "browser.profile.name=default",
             "browser.profile.path=",
             "browser.binary.path=",
-            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\geckodriver.exe",
+//            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\geckodriver.exe",
             "browser.download.dir=src\\\\test\\\\resources\\\\download\\\\",
             "profile.preference.dom.max_script_run_time=500",
             "profile.preference.browser.download.folderList=2",
@@ -76,10 +76,10 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
     }
 
     private FirefoxOptions getFirefoxOptions() throws IOException {
-        String driverPath = getProperty("browser.driver.path");
-        if (!"".equals(driverPath)) {
-            System.setProperty("webdriver.gecko.driver", driverPath);
-        }
+//        String driverPath = getProperty("browser.driver.path");
+//        if (!"".equals(driverPath)) {
+//            System.setProperty("webdriver.gecko.driver", driverPath);
+//        }
         FirefoxOptions options = new FirefoxOptions();
         options.setLogLevel(FirefoxDriverLogLevel.FATAL);
         FirefoxProfile profile = getProfile();
@@ -99,7 +99,7 @@ public class FirefoxConfigReader extends AbstractBrowserConfigReader {
         setProfilePreferences(profile);
         File file = new File(getDownloadPath());
         String downloadDir = file.getCanonicalPath();
-        if ("".equals(downloadDir) && !"silent".equals(downloadDir)) {
+        if (downloadDir.isEmpty() && !"silent".equals(downloadDir)) {
             String profilePath = getProperty("browser.profile.path");
             if (profilePath != null && !"".equals(profilePath) && !"silent".equals(downloadDir)) {
                 profile = new FirefoxProfile(new File(profilePath));

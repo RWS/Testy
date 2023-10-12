@@ -18,7 +18,7 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
 
     private static final String DEFAULT_CONFIG = String.join("\n", "##IExplorer defaults \n",
             "browser=iexplore",
-            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\IEDriverServer.exe",
+//            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\IEDriverServer.exe",
             "desired.capabilities.ignoreProtectedModeSettings=true",
             "desired.capabilities.javascriptEnabled=true");
 
@@ -44,10 +44,10 @@ public class IExplorerConfigReader extends AbstractBrowserConfigReader {
     private InternetExplorerOptions getOptions() {
         InternetExplorerOptions options = new InternetExplorerOptions();
         setOptions(options);
-        String driverPath = getProperty("browser.driver.path");
-        if (!"".equals(driverPath)) {
-            System.setProperty("webdriver.ie.driver", driverPath);
-        }
+//        String driverPath = getProperty("browser.driver.path");
+//        if (!"".equals(driverPath)) {
+//            System.setProperty("webdriver.ie.driver", driverPath);
+//        }
         return options;
     }
 

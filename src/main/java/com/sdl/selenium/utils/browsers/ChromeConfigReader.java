@@ -23,7 +23,7 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
 
     private static final String DEFAULT_CONFIG = String.join("\n", "##Chrome defaults \n",
             "browser=chrome",
-            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe",
+//            "browser.driver.path=src\\\\test\\\\resources\\\\drivers\\\\chromedriver.exe",
             "browser.download.dir=src\\\\test\\\\resources\\\\download\\\\",
             "options.arguments=--remote-allow-origins=* --disable-infobars --lang=en --use-simple-cache-backend --allow-running-insecure-content --enable-logging --v=1 --test-type",
             "options.experimental.profile.default_content_setting_values.automatic_downloads=1",
@@ -54,10 +54,10 @@ public class ChromeConfigReader extends AbstractBrowserConfigReader {
      * @return ChromeOptions
      */
     private ChromeOptions getChromeOptions() {
-        String driverPath = getProperty("browser.driver.path");
-        if (!"".equals(driverPath)) {
-            System.setProperty("webdriver.chrome.driver", driverPath);
-        }
+//        String driverPath = getProperty("browser.driver.path");
+//        if (!"".equals(driverPath)) {
+//            System.setProperty("webdriver.chrome.driver", driverPath);
+//        }
         ChromeOptions options = new ChromeOptions();
         options.setPageLoadStrategy(PageLoadStrategy.EAGER);
         setProfilePreferences(options);

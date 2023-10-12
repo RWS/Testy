@@ -9,6 +9,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
 import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
@@ -215,10 +216,13 @@ public class WebDriverConfig {
         Random random = new Random();
         AbstractBrowserConfigReader properties = null;
         if (browser == Browser.FIREFOX) {
+            WebDriverManager.firefoxdriver().setup();
             properties = new FirefoxConfigReader();
         } else if (browser == Browser.IEXPLORE) {
+            WebDriverManager.iedriver().setup();
             properties = new IExplorerConfigReader();
         } else if (browser == Browser.CHROME) {
+            WebDriverManager.chromedriver().setup();
             properties = new ChromeConfigReader();
         } else {
             log.error("Browser not supported {}", browser);

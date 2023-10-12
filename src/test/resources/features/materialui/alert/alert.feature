@@ -8,3 +8,6 @@ Feature: Alert
     And in MaterialUI I verify if Alert with "This is a warning alert — check it out!" message is present
     And in MaterialUI I verify if Alert with "This is an info alert — check it out!" message is present
     And in MaterialUI I verify if Alert with "This is a success alert — check it out!" message is present
+
+  Scenario: Final
+    And I stop
