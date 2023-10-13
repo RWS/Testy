@@ -37,6 +37,24 @@ public final class WebLocatorUtils extends WebLocator {
     }
 
     /**
+     * Scroll to element
+     *
+     * @param element    type WebLocator
+     * @param goUpOrDown if value is -10 go Up if value is 10 go Down after scroll to the element
+     */
+    public static void scrollToWebLocator(WebLocator element, int goUpOrDown) {
+        if (element.isPresent()) {
+            doExecuteScript("arguments[0].scrollIntoView(true);", element.getWebElement());
+            scroll(0, goUpOrDown);
+        }
+    }
+
+    public static void scroll(int x, int y) {
+        String script = "window.scrollBy(" + x + "," + y + ")";
+        WebLocatorUtils.doExecuteScript(script);
+    }
+
+    /**
      * <p>Generate JS script to validate and test xpath of all WebLocator's.
      * Just copy next lines and paste them in firebug, then press Run.</p>
      * <p>Usage example:</p>
@@ -271,7 +289,7 @@ public final class WebLocatorUtils extends WebLocator {
                             found = true;
                         } else if (xType.contains("checkbox")) {
                             String boxLabel = executeExtJS(parent, "c.boxLabel");
-                            if(!Strings.isNullOrEmpty(boxLabel)) {
+                            if (!Strings.isNullOrEmpty(boxLabel)) {
                                 String name = Strings.isNullOrEmpty(boxLabel) ? "checkBox" : getVariable(boxLabel);
                                 element.append("CheckBox ").append(name).append(" = new CheckBox(");
                                 addBoxLabel(boxLabel, element);
