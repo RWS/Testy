@@ -50,7 +50,11 @@ public class Menu extends WebLocator {
         return getWebLink(this, option, searchTypes).mouseOver();
     }
 
-    public WebLink getWebLink(WebLocator container, String option, SearchType[] searchTypes) {
+    public WebLink getWebLink(String option, SearchType... searchTypes) {
+        return getWebLink(this, option, searchTypes);
+    }
+
+    public WebLink getWebLink(WebLocator container, String option, SearchType... searchTypes) {
         return new WebLink(container).setText(option, searchTypes).setSearchTextType(SearchType.DEEP_CHILD_NODE_OR_SELF);
     }
 
