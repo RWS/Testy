@@ -37,6 +37,8 @@ public interface WebLocatorExecutor {
 
     String getText(WebLocator el);
 
+    String getText(WebLocator el, boolean instant);
+
     String getValue(WebLocator el);
 
     @Deprecated

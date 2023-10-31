@@ -253,12 +253,17 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public String getText(WebLocator el) {
+        return getText(el, false);
+    }
+
+    @Override
+    public String getText(WebLocator el, boolean instant) {
         invalidateCache(el);
         String text = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
             text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
         }
-        if (text == null) {
+        if (!instant && text == null) {
             return RetryUtils.retrySafe(4, () -> {
                 findAgain(el);
                 return el.getWebElement().getText();

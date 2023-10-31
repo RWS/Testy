@@ -132,7 +132,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
      */
     public String getText(boolean instant) {
         if (instant || ready()) {
-            return executor.getText(this);
+            return executor.getText(this, instant);
         }
         return null;
     }
