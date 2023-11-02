@@ -39,7 +39,7 @@ public class MatcherAssertList {
         if (!matcher.matches(actual)) {
             Description description = new StringDescription();
             String log = assertUtil.showObjectValues(actual, transformDate, format);
-            description.appendText(reason + log)
+            description.appendText(reason + ": " + log)
                     .appendText("\nExpected: ")
                     .appendDescriptionOf(matcher)
                     .appendText("\n     but: ");
@@ -61,7 +61,7 @@ public class MatcherAssertList {
         if (!matcher.matches(actual)) {
             Description description = new StringDescription();
             String log = assertUtil.showObjects(actual, transformDate);
-            description.appendText(reason + log)
+            description.appendText(reason + ": " + log)
                     .appendText("\nExpected: ")
                     .appendDescriptionOf(matcher)
                     .appendText("\n     but: ");

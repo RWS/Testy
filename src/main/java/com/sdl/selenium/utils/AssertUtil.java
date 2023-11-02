@@ -13,6 +13,8 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class AssertUtil {
@@ -120,12 +122,15 @@ public class AssertUtil {
             return null;
         }
         Field[] fields = aClass.getDeclaredFields();
-        StringBuilder log = new StringBuilder();
+//        StringBuilder log = new StringBuilder();
+        List<List<String>> logs = new ArrayList<>();
+        List<String> logTmp = new ArrayList<>();
         List<String> fieldsList = new ArrayList<>();
-        log.append("\n| ");
+//        log.append("\n| ");
         for (Field f : fields) {
             String name = f.getName();
-            log.append(name).append(" | ");
+//            log.append(name).append(" | ");
+            logTmp.add(name);
             String finalName = name.substring(0, 1).toUpperCase() + name.substring(1);
             String typeName = f.getType().getSimpleName();
             if ("String".equals(typeName) || "Boolean".equals(typeName)) {
@@ -134,9 +139,11 @@ public class AssertUtil {
                 fieldsList.add("is" + finalName);
             }
         }
-        log.append("\n");
+        logs.add(logTmp);
+//        log.append("\n");
         for (Object o : lists) {
-            log.append(" | ");
+//            log.append(" | ");
+            logTmp = new ArrayList<>();
             E workFlow = (E) o;
             for (String name : fieldsList) {
                 try {
@@ -150,14 +157,68 @@ public class AssertUtil {
                     } else {
                         format = transformDate ? function.apply(value) : value;
                     }
-                    log.append(format).append(" | ");
+//                    log.append(format).append(" | ");
+                    logTmp.add(format.toString());
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }
-            log.append("\n");
+            logs.add(logTmp);
+//            log.append("\n");
         }
+        List<Integer> maxCharacterLength = findMaxCharacterLength(logs);
+        List<List<String>> adjustsLogs = adjusts(logs, maxCharacterLength);
+        StringBuilder log = new StringBuilder();
+        log.append("\n");
+        for (List<String> adjustsLog : adjustsLogs) {
+            log.append("| ").append(String.join("| ", adjustsLog)).append(" |\n");
+        }
+        log.append("\n");
         return log.toString();
+    }
+
+    private List<Integer> findMaxCharacterLength(List<List<String>> logs) {
+//        List<Integer> maxPositions = new ArrayList<>();
+//        int columnSize = logs.get(0).size();
+//        for (int i = 0; i < columnSize; i++) {
+//            int maxColumn = 0;
+//            for (List<String> row : logs) {
+//                String item = row.get(i);
+//                int length = item.length();
+//                maxColumn = Math.max(maxColumn, length);
+//            }
+//            maxPositions.add(maxColumn);
+//        }
+//        return maxPositions;
+        return IntStream.range(0, logs.isEmpty() ? 0 : logs.get(0).size())
+                .mapToObj(i -> logs.stream().mapToInt(row -> row.get(i).length()).max().orElse(0))
+                .collect(Collectors.toList());
+    }
+
+    private List<List<String>> adjusts(List<List<String>> logs, List<Integer> columnsSize) {
+//        List<List<String>> logsAdjusts = new ArrayList<>();
+//        for (List<String> log : logs) {
+//            List<String> logAdjusts = new ArrayList<>();
+//            for (int i = 0; i < log.size(); i++) {
+//                String item = log.get(i);
+//                int length = item.length();
+//                Integer expectedLength = columnsSize.get(i);
+//                int repeatInt = expectedLength - length;
+//                logAdjusts.add(item + " ".repeat(repeatInt));
+//            }
+//            logsAdjusts.add(logAdjusts);
+//        }
+//        return logsAdjusts;
+        return logs.stream()
+                .map(log -> IntStream.range(0, log.size())
+                        .mapToObj(i -> {
+                            String item = log.get(i);
+                            int length = item.length();
+                            int repeatInt = columnsSize.get(i) - length;
+                            return item + " ".repeat(Math.max(0, repeatInt));
+                        })
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
     }
 
 
