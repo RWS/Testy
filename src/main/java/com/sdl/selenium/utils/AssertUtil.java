@@ -48,7 +48,7 @@ public class AssertUtil {
                 } else if (value == null) {
                     log.append(" | ");
                 } else {
-                    log.append(transformDate ? format.apply(String.valueOf(value)) : value).append(" | ");
+                    log.append(transformDate ? format.apply(value + "") : value).append(" | ");
                 }
             }
             log.append("\n");
