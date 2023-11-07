@@ -37,24 +37,30 @@ public class AssertUtil {
     }
 
     private <E, T extends List<E>> String logValues(T values, boolean transformDate, Function<String, String> format) {
-        StringBuilder log = new StringBuilder();
-        log.append("\n");
+        List<List<String>> logs = new ArrayList<>();
+//        StringBuilder log = new StringBuilder();
+//        log.append("\n");
         for (Object list : values) {
             List<?> l = (List<E>) list;
-            log.append(" | ");
+//            log.append(" | ");
+            List<String> logTmp = new ArrayList<>();
             for (Object value : l) {
                 if ("".equals(value)) {
-                    log.append("[blank]").append(" | ");
+//                    log.append("[blank]").append(" | ");
+                    logTmp.add("[blank]");
                 } else if (value == null) {
-                    log.append(" | ");
+//                    log.append(" | ");
                 } else {
-                    log.append(transformDate ? format.apply(value + "") : value).append(" | ");
+//                    log.append(transformDate ? format.apply(value + "") : value).append(" | ");
+                    logTmp.add(transformDate ? format.apply(value + "") : (String) value);
                 }
             }
-            log.append("\n");
+            logs.add(logTmp);
+//            log.append("\n");
         }
-        String s = log.toString();
-        return s;
+//        String s = log.toString();
+        String s1 = formatLogs(logs);
+        return s1;
     }
 
     private static <E, T extends List<E>> String showValue(T values) {
@@ -166,12 +172,16 @@ public class AssertUtil {
             logs.add(logTmp);
 //            log.append("\n");
         }
+        return formatLogs(logs);
+    }
+
+    private String formatLogs(List<List<String>> logs) {
         List<Integer> maxCharacterLength = findMaxCharacterLength(logs);
         List<List<String>> adjustsLogs = adjusts(logs, maxCharacterLength);
         StringBuilder log = new StringBuilder();
         log.append("\n");
         for (List<String> adjustsLog : adjustsLogs) {
-            log.append("| ").append(String.join("| ", adjustsLog)).append(" |\n");
+            log.append("| ").append(String.join(" | ", adjustsLog)).append(" |\n");
         }
         log.append("\n");
         return log.toString();
