@@ -206,7 +206,7 @@ public class AssertUtil {
                     try {
                         count = row.get(i).length();
                     } catch (IndexOutOfBoundsException e) {
-                        count = row.get(i).length();
+                        count = 0;
                     }
                     return count;
                 }).max().orElse(0))
