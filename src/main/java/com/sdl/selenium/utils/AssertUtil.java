@@ -201,7 +201,15 @@ public class AssertUtil {
 //        }
 //        return maxPositions;
         return IntStream.range(0, logs.isEmpty() ? 0 : logs.get(0).size())
-                .mapToObj(i -> logs.stream().mapToInt(row -> row.get(i).length()).max().orElse(0))
+                .mapToObj(i -> logs.stream().mapToInt(row -> {
+                    int count;
+                    try {
+                        count = row.get(i).length();
+                    } catch (IndexOutOfBoundsException e) {
+                        count = row.get(i).length();
+                    }
+                    return count;
+                }).max().orElse(0))
                 .collect(Collectors.toList());
     }
 
