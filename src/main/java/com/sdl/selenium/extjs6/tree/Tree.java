@@ -81,7 +81,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             String node = nodes.get(i);
             List<WebLocator> children = new ArrayList<>();
             if (function.getCondition().test(node)) {
-                function.getFunction().apply(node);
+                children = function.getFunction().apply(node);
             } else {
                 WebLocator textEl = new WebLocator().setText(node, searchTypes);
                 children.add(textEl);
