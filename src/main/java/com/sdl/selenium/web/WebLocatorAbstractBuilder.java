@@ -3,6 +3,7 @@ package com.sdl.selenium.web;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
+import java.util.List;
 
 /**
  * This class is used to simple construct xpath for WebLocator's
@@ -175,6 +176,11 @@ public abstract class WebLocatorAbstractBuilder {
     @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setChildNodes(final WebLocator... childNodes) {
         pathBuilder.setChildNodes(null, childNodes);
+        return (T) this;
+    }
+
+    public <T extends WebLocatorAbstractBuilder> T setChildNodes(final List<WebLocator> childNodes) {
+        pathBuilder.setChildNodes(null, childNodes.toArray(new WebLocator[0]));
         return (T) this;
     }
 

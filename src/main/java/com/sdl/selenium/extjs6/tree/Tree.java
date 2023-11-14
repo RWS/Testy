@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriverException;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -71,6 +72,89 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             scrollTop();
         }
         return doSelected(doScroll, nodes, action, searchTypes).isDone();
+    }
+
+    public Response<Row> doSelected(boolean doScroll, List<String> nodes, ConditionFunction<String, List<WebLocator>> function, Action action, SearchType... searchTypes) {
+        Row previousNodeEl = null;
+        boolean selected = false;
+        for (int i = 0; i < nodes.size(); i++) {
+            String node = nodes.get(i);
+            List<WebLocator> children = new ArrayList<>();
+            if (function.getCondition().test(node)) {
+                function.getFunction().apply(node);
+            } else {
+                WebLocator textEl = new WebLocator().setText(node, searchTypes);
+                children.add(textEl);
+            }
+            WebLocator container = previousNodeEl == null ? this : previousNodeEl;
+            Row nodeEl = new Row(container).setClasses("x-grid-item").setChildNodes(children).setVisibility(true);
+            if (previousNodeEl != null) {
+                nodeEl.setRoot("/following-sibling::");
+            }
+            Row row = new Row(nodeEl, 1).setTag("tr").setClasses("x-grid-row");
+            boolean isExpanded;
+            String aClass = row.getAttributeClass();
+            isExpanded = aClass != null && aClass.contains("x-grid-tree-node-expanded");
+            if (doScroll) {
+                scrollPageDownTo(nodeEl);
+            }
+            WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
+            if (nodeEl.ready()) {
+                if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
+                    RetryUtils.retry(2, () -> {
+                        expanderEl.click();
+                        boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
+                            String aCls = row.getAttributeClass();
+                            log.debug("classes:{}", aCls);
+                            return aCls.contains("x-grid-tree-node-expanded");
+                        });
+                        if (expanded) {
+                            log.info("Node '{}' is expanded.", node);
+                        } else {
+                            log.error("Node '{}' is not expanded!!!", node);
+                        }
+                        return expanded;
+                    });
+                } else {
+                    WebLocator checkTree = new WebLocator(nodeEl).setClasses("x-tree-checkbox");
+                    WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
+                    int nodeCount = nodeTree.size();
+                    if (nodeCount > 1) {
+                        WebLocator precedingSibling = new WebLocator(nodeTree).setTag("preceding-sibling::*").setClasses("x-tree-elbow-img");
+                        for (int j = 1; j <= nodeCount; j++) {
+                            nodeTree.setResultIdx(j);
+                            int size = precedingSibling.size();
+                            if (size == i + 1) {
+                                break;
+                            }
+                        }
+                    }
+                    try {
+                        if (checkTree.isPresent()) {
+                            selected = checkTree.click();
+                        } else {
+                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                        }
+                    } catch (WebDriverException e) {
+                        if (doScroll) {
+                            scrollPageDown();
+                        }
+                        if (checkTree.isPresent()) {
+                            selected = checkTree.click();
+                        } else {
+                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                        }
+                    }
+                }
+            }
+//            WebLocator containerOfParent = nodeEl.getPathBuilder().getContainer().getPathBuilder().getContainer();
+//            if (i > 0) {
+//                nodeEl.setContainer(containerOfParent);
+//                nodeEl.setRoot("//");
+//            }
+            previousNodeEl = nodeEl;
+        }
+        return new Response<>(previousNodeEl, selected);
     }
 
     public Response<Row> doSelected(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
@@ -159,6 +243,19 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             scrollTop();
         }
         Response<Row> response = doSelected(doScroll, nodes, action, searchTypes);
+        boolean selected = response.isDone();
+        if (selected) {
+            return response.getResult();
+        } else {
+            return null;
+        }
+    }
+
+    public Row selectAndGetNode(boolean doScroll, List<String> nodes, ConditionFunction<String, List<WebLocator>> function, Action action, SearchType... searchTypes) {
+        if (doScroll) {
+            scrollTop();
+        }
+        Response<Row> response = doSelected(doScroll, nodes, function, action, searchTypes);
         boolean selected = response.isDone();
         if (selected) {
             return response.getResult();
