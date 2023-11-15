@@ -67,7 +67,8 @@ public class Tab extends WebLocator implements ITab {
             link.setChildNodes(getPathBuilder().getChildNodes().toArray(new WebLocator[0]));
         }
         if (!Strings.isNullOrEmpty(getIconCls())) {
-            link.setChildNodes(new WebLocator().setClasses(getIconCls()));
+            WebLocator childNodes = new WebLocator().setClasses(getIconCls());
+            link.setChildNodes(childNodes);
         }
         return link.setInfoMessage(getPathBuilder().getTitle() + " Tab");
     }
