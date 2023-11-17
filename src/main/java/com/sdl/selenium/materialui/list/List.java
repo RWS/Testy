@@ -6,6 +6,8 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+
 @Slf4j
 public class List extends WebLocator implements IMenu {
 
@@ -37,12 +39,24 @@ public class List extends WebLocator implements IMenu {
     }
 
     public WebLocator getItemEl(String item, SearchType... searchTypes) {
-        return new WebLocator(this).setTag("li").setText(item, searchTypes);
+        return new WebLocator(this).setTag("li").setClasses("MuiListItem-root").setText(item, searchTypes);
     }
 
     @Override
     public boolean clickOnMenu(String option, SearchType... searchTypes) {
         Menu menu = new Menu();
         return menu.clickOnMenu(option, searchTypes);
+    }
+
+    public ArrayList<String> getValues() {
+        ArrayList<String> items = new ArrayList<>();
+        WebLocator liEl = new WebLocator(this).setTag("li").setClasses("MuiListItem-root");
+        int size = liEl.size();
+        for (int i = 1; i <= size; i++) {
+            liEl.setResultIdx(i);
+            String text = liEl.getText();
+            items.add(text);
+        }
+        return items;
     }
 }
