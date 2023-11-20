@@ -597,7 +597,7 @@ public abstract class WebLocatorAbstractBuilder {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
-     *     new WebLocator().setAttributes("placeholder", "Search", "Search");
+     *     new WebLocator().setAttributes("placeholder", "Search", "Text");
      *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') and contains(concat(' ', @placeholder, ' '), ' Text ')]
      * </pre>
      *
@@ -607,7 +607,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, String... values) {
+    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, SearchText... values) {
         pathBuilder.setAttributes(attribute, values);
         return (T) this;
     }
@@ -627,7 +627,7 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, Operator operator, String... values) {
+    public <T extends WebLocatorAbstractBuilder> T setAttributes(final String attribute, Operator operator, SearchText... values) {
         pathBuilder.setAttributes(attribute, operator, values);
         return (T) this;
     }

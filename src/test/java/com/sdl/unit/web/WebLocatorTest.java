@@ -1,10 +1,7 @@
 package com.sdl.unit.web;
 
 import com.sdl.selenium.extjs3.ExtJsComponent;
-import com.sdl.selenium.web.Operator;
-import com.sdl.selenium.web.Position;
-import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -148,9 +145,6 @@ public class WebLocatorTest {
                 {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.TRIM), "//*[normalize-space(@data)='value']"},
                 {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.TRIM), "//*[starts-with(normalize-space(@data),'value')]"},
 
-                {new WebLocator().setAttributes("data", "value"), "//*[contains(concat(' ', @data, ' '), ' value ')]"},
-                {new WebLocator().setAttributes("data", "value", "value2"), "//*[contains(concat(' ', @data, ' '), ' value ') and contains(concat(' ', @data, ' '), ' value2 ')]"},
-
 //                {new WebLocator().setAttribute("data", "value", SearchType.CONTAINS, SearchType.CHILD_NODE), "//*[contains(@data,'value')]"},
 //                {new WebLocator().setAttribute("data", "value", SearchType.EQUALS, SearchType.CHILD_NODE), "//*[@data='value']"},
 //                {new WebLocator().setAttribute("data", "value", SearchType.STARTS_WITH, SearchType.CHILD_NODE), "//*[starts-with(@data,'value')]"},
@@ -193,10 +187,12 @@ public class WebLocatorTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProviderAttributesV2() {
         return new Object[][]{
-                {new WebLocator().setAttributes("data", "value"), "//*[contains(concat(' ', @data, ' '), ' value ')]"},
-                {new WebLocator().setAttributes("data", "value", "value2"), "//*[contains(concat(' ', @data, ' '), ' value ') and contains(concat(' ', @data, ' '), ' value2 ')]"},
-                {new WebLocator().setAttributes("data", Operator.OR, "value", "value2"), "//*[(contains(concat(' ', @data, ' '), ' value ') or contains(concat(' ', @data, ' '), ' value2 '))]"},
-                {new WebLocator().setAttributes("data", Operator.AND, "value", "value2"), "//*[contains(concat(' ', @data, ' '), ' value ') and contains(concat(' ', @data, ' '), ' value2 ')]"},
+                {new WebLocator().setAttributes("data", new SearchText("value")), "//*[@data='value']"},
+                {new WebLocator().setAttributes("data", new SearchText("value"), new SearchText("value2")), "//*[@data='value' and @data='value2']"},
+                {new WebLocator().setAttributes("data", Operator.OR, new SearchText("value"), new SearchText("value2")), "//*[(@data='value' or @data='value2')]"},
+                {new WebLocator().setAttributes("data", Operator.AND, new SearchText("value"), new SearchText("value2")), "//*[@data='value' and @data='value2']"},
+                {new WebLocator().setAttributes("data", Operator.OR, new SearchText("value", SearchType.CONTAINS, SearchType.NOT), new SearchText("value2", SearchType.CONTAINS, SearchType.NOT)), "//*[(not(contains(@data,'value')) or not(contains(@data,'value2')))]"},
+                {new WebLocator().setAttributes("data", Operator.AND, new SearchText("value", SearchType.CONTAINS, SearchType.NOT), new SearchText("value2", SearchType.CONTAINS, SearchType.NOT)), "//*[not(contains(@data,'value')) and not(contains(@data,'value2'))]"},
         };
     }
 

@@ -55,7 +55,7 @@ public class XPathBuilder implements Cloneable {
     private String type;
     private String localName;
     private Map<String, SearchText> attribute = new LinkedHashMap<>();
-    private Map<String, String[]> attributes = new LinkedHashMap<>();
+    private Map<String, SearchText[]> attributes = new LinkedHashMap<>();
     private Operator attributesOperator = Operator.AND;
 
     //private int elIndex; // TODO try to find how can be used
@@ -722,7 +722,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
-     *     new WebLocator().setAttributes("placeholder", "Search", "Search");
+     *     new WebLocator().setAttributes("placeholder", "Search", "Text");
      *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') and contains(concat(' ', @placeholder, ' '), ' Text ')]
      * </pre>
      *
@@ -732,7 +732,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setAttributes(final String attribute, String... values) {
+    public <T extends XPathBuilder> T setAttributes(final String attribute, SearchText... values) {
         if (attribute != null) {
             if (values == null) {
                 this.attributes.remove(attribute);
@@ -758,7 +758,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setAttributes(final String attribute, Operator operator, String... values) {
+    public <T extends XPathBuilder> T setAttributes(final String attribute, Operator operator, SearchText... values) {
         if (attribute != null) {
             if (values == null) {
                 this.attributes.remove(attribute);
@@ -970,16 +970,23 @@ public class XPathBuilder implements Cloneable {
             }
         }
         if (!attributes.isEmpty()) {
-            for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
-                String[] values = entry.getValue();
+            for (Map.Entry<String, SearchText[]> entry : attributes.entrySet()) {
+                SearchText[] values = entry.getValue();
                 if (attributesOperator.name().equalsIgnoreCase("and")) {
-                    for (String value : values) {
-                        selectors.add(applyTemplate("attributes", entry.getKey(), value));
+                    for (SearchText searchText : values) {
+                        String text = searchText.getValue();
+                        List<SearchType> searchType = searchText.getSearchTypes();
+                        addTextInPath(selectors, text, "@" + entry.getKey(), searchType);
                     }
                 } else {
-                    List<String> collect = Stream.of(values).map(att -> applyTemplate("attributes", entry.getKey(), att)).collect(Collectors.toList());
-                    String attributesPath = String.join(" or ", collect);
-                    if (collect.size() > 1) {
+                    List<String> selectorsTmp = new ArrayList<>();
+                    for (SearchText searchText : values) {
+                        String text = searchText.getValue();
+                        List<SearchType> searchType = searchText.getSearchTypes();
+                        addTextInPath(selectorsTmp, text, "@" + entry.getKey(), searchType);
+                    }
+                    String attributesPath = String.join(" or ", selectorsTmp);
+                    if (selectorsTmp.size() > 1) {
                         attributesPath = "(" + attributesPath + ")";
                     }
                     selectors.add(attributesPath);
@@ -1401,13 +1408,13 @@ public class XPathBuilder implements Cloneable {
         LinkedHashMap<String, String[]> templatesValues = (LinkedHashMap<String, String[]>) builder.templatesValues;
         LinkedHashMap<String, String> elPathSuffix = (LinkedHashMap<String, String>) builder.elPathSuffix;
         LinkedHashMap<String, SearchText> attribute = (LinkedHashMap<String, SearchText>) builder.attribute;
-        LinkedHashMap<String, String[]> attributes = (LinkedHashMap<String, String[]>) builder.attributes;
+        LinkedHashMap<String, SearchText[]> attributes = (LinkedHashMap<String, SearchText[]>) builder.attributes;
 
         builder.templates = (Map<String, String>) templates.clone();
         builder.templatesValues = (Map<String, String[]>) templatesValues.clone();
         builder.elPathSuffix = (Map<String, String>) elPathSuffix.clone();
         builder.attribute = (Map<String, SearchText>) attribute.clone();
-        builder.attributes = (Map<String, String[]>) attributes.clone();
+        builder.attributes = (Map<String, SearchText[]>) attributes.clone();
 
         builder.templateTitle = (Map<String, WebLocator>) templateTitle.clone();
         WebLocator titleTplEl = templateTitle.get("title");
@@ -1540,7 +1547,7 @@ public class XPathBuilder implements Cloneable {
         return this.attribute;
     }
 
-    public Map<String, String[]> getAttributes() {
+    public Map<String, SearchText[]> getAttributes() {
         return this.attributes;
     }
 
