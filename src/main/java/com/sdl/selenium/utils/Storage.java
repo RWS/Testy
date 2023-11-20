@@ -2,6 +2,7 @@ package com.sdl.selenium.utils;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.utils.Utils;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -11,15 +12,13 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Getter
 @Component
 public class Storage {
 
     private final Map<String, Object> cache = new HashMap<>();
 
-    public Map<String, Object> getCache() {
-        return cache;
-    }
-
+    @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         return (T) cache.get(key);
     }
