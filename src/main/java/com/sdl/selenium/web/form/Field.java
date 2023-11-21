@@ -47,7 +47,7 @@ public abstract class Field extends WebLocator implements IField {
     public String getLabel() {
         WebLocator child = new WebLocator().setTag("label");
         WebLocator parent = new WebLocator(this).setRoot("//ancestor::").setChildNodes(child);
-        WebLocator labelEl = new WebLocator(parent).setRoot("/").setTag("label");
+        WebLocator labelEl = new WebLocator(parent).setRoot("/").setTag("label").setClasses("x-form-item-label");
         return labelEl.getText();
     }
 }

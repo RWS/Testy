@@ -86,4 +86,10 @@ public class CheckBox extends Field implements ICheck {
     public String getValue() {
         return String.valueOf(isChecked());
     }
+
+    public String getBoxLabel() {
+        WebLocator boxLabelEl = new WebLocator(this).setRoot("/../../").setTag("label").setAttribute("data-ref", "boxLabelEl");
+        String boxLabel = boxLabelEl.getText();
+        return boxLabel;
+    }
 }
