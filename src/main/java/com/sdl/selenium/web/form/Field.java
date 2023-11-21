@@ -21,8 +21,8 @@ public abstract class Field extends WebLocator implements IField {
             return iconLocator.click();
         } else {
             log.warn("clickIcon : field is not ready for use: " + this);
+            return false;
         }
-        return false;
     }
 
     /**
@@ -42,5 +42,12 @@ public abstract class Field extends WebLocator implements IField {
 
     public String getValue() {
         return executor.getValue(this);
+    }
+
+    public String getLabel() {
+        WebLocator child = new WebLocator().setTag("label");
+        WebLocator parent = new WebLocator(this).setRoot("//ancestor::").setChildNodes(child);
+        WebLocator labelEl = new WebLocator(parent).setRoot("/").setTag("label");
+        return labelEl.getText();
     }
 }
