@@ -10,6 +10,8 @@
 - [x] combo.select("item"); combo.getValue().equals("item") into select(...)
 - [x] getCellsValues from grouped grid
 - [] waitToAppearAndDisappear(5s,20s)
+- [] add SegmentButton download-analysis-statistics.feature
+- [] add selectAndRetry(TagField tagField, List<String> values)
 
 
 ## Examples and Documentation
