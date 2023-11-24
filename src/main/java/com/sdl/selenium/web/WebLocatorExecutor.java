@@ -41,6 +41,8 @@ public interface WebLocatorExecutor {
 
     String getValue(WebLocator el);
 
+    String getValue(WebLocator el, boolean instant);
+
     @Deprecated
     boolean isElementPresent(WebLocator el);
 

@@ -293,6 +293,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     @Override
+    public String getValue(WebLocator el, boolean instant) {
+        return getAttribute(el, "value", instant);
+    }
+
+    @Override
     @Deprecated
     public boolean isElementPresent(WebLocator el) {
         return findElement(el) != null;

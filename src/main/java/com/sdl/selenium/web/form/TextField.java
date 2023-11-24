@@ -29,7 +29,7 @@ public class TextField extends Field {
             getWebElement().clear();
             MultiThreadClipboardUtils.copyString(value);
             MultiThreadClipboardUtils.pasteString(this);
-            log.info("Set value(" +  this + "): " + value + "'");
+            log.info("Set value(" + this + "): " + value + "'");
             return true;
         }
         return false;
@@ -43,5 +43,9 @@ public class TextField extends Field {
     public String getValue() {
         assertReady();
         return executor.getValue(this);
+    }
+
+    public String getValue(boolean instant) {
+        return executor.getValue(this, instant);
     }
 }
