@@ -103,6 +103,7 @@
             <class name="com.sdl.unit.materialui.dialog.DialogTest"/>
             <class name="com.sdl.unit.materialui.menu.MenuTest"/>
             <class name="com.sdl.unit.materialui.alert.AlertTest"/>
+            <class name="com.sdl.unit.extjs6.button.SegmentedButtonTest"/>
         </classes>
     </test>
 </suite>

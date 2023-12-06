@@ -29,40 +29,24 @@ public class GenerateUtils {
     }
 
     public String getNameFormat() {
-        String result;
-        switch (name) {
-            case "checkbox":
-                result = "CheckBox";
-                break;
-            case "combobox":
-                result = "ComboBox";
-                break;
-            case "togglebutton":
-                result = "ToggleButton";
-                break;
-            default:
-                result = WordUtils.capitalize(name);
-                break;
-        }
+        String result = switch (name) {
+            case "checkbox" -> "CheckBox";
+            case "combobox" -> "ComboBox";
+            case "togglebutton" -> "ToggleButton";
+            default -> WordUtils.capitalize(name);
+        };
         return result;
     }
 
     public String getPackageFormat() {
-        String result;
-        switch (name) {
-            case "checkbox":
-            case "combobox":
-                result = "form";
-                break;
-            case "button":
-            case "togglebutton":
-                result = "button";
-                break;
-            default:
+        String result = switch (name) {
+            case "checkbox", "combobox" -> "form";
+            case "button", "togglebutton" -> "button";
+            default -> {
                 result = WordUtils.capitalize(getName(), '-').replaceAll("-", "");
-                result = WordUtils.uncapitalize(result);
-                break;
-        }
+                yield WordUtils.uncapitalize(result);
+            }
+        };
         return result;
     }
 
@@ -137,7 +121,7 @@ public class GenerateUtils {
         List<String> rows = List.of(
                 "Feature: " + getNameFormat() + "\n",
                 "  Scenario: Start",
-                "    Given I open MaterialUI and add \"\" path"
+                getPackageName().contains("extjs6") ? "    Given I open extjs6 app and add \"\" path" : "    Given I open MaterialUI and add \"\" path"
         );
         Files.write(filePath, rows, StandardOpenOption.CREATE);
         return filePath;
