@@ -14,7 +14,7 @@
     <url>https://github.com/sdl/Testy</url>
 
     <properties>
-        <selenium.version>4.14.0</selenium.version>
+        <selenium.version>4.12.0</selenium.version>
     </properties>
 
     <licenses>
