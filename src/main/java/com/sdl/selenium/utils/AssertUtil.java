@@ -406,7 +406,7 @@ public class AssertUtil {
     public String getKeyFromStorage(String date) {
         String valueTmp;
         boolean isCopied = false;
-        if (date.equals(".")) {
+        if (date.equals(".") || date.equals("...")) {
             return date;
         } else if (date.contains(".")) {
             valueTmp = date.split("\\.")[0];
