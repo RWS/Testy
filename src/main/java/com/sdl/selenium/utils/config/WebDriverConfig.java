@@ -31,10 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class WebDriverConfig {
 
@@ -117,6 +114,7 @@ public class WebDriverConfig {
         log.info("===============================================================");
         log.info("|          Stopping driver (closing browser)                   |");
         log.info("===============================================================");
+        WebDriverConfig.closeAllTabs();
         driver.quit();
         String user = System.getProperty("user.home");
         try {
@@ -286,8 +284,8 @@ public class WebDriverConfig {
     private static Browser findBrowser(InputStream inputStream) {
         PropertiesReader properties = new PropertiesReader(null, inputStream);
         String browserKey = properties.getProperty("browser");
-        if (System.getProperty("browser.recordNetworkTraffic")!=null) {
-            if(System.getProperty("browser.recordNetworkTraffic").equals("true")) {
+        if (System.getProperty("browser.recordNetworkTraffic") != null) {
+            if (System.getProperty("browser.recordNetworkTraffic").equals("true")) {
                 WebDriverConfig.setRecordNetworkTraffic(true);
             }
         } else {
@@ -372,6 +370,14 @@ public class WebDriverConfig {
             millis -= 100;
         }
         return hasExpectedTabs;
+    }
+
+    public static void closeAllTabs() {
+        Set<String> handles = driver.getWindowHandles();
+        for (String handle : handles) {
+            driver.switchTo().window(handle);
+            driver.close();
+        }
     }
 
     public static boolean isRecordNetworkTraffic() {
