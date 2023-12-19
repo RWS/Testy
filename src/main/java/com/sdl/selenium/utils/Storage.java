@@ -46,6 +46,25 @@ public class Storage {
         return variable;
     }
 
+    public String replaceVariable(String variable, String regex) {
+        String name;
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(variable);
+        while (matcher.find()) {
+            String variableKey = matcher.group(1);
+            name = get(variableKey);
+            String group = matcher.group();
+            if (Strings.isNullOrEmpty(name) || name.contains(variableKey)) {
+                String tmp = get(get(variableKey));
+                name = tmp == null ? name : tmp;
+                variable = name == null ? "Not found value for key: '" + variableKey + "'" : variable.replace(group, name);
+            } else {
+                variable = variable.replace(group, name);
+            }
+        }
+        return variable;
+    }
+
     public static void main(String[] args) {
         Storage storage = new Storage();
         storage.set("projectName", "p0");
