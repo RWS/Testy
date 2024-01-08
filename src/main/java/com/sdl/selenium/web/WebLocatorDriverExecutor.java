@@ -429,6 +429,31 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         return findAgain(el) && el.currentElement.isEnabled();
     }
 
+    public String getAccessibleName(WebLocator el) {
+        findAgain(el);
+        return el.getWebElement().getAccessibleName();
+    }
+
+    public String getAriaRole(WebLocator el) {
+        findAgain(el);
+        return el.getWebElement().getAriaRole();
+    }
+
+    public String getDomAttribute(WebLocator el, String name) {
+        findAgain(el);
+        return el.getWebElement().getDomAttribute(name);
+    }
+
+    public String getDomProperty(WebLocator el, String name) {
+        findAgain(el);
+        return el.getWebElement().getDomProperty(name);
+    }
+
+    public SearchContext getShadowRoot(WebLocator el) {
+        findAgain(el);
+        return el.getWebElement().getShadowRoot();
+    }
+
     public boolean isSamePath(WebLocator el, String path) {
         return el.getWebElement() != null && (el.getCurrentElementPath().equals(path));
     }

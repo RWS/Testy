@@ -1,10 +1,7 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.utils.config.WebLocatorConfig;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.time.Duration;
 import java.util.List;
@@ -76,6 +73,16 @@ public interface WebLocatorExecutor {
     boolean isDisplayed(WebLocator el);
 
     boolean isEnabled(WebLocator el);
+
+    String getAccessibleName(WebLocator el);
+
+    String getAriaRole(WebLocator el);
+
+    String getDomAttribute(WebLocator el, String name);
+
+     String getDomProperty(WebLocator el, String name);
+
+    SearchContext getShadowRoot(WebLocator el);
 
     boolean isSamePath(WebLocator el, String path);
 

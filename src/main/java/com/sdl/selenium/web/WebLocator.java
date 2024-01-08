@@ -597,6 +597,26 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return executor.isDisplayed(this);
     }
 
+    public String getAccessibleName() {
+        return executor.getAccessibleName(this);
+    }
+
+    public String getAriaRole() {
+        return executor.getAriaRole(this);
+    }
+
+    public String getDomAttribute(String name) {
+        return executor.getDomAttribute(this, name);
+    }
+
+    public String getDomProperty(String name) {
+        return executor.getDomProperty(this, name);
+    }
+
+    public SearchContext getShadowRoot() {
+        return executor.getShadowRoot(this);
+    }
+
     public WebLocator clone() {
         return WebLocatorSuggestions.getClone(this);
     }
