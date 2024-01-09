@@ -2,6 +2,7 @@ package com.sdl.selenium.web.form;
 
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 
 public class TextField extends Field {
@@ -16,6 +17,11 @@ public class TextField extends Field {
     public TextField(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public TextField(WebElement webElement) {
+        this();
+        setWebElement(webElement);
     }
 
     public TextField(String id) {

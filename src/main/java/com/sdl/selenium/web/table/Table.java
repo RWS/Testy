@@ -5,6 +5,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.CheckBox;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,11 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
     public Table(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public Table(WebElement webElement) {
+        this();
+        setWebElement(webElement);
     }
 
     @Override

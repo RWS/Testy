@@ -3,6 +3,7 @@ package com.sdl.selenium.web.form;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 
@@ -22,6 +23,11 @@ public class ComboBox extends Field implements ICombo {
     public ComboBox(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public ComboBox(WebElement webElement) {
+        this();
+        setWebElement(webElement);
     }
 
     public boolean selectByIndex(int index) {

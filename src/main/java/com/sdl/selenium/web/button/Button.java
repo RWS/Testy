@@ -2,6 +2,7 @@ package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import org.openqa.selenium.WebElement;
 
 public class Button extends WebLocator implements IButton {
 
@@ -14,6 +15,11 @@ public class Button extends WebLocator implements IButton {
     public Button(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public Button(WebElement webElement) {
+        this();
+        setWebElement(webElement);
     }
 
     public Button(WebLocator container, String text, SearchType... searchTypes) {

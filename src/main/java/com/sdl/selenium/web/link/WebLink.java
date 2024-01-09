@@ -4,6 +4,7 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class WebLink extends WebLocator {
 
@@ -17,6 +18,11 @@ public class WebLink extends WebLocator {
     public WebLink(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public WebLink(WebElement webElement) {
+        this();
+        setWebElement(webElement);
     }
 
     public WebLink(WebLocator container, String text, SearchType... searchTypes) {

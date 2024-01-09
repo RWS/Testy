@@ -563,6 +563,10 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
+        WebElement webElement = container.getPathBuilder().getWebElement();
+        if (webElement != null) {
+            setWebElement(webElement);
+        }
         return (T) this;
     }
 
@@ -576,6 +580,7 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setWebElement(WebElement webElement) {
         this.webElement = webElement;
+        setRoot("");
         return (T) this;
     }
 

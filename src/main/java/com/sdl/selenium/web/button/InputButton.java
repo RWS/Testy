@@ -1,6 +1,7 @@
 package com.sdl.selenium.web.button;
 
 import com.sdl.selenium.web.WebLocator;
+import org.openqa.selenium.WebElement;
 
 public class InputButton extends WebLocator implements IButton {
 
@@ -16,6 +17,11 @@ public class InputButton extends WebLocator implements IButton {
     public InputButton(WebLocator container) {
         this();
         setContainer(container);
+    }
+
+    public InputButton(WebElement webElement) {
+        this();
+        setWebElement(webElement);
     }
 
     /**

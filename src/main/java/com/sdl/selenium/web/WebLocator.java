@@ -35,15 +35,10 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
 
     public WebLocator(WebLocator container) {
         setContainer(container);
-        WebElement webElement = container.getPathBuilder().getWebElement();
-        if (webElement != null) {
-            setWebElement(webElement);
-        }
     }
 
     public WebLocator(WebElement webElement) {
         setWebElement(webElement);
-        setRoot("");
     }
 
     public WebLocator(SearchContext shadowRoot) {
