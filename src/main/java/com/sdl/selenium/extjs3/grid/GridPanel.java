@@ -75,7 +75,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         WebLocator container = tabPanel.getPathBuilder().getContainer();
         gridPanel.setContainer(container);
 
-        tabPanel.setContainer((WebLocator) null); // hack to have path without container
+        tabPanel.setContainer(null); // hack to have path without container
         String elPath = tabPanel.getXPath();
         tabPanel.setContainer(container); // set container back
 
@@ -306,7 +306,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
     public WebLocator getHeader(String columnId) {
         waitToRender();
         WebLocator headerEl = new WebLocator(this).setElPath("//*[contains(@class, 'x-grid3-hd-" + columnId + "') and count(parent::td[not(contains(@style, 'display: none;'))]) > 0]");
-        headerEl.setInfoMessage(toString() + " Header[" + columnId + "]");
+        headerEl.setInfoMessage(this + " Header[" + columnId + "]");
         return headerEl;
     }
 
@@ -382,7 +382,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             }
             return index;
         } else {
-            LOGGER.warn("getSelectedRowIndex : grid is not ready for use: " + toString());
+            LOGGER.warn("getSelectedRowIndex : grid is not ready for use: " + this);
             return -1;
         }
     }
@@ -420,7 +420,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 LOGGER.warn("The element '" + searchElement + "' was not found.");
             }
         } else {
-            LOGGER.warn("getRowIndex : grid is not ready for use: " + toString());
+            LOGGER.warn("getRowIndex : grid is not ready for use: " + this);
         }
         return index;
     }
@@ -614,7 +614,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             }
             return false;
         } else {
-            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + this);
             return false;
         }
     }
@@ -636,7 +636,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 }
             } while (selected < searchTexts.size() && scrollPageDown());
         } else {
-            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + this);
         }
         return selected;
     }
@@ -663,7 +663,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
             } while (!selected && scrollPageDown());
             return selected;
         } else {
-            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxSMSelectRow : grid is not ready for use: " + this);
             return false;
         }
     }
@@ -762,7 +762,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
                 }
             }
         } else {
-            LOGGER.warn("checkboxColumnSelect: grid is not ready for use: " + toString());
+            LOGGER.warn("checkboxColumnSelect: grid is not ready for use: " + this);
             selected = false;
         }
         return selected;

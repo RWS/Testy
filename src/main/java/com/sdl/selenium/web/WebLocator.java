@@ -38,7 +38,7 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     }
 
     public WebLocator(WebElement webElement) {
-        setContainer(webElement);
+        setWebElement(webElement);
     }
 
     public WebLocator(SearchContext shadowRoot) {

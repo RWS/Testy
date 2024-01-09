@@ -458,8 +458,8 @@ public abstract class WebLocatorAbstractBuilder {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends WebLocatorAbstractBuilder> T setContainer(WebElement webElement) {
-        pathBuilder.setContainer(webElement);
+    public <T extends WebLocatorAbstractBuilder> T setWebElement(WebElement webElement) {
+        pathBuilder.setWebElement(webElement);
         return (T) this;
     }
 

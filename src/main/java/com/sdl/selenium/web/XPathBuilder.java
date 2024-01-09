@@ -574,7 +574,7 @@ public class XPathBuilder implements Cloneable {
      * @return this element
      */
     @SuppressWarnings("unchecked")
-    public <T extends XPathBuilder> T setContainer(WebElement webElement) {
+    public <T extends XPathBuilder> T setWebElement(WebElement webElement) {
         this.webElement = webElement;
         return (T) this;
     }
