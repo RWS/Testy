@@ -2,6 +2,7 @@ package com.sdl.selenium.web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 import java.util.List;
@@ -446,6 +447,19 @@ public abstract class WebLocatorAbstractBuilder {
     @SuppressWarnings("unchecked")
     public <T extends WebLocatorAbstractBuilder> T setContainer(WebLocator container) {
         pathBuilder.setContainer(container);
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
+     * @param webElement parent containing element.
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends WebLocatorAbstractBuilder> T setContainer(WebElement webElement) {
+        pathBuilder.setContainer(webElement);
         return (T) this;
     }
 

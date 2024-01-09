@@ -8,6 +8,7 @@ import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -69,6 +70,7 @@ public class XPathBuilder implements Cloneable {
 
     private WebLocator container;
     private SearchContext shadowRoot;
+    private WebElement webElement;
     private ChildNodes childNodes = new ChildNodes();
     private String finalXPath;
 
@@ -561,6 +563,19 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
+     * @param webElement parent containing element.
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setContainer(WebElement webElement) {
+        this.webElement = webElement;
         return (T) this;
     }
 
@@ -1091,7 +1106,7 @@ public class XPathBuilder implements Cloneable {
 
             // child element has myself as parent
             if (parentElementIterator.getPathBuilder() == this) {
-                childIterator.setContainer(null); // break parent tree while generating child address
+                childIterator.setContainer((WebLocator) null); // break parent tree while generating child address
                 parentElement = parentElementIterator;
                 breakElement = childIterator;
             } else {
@@ -1590,6 +1605,10 @@ public class XPathBuilder implements Cloneable {
 
     public WebLocator getContainer() {
         return this.container;
+    }
+
+    public WebElement getWebElement() {
+        return webElement;
     }
 
     public SearchContext getShadowRoot() {

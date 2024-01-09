@@ -321,10 +321,12 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
     }
 
     public List<WebElement> findElements(WebLocator el) {
-        if (el.getPathBuilder().getShadowRoot() == null) {
-            return driver.findElements(el.getSelector());
-        } else {
+        if (el.getPathBuilder().getShadowRoot() != null) {
             return el.getPathBuilder().getShadowRoot().findElements(el.getSelector());
+        } else if (el.getPathBuilder().getWebElement() != null) {
+            return el.getPathBuilder().getWebElement().findElements(el.getSelector());
+        } else {
+            return driver.findElements(el.getSelector());
         }
     }
 
@@ -363,6 +365,8 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             if (el.getPathBuilder().getShadowRoot() != null) {
                 webElement = el.getPathBuilder().getShadowRoot().findElement(el.getSelector());
+            } else if (el.getPathBuilder().getWebElement() != null) {
+                webElement = el.getPathBuilder().getWebElement().findElement(el.getSelector());
             } else if (el.getPathBuilder().isVisibility()) {
                 webElement = wait.until((d) -> ExpectedConditions.visibilityOfElementLocated(el.getSelector()).apply(d));
             } else {
