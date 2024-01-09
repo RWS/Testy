@@ -7,6 +7,7 @@ import com.sdl.selenium.web.table.AbstractCell;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -67,6 +68,7 @@ public class XPathBuilder implements Cloneable {
     private Duration activate = Duration.ofSeconds(60);
 
     private WebLocator container;
+    private SearchContext shadowRoot;
     private ChildNodes childNodes = new ChildNodes();
     private String finalXPath;
 
@@ -559,6 +561,19 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
+        return (T) this;
+    }
+
+    /**
+     * <p><b>Used for finding element process (to generate xpath address)</b></p>
+     *
+     * @param shadowRoot parent containing element.
+     * @param <T>       the element which calls this method
+     * @return this element
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends XPathBuilder> T setShadowRoot(SearchContext shadowRoot) {
+        this.shadowRoot = shadowRoot;
         return (T) this;
     }
 
@@ -1575,6 +1590,10 @@ public class XPathBuilder implements Cloneable {
 
     public WebLocator getContainer() {
         return this.container;
+    }
+
+    public SearchContext getShadowRoot() {
+        return this.shadowRoot;
     }
 
     public List<? extends WebLocator> getChildNodes() {
