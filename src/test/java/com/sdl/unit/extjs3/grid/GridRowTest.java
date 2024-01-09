@@ -4,6 +4,7 @@ import com.sdl.selenium.extjs3.grid.GridCell;
 import com.sdl.selenium.extjs3.grid.GridPanel;
 import com.sdl.selenium.extjs3.grid.GridRow;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocator;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -34,7 +35,7 @@ public class GridRowTest {
 
     @Test(dataProvider = "testConstructorPathDataProvider")
     public void getPathSelectorCorrectlyFromConstructors(GridRow gridRow, String expectedXpath) {
-        gridRow.setContainer(null);
+        gridRow.setContainer((WebLocator) null);
         assertThat(gridRow.getXPath(), equalTo(expectedXpath));
     }
 }

@@ -75,7 +75,7 @@ public class GridPanel extends Panel implements ITable<GridRow, GridCell> {
         WebLocator container = tabPanel.getPathBuilder().getContainer();
         gridPanel.setContainer(container);
 
-        tabPanel.setContainer(null); // hack to have path without container
+        tabPanel.setContainer((WebLocator) null); // hack to have path without container
         String elPath = tabPanel.getXPath();
         tabPanel.setContainer(container); // set container back
 
