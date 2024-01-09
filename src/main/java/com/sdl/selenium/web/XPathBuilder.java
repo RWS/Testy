@@ -567,6 +567,11 @@ public class XPathBuilder implements Cloneable {
         if (webElement != null) {
             this.webElement = webElement;
         }
+        SearchContext shadowRoot = container.getPathBuilder().getShadowRoot();
+        if (shadowRoot != null) {
+            this.shadowRoot = shadowRoot;
+        }
+
         return (T) this;
     }
 
@@ -574,7 +579,7 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param webElement parent containing element.
-     * @param <T>       the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
@@ -588,12 +593,13 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      *
      * @param shadowRoot parent containing element.
-     * @param <T>       the element which calls this method
+     * @param <T>        the element which calls this method
      * @return this element
      */
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setShadowRoot(SearchContext shadowRoot) {
         this.shadowRoot = shadowRoot;
+        this.root = "";
         return (T) this;
     }
 
