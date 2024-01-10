@@ -27,6 +27,12 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
         super(columnText, searchTypes);
     }
 
+    /**
+     *
+     * @param columnIndex column
+     * @param columnText text
+     * @param searchTypes SearchType.EQUALS
+     */
     public Cell(int columnIndex, String columnText, SearchType... searchTypes) {
         super(columnIndex, columnText, searchTypes);
     }
