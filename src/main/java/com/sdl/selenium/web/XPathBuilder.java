@@ -563,15 +563,16 @@ public class XPathBuilder implements Cloneable {
     @SuppressWarnings("unchecked")
     public <T extends XPathBuilder> T setContainer(WebLocator container) {
         this.container = container;
-        WebElement webElement = container.getPathBuilder().getWebElement();
-        if (webElement != null) {
-            this.webElement = webElement;
+        if (container != null) {
+            WebElement webElement = container.getPathBuilder().getWebElement();
+            if (webElement != null) {
+                this.webElement = webElement;
+            }
+            SearchContext shadowRoot = container.getPathBuilder().getShadowRoot();
+            if (shadowRoot != null) {
+                this.shadowRoot = shadowRoot;
+            }
         }
-        SearchContext shadowRoot = container.getPathBuilder().getShadowRoot();
-        if (shadowRoot != null) {
-            this.shadowRoot = shadowRoot;
-        }
-
         return (T) this;
     }
 
