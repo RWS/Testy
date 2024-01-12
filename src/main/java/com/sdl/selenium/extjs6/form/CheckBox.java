@@ -74,7 +74,7 @@ public class CheckBox extends Field implements ICheck {
 
     @Override
     public boolean isChecked() {
-        if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
+        if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion()) || "7.7.0".equals(getVersion())) {
             return executor.isSelected(this);
         } else {
             WebLocator el = new WebLocator(this).setElPath("/../input");

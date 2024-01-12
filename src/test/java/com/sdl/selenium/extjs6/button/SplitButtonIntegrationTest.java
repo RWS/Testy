@@ -1,6 +1,5 @@
 package com.sdl.selenium.extjs6.button;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Table;
@@ -8,7 +7,6 @@ import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,10 +20,7 @@ public class SplitButtonIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#split-buttons");
-        driver.switchTo().frame("examples-iframe");
-        splitButton.ready(Duration.ofSeconds(10));
-        Utils.sleep(1000);
+        openEXTJSUrl("#split-buttons", splitButton);
     }
 
     @Test

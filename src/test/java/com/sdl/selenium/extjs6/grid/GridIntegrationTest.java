@@ -23,14 +23,12 @@ public class GridIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
-        driver.switchTo().frame("examples-iframe");
         if (InputData.EXTJS_EXAMPLE_URL.contains("?classic")) {
             grid = new Grid().setTitle("Basic Grid").setVisibility(true);
         } else {
             grid = new Grid().setTitle("Array Grid").setVisibility(true);
         }
-        grid.ready(Duration.ofSeconds(10));
+        openEXTJSUrl("#array-grid", grid);
         grid.ready(true);
     }
 
@@ -81,15 +79,13 @@ public class GridIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "headerTest")
     void selectTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#spreadsheet-checked");
-        driver.navigate().refresh();
-        driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("Spreadsheet");
         if (InputData.EXTJS_EXAMPLE_URL.contains("?classic")) {
             spreadsheet.setVersion("6.7.0");
         } else {
             spreadsheet.setVersion("6.0.2");
         }
+        openEXTJSUrl("#spreadsheet-checked", spreadsheet);
         spreadsheet.ready(true);
         Row row = spreadsheet.getRow(new Cell(3, "1900"));
         row.select();
@@ -139,6 +135,7 @@ public class GridIntegrationTest extends TestBase {
     @Test(dependsOnMethods = "checkCellTest")
     void checkExpandedRowTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#row-expander-grid");
+        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("Expander Rows to show extra data");
         if (InputData.EXTJS_EXAMPLE_URL.contains("?classic")) {
@@ -163,7 +160,7 @@ public class GridIntegrationTest extends TestBase {
     void getCellsTest() {
         driver.get(InputData.EXTJS_EXAMPLE_URL + "#xml-grid");
 //        driver.get(InputData.EXTJS_EXAMPLE_URL + "#array-grid");
-//        driver.navigate().refresh();
+        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         Grid spreadsheet = new Grid().setTitle("XML Grid");
 //        Grid spreadsheet = new Grid().setTitle("Basic Grid");

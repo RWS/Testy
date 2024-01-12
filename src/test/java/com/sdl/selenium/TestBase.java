@@ -3,11 +3,13 @@ package com.sdl.selenium;
 import com.sdl.selenium.extjs3.button.Button;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,5 +112,13 @@ public class TestBase {
         WebLocator tbar = new WebLocator().setId("top-toolbar");
         Button showComponentButton = new Button(tbar, buttonText);
         showComponentButton.click();
+    }
+
+    public void openEXTJSUrl(String part, WebLocator el) {
+        driver.get(InputData.EXTJS_EXAMPLE_URL + part);
+        driver.navigate().refresh();
+        driver.switchTo().frame("examples-iframe");
+        el.ready(Duration.ofSeconds(20));
+        Utils.sleep(1000);
     }
 }

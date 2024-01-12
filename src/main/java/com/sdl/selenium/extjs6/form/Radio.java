@@ -40,7 +40,7 @@ public class Radio extends WebLocator {
     public boolean isSelected(boolean instant) {
         WebLocator input = new WebLocator(this);
         boolean checked;
-        if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion())) {
+        if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion()) || "7.7.0".equals(getVersion())) {
             input.setElPath("//input");
             checked = executor.isSelected(input);
         } else {

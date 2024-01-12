@@ -1,12 +1,8 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,10 +14,7 @@ public class DateFieldIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
-        driver.switchTo().frame("examples-iframe");
-        dateField.ready(Duration.ofSeconds(20));
-        Utils.sleep(3000);
+        openEXTJSUrl("#form-fieldtypes", dateField);
     }
 
     @Test

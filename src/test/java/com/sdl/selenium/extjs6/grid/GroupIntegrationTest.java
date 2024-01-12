@@ -1,11 +1,9 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,9 +19,7 @@ public class GroupIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#grouped-grid");
-        driver.switchTo().frame("examples-iframe");
-        grid.ready(Duration.ofSeconds(10));
+        openEXTJSUrl("#grouped-grid", grid);
         grid.ready(true);
     }
 

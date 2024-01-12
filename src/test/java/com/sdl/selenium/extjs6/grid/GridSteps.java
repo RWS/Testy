@@ -3,12 +3,15 @@ package com.sdl.selenium.extjs6.grid;
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.Result;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.function.Function;
 
@@ -25,7 +28,12 @@ public class GridSteps extends TestBase {
         String url = InputData.EXTJS_EXAMPLE_URL + path;
         log.info("Url: {}", url);
         driver.get(url);
+        Utils.sleep(500);
+        driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
+        WebLocator mask = new WebLocator().setId("loadingSplash");
+        Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(15), () -> !mask.isPresent());
+        log.info("maskStatus: {}", maskStatus);
         grid.ready(true);
     }
 

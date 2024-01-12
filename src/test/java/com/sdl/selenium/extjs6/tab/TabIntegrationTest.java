@@ -1,12 +1,10 @@
 package com.sdl.selenium.extjs6.tab;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,9 +22,7 @@ public class TabIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-tabs");
-        driver.switchTo().frame("examples-iframe");
-        activeTab.ready(Duration.ofSeconds(20));
+        openEXTJSUrl("#basic-tabs", activeTab);
     }
 
     @Test

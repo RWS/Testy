@@ -1,13 +1,10 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
 import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -15,15 +12,13 @@ import static org.hamcrest.Matchers.is;
 
 public class RadioGroupIntegrationTest extends TestBase {
 
-    private Panel radioGroupPanel = new Panel(null, "Radio Group Example").setClasses("x-panel-default-framed");
-    private RadioGroup radioGroup = new RadioGroup(radioGroupPanel, "Auto Layout:", SearchType.DEEP_CHILD_NODE_OR_SELF);
+    private final Panel radioGroupPanel = new Panel(null, "Radio Group Example").setClasses("x-panel-default-framed");
+    private final RadioGroup radioGroup = new RadioGroup(radioGroupPanel, "Auto Layout:", SearchType.DEEP_CHILD_NODE_OR_SELF);
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-radiogroup");
-        driver.switchTo().frame("examples-iframe");
         radioGroup.setVersion(version);
-        radioGroup.ready(Duration.ofSeconds(20));
+        openEXTJSUrl("#form-radiogroup", radioGroup);
     }
 
     @Test

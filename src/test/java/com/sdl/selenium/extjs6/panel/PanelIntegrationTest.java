@@ -1,11 +1,8 @@
 package com.sdl.selenium.extjs6.panel;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -16,9 +13,7 @@ public class PanelIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#basic-panels");
-        driver.switchTo().frame("examples-iframe");
-        collapsiblePanel.ready(Duration.ofSeconds(10));
+        openEXTJSUrl("#basic-panels", collapsiblePanel);
     }
 
     @Test

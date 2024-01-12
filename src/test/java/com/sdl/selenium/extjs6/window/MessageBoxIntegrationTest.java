@@ -1,12 +1,10 @@
 package com.sdl.selenium.extjs6.window;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs6.button.Button;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,10 +19,7 @@ public class MessageBoxIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#message-box");
-        driver.switchTo().frame("examples-iframe");
-        dialogButton.ready(Duration.ofSeconds(20));
-        Utils.sleep(2000);
+        openEXTJSUrl("#message-box", dialogButton);
         dialogButton.click();
     }
 

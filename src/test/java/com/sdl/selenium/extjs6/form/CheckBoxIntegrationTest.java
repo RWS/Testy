@@ -1,13 +1,9 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
-import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -20,13 +16,10 @@ public class CheckBoxIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-fieldtypes");
-        driver.switchTo().frame("examples-iframe");
         checkBox.setVersion(version);
-        checkBox.getValue();
         boxLabel.setVersion(version);
-        boxLabel.ready(Duration.ofSeconds(10));
-        Utils.sleep(1);
+        openEXTJSUrl("#form-fieldtypes", checkBox);
+        checkBox.getValue();
     }
 
     @Test

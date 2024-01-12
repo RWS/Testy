@@ -1,6 +1,5 @@
 package com.sdl.selenium.extjs6.grid;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.form.ComboBox;
 import com.sdl.selenium.extjs6.form.DateField;
@@ -9,18 +8,14 @@ import org.openqa.selenium.Keys;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
 public class CellEditingIntegrationTest extends TestBase {
 
     private Grid grid;
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#cell-editing");
-        driver.switchTo().frame("examples-iframe");
         grid = new Grid().setTitle("Cell Editing Plants").setVisibility(true);
-        grid.ready(Duration.ofSeconds(10));
+        openEXTJSUrl("#cell-editing", grid);
         grid.ready(true);
     }
 

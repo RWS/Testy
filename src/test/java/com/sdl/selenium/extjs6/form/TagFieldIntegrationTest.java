@@ -1,13 +1,10 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.web.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +22,7 @@ public class TagFieldIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#form-tag");
-        driver.switchTo().frame("examples-iframe");
-        tagField.ready(Duration.ofSeconds(20));
-        Utils.sleep(2000);
+        openEXTJSUrl("#form-tag", tagField);
     }
 
 //    @Test

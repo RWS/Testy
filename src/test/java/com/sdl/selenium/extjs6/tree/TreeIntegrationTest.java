@@ -1,14 +1,11 @@
 package com.sdl.selenium.extjs6.tree;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,10 +17,7 @@ public class TreeIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTests() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#check-tree");
-        driver.switchTo().frame("examples-iframe");
-        tree.ready(Duration.ofSeconds(20));
-        Utils.sleep(1000);
+        openEXTJSUrl("#check-tree", tree);
     }
 
     @Test
@@ -36,9 +30,7 @@ public class TreeIntegrationTest extends TestBase {
 
     @Test(dependsOnMethods = "treeTest")
     void treeExpanderTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#tree-xml");
-        driver.switchTo().frame("examples-iframe");
-        tree.ready(Duration.ofSeconds(20));
+        openEXTJSUrl("#tree-xml", tree);
         tree.expandAllNodes();
         tree.scrollTop();
         List<List<String>> values = tree.getValues();

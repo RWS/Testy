@@ -1,12 +1,9 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.web.utils.Utils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,10 +17,7 @@ public class ComboBoxIntegrationTest extends TestBase {
 
     @BeforeClass
     public void startTest() {
-        driver.get(InputData.EXTJS_EXAMPLE_URL + "#simple-combo");
-        driver.switchTo().frame("examples-iframe");
-        comboBox.ready(Duration.ofSeconds(20));
-        Utils.sleep(2000);
+        openEXTJSUrl("#simple-combo", comboBox);
     }
 
     @Test

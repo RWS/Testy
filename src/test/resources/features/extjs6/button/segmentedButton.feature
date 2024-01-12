@@ -7,3 +7,4 @@ Feature: SegmentedButton
 
     And in ExtJs I verify if SegmentedButton has "Option One, Option Two, Option Three" values
     And in ExtJs I press on SegmentedButton with "Option Two" value
+    And I stop
