@@ -34,11 +34,11 @@ public class GridSteps extends TestBase {
         WebLocator mask = new WebLocator().setId("loadingSplash");
         Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(15), () -> !mask.isPresent());
         log.info("maskStatus: {}", maskStatus);
-        grid.ready(true);
     }
 
     @Then("I verify if grid has values:")
     public void iVerifyIfGridHasValues(List<List<String>> values) {
+        grid.ready(true);
         long startMs = System.currentTimeMillis();
         List<List<String>> cellsText = grid.getCellsText(t -> t == 5, getBooleanValue(), 6);
         long endMs = System.currentTimeMillis();

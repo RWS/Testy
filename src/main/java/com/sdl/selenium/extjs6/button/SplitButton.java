@@ -135,4 +135,15 @@ public class SplitButton extends Button {
             }
         }).filter(Objects::nonNull).collect(Collectors.toList());
     }
+
+    public List<String> getMenuValuesExtended() {
+        Menu menu = new Menu();
+        if (!menu.showMenu(this)) {
+            menu.ready();
+            menu.showMenu(this);
+        }
+        List<String> menuValuesExtend = menu.getMenuValuesExtend();
+        menu.hideMenu(this);
+        return menuValuesExtend;
+    }
 }

@@ -6,6 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.link.WebLink;
+import com.sdl.selenium.web.utils.RetryUtils;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -85,6 +86,19 @@ public class Menu extends WebLocator {
         return Arrays.asList(menuValues);
     }
 
+    public List<String> getMenuValues1() {
+        WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setVisibility(true).setInfoMessage(this + " -> x-menu-body");
+        WebLink link = new WebLink(menuList).setClasses("x-menu-item-link");
+        int size = link.size();
+        List<String> list = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            link.setResultIdx(i);
+            String value = link.getText().trim();
+            list.add(value);
+        }
+        return list;
+    }
+
     public List<Values> getMenuValuesWithStatus() {
         WebLocator menuList = new WebLocator(this).setClasses("x-menu-body").setVisibility(true).setInfoMessage(this + " -> x-menu-body");
         WebLink item = new WebLink(menuList).setClasses("x-menu-item-link").setVisibility(true);
@@ -108,6 +122,51 @@ public class Menu extends WebLocator {
             if (item.isChecked()) {
                 String text = item.getText();
                 list.add(text);
+            }
+        }
+        return list;
+    }
+
+    public List<String> getMenuValuesExtend() {
+        WebLocator arrow = new WebLocator().setClasses("x-menu-item-arrow");
+        List<String> menuValues = this.getMenuValues1();
+        List<String> list = new ArrayList<>();
+        for (String value : menuValues) {
+            WebLink item = getWebLink(value.trim());
+            item.setChildNodes(arrow);
+            list.add(value.trim());
+            if (item.isPresent()) {
+                String id = item.getAttribute("aria-owns");
+                Menu menuChild1 = RetryUtils.retry(2, () -> {
+                    item.click();
+                    Menu m = new Menu().setId(id);
+                    if (m.ready()) {
+                        return m;
+                    } else {
+                        return null;
+                    }
+                });
+                List<String> menuChild1Values = menuChild1.getMenuValues1();
+                for (String itemText : menuChild1Values) {
+                    list.add(">" + itemText);
+                    WebLink webLink = menuChild1.getWebLink(itemText.trim());
+                    webLink.setChildNodes(arrow);
+                    if (webLink.isPresent()) {
+                        String id2 = webLink.getAttribute("aria-owns");
+                        Menu menuChild2 = RetryUtils.retry(2, () -> {
+                            webLink.click();
+                            Menu m = new Menu().setId(id2);
+                            if (m.ready()) {
+                                return m;
+                            } else {
+                                return null;
+                            }
+                        });
+                        List<String> menuChild2Values = menuChild2.getMenuValues1();
+                        menuChild2Values = menuChild2Values.stream().map(h -> ">>" + h).toList();
+                        list.addAll(menuChild2Values);
+                    }
+                }
             }
         }
         return list;

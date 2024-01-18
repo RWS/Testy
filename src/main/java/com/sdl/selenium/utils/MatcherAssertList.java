@@ -49,6 +49,24 @@ public class MatcherAssertList {
         }
     }
 
+    public static <E, T extends List<E>> void assertThatListVertical(T actual, Matcher<? super T> matcher) {
+        assertThatListVertical("", actual, matcher);
+    }
+
+    public static <E, T extends List<E>> void assertThatListVertical(String reason, T actual, Matcher<? super T> matcher) {
+        if (!matcher.matches(actual)) {
+            Description description = new StringDescription();
+            String log = assertUtil.showValuesVertical(actual);
+            description.appendText(reason + ": " + log)
+                    .appendText("\nExpected: ")
+                    .appendDescriptionOf(matcher)
+                    .appendText("\n     but: ");
+            matcher.describeMismatch(actual, description);
+
+            throw new AssertionError(description.toString());
+        }
+    }
+
     public static <T> void assertThatObject(T actual, Matcher<? super T> matcher) {
         assertThatObject("", actual, matcher);
     }

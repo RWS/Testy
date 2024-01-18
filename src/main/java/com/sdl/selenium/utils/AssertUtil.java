@@ -110,6 +110,17 @@ public class AssertUtil {
         return log.toString();
     }
 
+    public <E, T extends List<E>> String showValuesVertical(T lists) {
+        if (lists == null || lists.isEmpty()) {
+            return null;
+        }
+        List<String> logs = new ArrayList<>();
+        for (Object o : lists) {
+            logs.add((String) o);
+        }
+        return formatLog(logs);
+    }
+
     public <E, T extends List<E>> String showObjectValues(T lists, boolean transformDate, Function<String, String> function) {
         if (lists == null || lists.isEmpty()) {
             return null;
@@ -187,19 +198,19 @@ public class AssertUtil {
         return log.toString();
     }
 
+    private String formatLog(List<String> logs) {
+        int maxLength = logs.stream().mapToInt(String::length).max().orElse(0);
+        StringBuilder log = new StringBuilder("\n");
+        for (String logEntry : logs) {
+            int paddingLength = maxLength - logEntry.length();
+            String paddedLogEntry = logEntry + " ".repeat(Math.max(0, paddingLength));
+            log.append("| ").append(String.join(" | ", paddedLogEntry)).append(" |\n");
+        }
+        log.append("\n");
+        return log.toString();
+    }
+
     private List<Integer> findMaxCharacterLength(List<List<String>> logs) {
-//        List<Integer> maxPositions = new ArrayList<>();
-//        int columnSize = logs.get(0).size();
-//        for (int i = 0; i < columnSize; i++) {
-//            int maxColumn = 0;
-//            for (List<String> row : logs) {
-//                String item = row.get(i);
-//                int length = item.length();
-//                maxColumn = Math.max(maxColumn, length);
-//            }
-//            maxPositions.add(maxColumn);
-//        }
-//        return maxPositions;
         return IntStream.range(0, logs.isEmpty() ? 0 : logs.get(0).size())
                 .mapToObj(i -> logs.stream().mapToInt(row -> {
                     int count;
@@ -214,19 +225,6 @@ public class AssertUtil {
     }
 
     private List<List<String>> adjusts(List<List<String>> logs, List<Integer> columnsSize) {
-//        List<List<String>> logsAdjusts = new ArrayList<>();
-//        for (List<String> log : logs) {
-//            List<String> logAdjusts = new ArrayList<>();
-//            for (int i = 0; i < log.size(); i++) {
-//                String item = log.get(i);
-//                int length = item.length();
-//                Integer expectedLength = columnsSize.get(i);
-//                int repeatInt = expectedLength - length;
-//                logAdjusts.add(item + " ".repeat(repeatInt));
-//            }
-//            logsAdjusts.add(logAdjusts);
-//        }
-//        return logsAdjusts;
         return logs.stream()
                 .map(log -> IntStream.range(0, log.size())
                         .mapToObj(i -> {
