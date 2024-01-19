@@ -31,8 +31,8 @@ public class GridSteps extends TestBase {
         Utils.sleep(500);
         driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
-        WebLocator mask = new WebLocator().setId("loadingSplash");
-        Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(15), () -> !mask.isPresent());
+        WebLocator mask = new WebLocator().setId("loadingSplashBottom");
+        Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(10), () -> !mask.isPresent());
         log.info("maskStatus: {}", maskStatus);
     }
 

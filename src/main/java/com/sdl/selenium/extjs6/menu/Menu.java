@@ -132,44 +132,48 @@ public class Menu extends WebLocator {
         List<String> menuValues = this.getMenuValues1();
         List<String> list = new ArrayList<>();
         for (String value : menuValues) {
-            WebLink item = getWebLink(value.trim());
+            WebLink item = getWebLink(value);
             item.setChildNodes(arrow);
-            list.add(value.trim());
+            list.add(value);
             if (item.isPresent()) {
-                String id = item.getAttribute("aria-owns");
-                Menu menuChild1 = RetryUtils.retry(2, () -> {
-                    item.click();
-                    Menu m = new Menu().setId(id);
-                    if (m.ready()) {
-                        return m;
-                    } else {
-                        return null;
-                    }
-                });
+                Menu menuChild1 = openMenu(item);
                 List<String> menuChild1Values = menuChild1.getMenuValues1();
                 for (String itemText : menuChild1Values) {
                     list.add(">" + itemText);
-                    WebLink webLink = menuChild1.getWebLink(itemText.trim());
-                    webLink.setChildNodes(arrow);
-                    if (webLink.isPresent()) {
-                        String id2 = webLink.getAttribute("aria-owns");
-                        Menu menuChild2 = RetryUtils.retry(2, () -> {
-                            webLink.click();
-                            Menu m = new Menu().setId(id2);
-                            if (m.ready()) {
-                                return m;
-                            } else {
-                                return null;
-                            }
-                        });
+                    WebLink item1 = menuChild1.getWebLink(itemText);
+                    item1.setChildNodes(arrow);
+                    if (item1.isPresent()) {
+                        Menu menuChild2 = openMenu(item1);
                         List<String> menuChild2Values = menuChild2.getMenuValues1();
-                        menuChild2Values = menuChild2Values.stream().map(h -> ">>" + h).toList();
-                        list.addAll(menuChild2Values);
+                        for (String item2Text : menuChild2Values) {
+                            list.add(">>" + item2Text);
+                            WebLink item2 = menuChild2.getWebLink(item2Text);
+                            item2.setChildNodes(arrow);
+                            if (item2.isPresent()) {
+                                Menu menuChild3 = openMenu(item2);
+                                List<String> menuChild3Values = menuChild3.getMenuValues1();
+                                menuChild3Values = menuChild3Values.stream().map(h -> ">>>" + h).toList();
+                                list.addAll(menuChild3Values);
+                            }
+                        }
                     }
                 }
             }
         }
         return list;
+    }
+
+    private static Menu openMenu(WebLink link) {
+        String id = link.getAttribute("aria-owns");
+        return RetryUtils.retry(2, () -> {
+            link.click();
+            Menu m = new Menu().setId(id);
+            if (m.ready()) {
+                return m;
+            } else {
+                return null;
+            }
+        });
     }
 
     public boolean showMenu(WebLocator parent) {
