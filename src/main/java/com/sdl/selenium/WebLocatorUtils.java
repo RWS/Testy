@@ -3,6 +3,7 @@ package com.sdl.selenium;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Utils;
+import org.jsoup.Jsoup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public final class WebLocatorUtils extends WebLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLocatorUtils.class);
@@ -168,9 +168,14 @@ public final class WebLocatorUtils extends WebLocator {
         return result;
     }
 
+    public static String getOuterHTMLTree(WebLocator webLocator) {
+        String innerHTML1 = webLocator.getAttribute("outerHTML");
+        return Jsoup.parse(innerHTML1).html();
+    }
+
     public static String getChildrenHtmlTree(WebLocator webLocator) {
         String innerHTML = webLocator.getAttribute("innerHTML").replaceAll("><", ">\n<");
-        List<String> collect = innerHTML.lines().collect(Collectors.toList());
+        List<String> collect = innerHTML.lines().toList();
         List<String> result = new ArrayList<>();
         int size = collect.size();
         final Map<String, String> map = Map.of(
