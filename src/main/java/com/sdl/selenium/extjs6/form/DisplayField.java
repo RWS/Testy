@@ -31,4 +31,11 @@ public class DisplayField extends WebLocator {
         }
         setLabel(label, searchTypes);
     }
+
+    public String getLabel() {
+        WebLocator child = new WebLocator().setTag("label");
+        WebLocator parent = new WebLocator(this).setRoot("//ancestor::").setChildNodes(child);
+        WebLocator labelEl = new WebLocator(parent).setRoot("/").setTag("label").setClasses("x-form-item-label");
+        return labelEl.getText();
+    }
 }

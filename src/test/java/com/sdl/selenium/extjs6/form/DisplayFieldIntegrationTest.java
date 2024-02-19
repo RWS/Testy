@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
+import com.sdl.selenium.web.utils.RetryUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,5 +22,11 @@ public class DisplayFieldIntegrationTest extends TestBase {
     @Test
     public void displayFieldTest() {
         assertThat(field.getText(), equalTo("Display field value"));
+    }
+
+    @Test
+    public void displayFieldLabel() {
+        String label = RetryUtils.retry(10, () -> field.getLabel());
+        assertThat(label, equalTo("Display field:"));
     }
 }
