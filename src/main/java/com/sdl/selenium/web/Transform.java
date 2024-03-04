@@ -26,8 +26,8 @@ public interface Transform {
             JsonNode jsonNode = mapper.readTree(json);
             for (int i = 0; i < size; i++) {
                 String value = i >= actualList.size() ? null : actualList.get(i);
-                ((ObjectNode) jsonNode).put(names.get(i), value);
-                Utils.sleep(1);
+                String field = names.get(i);
+                ((ObjectNode) jsonNode).put(field, value);
             }
             V object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
             resultList.add(object);
