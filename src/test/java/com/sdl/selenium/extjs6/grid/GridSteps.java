@@ -17,6 +17,7 @@ import java.util.function.Function;
 
 import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @Slf4j
 public class GridSteps extends TestBase {
@@ -78,5 +79,16 @@ public class GridSteps extends TestBase {
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
         assertThatList("Actual values: ", actualHeaders, contains(headers.toArray()));
+    }
+
+    @Then("I verify if grid has object values:")
+    public void iVerifyIfGridHasObjectValues(List<Plant> values) {
+        grid.ready(true);
+        long startMs = System.currentTimeMillis();
+        List<Plant> cellsText = grid.getCellsValues(values.get(0), t -> t == 5, getBooleanValue(), 6);
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.info("performance took {} ms", rez);
+        assertThatList("Actual values", cellsText, containsInAnyOrder(values.toArray()));
     }
 }

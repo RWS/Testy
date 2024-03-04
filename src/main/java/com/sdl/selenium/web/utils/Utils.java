@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * TODO Sa fie o metoda de Utils care sa poti seta din WebLocator path-ul unde sa salveze imaginile in dependenta de WebDriver ori Selenium
@@ -74,7 +75,7 @@ public class Utils {
     }
 
     public static boolean eq(Object a, Object b) {
-        boolean equals = a == b || (a != null && a.equals(b));
+        boolean equals = Objects.equals(a, b) || (a != null && a.equals(b));
         if (!equals) {
             LOGGER.debug("'" + a + "' is not equals with '" + b + "'");
         }

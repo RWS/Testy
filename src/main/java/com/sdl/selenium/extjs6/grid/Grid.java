@@ -20,7 +20,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -437,21 +436,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return getCellsText(group, t -> t == 0, null, excludedColumns);
     }
 
-    /**
-     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
-     */
     public <V> List<V> getCellsValues(V type, String group, int... excludedColumns) {
         List<List<String>> actualValues = getCellsText(group, t -> t == 0, null, excludedColumns);
-        List<V> collect = transformToObjectList(type, actualValues);
+        List<V> collect = transformTo(type, actualValues);
         return collect;
     }
 
-    /**
-     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
-     */
     public <V> List<V> getCellsValues(V type, String group, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> actualValues = getCellsText(group, predicate, function, excludedColumns);
-        List<V> collect = transformToObjectList(type, actualValues);
+        List<V> collect = transformTo(type, actualValues);
         return collect;
     }
 
@@ -603,7 +596,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         if (cellsText == null) {
             return null;
         }
-        List<V> collect = transformToObjectList(type, cellsText);
+        List<V> collect = transformTo(type, cellsText);
         return collect;
     }
 

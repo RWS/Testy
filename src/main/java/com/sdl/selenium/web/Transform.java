@@ -1,22 +1,50 @@
 package com.sdl.selenium.web;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public interface Transform {
 
-    ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
+    ObjectMapper mapper = new ObjectMapper();
+
+    @SneakyThrows
+    default <V> List<V> transformTo(V type, List<List<String>> actualListOfList) {
+        String json = mapper.writeValueAsString(type);
+        List<String> names = getNames(json);
+        int size = names.size();
+        LinkedList<V> resultList = new LinkedList<>();
+        for (List<String> actualList : actualListOfList) {
+            JsonNode jsonNode = mapper.readTree(json);
+            for (int i = 0; i < size; i++) {
+                String value = i >= actualList.size() ? null : actualList.get(i);
+                ((ObjectNode) jsonNode).put(names.get(i), value);
+                Utils.sleep(1);
+            }
+            V object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
+            resultList.add(object);
+        }
+        return resultList;
+    }
+
+    private List<String> getNames(String json) throws JsonProcessingException {
+        List<String> names = new ArrayList<>();
+        JsonNode jsonNode = mapper.readTree(json);
+        Iterator<String> fields = jsonNode.fieldNames();
+        while (fields.hasNext()) {
+            String entry = fields.next();
+            names.add(entry);
+        }
+        return names;
+    }
 
     /**
      * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)

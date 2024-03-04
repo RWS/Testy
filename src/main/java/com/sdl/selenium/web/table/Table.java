@@ -222,9 +222,6 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
         return transformToObjectList(type, cellsText);
     }
 
-    /**
-     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
-     */
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(excludedColumns);
         if (cellsText == null) {
@@ -235,7 +232,7 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
                 cellsText = getCellsText(excludedColumns);
             }
         }
-        return transformToObjectList(type, cellsText);
+        return transformTo(type, cellsText);
     }
 
     public String getText(String searchText, int columnId) {

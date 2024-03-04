@@ -1,6 +1,10 @@
 package com.sdl.selenium.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +22,7 @@ import java.util.stream.IntStream;
 
 @Component
 public class AssertUtil {
+    private final ObjectMapper mapper = new ObjectMapper();
 
     private static Storage storage;
 
@@ -121,6 +126,7 @@ public class AssertUtil {
         return formatLog(logs);
     }
 
+    @SneakyThrows
     public <E, T extends List<E>> String showObjectValues(T lists, boolean transformDate, Function<String, String> function) {
         if (lists == null || lists.isEmpty()) {
             return null;
@@ -138,52 +144,43 @@ public class AssertUtil {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
-        Field[] fields = aClass.getDeclaredFields();
-//        StringBuilder log = new StringBuilder();
+        List<String> names = getNames(mapper.writeValueAsString(lists.get(0)));
+        Set<String> headers = new HashSet<>();
         List<List<String>> logs = new ArrayList<>();
-        List<String> logTmp = new ArrayList<>();
-        List<String> fieldsList = new ArrayList<>();
-//        log.append("\n| ");
-        for (Field f : fields) {
-            String name = f.getName();
-//            log.append(name).append(" | ");
-            logTmp.add(name);
-            String finalName = name.substring(0, 1).toUpperCase() + name.substring(1);
-            String typeName = f.getType().getSimpleName();
-            if ("String".equals(typeName) || "Boolean".equals(typeName)) {
-                fieldsList.add("get" + finalName);
-            } else if ("boolean".equals(typeName)) {
-                fieldsList.add("is" + finalName);
-            }
-        }
-        logs.add(logTmp);
-//        log.append("\n");
+        List<String> logTmp;
         for (Object o : lists) {
-//            log.append(" | ");
             logTmp = new ArrayList<>();
             E workFlow = (E) o;
-            for (String name : fieldsList) {
-                try {
-                    Method method = workFlow.getClass().getDeclaredMethod(name);
-                    String value = (String) method.invoke(workFlow);
+            String json = mapper.writeValueAsString(workFlow);
+            JsonNode node = mapper.readTree(json);
+            for (String name : names) {
+                String value = node.get(name).textValue();
+                if (value != null) {
+                    headers.add(name);
                     Object format;
-                    if ("".equals(value)) {
+                    if (value.isEmpty()) {
                         format = "[blank]";
-                    } else if (value == null) {
-                        format = "";
                     } else {
                         format = transformDate ? function.apply(value) : value;
                     }
-//                    log.append(format).append(" | ");
                     logTmp.add(format.toString());
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    e.printStackTrace();
                 }
             }
             logs.add(logTmp);
-//            log.append("\n");
         }
+        logs.add(0, headers.stream().toList());
         return formatLogs(logs);
+    }
+
+    private List<String> getNames(String json) throws JsonProcessingException {
+        List<String> names = new ArrayList<>();
+        JsonNode jsonNode = mapper.readTree(json);
+        Iterator<String> fields = jsonNode.fieldNames();
+        while (fields.hasNext()) {
+            String entry = fields.next();
+            names.add(entry);
+        }
+        return names;
     }
 
     private String formatLogs(List<List<String>> logs) {
