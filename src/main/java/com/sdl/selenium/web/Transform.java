@@ -38,10 +38,14 @@ public interface Transform {
     private List<String> getNames(String json, List<Integer> columnsList) throws JsonProcessingException {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
-        Iterator<String> fields = jsonNode.fieldNames();
+        Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
         while (fields.hasNext()) {
-            String entry = fields.next();
-            names.add(entry);
+            Map.Entry<String, JsonNode> next = fields.next();
+            String entry = next.getKey();
+            String value = next.getValue().textValue();
+            if (value != null) {
+                names.add(entry);
+            }
         }
         names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         return names;
