@@ -189,7 +189,10 @@ public class AssertUtil {
         StringBuilder log = new StringBuilder();
         log.append("\n");
         for (List<String> adjustsLog : adjustsLogs) {
-            log.append("| ").append(String.join(" | ", adjustsLog)).append(" |\n");
+            int size = maxCharacterLength.size() - adjustsLog.size();
+            String joined = String.join(" | ", adjustsLog);
+            String join = size > 0 ? joined + " | ".repeat(size) : joined;
+            log.append("| ").append(join).append(" |\n");
         }
         log.append("\n");
         return log.toString();
