@@ -145,7 +145,7 @@ public class AssertUtil {
             return null;
         }
         List<String> names = getNames(mapper.writeValueAsString(lists.get(0)));
-        Set<String> headers = new HashSet<>();
+        Set<String> headers = new LinkedHashSet<>();
         List<List<String>> logs = new ArrayList<>();
         List<String> logTmp;
         for (Object o : lists) {
