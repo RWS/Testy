@@ -191,7 +191,7 @@ public class AssertUtil {
         for (List<String> adjustsLog : adjustsLogs) {
             int size = maxCharacterLength.size() - adjustsLog.size();
             String joined = String.join(" | ", adjustsLog);
-            String join = size > 0 ? joined + " | ".repeat(size) : joined;
+            String join = size > 0 ? joined + " | ".repeat(maxCharacterLength.get(maxCharacterLength.size() - 1)) : joined;
             log.append("| ").append(join).append(" |\n");
         }
         log.append("\n");
