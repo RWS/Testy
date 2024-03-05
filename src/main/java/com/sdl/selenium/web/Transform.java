@@ -19,7 +19,10 @@ public interface Transform {
     @SneakyThrows
     default <V> List<V> transformTo(V type, List<List<String>> actualListOfList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
-        List<String> names = getNames(json, columnsList);
+        List<String> names = getNames(json);
+        if (names.size() < actualListOfList.size()) {
+            names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
+        }
         int size = names.size();
         LinkedList<V> resultList = new LinkedList<>();
         for (List<String> actualList : actualListOfList) {
@@ -35,7 +38,7 @@ public interface Transform {
         return resultList;
     }
 
-    private List<String> getNames(String json, List<Integer> columnsList) throws JsonProcessingException {
+    private List<String> getNames(String json) throws JsonProcessingException {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
         Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
@@ -47,7 +50,6 @@ public interface Transform {
                 names.add(entry);
             }
         }
-        names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         return names;
     }
 
