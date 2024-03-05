@@ -17,16 +17,16 @@ public interface Transform {
     ObjectMapper mapper = new ObjectMapper();
 
     @SneakyThrows
-    default <V> List<V> transformTo(V type, List<List<String>> actualListOfList) {
+    default <V> List<V> transformTo(V type, List<List<String>> actualListOfList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
-        List<String> names = getNames(json);
+        List<String> names = getNames(json, columnsList);
         int size = names.size();
         LinkedList<V> resultList = new LinkedList<>();
         for (List<String> actualList : actualListOfList) {
             JsonNode jsonNode = mapper.readTree(json);
             for (int i = 0; i < size; i++) {
-                String value = i >= actualList.size() ? null : actualList.get(i);
                 String field = names.get(i);
+                String value = i >= actualList.size() ? null : actualList.get(i);
                 ((ObjectNode) jsonNode).put(field, value);
             }
             V object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
@@ -35,7 +35,7 @@ public interface Transform {
         return resultList;
     }
 
-    private List<String> getNames(String json) throws JsonProcessingException {
+    private List<String> getNames(String json, List<Integer> columnsList) throws JsonProcessingException {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
         Iterator<String> fields = jsonNode.fieldNames();
@@ -43,6 +43,7 @@ public interface Transform {
             String entry = fields.next();
             names.add(entry);
         }
+        names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         return names;
     }
 

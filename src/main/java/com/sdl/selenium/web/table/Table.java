@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -232,7 +233,8 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
                 cellsText = getCellsText(excludedColumns);
             }
         }
-        return transformTo(type, cellsText);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        return transformTo(type, cellsText, columnsList);
     }
 
     public String getText(String searchText, int columnId) {

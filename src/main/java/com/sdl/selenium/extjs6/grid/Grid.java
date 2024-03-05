@@ -438,13 +438,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
 
     public <V> List<V> getCellsValues(V type, String group, int... excludedColumns) {
         List<List<String>> actualValues = getCellsText(group, t -> t == 0, null, excludedColumns);
-        List<V> collect = transformTo(type, actualValues);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> collect = transformTo(type, actualValues, columnsList);
         return collect;
     }
 
     public <V> List<V> getCellsValues(V type, String group, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> actualValues = getCellsText(group, predicate, function, excludedColumns);
-        List<V> collect = transformTo(type, actualValues);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> collect = transformTo(type, actualValues, columnsList);
         return collect;
     }
 
@@ -596,7 +598,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         if (cellsText == null) {
             return null;
         }
-        List<V> collect = transformTo(type, cellsText);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> collect = transformTo(type, cellsText, columnsList);
         return collect;
     }
 

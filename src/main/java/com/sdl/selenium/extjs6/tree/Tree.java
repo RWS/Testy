@@ -18,6 +18,7 @@ import org.openqa.selenium.WebDriverException;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -414,13 +415,15 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
 
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
-        List<V> actualValues = transformTo(type, cellsText);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> actualValues = transformTo(type, cellsText, columnsList);
         return actualValues;
     }
 
     public <V> List<V> getCellsValues(V type, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(rowExpand, predicate, function, excludedColumns);
-        List<V> actualValues = transformTo(type, cellsText);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> actualValues = transformTo(type, cellsText, columnsList);
         return actualValues;
     }
 
