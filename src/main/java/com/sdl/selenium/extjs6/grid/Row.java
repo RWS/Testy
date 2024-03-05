@@ -338,7 +338,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 list.add(function.apply(cell));
             } else {
                 try {
-                    list.add(cell.getText(true).trim());
+                    list.add(cell.getText(true).replaceFirst("\n", " ").trim());
                 } catch (NullPointerException e) {
                     Utils.sleep(1);
                 }
