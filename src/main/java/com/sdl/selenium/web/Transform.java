@@ -20,7 +20,7 @@ public interface Transform {
     default <V> List<V> transformTo(V type, List<List<String>> actualListOfList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
         List<String> names = getNames(json);
-        if (names.size() < actualListOfList.size()) {
+        if (names.size() > actualListOfList.get(0).size()) {
             names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         }
         int size = names.size();
