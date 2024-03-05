@@ -5,6 +5,7 @@ import com.sdl.selenium.web.WebLocator;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -62,12 +63,10 @@ public class Row extends AbstractRow {
         return list;
     }
 
-    /**
-     * add in V class this: @JsonInclude(JsonInclude.Include.NON_NULL)
-     */
     public <V> V getCellsValues(V type, int... excludedColumns) {
         List<String> actualList = getCellsText(excludedColumns);
-        return transformToObject(type, actualList);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        return transformToObject(type, actualList, columnsList);
     }
 
     @Override

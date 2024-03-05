@@ -37,7 +37,7 @@ public class GridIntegrationWithAuthorTest extends TestBase {
 
     @Test
     void getCellsValues() {
-        Author author1 = new Author(null, "Master of the Game", "Warner Books", "Book");
+        Author author1 = new Author("Master of the Game", "Warner Books", "Book");
         Author author = spreadsheet.getRow(1).getCellsValues(author1, 1);
         assertThat(author, is(author1));
     }
