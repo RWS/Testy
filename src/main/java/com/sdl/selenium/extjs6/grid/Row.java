@@ -98,10 +98,10 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 for (AbstractCell cell : childNodes) {
                     ((Grid) grid).scrollTop();
                     Details details = getCellPosition(cell);
-                    int indexCurrent = details.getLockedPosition();
+                    int indexCurrent = details.lockedPosition();
                     cell.setTemplateValue("tagAndPosition", indexCurrent + "");
                     Row tmpEl;
-                    if (details.getFirstColumns() >= details.getActualPosition()) {
+                    if (details.firstColumns() >= details.actualPosition()) {
                         WebLocator containerLocked = new WebLocator(grid).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
                         tmpEl = new Row(containerLocked).setChildNodes(cell);
                     } else {
@@ -143,7 +143,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 List<Integer> commonId = findCommonId(collect, theMinList);
                 if (commonId.size() == 1) {
                     index = commonId.get(0);
-                } else if (commonId.size() == 0) {
+                } else if (commonId.isEmpty()) {
                     log.error("No found commonId!!!");
                 } else {
                     log.error("Find more row that one!!!");
@@ -151,7 +151,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
             }
             for (AbstractCell cell : childNodes) {
                 if (size) {
-                    int indexCurrent = getCellPosition(cell).getLockedPosition();
+                    int indexCurrent = getCellPosition(cell).lockedPosition();
                     cell.setTemplateValue("tagAndPosition", indexCurrent + "");
                 } else {
                     cell.setTag("table[@data-recordindex='" + index + "']//td");
@@ -211,38 +211,17 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return new Details(firstColumns, actualPosition, lockedPosition);
     }
 
-    static class Details {
-        private final int firstColumns;
-        private final int actualPosition;
-        private final int lockedPosition;
-
-        public Details(int firstColumns, int actualPosition, int lockedPosition) {
-            this.firstColumns = firstColumns;
-            this.actualPosition = actualPosition;
-            this.lockedPosition = lockedPosition;
-        }
-
-        public int getFirstColumns() {
-            return firstColumns;
-        }
-
-        public int getActualPosition() {
-            return actualPosition;
-        }
-
-        public int getLockedPosition() {
-            return lockedPosition;
-        }
+    record Details(int firstColumns, int actualPosition, int lockedPosition) {
 
         @Override
-        public String toString() {
-            return "Details{" +
-                    "firstColumns=" + firstColumns +
-                    ", actualPosition=" + actualPosition +
-                    ", lockedPosition=" + lockedPosition +
-                    '}';
+            public String toString() {
+                return "Details{" +
+                        "firstColumns=" + firstColumns +
+                        ", actualPosition=" + actualPosition +
+                        ", lockedPosition=" + lockedPosition +
+                        '}';
+            }
         }
-    }
 
     private int getLockedPosition(int firstColumns, int actualPosition) {
         if (actualPosition <= firstColumns) {
@@ -330,7 +309,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
                 list.add(function.apply(cell));
             } else {
                 try {
-                    list.add(cell.getText(true).replaceFirst("\n", " ").trim());
+                    list.add(cell.getText(true).replaceAll("\n", " ").trim());
                 } catch (NullPointerException e) {
                     Utils.sleep(1);
                 }
@@ -486,15 +465,5 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public Row getNextRow() {
         return new Row(this).setRoot("/").setTag("following-sibling::table[1]");
-    }
-
-    public static void main(String[] args) {
-        List<Integer> list1 = List.of(0, 2);
-        List<Integer> list2 = List.of(0, 1, 2, 3);
-        List<Integer> list3 = List.of(0, 1, 2, 3);
-        List<Integer> list4 = List.of(1, 2);
-        List<List<Integer>> list = List.of(list2, list3, list4);
-        List<Integer> commonId = new Row().findCommonId(list, list1);
-        log.info(commonId);
     }
 }
