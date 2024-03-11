@@ -6,7 +6,6 @@ import com.sdl.selenium.web.WebLocator;
 
 public class RadioGroup extends WebLocator {
 
-    private final Radio radio = new Radio(this);
     private String version;
 
     public RadioGroup() {
@@ -39,23 +38,26 @@ public class RadioGroup extends WebLocator {
     }
 
     public boolean selectByLabel(String label, SearchType... searchType) {
-        radio.setLabel(label, searchType);
-        boolean selected = radio.isSelected() || radio.click();
-        radio.setLabel(null);
-        return selected;
+        Radio radio = getRadio(label, searchType);
+        return radio.isSelected() || radio.click();
     }
 
     public boolean isSelectedByLabel(String label, SearchType... searchType) {
-        radio.setVersion(getVersion());
-        radio.setLabel(label, searchType);
-        boolean selected = radio.isSelected();
-        radio.setLabel(null);
-        return selected;
+        Radio radio = getRadio(label, searchType);
+        return radio.isSelected();
     }
 
-    public String getLabelName(String label) {
-        WebLocator locator = new WebLocator(radio).setElPath("/following-sibling::label[contains(text(),'" + label + "')]");
-        return locator.getText();
+    public Radio getRadio(String label, SearchType... searchType) {
+        WebLocator labelEl = new WebLocator().setTag("label").setText(label, searchType);
+        Radio radio = new Radio(this).setTag("*").setBaseCls("x-form-type-radio");
+        radio.setChildNodes(labelEl);
+        radio.setVersion(getVersion());
+        return radio;
+    }
+
+    public String getLabelName(String partialLabel) {
+        Radio radio = getRadio(partialLabel);
+        return radio.getText();
     }
 
 //    public boolean isDisabled() {

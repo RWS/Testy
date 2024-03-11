@@ -38,13 +38,12 @@ public class Radio extends WebLocator {
     }
 
     public boolean isSelected(boolean instant) {
-        WebLocator input = new WebLocator(this);
         boolean checked;
         if ("6.7.0".equals(getVersion()) || "6.6.0".equals(getVersion()) || "7.7.0".equals(getVersion())) {
-            input.setElPath("//input");
-            checked = executor.isSelected(input);
+            String aClass = getAttributeClass();
+            checked = aClass != null && aClass.contains("x-form-cb-checked");
         } else {
-            input.setElPath("/../input");
+            WebLocator input = new WebLocator(this).setTag("input");
             checked = "true".equals(input.getAttribute("aria-checked", instant));
         }
         return checked;

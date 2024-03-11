@@ -23,6 +23,7 @@ public class RadioGroupIntegrationTest extends TestBase {
 
     @Test
     public void selectRadioGroup() {
+        assertThat(radioGroup.isSelectedByLabel("Item 1"), is(false));
         assertThat(radioGroup.selectByLabel("Item 2"), is(true));
         assertThat(radioGroup.isSelectedByLabel("Item 2"), is(true));
         assertThat(radioGroup.selectByLabel("5", SearchType.CONTAINS), is(true));
@@ -36,6 +37,6 @@ public class RadioGroupIntegrationTest extends TestBase {
     @Test
     public void getLabelNameRadioGroup() {
         assertThat(radioGroup.getLabelName("1"), equalTo("Item 1"));
-        assertThat(radioGroup.getLabelName("1"), equalTo("Item 1"));
+        assertThat(radioGroup.getLabelName("2"), equalTo("Item 2"));
     }
 }
