@@ -60,8 +60,8 @@ public class RadioGroup extends WebLocator {
         return radio.getText();
     }
 
-//    public boolean isDisabled() {
-//        WebLocator locator = new WebLocator().setElPath(radio.getXPath(true));
-//        return locator.exists();
-//    }
+    public boolean isDisabled() {
+        String aClass = getAttributeClass();
+        return aClass != null &&  aClass.contains("x-item-disabled");
+    }
 }
