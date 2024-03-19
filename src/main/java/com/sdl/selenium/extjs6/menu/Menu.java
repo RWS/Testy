@@ -71,6 +71,14 @@ public class Menu extends WebLocator {
         return click;
     }
 
+    public void check(List<String> values) {
+        for (String value : values) {
+            Item item = new Item(this, value);
+            item.check(true);
+        }
+    }
+
+
     private boolean scrollDown(String id) {
         if (Strings.isNullOrEmpty(id)) {
             return false;
