@@ -98,6 +98,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
+        return sendKeys(false, el, charSequences);
+    }
+
+    @Override
+    public boolean sendKeys(boolean showLog, WebLocator el, java.lang.CharSequence... charSequences) {
         invalidateCache(el);
         boolean sendKeys = false;
         if (ensureExists(el)) {
@@ -124,7 +129,27 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
                 sendKeys = true;
             }
         }
+        if (showLog) {
+            if (sendKeys) {
+                log.info("sendKeys value({}): '{}'", el, getKeysName(charSequences));
+            } else {
+                log.info("Could not sendKeys {}", el);
+            }
+        }
         return sendKeys;
+    }
+
+    private String getKeysName(java.lang.CharSequence... charSequences) {
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        for (CharSequence ch : charSequences) {
+            if (i > 0) {
+                builder.append(",");
+            }
+            builder.append(ch instanceof Keys ? ((Keys) ch).name() : ch);
+            i++;
+        }
+        return builder.toString();
     }
 
     private boolean tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
@@ -139,19 +164,25 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     @Override
     public boolean setValue(WebLocator el, String value) {
-        return doSetValue(el, value);
+        return doSetValue(true, el, value);
     }
 
-    private boolean doSetValue(WebLocator el, String value) {
+    @Override
+    public boolean setValue(boolean showLog, WebLocator el, String value) {
+        return doSetValue(showLog, el, value);
+    }
+
+    private boolean doSetValue(boolean showLog, WebLocator el, String value) {
         invalidateCache(el);
         int lengthVal = WebLocatorConfig.getMinCharsToType();
         int length = value.length();
-//        el.getWebElement().clear();
         el.getWebElement().sendKeys(Keys.CONTROL, "a");
         el.getWebElement().sendKeys(Keys.DELETE);
         if (lengthVal == -1 || length <= lengthVal) {
             el.currentElement.sendKeys(value);
-            log.info("Set value({}): '{}'", el, getLogValue(el, value));
+            if (showLog) {
+                log.info("Set value({}): '{}'", el, getLogValue(el, value));
+            }
         } else {
             try {
                 MultiThreadClipboardUtils.copyString(value);
@@ -172,7 +203,6 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             info = el.getPathBuilder().itemToString();
         }
         info = info.toLowerCase();
-
         return WebLocatorConfig.getLogParamsExclude().contains(info) ? "*****" : value;
     }
 

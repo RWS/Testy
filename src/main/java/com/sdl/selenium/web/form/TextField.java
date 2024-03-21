@@ -52,6 +52,11 @@ public class TextField extends Field {
         return executor.setValue(this, value);
     }
 
+    public boolean setValue(boolean showLog, String value) {
+        assertReady();
+        return executor.setValue(showLog, this, value);
+    }
+
     public String getValue() {
         assertReady();
         return executor.getValue(this);

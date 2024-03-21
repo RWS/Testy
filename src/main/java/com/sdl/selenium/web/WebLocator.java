@@ -233,11 +233,8 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     public WebLocator sendKeys(boolean showLog, java.lang.CharSequence... charSequences) {
         boolean sendKeys = waitToRender();
         assertThat("Element was not rendered " + this, sendKeys);
-        sendKeys = executor.sendKeys(this, charSequences);
+        sendKeys = executor.sendKeys(showLog, this, charSequences);
         assertThat("Could not sendKeys " + this, sendKeys);
-        if (showLog) {
-            log.info("sendKeys value({}): '{}'", this, getKeysName(charSequences));
-        }
         return this;
     }
 
@@ -248,29 +245,9 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     public WebLocator doSendKeys(boolean showLog, java.lang.CharSequence... charSequences) {
         boolean doSendKeys = waitToRender();
         if (doSendKeys) {
-            doSendKeys = executor.sendKeys(this, charSequences);
-            if (showLog) {
-                if (doSendKeys) {
-                    log.info("sendKeys value({}): '{}'", this, getKeysName(charSequences));
-                } else {
-                    log.info("Could not sendKeys {}", this);
-                }
-            }
+            doSendKeys = executor.sendKeys(showLog, this, charSequences);
         }
         return doSendKeys ? this : null;
-    }
-
-    private String getKeysName(java.lang.CharSequence... charSequences) {
-        StringBuilder builder = new StringBuilder();
-        int i = 0;
-        for (CharSequence ch : charSequences) {
-            if (i > 0) {
-                builder.append(",");
-            }
-            builder.append(ch instanceof Keys ? ((Keys) ch).name() : ch);
-            i++;
-        }
-        return builder.toString();
     }
 
     public boolean clear() {

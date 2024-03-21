@@ -18,7 +18,11 @@ public interface WebLocatorExecutor {
 
     boolean clear(WebLocator el);
 
+    boolean sendKeys(boolean showLog, WebLocator el, java.lang.CharSequence... charSequences);
+
     boolean sendKeys(WebLocator el, java.lang.CharSequence... charSequences);
+
+    boolean setValue(boolean showLog, WebLocator el, String value);
 
     boolean setValue(WebLocator el, String value);
 
@@ -80,7 +84,7 @@ public interface WebLocatorExecutor {
 
     String getDomAttribute(WebLocator el, String name);
 
-     String getDomProperty(WebLocator el, String name);
+    String getDomProperty(WebLocator el, String name);
 
     SearchContext getShadowRoot(WebLocator el);
 

@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class WebLocatorConfig {
 
@@ -24,14 +22,15 @@ public class WebLocatorConfig {
     private static boolean logContainers;
     private static boolean highlight;
     private static boolean generateCssSelector;
-    private static ArrayList<SearchType> searchTextType = new ArrayList<SearchType>() {{
+    private static ArrayList<SearchType> searchTextType = new ArrayList<>() {{
         add(SearchType.CONTAINS);
     }};
     private static String defaultLabelPosition;
     private static int minCharsToType;
     private static String uploadExePath;
     private static String extJsVersion;
-    private static ArrayList<String> logParamsExclude;
+    private static Set<String> logParamsExclude = new HashSet<>(Arrays.asList("a", "b")) {
+    };
 
     private static WebLocatorConfigReader properties;
 
@@ -47,7 +46,7 @@ public class WebLocatorConfig {
                 //properties = new WebLocatorConfigReader(resource.openStream());
                 properties.load(resource.openStream());
             } catch (IOException e) {
-                log.error("IOException: {}", e);
+                log.error("IOException: {}", e.getMessage());
             }
         } //else {
         //properties = new WebLocatorConfigReader();
@@ -248,7 +247,7 @@ public class WebLocatorConfig {
         WebLocatorConfig.extJsVersion = extJsVersion;
     }
 
-    public static String getExtJsVersion(){
+    public static String getExtJsVersion() {
         return WebLocatorConfig.extJsVersion;
     }
 
@@ -261,21 +260,21 @@ public class WebLocatorConfig {
     }
 
     public static void setLogParamsExclude(String logParamsExclude) {
-        ArrayList<String> list = new ArrayList<>();
+        Set<String> list = new HashSet<>();
         if (!logParamsExclude.isEmpty()) {
             logParamsExclude = logParamsExclude.toLowerCase();
             list.addAll(Arrays.asList(logParamsExclude.split(",")));
         }
-        WebLocatorConfig.logParamsExclude = list;
+        WebLocatorConfig.logParamsExclude.addAll(list);
     }
 
-    public static ArrayList<String> getLogParamsExclude() {
+    public static Set<String> getLogParamsExclude() {
         return logParamsExclude;
     }
 
     public static void setBrowserProperties(PropertiesReader properties) {
         properties.keySet().retainAll(WebLocatorConfig.properties.keySet());
-        if (properties.size() > 0) {
+        if (!properties.isEmpty()) {
             WebLocatorConfig.properties.putAll(properties);
             log.info("The webLocator.properties were overwritten with value from browser properties: {}", properties.toString());
             init();
