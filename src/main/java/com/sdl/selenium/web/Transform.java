@@ -8,7 +8,9 @@ import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public interface Transform {
@@ -18,14 +20,15 @@ public interface Transform {
     @SneakyThrows
     default <V> List<V> transformTo(V type, List<List<String>> actualListOfList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
-        List<String> names = getNames(json);
+        Nod nods = getNods(json);
+        JsonNode jsonNode = nods.jsonNode();
+        List<String> names = nods.names();
         if (names.size() > actualListOfList.get(0).size()) {
             names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         }
         int size = names.size();
         LinkedList<V> resultList = new LinkedList<>();
         for (List<String> actualList : actualListOfList) {
-            JsonNode jsonNode = mapper.readTree(json);
             for (int i = 0; i < size; i++) {
                 String field = names.get(i);
                 String value = i >= actualList.size() ? null : actualList.get(i);
@@ -37,23 +40,26 @@ public interface Transform {
         return resultList;
     }
 
-    private List<String> getNames(String json) throws JsonProcessingException {
+    private Nod getNods(String json) throws JsonProcessingException {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
-        Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
-        fields.forEachRemaining(i -> {
+        jsonNode.fields().forEachRemaining(i -> {
             if (i.getValue().textValue() != null) {
                 names.add(i.getKey());
             }
         });
         if (names.isEmpty()) {
-            jsonNode.elements().next().fields().forEachRemaining(i -> {
+            jsonNode = jsonNode.elements().next();
+            jsonNode.fields().forEachRemaining(i -> {
                 if (i.getValue().textValue() != null) {
                     names.add(i.getKey());
                 }
             });
         }
-        return names;
+        return new Nod(jsonNode, names);
+    }
+
+    record Nod(JsonNode jsonNode, List<String> names) {
     }
 
     default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) {
@@ -86,12 +92,13 @@ public interface Transform {
     @SneakyThrows
     default <V> V transformToObject(V type, List<String> actualList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
-        List<String> names = getNames(json);
+        Nod nods = getNods(json);
+        List<String> names = nods.names();
         if (names.size() > actualList.size()) {
             names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         }
         int size = names.size();
-        JsonNode jsonNode = mapper.readTree(json);
+        JsonNode jsonNode = nods.jsonNode();
         for (int i = 0; i < size; i++) {
             String field = names.get(i);
             String value = i >= actualList.size() ? null : actualList.get(i);
