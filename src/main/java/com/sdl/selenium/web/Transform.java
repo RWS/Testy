@@ -30,16 +30,17 @@ public interface Transform {
         int size = names.size();
         LinkedList<V> resultList = new LinkedList<>();
         for (List<String> actualList : actualListOfList) {
+            JsonNode clonedJsonNode = jsonNode.deepCopy();
             for (int i = 0; i < size; i++) {
                 String field = names.get(i);
                 String value = i >= actualList.size() ? null : actualList.get(i);
-                ((ObjectNode) jsonNode).put(field, value);
+                ((ObjectNode) clonedJsonNode).put(field, value);
             }
             V object;
             try {
-                object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
+                object = mapper.treeToValue(clonedJsonNode, (Class<V>) type.getClass());
             } catch (MismatchedInputException e) {
-                object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
+                object = mapper.treeToValue(clonedJsonNode, (Class<V>) type.getClass());
             }
             resultList.add(object);
         }
