@@ -642,7 +642,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return checkBox;
     }
 
-
     public WebLocator getEmptyEl(String title, String message) {
         WebLocator titleEL = new WebLocator().setClasses("x-grid-empty-title").setText(title);
         WebLocator content = new WebLocator().setClasses("x-grid-empty-text").setText(message);

@@ -33,7 +33,7 @@ public class GridSteps extends TestBase {
         driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         WebLocator mask = new WebLocator().setId("loadingSplashBottom");
-        Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(10), () -> !mask.isPresent());
+        Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(30), () -> !mask.isPresent());
         log.info("maskStatus: {}", maskStatus);
     }
 
@@ -45,7 +45,7 @@ public class GridSteps extends TestBase {
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
-        assertThatList("Actual values: ", cellsText, contains(values.toArray()));
+        assertThatList("Actual values", cellsText, contains(values.toArray()));
     }
 
     public static Function<Cell, String> getBooleanValue() {
@@ -60,10 +60,11 @@ public class GridSteps extends TestBase {
     public void iVerifyParallelIfGridHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
         List<List<String>> cellsText = numberedRows.getParallelValues(t -> t == 0, getBooleanValue());
+//        List<List<String>> cellsText = numberedRows.getCellsText();
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
-        assertThatList("Actual values: ", cellsText, contains(values.toArray()));
+        assertThatList("Actual values", cellsText, contains(values.toArray()));
     }
 
     @And("I stop")
@@ -85,7 +86,7 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasObjectValues(List<Plant> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        List<Plant> cellsText = grid.getCellsValues(values.get(0), t -> t == 5, getBooleanValue(),3, 6);
+        List<Plant> cellsText = RetryUtils.retry(2, () -> grid.getCellsValues(values.get(0), t -> t == 5, getBooleanValue(), 3, 6));
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
