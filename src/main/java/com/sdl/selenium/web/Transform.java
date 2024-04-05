@@ -41,6 +41,13 @@ public interface Transform {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
         Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
+        List<String> list = new ArrayList<>();
+        jsonNode.fields().forEachRemaining(i -> {
+            if (i.getValue().textValue() != null) {
+                list.add(i.getKey());
+            }
+        });
+
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> next = fields.next();
             String entry = next.getKey();
