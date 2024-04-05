@@ -3,6 +3,7 @@ package com.sdl.selenium.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
 
@@ -34,7 +35,12 @@ public interface Transform {
                 String value = i >= actualList.size() ? null : actualList.get(i);
                 ((ObjectNode) jsonNode).put(field, value);
             }
-            V object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
+            V object;
+            try {
+                object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
+            } catch (MismatchedInputException e) {
+                object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
+            }
             resultList.add(object);
         }
         return resultList;
