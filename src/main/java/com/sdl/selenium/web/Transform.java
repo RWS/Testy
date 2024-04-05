@@ -3,7 +3,6 @@ package com.sdl.selenium.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
 
@@ -21,33 +20,26 @@ public interface Transform {
     @SneakyThrows
     default <V> List<V> transformTo(V type, List<List<String>> actualListOfList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
-        Nod nods = getNods(json);
-        JsonNode jsonNode = nods.jsonNode();
-        List<String> names = nods.names();
+        List<String> names = getNames(json);
         if (names.size() > actualListOfList.get(0).size()) {
             names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         }
         int size = names.size();
         LinkedList<V> resultList = new LinkedList<>();
         for (List<String> actualList : actualListOfList) {
-            JsonNode clonedJsonNode = jsonNode.deepCopy();
+            JsonNode jsonNode = mapper.readTree(json);
             for (int i = 0; i < size; i++) {
                 String field = names.get(i);
                 String value = i >= actualList.size() ? null : actualList.get(i);
-                ((ObjectNode) clonedJsonNode).put(field, value);
+                ((ObjectNode) jsonNode).put(field, value);
             }
-            V object;
-            try {
-                object = mapper.treeToValue(clonedJsonNode, (Class<V>) type.getClass());
-            } catch (MismatchedInputException e) {
-                object = mapper.treeToValue(clonedJsonNode, (Class<V>) type.getClass());
-            }
+            V object = mapper.treeToValue(jsonNode, (Class<V>) type.getClass());
             resultList.add(object);
         }
         return resultList;
     }
 
-    private Nod getNods(String json) throws JsonProcessingException {
+    private List<String> getNames(String json) throws JsonProcessingException {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
         jsonNode.fields().forEachRemaining(i -> {
@@ -55,18 +47,7 @@ public interface Transform {
                 names.add(i.getKey());
             }
         });
-        if (names.isEmpty()) {
-            jsonNode = jsonNode.elements().next();
-            jsonNode.fields().forEachRemaining(i -> {
-                if (i.getValue().textValue() != null) {
-                    names.add(i.getKey());
-                }
-            });
-        }
-        return new Nod(jsonNode, names);
-    }
-
-    record Nod(JsonNode jsonNode, List<String> names) {
+        return names;
     }
 
     default <V> List<V> transformToObjectList(Class<V> type, List<List<String>> actualListOfList) {
@@ -99,13 +80,12 @@ public interface Transform {
     @SneakyThrows
     default <V> V transformToObject(V type, List<String> actualList, List<Integer> columnsList) {
         String json = mapper.writeValueAsString(type);
-        Nod nods = getNods(json);
-        List<String> names = nods.names();
+        List<String> names = getNames(json);
         if (names.size() > actualList.size()) {
             names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
         }
         int size = names.size();
-        JsonNode jsonNode = nods.jsonNode();
+        JsonNode jsonNode = mapper.readTree(json);
         for (int i = 0; i < size; i++) {
             String field = names.get(i);
             String value = i >= actualList.size() ? null : actualList.get(i);
