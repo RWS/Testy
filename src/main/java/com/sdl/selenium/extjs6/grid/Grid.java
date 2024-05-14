@@ -184,7 +184,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             timeMs = System.currentTimeMillis() - startMs;
         }
         long endMs = System.currentTimeMillis();
-        log.info("waitToActivate:" + (endMs - startMs) + " milliseconds; " + toString());
+        log.info("waitToActivate:{} milliseconds; {}", endMs - startMs, this);
         return !hasMask;
     }
 

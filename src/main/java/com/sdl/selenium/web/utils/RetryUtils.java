@@ -302,8 +302,7 @@ public class RetryUtils {
             return !(Boolean) execute;
         } else if (execute instanceof String) {
             return Strings.isNullOrEmpty((String) execute);
-        } else if (execute instanceof List) {
-            List<?> list = (List<?>) execute;
+        } else if (execute instanceof List<?> list) {
             return list.isEmpty() || list.stream().allMatch(Objects::isNull);
         }
         return execute == null;
@@ -325,10 +324,8 @@ public class RetryUtils {
         V currentResult = call.call();
         if (currentResult instanceof Integer && expected instanceof Integer) {
             return expected == currentResult ? currentResult : null;
-        } else if (currentResult instanceof List && expected instanceof List) {
-            List<?> currentList = (List<?>) currentResult;
-            List<?> expectedList = (List<?>) expected;
-            if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
+        } else if (currentResult instanceof List<?> currentList && expected instanceof List<?> expectedList) {
+            if (!currentList.isEmpty() && currentList.get(0) instanceof List && !expectedList.isEmpty() && expectedList.get(0) instanceof List) {
                 return compareListOfList((List<List<?>>) expected, currentResult);
             } else if (currentList.get(0) instanceof String && expectedList.get(0) instanceof String) {
                 boolean allMatch = currentList.size() == expectedList.size() && currentList.containsAll(expectedList);

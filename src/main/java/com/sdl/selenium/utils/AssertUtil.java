@@ -43,29 +43,19 @@ public class AssertUtil {
 
     private <E, T extends List<E>> String logValues(T values, boolean transformDate, Function<String, String> format) {
         List<List<String>> logs = new ArrayList<>();
-//        StringBuilder log = new StringBuilder();
-//        log.append("\n");
         for (Object list : values) {
             List<?> l = (List<E>) list;
-//            log.append(" | ");
             List<String> logTmp = new ArrayList<>();
             for (Object value : l) {
                 if ("".equals(value)) {
-//                    log.append("[blank]").append(" | ");
                     logTmp.add("[blank]");
-                } else if (value == null) {
-//                    log.append(" | ");
                 } else {
-//                    log.append(transformDate ? format.apply(value + "") : value).append(" | ");
                     logTmp.add(transformDate ? format.apply(value + "") : (String) value);
                 }
             }
             logs.add(logTmp);
-//            log.append("\n");
         }
-//        String s = log.toString();
-        String s1 = formatLogs(logs);
-        return s1;
+        return formatLogs(logs);
     }
 
     private static <E, T extends List<E>> String showValue(T values) {
