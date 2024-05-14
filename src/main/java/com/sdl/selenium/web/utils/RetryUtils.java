@@ -325,7 +325,9 @@ public class RetryUtils {
         if (currentResult instanceof Integer && expected instanceof Integer) {
             return expected == currentResult ? currentResult : null;
         } else if (currentResult instanceof List<?> currentList && expected instanceof List<?> expectedList) {
-            if (!currentList.isEmpty() && currentList.get(0) instanceof List && !expectedList.isEmpty() && expectedList.get(0) instanceof List) {
+            if (currentList.isEmpty() && expectedList.isEmpty()) {
+                return currentResult;
+            } else if (currentList.get(0) instanceof List && expectedList.get(0) instanceof List) {
                 return compareListOfList((List<List<?>>) expected, currentResult);
             } else if (currentList.get(0) instanceof String && expectedList.get(0) instanceof String) {
                 boolean allMatch = currentList.size() == expectedList.size() && currentList.containsAll(expectedList);
