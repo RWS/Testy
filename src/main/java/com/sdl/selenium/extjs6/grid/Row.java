@@ -466,4 +466,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public Row getNextRow() {
         return new Row(this).setRoot("/").setTag("following-sibling::table[1]");
     }
+
+    public Row getNextRow(AbstractCell... cells) {
+        AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
+        return new Row(this).setRoot("/").setTag("following-sibling::table").setChildNodes(childNodes);
+    }
 }
