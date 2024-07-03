@@ -341,6 +341,10 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         } while (size != 0);
     }
 
+    public void collapseAllNodes() {
+//        TODO implement
+    }
+
     public List<List<String>> getValues(int... excludedColumns) {
         Row rowEl = new Row(this, 1);
         Cell columnsEl = new Cell(rowEl);
