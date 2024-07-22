@@ -226,20 +226,20 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     public List<String> getHeadersFast() {
         WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
         ArrayList<String> headers = new ArrayList<>();
-        if(!Strings.isNullOrEmpty(body.getText())){
+        if (!Strings.isNullOrEmpty(body.getText())) {
             headers.addAll(Arrays.asList(body.getText().split("\\n")));
         }
         return headers;
     }
 
     public int getHeadersCount() {
-        if(isGridLocked()){
+        if (isGridLocked()) {
             Row row = getRow(1);
             WebLocator columnsEl = new WebLocator(row).setTag("td");
             return columnsEl.size();
         } else {
             WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-            WebLocator header = new WebLocator(body).setClasses("x-column-header").setAttribute("aria-hidden", "false");;
+            WebLocator header = new WebLocator(body).setClasses("x-column-header").setAttribute("aria-hidden", "false");
             return header.size();
         }
     }
@@ -338,9 +338,9 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return new Row(containerLocked, 1).getCells();
     }
 
-    public List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
+    public <V> List<List<String>> getLists(int rows, Options<V> options, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
-        if (!rowExpand) {
+        if (!options.isExpand()) {
             rowsEl.setTag("tr");
         } else {
             rowsEl.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
@@ -353,18 +353,14 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         do {
             for (int i = 1; i <= rows; ++i) {
                 if (canRead) {
-                    Row row = new Row(this).setTag("tr").setResultIdx(i);
-                    if (rowExpand) {
-                        row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
-                    }
-                    List<String> list = row.getValues(predicate, function, columnsList);
+                    List<String> list = options.getCollector() == null ? collector(options, columnsList, this, i): options.getCollector().apply(i);
                     listOfList.add(list);
                 } else {
                     if (size == i + 1) {
                         break;
                     }
                     Row row = new Row(this, i);
-                    if (rowExpand) {
+                    if (options.isExpand()) {
                         row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                     }
                     String currentId = row.getAttributeId();
@@ -377,11 +373,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                 break;
             }
             Row row = new Row(this, size);
-            if (rowExpand) {
+            if (options.isExpand()) {
                 row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
             }
             id = row.getAttributeId();
-            if (rowExpand) {
+            if (options.isExpand()) {
                 scrollPageDown();
                 scrollPageDown();
             } else {
@@ -391,6 +387,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             timeout++;
         } while (timeout < 30);
         return listOfList;
+    }
+
+    private <V> List<String> collector(Options<V> options, List<Integer> columnsList, Grid grid, int i) {
+        Row row = new Row(grid).setTag("tr").setResultIdx(i);
+        if (options.isExpand()) {
+            row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
+        }
+        List<String> list = row.getValues(options, columnsList);
+        return list;
     }
 
     @Override
@@ -427,7 +432,26 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             if (isGridLocked()) {
                 return getLockedLists(predicate, function, columnsList);
             } else {
-                return getLists(rows, rowExpand, predicate, function, columnsList);
+                Options<?> options = new Options<>(rowExpand, predicate, function);
+                return getLists(rows, options, columnsList);
+            }
+        }
+    }
+
+    public <V> List<List<String>> getCellsTexts(Options<V> options, int... excludedColumns) {
+        Row rowsEl = new Row(this).setTag("tr");
+        if (options.isExpand()) {
+            rowsEl.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
+        }
+        int rows = rowsEl.size();
+        final List<Integer> columnsList = getColumns(excludedColumns);
+        if (rows <= 0) {
+            return null;
+        } else {
+            if (isGridLocked()) {
+                return getLockedLists(options.getPredicate(), options.getFunction(), columnsList);
+            } else {
+                return getLists(rows, options, columnsList);
             }
         }
     }
@@ -570,8 +594,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         if (cellsText == null) {
             return null;
         }
-        List<V> collect = transformToObjectList(type, cellsText);
-        return collect;
+        List<V> actualValue = transformToObjectList(type, cellsText);
+        return actualValue;
     }
 
     @SneakyThrows
@@ -581,8 +605,19 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             return null;
         }
         List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
-        List<V> collect = transformTo(type, cellsText, columnsList);
-        return collect;
+        List<V> actualValue = transformTo(type, cellsText, columnsList);
+        return actualValue;
+    }
+
+    @SneakyThrows
+    public <V> List<V> getCellsValues(Options<V> options, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsTexts(options, excludedColumns);
+        if (cellsText == null) {
+            return null;
+        }
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> actualValue = transformTo(options.getType(), cellsText, columnsList);
+        return actualValue;
     }
 
     @Override

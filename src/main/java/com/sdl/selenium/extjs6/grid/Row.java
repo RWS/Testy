@@ -318,6 +318,23 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return list;
     }
 
+    public <V> List<String> getValues(Options<V> options, List<Integer> columns) {
+        List<String> list = new ArrayList<>();
+        for (int j : columns) {
+            Cell cell = new Cell(this, j);
+            if (options.getPredicate().test(j)) {
+                list.add(options.getFunction().apply(cell));
+            } else {
+                try {
+                    list.add(cell.getText(true).replaceAll("\n", " ").trim());
+                } catch (NullPointerException e) {
+                    Utils.sleep(1);
+                }
+            }
+        }
+        return list;
+    }
+
     public List<String> getLockedCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         int firstColumns = getLockedCells();
         List<Integer> columns = getColumns(excludedColumns);
