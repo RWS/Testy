@@ -353,7 +353,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         do {
             for (int i = 1; i <= rows; ++i) {
                 if (canRead) {
-                    List<String> list = options.getCollector() == null ? collector(options, columnsList, this, i): options.getCollector().apply(i);
+                    List<String> list = options.getCollector() == null ? collector(options, columnsList, this, i) : options.getCollector().apply(new Details<>(options, columnsList, this, i));
                     listOfList.add(list);
                 } else {
                     if (size == i + 1) {
