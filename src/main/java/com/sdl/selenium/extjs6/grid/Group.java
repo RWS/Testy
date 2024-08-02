@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
 
@@ -65,7 +66,13 @@ public class Group extends WebLocator {
     }
 
     public Row getRow(AbstractCell... cells) {
-        return new Row(this).setTag("tr").setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
+        return new Row(this) {
+            public boolean isCollapsed() {
+                WebLocator locator = new WebLocator(this).setRoot("/ancestor::").setTag("table");
+                String aClass = locator.getAttributeClass();
+                return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-row-collapsed");
+            }
+        }.setTag("tr").setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
     }
 
     public String getNameGroup() {
