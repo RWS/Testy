@@ -341,8 +341,75 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         } while (size != 0);
     }
 
+    public Row expandNode(List<String> nodes) {
+        Row previousNodeEl = null;
+        for (int i = 0; i < nodes.size(); i++) {
+            String node = nodes.get(i);
+            List<WebLocator> children = new ArrayList<>();
+            WebLocator textEl = new WebLocator().setText(node);
+            children.add(textEl);
+            WebLocator container = previousNodeEl == null ? this : previousNodeEl;
+            Row nodeEl = new Row(container).setClasses("x-grid-item").setChildNodes(children).setVisibility(true);
+            if (previousNodeEl != null) {
+                nodeEl.setRoot("/following-sibling::");
+            }
+            Row row = new Row(nodeEl, 1).setTag("tr").setClasses("x-grid-row");
+            String aClass = row.getAttributeClass();
+            boolean isExpanded = aClass != null && aClass.contains("x-grid-tree-node-expanded");
+//                if (doScroll) {
+//                    scrollPageDownTo(nodeEl);
+//                }
+            WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
+            if (nodeEl.ready()) {
+                if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
+                    RetryUtils.retry(2, () -> {
+                        expanderEl.click();
+                        boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
+                            String aCls = row.getAttributeClass();
+                            log.debug("classes:{}", aCls);
+                            return aCls.contains("x-grid-tree-node-expanded");
+                        });
+                        if (expanded) {
+                            log.info("Node '{}' is expanded.", node);
+                        } else {
+                            log.error("Node '{}' is not expanded!!!", node);
+                        }
+                        return expanded;
+                    });
+                } else {
+                    WebLocator nodeTree = new WebLocator(nodeEl).setClasses("x-tree-node-text");
+                    int nodeCount = nodeTree.size();
+                    if (nodeCount > 1) {
+                        WebLocator precedingSibling = new WebLocator(nodeTree).setTag("preceding-sibling::*").setClasses("x-tree-elbow-img");
+                        for (int j = 1; j <= nodeCount; j++) {
+                            nodeTree.setResultIdx(j);
+                            int size = precedingSibling.size();
+                            if (size == i + 1) {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            previousNodeEl = nodeEl;
+        }
+        return previousNodeEl;
+    }
+
     public void collapseAllNodes() {
-//        TODO implement
+        scrollTop();
+        Row rowsEl = new Row(this).setTag("tr").setClasses("x-grid-tree-node-expanded").setExcludeClasses("x-grid-tree-node-leaf");
+        int size = rowsEl.size();
+        for (int i = 1; i <= size; i++) {
+            rowsEl.setResultIdx(i);
+            WebLocator expanderEl = new WebLocator(rowsEl).setClasses("x-tree-expander");
+            RetryUtils.retry(10, () -> {
+                if (rowsEl.isPresent()) {
+                    expanderEl.doClick();
+                }
+                return !rowsEl.ready(Duration.ofSeconds(1));
+            });
+        }
     }
 
     public List<List<String>> getValues(int... excludedColumns) {
@@ -369,6 +436,10 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
 
     public Row getNode(boolean doScroll, List<String> nodes, Action action, SearchType... searchTypes) {
         select(doScroll, nodes, action);
+        return getNodeRow(nodes, searchTypes);
+    }
+
+    private Row getNodeRow(List<String> nodes, SearchType... searchTypes) {
         int size = nodes.size();
         if (size == 0) {
             return null;
