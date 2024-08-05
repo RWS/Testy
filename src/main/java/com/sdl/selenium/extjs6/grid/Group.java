@@ -13,7 +13,6 @@ public class Group extends WebLocator {
 
     public Group() {
         setTag("table");
-//        setTemplate("groupTextRow", "count(*//text()[contains(.,'%s')]) > 0");
         setChildNodes(group);
     }
 
@@ -76,6 +75,6 @@ public class Group extends WebLocator {
     }
 
     public String getNameGroup() {
-        return getText().split(" \\(")[0];
+        return getText();
     }
 }
