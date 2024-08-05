@@ -75,6 +75,8 @@ public class Group extends WebLocator {
     }
 
     public String getNameGroup() {
-        return getText();
+        WebLocator groupTitle = new WebLocator(this).setClasses("x-grid-group-title");
+        WebLocator spanTitle = new WebLocator(groupTitle).setResultIdx(1);
+        return spanTitle.getText();
     }
 }
