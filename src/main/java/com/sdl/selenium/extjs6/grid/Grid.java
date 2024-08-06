@@ -353,8 +353,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         do {
             for (int i = 1; i <= rows; ++i) {
                 if (canRead) {
-                    List<String> list = options.getCollector() == null ? collector(options, columnsList, this, i) : options.getCollector().apply(new Details<>(options, columnsList, this, i));
-                    listOfList.add(list);
+                    List<List<String>> lists = options.getCollector() == null ? collector(options, columnsList, this, i) : options.getCollector().apply(new Details<>(options, columnsList, this, i));
+                    listOfList.addAll(lists);
                 } else {
                     if (size == i + 1) {
                         break;
@@ -389,13 +389,15 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return listOfList;
     }
 
-    private <V> List<String> collector(Options<V> options, List<Integer> columnsList, Grid grid, int i) {
+    private <V> List<List<String>> collector(Options<V> options, List<Integer> columnsList, Grid grid, int i) {
         Row row = new Row(grid).setTag("tr").setResultIdx(i);
         if (options.isExpand()) {
             row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
         }
+        List<List<String>> listOfList = new ArrayList<>();
         List<String> list = row.getValues(options, columnsList);
-        return list;
+        listOfList.add(list);
+        return listOfList;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class Options<V> {
     private boolean expand;
     private Predicate<Integer> predicate;
     private Function<Cell, String> function;
-    private Function<Details<V>, List<String>> collector;
+    private Function<Details<V>, List<List<String>>> collector;
 
     public Options(V type) {
         this.type = type;
@@ -33,12 +33,12 @@ public class Options<V> {
         this.expand = expand;
     }
 
-    public Options(V type, boolean expand, Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<String>> collector) {
+    public Options(V type, boolean expand, Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {
         this(type, expand, predicate, function);
         this.collector = collector;
     }
 
-    public Options(V type, Function<Details<V>, List<String>> collector) {
+    public Options(V type, Function<Details<V>, List<List<String>>> collector) {
         this(type);
         this.collector = collector;
     }
