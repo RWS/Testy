@@ -341,8 +341,9 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         } while (size != 0);
     }
 
-    public Row expandNode(List<String> nodes) {
+    public Response<Row> expandNode(List<String> nodes) {
         Row previousNodeEl = null;
+        boolean expand = false;
         for (int i = 0; i < nodes.size(); i++) {
             String node = nodes.get(i);
             List<WebLocator> children = new ArrayList<>();
@@ -362,8 +363,8 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
-                    RetryUtils.retry(2, () -> {
-                        expanderEl.click();
+                  expand =  RetryUtils.retry(2, () -> {
+                        expanderEl.doClick();
                         boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
                             String aCls = row.getAttributeClass();
                             log.debug("classes:{}", aCls);
@@ -393,7 +394,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             }
             previousNodeEl = nodeEl;
         }
-        return previousNodeEl;
+        return new Response<>(previousNodeEl, expand);
     }
 
     public void collapseAllNodes() {
@@ -507,7 +508,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
     }
 
     public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        com.sdl.selenium.extjs6.grid.Row rowsEl = new com.sdl.selenium.extjs6.grid.Row(this).setTag("tr");
+        Row rowsEl = new Row(this).setTag("tr");
         if (rowExpand) {
             rowsEl.setExcludeClasses("x-grid-rowbody-tr");
         }
