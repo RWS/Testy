@@ -2,6 +2,7 @@ package com.sdl.selenium.web;
 
 import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.web.form.Field;
+import com.sdl.selenium.web.utils.Result;
 import com.sdl.selenium.web.utils.RetryUtils;
 import org.slf4j.Logger;
 
@@ -36,7 +37,11 @@ public interface Editor {
             input = new WebLocator(container).setTag("iframe");
         }
         WebLocator finalInput = input;
-        String type = RetryUtils.retry(2, () -> finalInput.getAttribute("data-componentid"));
+        Result<String> result = RetryUtils.retryUntilOneIs(2,
+                () -> finalInput.getAttribute("data-componentid", true),
+                () -> finalInput.getAttribute("data-columnid", true)
+        );
+        String type = result.result();
         if (type == null) {
             log.error("active editor type: 'null'");
             return null;
@@ -49,7 +54,7 @@ public interface Editor {
                 editor = new DateField();
             } else if (type.contains("tag")) {
                 editor = new TagField();
-            } else if (type.contains("checkbox")) {
+            } else if (type.contains("checkbox") || type.contains("checkcolumn")) {
                 editor = new CheckBox();
             } else if (type.contains("numberfield") || type.contains("textfield")) {
                 editor = new TextField();
