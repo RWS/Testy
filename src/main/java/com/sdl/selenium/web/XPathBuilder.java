@@ -1068,7 +1068,7 @@ public class XPathBuilder implements Cloneable {
                 if (searchTextType.contains(SearchType.CONTAINS_ALL_CHILD_NODES)) {
                     if (searchTextType.contains(SearchType.CASE_INSENSITIVE)) {
                         if (escapeQuotesText.equals("'") || escapeQuotesText.equals(".")) {
-                            strings[i] = "count(*//text()[contains(translate(.," + strings[i].replaceAll("CONCAT\\(", "concat(") + ",\\'" + strings[i] + "'\\),\\'" + strings[i] + "'\\)]) > 0";
+                            strings[i] = "count(*//text()[contains(translate(.,'" + strings[i].replaceAll("CONCAT\\(", "concat(") + "',\\'" + strings[i] + "'\\),\\'" + strings[i] + "'\\)]) > 0";
                         } else {
                             strings[i] = "count(*//text()[contains(translate(.," + escapeQuotesText.toUpperCase().replaceAll("CONCAT\\(", "concat(") + "," + escapeQuotesText.toLowerCase() + ")," + escapeQuotesText.toLowerCase() + ")]) > 0";
                         }
