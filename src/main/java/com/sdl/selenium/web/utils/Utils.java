@@ -47,7 +47,7 @@ public class Utils {
             }
             return quoted.toString();
         } else if (hasDoubleQuote || !hasSingeQuote) {
-            return String.format("\\'%s\\'", text);
+            return String.format("'%s'", text);
         }
         return String.format("\"%s\"", text);
     }
