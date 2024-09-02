@@ -30,6 +30,19 @@ public abstract class Tag extends Combo implements ITag {
         return removed;
     }
 
+    public boolean doRemoveAll() {
+        boolean removed;
+        WebLocator item = new WebLocator(list).setClasses("x-tagfield-item");
+        int size = item.size();
+        if(size > 0) {
+            WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
+            removed = RetryUtils.retry(size, () -> closeEl.doClick() && !item.ready(Duration.ofMillis(500)));
+        } else {
+            removed = true;
+        }
+        return removed;
+    }
+
     public boolean remove(String... values) {
         boolean removed = true;
         for (String value : values) {
