@@ -60,6 +60,12 @@ public class TagField extends Tag {
         return selected;
     }
 
+    public boolean select(List<SearchType> searchTypes, List<String> values) {
+        boolean selected = doSelect(searchTypes, Duration.ofMillis(300), true, values);
+        assertThat("Could not selected value on : " + this, selected, is(true));
+        return selected;
+    }
+
     public boolean select(SearchType searchType, Duration duration, String... values) {
         boolean selected = doSelect(searchType, duration, true, values);
         assertThat("Could not selected value on : " + this, selected, is(true));
@@ -84,33 +90,51 @@ public class TagField extends Tag {
     }
 
     /**
-     * @param searchType        use {@link SearchType}
-     * @param duration          eg. 300ms
-     * @param holdOpen          true | false
-     * @param values            values[]
+     * @param searchType use {@link SearchType}
+     * @param duration   eg. 300ms
+     * @param holdOpen   true | false
+     * @param values     values[]
      * @return true if value was selected
      */
     public boolean doSelect(SearchType searchType, Duration duration, boolean holdOpen, String... values) {
+        return doSelect(List.of(searchType), duration, holdOpen, Arrays.asList(values));
+    }
+
+    public boolean doSelect(List<SearchType> searchTypes, List<String> values) {
+        return doSelect(searchTypes, Duration.ofMillis(300), true, values);
+    }
+
+    public boolean doSelect(List<SearchType> searchTypes, Duration duration, List<String> values) {
+        return doSelect(searchTypes, duration, true, values);
+    }
+
+    /**
+     * @param searchTypes List<SearchType> searchTypes, use {@link SearchType}
+     * @param duration    eg. Duration.ofMillis(300)
+     * @param holdOpen    true | false
+     * @param values      List<String> values
+     * @return true if value was selected
+     */
+    public boolean doSelect(List<SearchType> searchTypes, Duration duration, boolean holdOpen, List<String> values) {
         boolean selected = true;
         String info = toString();
         ready();
         List<String> selectedValues = getAllSelectedValues();
-        List<String> valuesList = List.of(values);
         List<String> selectValues = new ArrayList<>();
-        for (String value : valuesList) {
-            if(!selectedValues.contains(value)){
+        for (String value : values) {
+            if (!selectedValues.contains(value)) {
                 selectValues.add(value);
             }
         }
         if (holdOpen) {
             if (expand()) {
                 for (String value : selectValues) {
-                    WebLocator option = getComboEl(value, duration, searchType);
+                    WebLocator option = getComboEl(value, duration, searchTypes.toArray(new SearchType[0]));
                     selected = selected && option.doClick();
                     if (selected) {
-                        log.info("Set value(" + info + "): " + value);
+                        log.info("Set value({}): {}", info, value);
                     } else {
-                        log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+                        log.debug("({}) The option '{}' could not be located. {}", info, value, option.getXPath());
                     }
                 }
                 collapse(); // to close combo
@@ -118,13 +142,13 @@ public class TagField extends Tag {
         } else {
             for (String value : selectValues) {
                 expand();
-                WebLocator option = getComboEl(value, duration, searchType);
+                WebLocator option = getComboEl(value, duration, searchTypes.toArray(new SearchType[0]));
                 selected = selected && option.doClick();
                 if (selected) {
-                    log.info("Set value(" + info + "): " + value);
+                    log.info("Set value({}): {}", info, value);
                     collapse();
                 } else {
-                    log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+                    log.debug("({}) The option '{}' could not be located. {}", info, value, option.getXPath());
                 }
             }
         }
