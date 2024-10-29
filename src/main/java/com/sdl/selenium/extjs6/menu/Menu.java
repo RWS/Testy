@@ -46,6 +46,12 @@ public class Menu extends WebLocator {
         return item.check(true);
     }
 
+    public boolean doCheckInMenu(String option, SearchType... searchTypes) {
+        ready();
+        Item item = new Item(this, option, searchTypes);
+        return item.doCheck(true);
+    }
+
     public boolean mouseOverOnMenu(String option, SearchType... searchTypes) {
         ready();
         return getWebLink(this, option, searchTypes).mouseOver();
@@ -238,6 +244,7 @@ public class Menu extends WebLocator {
 
         public Item(WebLocator container, String option, SearchType... searchTypes) {
             WebLink link = getWebLink(null, option, searchTypes);
+            setContainer(container);
             setClasses("x-menu-item").setChildNodes(link);
             itemLink = getWebLink(container, option, searchTypes);
             setVisibility(true);

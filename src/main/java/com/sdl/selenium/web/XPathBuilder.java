@@ -1232,11 +1232,11 @@ public class XPathBuilder implements Cloneable {
             selectors.add("[class=" + getCls() + "]");
         }
         if (hasClasses()) {
-            selectors.addAll(getClasses().stream().map(cls -> "." + cls).collect(Collectors.toList()));
+            selectors.addAll(getClasses().stream().map(cls -> "." + cls).toList());
         }
         if (hasExcludeClasses()) {
 //            LOGGER.warn("excludeClasses is not supported yet");
-            selectors.addAll(getExcludeClasses().stream().map(excludeClass -> ":not(." + excludeClass + ")").collect(Collectors.toList()));
+            selectors.addAll(getExcludeClasses().stream().map(excludeClass -> ":not(." + excludeClass + ")").toList());
         }
         if (hasName()) {
             selectors.add("[name='" + getName() + "']");
@@ -1247,7 +1247,7 @@ public class XPathBuilder implements Cloneable {
         if (!attribute.isEmpty()) {
             selectors.addAll(attribute.entrySet().stream()
                     .map(e -> "[" + e.getKey() + "='" + e.getValue().getValue() + "']")
-                    .collect(Collectors.toList()));
+                    .toList());
         }
 //        for (Map.Entry<String, String> entry : getTemplatesValues().entrySet()) {
 //            addTemplate(selector, entry.getKey(), entry.getValue());
