@@ -109,10 +109,10 @@ public class TagField extends Tag {
     }
 
     /**
-     * @param searchTypes List<SearchType> searchTypes, use {@link SearchType}
+     * @param searchTypes searchTypes, use {@link SearchType}
      * @param duration    eg. Duration.ofMillis(300)
      * @param holdOpen    true | false
-     * @param values      List<String> values
+     * @param values      values
      * @return true if value was selected
      */
     public boolean doSelect(List<SearchType> searchTypes, Duration duration, boolean holdOpen, List<String> values) {
