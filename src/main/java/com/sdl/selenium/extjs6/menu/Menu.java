@@ -40,6 +40,21 @@ public class Menu extends WebLocator {
         }
     }
 
+    public void clickOnMenu(List<String> options, SearchType... searchTypes) {
+        ready();
+        String idChild = null;
+        for (String option : options) {
+            if (idChild != null) {
+                setId(idChild);
+            }
+            WebLink link = getWebLink(this, option, searchTypes);
+            boolean click = link.doClick();
+            if (click) {
+                idChild = link.getAttribute("aria-owns");
+            }
+        }
+    }
+
     public boolean checkInMenu(String option, SearchType... searchTypes) {
         ready();
         Item item = new Item(this, option, searchTypes);
