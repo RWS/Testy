@@ -440,7 +440,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return getNodeRow(nodes, searchTypes);
     }
 
-    private Row getNodeRow(List<String> nodes, SearchType... searchTypes) {
+    public Row getNodeRow(List<String> nodes, SearchType... searchTypes) {
         int size = nodes.size();
         if (size == 0) {
             return null;
