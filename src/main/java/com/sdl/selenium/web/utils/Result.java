@@ -7,6 +7,7 @@ public class Result<V> {
     V result;
     int position;
     boolean timeOut;
+    String field;
 
     public Result(V result, int position) {
         this.result = result;
@@ -16,6 +17,11 @@ public class Result<V> {
     public Result(V result, int position, boolean timeOut) {
         this(result, position);
         this.timeOut = timeOut;
+    }
+
+    public Result(V result, int position, boolean timeOut, String field) {
+        this(result, position, timeOut);
+        this.field = field;
     }
 
     public V result() {

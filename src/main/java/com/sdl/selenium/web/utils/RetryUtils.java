@@ -135,6 +135,11 @@ public class RetryUtils {
     }
 
     @SafeVarargs
+    public static <V> Result<V> retryUntilOneIsDetails(int maxRetries, Call<V>... calls) {
+        return retryUntilOneIsDetails(maxRetries, null, calls);
+    }
+
+    @SafeVarargs
     public static <V> Result<V> retryUntilOneIs(int maxRetries, String prefixLog, Callable<V>... calls) {
         int count = 0;
         int wait = 0;
@@ -171,6 +176,47 @@ public class RetryUtils {
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
         return new Result<>(execute, position, count == maxRetries);
+    }
+
+    @SafeVarargs
+    public static <V> Result<V> retryUntilOneIsDetails(int maxRetries, String prefixLog, Call<V>... calls) {
+        int count = 0;
+        int wait = 0;
+        Fib fib = new Fib();
+        long startMs = System.currentTimeMillis();
+        V execute = null;
+        boolean notExpected = true;
+        int position = 0;
+        String field = "";
+        do {
+            count++;
+            wait = count < 9 ? fibonacci(wait, fib).getResult() : wait;
+            Utils.sleep(wait);
+            int iteration = 0;
+            try {
+                for (Call<V> call : calls) {
+                    iteration++;
+                    execute = call.callable().call();
+                    notExpected = isNotExpected(execute);
+                    if (!notExpected) {
+                        position = iteration;
+                        field = call.name();
+                        break;
+                    }
+                }
+            } catch (Exception | AssertionError e) {
+                if (count >= maxRetries) {
+                    long duringMs = getDuringMillis(startMs);
+                    log.error((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        } while ((execute == null || notExpected) && count < maxRetries);
+        if (count > 1) {
+            long duringMs = getDuringMillis(startMs);
+            log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
+        }
+        return new Result<>(execute, position, count == maxRetries, field);
     }
 
     @SafeVarargs
@@ -217,6 +263,54 @@ public class RetryUtils {
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
         return new Result<>(execute, position, timeIsOver(startMillis, duration));
+    }
+
+    @SafeVarargs
+    public static <V> Result<V> retryUntilOneIsDetails(Duration duration, Call<V>... calls) {
+        return retryUntilOneIsDetails(duration, null, calls);
+    }
+
+    @SafeVarargs
+    public static <V> Result<V> retryUntilOneIsDetails(Duration duration, String prefixLog, Call<V>... calls) {
+        int count = 0;
+        int wait = 0;
+        int limit = getLimit(duration);
+        Fib fib = new Fib(limit);
+        long startMillis = System.currentTimeMillis();
+        long startMs = System.currentTimeMillis();
+        V execute = null;
+        boolean notExpected = true;
+        int position = 0;
+        String field = "";
+        do {
+            count++;
+            wait = fibonacciSinusoidal(wait, fib).getResult();
+            Utils.sleep(wait);
+            int iteration = 0;
+            try {
+                for (Call<V> call : calls) {
+                    iteration++;
+                    execute = call.callable().call();
+                    notExpected = isNotExpected(execute);
+                    if (!notExpected) {
+                        position = iteration;
+                        field = call.name();
+                        break;
+                    }
+                }
+            } catch (Exception | AssertionError e) {
+                if (timeIsOver(startMillis, duration)) {
+                    long duringMs = getDuringMillis(startMs);
+                    log.error((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds ->{}", count, duringMs, e);
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        } while ((execute == null || notExpected) && !timeIsOver(startMillis, duration));
+        if (count > 1) {
+            long duringMs = getDuringMillis(startMs);
+            log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
+        }
+        return new Result<>(execute, position, timeIsOver(startMillis, duration), field);
     }
 
     private static <V> V retry(Duration duration, String prefixLog, Callable<V> call, boolean safe) {
