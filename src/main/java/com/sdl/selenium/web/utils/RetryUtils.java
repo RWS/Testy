@@ -7,7 +7,6 @@ import com.google.common.base.Strings;
 import org.slf4j.Logger;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -149,9 +148,10 @@ public class RetryUtils {
         V execute = null;
         boolean notExpected = true;
         int position = 0;
-        List<String> fields = new ArrayList<>();
+        StringBuilder field = new StringBuilder();
         do {
             count++;
+            field.append("\n|").append(count).append(">");
             wait = count < 9 ? fibonacci(wait, fib).getResult() : wait;
             Utils.sleep(wait);
             int iteration = 0;
@@ -164,11 +164,11 @@ public class RetryUtils {
                     if (!notExpected) {
                         position = iteration;
                         long millis = getDuringMillis(startMsCall);
-                        fields.add(position + ":" + millis);
+                        field.append(position).append(":").append(millis);
                         break;
                     }
                     long millis = getDuringMillis(startMsCall);
-                    fields.add(iteration + ":" + millis);
+                    field.append(iteration).append(":").append(millis).append(",");
                 }
             } catch (Exception | AssertionError e) {
                 if (count >= maxRetries) {
@@ -182,7 +182,7 @@ public class RetryUtils {
             long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
-        return new Result<>(execute, position, count == maxRetries, String.join(",", fields));
+        return new Result<>(execute, position, count == maxRetries, field.toString());
     }
 
     @SafeVarargs
@@ -194,9 +194,10 @@ public class RetryUtils {
         V execute = null;
         boolean notExpected = true;
         int position = 0;
-        List<String> fields = new ArrayList<>();
+        StringBuilder field = new StringBuilder();
         do {
             count++;
+            field.append("\n|").append(count).append(">");
             wait = count < 9 ? fibonacci(wait, fib).getResult() : wait;
             Utils.sleep(wait);
             int iteration = 0;
@@ -209,11 +210,11 @@ public class RetryUtils {
                     if (!notExpected) {
                         position = iteration;
                         long millis = getDuringMillis(startMsCall);
-                        fields.add(call.name() + ":" + millis);
+                        field.append(call.name()).append(":").append(millis);
                         break;
                     }
                     long millis = getDuringMillis(startMsCall);
-                    fields.add(call.name() + ":" + millis);
+                    field.append(call.name()).append(":").append(millis).append(",");
                 }
             } catch (Exception | AssertionError e) {
                 if (count >= maxRetries) {
@@ -227,7 +228,7 @@ public class RetryUtils {
             long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
-        return new Result<>(execute, position, count == maxRetries, String.join(",", fields));
+        return new Result<>(execute, position, count == maxRetries, field.toString());
     }
 
     @SafeVarargs
@@ -246,9 +247,10 @@ public class RetryUtils {
         V execute = null;
         boolean notExpected = true;
         int position = 0;
-        List<String> fields = new ArrayList<>();
+        StringBuilder field = new StringBuilder();
         do {
             count++;
+            field.append("\n|").append(count).append(">");
             wait = fibonacciSinusoidal(wait, fib).getResult();
             Utils.sleep(wait);
             int iteration = 0;
@@ -261,11 +263,11 @@ public class RetryUtils {
                     if (!notExpected) {
                         position = iteration;
                         long millis = getDuringMillis(startMsCall);
-                        fields.add(position + ":" + millis);
+                        field.append(position).append(":").append(millis);
                         break;
                     }
                     long millis = getDuringMillis(startMsCall);
-                    fields.add(iteration + ":" + millis);
+                    field.append(iteration).append(":").append(millis).append(",");
                 }
             } catch (Exception | AssertionError e) {
                 if (timeIsOver(startMillis, duration)) {
@@ -279,7 +281,7 @@ public class RetryUtils {
             long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
-        return new Result<>(execute, position, timeIsOver(startMillis, duration), String.join(",", fields));
+        return new Result<>(execute, position, timeIsOver(startMillis, duration), field.toString());
     }
 
     @SafeVarargs
@@ -298,9 +300,10 @@ public class RetryUtils {
         V execute = null;
         boolean notExpected = true;
         int position = 0;
-        List<String> fields = new ArrayList<>();
+        StringBuilder field = new StringBuilder();
         do {
             count++;
+            field.append("\n|").append(count).append(">");
             wait = fibonacciSinusoidal(wait, fib).getResult();
             Utils.sleep(wait);
             int iteration = 0;
@@ -313,11 +316,11 @@ public class RetryUtils {
                     if (!notExpected) {
                         position = iteration;
                         long millis = getDuringMillis(startMsCall);
-                        fields.add(call.name() + ":" + millis);
+                        field.append(call.name()).append(":").append(millis);
                         break;
                     }
                     long millis = getDuringMillis(startMsCall);
-                    fields.add(call.name() + ":" + millis);
+                    field.append(call.name()).append(":").append(millis).append(",");
                 }
             } catch (Exception | AssertionError e) {
                 if (timeIsOver(startMillis, duration)) {
@@ -331,7 +334,7 @@ public class RetryUtils {
             long duringMs = getDuringMillis(startMs);
             log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMs);
         }
-        return new Result<>(execute, position, timeIsOver(startMillis, duration), String.join(",", fields));
+        return new Result<>(execute, position, timeIsOver(startMillis, duration), field.toString());
     }
 
     private static <V> V retry(Duration duration, String prefixLog, Callable<V> call, boolean safe) {
