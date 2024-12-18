@@ -214,14 +214,14 @@ public class Row extends com.sdl.selenium.web.table.Row {
     record Details(int firstColumns, int actualPosition, int lockedPosition) {
 
         @Override
-            public String toString() {
-                return "Details{" +
-                        "firstColumns=" + firstColumns +
-                        ", actualPosition=" + actualPosition +
-                        ", lockedPosition=" + lockedPosition +
-                        '}';
-            }
+        public String toString() {
+            return "Details{" +
+                    "firstColumns=" + firstColumns +
+                    ", actualPosition=" + actualPosition +
+                    ", lockedPosition=" + lockedPosition +
+                    '}';
         }
+    }
 
     private int getLockedPosition(int firstColumns, int actualPosition) {
         if (actualPosition <= firstColumns) {
@@ -481,11 +481,19 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row getNextRow() {
-        return new Row(this).setRoot("/").setTag("following-sibling::table[1]");
+        return getNextRow("/");
+    }
+
+    public Row getNextRow(String root) {
+        return new Row(this).setRoot(root).setTag("following-sibling::table[1]");
     }
 
     public Row getNextRow(AbstractCell... cells) {
+        return getNextRow("/", cells);
+    }
+
+    public Row getNextRow(String root, AbstractCell... cells) {
         AbstractCell[] childNodes = Stream.of(cells).filter(t -> t != null && (t.getPathBuilder().getText() != null || (t.getPathBuilder().getChildNodes() != null && !t.getPathBuilder().getChildNodes().isEmpty()))).toArray(AbstractCell[]::new);
-        return new Row(this).setRoot("/").setTag("following-sibling::table").setChildNodes(childNodes);
+        return new Row(this).setRoot(root).setTag("following-sibling::table").setChildNodes(childNodes);
     }
 }
