@@ -71,6 +71,11 @@ public class Group extends WebLocator {
                 String aClass = locator.getAttributeClass();
                 return !Strings.isNullOrEmpty(aClass) && aClass.contains("x-grid-row-collapsed");
             }
+
+            protected boolean doExpanded() {
+                Cell cell = getCell(1);
+                return cell.doClick();
+            }
         }.setTag("tr").setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
     }
 
