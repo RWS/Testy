@@ -485,7 +485,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public Row getNextRow(String root) {
-        return new Row(this).setRoot(root).setTag("following-sibling::table[1]");
+        return getNextRow(root, "following-sibling::table[1]");
+    }
+
+    public Row getNextRow(String root, String tag) {
+        return new Row(this).setRoot(root).setTag(tag);
     }
 
     public Row getNextRow(AbstractCell... cells) {
