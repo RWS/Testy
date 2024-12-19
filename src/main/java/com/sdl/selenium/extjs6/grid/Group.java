@@ -12,7 +12,7 @@ public class Group extends WebLocator {
     private final WebLocator group = new WebLocator().setClasses("x-grid-group-title").setTemplate("title", "contains(.,'%s')");
 
     public Group() {
-        setTag("table");
+        setTag("tr");
         setChildNodes(group);
     }
 
@@ -76,7 +76,7 @@ public class Group extends WebLocator {
                 Cell cell = getCell(1);
                 return cell.doClick();
             }
-        }.setTag("tr").setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
+        }.setTag("tr").setPosition(1).setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
     }
 
     public String getNameGroup() {
