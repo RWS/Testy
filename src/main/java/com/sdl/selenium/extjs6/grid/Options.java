@@ -48,8 +48,18 @@ public class Options<V> {
         this.function = function;
     }
 
+    public Options(Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {
+        this(predicate, function);
+        this.collector = collector;
+    }
+
     public Options(boolean expand, Predicate<Integer> predicate, Function<Cell, String> function) {
         this(predicate, function);
         this.expand = expand;
+    }
+
+    public Options(boolean expand, Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {
+        this(expand, predicate, function);
+        this.collector = collector;
     }
 }
