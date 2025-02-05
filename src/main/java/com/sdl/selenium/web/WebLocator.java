@@ -1,8 +1,10 @@
 package com.sdl.selenium.web;
 
 import com.sdl.selenium.WebLocatorSuggestions;
+import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -58,6 +60,31 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     public WebLocator(String tag, String baseCls) {
         setTag(tag);
         setBaseCls(baseCls);
+    }
+
+    public WebLocator above(WebLocator locator) {
+        WebElement el = WebDriverConfig.getDriver().findElement(RelativeLocator.with(By.xpath(getXPath())).above(locator.getWebElement()));
+        return new WebLocator(el);
+    }
+
+    public WebLocator below(WebLocator locator) {
+        WebElement el = WebDriverConfig.getDriver().findElement(RelativeLocator.with(By.xpath(getXPath())).below(locator.getWebElement()));
+        return new WebLocator(el);
+    }
+
+    public WebLocator near(WebLocator locator) {
+        WebElement el = WebDriverConfig.getDriver().findElement(RelativeLocator.with(By.xpath(getXPath())).near(locator.getWebElement()));
+        return new WebLocator(el);
+    }
+
+    public WebLocator toLeftOf(WebLocator locator) {
+        WebElement el = WebDriverConfig.getDriver().findElement(RelativeLocator.with(By.xpath(getXPath())).toLeftOf(locator.getWebElement()));
+        return new WebLocator(el);
+    }
+
+    public WebLocator toRightOf(WebLocator locator) {
+        WebElement el = WebDriverConfig.getDriver().findElement(RelativeLocator.with(By.xpath(getXPath())).toRightOf(locator.getWebElement()));
+        return new WebLocator(el);
     }
 
     // getters and setters

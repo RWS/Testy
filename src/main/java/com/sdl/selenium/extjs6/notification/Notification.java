@@ -13,7 +13,7 @@ public class Notification extends WebLocator {
 
     public Notification() {
         setClasses("msg", "x-border-box");
-        setVisibility(true);
+//        setVisibility(true);
         WebLocator c = new WebLocator().setClasses("msg-container");
         setContainer(c);
         getPathBuilder().defaultSearchTextType.add(SearchType.DEEP_CHILD_NODE_OR_SELF);
