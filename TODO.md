@@ -34,3 +34,4 @@
       at com.sdl.selenium.web.WebLocatorDriverExecutor.doClick(WebLocatorDriverExecutor.java:45)
       at com.sdl.selenium.web.WebLocator.click(WebLocator.java:189)
 
+test
