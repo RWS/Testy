@@ -338,7 +338,8 @@ public class WebDriverConfig {
                 log.info("Tab already closed");
             }
 
-            List<String> winList = new ArrayList<>(driver.getWindowHandles());
+            Set<String> windowHandles = RetryUtils.retry(2, () -> driver.getWindowHandles());
+            List<String> winList = new ArrayList<>(windowHandles);
             String tabID = winList.get(index);
             String title = RetryUtils.retry(3, () -> {
                 driver.switchTo().window(tabID);
