@@ -684,22 +684,30 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return new WebLocator(this).setClasses("x-grid-empty").setChildNodes(content, titleEL);
     }
 
-    public List<List<String>> getParallelValues(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+    public List<List<String>> getParallelValues(int... excludedColumns) {
+        return getParallelValues(new Options<>(List.of()), excludedColumns);
+    }
+
+    public <V> List<List<V>> getParallelValues(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+        return getParallelValues(new Options<>(predicate, function), excludedColumns);
+    }
+
+    public <V> List<V> getParallelValues(Options<V> options, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         List<Integer> columnsList = getColumns(excludedColumns);
         int size = rowsEl.size();
-        List<List<String>> listOfList = new ArrayList<>();
+        List<V> listOfList = new ArrayList<>();
         boolean canRead = true;
         String id = "";
         int timeout = 0;
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         do {
-            List<CompletableFuture<List<String>>> futures = new ArrayList<>();
+            List<CompletableFuture<V>> futures = new ArrayList<>();
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
-                    CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(predicate, function, columnsList, finalI), executorService);
+                    CompletableFuture<V> future = CompletableFuture.supplyAsync(() -> getRowValues(options, columnsList, finalI), executorService);
                     futures.add(future);
                 } else {
                     if (size == i + 1) {
@@ -731,8 +739,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return listOfList;
     }
 
-    private List<String> getRowValues(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList, int finalI) {
+    private <V> V getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
         Row row = new Row(this).setTag("tr").setResultIdx(finalI);
-        return row.getValues(predicate, function, columnsList);
+        return (V) row.getValues(options, columnsList);
     }
 }
