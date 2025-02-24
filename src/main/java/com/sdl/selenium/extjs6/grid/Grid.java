@@ -20,10 +20,9 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -695,13 +694,13 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         int timeout = 0;
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        List<Future<List<String>>> futures = new ArrayList<>();
 
         do {
+            List<CompletableFuture<List<String>>> futures = new ArrayList<>();
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
-                    Future<List<String>> future = executorService.submit(() -> getRowValues(predicate, function, columnsList, finalI));
+                    CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(predicate, function, columnsList, finalI), executorService);
                     futures.add(future);
                 } else {
                     if (size == i + 1) {
@@ -715,16 +714,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                 }
             }
 
-            for (Future<List<String>> future : futures) {
-                try {
-                    listOfList.add(future.get());
-                } catch (InterruptedException | ExecutionException e) {
-                    // Tratarea erorilor sau înregistrarea lor
-                    e.printStackTrace();
-                }
-            }
-
-            futures.clear();
+            listOfList.addAll(futures.stream().map(CompletableFuture::join).toList());
 
             if (isScrollBottom()) {
                 break;
