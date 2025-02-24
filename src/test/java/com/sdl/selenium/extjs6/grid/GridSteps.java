@@ -16,13 +16,14 @@ import java.util.List;
 import java.util.function.Function;
 
 import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 @Slf4j
 public class GridSteps extends TestBase {
     private final Grid grid = new Grid().setTitle("Cell Editing Plants");
     private final Grid numberedRows = new Grid().setTitle("Grid with Numbered Rows");
+    private final Grid editingRows = new Grid().setTitle("Row Editing Employees");
 
     @Given("I open extjs6 app and add {string} path")
     public void iOpenExtjs6AppAndAddPath(String path) {
@@ -67,6 +68,17 @@ public class GridSteps extends TestBase {
         assertThatList("Actual values", cellsText, contains(values.toArray()));
     }
 
+    @Then("I verify parallel if grid has size {int}")
+    public void iVerifyParallelIfGridHasValues(int size) {
+        long startMs = System.currentTimeMillis();
+        List<List<String>> cellsText = editingRows.getParallelValues(t -> t == 5, getBooleanValue());
+//        List<List<String>> cellsText = numberedRows.getCellsText();
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.info("performance took {} ms", rez);
+        assertThat("Actual values", cellsText.size(), is(size));
+    }
+
     @And("I stop")
     public void iStop() {
         Utils.sleep(1);
@@ -75,11 +87,11 @@ public class GridSteps extends TestBase {
     @Then("I verify if grid has headers {list}")
     public void iVerifyIfGridHasHeaders(List<String> headers) {
         long startMs = System.currentTimeMillis();
-        List<String> actualHeaders = numberedRows.getHeaders();
+        List<String> actualHeaders = editingRows.getHeaders();
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
-        assertThatList("Actual values: ", actualHeaders, contains(headers.toArray()));
+        assertThatList("Actual values", actualHeaders, contains(headers.toArray()));
     }
 
     @Then("I verify if grid has object values:")

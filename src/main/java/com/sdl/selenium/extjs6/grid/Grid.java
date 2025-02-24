@@ -694,7 +694,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         int timeout = 0;
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
         do {
             List<CompletableFuture<List<String>>> futures = new ArrayList<>();
             for (int i = 1; i <= size; ++i) {
