@@ -738,7 +738,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         if (options.getType() == null) {
             return (List<V>) listOfList;
         } else {
-            return transformTo(options.getType(), listOfList, columnsList);
+            List<V> listObject = transformTo(options.getType(), listOfList, columnsList);
+            return listObject;
         }
     }
 
