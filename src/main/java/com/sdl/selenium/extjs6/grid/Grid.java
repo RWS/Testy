@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
@@ -696,14 +697,14 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         Row rowsEl = new Row(this).setTag("tr");
         List<Integer> columnsList = getColumns(excludedColumns);
         int size = rowsEl.size();
-        List<List<String>> listOfList = new ArrayList<>();
+        List<List<String>> listOfList = new CopyOnWriteArrayList<>();
         boolean canRead = true;
         String id = "";
         int timeout = 0;
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         do {
-            List<CompletableFuture<List<String>>> futures = new ArrayList<>();
+            List<CompletableFuture<List<String>>> futures = new CopyOnWriteArrayList<>();
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
