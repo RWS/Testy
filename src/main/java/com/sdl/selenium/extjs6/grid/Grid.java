@@ -747,6 +747,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     private <V> List<String> getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
         Row row = new Row(this).setTag("tr").setResultIdx(finalI);
         List<String> values = row.getValues(options, columnsList);
+        log.info(values.toString());
         return values;
     }
 }

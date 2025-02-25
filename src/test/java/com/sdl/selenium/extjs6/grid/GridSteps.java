@@ -72,7 +72,7 @@ public class GridSteps extends TestBase {
     public void iVerifyParallelIfGridHasValues(int size) {
         long startMs = System.currentTimeMillis();
         List<List<String>> cellsText = editingRows.getParallelValues(t -> t == 5, getBooleanValue());
-//        List<List<String>> cellsText = numberedRows.getCellsText();
+//        List<List<String>> cellsText = editingRows.getCellsText(t -> t == 5, getBooleanValue());
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);

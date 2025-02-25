@@ -14,8 +14,16 @@ public interface Editor {
     WebLocator getView();
 
     default <T extends Field> T getEditor(WebLocator cell) {
+        return getEditor(cell, false);
+    }
+
+    default <T extends Field> T getEditor(WebLocator cell, boolean doClick) {
         return RetryUtils.retry(3, () -> {
-            cell.click();
+            if (doClick) {
+                cell.doClick();
+            } else {
+                cell.click();
+            }
             return getEditor();
         });
     }
