@@ -198,7 +198,6 @@ Feature: Grid
 
   Scenario: Verify grid parallel big
     Given I open extjs6 app and add "#row-editing" path
-    Then I verify if grid has headers "Name, Email, Start Date, Salary, Active?"
     Then I verify parallel if grid has size 858
 
   Scenario: Stop

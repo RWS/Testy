@@ -87,7 +87,7 @@ public class GridSteps extends TestBase {
     @Then("I verify if grid has headers {list}")
     public void iVerifyIfGridHasHeaders(List<String> headers) {
         long startMs = System.currentTimeMillis();
-        List<String> actualHeaders = editingRows.getHeaders();
+        List<String> actualHeaders = numberedRows.getHeaders();
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);

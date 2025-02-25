@@ -696,18 +696,18 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         Row rowsEl = new Row(this).setTag("tr");
         List<Integer> columnsList = getColumns(excludedColumns);
         int size = rowsEl.size();
-        List<V> listOfList = new ArrayList<>();
+        List<List<String>> listOfList = new ArrayList<>();
         boolean canRead = true;
         String id = "";
         int timeout = 0;
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         do {
-            List<CompletableFuture<V>> futures = new ArrayList<>();
+            List<CompletableFuture<List<String>>> futures = new ArrayList<>();
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
-                    CompletableFuture<V> future = CompletableFuture.supplyAsync(() -> getRowValues(options, columnsList, finalI), executorService);
+                    CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(options, columnsList, finalI), executorService);
                     futures.add(future);
                 } else {
                     if (size == i + 1) {
@@ -735,12 +735,16 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         } while (timeout < 30);
 
         executorService.shutdown();
-
-        return listOfList;
+        if (options.getType() == null) {
+            return (List<V>) listOfList;
+        } else {
+            return transformTo(options.getType(), listOfList, columnsList);
+        }
     }
 
-    private <V> V getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
+    private <V> List<String> getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
         Row row = new Row(this).setTag("tr").setResultIdx(finalI);
-        return (V) row.getValues(options, columnsList);
+        List<String> values = row.getValues(options, columnsList);
+        return values;
     }
 }
