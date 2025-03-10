@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -722,7 +723,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                 }
             }
 
-            listOfList.addAll(futures.stream().map(CompletableFuture::join).toList());
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            futures.forEach(f -> listOfList.add(f.join()));
 
             if (isScrollBottom()) {
                 break;
@@ -747,7 +749,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
     private <V> List<String> getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
         Row row = new Row(this).setTag("tr").setResultIdx(finalI);
         List<String> values = row.getValues(options, columnsList);
-        log.info(values.toString());
-        return values;
+        log.info("rowValues: {}", values.toString());
+        return Collections.unmodifiableList(values);
     }
 }
