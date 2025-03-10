@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
@@ -696,25 +695,24 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
 
     public <V> List<V> getParallelValues(Options<V> options, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
-        List<Integer> columnsList = getColumns(excludedColumns);
+        List<Integer> columnsList = Collections.unmodifiableList(getColumns(excludedColumns));
         int size = rowsEl.size();
-        List<List<String>> listOfList = new CopyOnWriteArrayList<>();
+        List<List<String>> listOfList = Collections.synchronizedList(new ArrayList<>());
         boolean canRead = true;
         String id = "";
         int timeout = 0;
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
         do {
-            List<CompletableFuture<List<String>>> futures = new CopyOnWriteArrayList<>();
+            List<CompletableFuture<List<String>>> futures = Collections.synchronizedList(new ArrayList<>());
+
             for (int i = 1; i <= size; ++i) {
                 if (canRead) {
                     int finalI = i;
-                    CompletableFuture<List<String>> future = CompletableFuture.supplyAsync(() -> getRowValues(options, columnsList, finalI), executorService);
-                    futures.add(future);
+                    futures.add(CompletableFuture.supplyAsync(() -> getRowValues(options, columnsList, finalI), executorService));
                 } else {
-                    if (size == i + 1) {
-                        break;
-                    }
+                    if (size == i + 1) break;
                     Row row = new Row(this, i);
                     String currentId = row.getAttributeId();
                     if (!"".equals(id) && id.equals(currentId)) {
@@ -724,11 +722,12 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             }
 
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-            futures.forEach(f -> listOfList.add(f.join()));
 
-            if (isScrollBottom()) {
-                break;
+            synchronized (listOfList) {
+                listOfList.addAll(futures.stream().map(CompletableFuture::join).toList());
             }
+
+            if (isScrollBottom()) break;
 
             Row row = new Row(this, size);
             id = row.getAttributeId();
@@ -741,12 +740,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         if (options.getType() == null) {
             return (List<V>) listOfList;
         } else {
-            List<V> listObject = transformTo(options.getType(), listOfList, columnsList);
-            return listObject;
+            return transformTo(options.getType(), listOfList, columnsList);
         }
     }
 
-    private <V> List<String> getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
+    public <V> List<String> getRowValues(Options<V> options, List<Integer> columnsList, int finalI) {
         Row row = new Row(this).setTag("tr").setResultIdx(finalI);
         List<String> values = row.getValues(options, columnsList);
         log.info("rowValues: {}", values.toString());
