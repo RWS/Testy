@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -17,6 +18,7 @@ public class Options<V> {
     private Predicate<Integer> predicate;
     private Function<Cell, String> function;
     private Function<Details<V>, List<List<String>>> collector;
+    private Map<Predicate<Integer>, Function<Cell, String>> functions;
 
     public Options(V type) {
         this.type = type;
@@ -24,8 +26,7 @@ public class Options<V> {
 
     public Options(V type, Predicate<Integer> predicate, Function<Cell, String> function) {
         this.type = type;
-        this.predicate = predicate;
-        this.function = function;
+        this.functions = Map.of(predicate, function);
     }
 
     public Options(V type, boolean expand, Predicate<Integer> predicate, Function<Cell, String> function) {
@@ -44,8 +45,7 @@ public class Options<V> {
     }
 
     public Options(Predicate<Integer> predicate, Function<Cell, String> function) {
-        this.predicate = predicate;
-        this.function = function;
+        this.functions = Map.of(predicate, function);
     }
 
     public Options(Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {

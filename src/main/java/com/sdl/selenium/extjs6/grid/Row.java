@@ -322,8 +322,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
         List<String> list = new ArrayList<>();
         for (int j : columns) {
             Cell cell = new Cell(this, j);
-            if (options.getPredicate().test(j)) {
-                list.add(options.getFunction().apply(cell));
+            Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(i -> i.test(j)).findFirst();
+            if (first.isPresent()) {
+                Predicate<Integer> predicate = first.get();
+                Function<Cell, String> function = options.getFunctions().get(predicate);
+                list.add(function.apply(cell));
             } else {
                 try {
                     list.add(cell.getText(true).replaceAll("\n", " ").trim());

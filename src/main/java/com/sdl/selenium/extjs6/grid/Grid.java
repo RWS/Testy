@@ -400,6 +400,13 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         return listOfList;
     }
 
+    private <V> List<List<String>> collectorGroup(Options<V> options, List<Integer> columnsList, Row row) {
+        List<List<String>> listOfList = new ArrayList<>();
+        List<String> list = row.getValues(options, columnsList);
+        listOfList.add(list);
+        return listOfList;
+    }
+
     @Override
     public List<List<String>> getCellsText(int... excludedColumns) {
         return getCellsText(false, (short) 0, excludedColumns);
@@ -523,6 +530,51 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                 timeout++;
             } while (listOfList.size() < rows && timeout < 30);
             return listOfList;
+        }
+    }
+
+    public <V> List<V> getCellsText(String group, Options<V> options, int... excludedColumns) {
+        Group groupEl = getGroup(group);
+        groupEl.expand();
+        List<Row> groupElRows = groupEl.getRows();
+        Cell columnsEl = new Cell(groupElRows.get(1));
+        int rows = groupElRows.size();
+        int columns = columnsEl.size();
+        List<Integer> columnsList = getColumns(columns, excludedColumns);
+        if (rows == 0) {
+            return null;
+        } else {
+            List<List<String>> listOfList = new ArrayList<>();
+            boolean canRead = true;
+            String id = "";
+            int timeout = 0;
+            do {
+                for (int i = 0; i < rows; ++i) {
+                    if (canRead) {
+                        Row row = groupElRows.get(i);
+                        List<List<String>> lists = options.getCollector() == null ? collectorGroup(options, columnsList, row) : options.getCollector().apply(new Details<>(options, columnsList, this, i));
+                        listOfList.addAll(lists);
+                    } else {
+                        String currentId = new Row(this, i + 1).getAttributeId();
+                        if (!"".equals(id) && id.equals(currentId)) {
+                            canRead = true;
+                        }
+                    }
+                }
+                if (isScrollBottom() || listOfList.size() >= rows) {
+                    break;
+                }
+                id = new Row(this, rows).getAttributeId();
+                scrollPageDownInTree();
+                canRead = false;
+                timeout++;
+            } while (timeout < 30);
+
+            if (options.getType() == null) {
+                return (List<V>) listOfList;
+            } else {
+                return transformTo(options.getType(), listOfList, columnsList);
+            }
         }
     }
 
