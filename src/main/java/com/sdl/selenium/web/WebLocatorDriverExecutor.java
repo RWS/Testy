@@ -33,7 +33,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
         }
         if (!click) {
-            click = RetryUtils.retryRunnableSafe(4, () -> {
+            click = RetryUtils.retryRunnableSafe(4, "click: " + el, () -> {
                 findAgain(el);
                 el.getWebElement().click();
             });
@@ -72,7 +72,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
         }
         if (!submit) {
-            submit = RetryUtils.retryRunnableSafe(4, () -> {
+            submit = RetryUtils.retryRunnableSafe(4, "submit: " + el, () -> {
                 findAgain(el);
                 el.getWebElement().submit();
             });
@@ -88,7 +88,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
         }
         if (!clear) {
-            clear = RetryUtils.retryRunnableSafe(4, () -> {
+            clear = RetryUtils.retryRunnableSafe(4, "clear: " + el, () -> {
                 findAgain(el);
                 el.getWebElement().clear();
             });
@@ -214,7 +214,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
         }
         if (cssValue == null) {
-            return RetryUtils.retrySafe(4, () -> {
+            return RetryUtils.retrySafe(4, "getCssValue: " + el, () -> {
                 findAgain(el);
                 return el.getWebElement().getCssValue(propertyName);
             });
@@ -230,7 +230,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
         }
         if (tagName == null) {
-            return RetryUtils.retrySafe(4, () -> {
+            return RetryUtils.retrySafe(4, "getTagName: " + el, () -> {
                 findAgain(el);
                 return el.getWebElement().getTagName();
             });
@@ -252,7 +252,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         }
         if (!instant) {
             if (attributeValue == null) {
-                return RetryUtils.retrySafe(4, () -> {
+                return RetryUtils.retrySafe(4, "getAttribute: " + el, () -> {
                     findAgain(el);
                     return el.getWebElement().getAttribute(attribute);
                 });
@@ -294,7 +294,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
             text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
         }
         if (!instant && text == null) {
-            return RetryUtils.retrySafe(4, () -> {
+            return RetryUtils.retrySafe(4, "getText: " + el, () -> {
                 findAgain(el);
                 return el.getWebElement().getText();
             });
