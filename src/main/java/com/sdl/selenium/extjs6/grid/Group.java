@@ -85,9 +85,9 @@ public class Group extends WebLocator {
                 Cell cell = getCell(1);
                 return cell.doClick();
             }
-        }.setTag("tr").setRoot("/following-sibling::table//").setClasses("x-grid-row").setChildNodes(cells);
+        }.setTag("tr").setRoot("//").setClasses("x-grid-row").setChildNodes(cells);
         if (!row.isPresent()) {
-            row.setRoot("//");
+            row.setRoot("/following-sibling::table//");
         }
         return row;
     }
