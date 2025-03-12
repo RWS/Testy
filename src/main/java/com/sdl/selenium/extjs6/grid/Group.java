@@ -64,7 +64,6 @@ public class Group extends WebLocator {
             } else {
                 rowTmp = new Row().setElPath("(" + row.getXPath() + ")[" + i + "]");
             }
-            String text = rowTmp.getText();
             rows.add(rowTmp);
             if (i == 1) {
                 rowTmp = rows.get(0).getNextRow("/following-sibling::", "tr");
@@ -75,7 +74,7 @@ public class Group extends WebLocator {
     }
 
     public Row getRow(AbstractCell... cells) {
-        return new Row(this) {
+        Row row = new Row(this) {
             public boolean isCollapsed() {
                 WebLocator locator = new WebLocator(this).setRoot("/ancestor::").setTag("table");
                 String aClass = locator.getAttributeClass();
@@ -87,6 +86,10 @@ public class Group extends WebLocator {
                 return cell.doClick();
             }
         }.setTag("tr").setRoot("/following-sibling::table//").setClasses("x-grid-row").setChildNodes(cells);
+        if (!row.isPresent()) {
+            row.setRoot("//");
+        }
+        return row;
     }
 
     public String getNameGroup() {

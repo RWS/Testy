@@ -1,7 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.WebLocatorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -86,10 +85,11 @@ public class GroupIntegrationTest extends TestBase {
 
     @Test
     void rowTest5() {
-        String htmlTree = WebLocatorUtils.getOuterHTMLTree(grid);
-        log.info(htmlTree);
         Group group = new Group(grid, "American");
         group.expand();
+        Row factory = group.getRow(new Cell(1, "Cheesecake Factory"));
+        String factoryText = factory.getCell(1).getText();
+        assertThat(factoryText, equalTo("Cheesecake Factory"));
         Row old = group.getRow(new Cell(1, "Old Pro"));
         String text = old.getCell(1).getText();
         assertThat(text, equalTo("Old Pro"));
