@@ -60,7 +60,7 @@ public class Group extends WebLocator {
         for (int i = 1; i <= size; i++) {
             Row rowTmp;
             if (i == 1) {
-                rowTmp = new Row().setTag("tr").setChildNodes(group);
+                rowTmp = new Row(container).setTag("tr").setChildNodes(group);
             } else {
                 rowTmp = new Row().setElPath("(" + row.getXPath() + ")[" + i + "]");
             }
