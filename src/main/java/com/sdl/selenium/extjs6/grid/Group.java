@@ -54,7 +54,7 @@ public class Group extends WebLocator {
 
     public List<Row> getRows() {
         WebLocator container = getPathBuilder().getContainer();
-        Row row = new Row(container).setFinalXPath(" | //table[preceding-sibling::table[." + group.getXPath() + "] and not(.//div[contains(@class, 'x-grid-group-title')])]").setChildNodes(group);
+        Row row = new Row(container).setFinalXPath(" | " + container.getXPath() + "//table[preceding-sibling::table[." + group.getXPath() + "] and not(.//div[contains(@class, 'x-grid-group-title')])]").setChildNodes(group);
         int size = row.size();
         ArrayList<Row> rows = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
