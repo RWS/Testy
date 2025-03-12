@@ -492,7 +492,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         int columns = columnsEl.size();
         List<Integer> columnsList = getColumns(columns, excludedColumns);
 
-        if (rows <= 0) {
+        if (rows == 0) {
             return null;
         } else {
             List<List<String>> listOfList = new ArrayList<>();
@@ -509,7 +509,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                             if (predicate.test(j)) {
                                 text = function.apply(cell);
                             } else {
-                                text = cell.getText(true).trim();
+                                try {
+                                    text = cell.getText(true).trim();
+                                } catch (NullPointerException e) {
+                                    text = "";
+                                }
                             }
                             list.add(text);
                         }
@@ -528,7 +532,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                 scrollPageDownInTree();
                 canRead = false;
                 timeout++;
-            } while (listOfList.size() < rows && timeout < 30);
+            } while (timeout < 30);
             return listOfList;
         }
     }

@@ -23,7 +23,7 @@ public class Group extends WebLocator {
 
     public Group(WebLocator container, int indexRow) {
         this(container);
-        setPosition(indexRow);
+        setResultIdx(indexRow);
     }
 
     public Group(WebLocator container, String groupName) {
@@ -37,8 +37,7 @@ public class Group extends WebLocator {
     }
 
     public boolean isCollapsed() {
-        WebLocator tr = new WebLocator(this).setTag("tr").setPosition(1);
-        String cls = tr.getAttributeClass();
+        String cls = getAttribute("class", true);
         return cls != null && cls.contains("x-grid-group-hd-collapsed");
     }
 
@@ -51,15 +50,16 @@ public class Group extends WebLocator {
     }
 
     public List<Row> getRows() {
-        expand();
-        Row firstRow = new Row(this).setTag("tr").setClasses("x-grid-row");
-        Row row = new Row(this).setTag("tr").setRoot("//following::").setClasses("x-grid-row");
+        Row row = new Row(this).setRoot("/../../../table//").setTag("tr");
         int size = row.size();
         ArrayList<Row> rows = new ArrayList<>();
-        rows.add(firstRow);
         for (int i = 1; i <= size; i++) {
-            final Row tmpRow = new Row(this).setTag("tr").setRoot("//following::").setClasses("x-grid-row").setResultIdx(i);
-            rows.add(tmpRow);
+            Row rowTmp = new Row(this).setRoot("/../../../table//").setTag("tr").setResultIdx(i);
+            String aClass = rowTmp.getAttribute("class", true);
+            if (aClass != null && aClass.contains("x-grid-group-hd-collapsed")) {
+                break;
+            }
+            rows.add(rowTmp);
         }
         return rows;
     }
@@ -76,12 +76,10 @@ public class Group extends WebLocator {
                 Cell cell = getCell(1);
                 return cell.doClick();
             }
-        }.setTag("tr").setPosition(1).setRoot("//following::").setClasses("x-grid-row").setChildNodes(cells);
+        }.setTag("tr").setRoot("/../../../table//").setClasses("x-grid-row").setChildNodes(cells);
     }
 
     public String getNameGroup() {
-        WebLocator groupTitle = new WebLocator(this).setClasses("x-grid-group-title");
-        WebLocator spanTitle = new WebLocator(groupTitle).setResultIdx(1);
-        return spanTitle.getText();
+        return getText(true);
     }
 }

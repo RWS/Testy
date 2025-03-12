@@ -4,7 +4,6 @@ import com.sdl.selenium.TestBase;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
@@ -26,8 +25,9 @@ public class GroupIntegrationTest extends TestBase {
     @Test
     void rowTest() {
         Group group = new Group(grid, "Cuisine: American");
+        group.expand();
         List<Row> rows = group.getRows();
-        assertThat(rows.get(0).getCell(1).getText(), equalTo("Cheesecake Factory"));
+        assertThat(rows.get(1).getCell(1).getText(), equalTo("Cheesecake Factory"));
     }
 
     @Test
@@ -48,6 +48,7 @@ public class GroupIntegrationTest extends TestBase {
             );
         } else {
             lists = List.of(
+                    List.of("Cuisine: American (10 Items)", ""),
                     List.of("Cheesecake Factory", "American"),
                     List.of("Creamery", "American"),
                     List.of("Crepevine", "American"),
@@ -65,20 +66,24 @@ public class GroupIntegrationTest extends TestBase {
 
     @Test
     void rowTest3() {
+        Group group = new Group(grid, "Cuisine: American");
+        group.collapse();
         List<String> groupsName = grid.getGroupsName();
-        List<String> lists = Arrays.asList("Cuisine: American", "Cuisine: Asian", "Cuisine: Bagels", "Cuisine: Cajun", "Cuisine: Californian", "Cuisine: Caribbean", "Cuisine: Chinese", "Cuisine: Coffee", "Cuisine: English", "Cuisine: French", "Cuisine: Indian", "Cuisine: Italian", "Cuisine: Mediterranean", "Cuisine: Mexican", "Cuisine: Pizza", "Cuisine: Salad", "Cuisine: Sandwiches", "Cuisine: Sushi", "Cuisine: Tapas", "Cuisine: Thai", "Cuisine: Vegan", "Cuisine: Vietnamese");
+        List<String> lists = List.of("Cuisine: American (10 Items)", "Cuisine: Asian (1 Item)", "Cuisine: Bagels (1 Item)", "Cuisine: Cajun (1 Item)", "Cuisine: Californian (1 Item)", "Cuisine: Caribbean (2 Items)", "Cuisine: Chinese (3 Items)", "Cuisine: Coffee (4 Items)", "Cuisine: English (1 Item)", "Cuisine: French (2 Items)", "Cuisine: Indian (5 Items)", "Cuisine: Italian (7 Items)", "Cuisine: Mediterranean (7 Items)", "Cuisine: Mexican (2 Items)", "Cuisine: Pizza (5 Items)", "Cuisine: Salad (2 Items)", "Cuisine: Sandwiches (1 Item)", "Cuisine: Sushi (3 Items)", "Cuisine: Tapas (1 Item)", "Cuisine: Thai (4 Items)", "Cuisine: Vegan (2 Items)", "Cuisine: Vietnamese (2 Items)");
         assertThat(lists, contains(groupsName.toArray()));
     }
 
     @Test
     void rowTest4() {
         Group group = grid.getGroup(2);
-        assertThat(group.getNameGroup(), equalTo("Cuisine: Asian"));
+        String nameGroup = group.getNameGroup();
+        assertThat(nameGroup, equalTo("Cuisine: Asian (1 Item)"));
     }
 
     @Test
     void rowTest5() {
         Group group = new Group(grid, "American");
+        group.expand();
         Row old = group.getRow(new Cell(1, "Old Pro"));
         String text = old.getCell(1).getText();
         assertThat(text, equalTo("Old Pro"));
