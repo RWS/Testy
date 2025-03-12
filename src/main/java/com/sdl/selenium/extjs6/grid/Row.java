@@ -70,9 +70,9 @@ public class Row extends com.sdl.selenium.web.table.Row {
         Grid grid;
         if (getPathBuilder().getContainer() instanceof Grid) {
             grid = (Grid) getPathBuilder().getContainer();
-        } else if (getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
+        } else if (getPathBuilder().getContainer() != null && getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
             grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer();
-        } else if (getPathBuilder().getContainer().getPathBuilder().getContainer() != null && getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
+        } else if (getPathBuilder().getContainer() != null && getPathBuilder().getContainer().getPathBuilder().getContainer() != null && getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer() instanceof Grid) {
             grid = (Grid) getPathBuilder().getContainer().getPathBuilder().getContainer().getPathBuilder().getContainer();
         } else {
             return null;

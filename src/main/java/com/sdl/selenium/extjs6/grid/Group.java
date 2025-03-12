@@ -3,16 +3,18 @@ package com.sdl.selenium.extjs6.grid;
 import com.google.common.base.Strings;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class Group extends WebLocator {
 
     private final WebLocator group = new WebLocator().setClasses("x-grid-group-title").setTemplate("title", "contains(.,'%s')");
 
     public Group() {
-        setTag("tr");
+        setTag("table");
         setChildNodes(group);
     }
 
@@ -37,7 +39,8 @@ public class Group extends WebLocator {
     }
 
     public boolean isCollapsed() {
-        String cls = getAttribute("class", true);
+        WebLocator tr = new WebLocator(this).setTag("tr").setPosition(1);
+        String cls = tr.getAttribute("class", true);
         return cls != null && cls.contains("x-grid-group-hd-collapsed");
     }
 
@@ -50,16 +53,23 @@ public class Group extends WebLocator {
     }
 
     public List<Row> getRows() {
-        Row row = new Row(this).setRoot("/../../../table//").setTag("tr");
+        WebLocator container = getPathBuilder().getContainer();
+        Row row = new Row(container).setFinalXPath(" | //table[preceding-sibling::table[." + group.getXPath() + "] and not(.//div[contains(@class, 'x-grid-group-title')])]").setChildNodes(group);
         int size = row.size();
         ArrayList<Row> rows = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
-            Row rowTmp = new Row(this).setRoot("/../../../table//").setTag("tr").setResultIdx(i);
-            String aClass = rowTmp.getAttribute("class", true);
-            if (aClass != null && aClass.contains("x-grid-group-hd-collapsed")) {
-                break;
+            Row rowTmp;
+            if (i == 1) {
+                rowTmp = new Row().setTag("tr").setChildNodes(group);
+            } else {
+                rowTmp = new Row().setElPath("(" + row.getXPath() + ")[" + i + "]");
             }
+            String text = rowTmp.getText();
             rows.add(rowTmp);
+            if (i == 1) {
+                rowTmp = rows.get(0).getNextRow("/following-sibling::", "tr");
+                rows.add(rowTmp);
+            }
         }
         return rows;
     }
@@ -76,7 +86,7 @@ public class Group extends WebLocator {
                 Cell cell = getCell(1);
                 return cell.doClick();
             }
-        }.setTag("tr").setRoot("/../../../table//").setClasses("x-grid-row").setChildNodes(cells);
+        }.setTag("tr").setRoot("/following-sibling::table//").setClasses("x-grid-row").setChildNodes(cells);
     }
 
     public String getNameGroup() {

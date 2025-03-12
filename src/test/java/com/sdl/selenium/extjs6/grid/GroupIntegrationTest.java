@@ -1,6 +1,8 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.WebLocatorUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -12,6 +14,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+@Slf4j
 public class GroupIntegrationTest extends TestBase {
 
     private final Grid grid = new Grid().setTitle("Restaurants").setVisibility(true);
@@ -27,7 +30,8 @@ public class GroupIntegrationTest extends TestBase {
         Group group = new Group(grid, "Cuisine: American");
         group.expand();
         List<Row> rows = group.getRows();
-        assertThat(rows.get(1).getCell(1).getText(), equalTo("Cheesecake Factory"));
+        String text = rows.get(1).getCell(1).getText();
+        assertThat(text, equalTo("Cheesecake Factory"));
     }
 
     @Test
@@ -82,6 +86,8 @@ public class GroupIntegrationTest extends TestBase {
 
     @Test
     void rowTest5() {
+        String htmlTree = WebLocatorUtils.getOuterHTMLTree(grid);
+        log.info(htmlTree);
         Group group = new Group(grid, "American");
         group.expand();
         Row old = group.getRow(new Cell(1, "Old Pro"));
