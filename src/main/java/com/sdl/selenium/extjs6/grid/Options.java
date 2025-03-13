@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -18,7 +19,7 @@ public class Options<V> {
     private Predicate<Integer> predicate;
     private Function<Cell, String> function;
     private Function<Details<V>, List<List<String>>> collector;
-    private Map<Predicate<Integer>, Function<Cell, String>> functions;
+    private Map<Predicate<Integer>, Function<Cell, String>> functions = new HashMap<>();
 
     public Options(V type) {
         this.type = type;
