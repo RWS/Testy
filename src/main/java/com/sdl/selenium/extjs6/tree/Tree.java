@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.tree;
 
 import com.google.common.base.Strings;
 import com.sdl.selenium.extjs6.grid.Cell;
+import com.sdl.selenium.extjs6.grid.Options;
 import com.sdl.selenium.extjs6.grid.Row;
 import com.sdl.selenium.extjs6.grid.Scrollable;
 import com.sdl.selenium.web.Editor;
@@ -17,10 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriverException;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -30,6 +28,8 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
     public Tree() {
         setClassName("Tree");
         setBaseCls("x-tree-panel");
+        WebLocator header = new WebLocator().setClasses("x-title-text");
+        setTemplateTitle(header);
     }
 
     public Tree(WebLocator container) {
@@ -363,7 +363,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
-                  expand =  RetryUtils.retry(2, () -> {
+                    expand = RetryUtils.retry(2, () -> {
                         expanderEl.doClick();
                         boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
                             String aCls = row.getAttributeClass();
@@ -420,7 +420,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         Row rowsEl = new Row(this).setTag("tr");
         int rows = rowsEl.size();
         final List<Integer> columnsList = getColumns(columns, excludedColumns);
-        return getValues(rows, columnsList, t -> t == 0, null);
+        return getValues(rows, columnsList, new Options<>(List.of()));
     }
 
     public Row getNode(List<String> nodes, SearchType... searchTypes) {
@@ -485,31 +485,46 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return listOfList;
     }
 
+    public List<List<String>> getNodesValues(List<String> nodes, Options<String> options, int... excludedColumns) {
+        Row rowNode = getNode(nodes);
+        List<List<String>> listOfList = new LinkedList<>();
+        for (String node : nodes) {
+            Row nodeRow = this.getRow(new Cell(1, node)).setResultIdx(1);
+            List<String> cellsText = nodeRow.getCellsText(options, excludedColumns);
+            listOfList.add(cellsText);
+        }
+        List<List<String>> values = getNodesValues(rowNode, options, excludedColumns);
+        listOfList.addAll(values);
+        return listOfList;
+    }
+
     public List<List<String>> getCellsText(int... excludedColumns) {
-        return getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
+        return getCellsText(new Options<>(List.of()), excludedColumns);
     }
 
     public <V> List<V> getCellsValues(V type, int... excludedColumns) {
-        List<List<String>> cellsText = getCellsText(false, t -> t == 0, Cell::getLanguages, excludedColumns);
+        List<List<String>> cellsText = getCellsText(new Options<>(type), excludedColumns);
         List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
         List<V> actualValues = transformTo(type, cellsText, columnsList);
         return actualValues;
     }
 
     public <V> List<V> getCellsValues(V type, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        List<List<String>> cellsText = getCellsText(rowExpand, predicate, function, excludedColumns);
+        Options<V> options = new Options<>(type, rowExpand, predicate, function);
+        List<List<String>> cellsText = getCellsText(options, excludedColumns);
         List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
         List<V> actualValues = transformTo(type, cellsText, columnsList);
         return actualValues;
     }
 
     public List<List<String>> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
-        return getCellsText(false, predicate, function, excludedColumns);
+        Options<List<String>> options = new Options<>(List.of(), false, predicate, function);
+        return getCellsText(options, excludedColumns);
     }
 
-    public List<List<String>> getCellsText(boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
+    public <V> List<List<String>> getCellsText(Options<V> options, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
-        if (rowExpand) {
+        if (options.isExpand()) {
             rowsEl.setExcludeClasses("x-grid-rowbody-tr");
         }
         int rows = rowsEl.size();
@@ -517,7 +532,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         if (rows <= 0) {
             return null;
         } else {
-            return getLists(rows, rowExpand, predicate, function, columnsList);
+            return getLists(rows, options, columnsList);
         }
     }
 
@@ -527,7 +542,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return row.getCells();
     }
 
-    public List<List<String>> getValues(int rows, List<Integer> columnsList, Predicate<Integer> predicate, Function<Cell, String> function) {
+    public <V> List<List<String>> getValues(int rows, List<Integer> columnsList, Options<V> options) {
         Row rowsEl = new Row(this).setTag("tr");
         int size = rowsEl.size();
         List<List<String>> listOfList = new LinkedList<>();
@@ -542,12 +557,16 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                         Row row = new Row(this).setTag("tr").setResultIdx(i);
                         Cell cell = new Cell(row, j);
                         String text;
-                        if (predicate.test(j)) {
+                        Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(p -> p.test(j)).findFirst();
+                        if (first.isPresent()) {
+                            Predicate<Integer> predicate = first.get();
+                            Function<Cell, String> function = options.getFunctions().get(predicate);
                             text = function.apply(cell);
                         } else {
-                            text = cell.getText(true).trim();
-                            if (Strings.isNullOrEmpty(text)) {
+                            try {
                                 text = cell.getText(true).trim();
+                            } catch (Exception e) {
+                                text = "";
                             }
                         }
                         list.add(text);
@@ -593,9 +612,26 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return listOfList;
     }
 
-    public List<List<String>> getLists(int rows, boolean rowExpand, Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
+    private <V> List<List<String>> getNodesValues(Row rowNode, Options<V> options, int... excludedColumns) {
+        List<List<String>> listOfList = new LinkedList<>();
+        Row nextRow = rowNode.getNextRow();
+        while (nextRow.ready()) {
+            Row row = nextRow.getNextRow();
+            Row rowTMP = row.clone(row);
+            rowTMP.setTag("tr").setClasses("x-grid-tree-node-leaf");
+            if (!rowTMP.isPresent()) {
+                break;
+            }
+            List<String> actualValues = rowTMP.getCellsText((Options<String>) options, excludedColumns);
+            listOfList.add(actualValues);
+            nextRow = row;
+        }
+        return listOfList;
+    }
+
+    public <V> List<List<String>> getLists(int rows, Options<V> options, List<Integer> columnsList) {
         Row rowsEl = new Row(this);
-        if (!rowExpand) {
+        if (!options.isExpand()) {
             rowsEl.setTag("tr");
         }
         int size = rowsEl.size();
@@ -609,12 +645,15 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                     List<String> list = new LinkedList<>();
                     for (int j : columnsList) {
                         Row row = new Row(this).setTag("tr").setResultIdx(i);
-                        if (rowExpand) {
+                        if (options.isExpand()) {
                             row.setExcludeClasses("x-grid-rowbody-tr");
                         }
                         Cell cell = new Cell(row, j);
                         String text;
-                        if (predicate.test(j)) {
+                        Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(p -> p.test(j)).findFirst();
+                        if (first.isPresent()) {
+                            Predicate<Integer> predicate = first.get();
+                            Function<Cell, String> function = options.getFunctions().get(predicate);
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
@@ -664,7 +703,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             timeMs = System.currentTimeMillis() - startMs;
         }
         long endMs = System.currentTimeMillis();
-        log.info("waitToActivate:" + (endMs - startMs) + " milliseconds; " + toString());
+        log.info("waitToActivate:{} milliseconds; {}", endMs - startMs, toString());
         return !hasMask;
     }
 

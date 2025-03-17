@@ -282,10 +282,21 @@ public class Row extends com.sdl.selenium.web.table.Row {
         return transformToObject(type, cellsText);
     }
 
+    public <V> V getCellsText(Class<V> type, Options<V> options, int... excludedColumns) {
+        List<String> cellsText = getCellsText((Options<String>) options, excludedColumns);
+        return transformToObject(type, cellsText);
+    }
+
     public <V> V getCellsValues(V type, Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<String> cellsText = getCellsText(predicate, function, excludedColumns);
         List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
         return transformToObject(type, cellsText, columnsList);
+    }
+
+    public <V> V getCellsValues(Options<V> options, int... excludedColumns) {
+        List<String> cellsText = getCellsText((Options<String>) options, excludedColumns);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        return transformToObject(options.getType(), cellsText, columnsList);
     }
 
     public List<String> getCellsText(short columnLanguages, int... excludedColumns) {
@@ -299,6 +310,11 @@ public class Row extends com.sdl.selenium.web.table.Row {
     public List<String> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         List<Integer> columns = getColumns(excludedColumns);
         return getValues(predicate, function, columns);
+    }
+
+    public List<String> getCellsText(Options<String> options, int... excludedColumns) {
+        List<Integer> columns = getColumns(excludedColumns);
+        return getValues(options, columns);
     }
 
     public List<String> getValues(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columns) {

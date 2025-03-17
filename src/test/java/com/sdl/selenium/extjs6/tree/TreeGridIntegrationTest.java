@@ -18,7 +18,7 @@ import static org.hamcrest.core.Is.is;
 
 public class TreeGridIntegrationTest extends TestBase {
 
-    private final Tree tree = new Tree().setVisibility(true);
+    private final Tree tree = new Tree().setTitle("Core Team Projects").setVisibility(true);
 
     @BeforeClass
     public void startTests() {
@@ -66,7 +66,7 @@ public class TreeGridIntegrationTest extends TestBase {
 
     @Test
     void treeTest2() {
-        List<List<String>> selected = tree.getValues(4, 5);
+        List<List<String>> selected = tree.getValues(4, 5, 6);
         assertThat(selected.size(), is(8));
     }
 }
