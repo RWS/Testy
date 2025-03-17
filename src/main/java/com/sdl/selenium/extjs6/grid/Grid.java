@@ -297,7 +297,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     }
                     Row row = new Row(containerLocked, i);
                     String currentId = row.getAttributeId();
-                    if (!"".equals(id) && id.equals(currentId)) {
+                    if (!Strings.isNullOrEmpty(id) && id.equals(currentId)) {
                         canRead = true;
                     }
                 }
@@ -364,7 +364,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                         row.setTemplate("visibility", "count(ancestor-or-self::*[contains(@class, 'x-grid-rowbody-tr')]) = 0").setVisibility(true);
                     }
                     String currentId = row.getAttributeId();
-                    if (!"".equals(id) && id.equals(currentId)) {
+                    if (!Strings.isNullOrEmpty(id) && id.equals(currentId)) {
                         canRead = true;
                     }
                 }
@@ -520,7 +520,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                         listOfList.add(list);
                     } else {
                         String currentId = new Row(this, i + 1).getAttributeId();
-                        if (!"".equals(id) && id.equals(currentId)) {
+                        if (!Strings.isNullOrEmpty(id) && id.equals(currentId)) {
                             canRead = true;
                         }
                     }
@@ -560,7 +560,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                         listOfList.addAll(lists);
                     } else {
                         String currentId = new Row(this, i + 1).getAttributeId();
-                        if (!"".equals(id) && id.equals(currentId)) {
+                        if (!Strings.isNullOrEmpty(id) && id.equals(currentId)) {
                             canRead = true;
                         }
                     }
@@ -771,7 +771,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     if (size == i + 1) break;
                     Row row = new Row(this, i);
                     String currentId = row.getAttributeId();
-                    if (!"".equals(id) && id.equals(currentId)) {
+                    if (!Strings.isNullOrEmpty(id) && id.equals(currentId)) {
                         canRead = true;
                     }
                 }
