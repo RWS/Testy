@@ -517,6 +517,13 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return actualValues;
     }
 
+    public <V> List<V> getCellsValues(Options<V> options, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsText(options, excludedColumns);
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> actualValues = transformTo(options.getType(), cellsText, columnsList);
+        return actualValues;
+    }
+
     public List<List<String>> getCellsText(Predicate<Integer> predicate, Function<Cell, String> function, int... excludedColumns) {
         Options<List<String>> options = new Options<>(List.of(), false, predicate, function);
         return getCellsText(options, excludedColumns);
