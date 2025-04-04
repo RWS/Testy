@@ -53,22 +53,17 @@ public class Group extends WebLocator {
     }
 
     public List<Row> getRows() {
-        WebLocator container = getPathBuilder().getContainer();
-        Row row = new Row(container).setFinalXPath(" | " + container.getXPath() + "//table[preceding-sibling::table[." + group.getXPath() + "] and not(.//div[contains(@class, 'x-grid-group-title')])]").setChildNodes(group);
-        int size = row.size();
         ArrayList<Row> rows = new ArrayList<>();
+        Row row = new Row(this).setTag("tr").setRoot("//following::");
+        int size = row.size();
         for (int i = 1; i <= size; i++) {
-            Row rowTmp;
-            if (i == 1) {
-                rowTmp = new Row(container).setTag("tr").setChildNodes(group);
-            } else {
-                rowTmp = new Row().setElPath("(" + row.getXPath() + ")[" + i + "]");
+            final Row tmpRow = new Row(this).setTag("tr").setRoot("//following::").setResultIdx(i);
+            WebLocator groupEl = new WebLocator(tmpRow).setClasses("x-group-hd-container");
+            WebLocator expandEl = new WebLocator(tmpRow).setRoot("/following-sibling::").setTag("tr").setClasses("x-grid-rowbody-tr");
+            if ((groupEl.isPresent() || expandEl.isPresent()) && i > 1) {
+                break;
             }
-            rows.add(rowTmp);
-            if (i == 1) {
-                rowTmp = rows.get(0).getNextRow("/following-sibling::", "tr");
-                rows.add(rowTmp);
-            }
+            rows.add(tmpRow);
         }
         return rows;
     }
