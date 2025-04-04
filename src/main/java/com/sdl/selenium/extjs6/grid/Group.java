@@ -15,7 +15,8 @@ public class Group extends WebLocator {
 
     public Group() {
         setTag("table");
-        setChildNodes(group);
+        WebLocator child = new WebLocator().setRoot("/").setTag("colgroup");
+        setChildNodes(group, child);
     }
 
     public Group(WebLocator container) {
