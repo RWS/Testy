@@ -1,5 +1,6 @@
 package com.sdl.selenium.extjs6.grid;
 
+import com.sdl.selenium.web.WebLocator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,6 @@ import java.util.List;
 public class Details<V> {
     private Options<V> options;
     private List<Integer> columns;
-    private Grid grid;
+    private WebLocator grid;
     private Integer index;
 }
