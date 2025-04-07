@@ -17,10 +17,7 @@ import lombok.SneakyThrows;
 import org.slf4j.Logger;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -244,7 +241,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         }
     }
 
-    public List<List<String>> getLockedLists(Predicate<Integer> predicate, Function<Cell, String> function, List<Integer> columnsList) {
+    public <V> List<List<String>> getLockedLists(Options<V> options, List<Integer> columnsList) {
         WebLocator containerLocked = new WebLocator(this).setClasses("x-grid-scrollbar-clipper", "x-grid-scrollbar-clipper-locked");
         Row rowsEl = new Row(containerLocked);
         int cells = new Row(containerLocked, 1).getCells();
@@ -271,7 +268,10 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     for (int j : firstColumns) {
                         Cell cell = new Cell(row, j);
                         String text;
-                        if (predicate.test(j)) {
+                        Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(it -> it.test(j)).findFirst();
+                        if (first.isPresent()) {
+                            Predicate<Integer> predicate = first.get();
+                            Function<Cell, String> function = options.getFunctions().get(predicate);
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
@@ -283,7 +283,10 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
                     for (int j : secondColumns) {
                         Cell cell = new Cell(row, j - cells);
                         String text;
-                        if (predicate.test(j)) {
+                        Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(it -> it.test(j)).findFirst();
+                        if (first.isPresent()) {
+                            Predicate<Integer> predicate = first.get();
+                            Function<Cell, String> function = options.getFunctions().get(predicate);
                             text = function.apply(cell);
                         } else {
                             text = cell.getText(true).trim();
@@ -438,10 +441,10 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         if (rows <= 0) {
             return null;
         } else {
+            Options<?> options = new Options<>(rowExpand, predicate, function);
             if (isGridLocked()) {
-                return getLockedLists(predicate, function, columnsList);
+                return getLockedLists(options, columnsList);
             } else {
-                Options<?> options = new Options<>(rowExpand, predicate, function);
                 return getLists(rows, options, columnsList);
             }
         }
@@ -458,7 +461,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
             return null;
         } else {
             if (isGridLocked()) {
-                return getLockedLists(options.getPredicate(), options.getFunction(), columnsList);
+                return getLockedLists(options, columnsList);
             } else {
                 return getLists(rows, options, columnsList);
             }
