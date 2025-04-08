@@ -18,6 +18,16 @@ public interface Transform {
 
     ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * Transforms a list of string lists into a list of objects of the specified type.
+     * The method uses Jackson ObjectMapper for JSON serialization/deserialization to perform the transformation.
+     * 
+     * @param type the template object used for transformation
+     * @param actualListOfList the list of data to be transformed
+     * @param columnsList list of column indices to be excluded from the transformation
+     * @param <V> the generic type of the resulting objects
+     * @return a list of transformed objects
+     */
     @SneakyThrows
     default <V> List<V> transformTo(V type, List<List<String>> actualListOfList, List<Integer> columnsList) {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

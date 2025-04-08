@@ -14,13 +14,13 @@ public class GroupTest {
     @DataProvider
     public static Object[][] testConstructorPathDataProvider() {
         return new Object[][]{
-                {new Grid().getGroup(3),                    "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0][position() = 3]"},
-                {new Grid().getGroup("Cuisine: Coffee"),    "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ') and contains(.,'Cuisine: Coffee')]) > 0]"},
-                {new Group(),                               "//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0]"},
-                {new Group(container),                      "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0]"},
-                {new Group(container, 2),                   "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0][position() = 2]"},
-                {new Group(container, "Cuisine: Coffee"),   "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ') and contains(.,'Cuisine: Coffee')]) > 0]"},
-                {new Group(container, "Cuisine: Coffee", 2),"(//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ') and contains(.,'Cuisine: Coffee')]) > 0])[2]"},
+                {new Grid().getGroup(3),                    "(//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0 and count(./colgroup) > 0])[3]"},
+                {new Grid().getGroup("Cuisine: Coffee"),   "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ') and contains(.,'Cuisine: Coffee')]) > 0 and count(./colgroup) > 0]"},
+                {new Group(),                               "//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0 and count(./colgroup) > 0]"},
+                {new Group(container),                      "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0 and count(./colgroup) > 0]"},
+                {new Group(container, 2),                   "(//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ')]) > 0 and count(./colgroup) > 0])[2]"},
+                {new Group(container, "Cuisine: Coffee"),   "//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ') and contains(.,'Cuisine: Coffee')]) > 0 and count(./colgroup) > 0]"},
+                {new Group(container, "Cuisine: Coffee", 2),"(//*[contains(concat(' ', @class, ' '), ' x-grid ')]//table[count(.//*[contains(concat(' ', @class, ' '), ' x-grid-group-title ') and contains(.,'Cuisine: Coffee')]) > 0 and count(./colgroup) > 0])[2]"},
         };
     }
 
