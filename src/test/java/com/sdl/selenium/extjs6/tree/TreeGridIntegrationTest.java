@@ -69,4 +69,11 @@ public class TreeGridIntegrationTest extends TestBase {
         List<List<String>> selected = tree.getValues(4, 5, 6);
         assertThat(selected.size(), is(8));
     }
+
+    @Test
+    void treeTest3() {
+        List<String> nodes = List.of("Task", "Duration", "Assigned To", "Done", "Edit");
+        List<String> headers = tree.getHeaders();
+        assertThat(headers, containsInAnyOrder(nodes.toArray()));
+    }
 }
