@@ -10,7 +10,7 @@ public interface IColumns {
     int getHeadersCount();
 
     default List<Integer> getColumns(int columns, int[] excludedColumns) {
-        List<Integer> excluded = Arrays.stream(excludedColumns).boxed().collect(Collectors.toList());
+        List<Integer> excluded = Arrays.stream(excludedColumns).boxed().toList();
 
         return IntStream.rangeClosed(1, columns)
                 .filter(column -> !excluded.contains(column))

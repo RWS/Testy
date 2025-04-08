@@ -11,6 +11,7 @@ import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.table.IHeaders;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.SneakyThrows;
@@ -23,9 +24,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-public class Grid extends Table implements Scrollable, XTool, Editor, Transform {
+public class Grid extends Table implements Scrollable, XTool, Editor, Transform, IHeaders {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Grid.class);
     private String version;
 
@@ -206,27 +206,6 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform 
         ConditionManager cm = new ConditionManager(duration);
         cm.add(new RenderSuccessCondition(row)).add(new RenderSuccessCondition(row2));
         return cm.execute().isSuccess();
-    }
-
-    public List<String> getHeaders() {
-        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-        WebLocator header = new WebLocator(body).setClasses("x-column-header");
-        int size = header.size();
-        List<String> headers = new ArrayList<>();
-        for (int i = 1; i <= size; i++) {
-            header.setResultIdx(i);
-            headers.add(header.getText());
-        }
-        return headers.stream().filter(i -> !Strings.isNullOrEmpty(i.trim())).collect(Collectors.toList());
-    }
-
-    public List<String> getHeadersFast() {
-        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-        ArrayList<String> headers = new ArrayList<>();
-        if (!Strings.isNullOrEmpty(body.getText())) {
-            headers.addAll(Arrays.asList(body.getText().split("\\n")));
-        }
-        return headers;
     }
 
     public int getHeadersCount() {

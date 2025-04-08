@@ -9,7 +9,7 @@ import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.Transform;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.table.IColumns;
+import com.sdl.selenium.web.table.IHeaders;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Response;
 import com.sdl.selenium.web.utils.RetryUtils;
@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Tree extends WebLocator implements Scrollable, Editor, Transform, IColumns {
+public class Tree extends WebLocator implements Scrollable, Editor, Transform, IHeaders {
     private static final Logger log = LogManager.getLogger(Tree.class);
 
     public Tree() {
@@ -547,15 +547,6 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
     public int getHeadersCount() {
         Row row = new Row(this, 1);
         return row.getCells();
-    }
-
-    public List<String> getHeaders() {
-        WebLocator body = new WebLocator(this).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-        ArrayList<String> headers = new ArrayList<>();
-        if (!Strings.isNullOrEmpty(body.getText())) {
-            headers.addAll(Arrays.asList(body.getText().split("\\n")));
-        }
-        return headers;
     }
 
     public <V> List<List<String>> getValues(int rows, List<Integer> columnsList, Options<V> options) {
