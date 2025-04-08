@@ -10,7 +10,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Tag extends Combo implements ITag {
 
@@ -69,20 +68,14 @@ public abstract class Tag extends Combo implements ITag {
 
     public List<String> getAllSelectedValues() {
         String text = list.getText();
-        if (!Strings.isNullOrEmpty(text)) {
-            boolean isEmpty = false;
-            String[] comboValues = text.split("\\n");
-            if (comboValues.length == 1) {
-                isEmpty = "".equals(comboValues[0]);
-            }
-            if (isEmpty) {
-                return new ArrayList<>();
-            } else {
-                return Arrays.stream(comboValues).map(String::trim).collect(Collectors.toList());
-            }
-        } else {
+        if (Strings.isNullOrEmpty(text)) {
             return new ArrayList<>();
         }
+        
+        return Arrays.stream(text.split("\\n"))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 
     public String getValue(){
