@@ -131,9 +131,18 @@ public class Options<V> {
     }
 
     /**
-     * Creates a new Options instance with expansion flag, predicate, and function.
+     * Creates a new Options instance with expander flag.
      *
-     * @param expand Whether the grid should be expanded
+     * @param expand Whether the grid has row expander
+     */
+    public Options(boolean expand) {
+        this.expand = expand;
+    }
+
+    /**
+     * Creates a new Options instance with expander flag, predicate, and function.
+     *
+     * @param expand Whether the grid has row expander
      * @param predicate The predicate for filtering rows
      * @param function The function for processing cell data
      */
@@ -143,9 +152,9 @@ public class Options<V> {
     }
 
     /**
-     * Creates a new Options instance with expansion flag, predicate, function, and collector.
+     * Creates a new Options instance with expander flag, predicate, function, and collector.
      *
-     * @param expand Whether the grid should be expanded
+     * @param expand Whether the grid has row expander
      * @param predicate The predicate for filtering rows
      * @param function The function for processing cell data
      * @param collector The collector function for gathering grid details
