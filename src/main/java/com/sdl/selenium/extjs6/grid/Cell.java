@@ -106,25 +106,30 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     }
 
     public String getLanguages() {
+        StringBuilder flags = new StringBuilder();
         WebLocator flagEl = new WebLocator(this).setTag("i").setClasses("flag");
         List<WebElement> elements = flagEl.doFindElements();
-        
-        if (elements == null || elements.isEmpty()) {
-            return "";
+        if (elements != null && !elements.isEmpty()) {
+            int count = 1;
+            int sizeLangs = elements.size();
+            for (WebElement el : elements) {
+                String aClass = el.getDomAttribute("class");
+                String lang = aClass.replace("flag", "").trim();
+                flags.append(lang);
+                if (count == 1) {
+                    if (sizeLangs > 1) {
+                        flags.append(">");
+                    }
+                } else {
+                    if (count > 1 && count < sizeLangs) {
+                        flags.append(",");
+                    }
+                }
+                count++;
+            }
+            return flags.toString();
         }
-
-        List<String> languages = new ArrayList<>();
-        for (WebElement el : elements) {
-            String aClass = el.getDomAttribute("class");
-            String lang = aClass.replace("flag", "").trim();
-            languages.add(lang);
-        }
-
-        if (languages.size() == 1) {
-            return languages.get(0);
-        }
-
-        return String.join(",", languages.subList(0, languages.size() - 1)) + ">" + languages.get(languages.size() - 1);
+        return "";
     }
 
     public List<String> getTargets() {
