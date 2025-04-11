@@ -654,6 +654,8 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
         List<List<String>> cellsText = getCellsTexts(options, excludedColumns);
         if (cellsText == null) {
             return null;
+        } else {
+            cellsText = equalizeLists(cellsText);
         }
         List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
         List<V> actualValue = transformTo(options.getType(), cellsText, columnsList);

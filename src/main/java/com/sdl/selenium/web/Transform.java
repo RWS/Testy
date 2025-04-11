@@ -133,4 +133,14 @@ public interface Transform {
         }
         return null;
     }
+
+    default List<List<String>> equalizeLists(List<List<String>> values) {
+        int maxLength = values.stream().mapToInt(List::size).max().orElse(0);
+        for (List<String> list : values) {
+            while (list.size() < maxLength) {
+                list.add("");
+            }
+        }
+        return values;
+    }
 }

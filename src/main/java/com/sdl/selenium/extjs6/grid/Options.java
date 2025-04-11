@@ -20,22 +20,34 @@ import java.util.function.Predicate;
 @Setter
 @ToString
 public class Options<V> {
-    /** The type of data being processed */
+    /**
+     * The type of data being processed
+     */
     private V type;
-    
-    /** Flag indicating if the grid should be expanded */
+
+    /**
+     * Flag indicating if the grid should be expanded
+     */
     private boolean expand;
-    
-    /** Predicate for filtering rows */
+
+    /**
+     * Predicate for filtering rows
+     */
     private Predicate<Integer> predicate;
-    
-    /** Function for processing cell data */
+
+    /**
+     * Function for processing cell data
+     */
     private Function<Cell, String> function;
-    
-    /** Collector function for gathering grid details */
+
+    /**
+     * Collector function for gathering grid details
+     */
     private Function<Details<V>, List<List<String>>> collector;
-    
-    /** Map of predicates to their corresponding cell processing functions */
+
+    /**
+     * Map of predicates to their corresponding cell processing functions
+     */
     private Map<Predicate<Integer>, Function<Cell, String>> functions = new HashMap<>();
 
     /**
@@ -50,9 +62,9 @@ public class Options<V> {
     /**
      * Creates a new Options instance with type, predicate, and function.
      *
-     * @param type The type of data to be processed
+     * @param type      The type of data to be processed
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      */
     public Options(V type, Predicate<Integer> predicate, Function<Cell, String> function) {
         this.type = type;
@@ -60,12 +72,23 @@ public class Options<V> {
     }
 
     /**
+     * Creates a new Options instance with type and expansion flag.
+     *
+     * @param type   The type of data to be processed
+     * @param expand Whether the grid should be expanded
+     */
+    public Options(V type, boolean expand) {
+        this(type);
+        this.expand = expand;
+    }
+
+    /**
      * Creates a new Options instance with type, expansion flag, predicate, and function.
      *
-     * @param type The type of data to be processed
-     * @param expand Whether the grid should be expanded
+     * @param type      The type of data to be processed
+     * @param expand    Whether the grid should be expanded
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      */
     public Options(V type, boolean expand, Predicate<Integer> predicate, Function<Cell, String> function) {
         this(type, predicate, function);
@@ -75,10 +98,10 @@ public class Options<V> {
     /**
      * Creates a new Options instance with type, expansion flag, predicate, function, and collector.
      *
-     * @param type The type of data to be processed
-     * @param expand Whether the grid should be expanded
+     * @param type      The type of data to be processed
+     * @param expand    Whether the grid should be expanded
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      * @param collector The collector function for gathering grid details
      */
     public Options(V type, boolean expand, Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {
@@ -89,7 +112,7 @@ public class Options<V> {
     /**
      * Creates a new Options instance with type and collector.
      *
-     * @param type The type of data to be processed
+     * @param type      The type of data to be processed
      * @param collector The collector function for gathering grid details
      */
     public Options(V type, Function<Details<V>, List<List<String>>> collector) {
@@ -100,7 +123,7 @@ public class Options<V> {
     /**
      * Creates a new Options instance with type and functions map.
      *
-     * @param type The type of data to be processed
+     * @param type      The type of data to be processed
      * @param functions Map of predicates to their corresponding cell processing functions
      */
     public Options(V type, Map<Predicate<Integer>, Function<Cell, String>> functions) {
@@ -109,10 +132,22 @@ public class Options<V> {
     }
 
     /**
+     * Creates a new Options instance with type and functions map.
+     *
+     * @param type      The type of data to be processed
+     * @param expand    Whether the grid should be expanded
+     * @param functions Map of predicates to their corresponding cell processing functions
+     */
+    public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions) {
+        this(type, expand);
+        this.functions = functions;
+    }
+
+    /**
      * Creates a new Options instance with predicate and function.
      *
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      */
     public Options(Predicate<Integer> predicate, Function<Cell, String> function) {
         this.functions = Map.of(predicate, function);
@@ -122,7 +157,7 @@ public class Options<V> {
      * Creates a new Options instance with predicate, function, and collector.
      *
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      * @param collector The collector function for gathering grid details
      */
     public Options(Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {
@@ -142,9 +177,9 @@ public class Options<V> {
     /**
      * Creates a new Options instance with expander flag, predicate, and function.
      *
-     * @param expand Whether the grid has row expander
+     * @param expand    Whether the grid has row expander
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      */
     public Options(boolean expand, Predicate<Integer> predicate, Function<Cell, String> function) {
         this(predicate, function);
@@ -154,9 +189,9 @@ public class Options<V> {
     /**
      * Creates a new Options instance with expander flag, predicate, function, and collector.
      *
-     * @param expand Whether the grid has row expander
+     * @param expand    Whether the grid has row expander
      * @param predicate The predicate for filtering rows
-     * @param function The function for processing cell data
+     * @param function  The function for processing cell data
      * @param collector The collector function for gathering grid details
      */
     public Options(boolean expand, Predicate<Integer> predicate, Function<Cell, String> function, Function<Details<V>, List<List<String>>> collector) {
