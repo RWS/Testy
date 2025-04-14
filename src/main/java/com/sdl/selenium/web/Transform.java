@@ -136,11 +136,14 @@ public interface Transform {
 
     default List<List<String>> equalizeLists(List<List<String>> values) {
         int maxLength = values.stream().mapToInt(List::size).max().orElse(0);
+        List<List<String>> mutableValues = new ArrayList<>();
         for (List<String> list : values) {
-            while (list.size() < maxLength) {
-                list.add("");
+            List<String> mutableList = new ArrayList<>(list);
+            while (mutableList.size() < maxLength) {
+                mutableList.add("");
             }
+            mutableValues.add(mutableList);
         }
-        return values;
+        return mutableValues;
     }
 }
