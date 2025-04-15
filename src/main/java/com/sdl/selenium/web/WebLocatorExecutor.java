@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.Go;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import org.openqa.selenium.*;
 
@@ -103,4 +104,10 @@ public interface WebLocatorExecutor {
     boolean browse(WebLocator el);
 
     boolean upload(String filePath);
+
+    default void scrollIntoView(WebLocator el, Go go) {
+        if (el.isPresent()) {
+            executeScript("arguments[0].scrollIntoView({block: '" + go.getValue() + "'});", el.getWebElement());
+        }
+    }
 }

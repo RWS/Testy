@@ -1,5 +1,6 @@
 package com.sdl.selenium.web;
 
+import com.sdl.selenium.Go;
 import com.sdl.selenium.WebLocatorSuggestions;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.utils.Utils;
@@ -393,6 +394,10 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
             }
         }
         return doClick;
+    }
+
+    public void scrollIntoView(Go go) {
+        executor.scrollIntoView(this, go);
     }
 
     /**
