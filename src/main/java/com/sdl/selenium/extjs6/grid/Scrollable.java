@@ -127,7 +127,9 @@ public interface Scrollable extends IWebLocator {
     default boolean scrollBy(int x, int y) {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(c){ c." + getView() + ".scrollable._scrollElement.dom.scrollBy(" + x + "," + y + ");return true}return false})(window.Ext.getCmp('" + id + "'))";
+            String script = "return (function(c)" +
+                    "{c." + getView() + ".scrollable._scrollElement.dom.scrollBy(" + x + "," + y + ");return true" +
+                    "})(window.Ext.getCmp('" + id + "'))";
             return (Boolean) WebLocatorUtils.doExecuteScript(script);
         }
         return false;
