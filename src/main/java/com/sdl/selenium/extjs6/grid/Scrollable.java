@@ -124,14 +124,13 @@ public interface Scrollable extends IWebLocator {
         });
     }
 
-    default boolean scrollBy(int x, int y) {
+    default void scrollBy(int x, int y) {
         String id = getAttributeId();
         if (!Strings.isNullOrEmpty(id)) {
-            String script = "return (function(c)" +
-                    "{c." + getView() + ".scrollable._scrollElement.dom.scrollBy(" + x + "," + y + ");return true" +
+            String script = "return (function(c){" +
+                    "c." + getView() + ".scrollable._scrollElement.dom.scrollBy(" + x + "," + y + ");" +
                     "})(window.Ext.getCmp('" + id + "'))";
-            return (Boolean) WebLocatorUtils.doExecuteScript(script);
+            WebLocatorUtils.doExecuteScript(script);
         }
-        return false;
     }
 }
