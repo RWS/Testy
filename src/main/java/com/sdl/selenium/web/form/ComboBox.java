@@ -34,6 +34,13 @@ public class ComboBox extends Field implements ICombo {
         return doSelect(index);
     }
 
+    public boolean selectByValue(String value) {
+        ready();
+        new Select(getWebElement()).selectByValue(value);
+        log.info("Set value(" + this + "): " + value);
+        return true;
+    }
+
     @Override
     public boolean select(String value) {
         boolean selected = waitToRender();
