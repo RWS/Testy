@@ -97,7 +97,10 @@ public interface Transform {
         String json = mapper.writeValueAsString(type);
         List<String> names = getNames(json);
         if (names.size() > actualList.size()) {
-            names.removeIf(i -> columnsList.contains(names.indexOf(i) + 1));
+            names.removeIf(i -> {
+                int index = names.indexOf(i) + 1;
+                return columnsList.contains(index);
+            });
         }
         int size = names.size();
         JsonNode jsonNode = mapper.readTree(json);
