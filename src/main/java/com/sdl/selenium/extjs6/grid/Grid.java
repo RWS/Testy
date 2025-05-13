@@ -253,7 +253,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
                             Function<Cell, String> function = options.getFunctions().get(predicate);
                             text = function.apply(cell);
                         } else {
-                            text = cell.getText(true).trim();
+                            try {
+                                text = cell.getText(true).trim();
+                            } catch (NullPointerException e) {
+                                text = "";
+                            }
                         }
                         list.add(text);
                     }
@@ -268,7 +272,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
                             Function<Cell, String> function = options.getFunctions().get(predicate);
                             text = function.apply(cell);
                         } else {
-                            text = cell.getText(true).trim();
+                            try {
+                                text = cell.getText(true).trim();
+                            } catch (NullPointerException e) {
+                                text = "";
+                            }
                         }
                         list.add(text);
                     }
