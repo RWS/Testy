@@ -208,7 +208,9 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
                         list.add(cell.getText(true));
                     }
                 }
-                listOfList.add(list);
+                if (!list.isEmpty()) {
+                    listOfList.add(list);
+                }
             }
             return listOfList;
         } else {
@@ -245,7 +247,7 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
         if (row.ready()) {
             text = new Cell(row, columnId).getText();
         } else {
-            LOGGER.warn("searchText was not found in table: " + searchText);
+            LOGGER.warn("searchText was not found in table: {}", searchText);
         }
         return text;
     }
