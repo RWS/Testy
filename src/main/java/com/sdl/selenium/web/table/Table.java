@@ -197,15 +197,16 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
         Cell columnsEl = new Cell(rowEl);
         int rows = rowsEl.size() + 1;
         int columns = columnsEl.size();
-
         List<Integer> columnsList = getColumns(columns, excludedColumns);
-
         if (rows > 0) {
             List<List<String>> listOfList = new ArrayList<>();
             for (int i = 1; i < rows; i++) {
                 List<String> list = new ArrayList<>();
                 for (int j : columnsList) {
-                    list.add(getCell(i, j).getText(true));
+                    Cell cell = getCell(i, j);
+                    if (cell.isPresent()) {
+                        list.add(cell.getText(true));
+                    }
                 }
                 listOfList.add(list);
             }
@@ -215,6 +216,7 @@ public class Table extends WebLocator implements ITable<Row, Cell>, Transform, I
         }
     }
 
+    @Deprecated
     public <V> List<V> getCellsText(Class<V> type, int... excludedColumns) {
         List<List<String>> cellsText = getCellsText(excludedColumns);
         if (cellsText == null) {
