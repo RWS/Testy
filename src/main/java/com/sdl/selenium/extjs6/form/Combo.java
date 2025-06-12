@@ -1,12 +1,12 @@
 package com.sdl.selenium.extjs6.form;
 
-import com.sdl.selenium.WebLocatorUtils;
-import com.sdl.selenium.extjs6.grid.Row;
+import com.sdl.selenium.Go;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICombo;
+import com.sdl.selenium.web.utils.RetryUtils;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public abstract class Combo extends Field implements ICombo {
-    private static final Logger log = LogManager.getLogger(Row.class);
+    private static final Logger log = LogManager.getLogger(Combo.class);
     private final Pagination paginationEl = new Pagination(getBoundList()).setRender(Duration.ofMillis(300));
 
     @Deprecated
@@ -111,6 +111,14 @@ public abstract class Combo extends Field implements ICombo {
         return selected;
     }
 
+    public boolean selected(String value, SearchType... searchType) {
+        Boolean selected = RetryUtils.retry(5, () -> {
+            doSelect(value, 300L, false, searchType);
+            return getValue().equals(value);
+        });
+        return selected;
+    }
+
     /**
      * @param value              value
      * @param optionRenderMillis eg. 300ms
@@ -150,19 +158,20 @@ public abstract class Combo extends Field implements ICombo {
                 selected = option.doClick();
                 if (!selected && option.isPresent()) {
 //                    WebLocatorUtils.scrollToWebLocator(option);
-                    WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
+//                    WebLocatorUtils.doExecuteScript("arguments[0].scrollIntoViewIfNeeded(false);", option.getWebElement());
+                    option.scrollIntoView(Go.NEAREST);
                     selected = option.doClick();
                 }
             }
             if (selected) {
-                log.info("Set value(" + info + "): " + value);
+                log.info("Set value({}): {}", info, value);
                 Utils.sleep(20);
                 return true;
             }
             collapse();
-            log.debug("(" + info + ") The option '" + value + "' could not be located. " + option.getXPath());
+            log.debug("({}) The option '{}' could not be located. {}", info, value, option.getXPath());
         } else {
-            log.debug("(" + info + ") The combo or arrow could not be located.");
+            log.debug("({}) The combo or arrow could not be located.", info);
         }
         return false;
     }
