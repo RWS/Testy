@@ -159,7 +159,9 @@ public class AssertUtil {
             logs.add(logTmp);
         }
         logs.add(0, headers.stream().toList());
-        return formatLogs(logs);
+        String currentValues = formatLogs(logs);
+        storage.set("currentValues", currentValues);
+        return currentValues;
     }
 
     private List<String> getNames(String json) throws JsonProcessingException {
