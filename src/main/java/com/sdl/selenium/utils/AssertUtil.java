@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
+import io.cucumber.java.Scenario;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -160,7 +161,9 @@ public class AssertUtil {
         }
         logs.add(0, headers.stream().toList());
         String currentValues = formatLogs(logs);
-        storage.set("currentValues", currentValues);
+        Scenario scenario = storage.get("currentScenario");
+        String name = scenario.getName();
+        storage.set("currentValues-" + name, currentValues);
         return currentValues;
     }
 
