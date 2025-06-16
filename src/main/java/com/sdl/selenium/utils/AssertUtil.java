@@ -122,15 +122,23 @@ public class AssertUtil {
         if (lists == null || lists.isEmpty()) {
             return null;
         }
+        Scenario scenario = storage.get("currentScenario");
+        String scenarioName = scenario.getName();
         Class aClass;
         try {
             aClass = lists.get(0).getClass();
             if (aClass.getName().contains("List")) {
-                return showValues(lists, transformDate, function);
+                String currentValues = showValues(lists, transformDate, function);
+                storage.set("currentValues-" + scenarioName, currentValues);
+                return currentValues;
             } else if (lists.getClass().getName().contains("List") && lists.get(0).getClass().getName().contains("String")) {
-                return showValue(lists);
+                String currentValues = showValue(lists);
+                storage.set("currentValues-" + scenarioName, currentValues);
+                return currentValues;
             } else if (aClass.getDeclaredFields()[0].getType().getSimpleName().contains("Map")) {
-                return showMapValue(lists);
+                String currentValues = showMapValue(lists);
+                storage.set("currentValues-" + scenarioName, currentValues);
+                return currentValues;
             }
         } catch (IndexOutOfBoundsException e) {
             return null;
@@ -161,9 +169,7 @@ public class AssertUtil {
         }
         logs.add(0, headers.stream().toList());
         String currentValues = formatLogs(logs);
-        Scenario scenario = storage.get("currentScenario");
-        String name = scenario.getName();
-        storage.set("currentValues-" + name, currentValues);
+        storage.set("currentValues-" + scenarioName, currentValues);
         return currentValues;
     }
 
