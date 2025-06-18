@@ -420,6 +420,8 @@ public class RetryUtils {
             return !(Boolean) execute;
         } else if (execute instanceof String) {
             return Strings.isNullOrEmpty((String) execute);
+        } else if (execute instanceof Integer) {
+            return ((Integer) execute) <= 0;
         } else if (execute instanceof List<?> list) {
             return list.isEmpty() || list.stream().allMatch(Objects::isNull);
         }
