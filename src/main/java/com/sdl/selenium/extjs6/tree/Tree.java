@@ -1,10 +1,7 @@
 package com.sdl.selenium.extjs6.tree;
 
 import com.google.common.base.Strings;
-import com.sdl.selenium.extjs6.grid.Cell;
-import com.sdl.selenium.extjs6.grid.Options;
-import com.sdl.selenium.extjs6.grid.Row;
-import com.sdl.selenium.extjs6.grid.Scrollable;
+import com.sdl.selenium.extjs6.grid.*;
 import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.Transform;
@@ -650,28 +647,8 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         do {
             for (int i = 1; i <= rows; ++i) {
                 if (canRead) {
-                    List<String> list = new LinkedList<>();
-                    for (int j : columnsList) {
-                        Row row = new Row(this).setTag("tr").setResultIdx(i);
-                        if (options.isExpand()) {
-                            row.setExcludeClasses("x-grid-rowbody-tr");
-                        }
-                        Cell cell = new Cell(row, j);
-                        String text;
-                        Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(p -> p.test(j)).findFirst();
-                        if (first.isPresent()) {
-                            Predicate<Integer> predicate = first.get();
-                            Function<Cell, String> function = options.getFunctions().get(predicate);
-                            text = function.apply(cell);
-                        } else {
-                            text = cell.getText(true).trim();
-                            if (Strings.isNullOrEmpty(text)) {
-                                text = cell.getText(true).trim();
-                            }
-                        }
-                        list.add(text);
-                    }
-                    listOfList.add(list);
+                    List<List<String>> list = options.getCollector() == null ? collector(options, columnsList, i) : options.getCollector().apply(new Details<>(options, columnsList, this, i));
+                    listOfList.addAll(list);
                 } else {
                     if (size == i + 1) {
                         break;
@@ -692,6 +669,33 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             canRead = false;
             timeout++;
         } while (timeout < 30);
+        return listOfList;
+    }
+
+    private <V> List<List<String>> collector(Options<V> options, List<Integer> columnsList, int i) {
+        List<List<String>> listOfList = new LinkedList<>();
+        List<String> list = new LinkedList<>();
+        for (int j : columnsList) {
+            Row row = new Row(this).setTag("tr").setResultIdx(i);
+            if (options.isExpand()) {
+                row.setExcludeClasses("x-grid-rowbody-tr");
+            }
+            Cell cell = new Cell(row, j);
+            String text;
+            Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter(p -> p.test(j)).findFirst();
+            if (first.isPresent()) {
+                Predicate<Integer> predicate = first.get();
+                Function<Cell, String> function = options.getFunctions().get(predicate);
+                text = function.apply(cell);
+            } else {
+                text = cell.getText(true).trim();
+                if (Strings.isNullOrEmpty(text)) {
+                    text = cell.getText(true).trim();
+                }
+            }
+            list.add(text);
+        }
+        listOfList.add(list);
         return listOfList;
     }
 
