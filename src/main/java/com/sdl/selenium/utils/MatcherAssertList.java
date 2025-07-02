@@ -1,6 +1,7 @@
 package com.sdl.selenium.utils;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.web.utils.Utils;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
@@ -11,6 +12,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,10 @@ public class MatcherAssertList {
         assertThatList(reason, true, assertUtil.getFormat(), actual, matcher);
     }
 
+    public static <E, T extends List<E>> void assertThatList(String reason, T actual, Matcher<? super T> matcher, Callable<?> call) {
+        assertThatList(reason, true, assertUtil.getFormat(), actual, matcher, call);
+    }
+
     public static <E, T extends List<E>> void assertThatList(String reason, boolean transformDate, T actual, Matcher<? super T> matcher) {
         assertThatList(reason, transformDate, assertUtil.getFormat(), actual, matcher);
     }
@@ -36,9 +42,20 @@ public class MatcherAssertList {
     }
 
     public static <E, T extends List<E>> void assertThatList(String reason, boolean transformDate, Function<String, String> format, T actual, Matcher<? super T> matcher) {
+        assertThatList(reason, transformDate, format, actual, matcher, null);
+    }
+
+    public static <E, T extends List<E>> void assertThatList(String reason, boolean transformDate, Function<String, String> format, T actual, Matcher<? super T> matcher, Callable<?> call) {
         if (!matcher.matches(actual)) {
             Description description = new StringDescription();
             String log = assertUtil.showObjectValues(actual, transformDate, format);
+            if (call != null) {
+                try {
+                    call.call();
+                } catch (Exception e) {
+                    Utils.sleep(1);
+                }
+            }
             description.appendText(reason + ": " + log)
                     .appendText("\nExpected: ")
                     .appendDescriptionOf(matcher)
