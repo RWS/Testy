@@ -105,7 +105,7 @@ public class ComboBox extends Combo {
                     return doClick && !option.ready(Duration.ofMillis(200));
                 });
                 if (!selected && option.isPresent()) {
-                    option.scrollIntoView(Go.START);
+                    option.scrollIntoView(Go.CENTER);
                     selected = option.doClick();
                 }
             }
