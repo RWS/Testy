@@ -111,7 +111,7 @@ public class ComboBox extends Combo {
             }
             if (selected) {
                 log.info("Set value({}): {}", info, value);
-                Utils.sleep(20);
+                Utils.sleep(10);
                 return true;
             }
             collapse();

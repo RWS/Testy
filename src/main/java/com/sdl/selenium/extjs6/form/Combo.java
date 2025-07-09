@@ -224,7 +224,7 @@ public abstract class Combo extends Field implements ICombo {
             } else {
                 selected = option.doClick();
                 if (!selected && option.isPresent()) {
-                    option.scrollIntoView(Go.NEAREST);
+                    option.scrollIntoView(Go.CENTER);
                     selected = option.doClick();
                 }
             }
