@@ -13,10 +13,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -311,12 +314,12 @@ public class AssertUtil {
         return this::format;
     }
 
-    private <O> O format(O dates) {
+    public <O> O format(O dates) {
         if (dates instanceof String date) {
             if (!Strings.isNullOrEmpty(date)) {
                 Pattern pattern = Pattern.compile("(\\d{2,4}[-. ]\\d{2,4}[-. ]\\d{2,4}(?:[ T]\\d{2}:\\d{2}:\\d{2})?|\\d{2} [A-Za-z]{3,9} \\d{4}(?:[ T]\\d{2}:\\d{2}:\\d{2})?|Today)");
                 // Accept format 'dd MMM yyyy', 'yyyy MMM dd', 'dd MM yyyy', 'dd-MM-yyyy'
-                java.util.regex.Matcher matcher = pattern.matcher(date);
+                Matcher matcher = pattern.matcher(date);
                 if (matcher.find()) {
                     LocalDate now = LocalDate.now();
                     String group = matcher.group();
@@ -324,69 +327,72 @@ public class AssertUtil {
                         return (O) "today dd MMM yyyy";
                     }
                     try {
-                        LocalDate newDate = getLocalDate(group);
+                        LocalDateTime newDateTime = getLocalDate(group);
+                        LocalDate newDate = (LocalDate) ChronoLocalDate.from(newDateTime);
+                        Matcher m = Pattern.compile("\\s\\d{2}:\\d{2}:\\d{2}").matcher(group);
+                        String time = m.find() ? m.group() : "";
                         if (now.minusDays(7L).isEqual(newDate)) {
-                            return (O) "1WeekAgo dd MMM yyyy";
+                            return (O) ("1WeekAgo dd MMM yyyy" + time);
                         } else if (now.minusDays(3L).isEqual(newDate)) {
-                            return (O) "3DaysAgo dd MMM yyyy";
+                            return (O) ("3DaysAgo dd MMM yyyy" + time);
                         } else if (now.minusDays(2L).isEqual(newDate)) {
-                            return (O) "2DaysAgo dd MMM yyyy";
+                            return (O) ("2DaysAgo dd MMM yyyy" + time);
                         } else if (now.minusDays(1L).isEqual(newDate)) {
-                            return (O) "yesterday dd MMM yyyy";
+                            return (O) ("yesterday dd MMM yyyy" + time);
                         } else if (now.isEqual(newDate)) {
-                            return (O) "today dd MMM yyyy";
+                            return (O) ("today dd MMM yyyy" + time);
                         } else if (now.plusDays(1L).isEqual(newDate)) {
-                            return (O) "tomorrow dd MMM yyyy";
+                            return (O) ("tomorrow dd MMM yyyy" + time);
                         } else if (now.plusDays(2L).isEqual(newDate)) {
-                            return (O) "in2Days dd MMM yyyy";
+                            return (O) ("in2Days dd MMM yyyy" + time);
                         } else if (now.plusDays(3L).isEqual(newDate)) {
-                            return (O) "in3Days dd MMM yyyy";
+                            return (O) ("in3Days dd MMM yyyy" + time);
                         } else if (now.plusDays(4L).isEqual(newDate)) {
-                            return (O) "in4Days dd MMM yyyy";
+                            return (O) ("in4Days dd MMM yyyy" + time);
                         } else if (now.plusDays(5L).isEqual(newDate)) {
-                            return (O) "in5Days dd MMM yyyy";
+                            return (O) ("in5Days dd MMM yyyy" + time);
                         } else if (now.plusDays(6L).isEqual(newDate)) {
-                            return (O) "in6Days dd MMM yyyy";
+                            return (O) ("in6Days dd MMM yyyy" + time);
                         } else if (now.plusDays(7L).isEqual(newDate)) {
-                            return (O) "nextWeek dd MMM yyyy";
+                            return (O) ("nextWeek dd MMM yyyy" + time);
                         } else if (now.plusDays(8L).isEqual(newDate)) {
-                            return (O) "nextWeekAnd1Day dd MMM yyyy";
+                            return (O) ("nextWeekAnd1Day dd MMM yyyy" + time);
                         } else if (now.plusDays(9L).isEqual(newDate)) {
-                            return (O) "nextWeekAnd2Days dd MMM yyyy";
+                            return (O) ("nextWeekAnd2Days dd MMM yyyy" + time);
                         } else if (now.plusDays(10L).isEqual(newDate)) {
-                            return (O) "nextWeekAnd3Days dd MMM yyyy";
+                            return (O) ("nextWeekAnd3Days dd MMM yyyy" + time);
                         } else if (now.plusDays(11L).isEqual(newDate)) {
-                            return (O) "nextWeekAnd4Days dd MMM yyyy";
+                            return (O) ("nextWeekAnd4Days dd MMM yyyy" + time);
                         } else if (now.plusDays(12L).isEqual(newDate)) {
-                            return (O) "nextWeekAnd5Days dd MMM yyyy";
+                            return (O) ("nextWeekAnd5Days dd MMM yyyy" + time);
                         } else if (now.plusDays(13L).isEqual(newDate)) {
-                            return (O) "nextWeekAnd6Days dd MMM yyyy";
+                            return (O) ("nextWeekAnd6Days dd MMM yyyy" + time);
                         } else if (now.plusDays(14L).isEqual(newDate)) {
-                            return (O) "next2Weeks dd MMM yyyy";
+                            return (O) ("next2Weeks dd MMM yyyy" + time);
                         } else if (now.plusDays(21L).isEqual(newDate)) {
-                            return (O) "next3Weeks dd MMM yyyy";
+                            return (O) ("next3Weeks dd MMM yyyy" + time);
                         } else if (now.plusDays(28L).isEqual(newDate)) {
-                            return (O) "next4Weeks dd MMM yyyy";
+                            return (O) ("next4Weeks dd MMM yyyy" + time);
                         } else if (now.plusMonths(1L).minusDays(1L).isEqual(newDate)) {
-                            return (O) "nextMonth1DayAgo dd MMM yyyy";
+                            return (O) ("nextMonth1DayAgo dd MMM yyyy" + time);
                         } else if (now.plusMonths(1L).minusDays(2L).isEqual(newDate)) {
-                            return (O) "nextMonth2DaysAgo dd MMM yyyy";
+                            return (O) ("nextMonth2DaysAgo dd MMM yyyy" + time);
                         } else if (now.plusMonths(1L).minusDays(3L).isEqual(newDate)) {
-                            return (O) "nextMonth3DaysAgo dd MMM yyyy";
+                            return (O) ("nextMonth3DaysAgo dd MMM yyyy" + time);
                         } else if (now.plusMonths(1L).plusDays(1L).isEqual(newDate)) {
-                            return (O) "nextMonthAnd1Day dd MMM yyyy";
+                            return (O) ("nextMonthAnd1Day dd MMM yyyy" + time);
                         } else if (now.plusMonths(1L).plusDays(2L).isEqual(newDate)) {
-                            return (O) "nextMonthAnd2Days dd MMM yyyy";
+                            return (O) ("nextMonthAnd2Days dd MMM yyyy" + time);
                         } else if (now.plusMonths(1L).isEqual(newDate)) {
-                            return (O) "nextMonth dd MMM yyyy";
+                            return (O) ("nextMonth dd MMM yyyy" + time);
                         } else if (now.plusMonths(6L).minusDays(1L).isEqual(newDate)) {
-                            return (O) "next6Months1DayAgo dd MMM yyyy";
+                            return (O) ("next6Months1DayAgo dd MMM yyyy" + time);
                         } else if (now.plusMonths(6L).minusDays(2L).isEqual(newDate)) {
-                            return (O) "next6Months2DaysAgo dd MMM yyyy";
+                            return (O) ("next6Months2DaysAgo dd MMM yyyy" + time);
                         } else if (now.plusYears(1L).minusDays(1L).isEqual(newDate)) {
-                            return (O) "nextYear1DayAgo dd MMM yyyy";
+                            return (O) ("nextYear1DayAgo dd MMM yyyy" + time);
                         } else if (now.plusYears(1L).isEqual(newDate)) {
-                            return (O) "nextYear dd MMM yyyy";
+                            return (O) ("nextYear dd MMM yyyy" + time);
                         }
                     } catch (DateTimeParseException e) {
                         String format = getKeyFromStorage(date);
@@ -401,17 +407,20 @@ public class AssertUtil {
         return dates;
     }
 
-    public LocalDate getLocalDate(String group) {
-        List<DateTimeFormatter> formatters = Arrays.asList(
+    public LocalDateTime getLocalDate(String group) {
+        List<DateTimeFormatter> formatters = List.of(
                 DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH),
                 DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH),
-                DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH)
+                DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH),
+                DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss", Locale.ENGLISH),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH)
         );
 
-        LocalDate newDate = null;
+        LocalDateTime newDate = null;
         for (DateTimeFormatter formatter : formatters) {
             try {
-                newDate = LocalDate.parse(group, formatter);
+                newDate = LocalDateTime.parse(group, formatter);
                 break; // dacă a reușit, ieși din for
             } catch (DateTimeParseException ignored) {
             }
