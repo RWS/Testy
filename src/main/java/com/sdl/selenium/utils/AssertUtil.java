@@ -314,7 +314,7 @@ public class AssertUtil {
     private <O> O format(O dates) {
         if (dates instanceof String date) {
             if (!Strings.isNullOrEmpty(date)) {
-                Pattern pattern = Pattern.compile("\\d{2,4}[-\\sa-zA-Z0-9]{4,6}\\d{2,4}|(Today)");
+                Pattern pattern = Pattern.compile("(\\d{2,4}[-. ]\\d{2,4}[-. ]\\d{2,4}(?:[ T]\\d{2}:\\d{2}:\\d{2})?|\\d{2} [A-Za-z]{3,9} \\d{4}(?:[ T]\\d{2}:\\d{2}:\\d{2})?|Today)");
                 // Accept format 'dd MMM yyyy', 'yyyy MMM dd', 'dd MM yyyy', 'dd-MM-yyyy'
                 java.util.regex.Matcher matcher = pattern.matcher(date);
                 if (matcher.find()) {
