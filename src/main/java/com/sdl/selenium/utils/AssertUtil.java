@@ -312,8 +312,7 @@ public class AssertUtil {
     }
 
     private <O> O format(O dates) {
-        if (dates instanceof String) {
-            String date = (String) dates;
+        if (dates instanceof String date) {
             if (!Strings.isNullOrEmpty(date)) {
                 Pattern pattern = Pattern.compile("\\d{2,4}[-\\sa-zA-Z0-9]{4,6}\\d{2,4}|(Today)");
                 // Accept format 'dd MMM yyyy', 'yyyy MMM dd', 'dd MM yyyy', 'dd-MM-yyyy'
@@ -325,7 +324,7 @@ public class AssertUtil {
                         return (O) "today dd MMM yyyy";
                     }
                     try {
-                        LocalDate newDate = LocalDate.parse(group, DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
+                        LocalDate newDate = getLocalDate(group);
                         if (now.minusDays(7L).isEqual(newDate)) {
                             return (O) "1WeekAgo dd MMM yyyy";
                         } else if (now.minusDays(3L).isEqual(newDate)) {
@@ -400,6 +399,27 @@ public class AssertUtil {
             }
         }
         return dates;
+    }
+
+    public LocalDate getLocalDate(String group) {
+        List<DateTimeFormatter> formatters = Arrays.asList(
+                DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH)
+        );
+
+        LocalDate newDate = null;
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                newDate = LocalDate.parse(group, formatter);
+                break; // dacă a reușit, ieși din for
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+        if (newDate == null) {
+            throw new DateTimeParseException("No matching date format", group, 0);
+        }
+        return newDate;
     }
 
     public String getKeyFromStorage(String date) {
