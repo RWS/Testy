@@ -18,7 +18,7 @@ public class TreeSteps extends Base {
     @Then("I verify if Tree has values:")
     public void iVerifyIfTreeHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
-        Options<List<String>> options = new Options<>(values.get(0));
+        Options<List<String>> options = new Options<>(values.get(0), 10);
         List<List<String>> cellsText = tree.getCellsText(options);
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;

@@ -51,6 +51,22 @@ public class Options<V> {
     private Map<Predicate<Integer>, Function<Cell, String>> functions = new HashMap<>();
 
     /**
+     * Index for resetting the parent for the next row.
+     * <p>
+     * This value determines after how many rows the parent locator should be reset when iterating through the grid.
+     * Default value is 3.
+     */
+    private int resetIndex = 3;
+
+    /**
+     * Index for scrolling through the grid.
+     * <p>
+     * This value determines after how many rows the grid should be scrolled to ensure all rows are loaded and visible.
+     * Default value is 15.
+     */
+    private int scrollIndex = 15;
+
+    /**
      * Creates a new Options instance with the specified type.
      *
      * @param type The type of data to be processed
@@ -121,6 +137,18 @@ public class Options<V> {
     }
 
     /**
+     * Creates a new Options instance with type, expand flag, and collector.
+     *
+     * @param type      The type of data to be processed
+     * @param expand    Whether the grid should be expanded
+     * @param collector The collector function for gathering grid details
+     */
+    public Options(V type, boolean expand, Function<Details<V>, List<List<String>>> collector) {
+        this(type, expand);
+        this.collector = collector;
+    }
+
+    /**
      * Creates a new Options instance with type and functions map.
      *
      * @param type      The type of data to be processed
@@ -129,6 +157,34 @@ public class Options<V> {
     public Options(V type, Map<Predicate<Integer>, Function<Cell, String>> functions) {
         this(type);
         this.functions = functions;
+    }
+
+    /**
+     * Creates a new Options instance with type, functions map, and resetIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     */
+    public Options(V type, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex) {
+        this(type);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, functions map, resetIndex, and scrollIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     */
+    public Options(V type, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, int scrollIndex) {
+        this(type);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
     }
 
     /**
@@ -141,6 +197,36 @@ public class Options<V> {
     public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions) {
         this(type, expand);
         this.functions = functions;
+    }
+
+    /**
+     * Creates a new Options instance with type, expand flag, functions map, and resetIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     */
+    public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex) {
+        this(type, expand);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, expand flag, functions map, resetIndex, and scrollIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     */
+    public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, int scrollIndex) {
+        this(type, expand);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
     }
 
     /**
@@ -198,4 +284,82 @@ public class Options<V> {
         this(expand, predicate, function);
         this.collector = collector;
     }
+
+    /**
+     * Creates a new Options instance with type and resetIndex.
+     *
+     * @param type       The type of data to be processed
+     * @param resetIndex The index for resetting the parent for the next row
+     */
+    public Options(V type, int resetIndex) {
+        this(type);
+        this.resetIndex = resetIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, resetIndex, and scrollIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     */
+    public Options(V type, int resetIndex, int scrollIndex) {
+        this(type, resetIndex);
+        this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, expand flag, resetIndex, and scrollIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     */
+    public Options(V type, boolean expand, int resetIndex, int scrollIndex) {
+        this(type, expand);
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, collector, and resetIndex.
+     *
+     * @param type      The type of data to be processed
+     * @param collector The collector function for gathering grid details
+     * @param resetIndex The index for resetting the parent for the next row
+     */
+    public Options(V type, Function<Details<V>, List<List<String>>> collector, int resetIndex) {
+        this(type, collector);
+        this.resetIndex = resetIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, collector, resetIndex, and scrollIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param collector   The collector function for gathering grid details
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     */
+    public Options(V type, Function<Details<V>, List<List<String>>> collector, int resetIndex, int scrollIndex) {
+        this(type, collector, resetIndex);
+        this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, expand flag, collector, resetIndex, and scrollIndex.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param collector   The collector function for gathering grid details
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     */
+    public Options(V type, boolean expand, Function<Details<V>, List<List<String>>> collector, int resetIndex, int scrollIndex) {
+        this(type, expand, collector);
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
+    }
 }
+

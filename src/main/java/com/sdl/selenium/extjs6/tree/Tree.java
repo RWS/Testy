@@ -551,14 +551,22 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         String id = "";
         String name = "";
         int i = 0;
-        Row row;
+        Row row = null;
         do {
-            row = new Row(this);
+            if (i % options.getResetIndex() == 0) {
+                if (i != 0) {
+                    id = row.getAttribute("id", true);
+                }
+                row = new Row(this);
+            }
             if (i != 0) {
-                row.setId(id).setChildNodes(new Cell(1, name));
+                if (!id.isEmpty()) {
+                    row.setId(id);
+                    id = "";
+                }
+                row.setChildNodes(new Cell(1, name));
                 row = row.getNextRow();
             }
-            id = row.getAttribute("id", true);
             if (i != 0 && i % 15 == 0) {
                 row.scrollIntoView(Go.START);
             }
