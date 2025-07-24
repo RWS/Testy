@@ -126,7 +126,7 @@ public class AssertUtil {
             return null;
         }
         Scenario scenario = storage.get("currentScenario");
-        String scenarioName = scenario.getName();
+        String scenarioName = scenario == null ? "" : scenario.getName();
         Class aClass;
         try {
             aClass = lists.get(0).getClass();

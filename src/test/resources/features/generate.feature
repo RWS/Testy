@@ -5,5 +5,5 @@ Feature: Generate feature file
 #    Given I generate step "in MaterialUI I verify if TextArea is present" in feature "textarea" file in "materialui/form" package
 
   Scenario: I generate feature file, runner and steps
-    Given I generate feature "segmentedButton" file in "extjs6/button" package
-    Given I generate step "in ExtJs I verify if SegmentedButton is present" in feature "segmentedButton" file in "extjs6/button" package
+    Given I generate feature "tree" file in "extjs6/tree" package
+    Given I generate step "in ExtJs I verify if Tree is present" in feature "tree" file in "extjs6/tree" package

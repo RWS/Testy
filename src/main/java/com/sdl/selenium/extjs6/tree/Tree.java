@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.tree;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.Go;
 import com.sdl.selenium.extjs6.grid.*;
 import com.sdl.selenium.web.Editor;
 import com.sdl.selenium.web.SearchType;
@@ -10,6 +11,7 @@ import com.sdl.selenium.web.table.IHeaders;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Response;
 import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriverException;
@@ -526,7 +528,66 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return getCellsText(options, excludedColumns);
     }
 
+    /**
+     * Retrieves the text content of the cells in the tree, using the provided options for custom extraction and excluding specified columns.
+     * <p>
+     * The {@code Options} parameter allows customization of how cell values are extracted, such as specifying a custom function or predicate for certain columns.
+     * The {@code excludedColumns} parameter allows you to skip specific columns by their indices.
+     *
+     * @param options         an {@link Options} object that allows customization of how cell values are extracted (e.g., custom functions, predicates, type).
+     * @param excludedColumns variable number of column indices to exclude from the result
+     * @param <V>             the type parameter for the options, typically the type of the extracted value
+     * @return a list of lists, where each inner list contains the text values of a row's cells, excluding the specified columns
+     *
+     * <b>Example usage:</b>
+     * <pre>
+     *     Options<List<String>> options = new Options<>(List.of());
+     *     List<List<String>> cellTexts = tree.getCellsText(options, 0, 2); // Excludes columns 0 and 2
+     * </pre>
+     */
     public <V> List<List<String>> getCellsText(Options<V> options, int... excludedColumns) {
+        final List<Integer> columnsList = getColumns(excludedColumns);
+        List<List<String>> listOfList = new LinkedList<>();
+        String id = "";
+        String name = "";
+        int i = 0;
+        Row row;
+        do {
+            row = new Row(this);
+            if (i != 0) {
+                row.setId(id).setChildNodes(new Cell(1, name));
+                row = row.getNextRow();
+            }
+            id = row.getAttribute("id", true);
+            if (i != 0 && i % 15 == 0) {
+                row.scrollIntoView(Go.START);
+            }
+            i++;
+            List<String> list = new LinkedList<>();
+            for (int j : columnsList) {
+                Cell cell = new Cell(row, j);
+                Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter((p) -> p.test(j)).findFirst();
+                String text;
+                if (first.isPresent()) {
+                    Predicate<Integer> predicate = first.get();
+                    Function<Cell, String> function = options.getFunctions().get(predicate);
+                    text = function.apply(cell);
+                } else {
+                    text = cell.getText(true);
+                }
+                try {
+                    name = text.trim();
+                } catch (NullPointerException e) {
+                    Utils.sleep(1);
+                }
+                list.add(name);
+            }
+            listOfList.add(list);
+        } while (row.getNextRow().isPresent());
+        return listOfList;
+    }
+
+    public <V> List<List<String>> getCellsTextV0(Options<V> options, int... excludedColumns) {
         Row rowsEl = new Row(this).setTag("tr");
         if (options.isExpand()) {
             rowsEl.setExcludeClasses("x-grid-rowbody-tr");
@@ -724,3 +785,4 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         return mask.waitToRender(Duration.ofMillis(200L), false);
     }
 }
+
