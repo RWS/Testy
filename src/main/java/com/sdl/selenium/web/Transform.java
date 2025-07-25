@@ -164,7 +164,7 @@ public interface Transform {
         WebLocator lineEl = new WebLocator(innerEl).setClasses("x-tree-elbow-line");
         WebLocator notExpandEl = new WebLocator(innerEl).setClasses("x-tree-elbow-plus", "x-tree-expander");
         WebLocator expandEl = new WebLocator(innerEl).setClasses("x-tree-icon", "x-tree-icon-parent-expanded");
-        if (emptyEl.isPresent()) {
+        if (emptyEl.isPresent() || lineEl.isPresent()) {
             int emptySize = emptyEl.size();
             int lineSize = lineEl.size();
             int size = emptySize + lineSize;
