@@ -540,10 +540,10 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
      * @return a list of lists, where each inner list contains the text values of a row's cells, excluding the specified columns
      *
      * <b>Example usage:</b>
-     * <pre>
-     *     Options<List<String>> options = new Options<>(List.of());
-     *     List<List<String>> cellTexts = tree.getCellsText(options, 0, 2); // Excludes columns 0 and 2
-     * </pre>
+     * { @code
+     * Options<List<String>> options = new Options<>(List.of());
+     * List<List<String>> cellTexts = tree.getCellsText(options, 0, 2); // Excludes columns 0 and 2
+     * }
      */
     public <V> List<List<String>> getCellsText(Options<V> options, int... excludedColumns) {
         final List<Integer> columnsList = getColumns(excludedColumns);
