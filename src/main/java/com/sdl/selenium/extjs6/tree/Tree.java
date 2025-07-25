@@ -584,12 +584,13 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                     text = cell.getText(true);
                 }
                 try {
-                    name = text.trim();
+                    text = text.trim();
                 } catch (NullPointerException e) {
                     Utils.sleep(1);
                 }
-                list.add(name);
+                list.add(text);
             }
+            name = list.get(0);
             List<String> listTMP = options.isAlignment() ? alignment(row, list) : list;
             listOfList.add(listTMP);
         } while (row.getNextRow().isPresent());
