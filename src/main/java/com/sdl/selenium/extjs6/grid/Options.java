@@ -66,6 +66,8 @@ public class Options<V> {
      */
     private int scrollIndex = 15;
 
+    private boolean alignment = true;
+
     /**
      * Creates a new Options instance with the specified type.
      *
@@ -173,6 +175,21 @@ public class Options<V> {
     }
 
     /**
+     * Creates a new Options instance with type, functions map, resetIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, boolean alignment) {
+        this(type);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+        this.alignment = alignment;
+    }
+
+    /**
      * Creates a new Options instance with type, functions map, resetIndex, and scrollIndex.
      *
      * @param type        The type of data to be processed
@@ -185,6 +202,23 @@ public class Options<V> {
         this.functions = functions;
         this.resetIndex = resetIndex;
         this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, functions map, resetIndex, scrollIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, int scrollIndex, boolean alignment) {
+        this(type);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
+        this.alignment = alignment;
     }
 
     /**
@@ -214,6 +248,22 @@ public class Options<V> {
     }
 
     /**
+     * Creates a new Options instance with type, expand flag, functions map, resetIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, boolean alignment) {
+        this(type, expand);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+        this.alignment = alignment;
+    }
+
+    /**
      * Creates a new Options instance with type, expand flag, functions map, resetIndex, and scrollIndex.
      *
      * @param type        The type of data to be processed
@@ -223,6 +273,23 @@ public class Options<V> {
      * @param scrollIndex The index for scrolling through the grid
      */
     public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, int scrollIndex) {
+        this(type, expand);
+        this.functions = functions;
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, expand flag, functions map, resetIndex, scrollIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param functions   Map of predicates to their corresponding cell processing functions
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, boolean expand, Map<Predicate<Integer>, Function<Cell, String>> functions, int resetIndex, int scrollIndex, boolean alignment) {
         this(type, expand);
         this.functions = functions;
         this.resetIndex = resetIndex;
@@ -297,6 +364,19 @@ public class Options<V> {
     }
 
     /**
+     * Creates a new Options instance with type, resetIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, int resetIndex, boolean alignment) {
+        this(type);
+        this.resetIndex = resetIndex;
+        this.alignment = alignment;
+    }
+
+    /**
      * Creates a new Options instance with type, resetIndex, and scrollIndex.
      *
      * @param type        The type of data to be processed
@@ -306,6 +386,20 @@ public class Options<V> {
     public Options(V type, int resetIndex, int scrollIndex) {
         this(type, resetIndex);
         this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, resetIndex, scrollIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, int resetIndex, int scrollIndex, boolean alignment) {
+        this(type, resetIndex);
+        this.scrollIndex = scrollIndex;
+        this.alignment = alignment;
     }
 
     /**
@@ -320,6 +414,22 @@ public class Options<V> {
         this(type, expand);
         this.resetIndex = resetIndex;
         this.scrollIndex = scrollIndex;
+    }
+
+    /**
+     * Creates a new Options instance with type, expand flag, resetIndex, scrollIndex, and alignment.
+     *
+     * @param type        The type of data to be processed
+     * @param expand      Whether the grid should be expanded
+     * @param resetIndex  The index for resetting the parent for the next row
+     * @param scrollIndex The index for scrolling through the grid
+     * @param alignment   Whether the grid should align cells
+     */
+    public Options(V type, boolean expand, int resetIndex, int scrollIndex, boolean alignment) {
+        this(type, expand);
+        this.resetIndex = resetIndex;
+        this.scrollIndex = scrollIndex;
+        this.alignment = alignment;
     }
 
     /**

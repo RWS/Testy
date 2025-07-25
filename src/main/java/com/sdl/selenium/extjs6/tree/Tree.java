@@ -590,7 +590,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                 }
                 list.add(name);
             }
-            List<String> listTMP = alignment(row, list);
+            List<String> listTMP = options.isAlignment() ? alignment(row, list) : list;
             listOfList.add(listTMP);
         } while (row.getNextRow().isPresent());
         return listOfList;
