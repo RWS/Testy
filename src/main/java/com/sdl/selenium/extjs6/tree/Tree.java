@@ -564,7 +564,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                     row.setId(id);
                     id = "";
                 }
-                row.setChildNodes(new Cell(1, name));
+                row.setChildNodes(new Cell(name));
                 row = row.getNextRow();
             }
             if (i != 0 && i % 15 == 0) {
