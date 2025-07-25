@@ -20,7 +20,6 @@ import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 public class Tree extends WebLocator implements Scrollable, Editor, Transform, IHeaders {
     private static final Logger log = LogManager.getLogger(Tree.class);
@@ -595,35 +594,6 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             listOfList.add(listTMP);
         } while (row.getNextRow().isPresent());
         return listOfList;
-    }
-
-    private static List<String> alignment(Row row, List<String> list) {
-        String prefix = "";
-        WebLocator firstRow = row.setResultIdx(1);
-        WebLocator innerEl = new WebLocator(firstRow).setClasses("x-grid-cell-inner-treecolumn");
-        WebLocator expandEndEl = new WebLocator(innerEl).setClasses("x-tree-elbow-end-plus", "x-tree-expander");
-        WebLocator emptyEl = new WebLocator(innerEl).setClasses("x-tree-elbow-empty");
-        WebLocator lineEl = new WebLocator(innerEl).setClasses("x-tree-elbow-line");
-        WebLocator notExpandEl = new WebLocator(innerEl).setClasses("x-tree-elbow-plus", "x-tree-expander");
-        WebLocator expandEl = new WebLocator(innerEl).setClasses("x-tree-icon", "x-tree-icon-parent-expanded");
-        if (emptyEl.isPresent()) {
-            int size = lineEl.size() + 1;
-            prefix = "-".repeat(size);
-        }
-        if (expandEndEl.isPresent()) {
-            prefix += "v";
-        } else if (notExpandEl.isPresent()) {
-            if (expandEl.isPresent()) {
-                prefix += "v";
-            } else {
-                prefix += ">";
-            }
-        } else {
-            prefix += "-\\";
-        }
-        String finalPrefix = prefix + " ";
-        return IntStream.range(0, list.size())
-                .mapToObj(z -> z == 0 ? finalPrefix + list.get(z) : list.get(z)).toList();
     }
 
     public <V> List<List<String>> getCellsTextV0(Options<V> options, int... excludedColumns) {
