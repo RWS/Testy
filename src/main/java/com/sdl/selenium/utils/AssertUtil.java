@@ -328,9 +328,8 @@ public class AssertUtil {
                     }
                     try {
                         Time timeObj = getLocalDate(group);
-                        LocalDateTime newDateTime = timeObj.localDateTime();
                         String format = timeObj.format();
-                        LocalDate newDate = (LocalDate) ChronoLocalDate.from(newDateTime);
+                        LocalDate newDate = timeObj.localDate();;
                         Matcher m = Pattern.compile("\\s\\d{2}:\\d{2}:\\d{2}").matcher(group);
                         String time = m.find() ? m.group() : "";
                         if (now.minusDays(7L).isEqual(newDate)) {
@@ -412,7 +411,7 @@ public class AssertUtil {
     record Format(DateTimeFormatter formatter, String format) {
     }
 
-    record Time(LocalDateTime localDateTime, String format) {
+    record Time(LocalDate localDate, String format) {
     }
 
     public Time getLocalDate(String group) {
@@ -422,16 +421,27 @@ public class AssertUtil {
                 new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH), "dd-MM-yyyy"),
                 new Format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss", Locale.ENGLISH), "dd MMM yyyy"),
                 new Format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH), "yyyy-MM-dd"),
-                new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH), "dd-MM-yyyy")
+                new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH), "dd-MM-yyyy"),
+                new Format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm", Locale.ENGLISH), "dd MMM yyyy"),
+                new Format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH), "yyyy-MM-dd"),
+                new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm", Locale.ENGLISH), "dd-MM-yyyy")
         );
         String form = "";
-        LocalDateTime newDate = null;
+        LocalDate newDate = null;
         for (Format format : formatters) {
             try {
-                newDate = LocalDateTime.parse(group, format.formatter);
+                LocalDateTime localDateTime = LocalDateTime.parse(group, format.formatter);
+                newDate = (LocalDate) ChronoLocalDate.from(localDateTime);
                 form = format.format;
-                break; // dacă a reușit, ieși din for
+                break;
             } catch (DateTimeParseException ignored) {
+                try {
+                    newDate = LocalDate.parse(group, format.formatter);
+                    form = format.format;
+                    break;
+                } catch (DateTimeParseException ignored2) {
+
+                }
             }
         }
         if (newDate == null) {
