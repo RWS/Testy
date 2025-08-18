@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -120,6 +121,24 @@ public class ComboBox extends Combo {
             log.debug("({}) The combo or arrow could not be located.", info);
         }
         return false;
+    }
+
+    public boolean select(String value, Function<String, Boolean> function) {
+        if (value.equals(getValue())) {
+            return true;
+        }
+        boolean selected;
+        boolean expand = expand();
+        if (expand) {
+            selected = function.apply(value);
+            if (!selected) {
+                collapse();
+            }
+        } else {
+            log.debug("The combo or arrow could not be located.");
+            selected = false;
+        }
+        return selected;
     }
 
     /**
@@ -261,9 +280,9 @@ public class ComboBox extends Combo {
     /**
      * Selects the icon element associated with a value in the combo box.
      *
-     * @param value     the value to select
-     * @param iconClass the CSS class of the icon
-     * @param duration  the maximum time to wait for the option to render
+     * @param value      the value to select
+     * @param iconClass  the CSS class of the icon
+     * @param duration   the maximum time to wait for the option to render
      * @param searchType the search strategy to use
      * @return true if the icon was successfully clicked, false otherwise
      *

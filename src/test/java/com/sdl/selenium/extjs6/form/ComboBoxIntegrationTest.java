@@ -1,11 +1,16 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.RetryUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -20,9 +25,22 @@ public class ComboBoxIntegrationTest extends TestBase {
         openEXTJSUrl("#simple-combo", comboBox);
     }
 
+    public static Function<String, Boolean> select(Duration duration, SearchType... searchTypes) {
+        return value -> {
+            WebLocator boundList = new WebLocator("x-boundlist").setExcludeClasses("x-masked").setVisibility(true);
+            WebLocator option = new WebLocator(boundList).setTag("li").setText(value, searchTypes).setRender(duration).setInfoMessage(value);
+            Boolean click = RetryUtils.retry(2, () -> {
+                boolean doClick = option.doClick();
+                return doClick && !option.ready(Duration.ofMillis(200));
+            });
+            return click;
+        };
+    }
+
     @Test
     public void comboBoxTest() {
-        assertThat(comboBox.select("New York"), is(true));
+        boolean select = comboBox.select("New York", select(Duration.ofSeconds(1), SearchType.CONTAINS));
+        assertThat(select, is(true));
     }
 
     @Test(dependsOnMethods = "comboBoxTest")
