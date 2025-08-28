@@ -1,13 +1,18 @@
 package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.utils.RetryUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,20 +30,23 @@ public class TagFieldIntegrationTest extends TestBase {
         openEXTJSUrl("#form-tag", tagField);
     }
 
-//    @Test
-//    public void testException() {
-////        selectTagField.setBaseCls("blalala");
-//        Utils.sleep(1);
-//
-////        Utils.retry(10, () -> {
-////            selectTagField.setValue("test");
-////        });
-//        String strings = RetryUtils.retryIfNotContains(0, "Kansasd", () -> {
-//            selectTagField.click();
-//            return selectTagField.getValue();
-//        });
-//        Utils.sleep(1);
-//    }
+    public static Function<String, Boolean> select(Duration duration, SearchType... searchTypes) {
+        return value -> {
+            WebLocator boundList = new WebLocator("x-boundlist").setExcludeClasses("x-masked").setVisibility(true);
+            WebLocator option = new WebLocator(boundList).setTag("li").setText(value, searchTypes).setRender(duration).setInfoMessage(value);
+            Boolean click = RetryUtils.retry(2, () -> {
+                boolean doClick = option.doClick();
+                return doClick && !option.ready(Duration.ofMillis(200));
+            });
+            return click;
+        };
+    }
+
+    @Test
+    public void testException() {
+        tagField.doSelect(List.of("California"), select(Duration.ofSeconds(1), SearchType.EQUALS));
+
+    }
 
     @Test
     public void tagTest() {

@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -152,6 +153,26 @@ public class TagField extends Tag {
                 }
             }
         }
+        return selected;
+    }
+
+    public boolean doSelect(List<String> values, Function<String, Boolean> function) {
+        boolean selected = true;
+        ready();
+        List<String> selectedValues = getAllSelectedValues();
+        List<String> selectValues = new ArrayList<>();
+        for (String value : values) {
+            if (!selectedValues.contains(value)) {
+                selectValues.add(value);
+            }
+        }
+        if (expand()) {
+            for (String value : selectValues) {
+                function.apply(value);
+            }
+            collapse(); // to close combo
+        }
+
         return selected;
     }
 
