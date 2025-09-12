@@ -3,8 +3,9 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.ICheck;
 
-public class Radio extends WebLocator {
+public class Radio extends WebLocator implements ICheck {
     private String version;
 
     public Radio() {
@@ -47,5 +48,10 @@ public class Radio extends WebLocator {
             checked = "true".equals(input.getAttribute("aria-checked", instant));
         }
         return checked;
+    }
+
+    @Override
+    public boolean isChecked() {
+        return isSelected();
     }
 }
