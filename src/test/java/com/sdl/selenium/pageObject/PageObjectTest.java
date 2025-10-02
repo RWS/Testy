@@ -5,7 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class PageObjectTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(PageObjectTest.class);
@@ -31,7 +31,7 @@ public class PageObjectTest {
 
     public static void init() {
         driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         driver.get("file:///D:/Testy/src/test/functional/bootstrap/index.html");
     }
 
