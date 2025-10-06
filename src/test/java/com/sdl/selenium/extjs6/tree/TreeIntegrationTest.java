@@ -1,11 +1,13 @@
 package com.sdl.selenium.extjs6.tree;
 
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.extjs6.grid.Options;
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +35,9 @@ public class TreeIntegrationTest extends TestBase {
         openEXTJSUrl("#tree-xml", tree);
         tree.expandAllNodes();
         tree.scrollTop();
-        List<List<String>> values = tree.getValues();
+        Options<List<String>> options = new Options<>(new ArrayList<>());
+        options.setResetIndex(5);
+        List<List<String>> values = tree.getCellsValues(options);
         assertThat(values.size(), is(439));
     }
 

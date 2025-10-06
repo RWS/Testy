@@ -654,7 +654,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                     }
                     Row row = new Row(this, i);
                     String currentId = row.getAttributeId();
-                    if (!"".equals(id) && id.equals(currentId)) {
+                    if (!Strings.isNullOrEmpty(id) && id.equals(currentId)) {
                         canRead = true;
                     }
                 }
