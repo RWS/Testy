@@ -37,8 +37,16 @@ public class MatcherAssertList {
         assertThatList(reason, transformDate, assertUtil.getFormat(), actual, matcher);
     }
 
+    public static <E, T extends List<E>> void assertThatList(String reason, boolean transformDate, T actual, Matcher<? super T> matcher, Callable<?> call) {
+        assertThatList(reason, transformDate, assertUtil.getFormat(), actual, matcher, call);
+    }
+
     public static <E, T extends List<E>> void assertThatList(String reason, Function<String, String> format, T actual, Matcher<? super T> matcher) {
         assertThatList(reason, true, format, actual, matcher);
+    }
+
+    public static <E, T extends List<E>> void assertThatList(String reason, Function<String, String> format, T actual, Matcher<? super T> matcher, Callable<?> call) {
+        assertThatList(reason, true, format, actual, matcher, call);
     }
 
     public static <E, T extends List<E>> void assertThatList(String reason, boolean transformDate, Function<String, String> format, T actual, Matcher<? super T> matcher) {
