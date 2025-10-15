@@ -92,6 +92,10 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
         return new WebLocator(this).setRoot("//ancestor::");
     }
 
+    public WebLocator next() {
+        return new WebLocator(this).setRoot("/").setTag("following-sibling::*");
+    }
+
     // getters and setters
 
     public static void setDriverExecutor(WebDriver driver) {
