@@ -378,7 +378,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private void logDetails(WebLocator el) {
         if (WebLocatorConfig.isLogXPath()) {
-            log.debug("\t" + WebLocatorUtils.getFirebugXPath(el));
+            log.debug("\t{}", WebLocatorUtils.getFirebugXPath(el));
         }
         if (WebLocatorConfig.isLogSuggestions()) {
             WebLocatorSuggestions.getSuggestion(el);
@@ -587,3 +587,4 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 //        }
     }
 }
+

@@ -533,12 +533,12 @@ public class WebLocator extends WebLocatorAbstractBuilder implements Cloneable, 
     @Deprecated
     public String waitTextToRender(int seconds, String excludeText) {
         String text = null;
-        if (seconds == 0 && ((text = getText(true)) != null && text.length() > 0 && !text.equals(excludeText))) {
+        if (seconds == 0 && ((text = getText(true)) != null && !text.isEmpty() && !text.equals(excludeText))) {
             return text;
         }
         for (int i = 0, count = 5 * seconds; i < count; i++) {
             text = getText(true);
-            if (text != null && text.length() > 0 && !text.equals(excludeText)) {
+            if (text != null && !text.isEmpty() && !text.equals(excludeText)) {
                 return text;
             }
             if (i == 0) {
