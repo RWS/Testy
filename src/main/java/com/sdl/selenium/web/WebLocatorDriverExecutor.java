@@ -154,7 +154,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
 
     private boolean tryAgainDoSendKeys(WebLocator el, java.lang.CharSequence... charSequences) {
         if (findAgain(el)) {
-            el.getWebElement().sendKeys(charSequences); // not sure it will click now
+            el.getWebElement().sendKeys(charSequences); // not sure if it will click now
             return true;
         } else {
             log.error("currentElement is null after to try currentElement: {}", el);
@@ -509,7 +509,7 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         try {
             return javascriptExecutor.executeScript(script, objects);
         } catch (WebDriverException e) {
-            log.error("WebDriverException in executeScript: " + script, e);
+            log.error("WebDriverException in executeScript: {}", script, e);
             return null;
         }
     }
