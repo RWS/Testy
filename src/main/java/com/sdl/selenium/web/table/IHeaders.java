@@ -18,12 +18,17 @@ public interface IHeaders extends IColumns {
      */
     default List<String> getHeaders() {
         WebLocator body = new WebLocator(getView()).setClasses("x-grid-header-ct").setExcludeClasses("x-grid-header-ct-hidden").setResultIdx(1);
-        WebLocator header = new WebLocator(body).setClasses("x-column-header");
+        WebLocator header = new WebLocator(body).setClasses("x-column-header").setAttribute("aria-hidden", "false");
         int size = header.size();
         List<String> headers = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
             header.setResultIdx(i);
-            headers.add(header.getText());
+            String value = header.getText();
+            if (Strings.isNullOrEmpty(value)) {
+                WebLocator headerEl = new WebLocator(header).setClasses("x-column-header-text-inner");
+                value = headerEl.getAttribute("textContent");
+            }
+            headers.add(value);
         }
         return headers.stream().filter(i -> !Strings.isNullOrEmpty(i.trim())).toList();
     }
