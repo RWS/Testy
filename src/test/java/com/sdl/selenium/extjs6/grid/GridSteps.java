@@ -98,7 +98,9 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasObjectValues(List<Plant> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        List<Plant> cellsText = RetryUtils.retry(2, () -> grid.getCellsValues(values.get(0), t -> t == 5, getBooleanValue(), 3, 6));
+        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, getBooleanValue());
+        options.setAlignment(false);
+        List<Plant> cellsText = RetryUtils.retry(2, () -> grid.getValues(options, 3, 6));
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);

@@ -1,6 +1,7 @@
 package com.sdl.selenium.extjs6.grid;
 
 import com.google.common.base.Strings;
+import com.sdl.selenium.Go;
 import com.sdl.selenium.conditions.ConditionManager;
 import com.sdl.selenium.conditions.RenderSuccessCondition;
 import com.sdl.selenium.extjs4.window.XTool;
@@ -668,6 +669,71 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
         List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
         List<V> actualValue = transformTo(options.getType(), cellsText, columnsList);
         return actualValue;
+    }
+
+    @SneakyThrows
+    public <V> List<V> getValues(Options<V> options, int... excludedColumns) {
+        List<List<String>> cellsText = getCellsValuesV1(options, excludedColumns);
+        if (cellsText == null) {
+            return null;
+        } else {
+            cellsText = equalizeLists(cellsText);
+        }
+        List<Integer> columnsList = Arrays.stream(excludedColumns).boxed().toList();
+        List<V> actualValue = transformTo(options.getType(), cellsText, columnsList);
+        return actualValue;
+    }
+
+    public <V> List<List<String>> getCellsValuesV1(Options<V> options, int... excludedColumns) {
+        final List<Integer> columnsList = getColumns(excludedColumns);
+        List<List<String>> listOfList = new LinkedList<>();
+        String id = "";
+        String name = "";
+        int i = 0;
+        Row row = null;
+        do {
+            if (i % options.getResetIndex() == 0) {
+                if (i != 0) {
+                    id = row.getAttribute("id", true);
+                }
+                row = new Row(this);
+            }
+            if (i != 0) {
+                if (!id.isEmpty()) {
+                    row.setId(id);
+                    id = "";
+                }
+                row.setChildNodes(new Cell(name));
+                row = row.getNextRow();
+            }
+            if (i != 0 && i % 15 == 0) {
+                row.scrollIntoView(Go.START);
+            }
+            i++;
+            List<String> list = new LinkedList<>();
+            for (int j : columnsList) {
+                Cell cell = new Cell(row, j);
+                Optional<Predicate<Integer>> first = options.getFunctions().keySet().stream().filter((p) -> p.test(j)).findFirst();
+                String text;
+                if (first.isPresent()) {
+                    Predicate<Integer> predicate = first.get();
+                    Function<Cell, String> function = options.getFunctions().get(predicate);
+                    text = function.apply(cell);
+                } else {
+                    text = cell.getText(true);
+                }
+                try {
+                    text = text.trim();
+                } catch (NullPointerException e) {
+                    Utils.sleep(1);
+                }
+                list.add(text);
+            }
+            name = list.get(0);
+            List<String> listTMP = options.isAlignment() ? alignment(row, list) : list;
+            listOfList.add(listTMP);
+        } while (row.getNextRow().isPresent());
+        return listOfList;
     }
 
     @Override
