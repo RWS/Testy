@@ -25,10 +25,10 @@ public class Retry {
      * @return the result of the callable if successful
      * @throws RuntimeException if all retries fail
      *
-     *  <pre>
-     *  Example usage:
-     *    RetryUtils.retry(3, () -> someOperation());
-     *  </pre>
+     *                          <pre>
+     *                                                    Example usage:
+     *                                                      RetryUtils.retry(3, () -> someOperation());
+     *                                                    </pre>
      */
     public static <V> V retry(int maxRetries, Callable<V> call) {
         return retry(maxRetries, null, call, false);
@@ -44,10 +44,10 @@ public class Retry {
      * @return the result of the callable if successful
      * @throws RuntimeException if the duration expires and the callable did not succeed
      *
-     *  <pre>
-     *  Example usage:
-     *    RetryUtils.retry(Duration.ofSeconds(10), () -> button.click());
-     *  </pre>
+     *                          <pre>
+     *                                                    Example usage:
+     *                                                      RetryUtils.retry(Duration.ofSeconds(10), () -> button.click());
+     *                                                    </pre>
      */
     public static <V> V retry(Duration duration, Callable<V> call) {
         return retry(duration, null, call, false);
@@ -64,10 +64,10 @@ public class Retry {
      * @return the result of the callable if successful
      * @throws RuntimeException if all retries fail
      *
-     *  <pre>
-     *  Example usage:
-     *    RetryUtils.retry(3, "Login", () -> someOperation());
-     *  </pre>
+     *                          <pre>
+     *                                                    Example usage:
+     *                                                      RetryUtils.retry(3, "Login", () -> someOperation());
+     *                                                    </pre>
      */
     public static <V> V retry(int maxRetries, String prefixLog, Callable<V> call) {
         return retry(maxRetries, prefixLog, call, false);
@@ -84,10 +84,10 @@ public class Retry {
      * @return the result of the callable if successful
      * @throws RuntimeException if the duration expires and the callable did not succeed
      *
-     *  <pre>
-     *  Example usage:
-     *    RetryUtils.retry(Duration.ofSeconds(10), "Login", () -> button.click());
-     *  </pre>
+     *                          <pre>
+     *                                                    Example usage:
+     *                                                      RetryUtils.retry(Duration.ofSeconds(10), "Login", () -> button.click());
+     *                                                    </pre>
      */
     public static <V> V retry(Duration duration, String prefixLog, Callable<V> call) {
         return retry(duration, prefixLog, call, false);
@@ -440,6 +440,57 @@ public class Retry {
         return execute;
     }
 
+    private static <V> V retryNoFibonacci(Duration duration, Callable<V> call) {
+        return retryNoFibonacci(duration, Duration.ZERO, "", call, false);
+    }
+
+    /**
+     * Retries the execution of a callable for a specified duration, without using Fibonacci-based wait intervals.
+     * Each retry waits a fixed interval (specified by stepTime) before re-attempting the operation.
+     * If the callable throws an exception or returns an unexpected value, it will be retried until the duration expires.
+     * <p>
+     * The method can be used for operations where a constant retry interval is preferred over exponential backoff.
+     * <p>
+     *
+     * @param duration  the maximum duration to retry (e.g., Duration.ofSeconds(10))
+     * @param stepTime  the interval to wait between retries (e.g., Duration.ofSeconds(1))
+     * @param prefixLog a prefix for log messages (can be null)
+     * @param call      the operation to execute
+     * @param safe      if true, exceptions are suppressed until the duration expires; if false, exceptions are thrown immediately when the duration is over
+     * @param <V>       the return type of the callable
+     * @return the result of the callable if successful, or throws RuntimeException if the duration expires and the callable did not succeed
+     *
+     * <pre>
+     * Example usage:
+     *   Retry.retryNoFibonacci(Duration.ofSeconds(10), Duration.ofSeconds(1), "Login", () -> button.click(), false);
+     * </pre>
+     */
+    private static <V> V retryNoFibonacci(Duration duration, Duration stepTime, String prefixLog, Callable<V> call, boolean safe) {
+        int count = 0;
+        long startMillis = System.currentTimeMillis();
+        V execute = null;
+        do {
+            count++;
+            Utils.sleep(stepTime.toMillis());
+            try {
+                execute = call.call();
+            } catch (Exception | AssertionError e) {
+                if (!safe) {
+                    if (timeIsOver(startMillis, duration)) {
+                        long duringMillis = getDuringMillis(startMillis);
+                        log.error((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds ->{}", count, duringMillis, e);
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                }
+            }
+        } while ((execute == null || isNotExpected(execute)) && !timeIsOver(startMillis, duration));
+        if (count > 1) {
+            long duringMillis = getDuringMillis(startMillis);
+            log.info((Strings.isNullOrEmpty(prefixLog) ? "" : prefixLog + ":") + "Retry {} and wait {} milliseconds", count, duringMillis);
+        }
+        return execute;
+    }
+
     private static int getLimit(Duration duration) {
         List<Integer> fibonacciNumbers = List.of(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610);
         int limit = (int) (duration.getSeconds() / 8);
@@ -751,3 +802,4 @@ public class Retry {
         }
     }
 }
+
