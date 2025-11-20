@@ -440,7 +440,7 @@ public class Retry {
         return execute;
     }
 
-    private static <V> V retryNoFibonacci(Duration duration, Callable<V> call) {
+    public static <V> V retryNoFibonacci(Duration duration, Callable<V> call) {
         return retryNoFibonacci(duration, Duration.ZERO, "", call, false);
     }
 
@@ -465,7 +465,7 @@ public class Retry {
      *   Retry.retryNoFibonacci(Duration.ofSeconds(10), Duration.ofSeconds(1), "Login", () -> button.click(), false);
      * </pre>
      */
-    private static <V> V retryNoFibonacci(Duration duration, Duration stepTime, String prefixLog, Callable<V> call, boolean safe) {
+    public static <V> V retryNoFibonacci(Duration duration, Duration stepTime, String prefixLog, Callable<V> call, boolean safe) {
         int count = 0;
         long startMillis = System.currentTimeMillis();
         V execute = null;
