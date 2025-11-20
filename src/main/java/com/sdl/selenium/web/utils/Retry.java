@@ -15,53 +15,126 @@ public class Retry {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Retry.class);
 
+    /**
+     * Retries the execution of a callable up to a maximum number of retries.
+     * If the callable throws an exception or returns an unexpected value, it will be retried.
+     *
+     * @param maxRetries the maximum number of retry attempts
+     * @param call       the operation to execute
+     * @param <V>        the return type of the callable
+     * @return the result of the callable if successful
+     * @throws RuntimeException if all retries fail
+     *
+     *  <pre>
+     *  Example usage:
+     *    RetryUtils.retry(3, () -> someOperation());
+     *  </pre>
+     */
     public static <V> V retry(int maxRetries, Callable<V> call) {
         return retry(maxRetries, null, call, false);
     }
 
     /**
-     * @param duration example 20 seconds
-     * @param call     button.click()
-     * @param <V>      type of method
-     * @return true or false, throw RuntimeException()
-     * <pre>{@code
-     * RetryUtils.retry(Duration.ofSeconds(10), ()-> button.click());
-     * }</pre>
+     * Retries the execution of a callable for a specified duration.
+     * If the callable throws an exception or returns an unexpected value, it will be retried until the duration expires.
+     *
+     * @param duration the maximum duration to retry (e.g., Duration.ofSeconds(10))
+     * @param call     the operation to execute
+     * @param <V>      the return type of the callable
+     * @return the result of the callable if successful
+     * @throws RuntimeException if the duration expires and the callable did not succeed
+     *
+     *  <pre>
+     *  Example usage:
+     *    RetryUtils.retry(Duration.ofSeconds(10), () -> button.click());
+     *  </pre>
      */
     public static <V> V retry(Duration duration, Callable<V> call) {
         return retry(duration, null, call, false);
     }
 
+    /**
+     * Retries the execution of a callable up to a maximum number of retries, with an optional log prefix.
+     * If the callable throws an exception or returns an unexpected value, it will be retried.
+     *
+     * @param maxRetries the maximum number of retry attempts
+     * @param prefixLog  a prefix for log messages (can be null)
+     * @param call       the operation to execute
+     * @param <V>        the return type of the callable
+     * @return the result of the callable if successful
+     * @throws RuntimeException if all retries fail
+     *
+     *  <pre>
+     *  Example usage:
+     *    RetryUtils.retry(3, "Login", () -> someOperation());
+     *  </pre>
+     */
     public static <V> V retry(int maxRetries, String prefixLog, Callable<V> call) {
         return retry(maxRetries, prefixLog, call, false);
     }
 
     /**
-     * @param duration  example 20 seconds
-     * @param prefixLog class name
-     * @param call      button.click()
-     * @param <V>       type of method
-     * @return true or false, throw RuntimeException()
-     * <pre>{@code
-     * RetryUtils.retry(Duration.ofSeconds(10), "LoginButton", ()-> button.click());
-     * }</pre>
+     * Retries the execution of a callable for a specified duration, with an optional log prefix.
+     * If the callable throws an exception or returns an unexpected value, it will be retried until the duration expires.
+     *
+     * @param duration  the maximum duration to retry
+     * @param prefixLog a prefix for log messages (can be null)
+     * @param call      the operation to execute
+     * @param <V>       the return type of the callable
+     * @return the result of the callable if successful
+     * @throws RuntimeException if the duration expires and the callable did not succeed
+     *
+     *  <pre>
+     *  Example usage:
+     *    RetryUtils.retry(Duration.ofSeconds(10), "Login", () -> button.click());
+     *  </pre>
      */
     public static <V> V retry(Duration duration, String prefixLog, Callable<V> call) {
         return retry(duration, prefixLog, call, false);
     }
 
+    /**
+     * Retries the execution of a Runnable up to a maximum number of retries.
+     *
+     * @param maxRetries the maximum number of retry attempts
+     * @param r          the Runnable to execute
+     * @return true if the Runnable ran successfully, false otherwise
+     */
     public static boolean retryRunnable(int maxRetries, Runnable r) {
         return retryRunnable(maxRetries, null, r, false);
     }
 
+    /**
+     * Retries the execution of a Runnable up to a maximum number of retries, with an optional log prefix.
+     *
+     * @param maxRetries the maximum number of retry attempts
+     * @param prefixLog  a prefix for log messages (can be null)
+     * @param r          the Runnable to execute
+     * @return true if the Runnable ran successfully, false otherwise
+     */
     public static boolean retryRunnable(int maxRetries, String prefixLog, Runnable r) {
         return retryRunnable(maxRetries, prefixLog, r, false);
     }
 
+    /**
+     * Retries the execution of a Runnable up to a maximum number of retries, returning false instead of throwing on failure.
+     *
+     * @param maxRetries the maximum number of retry attempts
+     * @param r          the Runnable to execute
+     * @return true if the Runnable ran successfully, false otherwise
+     */
     public static boolean retryRunnableSafe(int maxRetries, Runnable r) {
         return retryRunnable(maxRetries, null, r, true);
     }
 
+    /**
+     * Retries the execution of a Runnable up to a maximum number of retries, with an optional log prefix, returning false instead of throwing on failure.
+     *
+     * @param maxRetries the maximum number of retry attempts
+     * @param prefixLog  a prefix for log messages (can be null)
+     * @param r          the Runnable to execute
+     * @return true if the Runnable ran successfully, false otherwise
+     */
     public static boolean retryRunnableSafe(int maxRetries, String prefixLog, Runnable r) {
         return retryRunnable(maxRetries, prefixLog, r, true);
     }
@@ -420,6 +493,8 @@ public class Retry {
             return !(Boolean) execute;
         } else if (execute instanceof String) {
             return Strings.isNullOrEmpty((String) execute);
+        } else if (execute instanceof Integer) {
+            return ((Integer) execute) <= 0;
         } else if (execute instanceof List<?> list) {
             return list.isEmpty() || list.stream().allMatch(Objects::isNull);
         }
@@ -495,7 +570,7 @@ public class Retry {
             String expectedJson = mapper.writeValueAsString(o);
             boolean found = false;
             for (Object currentObject : currentList) {
-                String currentJson = mapper.writeValueAsString(currentObject);
+                String currentJson = mapper.writeValueAsString(currentObject).replaceAll(":null", ":\\\"\\\"");
                 if (expectedJson.equals(currentJson)) {
                     found = true;
                     break;

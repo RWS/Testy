@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
+@Deprecated
 public class RetryUtils {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(RetryUtils.class);
