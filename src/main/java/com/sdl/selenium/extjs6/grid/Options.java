@@ -66,7 +66,7 @@ public class Options<V> {
      */
     private int scrollIndex = 15;
 
-    private boolean alignment = true;
+    private boolean alignment = false;
 
     /**
      * Creates a new Options instance with the specified type.

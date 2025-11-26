@@ -35,7 +35,7 @@ public interface Transform {
         if (type == null) {
             return (List<V>) actualListOfList;
         }
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
         String json = mapper.writeValueAsString(type);
         List<String> names = getNames(json);
         if (names.size() > actualListOfList.get(0).size()) {
