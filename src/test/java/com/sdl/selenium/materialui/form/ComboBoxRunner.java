@@ -1,15 +1,17 @@
 package com.sdl.selenium.materialui.form;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
+import org.junit.platform.suite.api.ConfigurationParameter;
+import org.junit.platform.suite.api.IncludeEngines;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        stepNotifications = true,
-        plugin = {"pretty", "html:target/cucumber", "json:target/ComboBox.json", "com.sdl.selenium.StepDetails"},
-        glue = {"com.sdl.selenium"},
-        features = "classpath:features/materialui/form/combobox.feature"
-)
+import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
+import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
+
+@Suite
+@IncludeEngines("cucumber")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.sdl.selenium")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber, json:target/jsonReports/ComboBox.json, com.sdl.selenium.StepDetails")
+@SelectClasspathResource("features/materialui/form/combobox.feature")
 public class ComboBoxRunner {
 }

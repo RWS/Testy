@@ -13,5 +13,5 @@ Feature: Materialui
 
   Scenario: Click on button and select option from menu
     Given I open MaterialUI and add "react-menu/" path
-    And in MaterialUI I click on "" option
+    And in MaterialUI I click on "Profile" option
     And I stop

@@ -122,7 +122,8 @@ public class WebLocator1IntegrationTest extends TestBase {
         boolean useChildNodesSearch = el.getPathBuilder().getSearchTextType().contains(SearchType.DEEP_CHILD_NODE);
 
         String expected = "WebLocator text for search type-searchTextType" + (useChildNodesSearch ? " deep" : "");
-        assertThat(webLocatorLogger.getText(), equalTo(expected));
+        String text = webLocatorLogger.getText();
+        assertThat(text, equalTo(expected));
 
         webLocatorWithMoreEnter.click();
     }

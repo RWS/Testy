@@ -3,7 +3,7 @@ package com.sdl.selenium.extjs6.form;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,7 +34,7 @@ public class TagFieldIntegrationTest extends TestBase {
         return value -> {
             WebLocator boundList = new WebLocator("x-boundlist").setExcludeClasses("x-masked").setVisibility(true);
             WebLocator option = new WebLocator(boundList).setTag("li").setText(value, searchTypes).setRender(duration).setInfoMessage(value);
-            Boolean click = RetryUtils.retry(2, () -> {
+            Boolean click = Retry.retry(2, () -> {
                 boolean doClick = option.doClick();
                 return doClick && !option.ready(Duration.ofMillis(200));
             });

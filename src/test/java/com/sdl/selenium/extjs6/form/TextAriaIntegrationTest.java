@@ -2,7 +2,7 @@ package com.sdl.selenium.extjs6.form;
 
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.extjs6.panel.Panel;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -28,7 +28,7 @@ public class TextAriaIntegrationTest extends TestBase {
 
     @Test
     public void comboBoxTest() {
-        RetryUtils.retry(2, () -> time.select("2:45 AM"));
+        Retry.retry(2, () -> time.select("2:45 AM"));
         assertThat(time.getValue(), equalTo("2:45 AM"));
     }
 }
