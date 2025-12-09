@@ -618,7 +618,7 @@ public class Retry {
         mapper.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true);
         boolean allMatch = true;
         for (Object o : expectedList) {
-            String expectedJson = mapper.writeValueAsString(o);
+            String expectedJson = mapper.writeValueAsString(o).replaceAll(":null", ":\\\"\\\"");
             boolean found = false;
             for (Object currentObject : currentList) {
                 String currentJson = mapper.writeValueAsString(currentObject).replaceAll(":null", ":\\\"\\\"");
