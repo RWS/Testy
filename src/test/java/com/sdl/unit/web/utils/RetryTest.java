@@ -1,6 +1,6 @@
 package com.sdl.unit.web.utils;
 
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +14,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class RetryUtilsTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RetryUtilsTest.class);
+public class RetryTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RetryTest.class);
 
     @Test
     public void test0() {
-        Boolean actual = RetryUtils.retryIfNotSame(2, false, RetryUtilsTest::isLive);
+        Boolean actual = Retry.retryIfNotSame(2, false, RetryTest::isLive);
         assertThat(actual, is(true));
     }
 
@@ -31,7 +31,7 @@ public class RetryUtilsTest {
     public void test1() {
         List<String> list = Arrays.asList("a", "b", "c");
         long startMs = System.currentTimeMillis();
-        List<String> actual = RetryUtils.retryIfNotSame(3, list, RetryUtilsTest::getList);
+        List<String> actual = Retry.retryIfNotSame(3, list, RetryTest::getList);
         long endMs = System.currentTimeMillis();
         long time = endMs - startMs;
         LOGGER.info(String.format("retryIfNotSame took %s ms", time));
@@ -47,7 +47,7 @@ public class RetryUtilsTest {
     public void test2() {
         List<String> list = Arrays.asList("a", "b", "c");
         long startMs = System.currentTimeMillis();
-        List<String> actual = RetryUtils.retryIfNotSame(3, list, RetryUtilsTest::getList1);
+        List<String> actual = Retry.retryIfNotSame(3, list, RetryTest::getList1);
         long endMs = System.currentTimeMillis();
         long time = endMs - startMs;
         LOGGER.info(String.format("retryIfNotSame took %s ms", time));
@@ -64,7 +64,7 @@ public class RetryUtilsTest {
         List<List<String>> expectedList = new ArrayList<>();
         expectedList.add(Arrays.asList("a", "c"));
         expectedList.add(Arrays.asList("b", "e"));
-        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList);
+        List<List<String>> actual = Retry.retryIfNotSame(2, expectedList, RetryTest::getListOfList);
         Utils.sleep(1);
     }
 
@@ -80,7 +80,7 @@ public class RetryUtilsTest {
         List<List<String>> expectedList = new ArrayList<>();
         expectedList.add(Arrays.asList("a", "c"));
         expectedList.add(Arrays.asList("b", "e"));
-        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList1);
+        List<List<String>> actual = Retry.retryIfNotSame(2, expectedList, RetryTest::getListOfList1);
         Utils.sleep(1);
     }
 
@@ -96,7 +96,7 @@ public class RetryUtilsTest {
         List<List<String>> expectedList = new ArrayList<>();
         expectedList.add(Arrays.asList("a", "c"));
         expectedList.add(Arrays.asList("b", "e"));
-        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList2);
+        List<List<String>> actual = Retry.retryIfNotSame(2, expectedList, RetryTest::getListOfList2);
         Utils.sleep(1);
     }
 
@@ -113,7 +113,7 @@ public class RetryUtilsTest {
         List<List<String>> expectedList = new ArrayList<>();
         expectedList.add(Arrays.asList("a", "c"));
         expectedList.add(Arrays.asList("b", "e"));
-        List<List<String>> actual = RetryUtils.retryIfNotSame(2, expectedList, RetryUtilsTest::getListOfList3);
+        List<List<String>> actual = Retry.retryIfNotSame(2, expectedList, RetryTest::getListOfList3);
         Utils.sleep(1);
     }
 
@@ -180,7 +180,7 @@ public class RetryUtilsTest {
                 new Tet("a", "b", "c"),
                 new Tet("a", "b", "c")
         );
-        List<Tet> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getListOfObject);
+        List<Tet> actual = Retry.retryIfNotSame(2, list, RetryTest::getListOfObject);
         Utils.sleep(1);
     }
 
@@ -199,7 +199,7 @@ public class RetryUtilsTest {
                 new Tet("a2", "b2", "c2"),
                 new Tet("a1", "b1", "c1")
         );
-        List<Tet> actual = RetryUtils.retryIfNotSame(2, list, RetryUtilsTest::getListOfObject1);
+        List<Tet> actual = Retry.retryIfNotSame(2, list, RetryTest::getListOfObject1);
         Utils.sleep(1);
     }
 

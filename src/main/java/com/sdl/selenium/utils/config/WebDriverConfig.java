@@ -7,7 +7,7 @@ import com.sdl.selenium.utils.browsers.IExplorerConfigReader;
 import com.sdl.selenium.web.Browser;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.PropertiesReader;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.SystemUtils;
@@ -338,10 +338,10 @@ public class WebDriverConfig {
                 log.info("Tab already closed");
             }
 
-            Set<String> windowHandles = RetryUtils.retry(2, () -> driver.getWindowHandles());
+            Set<String> windowHandles = Retry.retry(2, () -> driver.getWindowHandles());
             List<String> winList = new ArrayList<>(windowHandles);
             String tabID = winList.get(index);
-            String title = RetryUtils.retry(3, () -> {
+            String title = Retry.retry(3, () -> {
                 driver.switchTo().window(tabID);
 //                getChromeDevTools().createSession(tabID);
                 Utils.sleep(100);

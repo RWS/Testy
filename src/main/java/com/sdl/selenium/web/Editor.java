@@ -2,7 +2,7 @@ package com.sdl.selenium.web;
 
 import com.sdl.selenium.extjs6.form.*;
 import com.sdl.selenium.web.form.Field;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -18,7 +18,7 @@ public interface Editor {
     }
 
     default <T extends Field> T getEditor(WebLocator cell, boolean doClick) {
-        return RetryUtils.retry(3, () -> {
+        return Retry.retry(3, () -> {
             if (doClick) {
                 cell.doClick();
             } else {
@@ -44,7 +44,7 @@ public interface Editor {
             input = new WebLocator(container).setTag("iframe");
         }
         WebLocator finalInput = input;
-        String type = RetryUtils.retry(2, () -> finalInput.getAttribute("data-componentid", true));
+        String type = Retry.retry(2, () -> finalInput.getAttribute("data-componentid", true));
         if (type == null) {
             log.error("active editor type: 'null'");
             return null;
@@ -80,13 +80,13 @@ public interface Editor {
         Field editor = getEditor(cell);
         boolean edited = false;
         if (editor instanceof TextField || editor instanceof HtmlEditor) {
-            edited = RetryUtils.retry(2, () -> {
+            edited = Retry.retry(2, () -> {
                 editor.setValue(value);
                 return editor.getValue().equals(value);
             });
         } else if (editor instanceof ComboBox) {
             ComboBox comboBox = (ComboBox) editor;
-            edited = RetryUtils.retry(2, () -> {
+            edited = Retry.retry(2, () -> {
                 comboBox.select(value);
                 return comboBox.getValue().equals(value);
             });

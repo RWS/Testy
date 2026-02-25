@@ -35,7 +35,7 @@ public class GridIntegrationTest extends TestBase {
 //    @Test
 //    void rowTest1() {
 //        long startMs = System.currentTimeMillis();
-//        String row = RetryUtils.retryIfNotSame(3, "ee", () -> grid.getRow(1).getText());
+//        String row = Retry.retryIfNotSame(3, "ee", () -> grid.getRow(1).getText());
 //        long endMs = System.currentTimeMillis();
 //        log.info("performanceIsCheckedTest took {} ms", endMs - startMs);
 //    }

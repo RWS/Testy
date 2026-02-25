@@ -6,7 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ICheck;
 import com.sdl.selenium.web.link.WebLink;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -194,7 +194,7 @@ public class Menu extends WebLocator {
 
     private static Menu openMenu(WebLink link) {
         String id = link.getAttribute("aria-owns");
-        return RetryUtils.retry(2, () -> {
+        return Retry.retry(2, () -> {
             link.click();
             Menu m = new Menu().setId(id);
             if (m.ready()) {

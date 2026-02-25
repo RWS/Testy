@@ -4,7 +4,7 @@ import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Result;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -34,7 +34,7 @@ public class GridSteps extends TestBase {
         driver.navigate().refresh();
         driver.switchTo().frame("examples-iframe");
         WebLocator mask = new WebLocator().setId("loadingSplashBottom");
-        Result<Boolean> maskStatus = RetryUtils.retryUntilOneIs(Duration.ofSeconds(30), () -> !mask.isPresent());
+        Result<Boolean> maskStatus = Retry.retryUntilOneIs(Duration.ofSeconds(30), () -> !mask.isPresent());
         log.info("maskStatus: {}", maskStatus);
     }
 
@@ -100,7 +100,27 @@ public class GridSteps extends TestBase {
         long startMs = System.currentTimeMillis();
         Options<Plant> options = new Options<>(values.get(0), t -> t == 5, getBooleanValue());
         options.setAlignment(false);
-        List<Plant> cellsText = RetryUtils.retry(2, () -> grid.getValues(options, 3, 6));
+        List<Plant> cellsText = Retry.retry(2, () -> grid.getValues(options, 3, 6));
+        long endMs = System.currentTimeMillis();
+        long rez = endMs - startMs;
+        log.info("performance took {} ms", rez);
+        assertThatList("Actual values", cellsText, containsInAnyOrder(values.toArray()));
+    }
+
+    public static <T> Function<List<T>, Boolean> auditor(List<T> values) {
+        return array -> {
+            return array.containsAll(values);
+        };
+    }
+
+    @Then("I verify if grid has only one row object values:")
+    public void iVerifyIfGridHasOnlyOneRowObjectValues(List<Plant> values) {
+        grid.ready(true);
+        long startMs = System.currentTimeMillis();
+        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, getBooleanValue());
+        options.setAlignment(false);
+        options.setAuditor(auditor(values));
+        List<Plant> cellsText = Retry.retry(2, () -> grid.getValues(options, 6));
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);

@@ -50,6 +50,8 @@ public class Options<V> {
      */
     private Map<Predicate<Integer>, Function<Cell, String>> functions = new HashMap<>();
 
+    private Function<List<V>, Boolean> auditor;
+
     /**
      * Index for resetting the parent for the next row.
      * <p>

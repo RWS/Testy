@@ -3,7 +3,7 @@ RELEASE NOTES
 **Release Notes for Testy 2.14.0-SNAPSHOT**
 - update webdriver version 4.1.0
 - improvement select(boolean doScroll, String... nodes) method in Tree
-- improvement doRetryIfNotSame(V expected, Callable<V> call) method in RetryUtils
+- improvement doRetryIfNotSame(V expected, Callable<V> call) method in Retry
 - migrate from slf4j-log4j12 to log4j-api
 - make scrollable interface works with locked grid
 - improvement Row(WebLocator grid, AbstractCell... cells) method for locked grid
@@ -41,7 +41,7 @@ RELEASE NOTES
 - setSearch{*}Type methods overate with current value
 - added Group class
 - click method is with retry
-- added RetryUtils class
+- added Retry class
 - added doRemove in TagField
 - added waitToRender(final long millis, boolean showXPathLog) method in IWebLocator
 - improvement Scrollable

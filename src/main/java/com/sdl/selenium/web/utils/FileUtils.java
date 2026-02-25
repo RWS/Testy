@@ -39,7 +39,7 @@ public class FileUtils {
     }
 
     public static boolean waitFileToHaveSize(File file, long size, int maxRetries) {
-        return RetryUtils.retry(maxRetries, () -> {
+        return Retry.retry(maxRetries, () -> {
             boolean greaterThanExpected = file.length() >= size;
             if (!greaterThanExpected) {
                 Utils.sleep(300);

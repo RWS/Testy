@@ -10,7 +10,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.IHeaders;
 import com.sdl.selenium.web.table.Table;
 import com.sdl.selenium.web.utils.Response;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -101,9 +101,9 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
-                    RetryUtils.retry(2, () -> {
+                    Retry.retry(2, () -> {
                         expanderEl.click();
-                        boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
+                        boolean expanded = Retry.retry(Duration.ofSeconds(2), () -> {
                             String aCls = row.getAttributeClass();
                             log.debug("classes:{}", aCls);
                             return aCls.contains("x-grid-tree-node-expanded");
@@ -133,7 +133,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
                         } else {
-                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                            selected = Retry.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
                         }
                     } catch (WebDriverException e) {
                         if (doScroll) {
@@ -142,7 +142,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
                         } else {
-                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                            selected = Retry.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
                         }
                     }
                 }
@@ -178,9 +178,9 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
-                    RetryUtils.retry(2, () -> {
+                    Retry.retry(2, () -> {
                         expanderEl.click();
-                        boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
+                        boolean expanded = Retry.retry(Duration.ofSeconds(2), () -> {
                             String aCls = row.getAttributeClass();
                             log.debug("classes:{}", aCls);
                             return aCls.contains("x-grid-tree-node-expanded");
@@ -210,7 +210,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
                         } else {
-                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                            selected = Retry.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
                         }
                     } catch (WebDriverException e) {
                         if (doScroll) {
@@ -219,7 +219,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
                         if (checkTree.isPresent()) {
                             selected = checkTree.click();
                         } else {
-                            selected = RetryUtils.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
+                            selected = Retry.retry(2, () -> action.name().equals("CLICK") ? nodeTree.click() : nodeTree.mouseOver());
                         }
                     }
                 }
@@ -362,9 +362,9 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             WebLocator expanderEl = new WebLocator(nodeEl).setClasses("x-tree-expander");
             if (nodeEl.ready()) {
                 if (!(isExpanded || (aClass != null && aClass.contains("x-grid-tree-node-leaf"))) && expanderEl.isPresent()) {
-                    expand = RetryUtils.retry(2, () -> {
+                    expand = Retry.retry(2, () -> {
                         expanderEl.doClick();
-                        boolean expanded = RetryUtils.retry(Duration.ofSeconds(2), () -> {
+                        boolean expanded = Retry.retry(Duration.ofSeconds(2), () -> {
                             String aCls = row.getAttributeClass();
                             log.debug("classes:{}", aCls);
                             return aCls.contains("x-grid-tree-node-expanded");
@@ -403,7 +403,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
         for (int i = 1; i <= size; i++) {
             rowsEl.setResultIdx(i);
             WebLocator expanderEl = new WebLocator(rowsEl).setClasses("x-tree-expander");
-            RetryUtils.retry(10, () -> {
+            Retry.retry(10, () -> {
                 if (rowsEl.isPresent()) {
                     expanderEl.doClick();
                 }

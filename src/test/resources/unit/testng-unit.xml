@@ -91,6 +91,7 @@
             <class name="com.sdl.unit.web.WebLocatorCssTest"/>
             <class name="com.sdl.unit.web.SetFinalXPathTest"/>
             <class name="com.sdl.unit.web.SetElPathSuffixTest"/>
+            <class name="com.sdl.unit.web.TransformTest"/>
 
             <class name="com.sdl.unit.window.WindowTest"/>
 

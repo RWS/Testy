@@ -27,7 +27,7 @@ public class Retry {
      *
      *                          <pre>
      *                                                    Example usage:
-     *                                                      RetryUtils.retry(3, () -> someOperation());
+     *                                                      Retry.retry(3, () -> someOperation());
      *                                                    </pre>
      */
     public static <V> V retry(int maxRetries, Callable<V> call) {
@@ -46,7 +46,7 @@ public class Retry {
      *
      *                          <pre>
      *                                                    Example usage:
-     *                                                      RetryUtils.retry(Duration.ofSeconds(10), () -> button.click());
+     *                                                      Retry.retry(Duration.ofSeconds(10), () -> button.click());
      *                                                    </pre>
      */
     public static <V> V retry(Duration duration, Callable<V> call) {
@@ -66,7 +66,7 @@ public class Retry {
      *
      *                          <pre>
      *                                                    Example usage:
-     *                                                      RetryUtils.retry(3, "Login", () -> someOperation());
+     *                                                      Retry.retry(3, "Login", () -> someOperation());
      *                                                    </pre>
      */
     public static <V> V retry(int maxRetries, String prefixLog, Callable<V> call) {
@@ -86,7 +86,7 @@ public class Retry {
      *
      *                          <pre>
      *                                                    Example usage:
-     *                                                      RetryUtils.retry(Duration.ofSeconds(10), "Login", () -> button.click());
+     *                                                      Retry.retry(Duration.ofSeconds(10), "Login", () -> button.click());
      *                                                    </pre>
      */
     public static <V> V retry(Duration duration, String prefixLog, Callable<V> call) {

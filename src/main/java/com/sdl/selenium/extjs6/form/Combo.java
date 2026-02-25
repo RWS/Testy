@@ -6,7 +6,7 @@ import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.Field;
 import com.sdl.selenium.web.form.ICombo;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -191,7 +191,7 @@ public abstract class Combo extends Field implements ICombo {
      * @return true if the value is successfully selected, false otherwise
      */
     public boolean selected(String value, Duration duration, SearchType... searchType) {
-        Boolean selected = RetryUtils.retry(5, () -> {
+        Boolean selected = Retry.retry(5, () -> {
             doSelect(value, duration, false, searchType);
             return getValue().equals(value);
         });

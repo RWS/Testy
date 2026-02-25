@@ -2,7 +2,7 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
@@ -83,7 +83,7 @@ public class Cell extends com.sdl.selenium.web.table.Cell {
     }
 
     public Boolean isChecked() {
-        String aClass = RetryUtils.retry(4, "isChecked", getCheckBoxCell()::getAttributeClass);
+        String aClass = Retry.retry(4, "isChecked", getCheckBoxCell()::getAttributeClass);
         return aClass != null && aClass.contains("x-grid-checkcolumn-checked");
     }
 

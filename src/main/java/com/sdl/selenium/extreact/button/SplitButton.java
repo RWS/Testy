@@ -3,7 +3,7 @@ package com.sdl.selenium.extreact.button;
 import com.sdl.selenium.extreact.menu.Menu;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -71,7 +71,7 @@ public class SplitButton extends Button {
     public List<String> getAllMenuValues() {
         Menu menu = new Menu();
         menu.ready();
-        RetryUtils.retry(3, () -> menu.showMenu(this) && menu.isShowMenu(this));
+        Retry.retry(3, () -> menu.showMenu(this) && menu.isShowMenu(this));
         List<String> menuValues = menu.getMenuValues();
         menu.hideMenu(this);
         return menuValues;

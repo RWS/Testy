@@ -8,7 +8,7 @@ import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.XPathBuilder;
 import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.tab.ITab;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -122,7 +122,7 @@ public class Tab extends WebLocator implements ITab {
             if (!inactiveTab.isDisplayed()) {
                 WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
                 WebLocator right = new WebLocator(container).setClasses("x-box-scroller-right");
-                Boolean scroll = RetryUtils.retry(6, () -> {
+                Boolean scroll = Retry.retry(6, () -> {
                     right.doClick();
                     return inactiveTab.isDisplayed();
                 });
@@ -146,7 +146,7 @@ public class Tab extends WebLocator implements ITab {
             if (!inactiveTab.isDisplayed()) {
                 WebLocator container = new WebLocator(getPathBuilder().getContainer()).setClasses(getPathBuilder().getBaseCls()).setTag(getPathBuilder().getTag());
                 WebLocator right = new WebLocator(container).setClasses("x-box-scroller-right");
-                Boolean scroll = RetryUtils.retry(6, () -> {
+                Boolean scroll = Retry.retry(6, () -> {
                     right.doClick();
                     return inactiveTab.isDisplayed();
                 });

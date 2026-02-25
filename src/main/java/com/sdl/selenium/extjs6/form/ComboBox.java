@@ -5,7 +5,7 @@ import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.extjs6.panel.Pagination;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
@@ -101,7 +101,7 @@ public class ComboBox extends Combo {
                     }
                 } while (getPaginationEl().goToNextPage());
             } else {
-                selected = RetryUtils.retry(2, () -> {
+                selected = Retry.retry(2, () -> {
                     boolean doClick = option.doClick();
                     return doClick && !option.ready(Duration.ofMillis(200));
                 });

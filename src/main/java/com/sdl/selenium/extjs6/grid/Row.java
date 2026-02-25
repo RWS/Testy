@@ -6,7 +6,7 @@ import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.AbstractCell;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -449,12 +449,12 @@ public class Row extends com.sdl.selenium.web.table.Row {
 
     public boolean expand() {
         scrollInGrid();
-        return !isCollapsed() || RetryUtils.retry(2, () -> doExpanded() && !isCollapsed());
+        return !isCollapsed() || Retry.retry(2, () -> doExpanded() && !isCollapsed());
     }
 
     public boolean collapse() {
         scrollInGrid();
-        return isCollapsed() || RetryUtils.retry(2, () -> doExpanded() && isCollapsed());
+        return isCollapsed() || Retry.retry(2, () -> doExpanded() && isCollapsed());
     }
 
     protected boolean doExpanded() {
@@ -468,7 +468,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
     }
 
     public boolean scrollTo() {
-        return RetryUtils.retryIfNotSame(70, true, () -> {
+        return Retry.retryIfNotSame(70, true, () -> {
             WebLocator container = getPathBuilder().getContainer();
             int lastRowVisibleIndex = new Row(container).findElements().size() - 1;
             Row row = new Row(container, lastRowVisibleIndex);
@@ -483,7 +483,7 @@ public class Row extends com.sdl.selenium.web.table.Row {
             if (grid.isScrollBottom()) {
                 grid.scrollTop();
             }
-            return RetryUtils.retry(100, () -> {
+            return Retry.retry(100, () -> {
                 boolean render = waitToRender(Duration.ofMillis(100), false) || grid.isScrollBottom();
                 if (!render) {
                     grid.scrollPageDown();

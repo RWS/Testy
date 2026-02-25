@@ -5,7 +5,7 @@ import com.sdl.selenium.extjs6.slider.Slider;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.link.WebLink;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import com.sdl.selenium.web.utils.Utils;
 import lombok.Getter;
 import org.openqa.selenium.WebDriverException;
@@ -74,7 +74,7 @@ public class DateField extends TextField {
     private boolean setDate(String day, String month, String year) {
         String fullDate = "";
         try {
-            fullDate = RetryUtils.retrySafe(5, monthYearButton::getText).trim();
+            fullDate = Retry.retrySafe(5, monthYearButton::getText).trim();
         } catch (NullPointerException e) {
             Utils.sleep(1);
         }
@@ -112,7 +112,7 @@ public class DateField extends TextField {
             }
         } while (!found && !foundYear(yearInt, goNext));
         try {
-            RetryUtils.retry(3, () -> {
+            Retry.retry(3, () -> {
                 yearEl.click();
                 return yearEl.getAttributeClass().contains("-selected");
             });
@@ -139,7 +139,7 @@ public class DateField extends TextField {
      * @return true if is selected date, false when DataField doesn't exist
      */
     public boolean select(String date) {
-        return RetryUtils.retry(2, () -> select(date, "dd/MM/yyyy"));
+        return Retry.retry(2, () -> select(date, "dd/MM/yyyy"));
     }
 
     public boolean select(String date, String format) {
@@ -165,7 +165,7 @@ public class DateField extends TextField {
             int hour = localDate.getHour();
             int minute = localDate.getMinute();
             ready();
-            RetryUtils.retry(2, () -> {
+            Retry.retry(2, () -> {
                 trigger.click();
                 return datePicker.ready(Duration.ofSeconds(1));
             });
@@ -177,7 +177,7 @@ public class DateField extends TextField {
             String month = localDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
             int year = localDate.getYear();
             ready();
-            RetryUtils.retry(2, () -> {
+            Retry.retry(2, () -> {
                 trigger.click();
                 return datePicker.ready(Duration.ofSeconds(1));
             });

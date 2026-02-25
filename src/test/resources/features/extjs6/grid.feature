@@ -1,5 +1,11 @@
 Feature: Grid
 
+  Scenario: Verify grid only one object
+    Given I open extjs6 app and add "#cell-editing" path
+    Then I verify if grid has only one row object values:
+      | commonName     | light | price | available    | indoor |
+      | Adder's-Tongue | Shade | $9.58 | Apr 13, 2006 | true   |
+
   Scenario: Verify grid object
     Given I open extjs6 app and add "#cell-editing" path
     Then I verify if grid has object values:

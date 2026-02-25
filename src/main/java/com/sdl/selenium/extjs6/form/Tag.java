@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.form.ITag;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public abstract class Tag extends Combo implements ITag {
         int size = item.size();
         if(size > 0) {
             WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-            removed = RetryUtils.retry(size, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
+            removed = Retry.retry(size, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
         } else {
             removed = true;
         }
@@ -35,7 +35,7 @@ public abstract class Tag extends Combo implements ITag {
         int size = item.size();
         if(size > 0) {
             WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-            removed = RetryUtils.retry(size, () -> closeEl.doClick() && !item.ready(Duration.ofMillis(500)));
+            removed = Retry.retry(size, () -> closeEl.doClick() && !item.ready(Duration.ofMillis(500)));
         } else {
             removed = true;
         }
@@ -48,7 +48,7 @@ public abstract class Tag extends Combo implements ITag {
             WebLocator item = new WebLocator(list).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
             if (item.ready(Duration.ofMillis(500))) {
                 WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-                removed = removed && RetryUtils.retry(2, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
+                removed = removed && Retry.retry(2, () -> closeEl.click() && !item.ready(Duration.ofMillis(500)));
             }
         }
         return removed;
@@ -60,7 +60,7 @@ public abstract class Tag extends Combo implements ITag {
             WebLocator item = new WebLocator(list).setClasses("x-tagfield-item").setText(value, SearchType.DEEP_CHILD_NODE_OR_SELF);
             if (item.ready(Duration.ofMillis(500))) {
                 WebLocator closeEl = new WebLocator(item).setClasses("x-tagfield-item-close");
-                removed = removed && RetryUtils.retry(2, () -> closeEl.doClick() && !item.ready(Duration.ofMillis(500)));
+                removed = removed && Retry.retry(2, () -> closeEl.doClick() && !item.ready(Duration.ofMillis(500)));
             }
         }
         return removed;

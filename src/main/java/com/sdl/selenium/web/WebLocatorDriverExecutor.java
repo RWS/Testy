@@ -5,7 +5,7 @@ import com.sdl.selenium.WebLocatorSuggestions;
 import com.sdl.selenium.WebLocatorUtils;
 import com.sdl.selenium.utils.config.WebLocatorConfig;
 import com.sdl.selenium.web.utils.MultiThreadClipboardUtils;
-import com.sdl.selenium.web.utils.RetryUtils;
+import com.sdl.selenium.web.utils.Retry;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,10 +30,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         boolean click = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            click = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().click());
+            click = Retry.retryRunnableSafe(1, () -> el.getWebElement().click());
         }
         if (!click) {
-            click = RetryUtils.retryRunnableSafe(4, "click: " + el, () -> {
+            click = Retry.retryRunnableSafe(4, "click: " + el, () -> {
                 findAgain(el);
                 el.getWebElement().click();
             });
@@ -69,10 +69,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         boolean submit = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            submit = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().submit());
+            submit = Retry.retryRunnableSafe(1, () -> el.getWebElement().submit());
         }
         if (!submit) {
-            submit = RetryUtils.retryRunnableSafe(4, "submit: " + el, () -> {
+            submit = Retry.retryRunnableSafe(4, "submit: " + el, () -> {
                 findAgain(el);
                 el.getWebElement().submit();
             });
@@ -85,10 +85,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         boolean clear = false;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            clear = RetryUtils.retryRunnableSafe(1, () -> el.getWebElement().clear());
+            clear = Retry.retryRunnableSafe(1, () -> el.getWebElement().clear());
         }
         if (!clear) {
-            clear = RetryUtils.retryRunnableSafe(4, "clear: " + el, () -> {
+            clear = Retry.retryRunnableSafe(4, "clear: " + el, () -> {
                 findAgain(el);
                 el.getWebElement().clear();
             });
@@ -211,10 +211,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         String cssValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            cssValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
+            cssValue = Retry.retrySafe(1, () -> el.getWebElement().getCssValue(propertyName));
         }
         if (cssValue == null) {
-            return RetryUtils.retrySafe(4, "getCssValue: " + el, () -> {
+            return Retry.retrySafe(4, "getCssValue: " + el, () -> {
                 findAgain(el);
                 return el.getWebElement().getCssValue(propertyName);
             });
@@ -227,10 +227,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         String tagName = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            tagName = RetryUtils.retrySafe(1, () -> el.getWebElement().getTagName());
+            tagName = Retry.retrySafe(1, () -> el.getWebElement().getTagName());
         }
         if (tagName == null) {
-            return RetryUtils.retrySafe(4, "getTagName: " + el, () -> {
+            return Retry.retrySafe(4, "getTagName: " + el, () -> {
                 findAgain(el);
                 return el.getWebElement().getTagName();
             });
@@ -248,11 +248,11 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         String attributeValue = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            attributeValue = RetryUtils.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
+            attributeValue = Retry.retrySafe(1, () -> el.getWebElement().getAttribute(attribute));
         }
         if (!instant) {
             if (attributeValue == null) {
-                return RetryUtils.retrySafe(4, "getAttribute: " + el, () -> {
+                return Retry.retrySafe(4, "getAttribute: " + el, () -> {
                     findAgain(el);
                     return el.getWebElement().getAttribute(attribute);
                 });
@@ -291,10 +291,10 @@ public class WebLocatorDriverExecutor implements WebLocatorExecutor {
         invalidateCache(el);
         String text = null;
         if (!el.getCurrentElementPath().equals(getSelector(el))) {
-            text = RetryUtils.retrySafe(1, () -> el.getWebElement().getText());
+            text = Retry.retrySafe(1, () -> el.getWebElement().getText());
         }
         if (!instant && text == null) {
-            return RetryUtils.retrySafe(4, "getText: " + el, () -> {
+            return Retry.retrySafe(4, "getText: " + el, () -> {
                 findAgain(el);
                 return el.getWebElement().getText();
             });
