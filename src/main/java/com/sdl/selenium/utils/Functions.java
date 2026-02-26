@@ -3,6 +3,7 @@ package com.sdl.selenium.utils;
 import com.sdl.selenium.extjs6.grid.Cell;
 import com.sdl.selenium.web.WebLocator;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 
@@ -17,7 +18,7 @@ public class Functions {
     }
 
     public static <T> Function<List<T>, Boolean> auditor(List<T> values) {
-        return array -> array.containsAll(values);
+        return array -> new HashSet<>(array).containsAll(values);
     }
 }
 
