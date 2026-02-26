@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 
-public class Functions {
+public class FunctionsUtils {
 
     public static Function<Cell, String> getBooleanValue() {
         return f -> {

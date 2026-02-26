@@ -2,7 +2,7 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
-import com.sdl.selenium.utils.Functions;
+import com.sdl.selenium.utils.FunctionsUtils;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Result;
 import com.sdl.selenium.web.utils.Retry;
@@ -42,7 +42,7 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasValues(List<List<String>> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = grid.getCellsText(t -> t == 5, Functions.getBooleanValue(), 6);
+        List<List<String>> cellsText = grid.getCellsText(t -> t == 5, FunctionsUtils.getBooleanValue(), 6);
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
@@ -53,7 +53,7 @@ public class GridSteps extends TestBase {
     @Then("I verify parallel if grid has values:")
     public void iVerifyParallelIfGridHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = numberedRows.getParallelValues(t -> t == 0, Functions.getBooleanValue());
+        List<List<String>> cellsText = numberedRows.getParallelValues(t -> t == 0, FunctionsUtils.getBooleanValue());
 //        List<List<String>> cellsText = numberedRows.getCellsText();
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
@@ -64,7 +64,7 @@ public class GridSteps extends TestBase {
     @Then("I verify parallel if grid has size {int}")
     public void iVerifyParallelIfGridHasValues(int size) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = editingRows.getParallelValues(t -> t == 5, Functions.getBooleanValue());
+        List<List<String>> cellsText = editingRows.getParallelValues(t -> t == 5, FunctionsUtils.getBooleanValue());
 //        List<List<String>> cellsText = editingRows.getCellsText(t -> t == 5, getBooleanValue());
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
@@ -91,7 +91,7 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasObjectValues(List<Plant> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, Functions.getBooleanValue());
+        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, FunctionsUtils.getBooleanValue());
         options.setAlignment(false);
         List<Plant> cellsText = Retry.retry(2, () -> grid.getValues(options, 3, 6));
         long endMs = System.currentTimeMillis();
@@ -105,9 +105,9 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasOnlyOneRowObjectValues(List<Plant> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, Functions.getBooleanValue());
+        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, FunctionsUtils.getBooleanValue());
         options.setAlignment(false);
-        options.setAuditor(Functions.auditor(values));
+        options.setAuditor(FunctionsUtils.auditor(values));
         List<Plant> cellsText = Retry.retry(2, () -> grid.getValues(options, 6));
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
