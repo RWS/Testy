@@ -705,6 +705,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
                 }
                 row.setChildNodes(new Cell(name));
                 row = row.getNextRow();
+                row.setResultIdx(1);
             }
             if (i != 0 && i % 15 == 0) {
                 row.scrollIntoView(Go.START);

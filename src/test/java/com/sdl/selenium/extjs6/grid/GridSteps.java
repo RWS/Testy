@@ -2,6 +2,7 @@ package com.sdl.selenium.extjs6.grid;
 
 import com.sdl.selenium.InputData;
 import com.sdl.selenium.TestBase;
+import com.sdl.selenium.utils.Functions;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.utils.Result;
 import com.sdl.selenium.web.utils.Retry;
@@ -13,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.function.Function;
 
 import static com.sdl.selenium.utils.MatcherAssertList.assertThatList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,25 +42,18 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasValues(List<List<String>> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = grid.getCellsText(t -> t == 5, getBooleanValue(), 6);
+        List<List<String>> cellsText = grid.getCellsText(t -> t == 5, Functions.getBooleanValue(), 6);
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
         log.info("performance took {} ms", rez);
         assertThatList("Actual values", cellsText, contains(values.toArray()));
     }
 
-    public static Function<Cell, String> getBooleanValue() {
-        return f -> {
-            WebLocator check = new WebLocator(f).setClasses("x-grid-checkcolumn");
-            boolean checked = check.getAttributeClass().contains("x-grid-checkcolumn-checked");
-            return checked ? "true" : "false";
-        };
-    }
 
     @Then("I verify parallel if grid has values:")
     public void iVerifyParallelIfGridHasValues(List<List<String>> values) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = numberedRows.getParallelValues(t -> t == 0, getBooleanValue());
+        List<List<String>> cellsText = numberedRows.getParallelValues(t -> t == 0, Functions.getBooleanValue());
 //        List<List<String>> cellsText = numberedRows.getCellsText();
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
@@ -71,7 +64,7 @@ public class GridSteps extends TestBase {
     @Then("I verify parallel if grid has size {int}")
     public void iVerifyParallelIfGridHasValues(int size) {
         long startMs = System.currentTimeMillis();
-        List<List<String>> cellsText = editingRows.getParallelValues(t -> t == 5, getBooleanValue());
+        List<List<String>> cellsText = editingRows.getParallelValues(t -> t == 5, Functions.getBooleanValue());
 //        List<List<String>> cellsText = editingRows.getCellsText(t -> t == 5, getBooleanValue());
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
@@ -98,7 +91,7 @@ public class GridSteps extends TestBase {
     public void iVerifyIfGridHasObjectValues(List<Plant> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, getBooleanValue());
+        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, Functions.getBooleanValue());
         options.setAlignment(false);
         List<Plant> cellsText = Retry.retry(2, () -> grid.getValues(options, 3, 6));
         long endMs = System.currentTimeMillis();
@@ -107,19 +100,14 @@ public class GridSteps extends TestBase {
         assertThatList("Actual values", cellsText, containsInAnyOrder(values.toArray()));
     }
 
-    public static <T> Function<List<T>, Boolean> auditor(List<T> values) {
-        return array -> {
-            return array.containsAll(values);
-        };
-    }
 
     @Then("I verify if grid has only one row object values:")
     public void iVerifyIfGridHasOnlyOneRowObjectValues(List<Plant> values) {
         grid.ready(true);
         long startMs = System.currentTimeMillis();
-        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, getBooleanValue());
+        Options<Plant> options = new Options<>(values.get(0), t -> t == 5, Functions.getBooleanValue());
         options.setAlignment(false);
-        options.setAuditor(auditor(values));
+        options.setAuditor(Functions.auditor(values));
         List<Plant> cellsText = Retry.retry(2, () -> grid.getValues(options, 6));
         long endMs = System.currentTimeMillis();
         long rez = endMs - startMs;
