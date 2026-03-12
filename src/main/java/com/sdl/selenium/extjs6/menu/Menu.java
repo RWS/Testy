@@ -193,9 +193,9 @@ public class Menu extends WebLocator {
     }
 
     public Menu openMenu(WebLink link) {
-        String id = link.getAttribute("aria-owns");
         return Retry.retry(2, () -> {
             link.click();
+            String id = link.getAttribute("aria-owns");
             Menu m = new Menu().setId(id);
             if (m.ready()) {
                 return m;
