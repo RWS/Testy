@@ -161,7 +161,7 @@ public class Menu extends WebLocator {
         List<String> menuValues = this.getMenuValues1();
         List<String> list = new ArrayList<>();
         for (String value : menuValues) {
-            WebLink item = getWebLink(value);
+            WebLink item = getWebLink(value, SearchType.EQUALS);
             item.setChildNodes(arrow);
             list.add(value);
             if (item.isPresent()) {
@@ -169,14 +169,14 @@ public class Menu extends WebLocator {
                 List<String> menuChild1Values = menuChild1.getMenuValues1();
                 for (String itemText : menuChild1Values) {
                     list.add(">" + itemText);
-                    WebLink item1 = menuChild1.getWebLink(itemText);
+                    WebLink item1 = menuChild1.getWebLink(itemText, SearchType.EQUALS);
                     item1.setChildNodes(arrow);
                     if (item1.isPresent()) {
                         Menu menuChild2 = openMenu(item1);
                         List<String> menuChild2Values = menuChild2.getMenuValues1();
                         for (String item2Text : menuChild2Values) {
                             list.add(">>" + item2Text);
-                            WebLink item2 = menuChild2.getWebLink(item2Text);
+                            WebLink item2 = menuChild2.getWebLink(item2Text, SearchType.EQUALS);
                             item2.setChildNodes(arrow);
                             if (item2.isPresent()) {
                                 Menu menuChild3 = openMenu(item2);
@@ -192,7 +192,7 @@ public class Menu extends WebLocator {
         return list;
     }
 
-    private static Menu openMenu(WebLink link) {
+    public Menu openMenu(WebLink link) {
         String id = link.getAttribute("aria-owns");
         return Retry.retry(2, () -> {
             link.click();
