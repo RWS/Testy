@@ -303,7 +303,7 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
             }
         }
         String aClass = nodeEl.getAttributeClass();
-        return aClass.contains("x-grid-item-selected");
+        return aClass != null && aClass.contains("x-grid-item-selected");
     }
 
     public void expandAllNodes() {
