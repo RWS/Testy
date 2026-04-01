@@ -730,7 +730,11 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
                 }
                 list.add(text);
             }
-            name = list.get(0);
+            try {
+                name = list.get(0);
+            } catch (IndexOutOfBoundsException e) {
+                name = "";
+            }
             List<String> listTMP = options.isAlignment() ? alignment(row, list) : list;
             listOfList.add(listTMP);
             if (options.getAuditor() != null) {
