@@ -741,7 +741,7 @@ public class Grid extends Table implements Scrollable, XTool, Editor, Transform,
             }
             List<String> listTMP = options.isAlignment() ? alignment(row, list) : list;
             listOfList.add(listTMP);
-            if (options.getAuditor() != null) {
+            if (options.getAuditor() != null && !listOfList.isEmpty() && !listOfList.get(0).isEmpty()) {
                 List<V> array = transformTo(options.getType(), listOfList, columnsList);
                 Boolean pass = options.getAuditor().apply(array);
                 if (pass) {
