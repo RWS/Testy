@@ -789,8 +789,8 @@ public class XPathBuilder implements Cloneable {
      * <p><b>Used for finding element process (to generate xpath address)</b></p>
      * <p>Result Example:</p>
      * <pre>
-     *     new WebLocator().setAttributes("placeholder", Operator.OR, "Search", "Search");
-     *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') or contains(concat(' ', @placeholder, ' '), ' Search ')]
+     *     new WebLocator().setAttributes("placeholder", Operator.OR, "Search", "Search1");
+     *     //*[contains(concat(' ', @placeholder, ' '), ' Search ') or contains(concat(' ', @placeholder, ' '), ' Search1 ')]
      * </pre>
      *
      * @param attribute eg. placeholder

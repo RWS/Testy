@@ -1,27 +1,40 @@
 package com.sdl.selenium.web;
 
 /**
- * Contains all Search types :
- * see details for all in :
+ * Contains all Search types:
+ * see details for all in:
  * <p>text group</p>
  * <ul>
  * <li>{@link SearchType#EQUALS}</li>
  * <li>{@link SearchType#CONTAINS}</li>
  * <li>{@link SearchType#STARTS_WITH}</li>
+ * <li>{@link SearchType#NOT}</li>
  * </ul>
  * <p>trim group</p>
  * <ul>
  * <li>{@link SearchType#TRIM}</li>
+ * <li>{@link SearchType#NO_TRIM}</li>
+ * </ul>
+ * <p>sensitive group</p>
+ * <ul>
+ * <li>{@link SearchType#CASE_SENSITIVE}</li>
+ * <li>{@link SearchType#CASE_INSENSITIVE}</li>
  * </ul>
  * <p>child group</p>
  * <ul>
  * <li>{@link SearchType#CHILD_NODE}</li>
  * <li>{@link SearchType#DEEP_CHILD_NODE}</li>
- * <li>{@link SearchType#HTML_NODE}</li>
- * <li>{@link SearchType#CONTAINS_ALL}</li>
- * <li>{@link SearchType#CONTAINS_ALL_CHILD_NODES}</li>
+ * <li>{@link SearchType#DEEP_CHILD_NODE_OR_SELF}</li>
  * <li>{@link SearchType#CONTAINS_ANY}</li>
  * </ul>
+ * <p>advance group</p>
+ *  <ul>
+ *  <li>{@link SearchType#CONTAINS_ANY}</li>
+ *  <li>{@link SearchType#CONTAINS_ALL}</li>
+ *  <li>{@link SearchType#CONTAINS_ALL_CHILD_NODES}</li>
+ *  <li>{@link SearchType#HTML_NODE}</li>
+ *  <li>{@link SearchType#HTML_NODES}</li>
+ *  </ul>
  */
 public enum SearchType {
 
