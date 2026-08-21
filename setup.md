@@ -13,4 +13,4 @@ Automated Acceptance Testing.
 ### Running tests
 
 - Right click on testngIntegration.xml (src\test\resources\integration\testngIntegration.xml) - Run
-- or simple navigate to any tests (eg. src\test\functional\java\com\sdl\selenium\extjs3\button\ButtonIntegrationTest.java) and run them 
+- or simple navigate to any tests (eg. src\test\functional\java\com\sdl\selenium\extjs3\button\ButtonIntegrationTest.java) and run them

@@ -92,6 +92,12 @@ This project is optimized for:
 - Java
 - Maven
 
+## Setup Guide
+
+For full setup and run instructions, see [`setup.md`](./setup.md).
+
+For `Button` examples and API notes, see [`button.md`](./button.md).
+
 ## Getting the maven plugin
 
 ```xml
@@ -185,7 +191,8 @@ Here is a sample project with cucumber and Testy on Chrome browser:
 
 ## Setting up Testy project
 
-[Setting UP](./setup.md) 
+- Main setup and run guide: [`setup.md`](./setup.md)
+- Button usage guide: [`button.md`](./button.md)
 
 ## License
 

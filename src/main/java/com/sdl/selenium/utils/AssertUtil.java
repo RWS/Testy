@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.function.Function;
@@ -323,82 +324,90 @@ public class AssertUtil {
                 if (matcher.find()) {
                     LocalDate now = LocalDate.now();
                     String group = matcher.group();
-                    if (group.contains("Today")) {
-                        return (O) "today dd MMM yyyy";
-                    }
-                    try {
-                        Time timeObj = getLocalDate(group);
-                        String format = timeObj.format();
-                        LocalDate newDate = timeObj.localDate();;
-                        Matcher m = Pattern.compile("\\s\\d{2}:\\d{2}:\\d{2}").matcher(group);
-                        String time = m.find() ? m.group() : "";
-                        if (now.minusDays(7L).isEqual(newDate)) {
-                            return (O) ("1WeekAgo " + format + time);
-                        } else if (now.minusDays(3L).isEqual(newDate)) {
-                            return (O) ("3DaysAgo " + format + time);
-                        } else if (now.minusDays(2L).isEqual(newDate)) {
-                            return (O) ("2DaysAgo " + format + time);
-                        } else if (now.minusDays(1L).isEqual(newDate)) {
-                            return (O) ("yesterday " + format + time);
-                        } else if (now.isEqual(newDate)) {
-                            return (O) ("today " + format + time);
-                        } else if (now.plusDays(1L).isEqual(newDate)) {
-                            return (O) ("tomorrow " + format + time);
-                        } else if (now.plusDays(2L).isEqual(newDate)) {
-                            return (O) ("in2Days " + format + time);
-                        } else if (now.plusDays(3L).isEqual(newDate)) {
-                            return (O) ("in3Days " + format + time);
-                        } else if (now.plusDays(4L).isEqual(newDate)) {
-                            return (O) ("in4Days " + format + time);
-                        } else if (now.plusDays(5L).isEqual(newDate)) {
-                            return (O) ("in5Days " + format + time);
-                        } else if (now.plusDays(6L).isEqual(newDate)) {
-                            return (O) ("in6Days " + format + time);
-                        } else if (now.plusDays(7L).isEqual(newDate)) {
-                            return (O) ("nextWeek " + format + time);
-                        } else if (now.plusDays(8L).isEqual(newDate)) {
-                            return (O) ("nextWeekAnd1Day " + format + time);
-                        } else if (now.plusDays(9L).isEqual(newDate)) {
-                            return (O) ("nextWeekAnd2Days " + format + time);
-                        } else if (now.plusDays(10L).isEqual(newDate)) {
-                            return (O) ("nextWeekAnd3Days " + format + time);
-                        } else if (now.plusDays(11L).isEqual(newDate)) {
-                            return (O) ("nextWeekAnd4Days " + format + time);
-                        } else if (now.plusDays(12L).isEqual(newDate)) {
-                            return (O) ("nextWeekAnd5Days " + format + time);
-                        } else if (now.plusDays(13L).isEqual(newDate)) {
-                            return (O) ("nextWeekAnd6Days " + format + time);
-                        } else if (now.plusDays(14L).isEqual(newDate)) {
-                            return (O) ("next2Weeks " + format + time);
-                        } else if (now.plusDays(21L).isEqual(newDate)) {
-                            return (O) ("next3Weeks " + format + time);
-                        } else if (now.plusDays(28L).isEqual(newDate)) {
-                            return (O) ("next4Weeks " + format + time);
-                        } else if (now.plusMonths(1L).minusDays(1L).isEqual(newDate)) {
-                            return (O) ("nextMonth1DayAgo " + format + time);
-                        } else if (now.plusMonths(1L).minusDays(2L).isEqual(newDate)) {
-                            return (O) ("nextMonth2DaysAgo " + format + time);
-                        } else if (now.plusMonths(1L).minusDays(3L).isEqual(newDate)) {
-                            return (O) ("nextMonth3DaysAgo " + format + time);
-                        } else if (now.plusMonths(1L).plusDays(1L).isEqual(newDate)) {
-                            return (O) ("nextMonthAnd1Day " + format + time);
-                        } else if (now.plusMonths(1L).plusDays(2L).isEqual(newDate)) {
-                            return (O) ("nextMonthAnd2Days " + format + time);
-                        } else if (now.plusMonths(1L).isEqual(newDate)) {
-                            return (O) ("nextMonth " + format + time);
-                        } else if (now.plusMonths(6L).minusDays(1L).isEqual(newDate)) {
-                            return (O) ("next6Months1DayAgo " + format + time);
-                        } else if (now.plusMonths(6L).minusDays(2L).isEqual(newDate)) {
-                            return (O) ("next6Months2DaysAgo " + format + time);
-                        } else if (now.plusYears(1L).minusDays(1L).isEqual(newDate)) {
-                            return (O) ("nextYear1DayAgo " + format + time);
-                        } else if (now.plusYears(1L).isEqual(newDate)) {
-                            return (O) ("nextYear " + format + time);
+                    String formattedValue;
+                    if (group.equalsIgnoreCase("Today")) {
+                        formattedValue = "today dd MMM yyyy";
+                    } else {
+                        try {
+                            Time timeObj = getLocalDate(group);
+                            String format = timeObj.format();
+                            LocalDate newDate = timeObj.localDate();
+                            Matcher m = Pattern.compile("\\s\\d{2}:\\d{2}:\\d{2}").matcher(group);
+                            String time = m.find() ? m.group() : "";
+                            if (now.minusDays(7L).isEqual(newDate)) {
+                                formattedValue = "1WeekAgo " + format + time;
+                            } else if (now.minusDays(3L).isEqual(newDate)) {
+                                formattedValue = "3DaysAgo " + format + time;
+                            } else if (now.minusDays(2L).isEqual(newDate)) {
+                                formattedValue = "2DaysAgo " + format + time;
+                            } else if (now.minusDays(1L).isEqual(newDate)) {
+                                formattedValue = "yesterday " + format + time;
+                            } else if (now.isEqual(newDate)) {
+                                formattedValue = "today " + format + time;
+                            } else if (now.plusDays(1L).isEqual(newDate)) {
+                                formattedValue = "tomorrow " + format + time;
+                            } else if (now.plusDays(2L).isEqual(newDate)) {
+                                formattedValue = "in2Days " + format + time;
+                            } else if (now.plusDays(3L).isEqual(newDate)) {
+                                formattedValue = "in3Days " + format + time;
+                            } else if (now.plusDays(4L).isEqual(newDate)) {
+                                formattedValue = "in4Days " + format + time;
+                            } else if (now.plusDays(5L).isEqual(newDate)) {
+                                formattedValue = "in5Days " + format + time;
+                            } else if (now.plusDays(6L).isEqual(newDate)) {
+                                formattedValue = "in6Days " + format + time;
+                            } else if (now.plusDays(7L).isEqual(newDate)) {
+                                formattedValue = "nextWeek " + format + time;
+                            } else if (now.plusDays(8L).isEqual(newDate)) {
+                                formattedValue = "nextWeekAnd1Day " + format + time;
+                            } else if (now.plusDays(9L).isEqual(newDate)) {
+                                formattedValue = "nextWeekAnd2Days " + format + time;
+                            } else if (now.plusDays(10L).isEqual(newDate)) {
+                                formattedValue = "nextWeekAnd3Days " + format + time;
+                            } else if (now.plusDays(11L).isEqual(newDate)) {
+                                formattedValue = "nextWeekAnd4Days " + format + time;
+                            } else if (now.plusDays(12L).isEqual(newDate)) {
+                                formattedValue = "nextWeekAnd5Days " + format + time;
+                            } else if (now.plusDays(13L).isEqual(newDate)) {
+                                formattedValue = "nextWeekAnd6Days " + format + time;
+                            } else if (now.plusDays(14L).isEqual(newDate)) {
+                                formattedValue = "next2Weeks " + format + time;
+                            } else if (now.plusDays(21L).isEqual(newDate)) {
+                                formattedValue = "next3Weeks " + format + time;
+                            } else if (now.plusDays(28L).isEqual(newDate)) {
+                                formattedValue = "next4Weeks " + format + time;
+                            } else if (now.plusMonths(1L).minusDays(1L).isEqual(newDate)) {
+                                formattedValue = "nextMonth1DayAgo " + format + time;
+                            } else if (now.plusMonths(1L).minusDays(2L).isEqual(newDate)) {
+                                formattedValue = "nextMonth2DaysAgo " + format + time;
+                            } else if (now.plusMonths(1L).minusDays(3L).isEqual(newDate)) {
+                                formattedValue = "nextMonth3DaysAgo " + format + time;
+                            } else if (now.plusMonths(1L).plusDays(1L).isEqual(newDate)) {
+                                formattedValue = "nextMonthAnd1Day " + format + time;
+                            } else if (now.plusMonths(1L).plusDays(2L).isEqual(newDate)) {
+                                formattedValue = "nextMonthAnd2Days " + format + time;
+                            } else if (now.plusMonths(1L).isEqual(newDate)) {
+                                formattedValue = "nextMonth " + format + time;
+                            } else if (now.plusMonths(6L).minusDays(1L).isEqual(newDate)) {
+                                formattedValue = "next6Months1DayAgo " + format + time;
+                            } else if (now.plusMonths(6L).minusDays(2L).isEqual(newDate)) {
+                                formattedValue = "next6Months2DaysAgo " + format + time;
+                            } else if (now.plusYears(1L).minusDays(1L).isEqual(newDate)) {
+                                formattedValue = "nextYear1DayAgo " + format + time;
+                            } else if (now.plusYears(1L).isEqual(newDate)) {
+                                formattedValue = "nextYear " + format + time;
+                            } else {
+                                formattedValue = date;
+                            }
+                        } catch (DateTimeParseException e) {
+                            String format = getKeyFromStorage(date);
+                            return (O) format;
                         }
-                    } catch (DateTimeParseException e) {
-                        String format = getKeyFromStorage(date);
-                        return (O) format;
                     }
+                    if (date.equals(group)) {
+                        return (O) formattedValue;
+                    }
+                    return (O) date.replace(group, formattedValue);
                 } else {
                     String format = getKeyFromStorage(date);
                     return (O) format;
@@ -416,15 +425,15 @@ public class AssertUtil {
 
     public Time getLocalDate(String group) {
         List<Format> formatters = List.of(
-                new Format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH), "dd MMM yyyy"),
-                new Format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH), "yyyy-MM-dd"),
-                new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH), "dd-MM-yyyy"),
-                new Format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss", Locale.ENGLISH), "dd MMM yyyy"),
-                new Format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH), "yyyy-MM-dd"),
-                new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH), "dd-MM-yyyy"),
-                new Format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm", Locale.ENGLISH), "dd MMM yyyy"),
-                new Format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH), "yyyy-MM-dd"),
-                new Format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm", Locale.ENGLISH), "dd-MM-yyyy")
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd MMM yyyy").toFormatter(Locale.ENGLISH), "dd MMM yyyy"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("yyyy-MM-dd").toFormatter(Locale.ENGLISH), "yyyy-MM-dd"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd-MM-yyyy").toFormatter(Locale.ENGLISH), "dd-MM-yyyy"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd MMM yyyy HH:mm:ss").toFormatter(Locale.ENGLISH), "dd MMM yyyy"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("yyyy-MM-dd HH:mm:ss").toFormatter(Locale.ENGLISH), "yyyy-MM-dd"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd-MM-yyyy HH:mm:ss").toFormatter(Locale.ENGLISH), "dd-MM-yyyy"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd MMM yyyy HH:mm").toFormatter(Locale.ENGLISH), "dd MMM yyyy"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("yyyy-MM-dd HH:mm").toFormatter(Locale.ENGLISH), "yyyy-MM-dd"),
+                new Format(new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd-MM-yyyy HH:mm").toFormatter(Locale.ENGLISH), "dd-MM-yyyy")
         );
         String form = "";
         LocalDate newDate = null;
