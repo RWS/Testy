@@ -440,19 +440,23 @@ public class Tree extends WebLocator implements Scrollable, Editor, Transform, I
     }
 
     public Row getNodeRow(List<String> nodes, SearchType... searchTypes) {
+        return getNodeRow(nodes, 1, searchTypes);
+    }
+
+    public Row getNodeRow(List<String> nodes, int columnIndex, SearchType... searchTypes) {
         int size = nodes.size();
         if (size == 0) {
             return null;
         } else if (size == 1) {
-            return getRow(new Cell(1, nodes.get(0), searchTypes));
+            return getRow(new Cell(columnIndex, nodes.get(0), searchTypes));
         } else {
-            Row row = new Row(this, new Cell(1, nodes.get(size - 2), searchTypes)) {
+            Row row = new Row(this, new Cell(columnIndex, nodes.get(size - 2), searchTypes)) {
                 public Row getNextRow() {
                     return new Row(this).setRoot("/").setTag("following-sibling::table");
                 }
             };
             Row nextRow = row.getNextRow();
-            Cell cell = new Cell(1, nodes.get(size - 1), searchTypes);
+            Cell cell = new Cell(columnIndex, nodes.get(size - 1), searchTypes);
             nextRow.setChildNodes(cell);
             return nextRow;
         }
