@@ -24,4 +24,9 @@ public class Accordion extends Panel {
         }
         setTitle(title, searchTypes);
     }
+
+    public boolean isCollapsed() {
+        String aClass = getAttributeClass();
+        return aClass != null && aClass.contains("x-collapsed");
+    }
 }
