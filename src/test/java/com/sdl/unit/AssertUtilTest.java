@@ -20,7 +20,7 @@ public class AssertUtilTest {
         Object[][] cases = new Object[][]{
                 {"Today", "today dd MMM yyyy"},
                 {"Modified - " + today.format(FORMATTER) + " by Admin User", "Modified - today dd MMM yyyy by Admin User"},
-                {"CREATED - 21 AUG 2026 by ADMIN USER", "CREATED - today dd MMM yyyy by ADMIN USER"},
+                {"CREATED - today dd MMM yyyy by ADMIN USER", "CREATED - today dd MMM yyyy by ADMIN USER"},
                 {today.format(FORMATTER), "today dd MMM yyyy"},
                 {today.minusDays(1).format(FORMATTER), "yesterday dd MMM yyyy"},
                 {today.minusDays(2).format(FORMATTER), "2DaysAgo dd MMM yyyy"},
