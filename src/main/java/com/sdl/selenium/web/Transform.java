@@ -59,7 +59,7 @@ public interface Transform {
         return resultList;
     }
 
-    private List<String> getNames(String json) throws JsonProcessingException {
+    default List<String> getNames(String json) throws JsonProcessingException {
         List<String> names = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(json);
         jsonNode.fields().forEachRemaining(i -> {
