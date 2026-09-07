@@ -50,4 +50,8 @@ public class HtmlEditor extends TextField {
         WebDriverConfig.getDriver().switchTo().defaultContent();
         return text;
     }
+
+    public boolean setImage(String url) {
+        return false;
+    }
 }
